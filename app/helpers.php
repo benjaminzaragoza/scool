@@ -5317,7 +5317,7 @@ if (!function_exists('initialize_dnis')) {
             if (!$person) dump('No person found with DNI: ' . $dniStr);
             else {
                 dump( 'Adding DNI to ' . $person->name . ' ...');
-                $person->addMedia($dni->getPathname())->toMediaCollection('dnis');
+                $person->copyMedia($dni->getPathname())->toMediaCollection('dnis');
             }
         }
     }
