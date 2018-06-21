@@ -111,7 +111,7 @@
                                                     tooltip="Eliminar"
                                                     message="Esteu segurs que voleu eliminar totes les dades associades al professor?"
                                             ></confirm-icon>
-                                            <model-docs></model-docs>
+                                            <model-docs :media="teacher.media"></model-docs>
                                         </td>
                                     </tr>
                                 </template>

@@ -4961,6 +4961,12 @@ if (!function_exists('check_job')) {
 }
 
 if (!function_exists('check_teacher')) {
+    /**
+     * Check teacher.
+     *
+     * @param $teacher
+     * @return bool
+     */
     function check_teacher($teacher) {
         return array_key_exists('user_id', $teacher) &&
             array_key_exists('teacher_id', $teacher) &&
@@ -5025,7 +5031,8 @@ if (!function_exists('check_teacher')) {
             array_key_exists('address_floor_number', $teacher) &&
             array_key_exists('address_location', $teacher) &&
             array_key_exists('address_postalcode', $teacher) &&
-            array_key_exists('address_province', $teacher);
+            array_key_exists('address_province', $teacher)  &&
+            array_key_exists('media', $teacher);
     }
 }
 
@@ -5304,7 +5311,6 @@ if (!function_exists('initialize_dnis')) {
     function initialize_dnis() {
         $dnis = collect(File::allFiles(base_path('storage/dni')));
         foreach ($dnis as $dni) {
-//            dd($dni);
             dump($name= $dni->getRelativePathName());
             $dniStr = substr($name,0,9);
             $person = Person::findByIdentifier($dniStr);

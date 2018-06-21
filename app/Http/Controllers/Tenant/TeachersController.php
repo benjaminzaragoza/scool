@@ -32,6 +32,11 @@ class TeachersController extends Controller
         return $this->teachers();
     }
 
+    /**
+     * Teachers.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     protected function teachers()
     {
         return collect(TeacherResource::collection(
@@ -53,6 +58,7 @@ class TeachersController extends Controller
                 'user.person.address',
                 'user.person.address.province',
                 'user.person.address.location',
+                'user.person.media', // TODO
                 'department'
             ])->orderByRaw('code + 0')->get()));
     }

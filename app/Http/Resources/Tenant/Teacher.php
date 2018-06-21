@@ -98,6 +98,7 @@ class Teacher extends JsonResource
             'address_location' =>  optional(optional(optional(optional($this->user)->person)->address)->location)->name,
             'address_postalcode' =>  optional(optional(optional(optional($this->user)->person)->address)->location)->postalcode,
             'address_province' =>  optional(optional(optional(optional($this->user)->person)->address)->province)->name,
+            'media' => optional(optional($this->user)->person)->media
         ];
     }
 }

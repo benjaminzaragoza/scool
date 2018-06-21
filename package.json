@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "chart.js": "^2.7.2",
+    "filesize": "^3.6.1",
     "google-palette": "^1.1.0",
     "gravatar": "^1.6.0",
     "laravel-echo": "^1.4.0",

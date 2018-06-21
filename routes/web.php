@@ -66,6 +66,10 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
         Route::group(['middleware' => 'auth'], function () {
 
+            // Media download
+            Route::get('/media/{media}/download','Tenant\MediaController@download');
+
+
             //        Route::impersonate() but be careful about tenant!
             Route::get('/impersonate/take/{id}', function($tenant, $id) {
                 return App::call('\Lab404\Impersonate\Controllers\ImpersonateController@take', ['tenant' => $tenant, 'id' => $id]);
