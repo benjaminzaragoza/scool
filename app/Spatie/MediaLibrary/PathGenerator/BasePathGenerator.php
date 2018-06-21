@@ -42,6 +42,6 @@ class BasePathGenerator implements PathGenerator
      */
     protected function getBasePath(Media $media): string
     {
-        return Config::get('app.subdomain') . '/'. $media->getKey();
+        return Config::get('app.subdomain') . '/spatie/'. $media->getKey();
     }
 }
