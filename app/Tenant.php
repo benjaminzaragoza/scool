@@ -48,18 +48,12 @@ class Tenant extends Model
         }
     }
 
+    /**
+     * Configure.
+     */
     public function configure()
     {
-        Config::set('app.name', $this->name);
-        //TODO Add shortname to tenants table
-        Config::set('app.shortname', $this->name);
-        Config::set('google.service.enable', true);
-        Config::set('google.service.file', $this->gsuite_service_account_path);
-        Config::set('google.admin_email', $this->gsuite_admin_email);
-        Config::set('auth.providers.users.model', \App\Models\User::class);
-        Config::set('auth.providers.users.driver', 'scool');
-        Config::set('hashing.driver', 'sha1');
-
+        configure_tenant($this);
     }
 
     /**

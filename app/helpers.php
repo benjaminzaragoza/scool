@@ -4187,6 +4187,22 @@ if (!function_exists('initialize_user_types')) {
     }
 }
 
+if (!function_exists('configure_tenant')) {
+    function configure_tenant($tenant)
+    {
+        Config::set('app.name', $tenant->name);
+        //TODO Add shortname to tenants table
+        Config::set('app.shortname', $tenant->name);
+        Config::set('app.subdomain',$tenant->subdomain);
+        Config::set('google.service.enable', true);
+        Config::set('google.service.file', $tenant->gsuite_service_account_path);
+        Config::set('google.admin_email', $tenant->gsuite_admin_email);
+        Config::set('auth.providers.users.model', \App\Models\User::class);
+        Config::set('auth.providers.users.driver', 'scool');
+        Config::set('hashing.driver', 'sha1');
+    }
+}
+
 if (!function_exists('apply_tenant')) {
     function apply_tenant($name)
     {
@@ -5308,15 +5324,17 @@ if (!function_exists('initialize_dnis')) {
     /**
      * Initialize dnis
      */
-    function initialize_dnis() {
+    function initialize_dnis($debug = false) {
         $dnis = collect(File::allFiles(base_path('storage/dni')));
         foreach ($dnis as $dni) {
-            dump($name= $dni->getRelativePathName());
+            $name= $dni->getRelativePathName();
             $dniStr = substr($name,0,9);
             $person = Person::findByIdentifier($dniStr);
-            if (!$person) dump('No person found with DNI: ' . $dniStr);
+            if (!$person) {
+                if($debug) dump('No person found with DNI: ' . $dniStr);
+            }
             else {
-                dump( 'Adding DNI to ' . $person->name . ' ...');
+                if($debug) dump( 'Adding DNI to ' . $person->name . ' ...');
                 $person->copyMedia($dni->getPathname())->toMediaCollection('dnis');
             }
         }
