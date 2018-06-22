@@ -42,7 +42,10 @@
                 required
         ></v-text-field>
         <v-btn v-if="!user" color="primary" @click.native="create" :disabled="creating" :loading="creating">Crear usuari</v-btn>
-        <v-btn v-else color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
+        <template v-else>
+            <v-btn color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
+            <v-btn color="primary" @click.native="$emit('created', this.user)">Continuar</v-btn>
+        </template>
     </form>
 </template>
 
@@ -117,17 +120,14 @@
     },
     methods: {
       remove () {
-        console.log('remove TODO!')
         this.removing = true
         if (this.user) {
-          this.$store.dispatch(actions.DELETE_USER_PERSON, {
-            user_id: this.user.id
-          }).then(response => {
+          this.$store.dispatch(actions.DELETE_USER_PERSON, this.user.id).then(response => {
             this.removing = false
             this.user = response.data
             this.$v.$reset()
-            this.$emit('deleter', this.user)
-            this.clear()
+            this.$emit('deleted', this.user)
+            this.showMessage('Usuari eliminat correctament')
           }).catch(error => {
             this.removing = false
             this.showError(error)
