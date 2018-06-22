@@ -1,5 +1,5 @@
 <template>
-    <v-avatar color="grey lighten-4" :size="size" v-if="hashId" :tile="tile">
+    <v-avatar color="grey lighten-4" :size="size" v-if="hashId" :tile="tile" @dblclick="dblclick">
         <img :src="'/user/' + hashId + '/photo'"
              :alt="alt"
              :title="alt">
@@ -23,6 +23,11 @@
       tile: {
         type: Boolean,
         default: false
+      }
+    },
+    methods: {
+      dblclick () {
+        this.$emit('dblclick')
       }
     }
   }

@@ -256,7 +256,6 @@
       }
     },
     created () {
-      console.log('HEY!!!!!')
       this.teacherId = this.jobTypes.find(jobType => jobType.name === 'Professor/a').id
     }
   }
