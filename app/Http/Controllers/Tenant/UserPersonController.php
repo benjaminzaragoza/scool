@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Requests\AddUser;
 use App\Http\Requests\AddUserPerson;
+use App\Http\Requests\DestroyUserPerson;
 use App\Models\Person;
 use App\Models\User;
 
@@ -44,6 +45,21 @@ class UserPersonController extends Controller
             'sn1' => $person->sn1,
             'sn2' => $person->sn2
         ]);
+    }
+
+    /**
+     * Destroy
+     *
+     * @param DestroyUserPerson $request
+     * @param $tenant
+     * @param User $user
+     * @throws \Exception
+     */
+    public function destroy(DestroyUserPerson $request, $tenant, User $user )
+    {
+        $person = Person::where('user_id',$user->id)->first();
+        $person->delete();
+        $user->delete();
     }
 
 }

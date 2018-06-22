@@ -86,4 +86,50 @@ class UserPersonControllerTest extends BaseTenantTest
 
         $response->assertStatus(403);
     }
+
+    /** @test */
+    public function user_manager_can_delete_user_persons()
+    {
+        $manager = create(User::class);
+        $this->actingAs($manager,'api');
+        $role = Role::firstOrCreate([
+            'name' => 'UsersManager',
+            'guard_name' => 'web'
+        ]);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+        $person = Person::create([
+            'user_id' => $user->id,
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
+
+        $response = $this->json('DELETE','/api/v1/user_person/' . $user->id);
+
+        $response->assertSuccessful();
+
+        $this->assertNull(User::findByName('Pepe Pardo Jeans'));
+        $this->assertNull(User::find($user->id));
+        $this->assertNull(Person::find($person->id));
+    }
+
+    /** @test */
+    public function regular_user_cannot_delete_user_persons()
+    {
+        $user = create(User::class);
+        $this->actingAs($user,'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+
+        $response = $this->json('DELETE','/api/v1/user_person/' . $user->id);
+
+        $response->assertStatus(403);
+    }
 }

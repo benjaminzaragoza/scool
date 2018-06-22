@@ -44,6 +44,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // User Person
             Route::post('/user_person', 'Tenant\UserPersonController@store');
+            Route::delete('/user_person/{user}', 'Tenant\UserPersonController@destroy');
 
             // USERS
             Route::put('/user', 'Tenant\LoggedUserController@update');
