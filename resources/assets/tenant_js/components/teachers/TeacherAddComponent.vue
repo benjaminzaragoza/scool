@@ -15,7 +15,7 @@
         <!--
         TODO ESBORRAR
 
-        1) Crear usuari
+        1) Crear usuari (user_type teacher i rol teacher)
         2) Nom (people). Assignar usuari a les dades personals
           - Fullname (sn1, sn2, GivenName) es pot proposar a partir del nom complet/nom usuari
         3) Assignar Rol Teacher
@@ -46,11 +46,9 @@
                       <user-add-form @created="step = 2"></user-add-form>
                   </v-card>
                 </v-stepper-content>
-                <v-stepper-step :complete="step > 2" step="2">Configure analytics for this app</v-stepper-step>
+                <v-stepper-step :complete="step > 2" step="2">Assignar lloc de treball (plaça)</v-stepper-step>
                 <v-stepper-content step="2">
-                  <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                  <v-btn color="primary" @click.native="step = 3">Continuar</v-btn>
-                  <v-btn flat @click.native="step = 1">Endarrera</v-btn>
+                    <assign-job-to-user @assigned="step = 3"></assign-job-to-user>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 3" step="3">Select an ad format and name ad unit</v-stepper-step>
                 <v-stepper-content step="3">
@@ -72,11 +70,13 @@
 
 <script>
   import UserAddForm from '../users/UserAddFormComponent'
+  import AssignJobToUser from '../jobs/AssignJobToUserComponent'
 
   export default {
     name: 'TeacherAddComponent',
     components: {
-      'user-add-form': UserAddForm
+      'user-add-form': UserAddForm,
+      'assign-job-to-user': AssignJobToUser
     },
     data () {
       return {
