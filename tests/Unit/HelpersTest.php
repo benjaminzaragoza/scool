@@ -55,4 +55,18 @@ class HelpersTest extends TestCase
         }
     }
 
+    /** @test */
+    public function test_propose_user_name(){
+
+        $this->assertEquals('pepepardo',propose_user_name('Pepe','Pardo'));
+        $this->assertEquals('pepepardo',propose_user_name('pepe','pardo'));
+        $this->assertEquals('pepepardo',propose_user_name(' pepe ', ' pardo '));
+        $this->assertEquals('pereramonpardo',propose_user_name(' Pere Ramon', ' pardo '));
+
+        $this->assertEquals('nomlahosticognommolt',propose_user_name('NomLaHostiaDELLARG', 'CognomMOltLlarg'));
+        $this->assertEquals(20,strlen(propose_user_name('NomLaHostiaDELLARG', 'CognomMOltLlarg')));
+        $this->assertEquals('nomlahostipardo',propose_user_name('NomLaHostiaDELLARG', 'Pardo'));
+        $this->assertEquals(15,strlen(propose_user_name('NomLaHostiaDELLARG', 'Pardo')));
+    }
+
 }

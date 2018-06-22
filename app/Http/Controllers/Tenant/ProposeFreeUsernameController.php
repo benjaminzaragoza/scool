@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Models\User;
+use Config;
 use Illuminate\Http\Request;
 
 /**
@@ -25,10 +26,6 @@ class ProposeFreeUsernameController extends Controller
         return $this->proposeUsername($name,$sn1);
     }
 
-    private function nospaces($string) {
-        return preg_replace('/\s+/', '', $string);
-    }
-
     /**
      * Propose username.
      *
@@ -38,14 +35,12 @@ class ProposeFreeUsernameController extends Controller
      */
     private function proposeUsername($name, $sn1)
     {
-        $originalUsername = mb_strimwidth(trim(str_slug($this->nospaces($name))),0,10,'') .
-            mb_strimwidth(trim(str_slug($this->nospaces($sn1))),0,10,'');
+        $originalUsername = propose_user_name($name,$sn1);
         $username = $originalUsername;
         $notFree = true;
         $i = 1;
         while ($notFree) {
-            // TODO email domain
-            if (!User::findByEmail($username . '@iesebre.com')) {
+            if (!User::findByEmail($username . '@' . Config::get('app.email_domain') )) {
                 $notFree = false;
             } else {
                 $username = $originalUsername . strval($i);

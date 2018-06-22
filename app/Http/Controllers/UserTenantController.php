@@ -34,6 +34,8 @@ class UserTenantController extends Controller
         $tenant = $request->user()->addTenant($tenant = Tenant::create([
             'name' => $request->name,
             'subdomain' => $request->subdomain,
+            // TODO -> Ask users for email_domain
+            'email_domain' => $request->subdomain . '.com',
             'hostname' => 'localhost',
             'database' => $request->subdomain,
             'username' => $request->subdomain,

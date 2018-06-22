@@ -87,6 +87,7 @@ class UserTenantsControllerTest extends TestCase
     /** @test */
     public function logged_user_can_create_tenant()
     {
+        $this->withoutExceptionHandling();
         $user = create(User::class);
         $this->actingAs($user,'api');
 
@@ -95,6 +96,7 @@ class UserTenantsControllerTest extends TestCase
         $response = $this->json('POST','/api/v1/tenant', [
             'name' => 'ACME SL',
             'subdomain' => 'acme',
+            'email_domain' => 'acme.com',
             'password' => 'secret',
             'password_confirmation' => 'secret'
         ]);

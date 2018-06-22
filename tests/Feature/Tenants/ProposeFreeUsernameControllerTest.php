@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,6 +36,8 @@ class ProposeFreeUsernameControllerTest  extends BaseTenantTest
     {
         // EMAIL DOMAIN
         $domain = '@iesebre.com';
+        Config::set('app.email_domain','iesebre.com');
+
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
 

@@ -33,6 +33,7 @@ class TenantTest extends TestCase
         $tenant = create(Tenant::class, [
             'name' => 'ACME SL',
             'subdomain' => 'acme',
+            'email_domain' => 'acme.com',
             'hostname' => 'localhost',
             'database' => 'acme',
             'username' => 'acme',

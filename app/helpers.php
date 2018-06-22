@@ -79,6 +79,7 @@ if (! function_exists('create_tenant')) {
         return Tenant::create([
             'name' => $name,
             'subdomain' => $subdomain,
+            'email_domain' => '@' . $subdomain . '.com',
             'hostname' => 'localhost',
             'username' => $subdomain,
             'password' => 'secret',
@@ -227,6 +228,7 @@ if (! function_exists('create_default_tenant')) {
             $tenant = $user->addTenant($tenant = Tenant::create([
                 'name' => "Institut de l'Ebre",
                 'subdomain' => 'iesebre',
+                'email_domain' => 'iesebre.com',
                 'hostname' => 'localhost',
                 'database' => 'iesebre',
                 'username' => 'iesebre',
@@ -4194,6 +4196,7 @@ if (!function_exists('configure_tenant')) {
         //TODO Add shortname to tenants table
         Config::set('app.shortname', $tenant->name);
         Config::set('app.subdomain',$tenant->subdomain);
+        Config::set('app.email_domain',$tenant->email_domain);
         Config::set('google.service.enable', true);
         Config::set('google.service.file', $tenant->gsuite_service_account_path);
         Config::set('google.admin_email', $tenant->gsuite_admin_email);
@@ -5341,3 +5344,21 @@ if (!function_exists('initialize_dnis')) {
     }
 }
 
+if (!function_exists('nospaces')) {
+    function nospaces($string) {
+        return preg_replace('/\s+/', '', $string);
+    }
+}
+
+
+
+if (!function_exists('propose_user_name')) {
+    /**
+     * Initialize dnis
+     */
+    function propose_user_name($name, $sn1)
+    {
+        return mb_strimwidth(trim(str_slug(nospaces($name))),0,10,'') .
+            mb_strimwidth(trim(str_slug(nospaces($sn1))),0,10,'');
+    }
+}
