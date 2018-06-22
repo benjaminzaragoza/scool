@@ -65,6 +65,22 @@ if (! function_exists('scool_menu')) {
     }
 }
 
+
+if (! function_exists('tenant')) {
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    function tenant()
+    {
+        return collect([
+            'name' => Config::get('app.name'),
+            'subdomain' => Config::get('app.subdomain'),
+            'email_domain' => Config::get('app.email_domain')
+        ]);
+    }
+}
+
 if (! function_exists('create_tenant')) {
 
     /**

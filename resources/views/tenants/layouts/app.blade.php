@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="user" content="{{ formatted_logged_user() }}">
     <meta name="scool_menu" content="{{ scool_menu() }}">
+    <meta name="tenant" content="{{ tenant() }}">
     <link rel="manifest" href="/manifest.json">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">

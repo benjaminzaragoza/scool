@@ -30,6 +30,10 @@ let scoolMenuHeader = document.head.querySelector('meta[name="scool_menu"]')
 window.scool_menu = null
 if (scoolMenuHeader) if (scoolMenuHeader.content) window.scool_menu = JSON.parse(scoolMenuHeader.content);
 
+let tenantHeader = document.head.querySelector('meta[name="tenant"]')
+window.tenant = null
+if (tenantHeader) if (tenantHeader.content) window.tenant = JSON.parse(tenantHeader.content);
+
 import Echo from 'laravel-echo'
 
 window.Pusher = require('pusher-js');
