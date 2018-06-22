@@ -26,6 +26,7 @@ class UserPersonController extends Controller
         $user = User::create([
             'name' => name($request->givenName,$request->sn1,$request->sn2),
             'email' => $request->email,
+            'user_type_id' => $request->user_type_id,
             'password' => sha1(str_random())
         ]);
         $person = Person::create([
@@ -36,6 +37,7 @@ class UserPersonController extends Controller
         ]);
 
         return collect([
+            'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'givenName' => $person->givenName,

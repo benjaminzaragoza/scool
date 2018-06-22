@@ -36,6 +36,16 @@ export default {
       })
     })
   },
+  [ actions.STORE_USER_PERSON ] (context, user) {
+    return new Promise((resolve, reject) => {
+      users.storeUserPerson(user).then(response => {
+        context.commit(mutations.ADD_USER, response.data.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   [ actions.DELETE_USER ] (context, user) {
     return new Promise((resolve, reject) => {
       users.delete(user).then(response => {

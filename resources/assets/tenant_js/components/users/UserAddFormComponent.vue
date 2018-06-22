@@ -35,11 +35,14 @@
                 label="Correu electrònic"
                 v-model="email"
                 :error-messages="emailErrors"
-                @input="$v.email.$touch()"
+                @input="inputEmail()"
                 @blur="$v.email.$touch()"
+                :disabled="loadingProposedUser"
+                :loading="loadingProposedUser"
                 required
         ></v-text-field>
-        <v-btn color="primary" @click.native="create">Crear usuari</v-btn>
+        <v-btn v-if="!user" color="primary" @click.native="create" :disabled="creating" :loading="creating">Crear usuari</v-btn>
+        <v-btn v-else color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
     </form>
 </template>
 
@@ -48,6 +51,7 @@
   import { validationMixin } from 'vuelidate'
   import withSnackbar from '../mixins/withSnackbar'
   import { required, email } from 'vuelidate/lib/validators'
+  import * as actions from '../../store/action-types'
 
   export default {
     mixins: [validationMixin, withSnackbar],
@@ -59,6 +63,7 @@
     },
     data () {
       return {
+        user: null,
         username: '',
         givenName: '',
         sn1: '',
@@ -66,16 +71,23 @@
         email: '',
         password: '',
         errors: [],
-        creating: false
+        creating: false,
+        deleting: false,
+        loadingProposedUser: false
+      }
+    },
+    props: {
+      userType: {
+        type: String,
+        required: false
       }
     },
     computed: {
-      user () {
-        return {
-          name: this.name,
-          email: this.email,
-          password: this.password
-        }
+      clear () {
+        this.givenName = ''
+        this.sn1 = ''
+        this.sn2 = ''
+        this.email = ''
       },
       name () {
         return (this.givenName.trim() + ' ' + this.sn1.trim() + ' ' + this.sn2.trim()).trim()
@@ -104,50 +116,73 @@
       }
     },
     methods: {
+      remove () {
+        console.log('remove TODO!')
+        this.removing = true
+        if (this.user) {
+          this.$store.dispatch(actions.DELETE_USER_PERSON, {
+            user_id: this.user.id
+          }).then(response => {
+            this.removing = false
+            this.user = response.data
+            this.$v.$reset()
+            this.$emit('deleter', this.user)
+            this.clear()
+          }).catch(error => {
+            this.removing = false
+            this.showError(error)
+          }).then(() => {
+            this.removing = false
+          })
+        }
+
+      },
+      inputEmail () {
+        this.errors['email'] = ''
+        this.$v.sn1.$touch()
+      },
       sn1Blur () {
         this.$v.sn1.$touch()
         this.proposeFreeUserName(this.givenName, this.sn1)
       },
       proposeFreeUserName (name, sn1) {
+        this.loadingProposedUser = true
         if (name && sn1) {
           axios.get('/api/v1/proposeFreeUserName/' + name + '/' + sn1).then(response => {
-            this.loading = false
+            this.loadingProposedUser = false
             this.username = response.data
             this.email = this.username + '@' + window.tenant.email_domain
           }).catch(error => {
-            this.loading = false
+            this.loadingProposedUser = false
             console.log(error)
             this.showError(error)
           })
         }
       },
       create () {
-        console.log('Create user')
         this.$v.$touch()
         if (!this.$v.$invalid) {
           this.creating = true
-
-          // ap1/v1/user_person
-          // this.$store.dispatch(actions.STORE_USER_PERSON, {
-          //   name: this.name,
-          //   email: this.email,
-          //   password: this.password,
-          //   type: this.userType && this.userType.name,
-          //   roles: this.role
-          // }).then(response => {
-          //   this.creating = false
-          //   this.clear()
-          //   this.$v.$reset()
-          // }).catch(error => {
-          //   if (error && error.status === 422) {
-          //     this.errors = error.data && error.data.errors
-          //     this.creating = false
-          //     this.showError(error)
-          //   }
-          // }).then(() => {
-          //   this.creating = false
-          // })
-          this.$emit('created', this.user)
+          this.$store.dispatch(actions.STORE_USER_PERSON, {
+            givenName: this.givenName,
+            sn1: this.sn1,
+            sn2: this.sn2,
+            email: this.email,
+            type: this.userType
+          }).then(response => {
+            this.creating = false
+            this.user = response.data
+            this.$v.$reset()
+            this.$emit('created', this.user)
+          }).catch(error => {
+            if (error && error.status === 422) {
+              this.errors = error.data && error.data.errors
+              this.creating = false
+              this.showError(error)
+            }
+          }).then(() => {
+            this.creating = false
+          })
         }
       }
     }

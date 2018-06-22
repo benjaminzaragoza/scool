@@ -36,7 +36,6 @@ class UserPersonControllerTest extends BaseTenantTest
     /** @test */
     public function user_manager_can_add_user_persons()
     {
-        $this->withoutExceptionHandling();
         $manager = create(User::class);
         $this->actingAs($manager,'api');
         $role = Role::firstOrCreate([
@@ -57,6 +56,7 @@ class UserPersonControllerTest extends BaseTenantTest
 
         $result = json_decode($response->getContent());
 
+        $this->assertNotNull($result->id);
         $this->assertEquals('Pepe Pardo Jeans',$result->name);
         $this->assertEquals('Pepe',$result->givenName);
         $this->assertEquals('Pardo',$result->sn1);

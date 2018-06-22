@@ -19,6 +19,15 @@ export default {
       'type': user.type
     })
   },
+  storeUserPerson (user) {
+    return axios.post('/api/v1/user_person', {
+      'givenName': user.givenName,
+      'sn1': user.sn1,
+      'sn2': user.sn2,
+      'email': user.email,
+      'type': user.type
+    })
+  },
   delete (user) {
     return axios.delete('/api/v1/users/' + user.id)
   }

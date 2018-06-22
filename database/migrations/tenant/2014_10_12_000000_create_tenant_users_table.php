@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CreateTenantUsersTable.
+ */
 class CreateTenantUsersTable extends Migration
 {
     /**
@@ -20,6 +23,7 @@ class CreateTenantUsersTable extends Migration
             $table->string('password');
             $table->string('photo')->nullable();
             $table->string('photo_hash')->nullable();
+            $table->unsignedInteger('user_type_id')->nullable();
             $table->boolean('admin')->default(false);
             $table->rememberToken();
             $table->timestamps();

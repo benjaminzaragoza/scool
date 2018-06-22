@@ -11,6 +11,8 @@ export const UPDATE_USER = 'UPDATE_USER'
 export const SELECTED_USER = 'SELECTED_USER'
 export const STORE_USER = 'STORE_USER'
 export const DELETE_USER = 'DELETE_USER'
+export const STORE_USER_PERSON = 'STORE_USER_PERSON'
+export const DELETE_USER_PERSON = 'DELETE_USER_PERSON'
 
 // JOBS MODULE
 export const GET_JOBS = 'GET_JOBS'
