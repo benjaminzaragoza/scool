@@ -30,5 +30,8 @@ export default {
   },
   delete (user) {
     return axios.delete('/api/v1/users/' + user.id)
+  },
+  deleteUserPerson (user) {
+    return axios.delete('/api/v1/user_person/' + user.id)
   }
 }

@@ -55,5 +55,15 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.DELETE_USER_PERSON ] (context, user) {
+    return new Promise((resolve, reject) => {
+      users.deleteUserPerson(user).then(response => {
+        context.commit(mutations.DELETE_USER, user)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
