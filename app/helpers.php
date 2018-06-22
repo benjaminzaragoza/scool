@@ -645,7 +645,7 @@ if (!function_exists('initialize_gates')) {
         });
 
         Gate::define('create_users', function ($user) {
-            return $user->hasRole('UsersManager');
+            return $user->hasRole('UsersManager') || $user->hasRole('TeachersManager');
         });
 
         Gate::define('delete_users', function ($user) {

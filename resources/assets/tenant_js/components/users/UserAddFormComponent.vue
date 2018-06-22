@@ -127,7 +127,8 @@
         if (!this.$v.$invalid) {
           this.creating = true
 
-          // this.$store.dispatch(actions.STORE_USER, {
+          // ap1/v1/user_person
+          // this.$store.dispatch(actions.STORE_USER_PERSON, {
           //   name: this.name,
           //   email: this.email,
           //   password: this.password,
