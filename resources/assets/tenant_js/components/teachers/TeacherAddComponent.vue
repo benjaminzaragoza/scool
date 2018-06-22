@@ -43,21 +43,27 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <user-add-form @created="step = 2"></user-add-form>
+                      <user-add-form @created="step = 2" :user-type="TEACHER_TYPE" role="Teacher"></user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Assignar lloc de treball (plaça)</v-stepper-step>
                 <v-stepper-content step="2">
-                    <assign-job-to-user @assigned="step = 3"></assign-job-to-user>
+                    <assign-job-to-user @assigned="step = 3" @back="step = 1"></assign-job-to-user>
                 </v-stepper-content>
-                <v-stepper-step :complete="step > 3" step="3">Select an ad format and name ad unit</v-stepper-step>
+                <v-stepper-step :complete="step > 3" step="3">Codi de professor i departament</v-stepper-step>
                 <v-stepper-content step="3">
                   <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
                   <v-btn color="primary" @click.native="step = 4">Continuar</v-btn>
                   <v-btn flat>Cancel</v-btn>
                 </v-stepper-content>
-                <v-stepper-step step="4">View setup instructions</v-stepper-step>
+                <v-stepper-step step="4">Dades personals</v-stepper-step>
                 <v-stepper-content step="4">
+                  <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                  <v-btn color="primary" @click.native="step = 1">Continuar</v-btn>
+                  <v-btn flat>Cancel</v-btn>
+                </v-stepper-content>
+                <v-stepper-step step="5">Fitxa del professor</v-stepper-step>
+                <v-stepper-content step="5">
                   <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
                   <v-btn color="primary" @click.native="step = 1">Continuar</v-btn>
                   <v-btn flat>Cancel</v-btn>
@@ -83,6 +89,9 @@
         dialog: false,
         step: 1
       }
+    },
+    created () {
+      this.TEACHER_TYPE = 1
     }
   }
 </script>

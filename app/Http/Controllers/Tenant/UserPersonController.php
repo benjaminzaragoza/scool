@@ -7,6 +7,7 @@ use App\Http\Requests\AddUserPerson;
 use App\Http\Requests\DestroyUserPerson;
 use App\Models\Person;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class UserPersonController.
@@ -37,10 +38,15 @@ class UserPersonController extends Controller
             'sn2' => $request->sn2,
         ]);
 
+        if($request->role) {
+            $user->assignRole(Role::findByName($request->role,'web'));
+        }
+
         return collect([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'user_type_id' => $user->user_type_id,
             'givenName' => $person->givenName,
             'sn1' => $person->sn1,
             'sn2' => $person->sn2

@@ -25,7 +25,8 @@ export default {
       'sn1': user.sn1,
       'sn2': user.sn2,
       'email': user.email,
-      'type': user.type
+      'user_type_id': user.user_type_id,
+      'role': user.role
     })
   },
   delete (user) {

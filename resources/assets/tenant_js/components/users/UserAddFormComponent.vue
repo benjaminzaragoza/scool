@@ -81,7 +81,9 @@
     },
     props: {
       userType: {
-        type: String,
+        required: false
+      },
+      role: {
         required: false
       }
     },
@@ -135,7 +137,6 @@
             this.removing = false
           })
         }
-
       },
       inputEmail () {
         this.errors['email'] = ''
@@ -168,7 +169,8 @@
             sn1: this.sn1,
             sn2: this.sn2,
             email: this.email,
-            type: this.userType
+            user_type_id: this.userType,
+            role: this.role
           }).then(response => {
             this.creating = false
             this.user = response.data
