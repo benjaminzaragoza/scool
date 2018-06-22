@@ -39,6 +39,16 @@
                     <v-divider v-if="index != collections.length - 1"></v-divider>
                 </template>
             </v-list>
+
+            <file-pond
+                    name="test"
+                    ref="pond"
+                    class-name="my-pond"
+                    label-idle="Afegiu nous fitxers aquí"
+                    allow-multiple="true"
+                    :files="myFiles"
+                    @init="handleFilePondInit"/>
+
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click.native="dialog = false" v-html="cancel"></v-btn>
@@ -50,13 +60,26 @@
 
 <script>
   import filesize from 'filesize'
+  import vueFilePond from 'vue-filepond'
+
+  import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js'
+  import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js'
+
+  import 'filepond/dist/filepond.min.css'
+  import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+
+  const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview)
 
   export default {
     name: 'ModelDocsComponent',
+    components: {
+      FilePond
+    },
     data () {
       return {
         dialog: false,
-        internalMedia: this.media
+        internalMedia: this.media,
+        myFiles: null
       }
     },
     props: {
@@ -107,6 +130,10 @@
       },
       filesize (size) {
         return filesize(size)
+      },
+      handleFilePondInit () {
+        console.log('FilePond has initialized')
+        // FilePond instance methods are available on `this.$refs.pond`
       }
     }
   }
