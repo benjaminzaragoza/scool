@@ -46,8 +46,36 @@
                     class-name="my-pond"
                     label-idle="Afegiu nous fitxers aquí"
                     allow-multiple="true"
-                    :files="myFiles"
+                    v-bind:files="myFiles"
+                    server="/prova/api"
                     @init="handleFilePondInit"/>
+
+            <!-- TODO Server variable: https://pqina.nl/filepond/docs/patterns/api/server/
+            Example: https://github.com/thedevdojo/image-uploads-with-laravel-and-filepond/blob/master/resources/views/welcome.blade.php
+
+IMPORTANT: Posar el CSRF TOKEN
+
+            FilePond.setOptions({
+                server: {
+                    url: '/upload',
+                    process: {
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    }
+                }
+            });
+
+Exemple de controlador:
+
+class UploadController extends Controller
+{
+    public function upload(Request $request){
+    	$file = $request->file('filepond');
+    	return Storage::put('tmp', $file);
+    }
+}
+            -->
 
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -79,7 +107,7 @@
       return {
         dialog: false,
         internalMedia: this.media,
-        myFiles: null
+        myFiles: []
       }
     },
     props: {
