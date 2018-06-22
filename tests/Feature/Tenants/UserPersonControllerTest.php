@@ -4,7 +4,6 @@ namespace Tests\Feature\Tenants;
 
 use App\Models\Person;
 use App\Models\User;
-use App\Models\UserType;
 use Config;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
@@ -12,11 +11,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
 
 /**
- * Class UsersControllerTest.
+ * Class UserPersonControllerTest.
  *
  * @package Tests\Feature
  */
-class UsersControllerTest extends BaseTenantTest
+class UserPersonControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
