@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Models\Employee;
 use App\Models\Job;
 use App\Models\User;
 use Config;
@@ -94,8 +95,8 @@ class EmployeeControllerTest extends BaseTenantTest
         $user = create(User::class);
         $this->actingAs($user,'api');
 
-        $user = factory(User::class)->create();
-        $job = Job::create([
+        factory(User::class)->create();
+        Job::create([
             'code' => 'CODE',
             'type_id' => 1,
             'specialty_id' => 1,
@@ -109,30 +110,34 @@ class EmployeeControllerTest extends BaseTenantTest
     /** @test */
     public function remove_employee()
     {
-        // TODO
+        $staffManager = create(User::class);
+        $role = Role::firstOrCreate(['name' => 'StaffManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $staffManager->assignRole($role);
+        $this->actingAs($staffManager,'api');
+
+        $employee= Employee::create([
+            'user_id' => 1,
+            'job_id' => 1,
+            'holder' => true
+        ]);
+        $response = $this->json('DELETE','/api/v1/employee/' . $employee->id);
+        $response->assertSuccessful();
     }
 
     /** @test */
     public function user_cannot_remove_employee()
     {
-//        initialize_job_types();
-//        initialize_forces();
-//        initialize_families();
-//        initialize_specialities();
-//        $user = create(User::class);
-//        $this->actingAs($user,'api');
-//
-//        $job = Job::create([
-//            'code' => '040',
-//            'type_id' => JobType::findByName('Professor/a')->id,
-//            'specialty_id' => 1,
-//            'family_id' => 1,
-//            'order' => 1,
-//            'notes' => 'bla bla bla'
-//        ]);
-//
-//        $response = $this->json('DELETE','/api/v1/jobs/' . $job->id);
-//        $response->assertStatus(403);
+        $user = create(User::class);
+        $this->actingAs($user,'api');
+
+        $employee= Employee::create([
+            'user_id' => 1,
+            'job_id' => 1,
+            'holder' => true
+        ]);
+        $response = $this->json('DELETE','/api/v1/employee/' . $employee->id);
+        $response->assertStatus(403);
     }
 
 }
