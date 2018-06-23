@@ -1,7 +1,7 @@
 <template>
     <v-select
             :label="label"
-            :items="jobs"
+            :items="filteredJobs"
             v-model="internalJob"
             item-text="active_user_description"
             chips
@@ -23,7 +23,7 @@
         </v-chip>
     </template>
         <template slot="item" slot-scope="{ item: job }">
-            <v-list-tile-avatar>
+            <v-list-tile-avatar v-if="job.active_user_hash_id">
                 <img :src="'/user/' + job.active_user_hash_id + '/photo'">
             </v-list-tile-avatar>
             <v-list-tile-content>
@@ -47,6 +47,12 @@
         internalJob: this.job
       }
     },
+    computed: {
+      filteredJobs () {
+        if (this.onlyAvailables) return this.jobs.filter(job => job.holder_id === null)
+        return this.jobs
+      }
+    },
     watch: {
       job (newjob) {
         this.internalJob = newjob
@@ -57,6 +63,10 @@
       event: 'input'
     },
     props: {
+      onlyAvailables: {
+        type: Boolean,
+        default: false
+      },
       job: {
         type: Object
       },

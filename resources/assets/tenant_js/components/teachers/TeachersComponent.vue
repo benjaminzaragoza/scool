@@ -138,8 +138,8 @@
   export default {
     mixins: [withSnackbar],
     components: {
-      ShowTeacherIcon, // show-teacher-icon
-      AdministrativeStatusSelect, // administrative-status-select
+      'show-teacher-icon': ShowTeacherIcon,
+      'administrative-status-select': AdministrativeStatusSelect,
       'confirm-icon': ConfirmIcon,
       'user-avatar': UserAvatar
     },

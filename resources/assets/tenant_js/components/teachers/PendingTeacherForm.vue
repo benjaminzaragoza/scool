@@ -450,7 +450,7 @@
                 <v-flex md6>
                     <teacher-select
                             name="teacher"
-                            label="Professor al que substitueix"
+                            label="Professor al que substitueix (si s'escau)"
                             :teachers="teachers"
                             v-model="teacher"
                     ></teacher-select>

@@ -48,7 +48,7 @@
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Assignar lloc de treball (plaça)</v-stepper-step>
                 <v-stepper-content step="2">
-                    <assign-job-to-user @assigned="step = 3" @back="step = 1"></assign-job-to-user>
+                    <assign-job-to-user :jobs="jobs" :administrative-statuses="administrativeStatuses" @assigned="step = 3" @back="step = 1"></assign-job-to-user>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 3" step="3">Codi de professor i departament</v-stepper-step>
                 <v-stepper-content step="3">
@@ -87,7 +87,17 @@
     data () {
       return {
         dialog: false,
-        step: 1
+        step: 2
+      }
+    },
+    props: {
+      jobs: {
+        type: Array,
+        required: true
+      },
+      administrativeStatuses: {
+        type: Array,
+        required: true
       }
     },
     created () {

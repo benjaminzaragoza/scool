@@ -13,7 +13,7 @@
 
     <teachers :teachers="{{ $teachers }}" :administrative-statuses="{{ $administrativeStatuses }}"></teachers>
 
-    <teacher-add></teacher-add>
+    <teacher-add :jobs="{{ $jobs }}" :administrative-statuses="{{ $administrativeStatuses }}"></teacher-add>
 
 @endsection
 
