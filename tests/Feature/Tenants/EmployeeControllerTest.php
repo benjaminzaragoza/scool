@@ -69,6 +69,41 @@ class EmployeeControllerTest extends BaseTenantTest
     }
 
     /** @test */
+    public function add_substitute()
+    {
+        $staffManager = create(User::class);
+        $role = Role::firstOrCreate(['name' => 'StaffManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $staffManager->assignRole($role);
+        $this->actingAs($staffManager,'api');
+
+        $user = factory(User::class)->create();
+        $job = Job::create([
+            'code' => 'CODE',
+            'type_id' => 1,
+            'specialty_id' => 1,
+            'family_id' => 1,
+            'order' => 1
+        ]);
+        $response = $this->json('POST','/api/v1/employee', [
+            'user_id' => $user->id,
+            'job_id' => $job->id,
+            'holder' => false,
+            'start_at' => '2016-02-15'
+        ]);
+        $response->assertSuccessful();
+        $this->assertTrue($user->is($job->users()->first()));
+        $this->assertTrue($user->is($job->substitutes()->first()));
+        $this->assertNull($job->holders()->first());
+        $this->assertDatabaseHas('employees',[
+            'user_id' => $user->id,
+            'job_id' => $job->id,
+            'holder' => 0,
+            'start_at' => '2016-02-15 00:00:00'
+        ]);
+    }
+
+    /** @test */
     public function add_employee_validation()
     {
         $staffManager = create(User::class);
