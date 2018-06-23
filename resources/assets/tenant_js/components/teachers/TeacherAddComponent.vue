@@ -43,12 +43,17 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <user-add-form @created="step = 2" :user-type="TEACHER_TYPE" role="Teacher"></user-add-form>
+                      <user-add-form @created="userCreated" :user-type="TEACHER_TYPE" role="Teacher"></user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Assignar lloc de treball (plaça)</v-stepper-step>
                 <v-stepper-content step="2">
-                    <assign-job-to-user :jobs="jobs" :administrative-statuses="administrativeStatuses" @assigned="step = 3" @back="step = 1"></assign-job-to-user>
+                    <assign-job-to-user
+                            :jobs="jobs"
+                            :user="user && user.id"
+                            :administrative-statuses="administrativeStatuses"
+                            @assigned="step = 3"
+                            @back="step = 1"></assign-job-to-user>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 3" step="3">Codi de professor i departament</v-stepper-step>
                 <v-stepper-content step="3">
@@ -87,7 +92,8 @@
     data () {
       return {
         dialog: false,
-        step: 2
+        step: 2,
+        user: null
       }
     },
     props: {
@@ -98,6 +104,13 @@
       administrativeStatuses: {
         type: Array,
         required: true
+      }
+    },
+    methods: {
+      userCreated (user) {
+        console.log(user)
+        this.user = user
+        this.step = 2
       }
     },
     created () {
