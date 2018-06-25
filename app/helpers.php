@@ -725,6 +725,9 @@ if (!function_exists('initialize_gates')) {
         Gate::define('store-teachers', function ($user) {
             return $user->hasRole('TeachersManager');
         });
+        Gate::define('delete-teachers', function ($user) {
+            return $user->hasRole('TeachersManager');
+        });
 
         Gate::define('show-pending-teachers', function ($user) {
             return $user->hasRole('TeachersManager');

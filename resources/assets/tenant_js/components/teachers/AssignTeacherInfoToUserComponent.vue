@@ -32,7 +32,8 @@
                 v-model="department"
                 :required="false"
         ></department-select>
-        <v-btn color="primary" @click="assign" :disabled="assigning" :loading="assigning">Assignar</v-btn>
+        <v-btn v-if="!teacher" color="primary" @click="assign" :disabled="assigning" :loading="assigning">Assignar</v-btn>
+        <v-btn v-else color="error" @click.native="remove" :disabled="removing" :loading="removing">Eliminar</v-btn>
         <v-btn color="error" @click="$emit('back')">Tornar endarrera</v-btn>
     </form>
 </template>
@@ -68,7 +69,9 @@
         specialty: null,
         department: null,
         assigning: false,
-        code: null
+        code: null,
+        teacher: null,
+        removing: false
       }
     },
     props: {
@@ -137,6 +140,23 @@
       selectSpecialtyByJob (job) {
         this.specialty = this.jobs.filter(j => j.id === job)[0].specialty_id
       },
+      remove () {
+        this.removing = true
+        if (this.teacher) {
+          axios.delete('/api/v1/teachers/' + this.teacher.id).then(response => {
+            this.removing = false
+            this.teacher = null
+            this.$v.$reset()
+            this.$emit('deleted', this.user)
+            this.showMessage('Dades del professor eliminades correctament')
+          }).catch(error => {
+            this.removing = false
+            this.showError(error)
+          }).then(() => {
+            this.removing = false
+          })
+        }
+      },
       assign () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
@@ -151,6 +171,7 @@
             this.assigning = false
             this.showMessage('Informació de professor assignada correctament')
             this.$emit('assigned', response.data)
+            this.teacher = response.data
           }).catch(error => {
             console.log(error)
             this.assigning = false

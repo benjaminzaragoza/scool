@@ -93,7 +93,8 @@
         if (this.employee) {
           axios.delete('/api/v1/employee/' + this.employee.id).then(response => {
             this.removing = false
-            // this.employee = response.data // TODO cal?
+            this.job = null
+            this.employee = null
             this.$v.$reset()
             this.$emit('deleted', this.user)
             this.showMessage('Assignació de plaça eliminada correctament')

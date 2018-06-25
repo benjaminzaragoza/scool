@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Http\Requests\DestroyTeacher;
 use App\Http\Requests\ListTeachers;
 use App\Http\Requests\ShowTeachersManagment;
 use App\Http\Requests\StoreTeacher;
@@ -111,5 +112,20 @@ class TeachersController extends Controller
             'administrative_status_id' => $request->administrative_status_id,
             'specialty_id' => $request->specialty_id,
         ]);
+    }
+
+    /**
+     * Destroy
+     *
+     * @param DestroyTeacher $request
+     * @param $tenant
+     * @param Teacher $teacher
+     * @return Teacher
+     * @throws \Exception
+     */
+    public function destroy(DestroyTeacher $request, $tenant, Teacher $teacher)
+    {
+        $teacher->delete();
+        return $teacher;
     }
 }
