@@ -69,6 +69,7 @@
                               :departments="departments"
                               :job="employee && employee.job_id"
                               :jobs="jobs"
+                              @assigned="teacherAssigned"
                       ></assign-teacher-info-to-user>
                   </v-card>
                 </v-stepper-content>
@@ -107,7 +108,8 @@
         dialog: false,
         step: 1,
         user: null,
-        employee: null
+        employee: null,
+        teacher: null
       }
     },
     props: {
@@ -136,6 +138,10 @@
       jobAssigned (employee) {
         this.employee = employee
         this.step = 3
+      },
+      teacherAssigned (teacher) {
+        this.teacher = teacher
+        this.step = 4
       }
     },
     created () {

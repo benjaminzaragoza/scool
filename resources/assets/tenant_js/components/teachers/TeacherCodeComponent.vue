@@ -58,7 +58,6 @@
         this.loading = true
         axios.get('/api/v1/teacher/available_code').then(response => {
           this.loading = false
-          console.log(response)
           this.internalCode = response.data
           this.$emit('input', this.internalCode)
         }).catch(error => {

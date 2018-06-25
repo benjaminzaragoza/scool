@@ -45,10 +45,11 @@
   import AdministrativeStatusSelect from './AdministrativeStatusSelectComponent'
   import SpecialtySelect from '../specialties/SpecialtySelectComponent'
   import DepartmentSelect from '../curriculum/departments/DepartmentsSelectComponent'
+  import withSnackbar from '../mixins/withSnackbar'
 
   export default {
     name: 'AssignTeacherInfoToUserComponent',
-    mixins: [validationMixin],
+    mixins: [validationMixin, withSnackbar],
     components: {
       'teacher-code': TeacherCode,
       'administrative-status-select': AdministrativeStatusSelect,
@@ -145,17 +146,17 @@
             code: this.code,
             administrative_status_id: this.administrativeStatus,
             department_id: this.department,
-            speciality_id: this.speciality
+            specialty_id: this.specialty
           }).then(response => {
             this.assigning = false
             this.showMessage('Informació de professor assignada correctament')
             this.$emit('assigned', response.data)
           }).catch(error => {
+            console.log(error)
             this.assigning = false
             this.showError(error)
           })
         } else {
-          console.log('INVALID')
           this.$v.$touch()
         }
       }
