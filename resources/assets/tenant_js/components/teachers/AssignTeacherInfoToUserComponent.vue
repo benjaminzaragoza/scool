@@ -1,15 +1,9 @@
 <template>
     <form>
-        Codi de professor: mostrar el codi que s'assignarà (next available code) i permetre canviar?
-        Departament: segons la plaça escollida es marca un departament per defecte
-        <v-text-field
-                label="Codi professor"
-                v-model="code"
+        <teacher-code
                 :error-messages="codeErrors"
-                @input="$v.code.$touch()"
-                @blur="$v.code.$touch()"
-                required
-        ></v-text-field>
+                v-model="code"
+        ></teacher-code>
         <administrative-status-select
                 :administrative-statuses="administrativeStatuses"
                 v-model="administrativeStatus"
@@ -47,6 +41,7 @@
   import { validationMixin } from 'vuelidate'
   import { required } from 'vuelidate/lib/validators'
   import axios from 'axios'
+  import TeacherCode from './TeacherCodeComponent'
   import AdministrativeStatusSelect from './AdministrativeStatusSelectComponent'
   import SpecialtySelect from '../specialties/SpecialtySelectComponent'
   import DepartmentSelect from '../curriculum/departments/DepartmentsSelectComponent'
@@ -55,9 +50,10 @@
     name: 'AssignTeacherInfoToUserComponent',
     mixins: [validationMixin],
     components: {
+      'teacher-code': TeacherCode,
       'administrative-status-select': AdministrativeStatusSelect,
       'specialty-select': SpecialtySelect,
-      'department-select': DepartmentSelect
+      'department-select': DepartmentSelect,
     },
     validations: {
       code: { required },
@@ -126,13 +122,11 @@
     },
     watch: {
       job (newJob) {
-        console.log('watched!!!')
         this.initialize()
       }
     },
     methods: {
       initialize () {
-        console.log('initialize')
         this.selectDepartmentByJob(this.job)
         this.selectSpecialtyByJob(this.job)
       },

@@ -58,9 +58,9 @@ class Job extends JsonResource
             $specialty_description = $specialty;
         }
 
-        $department = optional($this->department)->name;
-        $department_code = optional($this->department)->code;
-        $department_id = optional($this->department)->id;
+        $department = optional(optional($this->specialty)->department)->name;
+        $department_code = optional(optional($this->specialty)->department)->code;
+        $department_id = optional(optional($this->specialty)->department)->id;
         if ($department_code) {
             $department_description = $department_code . ' ' . $department;
         } else {

@@ -58,4 +58,12 @@ class Specialty extends Revisionable
     {
         return $this->belongsTo(Family::class);
     }
+
+    /**
+     * Get the department.
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

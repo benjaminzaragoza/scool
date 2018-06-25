@@ -80,6 +80,7 @@ class TeachersController extends Controller
                 'type',
                 'family',
                 'specialty',
+                'specialty.department',
                 'users',
                 'holders',
                 'holders.teacher',
