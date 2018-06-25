@@ -71,6 +71,7 @@ class JobsControllerTest extends BaseTenantTest
         initialize_user_types();
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         initialize_users();
@@ -103,6 +104,7 @@ class JobsControllerTest extends BaseTenantTest
     {
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         $staffManager = create(User::class);
@@ -191,6 +193,7 @@ class JobsControllerTest extends BaseTenantTest
     {
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         $staffManager = create(User::class);
@@ -230,6 +233,7 @@ class JobsControllerTest extends BaseTenantTest
     {
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         $user = create(User::class);
@@ -256,9 +260,9 @@ class JobsControllerTest extends BaseTenantTest
         initialize_job_types();
         initialize_forces();
         initialize_families();
+        initialize_departments();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         $staffManager = create(User::class);

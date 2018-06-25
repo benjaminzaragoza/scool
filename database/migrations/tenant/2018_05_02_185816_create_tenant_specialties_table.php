@@ -22,6 +22,7 @@ class CreateTenantSpecialtiesTable extends Migration
             $table->string('name');
             $table->unsignedInteger('force_id');
             $table->unsignedInteger('family_id')->nullable();
+            $table->unsignedInteger('department_id')->nullable();
             $table->timestamps();
         });
     }

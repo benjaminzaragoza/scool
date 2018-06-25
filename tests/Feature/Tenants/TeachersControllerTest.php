@@ -37,14 +37,15 @@ class TeachersControllerTest extends BaseTenantTest
     /** @test */
     public function show_teachers_management()
     {
+        $this->withoutExceptionHandling();
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         $staffManager = create(User::class);
@@ -63,6 +64,7 @@ class TeachersControllerTest extends BaseTenantTest
         $response->assertViewHas('specialties');
         $response->assertViewHas('forces');
         $response->assertViewHas('administrativeStatuses');
+        $response->assertViewHas('departments');
     }
 
 
@@ -73,10 +75,10 @@ class TeachersControllerTest extends BaseTenantTest
         initialize_user_types();
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         $staffManager = create(User::class);
@@ -103,10 +105,10 @@ class TeachersControllerTest extends BaseTenantTest
         initialize_user_types();
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         $teachersManager = create(User::class);

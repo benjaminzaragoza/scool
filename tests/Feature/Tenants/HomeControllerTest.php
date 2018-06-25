@@ -42,9 +42,9 @@ class HomeControllerTest extends BaseTenantTest
         initialize_job_types();
         initialize_forces();
         initialize_families();
+        initialize_departments();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         create_fake_audit_log_entries();

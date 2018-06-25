@@ -15,6 +15,7 @@
                 style="display: inline-block"
         >
             <v-text-field
+                    :error-messages="errorMessages"
                     ref="text"
                     :name="name"
                     slot="activator"
@@ -44,6 +45,9 @@
       event: 'input'
     },
     props: {
+      errorMessages: {
+        required: false
+      },
       date: {
         required: true
       },

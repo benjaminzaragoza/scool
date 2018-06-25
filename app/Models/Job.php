@@ -82,6 +82,14 @@ class Job extends Revisionable
     }
 
     /**
+     * Get the job specialty
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    /**
      * Get the current active user associated to the job.
      */
     public function getActiveUserAttribute($value) {

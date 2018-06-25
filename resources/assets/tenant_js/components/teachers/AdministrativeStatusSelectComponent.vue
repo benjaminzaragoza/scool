@@ -4,9 +4,11 @@
             :items="administrativeStatuses"
             v-model="internalAdministrativeStatus"
             item-text="name"
+            :item-value="itemValue"
             autocomplete
             clearable
             @input="input"
+            :error-messages="errorMessages"
     >
     </v-select>
 </template>
@@ -39,8 +41,11 @@
         required: true
       },
       errorMessages: {
-        type: Function,
         required: false
+      },
+      itemValue: {
+        type: String,
+        default: 'id'
       }
     },
     methods: {

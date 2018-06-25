@@ -166,9 +166,9 @@ class AssignedTeacherPhotoControllerTest extends BaseTenantTest
         initialize_job_types();
         initialize_forces();
         initialize_families();
+        initialize_departments();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
 

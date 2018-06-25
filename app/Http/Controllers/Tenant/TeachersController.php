@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Requests\ListTeachers;
 use App\Http\Requests\ShowTeachersManagment;
 use App\Models\AdministrativeStatus;
+use App\Models\Department;
 use App\Models\Force;
 use App\Models\Job;
 use App\Models\JobType;
@@ -88,7 +89,8 @@ class TeachersController extends Controller
         $specialties = Specialty::all();
         $forces = Force::all();
         $administrativeStatuses = AdministrativeStatus::all();
+        $departments = Department::all();
         return view('tenants.teachers.show', compact(
-            'pendingTeachers','teachers','specialties','forces','administrativeStatuses','jobs'));
+            'pendingTeachers','teachers','specialties','forces','administrativeStatuses','jobs','departments'));
     }
 }

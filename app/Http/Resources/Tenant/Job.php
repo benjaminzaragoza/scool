@@ -58,6 +58,15 @@ class Job extends JsonResource
             $specialty_description = $specialty;
         }
 
+        $department = optional($this->department)->name;
+        $department_code = optional($this->department)->code;
+        $department_id = optional($this->department)->id;
+        if ($department_code) {
+            $department_description = $department_code . ' ' . $department;
+        } else {
+            $department_description = $department;
+        }
+
         $substitutes = [];
         foreach ($this->substitutes as $substitute) {
             $substitutes[] = [
@@ -95,6 +104,10 @@ class Job extends JsonResource
             'specialty_id' => $specialty_id,
             'specialty_code' => $specialty_code,
             'specialty_description' => $specialty_description,
+            'department' => $department,
+            'department_id' => $department_id,
+            'department_code' => $department_code,
+            'department_description' => $department_description,
             'formatted_created_at_diff' => $this->formatted_created_at_diff,
             'formatted_created_at' => $this->formatted_created_at,
             'formatted_updated_at' => $this->formatted_updated_at,

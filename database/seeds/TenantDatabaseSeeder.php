@@ -26,10 +26,10 @@ class TenantDatabaseSeeder extends Seeder
         initialize_job_types();
         initialize_forces();
         initialize_families();
+        initialize_departments();
         initialize_specialities();
         initialize_administrative_statuses();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
         initialize_substitutes();
         initialize_head_departments();

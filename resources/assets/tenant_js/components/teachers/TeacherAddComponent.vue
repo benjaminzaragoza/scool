@@ -43,7 +43,11 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <user-add-form @created="userCreated" :user-type="TEACHER_TYPE" role="Teacher"></user-add-form>
+                      <user-add-form
+                              @created="userCreated"
+                              :user-type="TEACHER_TYPE"
+                              role="Teacher">
+                      </user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Assignar lloc de treball (plaça)</v-stepper-step>
@@ -51,21 +55,28 @@
                     <assign-job-to-user
                             :jobs="jobs"
                             :user="user && user.id"
-                            :administrative-statuses="administrativeStatuses"
-                            @assigned="step = 3"
+                            @assigned="jobAssigned"
                             @back="step = 1"></assign-job-to-user>
                 </v-stepper-content>
-                <v-stepper-step :complete="step > 3" step="3">Codi de professor i departament</v-stepper-step>
+                <v-stepper-step :complete="step > 3" step="3">Dades professor</v-stepper-step>
                 <v-stepper-content step="3">
-                  <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                  <v-btn color="primary" @click.native="step = 4">Continuar</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+                  <v-card class="mb-5">
+                      <assign-teacher-info-to-user
+                              :user="user && user.id"
+                              @back="step = 2"
+                              :administrative-statuses="administrativeStatuses"
+                              :specialties="specialties"
+                              :departments="departments"
+                              :job="employee && employee.job_id"
+                              :jobs="jobs"
+                      ></assign-teacher-info-to-user>
+                  </v-card>
                 </v-stepper-content>
                 <v-stepper-step step="4">Dades personals</v-stepper-step>
                 <v-stepper-content step="4">
                   <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
                   <v-btn color="primary" @click.native="step = 1">Continuar</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+                  <v-btn @click.native="step = 4" flat>Cancel</v-btn>
                 </v-stepper-content>
                 <v-stepper-step step="5">Fitxa del professor</v-stepper-step>
                 <v-stepper-content step="5">
@@ -82,18 +93,21 @@
 <script>
   import UserAddForm from '../users/UserAddFormComponent'
   import AssignJobToUser from '../jobs/AssignJobToUserComponent'
+  import AssignTeacherInfoToUser from '../teachers/AssignTeacherInfoToUserComponent'
 
   export default {
     name: 'TeacherAddComponent',
     components: {
       'user-add-form': UserAddForm,
-      'assign-job-to-user': AssignJobToUser
+      'assign-job-to-user': AssignJobToUser,
+      'assign-teacher-info-to-user': AssignTeacherInfoToUser
     },
     data () {
       return {
         dialog: false,
-        step: 2,
-        user: null
+        step: 1,
+        user: null,
+        employee: null
       }
     },
     props: {
@@ -101,16 +115,27 @@
         type: Array,
         required: true
       },
+      specialties: {
+        type: Array,
+        required: true
+      },
       administrativeStatuses: {
+        type: Array,
+        required: true
+      },
+      departments: {
         type: Array,
         required: true
       }
     },
     methods: {
       userCreated (user) {
-        console.log(user)
         this.user = user
         this.step = 2
+      },
+      jobAssigned (employee) {
+        this.employee = employee
+        this.step = 3
       }
     },
     created () {

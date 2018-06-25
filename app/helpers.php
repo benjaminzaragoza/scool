@@ -3969,14 +3969,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '517',
             'name' => 'Processos diagnòstics clínics i productes ortoprotètics',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('SANITAT')->id
+            'family_id' => Family::findByCode('SANITAT')->id,
+            'department_id' => Department::findByCode('SANITAT')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '518',
             'name' => 'Processos sanitaris',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('SANITAT')->id
+            'family_id' => Family::findByCode('SANITAT')->id,
+            'department_id' => Department::findByCode('SANITAT')->id
         ]);
 
         // Cos -> Professors tècnics de formació professional
@@ -3984,7 +3986,8 @@ if (!function_exists('initialize_specialities')) {
             'code' => '619',
             'name' => 'Procediments de diagnòstic clínic i productes ortoprotètics',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('SANITAT')->id
+            'family_id' => Family::findByCode('SANITAT')->id,
+            'department_id' => Department::findByCode('SANITAT')->id
         ]);
 
         // Cos -> Professors tècnics de formació professional
@@ -3992,7 +3995,8 @@ if (!function_exists('initialize_specialities')) {
             'code' => '620',
             'name' => 'Procediments sanitaris i assistencials ',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('SANITAT')->id
+            'family_id' => Family::findByCode('SANITAT')->id,
+            'department_id' => Department::findByCode('SANITAT')->id
         ]);
 
         // Serveis socioculturals i a la comunitat
@@ -4000,14 +4004,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '508',
             'name' => 'Intervenció sociocomunitària',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('SERVEIS')->id
+            'family_id' => Family::findByCode('SERVEIS')->id,
+            'department_id' => Department::findByCode('SERVEIS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '625',
             'name' => 'Serveis a la comunitat',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('SERVEIS')->id
+            'family_id' => Family::findByCode('SERVEIS')->id,
+            'department_id' => Department::findByCode('SERVEIS')->id
         ]);
 
         // Administració i finances
@@ -4015,14 +4021,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '501',
             'name' => 'Administració d’Empreses',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ADMIN')->id
+            'family_id' => Family::findByCode('ADMIN')->id,
+            'department_id' => Department::findByCode('ADMINISTRACIÓ')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '622',
             'name' => 'Processos de Gestió Administrativa',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('ADMIN')->id
+            'family_id' => Family::findByCode('ADMIN')->id,
+            'department_id' => Department::findByCode('ADMINISTRACIÓ')->id
         ]);
 
         // Comerç i marqueting
@@ -4030,14 +4038,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '510',
             'name' => 'Organització i gestió comercial',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ADMIN')->id
+            'family_id' => Family::findByCode('ADMIN')->id,
+            'department_id' => Department::findByCode('COMERÇ')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '621',
             'name' => 'Processos comercials',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('ADMIN')->id
+            'family_id' => Family::findByCode('ADMIN')->id,
+            'department_id' => Department::findByCode('COMERÇ')->id
         ]);
 
         // Informática
@@ -4045,14 +4055,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '507',
             'name' => 'Informàtica',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('INF')->id
+            'family_id' => Family::findByCode('INF')->id,
+            'department_id' => Department::findByCode('INFORMÀTICA')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '627',
             'name' => 'Sistemes i aplicacions informàtiques',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('INF')->id
+            'family_id' => Family::findByCode('INF')->id,
+            'department_id' => Department::findByCode('INFORMÀTICA')->id
         ]);
 
         // Electricitat i electrònica/ Energia i aigua
@@ -4060,42 +4072,48 @@ if (!function_exists('initialize_specialities')) {
             'code' => '524',
             'name' => 'Sistemes electrònics',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ELECTRIC')->id
+            'family_id' => Family::findByCode('ELECTRIC')->id,
+            'department_id' => Department::findByCode('ELÈCTRICS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '525',
             'name' => 'Sistemes electrònics i automàtics',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ELECTRIC')->id
+            'family_id' => Family::findByCode('ELECTRIC')->id,
+            'department_id' => Department::findByCode('ELÈCTRICS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '513',
             'name' => 'Organització i projectes de sistemes energètics',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ELECTRIC')->id
+            'family_id' => Family::findByCode('ELECTRIC')->id,
+            'department_id' => Department::findByCode('ELÈCTRICS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '602',
             'name' => 'Equips electrònics',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('ELECTRIC')->id
+            'family_id' => Family::findByCode('ELECTRIC')->id,
+            'department_id' => Department::findByCode('ELÈCTRICS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '605',
             'name' => 'Instal·lació i manteniment d’equips tèrmics i de fluids',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('ELECTRIC')->id
+            'family_id' => Family::findByCode('ELECTRIC')->id,
+            'department_id' => Department::findByCode('ELÈCTRICS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '606',
             'name' => 'Instal·lacions electrotècniques',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ELECTRIC')->id
+            'family_id' => Family::findByCode('ELECTRIC')->id,
+            'department_id' => Department::findByCode('ELÈCTRICS')->id
         ]);
 
         // Fabricació mecànica/ Instal·lació i manteniment
@@ -4103,14 +4121,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '512',
             'name' => 'Organització i projectes de fabricació mecànica',
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('FABRIC')->id
+            'family_id' => Family::findByCode('FABRIC')->id,
+            'department_id' => Department::findByCode('MECÀNICA')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '611',
             'name' => 'Mecanització i manteniment de màquines',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('FABRIC')->id
+            'family_id' => Family::findByCode('FABRIC')->id,
+            'department_id' => Department::findByCode('MECÀNICA')->id
         ]);
 
         // Arts gràfiques
@@ -4118,14 +4138,16 @@ if (!function_exists('initialize_specialities')) {
             'code' => '522',
             'name' => "Processos i productes d'arts gràfiques.",
             'force_id' => Force::findByCode('SECUNDARIA')->id,
-            'family_id' => Family::findByCode('ARTS')->id
+            'family_id' => Family::findByCode('ARTS')->id,
+            'department_id' => Department::findByCode('ARTS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => '623',
             'name' => 'Producció en arts gràfiques',
             'force_id' => Force::findByCode('PT')->id,
-            'family_id' => Family::findByCode('ARTS')->id
+            'family_id' => Family::findByCode('ARTS')->id,
+            'department_id' => Department::findByCode('ARTS')->id
         ]);
 
 
@@ -4149,13 +4171,15 @@ if (!function_exists('initialize_specialities')) {
         Specialty::firstOrCreate([
             'code' => 'MA',
             'name' => 'Matemàtiques',
-            'force_id' => Force::findByCode('SECUNDARIA')->id
+            'force_id' => Force::findByCode('SECUNDARIA')->id,
+            'department_id' => Department::findByCode('PPAS')->id
         ]);
 
         Specialty::firstOrCreate([
             'code' => 'CAS',
             'name' => 'Castellà',
-            'force_id' => Force::findByCode('SECUNDARIA')->id
+            'force_id' => Force::findByCode('SECUNDARIA')->id,
+            'department_id' => Department::findByCode('PPAS')->id
         ]);
 
         // Departament de llengües estrangeres
@@ -4163,14 +4187,16 @@ if (!function_exists('initialize_specialities')) {
         Specialty::firstOrCreate([
             'code' => 'AN',
             'name' => 'Anglès',
-            'force_id' => Force::findByCode('SECUNDARIA')->id
+            'force_id' => Force::findByCode('SECUNDARIA')->id,
+            'department_id' => Department::findByCode('PPAS')->id
         ]);
 
         // FOL
         Specialty::firstOrCreate([
             'code' => '505',
             'name' => 'Formació i orientació laboral',
-            'force_id' => Force::findByCode('SECUNDARIA')->id
+            'force_id' => Force::findByCode('SECUNDARIA')->id,
+            'department_id' => Department::findByCode('FOL')->id
         ]);
 
     }

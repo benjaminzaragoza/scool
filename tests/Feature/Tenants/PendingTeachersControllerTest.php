@@ -42,10 +42,10 @@ class PendingTeachersControllerTest extends BaseTenantTest
         initialize_user_types();
         initialize_job_types();
         initialize_forces();
+        initialize_departments();
         initialize_families();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         $response = $this->get('/add_teacher');

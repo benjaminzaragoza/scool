@@ -4,6 +4,7 @@
             :items="filteredJobs"
             v-model="internalJob"
             item-text="active_user_description"
+            :error-messages="errorMessages"
             chips
             autocomplete
             clearable
@@ -56,6 +57,9 @@
     watch: {
       job (newjob) {
         this.internalJob = newjob
+      },
+      filteredJobs (newFilteredJobs) {
+        if (newFilteredJobs.length === 0) this.$emit('empty')
       }
     },
     model: {
@@ -63,6 +67,9 @@
       event: 'input'
     },
     props: {
+      errorMessages: {
+        required: false
+      },
       onlyAvailables: {
         type: Boolean,
         default: false

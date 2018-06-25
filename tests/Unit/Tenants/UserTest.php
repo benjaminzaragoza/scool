@@ -256,9 +256,9 @@ class UserTest extends TestCase
         initialize_job_types();
         initialize_forces();
         initialize_families();
+        initialize_departments();
         initialize_specialities();
         initialize_users();
-        initialize_departments();
         initialize_teachers();
 
         $teachers = User::teachers()->get();
