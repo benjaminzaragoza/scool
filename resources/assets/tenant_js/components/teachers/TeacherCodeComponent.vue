@@ -5,20 +5,26 @@
             :error-messages="errorMessages"
             @input="input"
             @blur="blur"
+            :loading="loading"
             required
     ></v-text-field>
 </template>
 
 <script>
+  import axios from 'axios'
+  import withSnackbar from '../mixins/withSnackbar'
+
   export default {
     name: 'TeacherCodeComponent',
+    mixins: [withSnackbar],
     model: {
       prop: 'code',
       event: 'input'
     },
     data () {
       return {
-        internalCode: this.code
+        internalCode: this.code,
+        loading: false
       }
     },
     props: {
@@ -45,6 +51,19 @@
       },
       blur () {
         this.$emit('blur', this.internalCode)
+      }
+    },
+    created () {
+      if (this.code === null) {
+        this.loading = true
+        axios.get('/api/v1/teacher/available_code').then(response => {
+          this.loading = false
+          console.log(response)
+        }).catch(error => {
+          this.loading = false
+          console.log(error)
+          this.showError(error)
+        })
       }
     }
   }
