@@ -1,7 +1,7 @@
 <template>
     <v-text-field
             :label="label"
-            v-model="code"
+            v-model="internalCode"
             :error-messages="errorMessages"
             @input="input"
             @blur="blur"
@@ -59,6 +59,8 @@
         axios.get('/api/v1/teacher/available_code').then(response => {
           this.loading = false
           console.log(response)
+          this.internalCode = response.data
+          this.$emit('input', this.internalCode)
         }).catch(error => {
           this.loading = false
           console.log(error)

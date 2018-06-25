@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Requests\ListTeachers;
 use App\Http\Requests\ShowTeachersManagment;
+use App\Http\Requests\StoreTeacher;
 use App\Models\AdministrativeStatus;
 use App\Models\Department;
 use App\Models\Force;
@@ -93,5 +94,22 @@ class TeachersController extends Controller
         $departments = Department::all();
         return view('tenants.teachers.show', compact(
             'pendingTeachers','teachers','specialties','forces','administrativeStatuses','jobs','departments'));
+    }
+
+    /**
+     * Store.
+     *
+     * @param StoreTeacher $request
+     * @return mixed
+     */
+    public function store(StoreTeacher $request)
+    {
+        return Teacher::create([
+            'user_id' => $request->user_id,
+            'code' => $request->code,
+            'department_id' => $request->department_id,
+            'administrative_status_id' => $request->administrative_status_id,
+            'specialty_id' => $request->specialty_id,
+        ]);
     }
 }

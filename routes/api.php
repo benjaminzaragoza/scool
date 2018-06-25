@@ -34,6 +34,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // Teachers
             Route::get('/teachers', 'Tenant\TeachersController@index');
+            Route::post('/teachers', 'Tenant\TeachersController@store');
 
             // Approved teachers
             Route::post('/approved_teacher', 'Tenant\ApprovedTeacherController@store');
@@ -41,6 +42,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // Logged user teacher
             Route::get('/teacher', 'Tenant\LoggedUserTeacherController@show');
+
 
             //Available teacher code:
             Route::get('/teacher/available_code', 'Tenant\TeacherAvailableCodeController@show');

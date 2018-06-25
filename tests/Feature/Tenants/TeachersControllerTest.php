@@ -3,6 +3,7 @@
 namespace Tests\Feature\Tenants;
 
 use App\Models\IdentifierType;
+use App\Models\Teacher;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -134,6 +135,70 @@ class TeachersControllerTest extends BaseTenantTest
         $this->actingAs($user,'api');
 
         $response = $this->json('GET','/api/v1/teachers');
+
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function add_teacher()
+    {
+        $teachersManager = create(User::class);
+        $role = Role::firstOrCreate(['name' => 'TeachersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $teachersManager->assignRole($role);
+
+        $this->actingAs($teachersManager,'api');
+
+        $user = create(User::class);
+
+        $response = $this->json('POST','/api/v1/teachers',[
+            'user_id' => $user->id,
+            'code' => '001',
+            'department_id' => 1,
+            'administrative_status_id' => 1,
+            'specialty_id' => 1,
+        ]);
+
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals('2', $result->user_id);
+        $this->assertEquals('001', $result->code);
+        $this->assertEquals(1, $result->department_id);
+        $this->assertEquals(1, $result->administrative_status_id);
+        $this->assertEquals(1, $result->specialty_id);
+
+        $this->assertNotNull($teacher = Teacher::first());
+        $this->assertEquals('2', $teacher->user_id);
+        $this->assertEquals('001', $teacher->code);
+        $this->assertEquals(1, $teacher->department_id);
+        $this->assertEquals(1, $teacher->administrative_status_id);
+        $this->assertEquals(1, $teacher->specialty_id);
+
+    }
+
+    /** @test */
+    public function add_teachers_validation()
+    {
+        $teachersManager = create(User::class);
+        $role = Role::firstOrCreate(['name' => 'TeachersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $teachersManager->assignRole($role);
+
+        $this->actingAs($teachersManager,'api');
+
+        $response = $this->json('POST','/api/v1/teachers',[]);
+
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function regular_user_cannot_add_teacher()
+    {
+        $user = create(User::class);
+        $this->actingAs($user,'api');
+
+
+        $response = $this->json('POST','/api/v1/teachers');
 
         $response->assertStatus(403);
     }

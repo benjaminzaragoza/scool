@@ -29,9 +29,7 @@
       event: 'input'
     },
     props: {
-      administrativeStatus: {
-        type: Object
-      },
+      administrativeStatus: {},
       label: {
         type: String,
         default: 'Escolliu el tipus de professor'

@@ -139,21 +139,19 @@
       assign () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          console.log('Valid!')
           this.assigning = true
-          axios.post('/api/v1/teacher', {
+          axios.post('/api/v1/teachers', {
             user_id: this.user,
             code: this.code,
-            // administrative_status_id: this. administrative_status_id
-            // department_id: this.department.id
-            // speciality
+            administrative_status_id: this.administrativeStatus,
+            department_id: this.department,
+            speciality_id: this.speciality
           }).then(response => {
             this.assigning = false
             this.showMessage('Informació de professor assignada correctament')
             this.$emit('assigned', response.data)
           }).catch(error => {
             this.assigning = false
-            console.log(error)
             this.showError(error)
           })
         } else {
