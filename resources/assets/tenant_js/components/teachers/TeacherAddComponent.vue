@@ -77,13 +77,13 @@
                 <v-stepper-content step="4">
                   <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
                   <v-btn color="primary" @click.native="step = 1">Continuar</v-btn>
-                  <v-btn @click.native="step = 4" flat>Cancel</v-btn>
+                  <v-btn @click.native="step = 3" flat>Cancel</v-btn>
                 </v-stepper-content>
                 <v-stepper-step step="5">Fitxa del professor</v-stepper-step>
                 <v-stepper-content step="5">
                   <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
                   <v-btn color="primary" @click.native="step = 1">Continuar</v-btn>
-                  <v-btn flat>Cancel</v-btn>
+                  <v-btn @click.native="step = 4" flat>Cancel</v-btn>
                 </v-stepper-content>
               </v-stepper>
         </v-card>

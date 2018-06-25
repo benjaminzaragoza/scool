@@ -54,7 +54,7 @@
       'teacher-code': TeacherCode,
       'administrative-status-select': AdministrativeStatusSelect,
       'specialty-select': SpecialtySelect,
-      'department-select': DepartmentSelect,
+      'department-select': DepartmentSelect
     },
     validations: {
       code: { required },

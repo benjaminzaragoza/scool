@@ -145,6 +145,7 @@ class EmployeeControllerTest extends BaseTenantTest
     /** @test */
     public function remove_employee()
     {
+        dd('0dasasd');
         $staffManager = create(User::class);
         $role = Role::firstOrCreate(['name' => 'StaffManager']);
         Config::set('auth.providers.users.model', User::class);

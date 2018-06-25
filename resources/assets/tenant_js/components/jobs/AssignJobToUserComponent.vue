@@ -22,10 +22,10 @@
                 @empty="empty"
                 :jobs="jobs"
                 label="Escolliu la plaça a assignar"></jobs-select>
-        Codi de professor: mostrar el codi que s'assignarà (next available code) i permetre canviar?
-        Departament: segons la plaça escollida es marca un departament per defecte
-        <v-btn color="primary" @click="assign" :disabled="assigning" :loading="assigning">Assignar</v-btn>
+        <v-btn v-if="!employee" color="primary" @click="assign" :disabled="assigning" :loading="assigning">Assignar</v-btn>
+        <v-btn v-else color="error" @click.native="remove" :disabled="removing" :loading="removing">Eliminar</v-btn>
         <v-btn color="error" @click="$emit('back')">Tornar endarrera</v-btn>
+
     </span>
 </template>
 
@@ -57,8 +57,10 @@
       return {
         start_date: moment(new Date()).format('YYYY-MM-DD'),
         job: {},
+        employee: null,
         substitute: true,
-        assigning: false
+        assigning: false,
+        removing: false
       }
     },
     props: {
@@ -86,6 +88,23 @@
       empty () {
         this.showError('No hi ha cap plaça lliure per assignar')
       },
+      remove () {
+        this.removing = true
+        if (this.employee) {
+          axios.delete('/api/v1/employee/' + this.employee.id).then(response => {
+            this.removing = false
+            // this.employee = response.data // TODO cal?
+            this.$v.$reset()
+            this.$emit('deleted', this.user)
+            this.showMessage('Assignació de plaça eliminada correctament')
+          }).catch(error => {
+            this.removing = false
+            this.showError(error)
+          }).then(() => {
+            this.removing = false
+          })
+        }
+      },
       assign () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
@@ -99,6 +118,7 @@
             this.assigning = false
             this.showMessage('Plaça assignada correctament')
             this.$emit('assigned', response.data)
+            this.employee = response.data
           }).catch(error => {
             this.assigning = false
             console.log(error)
