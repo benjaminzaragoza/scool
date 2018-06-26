@@ -33,6 +33,7 @@ class TeacherWelcome extends Mailable
      */
     public function build()
     {
-        return $this->markdown('tenants.emails.teachers.welcome');
+        return $this->markdown('tenants.emails.teachers.welcome')
+            ->attach(public_path('img/app-bg.png'));
     }
 }
