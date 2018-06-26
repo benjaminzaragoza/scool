@@ -620,6 +620,10 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
 if (!function_exists('initialize_gates')) {
     function initialize_gates()
     {
+        Gate::define('show-personal-data', function ($user) {
+            return $user->hasRole(['UsersManager']);
+        } );
+
         Gate::define('calculate-lessons', function ($user) {
             return $user->hasRole(['LessonsManager']);
         });
@@ -846,6 +850,11 @@ if (!function_exists('initialize_menus')) {
             'role' => 'PhotoTeachersManager'
         ]);
 
+        Menu::firstOrCreate([
+            'text' => 'Dades personals',
+            'href' => '/personal_data',
+            'role' => 'UsersManager'
+        ]);
 
         Menu::firstOrCreate([
             'text' => 'Configuració general',

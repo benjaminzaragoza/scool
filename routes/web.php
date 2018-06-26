@@ -66,6 +66,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
         Route::group(['middleware' => 'auth'], function () {
 
+            // Personal data (people) management
+            Route::get('/personal_data','Tenant\PersonalDataController@show');
+
             // Media download
             Route::get('/media/{media}/download','Tenant\MediaController@download');
 

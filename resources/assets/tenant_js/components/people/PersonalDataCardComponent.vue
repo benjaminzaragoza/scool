@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-container grid-list-xs>
+        <v-container fluid grid-list-xs>
             <v-layout row wrap>
                 <v-flex xs2>
                     <v-container grid-list-xs text-xs-center>
