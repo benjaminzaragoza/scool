@@ -66,6 +66,11 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
         Route::group(['middleware' => 'auth'], function () {
 
+            // ******* Emails ********
+
+            // Teachers
+            Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');
+
             // Personal data (people) management
             Route::get('/personal_data','Tenant\PersonalDataController@show');
 

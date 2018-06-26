@@ -38,7 +38,7 @@ class TeachersControllerTest extends BaseTenantTest
     /** @test */
     public function show_teachers_management()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();
