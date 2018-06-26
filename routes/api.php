@@ -37,6 +37,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/teachers', 'Tenant\TeachersController@store');
             Route::delete('/teachers/{teacher}', 'Tenant\TeachersController@destroy');
 
+            // Finish teacher add
+            Route::post('/teacher/finish_add', 'Tenant\TeacherFinishAddController@store');
+
             // Approved teachers
             Route::post('/approved_teacher', 'Tenant\ApprovedTeacherController@store');
             Route::delete('/approved_teacher/{user}', 'Tenant\ApprovedTeacherController@destroy');

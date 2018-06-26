@@ -2,14 +2,12 @@
 
 namespace Tests\Feature\Tenants;
 
-use App\Models\IdentifierType;
 use App\Models\Teacher;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
