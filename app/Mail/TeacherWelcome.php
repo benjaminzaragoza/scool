@@ -16,6 +16,10 @@ class TeacherWelcome extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $body = "# Introduction
+
+The body of your message.";
+
     /**
      * Create a new message instance.
      *

@@ -68,7 +68,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             // ******* Emails ********
 
-            // Teachers
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');
 
             // Personal data (people) management
