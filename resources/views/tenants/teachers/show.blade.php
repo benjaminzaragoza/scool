@@ -14,6 +14,7 @@
     <teachers :teachers="{{ $teachers }}" :administrative-statuses="{{ $administrativeStatuses }}"></teachers>
 
     <teacher-add
+            :users="{{ $users }}"
             :jobs="{{ $jobs }}"
             :specialties="{{ $specialties }}"
             :administrative-statuses="{{ $administrativeStatuses }}"

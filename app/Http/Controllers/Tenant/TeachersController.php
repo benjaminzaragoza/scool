@@ -16,6 +16,7 @@ use App\Models\Specialty;
 use App\Models\Teacher;
 use App\Http\Resources\Tenant\Teacher as TeacherResource;
 use App\Http\Resources\Tenant\Job as JobResource;
+use App\Models\User;
 
 /**
  * Class TeachersController.
@@ -93,8 +94,17 @@ class TeachersController extends Controller
         $forces = Force::all();
         $administrativeStatuses = AdministrativeStatus::all();
         $departments = Department::all();
+        $users = User::all();
+
         return view('tenants.teachers.show', compact(
-            'pendingTeachers','teachers','specialties','forces','administrativeStatuses','jobs','departments'));
+            'pendingTeachers',
+            'teachers',
+            'specialties',
+            'forces',
+            'administrativeStatuses',
+            'jobs',
+            'departments',
+            'users'));
     }
 
     /**

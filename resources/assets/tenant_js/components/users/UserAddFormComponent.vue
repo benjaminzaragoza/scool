@@ -1,6 +1,11 @@
 <template>
     <form>
-        <v-container fluid grid-list-md text-xs-center>
+        <v-switch
+                :label="newUser ? 'Nou usuari' : 'Escollir un usuari existent'"
+                v-model="newUser"
+        ></v-switch>
+        <select-user v-if="!newUser" :users="users" v-model="user" :item-value="null"></select-user>
+        <v-container v-else fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex md4>
                     <v-text-field
@@ -29,22 +34,28 @@
                             required
                     ></v-text-field>
                 </v-flex>
+                <v-flex md12>
+                    <v-text-field
+                            label="Correu electrònic"
+                            v-model="email"
+                            :error-messages="emailErrors"
+                            @input="inputEmail()"
+                            @blur="$v.email.$touch()"
+                            :disabled="loadingProposedUser"
+                            :loading="loadingProposedUser"
+                            required
+                    ></v-text-field>
+                </v-flex>
             </v-layout>
         </v-container>
-        <v-text-field
-                label="Correu electrònic"
-                v-model="email"
-                :error-messages="emailErrors"
-                @input="inputEmail()"
-                @blur="$v.email.$touch()"
-                :disabled="loadingProposedUser"
-                :loading="loadingProposedUser"
-                required
-        ></v-text-field>
-        <v-btn v-if="!user" color="primary" @click.native="create" :disabled="creating" :loading="creating">Crear usuari</v-btn>
+
+        <v-btn v-if="!newUser" color="primary" @click="select">Seleccionar</v-btn>
         <template v-else>
-            <v-btn color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
-            <v-btn color="primary" @click.native="$emit('created', this.user)">Continuar</v-btn>
+            <v-btn v-if="!user" color="primary" @click.native="create" :disabled="creating" :loading="creating">Crear usuari</v-btn>
+            <template v-else>
+                <v-btn color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
+                <v-btn color="primary" @click.native="$emit('created', this.user)">Continuar</v-btn>
+            </template>
         </template>
     </form>
 </template>
@@ -55,10 +66,14 @@
   import withSnackbar from '../mixins/withSnackbar'
   import { required, email } from 'vuelidate/lib/validators'
   import * as actions from '../../store/action-types'
+  import SelectUser from './UsersSelectComponent'
 
   export default {
     mixins: [validationMixin, withSnackbar],
     name: 'UserAddFormComponent',
+    components: {
+      'select-user': SelectUser
+    },
     validations: {
       givenName: { required },
       sn1: { required },
@@ -76,10 +91,15 @@
         errors: [],
         creating: false,
         deleting: false,
-        loadingProposedUser: false
+        loadingProposedUser: false,
+        newUser: true
       }
     },
     props: {
+      users: {
+        type: Array,
+        required: true
+      },
       userType: {
         required: false
       },
@@ -159,6 +179,10 @@
             this.showError(error)
           })
         }
+      },
+      select () {
+        if (this.user) this.$emit('created', this.user)
+        else this.showError('Cal seleccionar un usuari!')
       },
       create () {
         this.$v.$touch()
