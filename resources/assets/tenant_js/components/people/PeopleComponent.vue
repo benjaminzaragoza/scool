@@ -34,7 +34,7 @@
                                 ></v-text-field>
                             </v-card-title>
                             <v-data-table
-                                    class="px-0 mb-2 hidden-sm-and-down"
+                                    class="px-0 m-0 hidden-sm-and-down"
                                     :headers="headers"
                                     :items="filteredPeople"
                                     :search="search"
@@ -144,7 +144,6 @@
         // if (this.showStatusHeader) headers.push({text: 'Estatus', value: 'administrative_status_code'})
         headers.push({text: 'Data i llocs de naixament', value: 'birthdate'})
         headers.push({text: 'Sexe', value: 'gender'})
-        headers.push({text: 'Notes', value: 'notes'})
         headers.push({text: 'Data creació', value: 'formatted_created_at'})
         headers.push({text: 'Data actualització', value: 'formatted_updated_at'})
         headers.push({text: 'Accions', sortable: false})
