@@ -22,6 +22,7 @@ class CreateTenantDepartmentsTable extends Migration
             $table->string('shortname');
             $table->string('code')->unique();
             $table->integer('order')->unique();
+            $table->string('email')->nullable();
             $table->unsignedInteger('head')->nullable();
             $table->timestamps();
         });

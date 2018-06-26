@@ -4698,70 +4698,80 @@ if (!function_exists('initialize_departments')) {
             'name' => 'Departament preparació proves d\'accès a superior',
             'shortname' => 'Curs d\'accès | Àngles',
             'code' => 'PPAS',
-            'order' => 1
+            'order' => 1,
+            'email' => 'ppas@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament de formació i orientació laboral',
             'shortname' => 'Formació i orientació laboral',
             'code' => 'FOL',
-            'order' => 2
+            'order' => 2,
+            'email' => 'fol@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament d\'administració i gestió',
             'shortname' => 'Administració i gestió',
             'code' => 'ADMINISTRACIÓ',
-            'order' => 3
+            'order' => 3,
+            'email' => 'administracio@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament de comerç i màrqueting',
             'shortname' => 'Comerç i màrqueting',
             'code' => 'COMERÇ',
-            'order' => 4
+            'order' => 4,
+            'email' => 'comerc@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament d\'electricitat i electrònica',
             'shortname' => 'Electricitat i electrònica',
             'code' => 'ELÈCTRICS',
-            'order' => 5
+            'order' => 5,
+            'email' => 'electrics@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament d\'informàtica',
             'shortname' => 'Informàtica',
             'code' => 'INFORMÀTICA',
-            'order' => 6
+            'order' => 6,
+            'email' => 'informatica@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament de fabricació mecànica',
             'shortname' => 'Fabricació mecànica',
             'code' => 'MECÀNICA',
-            'order' => 7
+            'order' => 7,
+            'email' => 'mecanica@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament de sanitat',
             'shortname' => 'Sanitat',
             'code' => 'SANITAT',
-            'order' => 8
+            'order' => 8,
+            'email' => 'sanitat@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament de serveis socioculturals i a la comunitat',
             'shortname' => 'Serveis socioculturals i a la comunitat',
             'code' => 'SERVEIS',
-            'order' => 9
+            'order' => 9,
+            'email' => 'serveis@iesebre.com'
         ]);
 
         Department::firstOrCreate([
             'name' => 'Departament d\'Arts gràfiques',
             'shortname' => 'Arts gràfiques',
             'code' => 'ARTS',
-            'order' => 10
+            'order' => 10,
+            'email' => 'arts@iesebre.com'
         ]);
 
     }

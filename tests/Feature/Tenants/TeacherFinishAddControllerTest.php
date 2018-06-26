@@ -37,8 +37,6 @@ class TeacherFinishAddControllerTest extends BaseTenantTest
     /** @test */
     public function finish_adding_teacher_with_welcome_email()
     {
-//        $this->withoutExceptionHandling();
-
         $staffManager = create(User::class);
         $this->actingAs($staffManager,'api');
         $role = Role::firstOrCreate(['name' => 'TeachersManager','guard_name' => 'web']);
@@ -64,8 +62,6 @@ class TeacherFinishAddControllerTest extends BaseTenantTest
     /** @test */
     public function finish_adding_teacher_with_welcome_email_404_for_unexisting_user()
     {
-//        $this->withoutExceptionHandling();
-
         $staffManager = create(User::class);
         $this->actingAs($staffManager,'api');
         $role = Role::firstOrCreate(['name' => 'TeachersManager','guard_name' => 'web']);
