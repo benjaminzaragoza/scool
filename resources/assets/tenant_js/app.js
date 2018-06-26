@@ -61,7 +61,8 @@ Vue.component('lessons-manager', require('./components/lessons/LessonsManagerCom
 // Docs/media
 Vue.component('model-docs', require('./components/docs/ModelDocsComponent.vue'));
 
-
+//People/Personal data (person)
+Vue.component('people', require('./components/people/PeopleComponent.vue'));
 
 window.Vuetify = require('vuetify');
 Vue.use(Vuetify)

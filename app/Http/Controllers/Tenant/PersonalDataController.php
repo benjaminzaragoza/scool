@@ -14,7 +14,7 @@ class PersonalDataController extends Controller
 {
     /**
      * Show.
-     * 
+     *
      * @param ShowPersonalData $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

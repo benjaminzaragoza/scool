@@ -2,7 +2,7 @@
 
 @section('content')
 
-    TODO
+    <people :people="{{ $people }}"></people>
 
 @endsection
 

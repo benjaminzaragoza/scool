@@ -10,11 +10,11 @@ use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class ApprovedTeacherControllerTest.
+ * Class PersonalDataControllerTest.
  *
  * @package Tests\Feature
  */
-class ApprovedTeacherControllerTest extends BaseTenantTest
+class PersonalDataControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
