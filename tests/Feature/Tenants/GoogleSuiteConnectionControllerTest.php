@@ -31,7 +31,11 @@ class GoogleSuiteConnectionControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group working
+     * @group gsuite
+     */
     public function can_connect_to_gsuite()
     {
         Config::set('google.service.enable', true);

@@ -77,3 +77,17 @@ Al crear un usuari cal especificar paraula de pas.
 https://developers.google.com/admin-sdk/directory/v1/reference/users
 
 hashFunction	string	Stores the hash format of the password property. We recommend sending the password property value as a base 16 bit hexadecimal-encoded hash value. Set the hashFunction values as either the SHA-1, MD5, or crypt hash format.
+
+## Error: unauthorized_client error_description: "Client is unauthorized to retrieve access tokens using this method."
+
+ÉS possible que a https://admin.google.com/AdminHome?chromeless=1#OGX:ManageOauthClients o domini admin.google.com i anar a Security/Configuracion Avanzada/Autenticació/Administrar el accesso de cliente APi
+el client api no tingui el scope o scopes necessaris. Com saber el "nombre del cliente"?
+
+ELS JSON estan a storage/app/gsuite_service_accounts
+
+100002334584174231252: "client_email": "provalectura@eminent-tape-163119.iam.gserviceaccount.com",
+                         "client_id": "100002334584174231252",
+
+117357427466292859088: "client_email": "scool-41@scool-204309.iam.gserviceaccount.com",
+                         "client_id": "117357427466292859088",
+

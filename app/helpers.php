@@ -656,6 +656,16 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        // Google suite groups
+        Gate::define('list-gsuite-groups', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('show-gsuite-groups', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+
         // Google suite Users
         Gate::define('list-gsuite-users', function ($user) {
             return $user->hasRole('UsersManager');
@@ -861,10 +871,14 @@ if (!function_exists('initialize_menus')) {
             'href' => '/config',
             'role' => 'Admin'
         ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Grups de google',
+            'href' => '/google_groups',
+            'role' => 'UsersManager'
+        ]);
     }
 }
-
-
 
 if (!function_exists('initialize_job_types')) {
     function initialize_job_types()
@@ -4508,6 +4522,14 @@ if (! function_exists('seed_provinces')) {
     }
 }
 
+if (! function_exists('config_google_api_for_tests')) {
+    function config_google_api_for_tests() {
+        Config::set('google.service.enable', true);
+        Config::set('google.service.file', './storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json');
+        Config::set('google.admin_email', 'sergitur@iesebre.com');
+    }
+}
+
 if (! function_exists('tune_google_client')) {
     function tune_google_client()
     {
@@ -4516,6 +4538,12 @@ if (! function_exists('tune_google_client')) {
             $user = 'sergitur@iesebre.com';
             return new Client($config, $user);
         });
+    }
+}
+
+if (! function_exists('check_google_group')) {
+    function check_google_group($group) {
+        return get_class($group) === 'Google_Service_Directory_Group';
     }
 }
 

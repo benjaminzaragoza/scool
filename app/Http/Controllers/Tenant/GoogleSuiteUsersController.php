@@ -35,7 +35,8 @@ class GoogleSuiteUsersController extends Controller
             dd($e);
             return $e;
         }
-        return $r;
+        return collect($r->users);
+//        return $r;
     }
 
     /**

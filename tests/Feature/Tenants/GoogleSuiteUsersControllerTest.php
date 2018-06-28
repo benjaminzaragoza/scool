@@ -55,7 +55,11 @@ class GoogleSuiteUsersControllerTest extends BaseTenantTest
         $response->assertSuccessful();
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group working
+     * @group gsuite
+     */
     public function user_cannot_show_google_users()
     {
         Config::set('google.service.enable', true);
@@ -69,7 +73,11 @@ class GoogleSuiteUsersControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group working
+     * @group gsuite
+     */
     public function show_google_user_info()
     {
         Config::set('google.service.enable', true);

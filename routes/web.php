@@ -66,6 +66,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
         Route::group(['middleware' => 'auth'], function () {
 
+            // Google groups
+            Route::get('/google_groups','Tenant\GoogleGroupsController@index');
+
             // ******* Emails ********
 
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');

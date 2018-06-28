@@ -103,6 +103,13 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/employee', 'Tenant\EmployeeController@store');
             Route::delete('/employee/{employee}', 'Tenant\EmployeeController@destroy');
 
+            //Google GSuite groups
+            Route::get('/gsuite/groups', 'Tenant\GoogleSuiteGroupsController@index');
+            Route::get('/gsuite/groups/{group}', 'Tenant\GoogleSuiteGroupsController@show');
+
+            // Group members
+            Route::get('/gsuite/groups/{group}/members', 'Tenant\GoogleSuiteGroupMembersController@index');
+
             //Google GSuite users
             Route::get('/gsuite/users', 'Tenant\GoogleSuiteUsersController@index');
             Route::get('/gsuite/users/{email}', 'Tenant\GoogleSuiteUsersController@show');

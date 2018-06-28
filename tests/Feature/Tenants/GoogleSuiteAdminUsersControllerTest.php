@@ -32,6 +32,7 @@ class GoogleSuiteAdminUsersControllerTest extends BaseTenantTest
     /**
      * @test
      * @group working
+     * @group gsuite
      */
     public function show_google_admin_users()
     {

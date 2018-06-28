@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Feature\Tenants;
+
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -9,11 +10,11 @@ use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class TeacherWelcomeEmailControllerTest.
+ * Class GoogleGroupsControllerTest.
  *
  * @package Tests\Feature\Tenants
  */
-class TeacherWelcomeEmailControllerTest extends BaseTenantTest
+class GoogleGroupsControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
@@ -31,28 +32,32 @@ class TeacherWelcomeEmailControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test @group working*/
-    public function show_teacher_welcome_email()
+    /** @test */
+    public function show_google_groups()
     {
-        $this->withoutExceptionHandling();
-        $teachersManager = create(User::class);
-        $this->actingAs($teachersManager);
-        $role = Role::firstOrCreate(['name' => 'TeachersManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $teachersManager->assignRole($role);
+//        $this->withoutExceptionHandling();
+        config_google_api_for_tests();
 
-        $response = $this->get('/mail/teacher_welcome');
+        $usersManager = create(User::class);
+        $this->actingAs($usersManager);
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $usersManager->assignRole($role);
+
+        $response = $this->get('google_groups');
 
         $response->assertSuccessful();
+        $response->assertViewIs('tenants.google_groups.show');
+        $response->assertViewHas('groups');
     }
 
     /** @test */
-    public function regular_user_cannot_show_teacher_welcome_email()
+    public function regular_user_cannot_show_google_groups()
     {
         $user = create(User::class);
         $this->actingAs($user);
 
-        $response = $this->get('/mail/teacher_welcome');
+        $response = $this->get('google_groups');
 
         $response->assertStatus(403);
     }

@@ -60,23 +60,6 @@ class TeacherFinishAddControllerTest extends BaseTenantTest
     }
 
     /** @test */
-    public function finish_adding_teacher_with_welcome_email_404_for_unexisting_user()
-    {
-        $staffManager = create(User::class);
-        $this->actingAs($staffManager,'api');
-        $role = Role::firstOrCreate(['name' => 'TeachersManager','guard_name' => 'web']);
-        Config::set('auth.providers.users.model', User::class);
-        $staffManager->assignRole($role);
-
-        $response = $this->json('POST','/api/v1/teacher/finish_add', [
-            'user_id' => 9999999999,
-            'welcome_email' => true
-        ]);
-
-        $response->assertStatus(404);
-    }
-
-    /** @test */
     public function finish_adding_teacher_with_welcome_email_validation()
     {
         $staffManager = create(User::class);
