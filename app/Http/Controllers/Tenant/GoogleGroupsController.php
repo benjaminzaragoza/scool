@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Requests\ListGoogleGroups;
+use App\Http\Requests\StoreGoogleGroups;
 
 /**
  * Class GoogleGroupsController.
@@ -12,19 +13,6 @@ use App\Http\Requests\ListGoogleGroups;
  */
 class GoogleGroupsController extends Controller
 {
-
-    public $directory;
-
-    /**
-     * GoogleGroupsController constructor.
-     *
-     * @param $directory
-     */
-    public function __construct(GoogleDirectory $directory)
-    {
-        $this->directory = $directory;
-    }
-
     /**
      * Index.
      *
@@ -33,7 +21,15 @@ class GoogleGroupsController extends Controller
      */
     public function index(ListGoogleGroups $request)
     {
-        $groups = $this->directory->groups();
+        $directory = new GoogleDirectory();
+        //        config_google_api_for_tests();
+        $groups = collect($directory->groups());
         return view('tenants.google_groups.show', compact('groups'));
+    }
+
+    public function store(StoreGoogleGroups $request)
+    {
+        dump('¡dsa');
+//        GoogleGroupsController
     }
 }

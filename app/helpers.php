@@ -1,5 +1,6 @@
 <?php
 
+use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Resources\UserResource;
 use App\Models\Address;
 use App\Models\AdministrativeStatus;
@@ -250,7 +251,7 @@ if (! function_exists('create_default_tenant')) {
                 'username' => 'iesebre',
                 'password' => str_random(),
                 'port' => 3306,
-                'gsuite_service_account_path' => '/gsuite_service_accounts/scool-07eed0b550a6f.json',
+                'gsuite_service_account_path' => '/gsuite_service_accounts/scool-07eed0b50a6f.json',
                 'gsuite_admin_email' => 'sergitur@iesebre.com'
             ]));
         }
@@ -665,6 +666,9 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        Gate::define('store-gsuite-groups', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
 
         // Google suite Users
         Gate::define('list-gsuite-users', function ($user) {
@@ -4268,9 +4272,7 @@ if (!function_exists('configure_tenant')) {
         Config::set('app.shortname', $tenant->name);
         Config::set('app.subdomain',$tenant->subdomain);
         Config::set('app.email_domain',$tenant->email_domain);
-        Config::set('google.service.enable', true);
-        Config::set('google.service.file', $tenant->gsuite_service_account_path);
-        Config::set('google.admin_email', $tenant->gsuite_admin_email);
+        config_google_api('/storage/app/' . $tenant->gsuite_service_account_path,$tenant->gsuite_admin_email);
         Config::set('auth.providers.users.model', \App\Models\User::class);
         Config::set('auth.providers.users.driver', 'scool');
         Config::set('hashing.driver', 'sha1');
@@ -4522,11 +4524,12 @@ if (! function_exists('seed_provinces')) {
     }
 }
 
-if (! function_exists('config_google_api_for_tests')) {
-    function config_google_api_for_tests() {
+if (! function_exists('config_google_api')) {
+    function config_google_api($file =  '/storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json',
+                               $email = 'sergitur@iesebre.com') {
         Config::set('google.service.enable', true);
-        Config::set('google.service.file', './storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json');
-        Config::set('google.admin_email', 'sergitur@iesebre.com');
+        Config::set('google.service.file', base_path($file));
+        Config::set('google.admin_email', $email);
     }
 }
 
@@ -4540,6 +4543,52 @@ if (! function_exists('tune_google_client')) {
         });
     }
 }
+
+if (! function_exists('google_group_exists')) {
+    function google_group_exists($group)
+    {
+        try {
+            $group = (new GoogleDirectory())->group($group);
+        } catch (Google_Service_Exception $e) {
+            return false;
+        }
+        if (check_google_group($group)) return true;
+        return false;
+    }
+}
+
+if (! function_exists('create_google_group')) {
+    /**
+     * Create Google Group
+     *
+     * @param $group
+     */
+    function create_google_group($group)
+    {
+        (new GoogleDirectory())->group([
+                'name' => $group,
+                'email' => $group,
+            ]);
+    }
+}
+
+if (! function_exists('remove_google_group')) {
+    /**
+     * Remove Google Group
+     *
+     * @param $group
+     */
+    function remove_google_group($group)
+    {
+        try {
+            (new GoogleDirectory())->removeGroup($group);
+        } catch (Google_Service_Exception $e) {
+            if($e->getErrors()[0]['message'] !== "Resource Not Found: groupKey") throw $e;
+        }
+    }
+}
+
+
 
 if (! function_exists('check_google_group')) {
     function check_google_group($group) {

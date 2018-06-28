@@ -2,7 +2,9 @@
 
 @section('content')
 
-    TODO
+    <google-group-add></google-group-add>
+
+    <google-groups :groups="{{ $groups }}"></google-groups>
 
 @endsection
 

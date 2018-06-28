@@ -31,7 +31,9 @@ class TeacherWelcomeEmailControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test @group working*/
+    /** @test
+     *  @group working
+     */
     public function show_teacher_welcome_email()
     {
         $this->withoutExceptionHandling();

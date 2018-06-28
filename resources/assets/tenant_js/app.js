@@ -55,14 +55,18 @@ Vue.component('jobs-sheet-holder', require('./components/jobs/JobsSheetHoldersCo
 Vue.component('donut', require('./components/charts/DonutComponent.vue'));
 Vue.component('bar', require('./components/charts/BarComponent.vue'));
 
-//Lessons
+// Lessons
 Vue.component('lessons-manager', require('./components/lessons/LessonsManagerComponent.vue'));
 
 // Docs/media
 Vue.component('model-docs', require('./components/docs/ModelDocsComponent.vue'));
 
-//People/Personal data (person)
+// People/Personal data (person)
 Vue.component('people', require('./components/people/PeopleComponent.vue'));
+
+// Google groups
+Vue.component('google-groups', require('./components/google/groups/GoogleGroupsComponent.vue'));
+Vue.component('google-group-add', require('./components/google/groups/GoogleGroupAddComponent.vue'));
 
 window.Vuetify = require('vuetify');
 Vue.use(Vuetify)

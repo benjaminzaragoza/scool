@@ -15,6 +15,29 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class HelpersTest extends TestCase
 {
+
+    /** @test */
+    public function google_group_exists()
+    {
+        $this->assertTrue(google_group_exists('claustre@iesebre.com'));
+        $this->assertFalse(google_group_exists('sdaawe12asdasdas@iesebre.com'));
+    }
+
+    /** @test */
+    public function create_google_group()
+    {
+        create_google_group('provaesborrar@iesebre.com');
+        $this->assertTrue(google_group_exists('provaesborrar@iesebre.com'));
+    }
+
+    /** @test */
+    public function remove_google_group()
+    {
+        create_google_group('provaesborrar@iesebre.com');
+        $this->assertTrue(remove_google_group('provaesborrar@iesebre.com'));
+        $this->assertFalse(google_group_exists('provaesborrar@iesebre.com'));
+    }
+
     /** @test */
     public function name()
     {

@@ -3,9 +3,9 @@
 namespace Tests\Unit\Tenants;
 
 use App\GoogleGSuite\GoogleDirectory;
-use App\Models\Department;
 use App\Models\User;
 use Config;
+use Google_Service_Exception;
 use Illuminate\Contracts\Console\Kernel;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -42,10 +42,62 @@ class GoogleDirectoryTest extends TestCase
     /** @test */
     public function can_get_groups()
     {
-        config_google_api_for_tests();
         $groups = (new GoogleDirectory())->groups();
         $this->assertNotNull($groups);
         $this->assertTrue(is_array($groups));
         $this->assertTrue(check_google_group($groups[0]));
+    }
+
+    /** @test */
+    public function can_get_group()
+    {
+        $group = (new GoogleDirectory())->group('claustre@iesebre.com');
+        $this->assertNotNull($group);
+        $this->assertTrue(check_google_group($group));
+    }
+
+    /** @test */
+    public function exception_getting_unexisting_group()
+    {
+        try {
+            $group = (new GoogleDirectory())->group('324wqeqq232qwq@iesebre.com');
+        } catch (Google_Service_Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Getting and unexisting group did not throw a Google_Service_Exception.");
+    }
+
+    /** @test */
+    public function can_create_group()
+    {
+        remove_google_group('provaesborrar@iesebre.com');
+        $group = (new GoogleDirectory())->group([
+            'name' => 'Prova',
+            'email' => 'provaesborrar@iesebre.com',
+            'description' => 'Descripció de prova',
+        ]);
+        $this->assertNotNull($group);
+        $this->assertTrue(check_google_group($group));
+        remove_google_group('provaesborrar@iesebre.com');
+
+
+        remove_google_group('provaesborrar@iesebre.com');
+        $group2 = (new GoogleDirectory())->group([
+            'name' => 'Prova',
+            'email' => 'prova1234456789@iesebre.com'
+        ]);
+        $this->assertNotNull($group2);
+        $this->assertTrue(check_google_group($group2));
+        remove_google_group('provaesborrar@iesebre.com');
+
+    }
+
+    /** @test */
+    public function can_remove_group()
+    {
+        create_google_group('provaesborrar@iesebre.com');
+        $group = (new GoogleDirectory())->remove_group('provaesborrar@iesebre.com');
+        $this->assertFalse(google_group_exists('provaesborrar@iesebre.com'));
     }
 }

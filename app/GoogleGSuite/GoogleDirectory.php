@@ -2,6 +2,7 @@
 
 namespace App\GoogleGSuite;
 
+use Google_Service_Directory_Group;
 use PulkitJalan\Google\Facades\Google;
 
 /**
@@ -19,6 +20,7 @@ class GoogleDirectory
      */
     public function __construct()
     {
+        config_google_api();
         tune_google_client();
         $this->directory = Google::make('directory');
         $this->domain = 'iesebre.com';
@@ -32,13 +34,49 @@ class GoogleDirectory
      */
     public function groups($maxResults = 500)
     {
-        try {
-            $r = $this->directory->groups->listGroups(array('domain' => $this->domain, 'maxResults' => $maxResults));
-        } catch (\Exception $e) {
-            dump('Error');
-            dd($e);
-            return $e;
-        }
+        $r = $this->directory->groups->listGroups(array('domain' => $this->domain, 'maxResults' => $maxResults));
         return $r->groups;
+    }
+
+
+    public function group($group = null)
+    {
+        if(is_array($group)) $this->create_group($group);
+        return $this->get_group($group);
+    }
+
+    protected function create_group($group)
+    {
+        $googleGroup = new Google_Service_Directory_Group();
+        $googleGroup->setName($group['name']);
+        $googleGroup->setEmail($group['email']);
+        if ($group['description']) $googleGroup->setDescription($group['description']);
+        $r = $this->directory->groups->insert($googleGroup);
+        return $r;
+    }
+
+    /**
+     * get group.
+     *
+     * @param $group
+     * @return mixed
+     */
+    protected function get_group($group)
+    {
+        $r = $this->directory->groups->get($group);
+        return $r;
+    }
+
+    /**
+     * Remove group.
+     *
+     * @param $group
+     * @return mixed
+     */
+    public function removeGroup($group)
+    {
+        $r = $this->directory->groups->delete($group);
+        dd($r);
+        return $r;
     }
 }
