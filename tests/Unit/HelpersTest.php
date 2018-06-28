@@ -24,17 +24,17 @@ class HelpersTest extends TestCase
     }
 
     /** @test */
-    public function create_google_group()
+    public function google_group_create()
     {
-        create_google_group('provaesborrar@iesebre.com');
+        google_group_create('provaesborrar@iesebre.com');
         $this->assertTrue(google_group_exists('provaesborrar@iesebre.com'));
     }
 
     /** @test */
-    public function remove_google_group()
+    public function google_group_remove()
     {
-        create_google_group('provaesborrar@iesebre.com');
-        $this->assertTrue(remove_google_group('provaesborrar@iesebre.com'));
+        google_group_create('provaesborrar@iesebre.com');
+        $this->assertTrue(google_group_remove('provaesborrar@iesebre.com'));
         $this->assertFalse(google_group_exists('provaesborrar@iesebre.com'));
     }
 

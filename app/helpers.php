@@ -4552,33 +4552,33 @@ if (! function_exists('google_group_exists')) {
         } catch (Google_Service_Exception $e) {
             return false;
         }
-        if (check_google_group($group)) return true;
+        if (google_group_check_($group)) return true;
         return false;
     }
 }
 
-if (! function_exists('create_google_group')) {
+if (! function_exists('google_group_create')) {
     /**
      * Create Google Group
      *
      * @param $group
      */
-    function create_google_group($group)
+    function google_group_create($group)
     {
-        (new GoogleDirectory())->group([
+        try {
+            (new GoogleDirectory())->group([
                 'name' => $group,
                 'email' => $group,
             ]);
+        } catch (Google_Service_Exception $e) {
+            
+        }
+
     }
 }
 
-if (! function_exists('remove_google_group')) {
-    /**
-     * Remove Google Group
-     *
-     * @param $group
-     */
-    function remove_google_group($group)
+if (! function_exists('google_group_remove')) {
+    function google_group_remove($group)
     {
         try {
             (new GoogleDirectory())->removeGroup($group);
@@ -4588,10 +4588,8 @@ if (! function_exists('remove_google_group')) {
     }
 }
 
-
-
-if (! function_exists('check_google_group')) {
-    function check_google_group($group) {
+if (! function_exists('google_group_check_')) {
+    function google_group_check_($group) {
         return get_class($group) === 'Google_Service_Directory_Group';
     }
 }

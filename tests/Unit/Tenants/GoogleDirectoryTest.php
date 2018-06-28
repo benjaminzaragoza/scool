@@ -45,7 +45,7 @@ class GoogleDirectoryTest extends TestCase
         $groups = (new GoogleDirectory())->groups();
         $this->assertNotNull($groups);
         $this->assertTrue(is_array($groups));
-        $this->assertTrue(check_google_group($groups[0]));
+        $this->assertTrue(google_group_check_($groups[0]));
     }
 
     /** @test */
@@ -53,7 +53,7 @@ class GoogleDirectoryTest extends TestCase
     {
         $group = (new GoogleDirectory())->group('claustre@iesebre.com');
         $this->assertNotNull($group);
-        $this->assertTrue(check_google_group($group));
+        $this->assertTrue(google_group_check_($group));
     }
 
     /** @test */
@@ -71,32 +71,32 @@ class GoogleDirectoryTest extends TestCase
     /** @test */
     public function can_create_group()
     {
-        remove_google_group('provaesborrar@iesebre.com');
+        google_group_remove('provaesborrar@iesebre.com');
         $group = (new GoogleDirectory())->group([
             'name' => 'Prova',
             'email' => 'provaesborrar@iesebre.com',
             'description' => 'Descripció de prova',
         ]);
         $this->assertNotNull($group);
-        $this->assertTrue(check_google_group($group));
-        remove_google_group('provaesborrar@iesebre.com');
+        $this->assertTrue(google_group_check_($group));
+        google_group_remove('provaesborrar@iesebre.com');
 
 
-        remove_google_group('provaesborrar@iesebre.com');
+        google_group_remove('provaesborrar@iesebre.com');
         $group2 = (new GoogleDirectory())->group([
             'name' => 'Prova',
             'email' => 'prova1234456789@iesebre.com'
         ]);
         $this->assertNotNull($group2);
-        $this->assertTrue(check_google_group($group2));
-        remove_google_group('provaesborrar@iesebre.com');
+        $this->assertTrue(google_group_check_($group2));
+        google_group_remove('provaesborrar@iesebre.com');
 
     }
 
     /** @test */
     public function can_remove_group()
     {
-        create_google_group('provaesborrar@iesebre.com');
+        google_group_create('provaesborrar@iesebre.com');
         $group = (new GoogleDirectory())->remove_group('provaesborrar@iesebre.com');
         $this->assertFalse(google_group_exists('provaesborrar@iesebre.com'));
     }

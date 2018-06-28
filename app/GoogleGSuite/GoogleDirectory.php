@@ -41,7 +41,10 @@ class GoogleDirectory
 
     public function group($group = null)
     {
-        if(is_array($group)) $this->create_group($group);
+        if(is_array($group)) {
+            $this->create_group($group);
+            return;
+        }
         return $this->get_group($group);
     }
 
@@ -50,9 +53,8 @@ class GoogleDirectory
         $googleGroup = new Google_Service_Directory_Group();
         $googleGroup->setName($group['name']);
         $googleGroup->setEmail($group['email']);
-        if ($group['description']) $googleGroup->setDescription($group['description']);
-        $r = $this->directory->groups->insert($googleGroup);
-        return $r;
+        if (array_key_exists('description',$group)) $googleGroup->setDescription($group['description']);
+        $this->directory->groups->insert($googleGroup);
     }
 
     /**
@@ -75,8 +77,6 @@ class GoogleDirectory
      */
     public function removeGroup($group)
     {
-        $r = $this->directory->groups->delete($group);
-        dd($r);
-        return $r;
+        $this->directory->groups->delete($group);
     }
 }
