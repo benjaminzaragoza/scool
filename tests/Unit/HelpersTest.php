@@ -15,7 +15,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class HelpersTest extends TestCase
 {
-
     /** @test */
     public function google_group_exists()
     {
@@ -23,19 +22,27 @@ class HelpersTest extends TestCase
         $this->assertFalse(google_group_exists('sdaawe12asdasdas@iesebre.com'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     */
     public function google_group_create()
     {
         google_group_create('provaesborrar@iesebre.com');
+        sleep('3');
         $this->assertTrue(google_group_exists('provaesborrar@iesebre.com'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     */
     public function google_group_remove()
     {
         google_group_create('provaesborrar@iesebre.com');
-        $this->assertTrue(google_group_remove('provaesborrar@iesebre.com'));
+        sleep('3');
         $this->assertFalse(google_group_exists('provaesborrar@iesebre.com'));
+        google_group_remove('provaesborrar@iesebre.com');
     }
 
     /** @test */

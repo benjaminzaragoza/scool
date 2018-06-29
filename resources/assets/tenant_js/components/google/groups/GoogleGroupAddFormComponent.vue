@@ -17,7 +17,7 @@
                             label="Correu electrònic"
                             v-model="email"
                             :error-messages="emailErrors"
-                            @input="inputEmail()"
+                            @input="$v.email.$touch()"
                             @blur="$v.email.$touch()"
                             required
                     ></v-text-field>
@@ -31,7 +31,7 @@
             </v-layout>
         </v-container>
 
-        <v-btn color="primary" @click="create">Crear</v-btn>
+        <v-btn color="primary" @click="create" :disabled="creating" :loading="creating">Crear</v-btn>
     </form>
 </template>
 
@@ -52,7 +52,9 @@
       return {
         name: '',
         email: '',
-        description: ''
+        description: '',
+        creating: false,
+        errors: []
       }
     },
     computed: {
@@ -79,8 +81,25 @@
     },
     methods: {
       create () {
-        console.log('CREATE TODO')
-        this.$emit('created', {})
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          this.creating = true
+          axios.post('/api/v1/gsuite/groups', {
+            name: this.name,
+            email: this.email,
+            description: this.description
+          }).then(response => {
+            this.creating = false
+            this.$emit('created', response.data)
+            this.showMessage('Grup creat correctament')
+          }).catch(error => {
+            this.creating = false
+            console.log(error)
+            this.showError(error)
+          })
+        } else {
+          this.$v.$touch()
+        }
       }
     }
   }

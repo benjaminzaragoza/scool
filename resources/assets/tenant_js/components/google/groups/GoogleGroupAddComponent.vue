@@ -33,6 +33,7 @@
                 <v-stepper-step :complete="step > 2" step="2">Membres del grup</v-stepper-step>
                 <v-stepper-content step="2">
                     TODO MEMBERS
+                    <v-btn color="error" @click="step = 1">Endarrera</v-btn>
                 </v-stepper-content>
             </v-stepper>
 

@@ -19,7 +19,7 @@
                     <v-btn icon class="white--text" @click="">
                         <v-icon>settings</v-icon>
                     </v-btn>
-                    <v-btn icon class="white--text" @click="refresh">
+                    <v-btn icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
                         <v-icon>refresh</v-icon>
                     </v-btn>
                 </v-toolbar>
@@ -67,6 +67,15 @@
                                             <v-btn icon class="mx-0" @click="">
                                                 <v-icon color="teal">edit</v-icon>
                                             </v-btn>
+                                            <confirm-icon
+                                                    :id="'google_group_remove_' + group.email.replace('@','_')"
+                                                    icon="delete"
+                                                    color="pink"
+                                                    :working="removing"
+                                                    @confirmed="remove(group)"
+                                                    tooltip="Eliminar"
+                                                    message="Esteu segurs que voleu eliminar el grup?"
+                                            ></confirm-icon>
                                         </td>
                                     </tr>
                                 </template>
@@ -81,20 +90,21 @@
 
 <script>
   import withSnackbar from '../../mixins/withSnackbar'
+  import axios from 'axios'
+  import ConfirmIcon from '../../ui/ConfirmIconComponent'
 
   export default {
     name: 'GoogleGroupsComponent',
     mixins: [withSnackbar],
     components: {
-      // 'show-group-icon': ShowTeacherIcon,
-      // 'administrative-status-select': AdministrativeStatusSelect,
-      // 'confirm-icon': ConfirmIcon,
-      // 'user-avatar': UserAvatar
+      'confirm-icon': ConfirmIcon
     },
     data () {
       return {
         search: '',
-        internalGroups: this.groups
+        internalGroups: this.groups,
+        removing: false,
+        refreshing: false
       }
     },
     computed: {
@@ -122,7 +132,25 @@
     },
     methods: {
       refresh () {
-        console.log('TODO')
+        this.refreshing = true
+        axios.get('/api/v1/gsuite/groups').then(response => {
+          this.refreshing = false
+          this.internalGroups = response.data
+        }).catch(error => {
+          this.refreshing = false
+          console.log(error)
+        })
+      },
+      remove (group) {
+        console.log(group)
+        this.removing = true
+        axios.delete('/api/v1/gsuite/groups/' + group).then(response => {
+          this.removing = false
+          this.refresh()
+        }).catch(error => {
+          this.removing = false
+          console.log(error)
+        })
       }
     }
   }

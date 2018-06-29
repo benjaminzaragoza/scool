@@ -662,6 +662,10 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        Gate::define('remove-gsuite-groups', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
         Gate::define('show-gsuite-groups', function ($user) {
             return $user->hasRole('UsersManager');
         });
@@ -4571,7 +4575,7 @@ if (! function_exists('google_group_create')) {
                 'email' => $group,
             ]);
         } catch (Google_Service_Exception $e) {
-            
+
         }
 
     }
