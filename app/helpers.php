@@ -885,6 +885,12 @@ if (!function_exists('initialize_menus')) {
             'href' => '/google_groups',
             'role' => 'UsersManager'
         ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Usuaris de google',
+            'href' => '/google_users',
+            'role' => 'UsersManager'
+        ]);
     }
 }
 
@@ -7813,7 +7819,6 @@ if (!function_exists('propose_user_name')) {
 }
 
 if (!function_exists('google_groups_check_members')) {
-
     function google_groups_check_members($members)
     {
         return get_class($members) === 'Google_Service_Directory_Members' &&
@@ -7821,3 +7826,17 @@ if (!function_exists('google_groups_check_members')) {
                get_class($members->members[0]) === 'Google_Service_Directory_Member';
     }
 }
+
+if (!function_exists('google_groups_check_member')) {
+    function google_groups_check_member($member)
+    {
+        return get_class($member) === 'stdClass' &&
+            property_exists($member,'email') &&
+            property_exists($member,'id') &&
+            property_exists($member,'etag') &&
+            property_exists($member,'role') &&
+            property_exists($member,'type') &&
+            property_exists($member,'status');
+    }
+}
+
