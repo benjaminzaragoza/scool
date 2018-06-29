@@ -40,7 +40,22 @@ class GoogleDirectory
             ]);
             $pageToken = $r->nextPageToken;
             if(!$r->nextPageToken) $continue = false;
-            $users = array_merge($users,$r->users);
+            $googleUsers = collect($r->users)->map(function ($user) {
+                    return [
+                        'id' => $user->id,
+                        'primaryEmail' => $user->primaryEmail,
+                        'isAdmin' => $user->isAdmin,
+                        'name' => $user->name,
+                        'lastLoginTime' => $user->lastLoginTime,
+                        'creationTime' => $user->creationTime,
+                        'suspended' => $user->suspended,
+                        'suspensionReason' => $user->suspensionReason,
+                        'thumbnailPhotoUrl' => $user->thumbnailPhotoUrl,
+                        'orgUnitPath' => $user->orgUnitPath,
+                        'organizations' => $user->organizations,
+                    ];
+                });
+            $users = array_merge($users,$googleUsers->toArray());
         }
         return $users;
     }

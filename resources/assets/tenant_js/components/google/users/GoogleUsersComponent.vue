@@ -51,18 +51,16 @@
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
                                         <td class="text-xs-left">
-                                            <span :title="'etag: ' + user.etag" v-html="user.id"></span>
+                                            <span v-html="user.id"></span>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.name"></td>
-                                        <td class="text-xs-left" v-html="user.email"></td>
-                                        <td class="text-xs-left" v-html="user.directMembersCount"></td>
-                                        <td class="text-xs-left" v-html="user.adminCreated"></td>
-                                        <td class="text-xs-left">
-                                            <template v-if="user.aliases">
-                                                {{ user.aliases.join() }}
-                                            </template>
-                                        </td>
-                                        <td class="text-xs-left" v-html="user.description"></td>
+                                        <td class="text-xs-left" v-html="user.name.fullName"></td>
+                                        <td class="text-xs-left" v-html="user.primaryEmail"></td>
+                                        <td class="text-xs-left" v-html="user.orgUnitPath"></td>
+                                        <td class="text-xs-left" v-html="user.isAdmin"></td>
+                                        <td class="text-xs-left" v-html="user.suspended"></td>
+                                        <td class="text-xs-left" v-html="user.suspensionReason"></td>
+                                        <td class="text-xs-left" v-html="user.lastLoginTime"></td>
+                                        <td class="text-xs-left" v-html="user.creationTime"></td>
                                         <td class="text-xs-left">
                                             <v-btn icon class="mx-0" @click="">
                                                 <v-icon color="teal">edit</v-icon>
@@ -116,10 +114,12 @@
         headers.push({text: 'Id', align: 'left', value: 'id'})
         headers.push({text: 'name', value: 'name'})
         headers.push({text: 'email', value: 'email'})
-        headers.push({text: 'Membres del grup', value: 'directMembersCount'})
-        headers.push({text: 'Created by admin', value: 'adminCreated'})
-        headers.push({text: 'Alias', value: 'aliases'})
-        headers.push({text: 'Descripció', value: 'description'})
+        headers.push({text: 'Path', value: 'orgUnitPath'})
+        headers.push({text: 'Administrador', value: 'isAdmin'})
+        headers.push({text: 'Suspès?', value: 'suspended'})
+        headers.push({text: 'Raó suspensió', value: 'suspensionReason'})
+        headers.push({text: 'las login', value: 'lastLoginTime'})
+        headers.push({text: 'Data creació', value: 'creationTime'})
         headers.push({text: 'Accions', sortable: false})
         return headers
       }
