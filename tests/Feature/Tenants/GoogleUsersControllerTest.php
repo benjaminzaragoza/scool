@@ -32,10 +32,12 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     */
     public function show_google_users()
     {
-        $this->withoutExceptionHandling();
         $usersManager = create(User::class);
         $this->actingAs($usersManager);
         $role = Role::firstOrCreate(['name' => 'UsersManager']);

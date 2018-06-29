@@ -68,7 +68,7 @@
                                                 <v-icon color="teal">edit</v-icon>
                                             </v-btn>
                                             <confirm-icon
-                                                    :id="'google_user_remove_' + user.email.replace('@','_')"
+                                                    :id="'google_user_remove_' + user.primaryEmail.replace('@','_')"
                                                     icon="delete"
                                                     color="pink"
                                                     :working="removing"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Requests\ListGoogleUsers;
 use App\Http\Requests\StoreGoogleGroups;
+use Cache;
 
 /**
  * Class GoogleUsersController.
@@ -21,8 +22,11 @@ class GoogleUsersController extends Controller
      */
     public function show(ListGoogleUsers $request)
     {
-        $directory = new GoogleDirectory();
-        $users = collect($directory->users());
+        $users = collect([]);
+        $users = Cache::rememberForever('users', function() use ($users){
+            $directory = new GoogleDirectory();
+            return collect($directory->users());
+        });
         return view('tenants.google_users.show', compact('users'));
     }
 
