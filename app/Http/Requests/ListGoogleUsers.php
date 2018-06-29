@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListGoogleSuiteUser.
+ * Class ListGoogleUsers.
  *
  * @package App\Http\Requests
  */
-class ListGoogleSuiteUser extends FormRequest
+class ListGoogleUsers extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,6 @@ class ListGoogleSuiteUser extends FormRequest
      */
     public function authorize()
     {
-        if (! Auth::user()) return false;
         return Auth::user()->can('list-gsuite-users');
     }
 
@@ -31,7 +30,7 @@ class ListGoogleSuiteUser extends FormRequest
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }

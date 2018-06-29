@@ -26,6 +26,25 @@ class GoogleDirectory
         $this->domain = 'iesebre.com';
     }
 
+    public function users($maxResults = 500)
+    {
+//        dd(get_class($this->directory->users)); //Google_Service_Directory_Resource_Users
+        $continue = true;
+        $users = [];
+        $pageToken = null;
+        while ($continue) {
+            $r = $this->directory->users->listUsers([
+                'domain' => $this->domain,
+                'maxResults' => $maxResults,
+                'pageToken' => $pageToken
+            ]);
+            $pageToken = $r->nextPageToken;
+            if(!$r->nextPageToken) $continue = false;
+            $users = array_merge($users,$r->users);
+        }
+        return $users;
+    }
+
     /**
      * Groups.
      *

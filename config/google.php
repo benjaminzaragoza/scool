@@ -29,6 +29,7 @@ return [
     'client_secret'   => env('GOOGLE_CLIENT_SECRET', ''),
     'redirect_uri'    => env('GOOGLE_REDIRECT', ''),
     'scopes'          => [
+        'https://www.googleapis.com/auth/admin.directory.user',
         'https://www.googleapis.com/auth/admin.directory.group',
     ],
     'access_type'     => 'online',

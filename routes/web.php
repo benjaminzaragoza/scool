@@ -69,6 +69,10 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             // Google groups
             Route::get('/google_groups','Tenant\GoogleGroupsController@show');
 
+            // Google users
+            Route::get('/google_users','Tenant\GoogleUsersController@show');
+
+
             // ******* Emails ********
 
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');

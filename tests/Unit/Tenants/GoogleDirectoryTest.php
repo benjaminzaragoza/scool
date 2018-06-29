@@ -121,4 +121,16 @@ class GoogleDirectoryTest extends TestCase
         $this->assertTrue(google_groups_check_members($members));
     }
 
+    /**
+     * @test
+     * @group slow
+     */
+    public function can_get_users()
+    {
+        $users = (new GoogleDirectory())->users();
+//        dd($users);
+        $this->assertTrue(google_groups_check_users($users));
+
+    }
+
 }

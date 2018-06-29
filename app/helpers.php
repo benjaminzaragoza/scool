@@ -4604,6 +4604,14 @@ if (! function_exists('google_group_check_')) {
     }
 }
 
+if (! function_exists('google_user_check')) {
+    function google_user_check($user) {
+        return get_class($user) === 'Google_Service_Directory_Group';
+    }
+}
+
+
+
 if (! function_exists('get_photo_slugs_from_path')) {
     /**
      * Get photos slugs from path.
@@ -7815,6 +7823,13 @@ if (!function_exists('propose_user_name')) {
     {
         return mb_strimwidth(trim(str_slug(nospaces($name))),0,10,'') .
             mb_strimwidth(trim(str_slug(nospaces($sn1))),0,10,'');
+    }
+}
+
+if (!function_exists('google_groups_check_users')) {
+    function google_groups_check_users($users)
+    {
+        return is_array($users);
     }
 }
 

@@ -68,6 +68,10 @@ Vue.component('people', require('./components/people/PeopleComponent.vue'));
 Vue.component('google-groups', require('./components/google/groups/GoogleGroupsComponent.vue'));
 Vue.component('google-group-add', require('./components/google/groups/GoogleGroupAddComponent.vue'));
 
+// Google users
+Vue.component('google-users', require('./components/google/users/GoogleUsersComponent.vue'));
+// Vue.component('google-group-add', require('./components/google/groups/GoogleGroupAddComponent.vue'));
+
 window.Vuetify = require('vuetify');
 Vue.use(Vuetify)
 
