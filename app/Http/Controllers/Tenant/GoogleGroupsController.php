@@ -59,8 +59,14 @@ class GoogleGroupsController extends Controller
         }
     }
 
-    public function destroy(DestroyGoogleGroups $request)
+    public function destroy(DestroyGoogleGroups $request, $tenant, $group)
     {
+        dump('GROUP: ' . $group);
         dump('TODO Destroy');
+        try {
+            (new GoogleDirectory())->removeGroup($group);
+        } catch (Google_Service_Exception $e) {
+            dd('TODO');
+        }
     }
 }

@@ -142,14 +142,15 @@
         })
       },
       remove (group) {
-        console.log(group)
         this.removing = true
-        axios.delete('/api/v1/gsuite/groups/' + group).then(response => {
+        axios.delete('/api/v1/gsuite/groups/' + group.id).then(response => {
           this.removing = false
           this.refresh()
+          this.showMessage('Grup esborrat correctament')
         }).catch(error => {
           this.removing = false
           console.log(error)
+          this.showError(error)
         })
       }
     }

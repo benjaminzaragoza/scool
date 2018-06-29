@@ -7811,3 +7811,13 @@ if (!function_exists('propose_user_name')) {
             mb_strimwidth(trim(str_slug(nospaces($sn1))),0,10,'');
     }
 }
+
+if (!function_exists('google_groups_check_members')) {
+
+    function google_groups_check_members($members)
+    {
+        return get_class($members) === 'Google_Service_Directory_Members' &&
+               is_array($members->members) &&
+               get_class($members->members[0]) === 'Google_Service_Directory_Member';
+    }
+}

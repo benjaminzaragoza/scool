@@ -97,11 +97,28 @@ class GoogleDirectoryTest extends TestCase
 
     }
 
-    /** @test */
+    /**
+     * Remove group.
+     *
+     * @test
+     * @group slow
+     */
     public function can_remove_group()
     {
-        google_group_create('provaesborrar@iesebre.com');
-        $group = (new GoogleDirectory())->remove_group('provaesborrar@iesebre.com');
-        $this->assertFalse(google_group_exists('provaesborrar@iesebre.com'));
+        google_group_create('provaesborrar777@iesebre.com');
+        sleep(5);
+        $group = (new GoogleDirectory())->removeGroup('provaesborrar777@iesebre.com');
+        $this->assertFalse(google_group_exists('provaesborrar777@iesebre.com'));
     }
+
+    /**
+     * @test
+     * @group slow
+     */
+    public function can_get_members_of_a_group()
+    {
+        $members = (new GoogleDirectory())->groupMembers('claustre@iesebre.com');
+        $this->assertTrue(google_groups_check_members($members));
+    }
+
 }

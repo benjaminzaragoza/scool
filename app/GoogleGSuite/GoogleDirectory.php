@@ -79,4 +79,16 @@ class GoogleDirectory
     {
         $this->directory->groups->delete($group);
     }
+
+    /**
+     * Get group members.
+     *
+     * @param $group
+     * @param int $maxResults
+     * @return mixed
+     */
+    public function groupMembers($group, $maxResults = 500)
+    {
+        return $this->directory->members->listMembers($group,['maxResults' => $maxResults]);
+    }
 }
