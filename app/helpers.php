@@ -4567,6 +4567,24 @@ if (! function_exists('google_group_exists')) {
     }
 }
 
+if (! function_exists('google_group_get')) {
+    /**
+     * Get Google Group.
+     *
+     * @param $group
+     * @return mixed|void
+     */
+    function google_group_get($group)
+    {
+        try {
+            return (new GoogleDirectory())->group($group);
+        } catch (Google_Service_Exception $e) {
+            dump('Error getting google group : ' . $group . ' . ' . $e->getMessage());
+        }
+
+    }
+}
+
 if (! function_exists('google_group_create')) {
     /**
      * Create Google Group
@@ -4581,7 +4599,7 @@ if (! function_exists('google_group_create')) {
                 'email' => $group,
             ]);
         } catch (Google_Service_Exception $e) {
-
+            dump('Error creating google group. ' . $e->getMessage());
         }
 
     }

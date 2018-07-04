@@ -117,7 +117,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/gsuite/users', 'Tenant\GoogleSuiteUsersController@store');
             Route::delete('/gsuite/users/{email}', 'Tenant\GoogleSuiteUsersController@destroy');
 
-            // Google Suite deleted users TODO
+            // Google Suite deleted users TODO ELIMINAR
             // Undelete user
 //            Route::post('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@undelete');
 //            Route::get('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@show');

@@ -167,6 +167,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     /**
      * @test
      * @group google
+     * @group slow
      */
     public function delete_group()
     {
@@ -178,10 +179,15 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         Config::set('auth.providers.users.model', User::class);
         $usersManager->assignRole($role);
 
+        google_group_create('prova123@iesebre.com');
+        sleep(5);
         $group = '';
         $response = $this->json('DELETE','/api/v1/gsuite/groups/' . $group);
 
         $response->assertSuccessful();
+
+        google_group_remove('prova123@iesebre.com');
+
     }
 
     /**
