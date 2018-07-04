@@ -179,14 +179,19 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         Config::set('auth.providers.users.model', User::class);
         $usersManager->assignRole($role);
 
-        google_group_create('prova123@iesebre.com');
+        try {
+            google_group_create('provaborrar777@iesebre.com');
+        } catch (\Exception $e) {
+
+        }
         sleep(5);
-        $group = '';
-        $response = $this->json('DELETE','/api/v1/gsuite/groups/' . $group);
+        $group = google_group_get('provaborrar777@iesebre.com');
+        $response = $this->json('DELETE','/api/v1/gsuite/groups/' . $group->id);
 
         $response->assertSuccessful();
+        sleep(5);
 
-        google_group_remove('prova123@iesebre.com');
+        google_group_remove('provaborrar777@iesebre.com');
 
     }
 
