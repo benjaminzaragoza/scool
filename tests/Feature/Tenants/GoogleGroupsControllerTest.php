@@ -32,7 +32,10 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function show_google_groups()
     {
         config_google_api();
@@ -52,7 +55,9 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         });
     }
 
-    /** @test */
+    /** @test
+     *  @group google
+     */
     public function regular_user_cannot_show_google_groups()
     {
         $user = create(User::class);
@@ -68,6 +73,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
      *
      * @test
      * @group slow
+     * @group google
      */
     public function list_groups()
     {
@@ -86,6 +92,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
      *
      * @test
      * @group slow
+     * @group google
      */
     public function regular_user_cannot_list_groups()
     {
@@ -100,6 +107,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     /**
      * @test
      * @group slow
+     * @group google
      */
     public function create_group()
     {
@@ -123,7 +131,10 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $this->assertTrue(google_group_exists('prova123@iesebre.com'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function create_group_validation()
     {
         config_google_api();
@@ -139,7 +150,10 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $response->assertStatus(422);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function regular_user_cannot_create_group()
     {
         $user = create(User::class);
@@ -150,7 +164,10 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function delete_group()
     {
         config_google_api();
@@ -167,7 +184,10 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $response->assertSuccessful();
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function regular_user_cannot_delete_group()
     {
         $user = create(User::class);
