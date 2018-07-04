@@ -53,7 +53,7 @@
                                         <td class="text-xs-left">
                                             <span v-html="user.id"></span>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.name.fullName"></td>
+                                        <td class="text-xs-left" v-html="user.fullName"></td>
                                         <td class="text-xs-left" v-html="user.primaryEmail"></td>
                                         <td class="text-xs-left" v-html="user.orgUnitPath"></td>
                                         <td class="text-xs-left" v-html="user.isAdmin"></td>
@@ -111,14 +111,14 @@
       },
       headers () {
         let headers = []
-        headers.push({text: 'Id', align: 'left', value: 'id'})
-        headers.push({text: 'name', value: 'name'})
-        headers.push({text: 'email', value: 'email'})
+        headers.push({text: 'Id', align: 'left', value: 'Id', sortable: false})
+        headers.push({text: 'Nom', value: 'fullName'})
+        headers.push({text: 'Correu electrònic', value: 'primaryEmail'})
         headers.push({text: 'Path', value: 'orgUnitPath'})
         headers.push({text: 'Administrador', value: 'isAdmin'})
         headers.push({text: 'Suspès?', value: 'suspended'})
         headers.push({text: 'Raó suspensió', value: 'suspensionReason'})
-        headers.push({text: 'las login', value: 'lastLoginTime'})
+        headers.push({text: 'Últim login', value: 'lastLoginTime'})
         headers.push({text: 'Data creació', value: 'creationTime'})
         headers.push({text: 'Accions', sortable: false})
         return headers

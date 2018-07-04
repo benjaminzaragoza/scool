@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Tenant;
 
 use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Requests\ListGoogleUsers;
-use App\Http\Requests\StoreGoogleGroups;
 use Cache;
 
 /**
