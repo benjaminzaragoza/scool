@@ -4606,7 +4606,18 @@ if (! function_exists('google_group_check_')) {
 
 if (! function_exists('google_user_check')) {
     function google_user_check($user) {
-        return get_class($user) === 'Google_Service_Directory_Group';
+        return array_key_exists('id', $user) &&
+            array_key_exists('primaryEmail', $user) &&
+            array_key_exists('isAdmin', $user) &&
+            array_key_exists('familyName', $user) &&
+            array_key_exists('fullName', $user) &&
+            array_key_exists('lastLoginTime', $user) &&
+            array_key_exists('creationTime', $user) &&
+            array_key_exists('suspended', $user) &&
+            array_key_exists('suspensionReason', $user) &&
+            array_key_exists('thumbnailPhotoUrl', $user) &&
+            array_key_exists('orgUnitPath', $user) &&
+            array_key_exists('organizations', $user);
     }
 }
 

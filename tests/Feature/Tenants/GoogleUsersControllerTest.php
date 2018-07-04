@@ -10,11 +10,11 @@ use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class GoogleGroupsControllerTest.
+ * Class GoogleUsersControllerTest.
  *
  * @package Tests\Feature\Tenants
  */
-class GoogleGroupsControllerTest extends BaseTenantTest
+class GoogleUsersControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
@@ -65,22 +65,26 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     }
 
     /**
-     * List users.
+     * List google users.
      *
      * @test
      * @group slow
+     * @group google
      */
-    public function list_users()
+    public function list_google_users()
     {
-//        config_google_api();
-//
-//        $usersManager = create(User::class);
-//        $this->actingAs($usersManager,'api');
-//        $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
-//        Config::set('auth.providers.users.model', User::class);
-//        $usersManager->assignRole($role);
-//        $response = $this->json('GET','/api/v1/gsuite/groups');
-//        $response->assertSuccessful();
+        $this->withoutExceptionHandling();
+        config_google_api();
+        $usersManager = create(User::class);
+        $this->actingAs($usersManager,'api');
+        $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
+        Config::set('auth.providers.users.model', User::class);
+        $usersManager->assignRole($role);
+
+        $response = $this->json('GET','/api/v1/gsuite/users');
+
+        $response->assertSuccessful();
+        $response->dump();
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Requests\DeleteGoogleSuiteUser;
-use App\Http\Requests\ListGoogleSuiteUser;
+use App\Http\Requests\ListGoogleUsers;
 use App\Http\Requests\ShowGoogleSuiteUser;
 use App\Http\Requests\StoreGoogleSuiteUser;
 use Google_Service_Directory_User;
@@ -25,18 +25,23 @@ class GoogleSuiteUsersController extends Controller
         tune_google_client();
     }
 
-    public function index(ListGoogleSuiteUser $request)
+    /**
+     * List.
+     *
+     * @param ListGoogleUsers $request
+     * @return \Exception|\Illuminate\Support\Collection
+     */
+    public function index(ListGoogleUsers $request)
     {
+        dd('TO STOP TESTS!!!'); // TODO
+
         $directory = Google::make('directory');
         try {
             $r = $directory->users->listUsers(array('domain' => 'iesebre.com', 'maxResults' => 500));
         } catch (\Exception $e) {
-            dump('Error');
-            dd($e);
-            return $e;
+            abort('404', $e);
         }
         return collect($r->users);
-//        return $r;
     }
 
     /**
@@ -49,6 +54,8 @@ class GoogleSuiteUsersController extends Controller
      */
     public function show(ShowGoogleSuiteUser $request, $tenant, $email)
     {
+        dd('SHOW TO STOP TESTS!!!'); // TODO
+
         $directory = Google::make('directory');
 
         try {
@@ -56,7 +63,6 @@ class GoogleSuiteUsersController extends Controller
         } catch (\Exception $e) {
             return $e;
         }
-//        dd($r);
         if ($r->emails[0]['address'] === $email && $r->emails[0]['primary']) {
             return json_encode($r);
         } else {
@@ -71,7 +77,7 @@ class GoogleSuiteUsersController extends Controller
 
     public function store(StoreGoogleSuiteUser $request)
     {
-
+        dd('TO STOP TESTS!!!'); // TODO
         $user = new Google_Service_Directory_User();
         $name = new Google_Service_Directory_UserName();
         $new_person = array();
@@ -108,6 +114,7 @@ class GoogleSuiteUsersController extends Controller
      */
     public function destroy(DeleteGoogleSuiteUser $request, $tenant, $email)
     {
+        dd('TO STOP TESTS!!!'); // TODO
 
         $directory = Google::make('directory');
         try {
@@ -132,6 +139,7 @@ class GoogleSuiteUsersController extends Controller
      */
     public function undelete(DeleteGoogleSuiteUser $request, $tenant, $email)
     {
+        dd('TO STOP TESTS!!!'); // TODO
 
         $directory = Google::make('directory');
         dd(get_class($directory->users));

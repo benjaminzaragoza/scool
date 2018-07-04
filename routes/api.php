@@ -103,10 +103,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/employee', 'Tenant\EmployeeController@store');
             Route::delete('/employee/{employee}', 'Tenant\EmployeeController@destroy');
 
-            //Google GSuite groups
-            //TODO: clean/remove tests!
-//            Route::get('/gsuite/groups/{group}', 'Tenant\GoogleSuiteGroupsController@show');
-
+            // Google Apps/Gsuite groups
             Route::get('/gsuite/groups', 'Tenant\GoogleGroupsController@index');
             Route::post('/gsuite/groups', 'Tenant\GoogleGroupsController@store');
             Route::delete('/gsuite/groups/{group}', 'Tenant\GoogleGroupsController@destroy');
@@ -114,19 +111,16 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Group members
             Route::get('/gsuite/groups/{group}/members', 'Tenant\GoogleGroupMembersController@index');
 
-            //TODO: clean/remove tests!
-//            Route::get('/gsuite/groups/{group}/members', 'Tenant\GoogleSuiteGroupMembersController@index');
-
-            //Google GSuite users
+            //Google Apps/GSuite users
             Route::get('/gsuite/users', 'Tenant\GoogleSuiteUsersController@index');
             Route::get('/gsuite/users/{email}', 'Tenant\GoogleSuiteUsersController@show');
             Route::post('/gsuite/users', 'Tenant\GoogleSuiteUsersController@store');
             Route::delete('/gsuite/users/{email}', 'Tenant\GoogleSuiteUsersController@destroy');
 
-            // Google Suite deleted users
+            // Google Suite deleted users TODO
             // Undelete user
-            Route::post('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@undelete');
-            Route::get('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@show');
+//            Route::post('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@undelete');
+//            Route::get('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@show');
 
             //Google Suite watch users
             Route::post('/gsuite/watchusers', 'Tenant\GoogleSuiteWatchUsersController@store');

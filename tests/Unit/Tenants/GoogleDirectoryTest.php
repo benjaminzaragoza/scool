@@ -19,6 +19,9 @@ class GoogleDirectoryTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Set up.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -39,7 +42,10 @@ class GoogleDirectoryTest extends TestCase
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function can_get_groups()
     {
         $groups = (new GoogleDirectory())->groups();
@@ -48,7 +54,10 @@ class GoogleDirectoryTest extends TestCase
         $this->assertTrue(google_group_check_($groups[0]));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function can_get_group()
     {
         $group = (new GoogleDirectory())->group('claustre@iesebre.com');
@@ -56,7 +65,10 @@ class GoogleDirectoryTest extends TestCase
         $this->assertTrue(google_group_check_($group));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group google
+     */
     public function exception_getting_unexisting_group()
     {
         try {
@@ -71,7 +83,7 @@ class GoogleDirectoryTest extends TestCase
     /**
      * @test
      * @group slow
-     *
+     * @group google
      */
     public function can_create_group()
     {
@@ -102,6 +114,7 @@ class GoogleDirectoryTest extends TestCase
      *
      * @test
      * @group slow
+     * @group google
      */
     public function can_remove_group()
     {
@@ -114,6 +127,7 @@ class GoogleDirectoryTest extends TestCase
     /**
      * @test
      * @group slow
+     * @group google
      */
     public function can_get_members_of_a_group()
     {
@@ -124,13 +138,12 @@ class GoogleDirectoryTest extends TestCase
     /**
      * @test
      * @group slow
+     * @group google
      */
     public function can_get_users()
     {
         $users = (new GoogleDirectory())->users();
-//        dd($users);
         $this->assertTrue(google_groups_check_users($users));
-
     }
 
 }
