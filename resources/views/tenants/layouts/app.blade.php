@@ -12,7 +12,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     {{--<link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">--}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.18/vuetify.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-corner-indicator.min.css" rel="stylesheet">
     <link href="/tenant/css/app.css" rel="stylesheet">
 </head>

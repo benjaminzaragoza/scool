@@ -7855,3 +7855,21 @@ if (!function_exists('google_groups_check_member')) {
     }
 }
 
+if (!function_exists('get_current_git_commit')) {
+    /**
+     * https://gist.github.com/stevegrunwell/3363975
+     *
+     * Get the hash of the current git HEAD
+     * @param str $branch The git branch to check
+     * @return mixed Either the hash or a boolean false
+     */
+    function get_current_git_commit($branch = 'master')
+    {
+        if ($hash = file_get_contents(sprintf('.git/refs/heads/%s', $branch))) {
+            return $hash;
+        } else {
+            return false;
+        }
+    }
+}
+
