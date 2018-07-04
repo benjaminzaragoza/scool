@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "chart.js": "^2.7.2",
-    "filepond": "^1.8.0",
+    "filepond": "^1.8.5",
     "filepond-plugin-file-validate-type": "^1.1.0",
     "filepond-plugin-image-preview": "^1.0.10",
     "filesize": "^3.6.1",
@@ -48,10 +48,10 @@
     "laravel-echo": "^1.4.0",
     "pusher-js": "^4.2.2",
     "sweetalert": "^2.1.0",
-    "vue-filepond": "^2.1.1",
-    "vue-full-calendar": "^4.0.0-0",
+    "vue-filepond": "^2.1.5",
+    "vue-full-calendar": "^4.0.0-1",
     "vuelidate": "^0.6.2",
-    "vuetify": "^1.0.19",
+    "vuetify": "^1.1.1",
     "vuex": "^3.0.1"
   }
 }
