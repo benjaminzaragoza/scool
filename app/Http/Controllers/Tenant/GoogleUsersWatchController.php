@@ -65,9 +65,9 @@ class GoogleUsersWatchController extends Controller
                 dump($timeInMillis + 36000000);
                 dump(Carbon::createFromTimestampMs($timeInMillis + 36000000)->toDateTimeString());
 //                $channel->setExpiration($timeInMillis + 36000000);
-//                $channel->setParams([
-//                    'ttl' => 600000000000
-//                ]);
+                $channel->setParams([
+                    'ttl' => 3600
+                ]);
 
                 $r = $directory->users->watch($channel,[
                     'customer' => $r->customerId, // sergitur@iesebre.com customerId obtained with get to the API
