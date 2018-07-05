@@ -2,6 +2,33 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
+                <v-dialog v-model="settingsDialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+                    <v-card>
+                        <v-toolbar dark color="primary">
+                            <v-btn icon dark @click.native="dialog = false">
+                                <v-icon>close</v-icon>
+                            </v-btn>
+                            <v-toolbar-title>Configuració Usuaris Google</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <v-toolbar-items>
+                                <v-btn dark flat @click.native="dialog = false">Guardar</v-btn>
+                            </v-toolbar-items>
+                        </v-toolbar>
+                        <v-list three-line subheader>
+                            <v-subheader>General</v-subheader>
+                            <v-list-tile avatar>
+                                <v-list-tile-action>
+                                    <v-checkbox v-model="googleWatch"></v-checkbox>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>Observar canvis d'usuaris Google (Watch)</v-list-tile-title>
+                                    <v-list-tile-sub-title>Activar les notificacions push de Google per tal de registrar/observar els canvis d'usuaris.
+                                        <a href="https://developers.google.com/admin-sdk/directory/v1/guides/push" target="_blank">Documentació</a></v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-dialog>
                 <v-toolbar color="blue darken-3">
                     <v-menu bottom>
                         <v-btn slot="activator" icon dark>
@@ -16,7 +43,7 @@
                     </v-menu>
                     <v-toolbar-title class="white--text title">Google users</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon class="white--text" @click="">
+                    <v-btn icon class="white--text" @click="settingsDialog = true">
                         <v-icon>settings</v-icon>
                     </v-btn>
                     <v-btn icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
@@ -102,7 +129,9 @@
         search: '',
         internalUsers: this.users,
         removing: false,
-        refreshing: false
+        refreshing: false,
+        settingsDialog: false,
+        googleWatch: false
       }
     },
     computed: {
@@ -122,6 +151,18 @@
         headers.push({text: 'Data creació', value: 'creationTime'})
         headers.push({text: 'Accions', sortable: false})
         return headers
+      }
+    },
+    watch: {
+      googleWatch (newValue) {
+        console.log('googleWatch changed to : ' + newValue)
+        if (newValue) {
+          axios.get('/api/v1/gsuite/users/watch').then(response => {
+            console.log(response)
+          }).catch(error => {
+            console.log(error)
+          })
+        }
       }
     },
     props: {

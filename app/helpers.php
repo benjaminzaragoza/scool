@@ -4558,6 +4558,61 @@ if (! function_exists('tune_google_client')) {
     }
 }
 
+if (! function_exists('google_user_exists')) {
+    function google_user_exists($user)
+    {
+        try {
+            $user = (new GoogleDirectory())->user($user);
+        } catch (Google_Service_Exception $e) {
+            return false;
+        }
+        if (google_user_check($user)) return true;
+        return false;
+    }
+}
+
+if (! function_exists('google_user_get')) {
+    /**
+     * Get Google User.
+     *
+     * @param $user
+     * @return mixed|void
+     */
+    function google_user_get($user)
+    {
+        return (new GoogleDirectory())->user($user);
+    }
+}
+
+if (! function_exists('google_user_create')) {
+    /**
+     * Create Google User
+     *
+     * @param $user
+     */
+    function google_user_create($user)
+    {
+        try {
+            (new GoogleDirectory())->user($user);
+        } catch (Google_Service_Exception $e) {
+            dump('Error creating google user. ' . $e->getMessage());
+        }
+
+    }
+}
+
+if (! function_exists('google_user_remove')) {
+    function google_user_remove($user)
+    {
+        (new GoogleDirectory())->removeUser($user);
+    }
+}
+
+/**
+ * GOOGLE GROUPS
+ */
+
+
 if (! function_exists('google_group_exists')) {
     function google_group_exists($group)
     {
@@ -4580,12 +4635,7 @@ if (! function_exists('google_group_get')) {
      */
     function google_group_get($group)
     {
-        try {
-            return (new GoogleDirectory())->group($group);
-        } catch (Google_Service_Exception $e) {
-            dump('Error getting google group : ' . $group . ' . ' . $e->getMessage());
-        }
-
+        return (new GoogleDirectory())->group($group);
     }
 }
 
@@ -4641,6 +4691,7 @@ if (! function_exists('google_group_check')) {
 
 if (! function_exists('google_user_check')) {
     function google_user_check($user) {
+        if(get_class($user) === 'Google_Service_Directory_User') return true;
         return array_key_exists('id', $user) &&
             array_key_exists('primaryEmail', $user) &&
             array_key_exists('isAdmin', $user) &&
@@ -4655,8 +4706,6 @@ if (! function_exists('google_user_check')) {
             array_key_exists('organizations', $user);
     }
 }
-
-
 
 if (! function_exists('get_photo_slugs_from_path')) {
     /**

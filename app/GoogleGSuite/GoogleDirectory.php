@@ -3,6 +3,7 @@
 namespace App\GoogleGSuite;
 
 use Google_Service_Directory_Group;
+use Google_Service_Directory_User;
 use PulkitJalan\Google\Facades\Google;
 
 /**
@@ -61,6 +62,62 @@ class GoogleDirectory
         return $users;
     }
 
+    public function user($user = null)
+    {
+        if(is_array($user)) {
+            $this->create_user($user);
+            return;
+        }
+        return $this->get_user($user);
+    }
+
+    /**
+     * get user.
+     *
+     * @param $user
+     * @return mixed
+     */
+    protected function get_user($user)
+    {
+        $r = $this->directory->users->get($user);
+        return $r;
+    }
+
+    protected function create_user($user)
+    {
+        $googleUser = new Google_Service_Directory_User();
+
+        // Mandatory:
+        // First name
+        // Last name
+        // Primary email
+        // Organizational Unit (default iesebre.com)
+
+        // TODO
+        // Optional:
+        // Secondary email
+        // Phone Number
+
+        $name = new  \Google_Service_Directory_UserName();
+        $name->setGivenName($user['givenName']);
+        $name->setFamilyName($user['familyName']);
+        $googleUser->setName($name);
+        $googleUser->setPrimaryEmail($user['primaryEmail']);
+        $path = '/';
+        if (array_key_exists('path',$user)) $path = $user['path'];
+        $googleUser->setOrgUnitPath($path);
+        $changePasswordAtNextLogin = false;
+        if (array_key_exists('changePasswordAtNextLogin',$user)) $changePasswordAtNextLogin = true;
+        $googleUser->setChangePasswordAtNextLogin($changePasswordAtNextLogin);
+        $hashFunction = 'SHA-1';
+        if (array_key_exists('hashFunction',$user)) $hashFunction = $user['hashFunction'];
+        $googleUser->setHashFunction($hashFunction);
+        $password = str_random();
+        if (array_key_exists('password',$user)) $password = $user['password'];
+        $googleUser->setPassword(sha1($password));
+        $this->directory->users->insert($googleUser);
+    }
+
     /**
      * Groups.
      *
@@ -102,6 +159,17 @@ class GoogleDirectory
     {
         $r = $this->directory->groups->get($group);
         return $r;
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param $user
+     * @return mixed
+     */
+    public function removeUser($user)
+    {
+        $this->directory->users->delete($user);
     }
 
     /**

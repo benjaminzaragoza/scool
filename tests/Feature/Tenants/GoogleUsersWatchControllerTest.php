@@ -10,11 +10,11 @@ use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class GoogleSuiteWatchUsersControllerTest.
+ * Class GoogleUsersWatchControllerTest.
  *
  * @package Tests\Feature\Tenants
  */
-class GoogleSuiteWatchUsersControllerTest extends BaseTenantTest
+class GoogleUsersWatchControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
@@ -41,7 +41,7 @@ class GoogleSuiteWatchUsersControllerTest extends BaseTenantTest
         Config::set('google.service.enable', true);
         Config::set('google.service.file', './storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json');
         Config::set('google.admin_email', 'sergitur@iesebre.com');
-        Config::set('app.url', 'https://iesebre.scool.iesebre.com');
+        Config::set('app.url', 'https://iesebre.scool.cat');
         $manager = create(User::class);
         $this->actingAs($manager,'api');
         $role = Role::firstOrCreate([
@@ -51,7 +51,7 @@ class GoogleSuiteWatchUsersControllerTest extends BaseTenantTest
         Config::set('auth.providers.users.model', User::class);
         $manager->assignRole($role);
 
-        $response = $this->json('POST','/api/v1/gsuite/watchusers');
+        $response = $this->json('POST','/api/v1/gsuite/users/watch');
         $response->assertSuccessful();
     }
 
@@ -65,9 +65,7 @@ class GoogleSuiteWatchUsersControllerTest extends BaseTenantTest
         $user = create(User::class);
         $this->actingAs($user,'api');
 
-        $response = $this->json('POST','/api/v1/gsuite/watchusers');
+        $response = $this->json('POST','/api/v1/gsuite/users/watch');
         $response->assertStatus(403);
     }
-
-
 }

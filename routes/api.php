@@ -128,8 +128,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 //            Route::get('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@show');
 
             //Google Suite watch users TODO
-            Route::post('/gsuite/watchusers', 'Tenant\GoogleSuiteWatchUsersController@store');
-
+            Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
         });
 
         Route::group(['prefix' => 'v1'], function () {

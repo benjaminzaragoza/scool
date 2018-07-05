@@ -22,6 +22,57 @@ class HelpersTest extends TestCase
         $this->assertFalse(google_group_exists('sdaawe12asdasdas@iesebre.com'));
     }
 
+    /** @test */
+    public function google_user_exists()
+    {
+        $this->assertTrue(google_user_exists('sergitur@iesebre.com'));
+        $this->assertFalse(google_user_exists('rqweq123asda@iesebre.com'));
+    }
+
+    /** @test */
+    public function google_user_get()
+    {
+        $user = google_user_get('sergitur@iesebre.com');
+        $this->assertInstanceOf('Google_Service_Directory_User',$user);
+        try {
+            $user = google_user_get('rqweq123asda@iesebre.com');
+        } catch (\Exception $e) {
+            return;
+        }
+        $this->fail('No exception throw when trying to get an unexisting user');
+    }
+
+    /** @test */
+    public function google_group_get()
+    {
+        $group = google_group_get('claustre@iesebre.com');
+        $this->assertInstanceOf('Google_Service_Directory_Group',$group);
+        try {
+            $group = google_group_get('rqweq123asda@iesebre.com');
+        } catch (\Exception $e) {
+            return;
+        }
+        $this->fail('No exception throw when trying to get an unexisting group');
+    }
+
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
+    public function google_user_create()
+    {
+        google_user_create([
+            'givenName' => 'Pepe',
+            'familyName' => 'Pardo',
+            'primaryEmail' => 'pepepardo@iesebre.com',
+        ]);
+        sleep('3');
+        $this->assertTrue(google_user_exists('pepepardo@iesebre.com'));
+        sleep('3');
+        google_user_remove('pepepardo@iesebre.com');
+    }
+
     /**
      * @test
      * @group slow

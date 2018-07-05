@@ -5,37 +5,41 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Requests\WatchGoogleSuiteUsers;
 use Carbon\Carbon;
 use Google_Service_Directory_Channel;
-use Illuminate\Http\Request;
 use PulkitJalan\Google\Facades\Google;
 use Webpatser\Uuid\Uuid;
 
 /**
- * Class GoogleSuiteWatchUsersController.
+ * Class GoogleUsersWatchController.
+ *
  * @package App\Http\Controllers
  */
-class GoogleSuiteWatchUsersController extends Controller
+class GoogleUsersWatchController extends Controller
 {
     /**
-     * GoogleSuiteTestConnectionController constructor.
+     * GoogleUsersWatchController constructor.
      */
     public function __construct()
     {
         tune_google_client();
     }
 
+    /**
+     * Store.
+     *
+     * @param WatchGoogleSuiteUsers $request
+     * @return \Exception
+     */
     public function store(WatchGoogleSuiteUsers $request)
     {
-        $domain = 'iesebre.com';
         $events = ['add','delete','makeAdmin','undelete','update'];
         $events = ['add'];
 
         $directory = Google::make('directory');
-
+        $adminUser = 'sergitur@iesebre.com';
         try {
-            $r = $directory->users->get('sergitur@iesebre.com');
+            $r = $directory->users->get($adminUser);
         } catch (\Exception $e) {
-            dump('CACA');
-            dd($e);
+            abort(500,'Error retrieving Google User info for ' . $adminUser);
             return $e;
         }
 
