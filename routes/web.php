@@ -44,8 +44,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             return view('tenants.welcome');
         });
 
-        // Gsuite users push notifications -> TODO
-        Route::post('/gsuite/notifications','Tenant\GoogleSuiteUsersPushNotificationController@store');
+        // Gsuite users push notifications -> Registered with Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
+        Route::post('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
 
         Route::get('/add_teacher', 'Tenant\PendingTeachersController@showForm');
         Route::get('/nou_professor', 'Tenant\PendingTeachersController@showForm');

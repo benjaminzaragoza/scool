@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Log;
 
 /**
- * Class GoogleSuiteUsersPushNotificationController.
+ * Class GoogleUsersPushNotificationController.
  *
  * @package App\Http\Controllers\Tenant
  */
-class GoogleSuiteUsersPushNotificationController extends Controller
+class GoogleUsersPushNotificationController extends Controller
 {
     public function store(Request $request)
     {

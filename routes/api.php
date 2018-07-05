@@ -112,7 +112,6 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/gsuite/groups/{group}/members', 'Tenant\GoogleGroupMembersController@index');
 
             //Google Apps/GSuite users
-
             Route::get('/gsuite/users', 'Tenant\GoogleUsersController@index');
 
 
@@ -129,6 +128,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //Google Suite watch users TODO
             Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {
