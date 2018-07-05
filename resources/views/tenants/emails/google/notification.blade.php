@@ -3,6 +3,12 @@
 
 Google Notification received! {{ $prova }}
 
+Request:
+
+<quote>
+    {{ $request }}
+</quote>
+
 <ul>
     @foreach ($headers as $header)
         <li>Header: {{ json_encode($header) }}</li>

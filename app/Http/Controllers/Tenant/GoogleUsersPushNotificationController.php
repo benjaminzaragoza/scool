@@ -22,7 +22,7 @@ class GoogleUsersPushNotificationController extends Controller
     public function store(Request $request)
     {
         dump($request->headers);
-//        dump(json_encode($request));
+        dump(json_encode($request));
         event(new GoogleUserNotificationReceived($request));
         Mail::to('stur@iesebre.com')->send(new GoogleUserNotificationReceivedMail($request));
     }
