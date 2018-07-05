@@ -62,9 +62,9 @@ class GoogleUsersWatchController extends Controller
                 dump($timeInMillis);
                 dump(Carbon::createFromTimestampMs($timeInMillis)->toDateTimeString());
                 dump('Proposed expiration: ');
-                dump($timeInMillis + 3600000);
-                dump(Carbon::createFromTimestampMs($timeInMillis + 3600000)->toDateTimeString());
-                $channel->setExpiration($timeInMillis + 3600000);
+                dump($timeInMillis + 36000000);
+                dump(Carbon::createFromTimestampMs($timeInMillis + 36000000)->toDateTimeString());
+//                $channel->setExpiration($timeInMillis + 36000000);
 //                $channel->setParams([
 //                    'ttl' => 600000000000
 //                ]);
@@ -81,11 +81,13 @@ class GoogleUsersWatchController extends Controller
                 return $e;
             }
         }
+        dump('NOW:');
+        dump(Carbon::now()->toDateTimeString());
         dump('EXPIRATION:');
         dump($r->expiration);
         dump(Carbon::createFromTimestampMs($r->expiration)->toDateTimeString());
 
-        dump('dassad');
+        dump('FINISH');
         //https://developers.google.com/admin-sdk/directory/v1/guides/push
 //        POST https://www.googleapis.com/admin/directory/v1/users/watch?domain=domain&event=event
 
