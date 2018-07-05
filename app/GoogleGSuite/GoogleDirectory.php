@@ -28,7 +28,6 @@ class GoogleDirectory
 
     public function users($maxResults = 500)
     {
-//        dd(get_class($this->directory->users)); //Google_Service_Directory_Resource_Users
         $continue = true;
         $users = [];
         $pageToken = null;

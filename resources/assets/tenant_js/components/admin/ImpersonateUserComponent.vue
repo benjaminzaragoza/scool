@@ -1,5 +1,5 @@
 <template>
-    <v-select
+    <v-autocomplete
             name="user"
             :label="label"
             :items="users"
@@ -7,7 +7,6 @@
             item-text="name"
             item-value="id"
             chips
-            autocomplete
             clearable
     >
         <template slot="selection" slot-scope="data">
@@ -37,7 +36,7 @@
                 </v-list-tile-content>
             </template>
         </template>
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <style>

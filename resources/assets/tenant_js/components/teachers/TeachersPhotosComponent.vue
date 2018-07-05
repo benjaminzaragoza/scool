@@ -8,14 +8,13 @@
 
             <h1 class="title">Fotos disponibles:</h1>
 
-            <v-select
+            <v-autocomplete
                     :items="internalAvailablePhotos"
                     v-model="photo"
                     label="Selecciona foto"
                     item-text="filename"
                     item-value="name"
                     chips
-                    autocomplete
                     clearable
             >
                 <template slot="selection" slot-scope="data">
@@ -41,7 +40,7 @@
                         </v-list-tile-content>
                     </template>
                 </template>
-            </v-select>
+            </v-autocomplete>
 
             <template v-if="showPhoto">
                 <span v-if="uploading">Pujant la foto...</span>
@@ -165,14 +164,13 @@
             </v-alert>
             <h1 class="title">Fitxers zip:</h1>
 
-            <v-select
+            <v-autocomplete
                     :items="internalZips"
                     v-model="zipFile"
                     label="Selecciona fitxer zip"
                     item-text="filename"
                     item-value="name"
                     chips
-                    autocomplete
                     clearable
             >
                 <template slot="selection" slot-scope="data">
@@ -192,7 +190,7 @@
                         </v-list-tile-content>
                     </template>
                 </template>
-            </v-select>
+            </v-autocomplete>
 
 
             <v-alert :value="true" type="error" v-for="error in zipErrors" :key="error.id">

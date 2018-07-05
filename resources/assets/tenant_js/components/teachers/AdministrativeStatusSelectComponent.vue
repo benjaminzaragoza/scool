@@ -1,16 +1,15 @@
 <template>
-    <v-select
+    <v-autocomplete
             :label="label"
             :items="administrativeStatuses"
             v-model="internalAdministrativeStatus"
             item-text="name"
             :item-value="itemValue"
-            autocomplete
             clearable
             @input="input"
             :error-messages="errorMessages"
     >
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <style>

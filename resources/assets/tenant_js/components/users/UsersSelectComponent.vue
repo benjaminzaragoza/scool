@@ -1,5 +1,5 @@
 <template>
-    <v-select
+    <v-autocomplete
             :name="name"
             :label="label"
             :items="users"
@@ -7,7 +7,6 @@
             item-text="name"
             :item-value="itemValue"
             chips
-            autocomplete
             clearable
             @input="input"
             @blur="blur"
@@ -35,7 +34,7 @@
                 <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
             </v-list-tile-content>
         </template>
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <style>

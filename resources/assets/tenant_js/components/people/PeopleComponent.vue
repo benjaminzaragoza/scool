@@ -116,7 +116,8 @@
     data () {
       return {
         search: '',
-        internalPeople: this.people
+        internalPeople: this.people,
+        removing: false
       }
     },
     computed: {

@@ -16,7 +16,7 @@ class GoogleUsersController extends Controller
     /**
      * Show.
      *
-     * @param ListGoogleGroups $request
+     * @param ListGoogleUsers $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(ListGoogleUsers $request)
@@ -38,7 +38,7 @@ class GoogleUsersController extends Controller
     public function index(ListGoogleUsers $request)
     {
         $directory = new GoogleDirectory();
-        return collect($directory->groups());
+        return collect($directory->users());
     }
 
 }

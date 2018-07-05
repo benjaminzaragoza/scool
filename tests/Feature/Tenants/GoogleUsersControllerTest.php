@@ -73,7 +73,6 @@ class GoogleUsersControllerTest extends BaseTenantTest
      */
     public function list_google_users()
     {
-        $this->withoutExceptionHandling();
         config_google_api();
         $usersManager = create(User::class);
         $this->actingAs($usersManager,'api');
@@ -84,23 +83,24 @@ class GoogleUsersControllerTest extends BaseTenantTest
         $response = $this->json('GET','/api/v1/gsuite/users');
 
         $response->assertSuccessful();
-        $response->dump();
+        $result = json_decode($response->getContent());
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(google_user_check($result[0]));
     }
 
     /**
-     *
      * @test
-     * @group slow
+     * @group google
      */
     public function regular_user_cannot_list_users()
     {
-//        config_google_api();
-//
-//        $user = create(User::class);
-//        $this->actingAs($user,'api');
-//        $response = $this->json('GET','/api/v1/gsuite/regular_user_cannot_list_users');
-//        $response->assertStatus(403);
-    }
+        config_google_api();
+        $user = create(User::class);
+        $this->actingAs($user,'api');
 
+        $response = $this->json('GET','/api/v1/gsuite/users');
+
+        $response->assertStatus(403);
+    }
 
 }

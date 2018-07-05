@@ -1,17 +1,16 @@
 <template>
-    <v-select
+    <v-autocomplete
             :label="label"
             :items="jobTypes"
             v-model="internalJobType"
             item-text="name"
             item-value="id"
-            autocomplete
             clearable
             @input="input"
             @blur="blur"
             :error-messages="errorMessages"
     >
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <script>

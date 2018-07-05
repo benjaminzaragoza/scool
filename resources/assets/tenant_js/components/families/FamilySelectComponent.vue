@@ -1,8 +1,7 @@
 <template>
-    <v-select
+    <v-autocomplete
             :name="name"
             :label="label"
-            autocomplete
             :required="required"
             clearable
             :error-messages="errorMessages"
@@ -16,7 +15,7 @@
         <template slot="item" slot-scope="{item: family}">
             <v-list-tile-content v-text="family.name"></v-list-tile-content>
         </template>
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <script>

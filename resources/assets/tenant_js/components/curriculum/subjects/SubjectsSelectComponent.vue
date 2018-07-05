@@ -1,12 +1,11 @@
 <template>
-    <v-select
+    <v-autocomplete
             :name="name"
             :label="label"
             :items="subjects"
             v-model="internalSubject"
             item-text="name"
             :item-value="itemValue"
-            autocomplete
             clearable
             @input="input"
             @blur="blur"
@@ -18,7 +17,7 @@
                 <v-list-tile-sub-title v-html="subject.code"></v-list-tile-sub-title>
             </v-list-tile-content>
         </template>
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <script>
