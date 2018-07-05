@@ -192,6 +192,7 @@ class GoogleSuiteUsersControllerTest extends BaseTenantTest
     /** @test */
     public function user_cannot_show_google_user_info()
     {
+        $this->withoutExceptionHandling();
         $user = create(User::class);
         $this->actingAs($user,'api');
 

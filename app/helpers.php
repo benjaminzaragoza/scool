@@ -4534,6 +4534,10 @@ if (! function_exists('seed_provinces')) {
     }
 }
 
+/**
+ * GOOGLE APPS / GSUITE HELPERS
+ */
+
 if (! function_exists('config_google_api')) {
     function config_google_api($file =  '/storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json',
                                $email = 'sergitur@iesebre.com') {
@@ -4562,7 +4566,7 @@ if (! function_exists('google_group_exists')) {
         } catch (Google_Service_Exception $e) {
             return false;
         }
-        if (google_group_check_($group)) return true;
+        if (google_group_check($group)) return true;
         return false;
     }
 }
@@ -4616,9 +4620,22 @@ if (! function_exists('google_group_remove')) {
     }
 }
 
-if (! function_exists('google_group_check_')) {
-    function google_group_check_($group) {
-        return get_class($group) === 'Google_Service_Directory_Group';
+if (! function_exists('google_group_check')) {
+    function google_group_check($group) {
+        if(get_class($group) === 'stdClass') {
+            return property_exists($group,'id') &&
+                property_exists($group, 'name') &&
+                property_exists($group, 'adminCreated') &&
+                property_exists($group, 'aliases') &&
+                property_exists($group, 'description') &&
+                property_exists($group, 'directMembersCount') &&
+                property_exists($group, 'email') &&
+                property_exists($group, 'etag') &&
+                property_exists($group, 'kind') &&
+                property_exists($group, 'nonEditableAliases');
+        } else {
+            return get_class($group) === 'Google_Service_Directory_Group';
+        }
     }
 }
 

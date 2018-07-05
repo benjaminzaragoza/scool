@@ -51,7 +51,7 @@ class GoogleDirectoryTest extends TestCase
         $groups = (new GoogleDirectory())->groups();
         $this->assertNotNull($groups);
         $this->assertTrue(is_array($groups));
-        $this->assertTrue(google_group_check_($groups[0]));
+        $this->assertTrue(google_group_check($groups[0]));
     }
 
     /**
@@ -62,7 +62,7 @@ class GoogleDirectoryTest extends TestCase
     {
         $group = (new GoogleDirectory())->group('claustre@iesebre.com');
         $this->assertNotNull($group);
-        $this->assertTrue(google_group_check_($group));
+        $this->assertTrue(google_group_check($group));
     }
 
     /**
@@ -100,11 +100,15 @@ class GoogleDirectoryTest extends TestCase
 
 
         google_group_remove('provaesborrar888@iesebre.com');
+        sleep(5);
+
         (new GoogleDirectory())->group([
             'name' => 'Prova',
-            'email' => 'prova1234456789@iesebre.com'
+            'email' => 'provaesborrar888@iesebre.com'
         ]);
-        $this->assertTrue(google_group_check_($group2));
+        sleep(5);
+
+        $this->assertTrue(google_group_exists('provaesborrar888@iesebre.com'));
         google_group_remove('provaesborrar888@iesebre.com');
 
     }

@@ -51,7 +51,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $response->assertViewIs('tenants.google_groups.show');
         $response->assertViewHas('groups', function($groups) {
-            return google_group_check_($groups[0]);
+            return google_group_check($groups[0]);
         });
     }
 
@@ -86,6 +86,9 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $usersManager->assignRole($role);
         $response = $this->json('GET','/api/v1/gsuite/groups');
         $response->assertSuccessful();
+        $groups = json_decode($response->getContent());
+//        dd($groups[0]);
+        $this->assertTrue(google_group_check($groups[0]));
     }
 
     /**
