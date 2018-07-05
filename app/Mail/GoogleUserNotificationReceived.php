@@ -36,6 +36,10 @@ class GoogleUserNotificationReceived extends Mailable
      */
     public function build()
     {
-        return $this->markdown('tenants.emails.google.notification');
+        return $this->markdown('tenants.emails.google.notification')
+            ->with([
+                'prova' => 'Hola que tal!',
+                'headers' => $this->request->headers
+            ]);
     }
 }
