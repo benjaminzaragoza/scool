@@ -2,10 +2,13 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Events\GoogleUserNotificationReceived;
 use Event;
 use Illuminate\Contracts\Console\Kernel;
+use Mail;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Mail\GoogleUserNotificationReceived as GoogleUserNotificationReceivedMail;
 
 /**
  * Class GoogleSuiteUsersPushNotificationControllerTest.
@@ -37,19 +40,18 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
     public function can_receive_google_suite_users_push_notifications()
     {
         Event::fake();
-
-        $response = $this->post('/gsuite/notifications',[
-            'kind' => "admin#directory#user",
-            'id' => 2341412,
-            'etag' => 'weqqw4321',
-            'primaryEmail' => 'prova@iesebre.com'
-        ]);
+        Mail::fake();
+//        $this->withoutExceptionHandling();
+        $response = $this->post('/gsuite/notifications');
 
         $response->assertSuccessful();
-        Event::assertDispatched(GoogleUserNotificationReceived::class);
 
-//        Event::assertDispatched(GooleUserNotificationReceived::class, function ($e) use ($order) {
-//            return $e->order->id === $order->id;
+//        Event::assertDispatched(GoogleUserNotificationReceived::class, function ($e) {
+//            return get_class($e->request) === 'Illuminate\Http\Request';
+//        });
+//
+//        Mail::assertQueued(GoogleUserNotificationReceivedMail::class, function ($e) {
+//            return get_class($e->request) === 'Illuminate\Http\Request';
 //        });
     }
 }

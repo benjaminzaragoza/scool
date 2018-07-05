@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Events\GoogleUserNotificationReceived;
 use Illuminate\Http\Request;
-use Log;
+use Mail;
+use App\Mail\GoogleUserNotificationReceived as GoogleUserNotificationReceivedMail;
 
 /**
  * Class GoogleUsersPushNotificationController.
@@ -12,13 +14,15 @@ use Log;
  */
 class GoogleUsersPushNotificationController extends Controller
 {
+    /**
+     * Store.
+     *
+     * @param Request $request
+     */
     public function store(Request $request)
     {
-        Log::info($request->headers);
-        $GoogleHeaders = collect($request->headers)->filter(function ($header, $key) {
-            return starts_with($key, 'X-Goog-');
-        });
-        Log::info($GoogleHeaders);
-        Log::info($request->input());
+//        dump(json_encode($request));
+        event(new GoogleUserNotificationReceived($request));
+        Mail::to('stur@iesebre.com')->queue(new GoogleUserNotificationReceivedMail($request));
     }
 }
