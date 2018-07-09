@@ -45,7 +45,7 @@ class GoogleUserNotificationReceived extends Mailable
             return $header[0];
         });
         $type = '';
-        if (array_key_exists('x-goog-resource-state',$googleHeaders)) {
+        if (array_key_exists('x-goog-resource-state',$googleHeaders->toArray())) {
             $type = $googleHeaders['x-goog-resource-state'];
         };
         $body = $this->request->getContent();
