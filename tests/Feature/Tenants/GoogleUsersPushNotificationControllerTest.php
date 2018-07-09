@@ -39,8 +39,7 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
      */
     public function can_receive_google_suite_users_push_notifications()
     {
-//        Event::fake();
-//        Mail::fake();
+        Event::fake();
         $this->withoutExceptionHandling();
         $response = $this->post('/gsuite/notifications',[],[
             'X-Goog-inventat' => 'PROVA'
@@ -48,12 +47,9 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
 
         $response->assertSuccessful();
 
-//        Event::assertDispatched(GoogleUserNotificationReceived::class, function ($e) {
-//            return get_class($e->request) === 'Illuminate\Http\Request';
-//        });
-//
-//        Mail::assertQueued(GoogleUserNotificationReceivedMail::class, function ($e) {
-//            return get_class($e->request) === 'Illuminate\Http\Request';
-//        });
+        Event::assertDispatched(GoogleUserNotificationReceived::class, function ($e) {
+            return get_class($e->request) === 'Illuminate\Http\Request';
+        });
+
     }
 }

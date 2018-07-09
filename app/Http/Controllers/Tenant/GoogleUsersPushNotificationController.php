@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Tenant;
 use App\Events\GoogleUserNotificationReceived;
 use Illuminate\Http\Request;
 use Mail;
-use App\Mail\GoogleUserNotificationReceived as GoogleUserNotificationReceivedMail;
 
 /**
  * Class GoogleUsersPushNotificationController.
@@ -21,10 +20,6 @@ class GoogleUsersPushNotificationController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO remove dumps
-//        dump($request->headers);
-//        dump(json_encode($request));
         event(new GoogleUserNotificationReceived($request));
-        Mail::to('stur@iesebre.com')->send(new GoogleUserNotificationReceivedMail($request));
     }
 }
