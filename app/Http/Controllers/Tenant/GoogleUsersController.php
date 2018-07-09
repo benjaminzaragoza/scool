@@ -22,7 +22,7 @@ class GoogleUsersController extends Controller
     public function show(ListGoogleUsers $request)
     {
         $users = collect([]);
-        $users = Cache::rememberForever('users', function() use ($users){
+        $users = Cache::rememberForever('google_users', function() use ($users){
             $directory = new GoogleDirectory();
             return collect($directory->users());
         });

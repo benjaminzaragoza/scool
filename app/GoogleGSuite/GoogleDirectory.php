@@ -27,6 +27,12 @@ class GoogleDirectory
         $this->domain = 'iesebre.com';
     }
 
+    /**
+     * Users.
+     *
+     * @param int $maxResults
+     * @return array
+     */
     public function users($maxResults = 500)
     {
         $continue = true;
