@@ -239,7 +239,7 @@ class GoogleDirectory
             $r = $directory->users->watch($channel,[
                 'customer' => $r->customerId, // sergitur@iesebre.com customerId obtained with get to the API
                 'event' => $event,
-                'domain' => 'iesebre.com'
+                'domain' => config('scool.gsuite_domain')
             ]);
         }
         dump('EXPIRATION:');
