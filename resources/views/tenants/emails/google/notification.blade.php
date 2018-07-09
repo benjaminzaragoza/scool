@@ -1,6 +1,15 @@
 @component('mail::message')
 # Google Users Push Notification received.
 
+<ul>
+    <li>Type: {{ $type }}</li>
+</ul>
+
+Body:
+@component('mail::panel')
+    {{ $body }}
+@endcomponent
+
 Google headers:
 <ul>
     @foreach ($googleHeaders as $googleHeaderKey => $googleHeader)
