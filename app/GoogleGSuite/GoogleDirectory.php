@@ -2,9 +2,12 @@
 
 namespace App\GoogleGSuite;
 
+use Carbon\Carbon;
+use Google_Service_Directory_Channel;
 use Google_Service_Directory_Group;
 use Google_Service_Directory_User;
 use PulkitJalan\Google\Facades\Google;
+use Webpatser\Uuid\Uuid;
 
 /**
  * Class GoogleDirectory.
@@ -199,5 +202,49 @@ class GoogleDirectory
     public function groupMembers($group, $maxResults = 500)
     {
         return $this->directory->members->listMembers($group,['maxResults' => $maxResults]);
+    }
+
+    /**
+     * Watch.
+     */
+    public function watch()
+    {
+        $events = config('scool.gsuite_events_to_watch');
+        $directory = Google::make('directory');
+        $adminUser = config('scool.gsuite_user');
+
+        $r = $directory->users->get($adminUser);
+
+        foreach ($events as $event) {
+            $channel = new Google_Service_Directory_Channel();
+            $channel->setId($uuid = Uuid::generate()->string);
+            $channel->setType('web_hook');
+            $address = config('app.url') . '/gsuite/notifications';
+            $channel->setAddress($address);
+            $channel->setToken($token = str_random(20));
+            // Màxim de la API és 6h?: https://stackoverflow.com/questions/40707761/google-webhooks-getting-this-error-pushinvalidttl-invalid-ttl-value-for-channe/40707786#40707786
+            // La resposta inclou l'expiration time i si comprovat és de 6hores
+            $channel->setParams([
+                'ttl' => 99999999999999999
+            ]);
+
+            // TODO
+            // IMPORTANT: si es registren múltiples canals es rebran tantes notificacions push com CANALS ACTIUS!
+            // Els canals tenen un ID que es pot utilitzar per tenir només un canal actiu i comprovar que el missatge
+            // ve del canal que volem i evitar duplicats
+
+            // Utilitzar Scheduling per executar cada 6 hores: https://laravel.com/docs/5.6/scheduling#introduction
+            // Com notificar errors/comprovar canal funciona i està actiu?
+
+            $r = $directory->users->watch($channel,[
+                'customer' => $r->customerId, // sergitur@iesebre.com customerId obtained with get to the API
+                'event' => $event,
+                'domain' => 'iesebre.com'
+            ]);
+        }
+        dump('EXPIRATION:');
+        dump($r->expiration);
+        dump(Carbon::createFromTimestampMs($r->expiration)->toDateTimeString());
+        dump('FINISH');
     }
 }
