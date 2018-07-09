@@ -41,10 +41,13 @@ class GoogleUserNotificationReceived extends Mailable
         $googleHeaders = $googleHeaders->map(function ($header) {
             return $header[0];
         });
+        $headers = $this->request->headers->map(function ($header) {
+            return $header[0];
+        });
         return $this->markdown('tenants.emails.google.notification')
             ->with([
                 'googleHeaders' => collect($googleHeaders),
-                'headers' => $this->request->headers,
+                'headers' => $headers,
                 'request' => json_encode($this->request)
             ]);
     }

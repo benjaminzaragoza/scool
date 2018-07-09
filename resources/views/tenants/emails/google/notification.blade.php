@@ -8,6 +8,13 @@ Google headers:
     @endforeach
 </ul>
 
+All headers:
+<ul>
+    @foreach ($headers as $headerKey => $header)
+        <li>{{ $headerKey }}: {{ $header }}</li>
+    @endforeach
+</ul>
+
 Full Request:
 
 <quote>
