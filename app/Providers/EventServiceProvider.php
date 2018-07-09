@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\GoogleUserNotificationReceived;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\CreateTenantDatabase;
+use App\Listeners\SendGoogleUserNotificationReceivedEmail;
 use App\Listeners\UnzipTeacherPhotos;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -25,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TeacherPhotosZipUploaded::class => [
             UnzipTeacherPhotos::class
+        ],
+        GoogleUserNotificationReceived::class => [
+            SendGoogleUserNotificationReceivedEmail::class
         ]
     ];
 

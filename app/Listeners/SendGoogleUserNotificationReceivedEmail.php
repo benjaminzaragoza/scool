@@ -20,6 +20,8 @@ class SendGoogleUserNotificationReceivedEmail
      */
     public function handle($event)
     {
-        Mail::to('stur@iesebre.com')->send(new GoogleUserNotificationReceived($event->request));
+        if (config('scool.gsuite_notifications_send_email')) {
+            Mail::to(config('scool.gsuite_notifications_email'))->send(new GoogleUserNotificationReceived($event->request));
+        }
     }
 }
