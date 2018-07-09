@@ -65,9 +65,19 @@ class GoogleUsersWatchController extends Controller
                 dump($timeInMillis + 36000000);
                 dump(Carbon::createFromTimestampMs($timeInMillis + 36000000)->toDateTimeString());
 //                $channel->setExpiration($timeInMillis + 36000000);
+                // Màxim de la API és 6h?: https://stackoverflow.com/questions/40707761/google-webhooks-getting-this-error-pushinvalidttl-invalid-ttl-value-for-channe/40707786#40707786
+                // La resposta inclou l'expiration time i si comprovat és de 6hores
                 $channel->setParams([
-                    'ttl' => 3600
+                    'ttl' => 99999999999999999
                 ]);
+
+                // IMPORTANT: si es registren múltiples canals es rebran tantes notificacions push com CANALS ACTIUS!
+                // Els canals tenen un ID que es pot utilitzar per tenir només un canal actiu i comprovar que el missatge
+                // ve del canal que volem i evitar duplicats
+
+                // Utilitzar Scheduling per executar cada 6 hores: https://laravel.com/docs/5.6/scheduling#introduction
+                // Com notificar errors/comprovar canal funciona i està actiu?
+
 
                 $r = $directory->users->watch($channel,[
                     'customer' => $r->customerId, // sergitur@iesebre.com customerId obtained with get to the API
