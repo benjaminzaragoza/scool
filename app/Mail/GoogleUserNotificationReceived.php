@@ -35,6 +35,8 @@ class GoogleUserNotificationReceived extends Mailable
      */
     public function build()
     {
+        $type = $this->request->header('x-goog-resource-state','');
+
         $googleHeaders = collect($this->request->headers)->filter(function ($header, $headerKey) {
             return starts_with($headerKey,'x-goog-');
         });
@@ -44,10 +46,7 @@ class GoogleUserNotificationReceived extends Mailable
         $headers = collect($this->request->headers)->map(function ($header) {
             return $header[0];
         });
-        $type = '';
-        if (array_key_exists('x-goog-resource-state',$googleHeaders->toArray())) {
-            $type = $googleHeaders['x-goog-resource-state'];
-        };
+
         $body = $this->request->getContent();
         return $this->markdown('tenants.emails.google.notification')
             ->with([
