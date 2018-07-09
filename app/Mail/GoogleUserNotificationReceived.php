@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
  * Class GoogleUserNotificationReceived.
@@ -37,11 +36,14 @@ class GoogleUserNotificationReceived extends Mailable
     public function build()
     {
         $googleHeaders = collect($this->request->headers)->filter(function ($header, $headerKey) {
-            return starts_with($headerKey,'X-Goog');
+            return starts_with($headerKey,'x-goog-');
+        });
+        $googleHeaders = $googleHeaders->map(function ($header) {
+            return $header[0];
         });
         return $this->markdown('tenants.emails.google.notification')
             ->with([
-                'googleHeaders' => $googleHeaders,
+                'googleHeaders' => collect($googleHeaders),
                 'headers' => $this->request->headers,
                 'request' => json_encode($this->request)
             ]);

@@ -42,7 +42,9 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
 //        Event::fake();
 //        Mail::fake();
         $this->withoutExceptionHandling();
-        $response = $this->post('/gsuite/notifications');
+        $response = $this->post('/gsuite/notifications',[],[
+            'X-Goog-inventat' => 'PROVA'
+        ]);
 
         $response->assertSuccessful();
 

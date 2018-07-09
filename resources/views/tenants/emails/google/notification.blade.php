@@ -1,5 +1,7 @@
 @component('mail::message')
 # Google Users Push Notification received.
+
+Google headers:
 <ul>
     @foreach ($googleHeaders as $googleHeaderKey => $googleHeader)
         <li>{{ $googleHeaderKey }}: {{ $googleHeader }}</li>
@@ -11,12 +13,6 @@ Full Request:
 <quote>
     {{ $request }}
 </quote>
-
-<ul>
-    @foreach ($headers as $header)
-        <li>Header: {{ json_encode($header) }}</li>
-    @endforeach
-</ul>
 
 Thanks,<br>
 {{ config('app.name') }}
