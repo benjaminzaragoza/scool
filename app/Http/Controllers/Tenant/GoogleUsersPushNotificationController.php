@@ -21,6 +21,7 @@ class GoogleUsersPushNotificationController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO remove dumps
         dump($request->headers);
         dump(json_encode($request));
         event(new GoogleUserNotificationReceived($request));

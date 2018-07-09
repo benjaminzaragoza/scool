@@ -36,9 +36,13 @@ class GoogleUserNotificationReceived extends Mailable
      */
     public function build()
     {
+        $googleHeaders = collect($this->request->headers)->filter(function ($header) {
+            return starts_with($header,'X-Goog') ;
+        });
+
         return $this->markdown('tenants.emails.google.notification')
             ->with([
-                'prova' => 'Hola que tal!',
+                'googleHeaders' => $googleHeaders,
                 'headers' => $this->request->headers,
                 'request' => json_encode($this->request)
             ]);
