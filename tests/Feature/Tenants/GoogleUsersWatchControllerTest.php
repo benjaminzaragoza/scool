@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Jobs\WatchGoogleUsers;
 use Illuminate\Contracts\Console\Kernel;
 use App\Models\User;
 use Config;
+use Queue;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,11 +36,13 @@ class GoogleUsersWatchControllerTest extends BaseTenantTest
 
     /**
      * @test
-     * @group working
+     * @group google
      */
     public function watch_google_users()
     {
         $this->withoutExceptionHandling();
+        Queue::fake();
+
         Config::set('google.service.enable', true);
         Config::set('google.service.file', './storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json');
         Config::set('google.admin_email', 'sergitur@iesebre.com');
@@ -54,6 +58,8 @@ class GoogleUsersWatchControllerTest extends BaseTenantTest
 
         $response = $this->json('POST','/api/v1/gsuite/users/watch');
         $response->assertSuccessful();
+
+        Queue::assertPushed(WatchGoogleUsers::class);
     }
 
     /** @test */

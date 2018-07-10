@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Requests\WatchGoogleSuiteUsers;
+use App\Jobs\WatchGoogleUsers;
 
 /**
  * Class GoogleUsersWatchController.
@@ -29,7 +30,6 @@ class GoogleUsersWatchController extends Controller
      */
     public function store(WatchGoogleSuiteUsers $request)
     {
-        $directory = new GoogleDirectory();
-        $directory->watch();
+        WatchGoogleUsers::dispatch();
     }
 }
