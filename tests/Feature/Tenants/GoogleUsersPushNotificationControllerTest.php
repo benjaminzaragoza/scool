@@ -39,8 +39,10 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
      */
     public function can_receive_google_suite_users_push_notifications()
     {
+        //        $this->withoutExceptionHandling();
+
         Event::fake();
-//        $this->withoutExceptionHandling();
+
         $response = $this->post('/gsuite/notifications',[],[
             'X-Goog-resource-state' => 'sync',
             'X-Goog-inventat' => 'PROVA'
