@@ -27,12 +27,12 @@ class GoogleNotification extends Model
      */
     public static function validate($request)
     {
+        dump(1);
         $type = self::getType($request);
+        dump($type);
         if (!$type) return false;
-        $watch = GoogleWatch::where('channel_type',$type)->order_by('created_at', 'desc')->first();
-        if ( $watch->token === self::getToken($request) &&
-             $watch->channel_id === self::getChannelId($request) &&
-             self::checkExpiration(self::getExpiration($request))) return true;
+        $watch = GoogleWatch::latest()->where('channel_id',self::getChannelId($request))->where('token',self::getToken($request))->first();
+        if ( $watch && self::checkExpiration(self::getExpiration($request))) return true;
         return false;
     }
 
@@ -61,29 +61,32 @@ class GoogleNotification extends Model
      * Get token.
      *
      * @param $request
+     * @return mixed
      */
     public static function getToken($request)
     {
-        $request->header(self::GOOGLE_HEADER_CHANNEL_TOKEN,null);
+        return $request->header(self::GOOGLE_HEADER_CHANNEL_TOKEN,null);
     }
 
     /**
      * Get channel id.
      *
      * @param $request
+     * @return mixed
      */
     public static function getChannelId($request)
     {
-        $request->header(self::GOOGLE_HEADER_CHANNEL_ID,null);
+        return $request->header(self::GOOGLE_HEADER_CHANNEL_ID,null);
     }
 
     /**
      * Get notification type.
      *
      * @param $request
+     * @return mixed
      */
     public static function getType($request)
     {
-        $request->header(self::GOOGLE_HEADER_RESOURCE_STATE,null);
+        return $request->header(self::GOOGLE_HEADER_RESOURCE_STATE,null);
     }
 }
