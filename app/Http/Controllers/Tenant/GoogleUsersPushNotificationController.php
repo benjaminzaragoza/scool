@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Events\GoogleUserNotificationReceived;
+use App\Models\GoogleNotification;
 use Illuminate\Http\Request;
 use Mail;
 
@@ -20,6 +21,11 @@ class GoogleUsersPushNotificationController extends Controller
      */
     public function store(Request $request)
     {
-        event(new GoogleUserNotificationReceived($request));
+        if (GoogleNotification::validate($request)) {
+            event(new GoogleUserNotificationReceived($request));
+        } else {
+            event(new InvalidGoogleUserNotificationReceived($request));
+        }
+
     }
 }
