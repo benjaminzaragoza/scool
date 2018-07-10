@@ -1,3 +1,35 @@
+# Google Apps Watch/Push Notifications
+
+Google api limits to 6 hours the watch expiration time. Also permits to ahve duplicate watches (so we can receive multiple
+times the same notification throuh different channels)
+
+Every channel has:
+- Id: we use UUId with $channel->setId($uuid = Uuid::generate()->string);
+- Token: $token -> $channel->setToken($token = str_random(20));
+
+We use a table to register every time a watch is executed:
+
+table: google_watches | model: GoogleWatch
+- id
+- channel_id
+- token
+- expiration_time -> Used as boolean confirmed (if exist then we have received a sync)
+- updated-at
+- created-at
+
+Then we use Laravel Scheduler to execute watches every 5 hours (before expiration in 6 hours). When a watch is executed
+then we confirm wath is received by Google looking for confirmed boolean at table google_watches (oly filled to true if
+google sync message is received) at:
+- 30 seconds later
+- 1 minute later
+- 5 minutes later
+
+If not sync is received we execute watch again.
+
+## Google Apps Watch/Push Notifications ALERTS
+
+- Execute every hour a command than checks exists a valid watcher: At google_watches table look for an active channel (not expired)
+
 
 # Link:
 
