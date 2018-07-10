@@ -2,6 +2,7 @@
 
 namespace App\GoogleGSuite;
 
+use App\Models\GoogleWatch;
 use Carbon\Carbon;
 use Google_Service_Directory_Channel;
 use Google_Service_Directory_Group;
@@ -224,29 +225,21 @@ class GoogleDirectory
             $address = $tenant_url . '/gsuite/notifications';
             $channel->setAddress($address);
             $channel->setToken($token = str_random(20));
-            // Màxim de la API és 6h?: https://stackoverflow.com/questions/40707761/google-webhooks-getting-this-error-pushinvalidttl-invalid-ttl-value-for-channe/40707786#40707786
-            // La resposta inclou l'expiration time i si comprovat és de 6hores
+            // API max is 6h? it seems yes: https://stackoverflow.com/questions/40707761/google-webhooks-getting-this-error-pushinvalidttl-invalid-ttl-value-for-channe/40707786#40707786
             $channel->setParams([
                 'ttl' => 99999999999999999
             ]);
-
-            // TODO
-            // IMPORTANT: si es registren múltiples canals es rebran tantes notificacions push com CANALS ACTIUS!
-            // Els canals tenen un ID que es pot utilitzar per tenir només un canal actiu i comprovar que el missatge
-            // ve del canal que volem i evitar duplicats
-
-            // Utilitzar Scheduling per executar cada 6 hores: https://laravel.com/docs/5.6/scheduling#introduction
-            // Com notificar errors/comprovar canal funciona i està actiu?
-
             $r = $directory->users->watch($channel,[
                 'customer' => $r->customerId, // sergitur@iesebre.com customerId obtained with get to the API
                 'event' => $event,
                 'domain' => config('scool.gsuite_domain')
             ]);
+            GoogleWatch::create([
+                'channel_id' => $uuid,
+                'token' => $token,
+                'channel_type' => $event,
+                'expiration_time2' => $r->expiration
+            ]);
         }
-        dump('EXPIRATION:');
-        dump($r->expiration);
-        dump(Carbon::createFromTimestampMs($r->expiration)->toDateTimeString());
-        dump('FINISH');
     }
 }

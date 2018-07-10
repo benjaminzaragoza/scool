@@ -13,6 +13,8 @@ table: google_watches | model: GoogleWatch
 - id
 - channel_id
 - token
+- channel_type: add: user created event | delete: user deleted event | makeAdmin: user admin status change event
+                undelete: user undeleted event | update: user updated event
 - expiration_time -> Used as boolean confirmed (if exist then we have received a sync)
 - updated-at
 - created-at
