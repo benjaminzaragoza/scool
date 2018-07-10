@@ -4282,6 +4282,7 @@ if (!function_exists('configure_tenant')) {
         Config::set('app.shortname', $tenant->name);
         Config::set('app.subdomain',$tenant->subdomain);
         Config::set('app.email_domain',$tenant->email_domain);
+        Config::set('app.tenant_url','https://' . $tenant->subdomain . '.' . Config::get('app.domain'));
         config_google_api('/storage/app/' . $tenant->gsuite_service_account_path,$tenant->gsuite_admin_email);
         Config::set('auth.providers.users.model', \App\Models\User::class);
         Config::set('auth.providers.users.driver', 'scool');

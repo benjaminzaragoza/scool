@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\GoogleGSuite\GoogleDirectory;
+use Config;
 use Illuminate\Console\Command;
 
 /**
@@ -17,7 +18,7 @@ class WatchGoogleUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'google-users:watch';
+    protected $signature = 'google-users:watch {tenant}';
 
     /**
      * The console command description.
@@ -44,6 +45,6 @@ class WatchGoogleUsers extends Command
     public function handle()
     {
         $directory = new GoogleDirectory();
-        $directory->watch();
+        $directory->watch('https://' . $this->argument('tenant') . '.' . Config::get('app.domain'));
     }
 }

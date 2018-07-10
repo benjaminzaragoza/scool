@@ -207,7 +207,7 @@ class GoogleDirectory
     /**
      * Watch.
      */
-    public function watch()
+    public function watch($tenant_url = null)
     {
         $events = config('scool.gsuite_events_to_watch');
         $directory = Google::make('directory');
@@ -215,11 +215,13 @@ class GoogleDirectory
 
         $r = $directory->users->get($adminUser);
 
+        if ($tenant_url == null) $tenant_url = config('app.tenant_url');
+
         foreach ($events as $event) {
             $channel = new Google_Service_Directory_Channel();
             $channel->setId($uuid = Uuid::generate()->string);
             $channel->setType('web_hook');
-            $address = config('app.url') . '/gsuite/notifications';
+            $address = $tenant_url . '/gsuite/notifications';
             $channel->setAddress($address);
             $channel->setToken($token = str_random(20));
             // Màxim de la API és 6h?: https://stackoverflow.com/questions/40707761/google-webhooks-getting-this-error-pushinvalidttl-invalid-ttl-value-for-channe/40707786#40707786
