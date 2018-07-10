@@ -238,7 +238,7 @@ class GoogleDirectory
                 'channel_id' => $uuid,
                 'token' => $token,
                 'channel_type' => $event,
-                'expiration_time2' => $r->expiration
+                'expiration_time2' => Carbon::createFromTimestampMs($r->expiration)
             ]);
         }
     }

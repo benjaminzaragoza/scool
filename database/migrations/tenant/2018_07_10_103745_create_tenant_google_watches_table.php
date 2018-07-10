@@ -18,8 +18,8 @@ class CreateTenantGoogleWatchesTable extends Migration
             $table->uuid('channel_id');
             $table->string('token');
             $table->enum('channel_type', ['add', 'delete','makeAdmin','undelete','update']);
-            $table->dateTime('expiration_time');
-            $table->dateTime('expiration_time2');
+            $table->dateTime('expiration_time')->nullable();
+            $table->dateTime('expiration_time2')->nullable();
             $table->timestamps();
         });
     }

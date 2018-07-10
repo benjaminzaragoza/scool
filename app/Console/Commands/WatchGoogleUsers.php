@@ -18,7 +18,7 @@ class WatchGoogleUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'google-users:watch {tenant}';
+    protected $signature = 'google-users:watch {tenant} {domain?}';
 
     /**
      * The console command description.
@@ -44,7 +44,14 @@ class WatchGoogleUsers extends Command
      */
     public function handle()
     {
+        apply_tenant($this->argument('tenant'));
         $directory = new GoogleDirectory();
-        $directory->watch('https://' . $this->argument('tenant') . '.' . Config::get('app.domain'));
+        $url = 'https://' . $this->argument('tenant') . '.';
+        if ($this->argument('domain')) {
+            $url = $url . $this->argument('domain');
+        } else {
+            $url = $url . Config::get('app.domain');
+        }
+        $directory->watch($url);
     }
 }

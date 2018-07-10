@@ -45,6 +45,8 @@ class CleanGoogleuserswatch extends Command
      */
     public function handle()
     {
+        apply_tenant($this->argument('tenant'));
         GoogleWatch::truncate();
+        $this->info('Table google_watches truncated ok!');
     }
 }
