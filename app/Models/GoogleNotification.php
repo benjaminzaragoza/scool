@@ -46,6 +46,17 @@ class GoogleNotification extends Model
     }
 
     /**
+     * Get messge number.
+     *
+     * @param $request
+     * @return mixed
+     */
+    public static function getMessageNumber($request)
+    {
+        return $request->header(self::GOOGLE_HEADER_MESSAGE_NUMBER,null);
+    }
+
+    /**
      * Get expiration.
      *
      * @param $request
