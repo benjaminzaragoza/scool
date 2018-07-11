@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\GoogleUserNotificationReceived;
+use App\Events\InvalidGoogleUserNotificationReceived;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\CreateTenantDatabase;
@@ -32,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
         GoogleUserNotificationReceived::class => [
             SendGoogleUserNotificationReceivedEmail::class,
             SyncGoogleUsers::class
+        ],
+        InvalidGoogleUserNotificationReceived::class => [
+            SendGoogleInvalidUserNotificationReceivedEmail::class,
         ]
     ];
 

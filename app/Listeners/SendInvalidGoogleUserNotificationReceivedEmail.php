@@ -6,11 +6,11 @@ use App\Mail\GoogleUserNotificationReceived;
 use Mail;
 
 /**
- * Class SendInvalidGoogleUserNotificationReceivedEmail.
+ * Class SendGoogleUserNotificationsReceivedEmail.
  *
  * @package App\Listeners
  */
-class SendInvalidGoogleUserNotificationReceivedEmail
+class SendGoogleUserNotificationReceivedEmail
 {
     /**
      * Handle the event.
@@ -21,7 +21,7 @@ class SendInvalidGoogleUserNotificationReceivedEmail
     public function handle($event)
     {
         if (config('scool.gsuite_notifications_send_email')) {
-            Mail::to(config('scool.gsuite_notifications_email'))->send(new GoogleInvalidUserNotificationReceived($event->request));
+            Mail::to(config('scool.gsuite_notifications_email'))->send(new GoogleUserNotificationReceived($event->request));
         }
     }
 }

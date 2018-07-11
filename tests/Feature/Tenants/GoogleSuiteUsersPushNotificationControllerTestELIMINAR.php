@@ -32,9 +32,11 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
     /**
      * @test
      * @group working
+     * @group google
      */
     public function can_receive_google_suite_users_push_notifications()
     {
+        $this->withoutExceptionHandling();
         $response = $this->post('/gsuite/notifications',[
             'kind' => "admin#directory#user",
             'id' => 2341412,

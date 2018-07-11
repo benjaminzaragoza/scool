@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Events\GoogleUserNotificationReceived;
+use App\Events\InvalidGoogleUserNotificationReceived;
 use App\Models\GoogleNotification;
 use Illuminate\Http\Request;
 use Mail;
