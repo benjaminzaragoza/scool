@@ -141,7 +141,7 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
      */
     public function can_receive_google_suite_users_push_notifications_invalid_expiration_date()
     {
-                $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         GoogleWatch::create([
             'channel_id' => '123456789',
             'channel_type' => 'add',
