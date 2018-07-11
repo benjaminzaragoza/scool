@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Events\GoogleUserNotificationReceived;
 use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Models\GoogleNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -27,7 +28,7 @@ class GoogleUsersPushNotificationController extends Controller
             'channel_type' => GoogleNotification::getType($request),
             'token' => GoogleNotification::getToken($request),
             'message_number' => GoogleNotification::getMessageNumber($request),
-            'expiration_time' => GoogleNotification::getExpiration($request)
+            'expiration_time' => Carbon::createFromTimestampMs(GoogleNotification::getExpiration($request))
         ]);
         if (GoogleNotification::validate($request)) {
             event(new GoogleUserNotificationReceived($request));
