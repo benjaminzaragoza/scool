@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Events\InvalidGoogleUserNotificationReceived;
+use Event;
 use Illuminate\Contracts\Console\Kernel;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,12 +33,13 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
 
     /**
      * @test
-     * @group working
      * @group google
      */
-    public function can_receive_google_suite_users_push_notifications()
+    public function can_receive_google_invalid_suite_users_push_notifications()
     {
         $this->withoutExceptionHandling();
+        Event::fake();
+
         $response = $this->post('/gsuite/notifications',[
             'kind' => "admin#directory#user",
             'id' => 2341412,
@@ -45,6 +48,9 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
         ]);
 
         $response->assertSuccessful();
-        $response->dump();
+        $result = json_decode($response->getContent());
+        $this->assertEquals('Error', $result->result);
+
+        Event::assertDispatched(InvalidGoogleUserNotificationReceived::class);
     }
 }

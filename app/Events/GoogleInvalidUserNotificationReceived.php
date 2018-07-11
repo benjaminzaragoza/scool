@@ -12,11 +12,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Http\Request;
 
 /**
- * Class InvalidGoogleUserNotificationReceived
+ * Class GoogleInvalidUserNotificationReceived
  *
  * @package App\Events
  */
-class InvalidGoogleUserNotificationReceived
+class GoogleInvalidUserNotificationReceived
 
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;

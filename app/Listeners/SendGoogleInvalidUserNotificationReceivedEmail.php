@@ -2,15 +2,15 @@
 
 namespace App\Listeners;
 
-use App\Mail\GoogleUserNotificationReceived;
+use App\Mail\GoogleInvalidUserNotificationReceived;
 use Mail;
 
 /**
- * Class SendGoogleUserNotificationsReceivedEmail.
+ * Class SendGoogleInvalidUserNotificationReceivedEmail.
  *
  * @package App\Listeners
  */
-class SendGoogleUserNotificationReceivedEmail
+class SendGoogleInvalidUserNotificationReceivedEmail
 {
     /**
      * Handle the event.
@@ -21,7 +21,7 @@ class SendGoogleUserNotificationReceivedEmail
     public function handle($event)
     {
         if (config('scool.gsuite_notifications_send_email')) {
-            Mail::to(config('scool.gsuite_notifications_email'))->send(new GoogleUserNotificationReceived($event->request));
+            Mail::to(config('scool.gsuite_notifications_email'))->queue(new GoogleInvalidUserNotificationReceived($event->request));
         }
     }
 }

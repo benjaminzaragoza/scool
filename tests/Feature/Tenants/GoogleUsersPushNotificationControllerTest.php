@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Tenants;
 
-use App\Events\GoogleUserNotificationReceived;
+use App\Events\GoogleInvalidUserNotificationReceived;
+use App\Mail\GoogleInvalidUserNotificationReceived as GoogleInvalidUserNotificationReceivedEmail;
 use Event;
 use Illuminate\Contracts\Console\Kernel;
 use Mail;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Mail\GoogleUserNotificationReceived as GoogleUserNotificationReceivedMail;
 
 /**
  * Class GoogleSuiteUsersPushNotificationControllerTest.
@@ -40,7 +40,6 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
     public function can_receive_google_suite_users_push_notifications()
     {
         //        $this->withoutExceptionHandling();
-
         Event::fake();
 
         $response = $this->post('/gsuite/notifications',[],[
@@ -50,9 +49,26 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
 
         $response->assertSuccessful();
 
-        Event::assertDispatched(GoogleUserNotificationReceived::class, function ($e) {
-            return get_class($e->request) === 'Illuminate\Http\Request';
-        });
+        Event::assertDispatched(GoogleInvalidUserNotificationReceived::class);
 
+    }
+
+    /**
+     * @test
+     * @group working
+     */
+    public function can_receive_google_suite_users_push_notifications_email()
+    {
+        //        $this->withoutExceptionHandling();
+        Mail::fake();
+
+        $response = $this->post('/gsuite/notifications',[],[
+            'X-Goog-resource-state' => 'sync',
+            'X-Goog-inventat' => 'PROVA'
+        ]);
+
+        $response->assertSuccessful();
+
+        Mail::assertQueued(GoogleInvalidUserNotificationReceivedEmail::class);
     }
 }

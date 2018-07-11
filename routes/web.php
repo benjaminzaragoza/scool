@@ -46,7 +46,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
         // Gsuite users push notifications -> Registered with Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
         Route::post('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
-        Route::get('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
+        // TODO remove only needed for testing:
+//        Route::get('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
 
         Route::get('/add_teacher', 'Tenant\PendingTeachersController@showForm');
         Route::get('/nou_professor', 'Tenant\PendingTeachersController@showForm');
@@ -75,7 +76,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
 
             // ******* Emails ********
-
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');
 
             // Personal data (people) management
