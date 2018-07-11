@@ -5,7 +5,6 @@ namespace Tests\Feature\Tenants;
 use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Events\GoogleUserNotificationReceived;
 use App\Jobs\SyncGoogleUsers;
-use App\Jobs\WatchGoogleUsers;
 use App\Mail\GoogleInvalidUserNotificationReceived as GoogleInvalidUserNotificationReceivedEmail;
 use App\Mail\GoogleUserNotificationReceived as GoogleUserNotificationReceivedEmail;
 use App\Models\GoogleWatch;
@@ -70,7 +69,7 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
             'channel_type' => 'sync',
             'message_number' => 1,
             'expiration_time' => $expiration,
-            'valid' => false
+            'valid' => true
         ]);
 
         Event::assertDispatched(GoogleUserNotificationReceived::class);
@@ -164,12 +163,21 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
             'x-goog-channel-id' => '123456789',
             'x-goog-channel-token' => 'TOKEN',
             'x-goog-message-number' => 1,
-            'x-goog-channel-expiration' => Carbon::now()->subHours(1)->timestamp*1000
+            'x-goog-channel-expiration' => $expiration = Carbon::now()->subHours(1)->timestamp*1000
         ]);
 
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
         $this->assertEquals('Error',$result->result);
+
+        $this->assertDatabaseHas('google_notifications',[
+            'channel_id' => '123456789',
+            'token' => 'TOKEN',
+            'channel_type' => 'sync',
+            'message_number' => 1,
+            'expiration_time' => $expiration,
+            'valid' => false
+        ]);
     }
 
     /**

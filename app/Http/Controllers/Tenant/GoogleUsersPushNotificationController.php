@@ -22,7 +22,7 @@ class GoogleUsersPushNotificationController extends Controller
      */
     public function store(Request $request)
     {
-        GoogleNotification::create([
+        $notification = GoogleNotification::create([
             'channel_id' => GoogleNotification::getChannelId($request),
             'channel_type' => GoogleNotification::getType($request),
             'token' => GoogleNotification::getToken($request),
@@ -31,6 +31,8 @@ class GoogleUsersPushNotificationController extends Controller
         ]);
         if (GoogleNotification::validate($request)) {
             event(new GoogleUserNotificationReceived($request));
+            $notification->valid = true;
+            $notification->save();
             return ['result' => 'Ok'];
         } else {
             event(new GoogleInvalidUserNotificationReceived($request));
