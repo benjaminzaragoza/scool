@@ -27,9 +27,7 @@ class GoogleNotification extends Model
      */
     public static function validate($request)
     {
-        dump(1);
         $type = self::getType($request);
-        dump($type);
         if (!$type) return false;
         $watch = GoogleWatch::latest()->where('channel_id',self::getChannelId($request))->where('token',self::getToken($request))->first();
         if ( $watch && self::checkExpiration(self::getExpiration($request))) return true;
