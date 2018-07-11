@@ -42,17 +42,18 @@ class GoogleNotification extends Model
      */
     public static function checkExpiration($expiration)
     {
-        return Carbon::createFromTimestampMs($expiration)->lt(Carbon::now());
+        return Carbon::createFromTimestampMs($expiration)->gt(Carbon::now());
     }
 
     /**
      * Get expiration.
      *
      * @param $request
+     * @return mixed
      */
     public static function getExpiration($request)
     {
-        $request->header(self::GOOGLE_HEADER_CHANNEL_EXPIRATION,null);
+        return $request->header(self::GOOGLE_HEADER_CHANNEL_EXPIRATION,null);
     }
 
     /**

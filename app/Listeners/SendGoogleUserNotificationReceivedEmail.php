@@ -21,7 +21,7 @@ class SendGoogleUserNotificationReceivedEmail
     public function handle($event)
     {
         if (config('scool.gsuite_notifications_send_email')) {
-            Mail::to(config('scool.gsuite_notifications_email'))->send(new GoogleUserNotificationReceived($event->request));
+            Mail::to(config('scool.gsuite_notifications_email'))->queue(new GoogleUserNotificationReceived($event->request));
         }
     }
 }
