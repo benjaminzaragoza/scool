@@ -29,7 +29,7 @@ class GoogleUsersPushNotificationController extends Controller
             'channel_type' => GoogleNotification::getType($request),
             'token' => GoogleNotification::getToken($request),
             'message_number' => GoogleNotification::getMessageNumber($request),
-            'expiration_time' => is_numeric($expiration) ? Carbon::createFromTimestampMs($expiration) : null
+            'expiration_time' => $expiration ? Carbon::parse($expiration)->tz(config('app.timezone')) : null
         ]);
         if (GoogleNotification::validate($request)) {
             event(new GoogleUserNotificationReceived($request));

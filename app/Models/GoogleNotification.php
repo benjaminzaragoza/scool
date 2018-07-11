@@ -42,7 +42,7 @@ class GoogleNotification extends Model
      */
     public static function checkExpiration($expiration)
     {
-        return Carbon::createFromTimestampMs($expiration)->gt(Carbon::now());
+        return Carbon::parse($expiration)->gt(Carbon::now());
     }
 
     /**

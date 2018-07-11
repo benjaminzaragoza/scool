@@ -57,7 +57,8 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
             'x-goog-channel-id' => '123456789',
             'x-goog-channel-token' => 'TOKEN',
             'x-goog-message-number' => 1,
-            'x-goog-channel-expiration' => $expiration->timestamp*1000
+            'x-goog-channel-expiration' => $expiration->toRfc7231String()
+//            X-Goog-Channel-Expiration: Tue, 29 Oct 2013 20:32:02 GMT
         ]);
 
         $response->assertSuccessful();
@@ -66,10 +67,10 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
 
         $this->assertDatabaseHas('google_notifications',[
             'channel_id' => '123456789',
-            'token' => 'TOKEN',
             'channel_type' => 'sync',
+            'token' => 'TOKEN',
             'message_number' => 1,
-            'expiration_time' => $expiration,
+            'expiration_time' => Carbon::parse($expiration)->toDateTimeString(),
             'valid' => true
         ]);
 
@@ -82,19 +83,20 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
      */
     public function can_receive_google_suite_users_push_notifications_email()
     {
-        //        $this->withoutExceptionHandling();
         Mail::fake();
         GoogleWatch::create([
             'channel_id' => '123456789',
             'channel_type' => 'add',
             'token' => 'TOKEN'
         ]);
+        $expiration = Carbon::now()->addHours(1);
         $response = $this->post('/gsuite/notifications',[],[
             'X-Goog-resource-state' => 'sync',
             'x-goog-channel-id' => '123456789',
             'x-goog-channel-token' => 'TOKEN',
             'x-goog-message-number' => 1,
-            'x-goog-channel-expiration' => Carbon::now()->addHours(1)->timestamp*1000
+            'x-goog-channel-expiration' => $expiration->toRfc7231String()
+//            X-Goog-Channel-Expiration: Tue, 29 Oct 2013 20:32:02 GMT
         ]);
 
         $response->assertSuccessful();
@@ -110,7 +112,6 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
      */
     public function can_receive_google_suite_users_push_notifications_job()
     {
-        //        $this->withoutExceptionHandling();
         Queue::fake();
         GoogleWatch::create([
             'channel_id' => '123456789',
@@ -119,12 +120,15 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
         ]);
 
         // Do not sinchronize users with syncs!!!
+        $expiration = Carbon::now()->addHours(1);
+
         $response = $this->post('/gsuite/notifications',[],[
             'X-Goog-resource-state' => 'sync',
             'x-goog-channel-id' => '123456789',
             'x-goog-channel-token' => 'TOKEN',
             'x-goog-message-number' => 1,
-            'x-goog-channel-expiration' => Carbon::now()->addHours(1)->timestamp*1000
+            'x-goog-channel-expiration' => $expiration->toRfc7231String()
+//            X-Goog-Channel-Expiration: Tue, 29 Oct 2013 20:32:02 GMT
         ]);
 
         $response->assertSuccessful();
@@ -132,12 +136,13 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
         $this->assertEquals('Ok',$result->result);
         Queue::assertNotPushed(SyncGoogleUsers::class);
 
+        $expiration = Carbon::now()->addHours(1);
         $response = $this->post('/gsuite/notifications',[],[
             'X-Goog-resource-state' => 'add',
             'x-goog-channel-id' => '123456789',
             'x-goog-channel-token' => 'TOKEN',
             'x-goog-message-number' => 1,
-            'x-goog-channel-expiration' => Carbon::now()->addHours(1)->timestamp*1000
+            'x-goog-channel-expiration' => $expiration->toRfc7231String()
         ]);
 
         $response->assertSuccessful();
@@ -153,7 +158,6 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
      */
     public function can_receive_google_suite_users_push_notifications_invalid_expiration_date()
     {
-//        $this->withoutExceptionHandling();
         GoogleWatch::create([
             'channel_id' => '123456789',
             'channel_type' => 'add',
@@ -165,7 +169,7 @@ class GoogleSuiteUsersPushNotificationControllerTest extends BaseTenantTest
             'x-goog-channel-id' => '123456789',
             'x-goog-channel-token' => 'TOKEN',
             'x-goog-message-number' => 1,
-            'x-goog-channel-expiration' => $expiration->timestamp*1000
+            'x-goog-channel-expiration' => $expiration->toRfc7231String()
         ]);
 
         $response->assertSuccessful();
