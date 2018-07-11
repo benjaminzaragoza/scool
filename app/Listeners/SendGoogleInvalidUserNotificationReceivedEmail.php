@@ -21,7 +21,7 @@ class SendGoogleInvalidUserNotificationReceivedEmail
     public function handle($event)
     {
         if (config('scool.gsuite_notifications_send_email')) {
-            Mail::to(config('scool.gsuite_notifications_email'))->queue(new GoogleInvalidUserNotificationReceived($event->request));
+            Mail::to(config('scool.gsuite_notifications_email'))->send(new GoogleInvalidUserNotificationReceived($event->request));
         }
     }
 }
