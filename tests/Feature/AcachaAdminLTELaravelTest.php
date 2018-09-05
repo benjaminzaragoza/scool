@@ -287,18 +287,6 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Create view using make:view command.
-     *
-     * @param $view
-     */
-    protected function callArtisanMakeView($view)
-    {
-        Artisan::call('make:view', [
-            'name' => $view,
-        ]);
-    }
-
-    /**
      * Test adminlte:admin command.
      *
      * @group
