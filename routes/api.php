@@ -62,7 +62,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/users/{user}', 'Tenant\UsersController@destroy');
 
             // Available users
-            Route::get('/users/available', 'Tenant\UsersAvailableController@index');
+            // TODO: UMMMMM
+//            Route::get('/users/available', 'Tenant\UsersAvailableController@index');
 
             //Pending teachers
             Route::get('/pending_teachers', 'Tenant\PendingTeachersController@index');
@@ -140,7 +141,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/localities','Tenant\LocalitiesController@index');
             Route::get('/locations','Tenant\LocalitiesController@index');
 
-            Route::get('/gsuite/test_connection','Tenant\GoogleSuiteTestConnectionController@index');
+            // TODO remove
+//            Route::get('/gsuite/test_connection','Tenant\GoogleSuiteTestConnectionController@index');
         });
     });
 });
