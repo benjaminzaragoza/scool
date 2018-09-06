@@ -70,7 +70,7 @@ Vue.component('google-group-add', require('./components/google/groups/GoogleGrou
 
 // Google users
 Vue.component('google-users', require('./components/google/users/GoogleUsersComponent.vue'));
-// Vue.component('google-group-add', require('./components/google/groups/GoogleGroupAddComponent.vue'));
+Vue.component('google-user-add', require('./components/google/users/GoogleUserAddComponent.vue'));
 
 window.Vuetify = require('vuetify');
 Vue.use(Vuetify)

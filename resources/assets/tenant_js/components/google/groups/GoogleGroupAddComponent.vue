@@ -13,6 +13,9 @@
     </v-btn>
     <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="dialog = false">
         <v-toolbar color="blue darken-3">
+            <v-btn icon dark @click.native="dialog = false">
+                <v-icon>close</v-icon>
+            </v-btn>
             <v-toolbar-title class="white--text title">Afegir grup de google</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon class="white--text">

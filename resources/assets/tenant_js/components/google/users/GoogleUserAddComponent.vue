@@ -13,7 +13,10 @@
     </v-btn>
     <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="dialog = false">
         <v-toolbar color="blue darken-3">
-            <v-toolbar-title class="white--text title">Afegir grup de google</v-toolbar-title>
+            <v-btn icon dark @click.native="dialog = false">
+                <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title class="white--text title">Afegir usuari de google</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon class="white--text">
                 <v-icon>exit</v-icon>
@@ -27,7 +30,7 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <google-group-add-form @created="groupCreated"></google-group-add-form>
+                      <google-user-add-form @created="userCreated"></google-user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Membres del grup</v-stepper-step>
@@ -43,22 +46,22 @@
 </template>
 
 <script>
-  import GoogleGroupAddForm from './GoogleGroupAddFormComponent'
+  import GoogleUserAddForm from './GoogleUserAddFormComponent'
   export default {
-    name: 'GoogleGroupAddComponent',
+    name: 'GoogleUserAddComponent',
     components: {
-      'google-group-add-form': GoogleGroupAddForm
+      'google-user-add-form': GoogleUserAddForm
     },
     data () {
       return {
         dialog: false,
         step: 1,
-        group: null,
+        user: null,
       }
     },
     methods: {
-      groupCreated (group) {
-        this.group = group
+      userCreated (user) {
+        this.user = user
         this.step = 2
       }
     }
