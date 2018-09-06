@@ -25,11 +25,9 @@ class GoogleDirectory
      */
     public function __construct()
     {
-        // TODO delete this comments already configured in configure_tenant using middleware
-//        config_google_api();
-//        tune_google_client();
         $this->directory = Google::make('directory');
-        $this->domain = 'iesebre.com';
+        $domain =
+        $this->domain = config('app.email_domain','iesebre.com');
     }
 
     /**
