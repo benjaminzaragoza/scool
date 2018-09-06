@@ -33,7 +33,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     }
 
     /**
-     * @test
+     * @ test
      * @group google
      * @group slow
      */
@@ -73,13 +73,16 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     /**
      * List groups.
      *
-     * @test
+     * @ test
      * @group slow
      * @group google
      */
     public function list_groups()
     {
+        $this->withoutExceptionHandling();
         config_google_api();
+        tune_google_client();
+
 
         $usersManager = create(User::class);
         $this->actingAs($usersManager,'api');
@@ -89,7 +92,6 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $response = $this->json('GET','/api/v1/gsuite/groups');
         $response->assertSuccessful();
         $groups = json_decode($response->getContent());
-//        dd($groups[0]);
         $this->assertTrue(google_group_check($groups[0]));
     }
 
@@ -102,6 +104,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     public function regular_user_cannot_list_groups()
     {
         config_google_api();
+        tune_google_client();
 
         $user = create(User::class);
         $this->actingAs($user,'api');
@@ -117,6 +120,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     public function create_group()
     {
         config_google_api();
+        tune_google_client();
 
         $usersManager = create(User::class);
         $this->actingAs($usersManager,'api');
@@ -143,6 +147,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     public function create_group_validation()
     {
         config_google_api();
+        tune_google_client();
 
         $usersManager = create(User::class);
         $this->actingAs($usersManager,'api');
@@ -177,6 +182,7 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     public function delete_group()
     {
         config_google_api();
+        tune_google_client();
 
         $usersManager = create(User::class);
         $this->actingAs($usersManager,'api');

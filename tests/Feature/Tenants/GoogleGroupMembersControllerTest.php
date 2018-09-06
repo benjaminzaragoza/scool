@@ -36,10 +36,13 @@ class GoogleGroupMembersControllerTest extends BaseTenantTest
      * List groups.
      *
      * @test
+     * @group google
      * @group slow
      */
     public function list_members()
     {
+        config_google_api();
+        tune_google_client();
         $usersManager = create(User::class);
         $this->actingAs($usersManager,'api');
         $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);

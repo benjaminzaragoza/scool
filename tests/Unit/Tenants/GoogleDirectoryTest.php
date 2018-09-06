@@ -93,6 +93,8 @@ class GoogleDirectoryTest extends TestCase
      */
     public function can_create_group()
     {
+        config_google_api();
+        tune_google_client();
         google_group_remove('provaesborrar999@iesebre.com');
         sleep(10);
         (new GoogleDirectory())->group([
@@ -128,6 +130,8 @@ class GoogleDirectoryTest extends TestCase
      */
     public function can_remove_group()
     {
+        config_google_api();
+        tune_google_client();
         google_group_create('provaesborrar777@iesebre.com');
         sleep(5);
         $group = (new GoogleDirectory())->removeGroup('provaesborrar777@iesebre.com');
@@ -141,17 +145,21 @@ class GoogleDirectoryTest extends TestCase
      */
     public function can_get_members_of_a_group()
     {
+        config_google_api();
+        tune_google_client();
         $members = (new GoogleDirectory())->groupMembers('claustre@iesebre.com');
         $this->assertTrue(google_groups_check_members($members));
     }
 
     /**
-     * @test
+     * @ test
      * @group slow
      * @group google
      */
     public function can_get_users()
     {
+        config_google_api();
+        tune_google_client();
         $users = (new GoogleDirectory())->users();
         $this->assertTrue(google_groups_check_users($users));
     }
