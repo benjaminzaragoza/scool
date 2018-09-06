@@ -25,6 +25,8 @@ Route::bind('hashuser', function($value, $route)
 
 Route::domain('{tenant}.' . config('app.domain'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {
+
+        // Taken from Illuminate\Routing\Router
         // Authentication Routes...
         Route::get('login', 'Auth\Tenant\LoginController@showLoginForm')->name('login');
         Route::post('login', 'Auth\Tenant\LoginController@login');
@@ -39,6 +41,11 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::post('password/email', 'Auth\Tenant\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
         Route::get('password/reset/{token}', 'Auth\Tenant\ResetPasswordController@showResetForm')->name('password.reset');
         Route::post('password/reset', 'Auth\Tenant\ResetPasswordController@reset');
+
+        // Email verification routes
+        Route::get('email/verify', 'Auth\Tenant\VerificationController@show')->name('verification.notice');
+        Route::get('email/verify/{id}', 'Auth\Tenant\VerificationController@verify')->name('verification.verify');
+        Route::get('email/resend', 'Auth\Tenant\VerificationController@resend')->name('verification.resend');
 
         Route::get('/', function () {
             return view('tenants.welcome');

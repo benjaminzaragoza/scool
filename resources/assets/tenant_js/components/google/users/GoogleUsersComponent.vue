@@ -37,7 +37,7 @@
 
                         <v-list>
                             <v-list-tile>
-                                <v-list-tile-title>TODO</v-list-tile-title>
+                                <v-list-tile-title><a target="_blank" href="https://admin.google.com/u/3/ac/users">Panell administració Google</a></v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -77,11 +77,10 @@
                             >
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
-                                        <td class="text-xs-left">
-                                            <span v-html="user.id"></span>
-                                        </td>
                                         <td class="text-xs-left" v-html="user.fullName"></td>
-                                        <td class="text-xs-left" v-html="user.primaryEmail"></td>
+                                        <td class="text-xs-left">
+                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
+                                        </td>
                                         <td class="text-xs-left" v-html="user.orgUnitPath"></td>
                                         <td class="text-xs-left" v-html="user.isAdmin"></td>
                                         <td class="text-xs-left" v-html="user.suspended"></td>
@@ -140,7 +139,6 @@
       },
       headers () {
         let headers = []
-        headers.push({text: 'Id', align: 'left', value: 'Id', sortable: false})
         headers.push({text: 'Nom', value: 'fullName'})
         headers.push({text: 'Correu electrònic', value: 'primaryEmail'})
         headers.push({text: 'Path', value: 'orgUnitPath'})

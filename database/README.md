@@ -1,0 +1,1 @@
+php artisan migrate:tenant:fresh --seed iesebre -v

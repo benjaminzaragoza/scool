@@ -34,9 +34,9 @@
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md12>
+                <v-flex md5>
                     <v-text-field
-                            label="Correu electrònic"
+                            label="Correu electrònic personal"
                             v-model="email"
                             :error-messages="emailErrors"
                             @input="inputEmail()"
@@ -45,6 +45,19 @@
                             :loading="loadingProposedUser"
                             required
                     ></v-text-field>
+                </v-flex>
+                <v-flex md3>
+                    <v-text-field
+                            label="Telèfon mòbil"
+                            v-model="mobile"
+                            required
+                    ></v-text-field>
+                </v-flex>
+                <v-flex md4>
+                    <v-switch
+                            :label="createGsuiteUser ? 'Crear usuari de Google' : 'NO crear usuari de Google'"
+                            v-model="createGsuiteUser"
+                    ></v-switch>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -87,12 +100,14 @@
         sn1: '',
         sn2: '',
         email: '',
+        mobile: '',
         password: '',
         errors: [],
         creating: false,
         deleting: false,
         loadingProposedUser: false,
-        newUser: true
+        newUser: true,
+        createGsuiteUser: true
       }
     },
     props: {

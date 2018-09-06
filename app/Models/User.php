@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+
 use App\Models\Traits\FormattedDates;
 use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
@@ -21,9 +24,9 @@ use Storage;
  *
  * @package App
  */
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
 {
-    use Notifiable, HasApiTokens, HasRoles, FormattedDates, Impersonate, HasMediaTrait;
+    use Notifiable, HasApiTokens, HasRoles, FormattedDates, Impersonate, HasMediaTrait, MustVerifyEmail;
 
     const DEFAULT_PHOTO = 'default.png';
     const PHOTOS_PATH = 'user_photos';

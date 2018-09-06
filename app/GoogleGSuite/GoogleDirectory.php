@@ -50,6 +50,7 @@ class GoogleDirectory
             ]);
             $pageToken = $r->nextPageToken;
             if(!$r->nextPageToken) $continue = false;
+            dd($r->users);
             $googleUsers = collect($r->users)->map(function ($user) {
                     return [
                         'id' => $user->id,

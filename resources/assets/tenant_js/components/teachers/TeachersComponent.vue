@@ -66,6 +66,9 @@
                                             <span :title="teacher.email" v-html="teacher.fullname "></span>
                                         </td>
                                         <td class="text-xs-left">
+                                            <a :href="'https://admin.google.com/u/3/ac/users/' + teacher.gsuite_id" target="_blank"> TODO {{ teacher.email }}</a>
+                                        </td>
+                                        <td class="text-xs-left">
                                             <span :title="teacher.department" v-html="teacher.department_code"></span>
                                         </td>
                                         <td class="text-xs-left">
@@ -166,6 +169,7 @@
         headers.push({text: 'Codi', value: 'code'})
         headers.push({text: 'Foto', value: 'full_search', sortable: false})
         headers.push({text: 'Nom', value: 'fullname'})
+        headers.push({text: 'GSuite', value: 'fullname'})
         headers.push({text: 'Departament', value: 'department_code'})
         headers.push({text: 'Especialitat', value: 'specialty_code'})
         headers.push({text: 'Familia', value: 'family_code'})
@@ -206,7 +210,7 @@
         })
       },
       settings () {
-        console.log('settigns TODO')
+        console.log('settings TODO') //TODO
       },
       remove (teacher) {
         this.removing = true

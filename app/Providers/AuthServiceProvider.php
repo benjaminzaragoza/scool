@@ -35,12 +35,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // TODO
+        Passport::routes();
+
         Auth::provider('scool', function ($app, array $config) {
             return new ScoolUserProvider(app(Hasher::class), User::class);
         });
-
-        Passport::routes();
 
         initialize_gates();
 
