@@ -237,23 +237,30 @@ if (! function_exists('create_other_tenant_admin_users')) {
     }
 }
 
+if (! function_exists('create_iesebre_tenant')) {
+    function create_iesebre_tenant()
+    {
+        return Tenant::create([
+            'name' => "Institut de l'Ebre",
+            'subdomain' => 'iesebre',
+            'email_domain' => 'iesebre.com',
+            'hostname' => 'localhost',
+            'database' => 'iesebre',
+            'username' => 'iesebre',
+            'password' => str_random(),
+            'port' => 3306,
+            'gsuite_service_account_path' => '/gsuite_service_accounts/scool-07eed0b50a6f.json',
+            'gsuite_admin_email' => 'sergitur@iesebre.com'
+        ]);
+    }
+}
+
 if (! function_exists('create_default_tenant')) {
     function create_default_tenant() {
         $user = App\User::find(1);
         $tenant = Tenant::where('subdomain','iesebre')->first();
         if (! $tenant) {
-            $tenant = $user->addTenant($tenant = Tenant::create([
-                'name' => "Institut de l'Ebre",
-                'subdomain' => 'iesebre',
-                'email_domain' => 'iesebre.com',
-                'hostname' => 'localhost',
-                'database' => 'iesebre',
-                'username' => 'iesebre',
-                'password' => str_random(),
-                'port' => 3306,
-                'gsuite_service_account_path' => '/gsuite_service_accounts/scool-07eed0b50a6f.json',
-                'gsuite_admin_email' => 'sergitur@iesebre.com'
-            ]));
+            $tenant = $user->addTenant($tenant = create_iesebre_tenant());
         }
 
         create_mysql_full_database(
@@ -4284,6 +4291,7 @@ if (!function_exists('configure_tenant')) {
         Config::set('app.email_domain',$tenant->email_domain);
         Config::set('app.tenant_url','https://' . $tenant->subdomain . '.' . Config::get('app.domain'));
         config_google_api('/storage/app/' . $tenant->gsuite_service_account_path,$tenant->gsuite_admin_email);
+        tune_google_client($tenant->gsuite_admin_email);
         Config::set('auth.providers.users.model', \App\Models\User::class);
         Config::set('auth.providers.users.driver', 'scool');
         Config::set('hashing.driver', 'sha1');
@@ -4549,11 +4557,11 @@ if (! function_exists('config_google_api')) {
 }
 
 if (! function_exists('tune_google_client')) {
-    function tune_google_client()
+    function tune_google_client($gsuiteAdminUser  = 'sergitur@iesebre.com')
     {
-        app()->extend(\PulkitJalan\Google\Client::class, function ($command, $app) {
+        app()->extend(\PulkitJalan\Google\Client::class, function ($command, $app) use ($gsuiteAdminUser) {
             $config = $app['config']['google'];
-            $user = 'sergitur@iesebre.com';
+            $user = $gsuiteAdminUser;
             return new Client($config, $user);
         });
     }

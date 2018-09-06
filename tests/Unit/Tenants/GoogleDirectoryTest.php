@@ -45,9 +45,12 @@ class GoogleDirectoryTest extends TestCase
     /**
      * @test
      * @group google
+     * @group slow
      */
     public function can_get_groups()
     {
+        config_google_api();
+        tune_google_client();
         $groups = (new GoogleDirectory())->groups();
         $this->assertNotNull($groups);
         $this->assertTrue(is_array($groups));
@@ -57,9 +60,12 @@ class GoogleDirectoryTest extends TestCase
     /**
      * @test
      * @group google
+     * @group slow
      */
     public function can_get_group()
     {
+        config_google_api();
+        tune_google_client();
         $group = (new GoogleDirectory())->group('claustre@iesebre.com');
         $this->assertNotNull($group);
         $this->assertTrue(google_group_check($group));

@@ -35,10 +35,12 @@ class GoogleGroupsControllerTest extends BaseTenantTest
     /**
      * @test
      * @group google
+     * @group slow
      */
     public function show_google_groups()
     {
         config_google_api();
+        tune_google_client();
 
         $usersManager = create(User::class);
         $this->actingAs($usersManager);

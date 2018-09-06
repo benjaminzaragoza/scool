@@ -16,7 +16,7 @@
             <v-btn icon dark @click.native="dialog = false">
                 <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title class="white--text title">Afegir usuari de google</v-toolbar-title>
+            <v-toolbar-title class="white--text title">Afegir usuari de Google</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon class="white--text">
                 <v-icon>exit</v-icon>
@@ -25,8 +25,8 @@
         <v-card>
             <v-stepper v-model="step" vertical>
                 <v-stepper-step :complete="step > 1" step="1">
-                  Dades del grup
-                  <small>Nom, correu electrònic, descripció</small>
+                  Dades de l'usuari
+                  <small>Nom, Cognom, correu electrònic, descripció</small>
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">

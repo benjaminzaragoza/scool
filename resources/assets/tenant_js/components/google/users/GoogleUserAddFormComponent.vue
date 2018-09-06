@@ -14,7 +14,17 @@
                 </v-flex>
                 <v-flex md6>
                     <v-text-field
-                            label="Correu electrònic"
+                            label="Cognoms"
+                            v-model="surname"
+                            :error-messages="surnameErrors"
+                            @input="$v.surname.$touch()"
+                            @blur="$v.surname.$touch()"
+                            required
+                    ></v-text-field>
+                </v-flex>
+                <v-flex md6>
+                    <v-text-field
+                            :label="'Correu electrònic personal (no utilitzeu ' + tenant.email_domain +')'"
                             v-model="email"
                             :error-messages="emailErrors"
                             @input="$v.email.$touch()"
@@ -24,8 +34,14 @@
                 </v-flex>
                 <v-flex md6>
                     <v-text-field
-                            label="Descripció"
-                            v-model="description"
+                            label="Telèfon mòbil"
+                            v-model="mobile"
+                    ></v-text-field>
+                </v-flex>
+                <v-flex md6>
+                    <v-text-field
+                            label="Email personal"
+                            v-model="personalEmail"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -42,17 +58,20 @@
   import axios from 'axios'
 
   export default {
-    name: 'GoogleGroupAddFormComponent',
+    name: 'GoogleUserAddFormComponent',
     mixins: [validationMixin, withSnackbar],
     validations: {
       name: { required },
+      surname: { required },
       email: { required, email }
     },
     data () {
       return {
         name: '',
+        surname: '',
         email: '',
-        description: '',
+        mobile: '',
+        personalEmail: '',
         creating: false,
         errors: []
       }
@@ -69,6 +88,13 @@
         !this.$v.name.required && nameErrors.push('El nom és obligatori.')
         this.errors['name'] && nameErrors.push(this.errors['name'])
         return nameErrors
+      },
+      surnameErrors () {
+        const surnameErrors = []
+        if (!this.$v.surname.$dirty) return surnameErrors
+        !this.$v.surname.required && surnameErrors.push('El cognom és obligatori.')
+        this.errors['surname'] && surnameErrors.push(this.errors['surname'])
+        return surnameErrors
       },
       emailErrors () {
         const emailErrors = []
@@ -101,6 +127,9 @@
           this.$v.$touch()
         }
       }
+    },
+    created () {
+      this.tenant = window.tenant
     }
   }
 </script>

@@ -5,8 +5,8 @@ namespace Tests\Unit;
 use File;
 use Storage;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Contracts\Console\Kernel;
 
 /**
  * Class HelpersTest.
@@ -15,23 +15,43 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class HelpersTest extends TestCase
 {
-    /** @test */
+    use RefreshDatabase;
+
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
     public function google_group_exists()
     {
+        $tenant = create_iesebre_tenant();
+        configure_tenant($tenant);
         $this->assertTrue(google_group_exists('claustre@iesebre.com'));
         $this->assertFalse(google_group_exists('sdaawe12asdasdas@iesebre.com'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
     public function google_user_exists()
     {
+        $tenant = create_iesebre_tenant();
+        configure_tenant($tenant);
         $this->assertTrue(google_user_exists('sergitur@iesebre.com'));
         $this->assertFalse(google_user_exists('rqweq123asda@iesebre.com'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
     public function google_user_get()
     {
+        $tenant = create_iesebre_tenant();
+        configure_tenant($tenant);
         $user = google_user_get('sergitur@iesebre.com');
         $this->assertInstanceOf('Google_Service_Directory_User',$user);
         try {
@@ -42,9 +62,15 @@ class HelpersTest extends TestCase
         $this->fail('No exception throw when trying to get an unexisting user');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
     public function google_group_get()
     {
+        $tenant = create_iesebre_tenant();
+        configure_tenant($tenant);
         $group = google_group_get('claustre@iesebre.com');
         $this->assertInstanceOf('Google_Service_Directory_Group',$group);
         try {
