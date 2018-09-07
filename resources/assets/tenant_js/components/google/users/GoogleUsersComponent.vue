@@ -113,6 +113,10 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+  import * as mutations from '../../../store/mutation-types'
+  import * as actions from '../../../store/action-types'
+
   import withSnackbar from '../../mixins/withSnackbar'
   import axios from 'axios'
   import ConfirmIcon from '../../ui/ConfirmIconComponent'
@@ -126,7 +130,6 @@
     data () {
       return {
         search: '',
-        internalUsers: this.users,
         removing: false,
         refreshing: false,
         settingsDialog: false,
@@ -134,6 +137,9 @@
       }
     },
     computed: {
+      ...mapGetters({
+        internalUsers: 'googleUsers'
+      }),
       filteredUsers: function () {
         return this.internalUsers
       },
@@ -192,6 +198,9 @@
           this.showError(error)
         })
       }
+    },
+    created () {
+      this.$store.commit(mutations.SET_GOOGLE_USERS, this.users)
     }
   }
 </script>

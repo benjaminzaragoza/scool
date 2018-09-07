@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from './modules/auth'
 import snackbar from './modules/snackbar'
 import users from './modules/users'
+import googleUsers from './modules/google_users'
 import staff from './modules/jobs'
 import teachers from './modules/teachers'
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     snackbar,
     users,
     staff,
-    teachers
+    teachers,
+    googleUsers
   },
   strict: debug
 })

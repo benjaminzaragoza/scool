@@ -26,7 +26,7 @@
             <v-stepper v-model="step" vertical>
                 <v-stepper-step :complete="step > 1" step="1">
                   Dades de l'usuari
-                  <small>Nom, Cognom, correu electrònic, descripció</small>
+                  <small>Nom, Cognom, correu electrònic...</small>
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">

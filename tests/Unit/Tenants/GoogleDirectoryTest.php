@@ -152,7 +152,7 @@ class GoogleDirectoryTest extends TestCase
     }
 
     /**
-     * @ test
+     * @test
      * @group slow
      * @group google
      */

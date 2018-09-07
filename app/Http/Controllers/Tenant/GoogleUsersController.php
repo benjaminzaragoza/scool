@@ -23,24 +23,32 @@ class GoogleUsersController extends Controller
      */
     public function show(ListGoogleUsers $request)
     {
+        $users = $this->getGoogleUsers();
+        return view('tenants.google_users.show', compact('users'));
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getGoogleUsers()
+    {
         $users = collect([]);
-        $users = Cache::rememberForever('google_users', function() use ($users){
+        return Cache::rememberForever('google_users', function() use ($users){
             $directory = new GoogleDirectory();
             return collect($directory->users());
         });
-        return view('tenants.google_users.show', compact('users'));
     }
 
     /**
      * Index.
      *
      * @param ListGoogleUsers $request
-     * @return \Illuminate\Support\Collection
+     * @return mixed
      */
     public function index(ListGoogleUsers $request)
     {
-        $directory = new GoogleDirectory();
-        return collect($directory->users());
+        Cache::forget('google_users');
+        return $this->getGoogleUsers();
     }
 
     /**
@@ -67,10 +75,11 @@ class GoogleUsersController extends Controller
         if ($request->id) $user['id'] = $request->id;
 
         try {
-            return get_object_vars($directory->user($user));
+            $users = get_object_vars($directory->user($user));
+            Cache::forget('google_users');
+            return $users;
         } catch (Google_Service_Exception $e) {
             abort('422',$e);
         }
     }
-
 }

@@ -70,7 +70,7 @@ class GoogleUsersControllerTest extends BaseTenantTest
     /**
      * List google users.
      *
-     * @ test DISABLED ONLY EXECUTED MANUALLY no automated!
+     * @test
      * @group slow
      * @group google
      */
