@@ -102,10 +102,14 @@ class GoogleDirectory
         $googleUser = new Google_Service_Directory_User();
 
         // Mandatory: First name, Last name, Primary email
-
         $name = new  \Google_Service_Directory_UserName();
         $name->setGivenName($user['givenName']);
         $name->setFamilyName($user['familyName']);
+        if (array_key_exists('fullName',$user)) {
+            $name->setFullName($user['fullName']);
+        } else {
+            $name->setFullName($user['givenName'] . ' ' . $user['familyName']);
+        }
         $googleUser->setName($name);
         $googleUser->setPrimaryEmail($user['primaryEmail']);
         $path = '/';

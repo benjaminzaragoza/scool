@@ -115,7 +115,6 @@
 <script>
   import { mapGetters } from 'vuex'
   import * as mutations from '../../../store/mutation-types'
-  import * as actions from '../../../store/action-types'
 
   import withSnackbar from '../../mixins/withSnackbar'
   import axios from 'axios'
@@ -188,10 +187,12 @@
       },
       remove (user) {
         this.removing = true
+        // TODO
+        console.log('TODO GOOGLE USERS REMOVE')
         axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
           this.removing = false
           this.refresh()
-          this.showMessage('Grup esborrat correctament')
+          this.showMessage('Usuari esborrat correctament')
         }).catch(error => {
           this.removing = false
           console.log(error)

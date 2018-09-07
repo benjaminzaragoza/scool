@@ -50,6 +50,8 @@
 
 <script>
   import GoogleUserAddForm from './GoogleUserAddFormComponent'
+  import * as mutations from '../../../store/mutation-types'
+
   export default {
     name: 'GoogleUserAddComponent',
     components: {
@@ -68,7 +70,18 @@
         this.dialog = false
       },
       userCreated (user) {
-        this.user = user
+        console.log(user)
+        let adaptedUser = {}
+        adaptedUser.fullName = user.fullName
+        adaptedUser.primaryEmail = user.primaryEmail
+        adaptedUser.orgUnitPath = user.orgUnitPath
+        adaptedUser.suspended = user.suspended
+        adaptedUser.suspensionReason = user.suspensionReason
+        adaptedUser.lastLoginTime = user.lastLoginTime
+        adaptedUser.creationTime = user.creationTime
+        adaptedUser.suspensionReason = user.suspensionReason
+        this.$store.commit(mutations.ADD_GOOGLE_USER, adaptedUser)
+        this.user = adaptedUser
         this.step = 2
       }
     }
