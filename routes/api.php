@@ -114,6 +114,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //Google Apps/GSuite users
             Route::get('/gsuite/users', 'Tenant\GoogleUsersController@index');
+            Route::post('/gsuite/users', 'Tenant\GoogleUsersController@store');
 
 
 

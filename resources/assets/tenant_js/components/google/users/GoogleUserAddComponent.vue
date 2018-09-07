@@ -33,9 +33,12 @@
                       <google-user-add-form @created="userCreated"></google-user-add-form>
                   </v-card>
                 </v-stepper-content>
-                <v-stepper-step :complete="step > 2" step="2">Membres del grup</v-stepper-step>
+                <v-stepper-step :complete="step > 2" step="2">Dades de l'usuari</v-stepper-step>
                 <v-stepper-content step="2">
-                    TODO MEMBERS
+                    <template v-if="user">
+                    Google Suite User link: <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id"> {{ user.primaryEmail }}</a>
+                    </template>
+                    <v-btn @click="dialog = false">Tancar</v-btn>
                     <v-btn color="error" @click="step = 1">Endarrera</v-btn>
                 </v-stepper-content>
             </v-stepper>
@@ -61,6 +64,7 @@
     },
     methods: {
       userCreated (user) {
+        console.log(user)
         this.user = user
         this.step = 2
       }

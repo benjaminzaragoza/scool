@@ -52,7 +52,11 @@ class HelpersTest extends TestCase
     {
         $tenant = create_iesebre_tenant();
         configure_tenant($tenant);
-        $user = google_user_get('sergitur@iesebre.com');
+        //TODO
+//        $user = google_user_get('sergitur@iesebre.com');
+        $user = google_user_get('mariahoz@iesebre.com');
+        dd($user);
+
         $this->assertInstanceOf('Google_Service_Directory_User',$user);
         try {
             $user = google_user_get('rqweq123asda@iesebre.com');
@@ -100,6 +104,29 @@ class HelpersTest extends TestCase
         sleep('3');
         google_user_remove('pepepardo@iesebre.com');
     }
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
+    public function google_user_create2()
+    {
+        $tenant = create_iesebre_tenant();
+        configure_tenant($tenant);
+        google_user_create([
+            'givenName' => 'maria',
+            'familyName' => 'hoz',
+            'primaryEmail' => 'mariahoz@iesebre.com',
+            'mobile' => '659123456',
+            'secondaryEmail' => 'mariahoz@hotmail.com',
+            'id' => 458
+        ]);
+        sleep('3');
+        $this->assertTrue(google_user_exists('mariahoz@iesebre.com'));
+        sleep('3');
+//        google_user_remove('pepitaparda@iesebre.com');
+    }
+
 
     /**
      * @group working
@@ -193,6 +220,29 @@ class HelpersTest extends TestCase
         $this->assertEquals(20,strlen(propose_user_name('NomLaHostiaDELLARG', 'CognomMOltLlarg')));
         $this->assertEquals('nomlahostipardo',propose_user_name('NomLaHostiaDELLARG', 'Pardo'));
         $this->assertEquals(15,strlen(propose_user_name('NomLaHostiaDELLARG', 'Pardo')));
+    }
+
+    /**
+     * @test
+     */
+    public function is_sha1()
+    {
+        $passwords = [
+            '123456',
+            'password',
+            'wqqwe23dsa',
+            'tRp>4?;7Yxd8nQ.)',
+            'tRp>4?;7Yxd8nQ.)'
+        ];
+
+        foreach ($passwords as $password) {
+            $this->assertFalse(is_sha1($password));
+        }
+
+        foreach ($passwords as $password) {
+            $hash = sha1($password);
+            $this->assertTrue(is_sha1($hash));
+        }
     }
 
 }

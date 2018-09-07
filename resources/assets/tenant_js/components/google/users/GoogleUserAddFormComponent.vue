@@ -5,30 +5,30 @@
                 <v-flex md6>
                     <v-text-field
                             label="Nom"
-                            v-model="name"
-                            :error-messages="nameErrors"
-                            @input="$v.name.$touch()"
-                            @blur="$v.name.$touch()"
+                            v-model="givenName"
+                            :error-messages="givenNameErrors"
+                            @input="$v.givenName.$touch()"
+                            @blur="$v.givenName.$touch()"
                             required
                     ></v-text-field>
                 </v-flex>
                 <v-flex md6>
                     <v-text-field
                             label="Cognoms"
-                            v-model="surname"
-                            :error-messages="surnameErrors"
-                            @input="$v.surname.$touch()"
-                            @blur="$v.surname.$touch()"
+                            v-model="familyName"
+                            :error-messages="familyNameErrors"
+                            @input="$v.familyName.$touch()"
+                            @blur="$v.familyName.$touch()"
                             required
                     ></v-text-field>
                 </v-flex>
                 <v-flex md6>
                     <v-text-field
-                            :label="'Correu electrònic personal (no utilitzeu ' + tenant.email_domain +')'"
-                            v-model="email"
-                            :error-messages="emailErrors"
-                            @input="$v.email.$touch()"
-                            @blur="$v.email.$touch()"
+                            label="Correu electrònic corporatiu"
+                            v-model="primaryEmail"
+                            :error-messages="primaryEmailErrors"
+                            @input="$v.primaryEmail.$touch()"
+                            @blur="$v.primaryEmail.$touch()"
                             required
                     ></v-text-field>
                 </v-flex>
@@ -40,8 +40,8 @@
                 </v-flex>
                 <v-flex md6>
                     <v-text-field
-                            label="Email personal"
-                            v-model="personalEmail"
+                            :label="'Correu electrònic personal (no utilitzeu ' + tenant.email_domain +')'"
+                            v-model="secondaryEmail"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -56,53 +56,56 @@
   import withSnackbar from '../../mixins/withSnackbar'
   import { required, email } from 'vuelidate/lib/validators'
   import axios from 'axios'
+  import hasTenantInfo from '../../mixins/hasTenantInfo'
 
   export default {
     name: 'GoogleUserAddFormComponent',
-    mixins: [validationMixin, withSnackbar],
+    mixins: [validationMixin, withSnackbar, hasTenantInfo],
     validations: {
-      name: { required },
-      surname: { required },
-      email: { required, email }
+      givenName: { required },
+      familyName: { required },
+      primaryEmail: { required, email }
     },
     data () {
       return {
-        name: '',
-        surname: '',
-        email: '',
+        givenName: '',
+        familyName: '',
+        primaryEmail: '',
         mobile: '',
-        personalEmail: '',
+        secondaryEmail: '',
         creating: false,
         errors: []
       }
     },
     computed: {
       clear () {
-        this.name = ''
-        this.email = ''
-        this.description = ''
+        this.givenName = ''
+        this.primaryEmail = ''
+        this.familyName = ''
+        this.mobile = ''
+        this.secondaryEmail = ''
       },
-      nameErrors () {
-        const nameErrors = []
-        if (!this.$v.name.$dirty) return nameErrors
-        !this.$v.name.required && nameErrors.push('El nom és obligatori.')
-        this.errors['name'] && nameErrors.push(this.errors['name'])
-        return nameErrors
+      givenNameErrors () {
+        const givenNameErrors = []
+        if (!this.$v.givenName.$dirty) return givenNameErrors
+        !this.$v.givenName.required && givenNameErrors.push('El nom és obligatori.')
+        this.errors['givenName'] && givenNameErrors.push(this.errors['givenNameErrors'])
+        return givenNameErrors
       },
-      surnameErrors () {
-        const surnameErrors = []
-        if (!this.$v.surname.$dirty) return surnameErrors
-        !this.$v.surname.required && surnameErrors.push('El cognom és obligatori.')
-        this.errors['surname'] && surnameErrors.push(this.errors['surname'])
-        return surnameErrors
+      familyNameErrors () {
+        const familyNameErrors = []
+        if (!this.$v.familyName.$dirty) return familyNameErrors
+        !this.$v.familyName.required && familyNameErrors.push('El cognom és obligatori.')
+        this.errors['familyName'] && familyNameErrors.push(this.errors['familyName'])
+        return familyNameErrors
       },
-      emailErrors () {
-        const emailErrors = []
-        if (!this.$v.email.$dirty) return emailErrors
-        !this.$v.email.email && emailErrors.push('El correu electrònic ha de ser vàlid')
-        !this.$v.email.required && emailErrors.push('El correu electrònic és obligatori.')
-        this.errors['email'] && emailErrors.push(this.errors['email'])
-        return emailErrors
+      primaryEmailErrors () {
+        const primaryEmailErrors = []
+        if (!this.$v.primaryEmail.$dirty) return primaryEmailErrors
+        !this.$v.primaryEmail.email && primaryEmailErrors.push('El correu electrònic ha de ser vàlid')
+        !this.$v.primaryEmail.required && primaryEmailErrors.push('El correu electrònic és obligatori.')
+        this.errors['primaryEmail'] && primaryEmailErrors.push(this.errors['primaryEmail'])
+        return primaryEmailErrors
       }
     },
     methods: {
@@ -110,14 +113,20 @@
         this.$v.$touch()
         if (!this.$v.$invalid) {
           this.creating = true
-          axios.post('/api/v1/gsuite/groups', {
-            name: this.name,
-            email: this.email,
-            description: this.description
+          axios.post('/api/v1/gsuite/users', {
+            givenName: this.givenName,
+            familyName: this.familyName,
+            primaryEmail: this.primaryEmail,
+            mobile: this.mobile,
+            secondaryEmail: this.secondaryEmail
           }).then(response => {
             this.creating = false
+            console.log('RESPONSE:')
+            console.log(response)
+            console.log('RESPONSE DATA:')
+            console.log(response.data)
             this.$emit('created', response.data)
-            this.showMessage('Grup creat correctament')
+            this.showMessage('Usuari creat correctament')
           }).catch(error => {
             this.creating = false
             console.log(error)
@@ -127,9 +136,6 @@
           this.$v.$touch()
         }
       }
-    },
-    created () {
-      this.tenant = window.tenant
     }
   }
 </script>

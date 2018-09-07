@@ -75,8 +75,7 @@ class GoogleDirectory
     public function user($user = null)
     {
         if(is_array($user)) {
-            $this->create_user($user);
-            return;
+            return $this->create_user($user);
         }
         return $this->get_user($user);
     }
@@ -89,24 +88,21 @@ class GoogleDirectory
      */
     protected function get_user($user)
     {
+//        dd($user);
         $r = $this->directory->users->get($user);
         return $r;
     }
 
+    /**
+     * Create user
+     * @param $user
+     * @return
+     */
     protected function create_user($user)
     {
         $googleUser = new Google_Service_Directory_User();
 
-        // Mandatory:
-        // First name
-        // Last name
-        // Primary email
-        // Organizational Unit (default iesebre.com)
-
-        // TODO
-        // Optional:
-        // Secondary email
-        // Phone Number
+        // Mandatory: First name, Last name, Primary email
 
         $name = new  \Google_Service_Directory_UserName();
         $name->setGivenName($user['givenName']);
@@ -124,8 +120,33 @@ class GoogleDirectory
         $googleUser->setHashFunction($hashFunction);
         $password = str_random();
         if (array_key_exists('password',$user)) $password = $user['password'];
-        $googleUser->setPassword(sha1($password));
-        $this->directory->users->insert($googleUser);
+        if (is_sha1($password)) {
+            $googleUser->setPassword($password);
+        } else {
+            $googleUser->setPassword(sha1($password));
+        }
+
+        if (array_key_exists('secondaryEmail',$user)) {
+            $email = new  \Google_Service_Directory_UserEmail();
+            $email->setAddress($user['secondaryEmail']);
+            $email->setType('home');
+            $googleUser->setEmails([$email]);
+        }
+        if (array_key_exists('mobile',$user)) {
+            $phone = new  \Google_Service_Directory_UserPhone();
+            $phone->setValue($user['mobile']);
+            $phone->setPrimary(true);
+            $phone->setType('mobile');
+            $googleUser->setPhones([$phone]);
+        }
+        if (array_key_exists('id',$user)) {
+            $id = new  \Google_Service_Directory_UserExternalId();
+            $id->setValue($user['id']);
+            $id->setType('organization');
+            $googleUser->setExternalIds([$id]);
+        }
+
+        return $this->directory->users->insert($googleUser);
     }
 
     /**

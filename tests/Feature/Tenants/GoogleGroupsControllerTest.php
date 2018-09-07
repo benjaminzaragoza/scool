@@ -127,17 +127,17 @@ class GoogleGroupsControllerTest extends BaseTenantTest
         $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
         Config::set('auth.providers.users.model', User::class);
         $usersManager->assignRole($role);
-        google_group_remove('prova123@iesebre.com');
+        google_group_remove('provagroup123@iesebre.com');
         sleep(5);
         $response = $this->json('POST','/api/v1/gsuite/groups', [
             'name' => 'Grup de prova',
-            'email' => 'prova123@iesebre.com',
+            'email' => 'provagroup123@iesebre.com',
             'description' => 'Prova de descripció'
         ]);
 
         $response->assertSuccessful();
         sleep(5);
-        $this->assertTrue(google_group_exists('prova123@iesebre.com'));
+        $this->assertTrue(google_group_exists('provagroup123@iesebre.com'));
     }
 
     /**

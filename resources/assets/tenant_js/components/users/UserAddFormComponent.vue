@@ -36,7 +36,7 @@
                 </v-flex>
                 <v-flex md5>
                     <v-text-field
-                            label="Correu electrònic personal"
+                            :label="'Correu electrònic personal (no utilitzeu ' + tenant.email_domain +')'"
                             v-model="email"
                             :error-messages="emailErrors"
                             @input="inputEmail()"
@@ -80,9 +80,10 @@
   import { required, email } from 'vuelidate/lib/validators'
   import * as actions from '../../store/action-types'
   import SelectUser from './UsersSelectComponent'
+  import hasTenantInfo from '../mixins/hasTenantInfo'
 
   export default {
-    mixins: [validationMixin, withSnackbar],
+    mixins: [validationMixin, withSnackbar, hasTenantInfo],
     name: 'UserAddFormComponent',
     components: {
       'select-user': SelectUser

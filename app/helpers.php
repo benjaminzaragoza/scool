@@ -7977,3 +7977,8 @@ if (!function_exists('get_current_git_commit')) {
     }
 }
 
+if (! function_exists('is_sha1')) {
+    function is_sha1($str) {
+        return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
+    }
+}
