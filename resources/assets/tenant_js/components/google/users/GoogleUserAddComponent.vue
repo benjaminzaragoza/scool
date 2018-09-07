@@ -70,14 +70,12 @@
         this.dialog = false
       },
       userCreated (user) {
-        console.log(user)
         let adaptedUser = {}
-        adaptedUser.fullName = user.fullName
+        adaptedUser.fullName = user.name.fullName
         adaptedUser.primaryEmail = user.primaryEmail
         adaptedUser.orgUnitPath = user.orgUnitPath
-        adaptedUser.suspended = user.suspended
-        adaptedUser.suspensionReason = user.suspensionReason
-        adaptedUser.lastLoginTime = user.lastLoginTime
+        adaptedUser.isAdmin = false
+        adaptedUser.suspended = false
         adaptedUser.creationTime = user.creationTime
         adaptedUser.suspensionReason = user.suspensionReason
         this.$store.commit(mutations.ADD_GOOGLE_USER, adaptedUser)
