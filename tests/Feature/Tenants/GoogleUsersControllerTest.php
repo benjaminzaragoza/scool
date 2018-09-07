@@ -175,4 +175,50 @@ class GoogleUsersControllerTest extends BaseTenantTest
 
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     * @group google
+     * @group slow
+     */
+    public function delete_user()
+    {
+        config_google_api();
+        tune_google_client();
+
+        $usersManager = create(User::class);
+        $this->actingAs($usersManager,'api');
+        $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
+        Config::set('auth.providers.users.model', User::class);
+        $usersManager->assignRole($role);
+
+        try {
+            google_user_create('provaborrar777@iesebre.com');
+        } catch (\Exception $e) {
+
+        }
+        sleep(5);
+        $user = google_user_get('provaborrar777@iesebre.com');
+        $response = $this->json('DELETE','/api/v1/gsuite/users/' . $user->id);
+
+        $response->assertSuccessful();
+        sleep(5);
+
+        google_user_remove('provaborrar777@iesebre.com');
+
+    }
+
+    /**
+     * @test
+     * @group google
+     */
+    public function regular_user_cannot_delete_user()
+    {
+        $user = create(User::class);
+        $this->actingAs($user,'api');
+
+        $response = $this->json('DELETE','/api/v1/gsuite/users/12311');
+
+        $response->assertStatus(403);
+    }
 }

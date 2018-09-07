@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\GoogleGSuite\GoogleDirectory;
+use App\Http\Requests\DestroyGoogleUsers;
 use App\Http\Requests\ListGoogleUsers;
 use App\Http\Requests\StoreGoogleUsers;
 use Cache;
@@ -78,6 +79,20 @@ class GoogleUsersController extends Controller
             $users = get_object_vars($directory->user($user));
             Cache::forget('google_users');
             return $users;
+        } catch (Google_Service_Exception $e) {
+            abort('422',$e);
+        }
+    }
+
+    /**
+     * @param DestroyGoogleUsers $request
+     * @param $tenant
+     * @param $user
+     */
+    public function destroy(DestroyGoogleUsers $request, $tenant, $user)
+    {
+        try {
+            (new GoogleDirectory())->removeUser($user);
         } catch (Google_Service_Exception $e) {
             abort('422',$e);
         }
