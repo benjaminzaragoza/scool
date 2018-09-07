@@ -98,7 +98,7 @@
                                                     :working="removing"
                                                     @confirmed="remove(user)"
                                                     tooltip="Eliminar"
-                                                    message="Esteu segurs que voleu eliminar el grup?"
+                                                    message="Esteu segurs que voleu eliminar l'usuari?"
                                             ></confirm-icon>
                                         </td>
                                     </tr>
@@ -179,7 +179,7 @@
         this.refreshing = true
         axios.get('/api/v1/gsuite/users').then(response => {
           this.refreshing = false
-          this.internalUsers = response.data
+          this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
         }).catch(error => {
           this.refreshing = false
           console.log(error)
@@ -187,11 +187,9 @@
       },
       remove (user) {
         this.removing = true
-        // TODO
-        console.log('TODO GOOGLE USERS REMOVE')
         axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
           this.removing = false
-          this.refresh()
+          this.$store.commit(mutations.DELETE_GOOGLE_USER, user )
           this.showMessage('Usuari esborrat correctament')
         }).catch(error => {
           this.removing = false

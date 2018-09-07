@@ -93,6 +93,7 @@ class GoogleUsersController extends Controller
     {
         try {
             (new GoogleDirectory())->removeUser($user);
+            Cache::forget('google_users');
         } catch (Google_Service_Exception $e) {
             abort('422',$e);
         }

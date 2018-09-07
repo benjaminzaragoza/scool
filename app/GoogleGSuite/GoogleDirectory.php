@@ -71,6 +71,12 @@ class GoogleDirectory
         return $users;
     }
 
+    /**
+     * user.
+     *
+     * @param null $user
+     * @return mixed
+     */
     public function user($user = null)
     {
         if(is_array($user)) {

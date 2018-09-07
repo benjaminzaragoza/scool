@@ -193,7 +193,11 @@ class GoogleUsersControllerTest extends BaseTenantTest
         $usersManager->assignRole($role);
 
         try {
-            google_user_create('provaborrar777@iesebre.com');
+            google_user_create([
+               'givenName' =>  'Nom',
+               'familyName' =>  'Cognom',
+               'primaryEmail' =>  'provaborrar777@iesebre.com'
+            ]);
         } catch (\Exception $e) {
 
         }
@@ -202,10 +206,7 @@ class GoogleUsersControllerTest extends BaseTenantTest
         $response = $this->json('DELETE','/api/v1/gsuite/users/' . $user->id);
 
         $response->assertSuccessful();
-        sleep(5);
-
-        google_user_remove('provaborrar777@iesebre.com');
-
+        $this->assertFalse(google_user_exists('provaborrar777@iesebre.com'));
     }
 
     /**

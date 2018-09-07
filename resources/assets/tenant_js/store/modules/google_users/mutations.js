@@ -6,5 +6,8 @@ export default {
   },
   [ types.ADD_GOOGLE_USER ] (state, user) {
     state.googleUsers.push(user)
+  },
+  [ types.DELETE_GOOGLE_USER ] (state, user) {
+    state.googleUsers.splice(state.googleUsers.indexOf(user), 1)
   }
 }
