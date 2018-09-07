@@ -121,10 +121,6 @@
             secondaryEmail: this.secondaryEmail
           }).then(response => {
             this.creating = false
-            console.log('RESPONSE:')
-            console.log(response)
-            console.log('RESPONSE DATA:')
-            console.log(response.data)
             this.$emit('created', response.data)
             this.showMessage('Usuari creat correctament')
           }).catch(error => {

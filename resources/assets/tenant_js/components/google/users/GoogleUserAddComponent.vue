@@ -11,9 +11,9 @@
     >
         <v-icon>add</v-icon>
     </v-btn>
-    <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="dialog = false">
+    <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="close">
         <v-toolbar color="blue darken-3">
-            <v-btn icon dark @click.native="dialog = false">
+            <v-btn icon dark @click.native="close">
                 <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title class="white--text title">Afegir usuari de Google</v-toolbar-title>
@@ -38,7 +38,7 @@
                     <template v-if="user">
                     Google Suite User link: <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id"> {{ user.primaryEmail }}</a>
                     </template>
-                    <v-btn @click="dialog = false">Tancar</v-btn>
+                    <v-btn @click="close">Tancar</v-btn>
                     <v-btn color="error" @click="step = 1">Endarrera</v-btn>
                 </v-stepper-content>
             </v-stepper>
@@ -59,12 +59,15 @@
       return {
         dialog: false,
         step: 1,
-        user: null,
+        user: null
       }
     },
     methods: {
+      close () {
+        this.step = 1
+        this.dialog = false
+      },
       userCreated (user) {
-        console.log(user)
         this.user = user
         this.step = 2
       }
