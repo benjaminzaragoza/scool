@@ -53,10 +53,16 @@
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md4>
+                <v-flex md2>
                     <v-switch
                             :label="createGsuiteUser ? 'Crear usuari de Google' : 'NO crear usuari de Google'"
                             v-model="createGsuiteUser"
+                    ></v-switch>
+                </v-flex>
+                <v-flex md2>
+                    <v-switch
+                            :label="createLdapUser ? 'Crear usuari Ldap (Samba, Moodle...)' : 'NO crear usuari Ldap'"
+                            v-model="createLdapUser"
                     ></v-switch>
                 </v-flex>
             </v-layout>
@@ -108,7 +114,8 @@
         deleting: false,
         loadingProposedUser: false,
         newUser: true,
-        createGsuiteUser: true
+        createGsuiteUser: true,
+        createLdapUser: true
       }
     },
     props: {

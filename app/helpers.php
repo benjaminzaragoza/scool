@@ -702,6 +702,23 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        // Ldap Users
+        Gate::define('list-ldap-users', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('show-ldap-users', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('store-ldap-users', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('delete-ldap-users', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
         // STAFF/JOBS
         Gate::define('list-available-users', function ($user) {
             return $user->hasRole('StaffManager') || $user->hasRole('TeachersManager');
@@ -896,6 +913,12 @@ if (!function_exists('initialize_menus')) {
         Menu::firstOrCreate([
             'text' => 'Usuaris de google',
             'href' => '/google_users',
+            'role' => 'UsersManager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Usuaris de ldap',
+            'href' => '/ldap_users',
             'role' => 'UsersManager'
         ]);
     }

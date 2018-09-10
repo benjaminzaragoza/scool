@@ -15,7 +15,9 @@
         <!--
         TODO ESBORRAR
 
-        1) Crear usuari (user_type teacher i rol teacher)
+        1) Crear usuari (user_type teacher i rol teacher) -> Crear també usuari a Google I Ldap centre
+        1.1 google Suite
+        1.2 Ldap centre
         2) Nom (people). Assignar usuari a les dades personals
           - Fullname (sn1, sn2, GivenName) es pot proposar a partir del nom complet/nom usuari
         3) Assignar Rol Teacher

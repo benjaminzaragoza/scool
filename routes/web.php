@@ -81,6 +81,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             // Google users
             Route::get('/google_users','Tenant\GoogleUsersController@show');
 
+            // Ldap users
+            Route::get('/ldap_users','Tenant\LdapUsersController@show');
+
 
             // ******* Emails ********
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');

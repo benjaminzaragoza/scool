@@ -72,6 +72,10 @@ Vue.component('google-group-add', require('./components/google/groups/GoogleGrou
 Vue.component('google-users', require('./components/google/users/GoogleUsersComponent.vue'));
 Vue.component('google-user-add', require('./components/google/users/GoogleUserAddComponent.vue'));
 
+// Ldap users
+Vue.component('ldap-users', require('./components/ldap/users/LdapUsersComponent.vue'));
+Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddComponent.vue'));
+
 window.Vuetify = require('vuetify');
 Vue.use(Vuetify)
 
