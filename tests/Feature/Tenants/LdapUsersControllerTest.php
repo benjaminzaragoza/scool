@@ -33,6 +33,43 @@ class LdapusersControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
+    /**
+     * @test
+     * @group slow
+     * @group ldap
+     */
+    public function list_ldap_users()
+    {
+        $usersManager = create(User::class);
+        $this->actingAs($usersManager,'api');
+        $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
+        Config::set('auth.providers.users.model', User::class);
+        $usersManager->assignRole($role);
+
+        $response = $this->json('GET','/api/v1/ldap/users');
+
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertTrue(is_array($result));
+        // TODO
+//        $this->assertTrue(google_user_check($result[0]));
+    }
+
+    /**
+     * @test
+     * @group slow
+     * @group google
+     */
+    public function regular_user_cannot_list_ldap_users()
+    {
+        $user = create(User::class);
+        $this->actingAs($user,'api');
+
+        $response = $this->json('GET','/api/v1/ldap/users');
+
+        $response->assertStatus(403);
+    }
+
     /** @test */
     public function user_manager_can_see_ldap_users()
     {
@@ -90,5 +127,54 @@ class LdapusersControllerTest extends BaseTenantTest
         $response->assertStatus(403);
 
     }
+
+    /** @test */
+    public function user_manager_can_create_ldap_users()
+    {
+        $this->withoutExceptionHandling();
+        $manager = create(User::class);
+        $this->actingAs($manager,'api');
+        $role = Role::firstOrCreate([
+            'name' => 'UsersManager',
+            'guard_name' => 'web'
+        ]);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+
+        $response = $this->json('POST', '/api/v1/ldap/users', [
+
+        ]);
+        $response->assertSuccessful();
+    }
+
+    /** @test */
+    public function user_manager_can_create_ldap_users_validation()
+    {
+        $this->withoutExceptionHandling();
+        $manager = create(User::class);
+        $this->actingAs($manager,'api');
+        $role = Role::firstOrCreate([
+            'name' => 'UsersManager',
+            'guard_name' => 'web'
+        ]);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+
+        $response = $this->json('POST', '/api/v1/ldap/users', [
+
+        ]);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function regular_user_cannot_create_ldap_users()
+    {
+        $user = create(User::class);
+        $this->actingAs($user,'api');
+
+        $response = $this->json('POST', '/api/v1/ldap/users');
+        $response->assertStatus(403);
+    }
+
 
 }

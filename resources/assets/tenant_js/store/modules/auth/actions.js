@@ -42,6 +42,15 @@ export default {
       })
     })
   },
+  [ actions.CONFIRM_EMAIL ] (context) {
+    return new Promise((resolve, reject) => {
+      auth.confirm().then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   [ actions.RESET_PASSWORD ] (context, user) {
     return new Promise((resolve, reject) => {
       auth.reset(user).then(response => {

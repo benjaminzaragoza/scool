@@ -103,6 +103,7 @@ const app = new Vue({
     drawerRight: false,
     editingUser: false,
     changingPassword: false,
+    confirmingEmail: false,
     updatingUser: false,
     items: window.scool_menu
   }),
@@ -164,6 +165,20 @@ const app = new Vue({
       }).then(() => {
         this.changingPassword = false
       })
+    },
+    confirmEmail () {
+      this.confirmingEmail = true
+      this.$store.dispatch(actions.CONFIRM_EMAIL).then(response => {
+        this.showMessage(`Correu electrònic enviat per tal de confirmar el email`)
+      }).catch(error => {
+        console.dir(error)
+        this.showError(error)
+      }).then(() => {
+        this.confirmingEmail = false
+      })
     }
+  },
+  created () {
+    this.isEmailVerified = window.user.email_verified_at
   }
-});
+})

@@ -117,17 +117,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/gsuite/users', 'Tenant\GoogleUsersController@store');
             Route::delete('/gsuite/users/{user}', 'Tenant\GoogleUsersController@destroy');
 
-            //***************** ESBORRAR ***********************
-            // ELIMINAR PROVES: TODO
-//            Route::get('/gsuite/users', 'Tenant\GoogleSuiteUsersController@index');
-//            Route::get('/gsuite/users/{email}', 'Tenant\GoogleSuiteUsersController@show');
-//            Route::post('/gsuite/users', 'Tenant\GoogleSuiteUsersController@store');
-//            Route::delete('/gsuite/users/{email}', 'Tenant\GoogleSuiteUsersController@destroy');
-
-            // Google Suite deleted users TODO ELIMINAR
-            // Undelete user
-//            Route::post('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@undelete');
-//            Route::get('/gsuite/deleted_users/{email}', 'Tenant\GoogleSuiteDeletedUsersController@show');
+            //Google Apps/GSuite users
+            Route::get('/ldap/users', 'Tenant\LdapUsersController@index');
+            Route::post('/ldap/users', 'Tenant\LdapUsersController@store');
+//            Route::delete('/ldap/users/{user}', 'Tenant\LdapUsersController@destroy');
 
             //Google Suite watch users TODO
             Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');

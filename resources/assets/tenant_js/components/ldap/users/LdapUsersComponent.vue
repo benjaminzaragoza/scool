@@ -78,22 +78,29 @@
                             >
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
-                                        <td class="text-xs-left" v-html="user.fullName"></td>
+                                        <td class="text-xs-left" v-html="user.dn"></td>
+                                        <td class="text-xs-left" v-html="user.cn"></td>
+                                        <td class="text-xs-left" v-html="user.uid"></td>
+                                        <td class="text-xs-left" v-html="user.uidnumber"></td>
+                                        <td class="text-xs-left" v-html="user.userpassword"></td>
                                         <td class="text-xs-left">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.orgUnitPath"></td>
-                                        <td class="text-xs-left" v-html="user.isAdmin"></td>
-                                        <td class="text-xs-left" v-html="user.suspended"></td>
+                                        <td class="text-xs-left" v-html="user.sn1"></td>
+                                        <td class="text-xs-left" v-html="user.sn2"></td>
+                                        <td class="text-xs-left" v-html="user.givenname"></td>
                                         <td class="text-xs-left" v-html="user.suspensionReason"></td>
                                         <td class="text-xs-left" v-html="user.lastLoginTime"></td>
-                                        <td class="text-xs-left" v-html="user.creationTime"></td>
+                                        <td class="text-xs-left" v-html="user.createtimestamp"></td>
+                                        <td class="text-xs-left" v-html="user.creatorsName"></td>
+                                        <td class="text-xs-left" v-html="user.modifiersName"></td>
+                                        <td class="text-xs-left" v-html="user.modifyTimestamp"></td>
                                         <td class="text-xs-left">
+                                            <show-ldap-user-icon :user="user" :users="users"></show-ldap-user-icon>
                                             <v-btn icon class="mx-0" @click="">
                                                 <v-icon color="teal">edit</v-icon>
                                             </v-btn>
                                             <confirm-icon
-                                                    :id="'google_user_remove_' + user.primaryEmail.replace('@','_')"
                                                     icon="delete"
                                                     color="pink"
                                                     :working="removing"
@@ -120,12 +127,14 @@
   import withSnackbar from '../../mixins/withSnackbar'
   import axios from 'axios'
   import ConfirmIcon from '../../ui/ConfirmIconComponent'
+  import ShowLdapUserIconComponent from './ShowLdapUserIconComponent'
 
   export default {
     name: 'LdapUsersComponent',
     mixins: [withSnackbar],
     components: {
-      'confirm-icon': ConfirmIcon
+      'confirm-icon': ConfirmIcon,
+      'show-ldap-user-icon': ShowLdapUserIconComponent
     },
     data () {
       return {
@@ -145,14 +154,21 @@
       },
       headers () {
         let headers = []
-        headers.push({text: 'Nom', value: 'fullName'})
+        headers.push({text: 'Nom1', value: 'fullName'})
+        headers.push({text: 'Nom2', value: 'fullName'})
+        headers.push({text: 'uid', value: 'uid'})
+        headers.push({text: 'uidnumber', value: 'uidnumber'})
+        headers.push({text: 'userpassword', value: 'userpassword'})
         headers.push({text: 'Correu electrònic', value: 'primaryEmail'})
         headers.push({text: 'Path', value: 'orgUnitPath'})
         headers.push({text: 'Administrador', value: 'isAdmin'})
         headers.push({text: 'Suspès?', value: 'suspended'})
         headers.push({text: 'Raó suspensió', value: 'suspensionReason'})
         headers.push({text: 'Últim login', value: 'lastLoginTime'})
-        headers.push({text: 'Data creació', value: 'creationTime'})
+        headers.push({text: 'Data creació', value: 'createtimestamp'})
+        headers.push({text: 'Usuari creació', value: 'creatorsName'})
+        headers.push({text: 'modifiersName', value: 'modifiersName'})
+        headers.push({text: 'modifyTimestamp', value: 'modifyTimestamp'})
         headers.push({text: 'Accions', sortable: false})
         return headers
       }

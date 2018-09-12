@@ -158,6 +158,11 @@
                 <v-btn :loading="changingPassword" flat color="red" @click="changePassword">Canviar Password</v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
+            <v-card-actions v-show="!isEmailVerified">
+                <v-spacer></v-spacer>
+                <v-btn :loading="confirmingEmail" flat @click="confirmEmail">Confirmar email</v-btn>
+                <v-spacer></v-spacer>
+            </v-card-actions>
         </v-card>
         @if (Auth::user()->isTeacher())
             <v-card>

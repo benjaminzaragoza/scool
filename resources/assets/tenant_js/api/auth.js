@@ -18,6 +18,9 @@ export default {
   remember (email) {
     return axios.post('/password/email', { 'email': email })
   },
+  confirm () {
+    return axios.get('/email/resend')
+  },
   reset (user) {
     return axios.post('/password/reset', {
       'email': user.email,

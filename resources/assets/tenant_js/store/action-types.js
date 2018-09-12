@@ -4,6 +4,7 @@ export const LOGOUT = 'LOGOUT'
 export const REGISTER = 'REGISTER'
 export const REMEMBER_PASSWORD = 'REMEMBER_PASSWORD'
 export const RESET_PASSWORD = 'RESET_PASSWORD'
+export const CONFIRM_EMAIL = 'CONFIRM_EMAIL'
 
 // USERS MODULE
 export const FETCH_USERS = 'FETCH_USERS'
