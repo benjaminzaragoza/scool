@@ -21,6 +21,9 @@ export default {
   confirm () {
     return axios.get('/email/resend')
   },
+  confirmUser (user) {
+    return axios.get('/api/v1/email/resend/' + user.id)
+  },
   reset (user) {
     return axios.post('/password/reset', {
       'email': user.email,

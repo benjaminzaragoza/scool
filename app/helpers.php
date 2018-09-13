@@ -719,6 +719,10 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        Gate::define('resend-email-verification', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
         // STAFF/JOBS
         Gate::define('list-available-users', function ($user) {
             return $user->hasRole('StaffManager') || $user->hasRole('TeachersManager');

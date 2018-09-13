@@ -67,9 +67,18 @@
                                         <show-user-icon :user="user" :users="users"></show-user-icon>
 
                                         <confirm-icon icon="email"
-                                                      :working="sending"
+                                                      :working="sendingResetPassword"
                                                       @confirmed="sendResetPasswordEmail(user)"
                                                       tooltip="Enviar email restauració paraula de pas"
+                                                      message="Esteu segurs que voleu enviar email per canviar paraula de pas?"
+                                                      confirm="Enviar"
+                                        ></confirm-icon>
+                                        <confirm-icon v-show="!user.email_verified_at" icon="email"
+                                                      :working="sendingEmailConfirmation"
+                                                      @confirmed="sendEmailConfirmation(user)"
+                                                      tooltip="Enviar email confirmació email"
+                                                      message="Esteu segurs que voleu enviar email per confirmar email de l'usuari?"
+                                                      confirm="Enviar"
                                         ></confirm-icon>
                                         <v-btn icon class="mx-0" @click="editItem(user)">
                                             <v-icon color="teal">edit</v-icon>
@@ -167,7 +176,8 @@
           {text: 'Data actualització', value: 'formatted_updated_at'},
           {text: 'Accions', sortable: false}
         ],
-        sending: false
+        sendingResetPassword: false,
+        sendingEmailConfirmation: false
       }
     },
     props: {
@@ -191,14 +201,26 @@
         console.log('settings TODO') // TODO
       },
       sendResetPasswordEmail (user) {
-        this.sending = true
+        this.sendingResetPassword = true
         axios.post('password/email', {
           email: user.email
         }).then(response => {
-          this.sending = false
+          this.sendingResetPassword = false
+          this.showMessage(`Email enviat correctament`)
         }).catch(error => {
           console.log(error)
           this.showError(error)
+        })
+      },
+      sendEmailConfirmation (user) {
+        this.sendingEmailConfirmation = true
+        this.$store.dispatch(actions.CONFIRM_USER_EMAIL, user).then(response => {
+          this.showMessage(`Correu electrònic enviat per tal de confirmar el email`)
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error)
+        }).then(() => {
+          this.sendingEmailConfirmation = false
         })
       },
       formatRoles (user) {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth\Tenant;
 
+use App\Http\Requests\ResendEmailVerification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
@@ -38,5 +40,18 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    /**
+     * Resend the email verification notification to an specific user.
+     *
+     * @param ResendEmailVerification $request
+     * @param $tenant
+     * @param User $user
+     * @return void
+     */
+    public function resendUser(ResendEmailVerification $request, $tenant, User $user)
+    {
+        $user->sendEmailVerificationNotification();
     }
 }

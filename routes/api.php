@@ -125,6 +125,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Google Suite watch users TODO
             Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
 
+            //Resend user email verification email
+            Route::get('/email/resend/{user}', 'Auth\Tenant\VerificationController@resendUser');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {
