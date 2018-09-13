@@ -67,12 +67,23 @@
                                         <show-user-icon :user="user" :users="users"></show-user-icon>
 
                                         <confirm-icon icon="email"
+                                                      :working="sendingWelcomeEmail"
+                                                      @confirmed="sendWelcomeEmail(user)"
+                                                      tooltip="(Re)Enviar email de benvinguda"
+                                                      message="Esteu segurs que voleu enviar email de benvinguda a l'usuari?"
+                                                      confirm="Enviar"
+                                        ></confirm-icon>
+
+                                        <confirm-icon icon="email"
                                                       :working="sendingResetPassword"
                                                       @confirmed="sendResetPasswordEmail(user)"
                                                       tooltip="Enviar email restauració paraula de pas"
                                                       message="Esteu segurs que voleu enviar email per canviar paraula de pas?"
                                                       confirm="Enviar"
                                         ></confirm-icon>
+
+
+
                                         <confirm-icon v-show="!user.email_verified_at" icon="email"
                                                       :working="sendingEmailConfirmation"
                                                       @confirmed="sendEmailConfirmation(user)"
@@ -176,6 +187,7 @@
           {text: 'Data actualització', value: 'formatted_updated_at'},
           {text: 'Accions', sortable: false}
         ],
+        sendingWelcomeEmail: false,
         sendingResetPassword: false,
         sendingEmailConfirmation: false
       }
@@ -199,6 +211,17 @@
       },
       settings () {
         console.log('settings TODO') // TODO
+      },
+      sendWelcomeEmail (user) {
+        this.sendingWelcomeEmail = true
+        this.$store.dispatch(actions.WELCOME_EMAIL, user).then(response => {
+          this.showMessage(`Correu electrònic correctament`)
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error)
+        }).then(() => {
+          this.sendingWelcomeEmail = false
+        })
       },
       sendResetPasswordEmail (user) {
         this.sendingResetPassword = true

@@ -128,6 +128,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Resend user email verification email
             Route::get('/email/resend/{user}', 'Auth\Tenant\VerificationController@resendUser');
 
+            //Re(send) welcome user email
+            Route::get('/email/welcome/{user}', 'Auth\Tenant\ForgotPasswordController@welcome');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {

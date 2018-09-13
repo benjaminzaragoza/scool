@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\VerifyEmail;
+use App\Notifications\WelcomeEmailNotification;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
@@ -256,6 +257,17 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Send the welcome email notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendWelcomeEmailNotification($token)
+    {
+        $this->notify(new WelcomeEmailNotification($token));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Tests\Feature\Tenants;
 
 use App\Models\User;
 use App\Notifications\VerifyEmail;
+use App\Notifications\WelcomeEmailNotification;
 use Config;
 use Notification;
 use Spatie\Permission\Models\Role;
@@ -12,11 +13,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
 
 /**
- * Class ResendEmailVerificationTest.
+ * Class SendWelcomeEmailVerificationTest.
  *
  * @package Tests\Feature
  */
-class ResendEmailVerificationTest extends BaseTenantTest
+class SendWelcomeEmailVerificationTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
@@ -35,8 +36,9 @@ class ResendEmailVerificationTest extends BaseTenantTest
     }
 
     /** @test */
-    public function user_manager_can_resend_email_user_email_verification()
+    public function user_manager_can_send_welcome_email()
     {
+        $this->withoutExceptionHandling();
         Notification::fake();
         $manager = create(User::class);
         $this->actingAs($manager,'api');
@@ -49,15 +51,15 @@ class ResendEmailVerificationTest extends BaseTenantTest
 
         $user = create(User::class);
 
-        $response = $this->json('GET','/api/v1/email/resend/' . $user->id);
+        $response = $this->json('GET','/api/v1/email/welcome/' . $user->id);
 
         $response->assertSuccessful();
 
-        Notification::assertSentTo($user,VerifyEmail::class);
+        Notification::assertSentTo($user,WelcomeEmailNotification::class);
     }
 
     /** @test */
-    public function user_cannot_resend_email_user_email_verification()
+    public function user_cannot_send_welcome_email()
     {
         $regularUser = create(User::class);
         $this->actingAs($regularUser,'api');
@@ -65,7 +67,7 @@ class ResendEmailVerificationTest extends BaseTenantTest
 
         $user = create(User::class);
 
-        $response = $this->json('GET','/api/v1/email/resend/' . $user->id);
+        $response = $this->json('GET','/api/v1/email/welcome/' . $user->id);
 
         $response->assertStatus(403);
     }

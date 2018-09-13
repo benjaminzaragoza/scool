@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\WelcomeEmail;
+use App\Models\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,6 +24,16 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    /**
+     * @param Request $request
+     * @param $tenant
+     * @param User $user
+     */
+    public function welcome(WelcomeEmail $request, $tenant, User $user)
+    {
+        $user->sendWelcomeEmailNotification($this->broker()->getRepository()->create($user));
+    }
 
     /**
      * Send a reset link to the given user.

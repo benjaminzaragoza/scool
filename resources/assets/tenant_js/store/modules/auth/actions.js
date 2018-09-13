@@ -60,6 +60,15 @@ export default {
       })
     })
   },
+  [ actions.WELCOME_EMAIL ] (context, user) {
+    return new Promise((resolve, reject) => {
+      auth.welcome(user).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   [ actions.RESET_PASSWORD ] (context, user) {
     return new Promise((resolve, reject) => {
       auth.reset(user).then(response => {
