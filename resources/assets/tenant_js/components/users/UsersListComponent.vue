@@ -55,6 +55,12 @@
                                     </td>
                                     <td class="text-xs-left">{{ user.email }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>
+                                    <td class="text-xs-left">
+                                        <v-tooltip bottom>
+                                            <span slot="activator">{{ user.last_login }}</span>
+                                            <span>{{ user.last_login_ip }}</span>
+                                        </v-tooltip>
+                                    </td>
                                     <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(user) }}</span>
@@ -181,7 +187,8 @@
           {text: 'Id', align: 'left', value: 'id'},
           {text: 'Name', value: 'name'},
           {text: 'Email', value: 'email'},
-          {text: 'Verification Email', value: 'email_verified_at'},
+          {text: 'Verificació email', value: 'email_verified_at'},
+          {text: 'Últim login', value: 'last_login'},
           {text: 'Rols', value: 'roles', sortable: false},
           {text: 'Data creació', value: 'formatted_created_at'},
           {text: 'Data actualització', value: 'formatted_updated_at'},
@@ -215,7 +222,7 @@
       sendWelcomeEmail (user) {
         this.sendingWelcomeEmail = true
         this.$store.dispatch(actions.WELCOME_EMAIL, user).then(response => {
-          this.showMessage(`Correu electrònic correctament`)
+          this.showMessage(`Correu electrònic enviat correctament`)
         }).catch(error => {
           console.dir(error)
           this.showError(error)
@@ -229,7 +236,7 @@
           email: user.email
         }).then(response => {
           this.sendingResetPassword = false
-          this.showMessage(`Email enviat correctament`)
+          this.showMessage(`Correu electrònic enviat correctament`)
         }).catch(error => {
           console.log(error)
           this.showError(error)

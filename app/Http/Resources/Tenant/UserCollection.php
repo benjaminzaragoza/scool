@@ -31,6 +31,8 @@ class UserCollection
                 'name' => $user->name,
                 'email' => $user->email,
                 'email_verified_at' => $user->email_verified_at,
+                'last_login' => $user->last_login,
+                'last_login_ip' => $user->last_login_ip,
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
                 'roles' => $user->roles->pluck('name')->unique()->toArray(),
