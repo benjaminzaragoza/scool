@@ -7,10 +7,12 @@ use App\Events\GoogleUserNotificationReceived;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\CreateTenantDatabase;
+use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
 use App\Listeners\SyncGoogleUsers;
 use App\Listeners\UnzipTeacherPhotos;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
@@ -37,7 +39,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         GoogleInvalidUserNotificationReceived::class => [
             SendGoogleInvalidUserNotificationReceivedEmail::class,
-        ]
+        ],
+        Login::class => [
+            LogSuccessfulLogin::class
+        ],
     ];
 
     /**
