@@ -1,6 +1,6 @@
 <template>
     <form>
-        <v-switch
+        <v-switch v-show="existing"
                 :label="newUser ? 'Nou usuari' : 'Escollir un usuari existent'"
                 v-model="newUser"
         ></v-switch>
@@ -34,7 +34,7 @@
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md5>
+                <v-flex md3>
                     <v-text-field
                             :label="'Correu electrònic personal (no utilitzeu ' + tenant.email_domain +')'"
                             v-model="email"
@@ -55,14 +55,20 @@
                 </v-flex>
                 <v-flex md2>
                     <v-switch
-                            :label="createGsuiteUser ? 'Crear usuari de Google' : 'NO crear usuari de Google'"
-                            v-model="createGsuiteUser"
+                            :label="welcomeEmail ? 'Email de benvinguda' : 'NO enviar email'"
+                            v-model="welcomeEmail"
                     ></v-switch>
                 </v-flex>
                 <v-flex md2>
                     <v-switch
-                            :label="createLdapUser ? 'Crear usuari Ldap (Samba, Moodle...)' : 'NO crear usuari Ldap'"
-                            v-model="createLdapUser"
+                            :label="googleUser ? 'Crear usuari de Google' : 'NO crear usuari de Google'"
+                            v-model="googleUser"
+                    ></v-switch>
+                </v-flex>
+                <v-flex md2>
+                    <v-switch
+                            :label="ldapUser ? 'Crear usuari Ldap (Samba, Moodle...)' : 'NO crear usuari Ldap'"
+                            v-model="ldapUser"
                     ></v-switch>
                 </v-flex>
             </v-layout>
@@ -83,13 +89,14 @@
   import axios from 'axios'
   import { validationMixin } from 'vuelidate'
   import withSnackbar from '../mixins/withSnackbar'
+  import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
   import { required, email } from 'vuelidate/lib/validators'
   import * as actions from '../../store/action-types'
   import SelectUser from './UsersSelectComponent'
   import hasTenantInfo from '../mixins/hasTenantInfo'
 
   export default {
-    mixins: [validationMixin, withSnackbar, hasTenantInfo],
+    mixins: [validationMixin, withSnackbar, hasTenantInfo, SendsWelcomeEmail],
     name: 'UserAddFormComponent',
     components: {
       'select-user': SelectUser
@@ -114,11 +121,16 @@
         deleting: false,
         loadingProposedUser: false,
         newUser: true,
-        createGsuiteUser: true,
-        createLdapUser: true
+        welcomeEmail: true,
+        googleUser: true,
+        ldapUser: true
       }
     },
     props: {
+      existing: {
+        type: Boolean,
+        default: false
+      },
       users: {
         type: Array,
         required: true
@@ -207,6 +219,12 @@
         if (this.user) this.$emit('created', this.user)
         else this.showError('Cal seleccionar un usuari!')
       },
+      createGoogleUser () {
+        console.log('TODO create Google User')
+      },
+      createLdapUser () {
+        console.log('TODO create Ldap User')
+      },
       create () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
@@ -216,12 +234,16 @@
             sn1: this.sn1,
             sn2: this.sn2,
             email: this.email,
+            mobile: this.mobile,
             user_type_id: this.userType,
             role: this.role
           }).then(response => {
             this.creating = false
             this.user = response.data
             this.$v.$reset()
+            this.welcomeEmail && this.sendWelcomeEmail(this.user)
+            this.googleUser && this.createGoogleUser(this.user)
+            this.ldapUser && this.createLdapUser(this.user)
             this.$emit('created', this.user)
           }).catch(error => {
             if (error && error.status === 422) {

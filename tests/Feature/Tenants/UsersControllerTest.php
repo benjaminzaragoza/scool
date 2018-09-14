@@ -100,6 +100,33 @@ class UsersControllerTest extends BaseTenantTest
     }
 
     /** @test */
+    public function user_manager_can_add_user_with_mobile()
+    {
+        $manager = create(User::class);
+        $this->actingAs($manager,'api');
+        $role = Role::firstOrCreate([
+            'name' => 'UsersManager',
+            'guard_name' => 'web'
+        ]);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+
+        $response = $this->json('POST','/api/v1/users',[
+            'name' => 'Pepe Pardo',
+            'email' =>'pepepardo@jeans.com',
+            'mobile' => '679524789'
+        ]);
+
+        $response->assertSuccessful();
+        $response->assertJsonFragment([
+            'name' => 'Pepe Pardo',
+            'email' =>'pepepardo@jeans.com',
+            'mobile' => '679524789',
+            'id' => 2
+        ]);
+    }
+
+    /** @test */
     public function user_manager_can_add_user_with_user_type_and_roles()
     {
         $manager = create(User::class);

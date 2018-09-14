@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <user-add :roles="{{ $roles }}"></user-add>
+    <user-add :roles="{{ $roles }}" :users="{{ $users }}"></user-add>
 
     <users-list :users="{{ $users }}"></users-list>
 
@@ -14,8 +14,6 @@
     </ul>
 
     <users-dashboard></users-dashboard>
-
-
 
 @endsection
 

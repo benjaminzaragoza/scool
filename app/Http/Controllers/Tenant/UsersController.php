@@ -7,7 +7,6 @@ use App\Http\Requests\DeleteUser;
 use App\Http\Requests\ShowUsersManagement;
 use App\Http\Resources\Tenant\UserCollection;
 use App\Http\Resources\Tenant\UserResource;
-use App\Http\Resources\Tenant\UserTypeCollection;
 use App\Http\Resources\Tenant\UserTypesCollection;
 use App\Models\User;
 use App\Models\UserType;
@@ -39,10 +38,15 @@ class UsersController extends Controller
      */
     public function show(ShowUsersManagement $request)
     {
-        $users = (new UserCollection(User::with('roles')->get()))->transform();
+        $users = $this->getUsers();
         $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
         $roles = Role::all()->pluck('name');
         return view('tenants.users.show',compact('users','userTypes','roles'));
+    }
+
+    protected function getUsers()
+    {
+        return (new UserCollection(User::with('roles')->get()))->transform();
     }
 
     /**
@@ -53,7 +57,7 @@ class UsersController extends Controller
      */
     public function index(ShowUsersManagement $request)
     {
-        return User::all();
+        return $this->getUsers();
     }
 
     /**

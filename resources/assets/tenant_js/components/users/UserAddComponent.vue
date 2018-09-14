@@ -30,7 +30,7 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <user-add-form @created="userCreated"></user-add-form>
+                      <user-add-form @created="userCreated" :users="users"></user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Dades de l'usuari</v-stepper-step>
@@ -42,7 +42,6 @@
                     <v-btn color="error" @click="step = 1">Endarrera</v-btn>
                 </v-stepper-content>
             </v-stepper>
-
         </v-card>
     </v-dialog>
     </span>
@@ -62,6 +61,12 @@
         dialog: false,
         step: 1,
         user: null
+      }
+    },
+    props: {
+      users: {
+        type: Array,
+        required: true
       }
     },
     methods: {

@@ -1,5 +1,10 @@
 <template>
     <form>
+        <v-switch v-show="existing"
+                  :label="newUser ? 'Nou usuari' : 'Escollir un usuari existent'"
+                  v-model="newUser"
+        ></v-switch>
+        <select-user v-if="!newUser" :users="users" v-model="user" :item-value="null"></select-user>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex md6>
@@ -57,9 +62,13 @@
   import { required, email } from 'vuelidate/lib/validators'
   import axios from 'axios'
   import hasTenantInfo from '../../mixins/hasTenantInfo'
+  import SelectUser from '../../users/UsersSelectComponent'
 
   export default {
     name: 'GoogleUserAddFormComponent',
+    components: {
+      'select-user': SelectUser
+    },
     mixins: [validationMixin, withSnackbar, hasTenantInfo],
     validations: {
       givenName: { required },
@@ -74,7 +83,14 @@
         mobile: '',
         secondaryEmail: '',
         creating: false,
-        errors: []
+        errors: [],
+        newUser: true
+      }
+    },
+    props: {
+      existing: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {

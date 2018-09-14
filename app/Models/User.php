@@ -42,7 +42,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','photo','photo_hash','user_type_id'
+        'name', 'email','mobile', 'password','photo','photo_hash','user_type_id'
     ];
 
     protected $appends = [

@@ -54,6 +54,7 @@
                                         {{ user.name }}
                                     </td>
                                     <td class="text-xs-left">{{ user.email }}</td>
+                                    <td class="text-xs-left">{{ user.mobile }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>
                                     <td class="text-xs-left">
                                         <v-tooltip bottom>
@@ -169,11 +170,11 @@
   import withSnackbar from '../mixins/withSnackbar'
   import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
   import ShowUserIcon from './ShowUserIconComponent.vue'
-
+  import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
   import axios from 'axios'
 
   export default {
-    mixins: [withSnackbar],
+    mixins: [withSnackbar, SendsWelcomeEmail],
     components: {
       'confirm-icon': ConfirmIcon,
       'show-user-icon': ShowUserIcon
@@ -187,6 +188,7 @@
           {text: 'Id', align: 'left', value: 'id'},
           {text: 'Name', value: 'name'},
           {text: 'Email', value: 'email'},
+          {text: 'Mòbil', value: 'mobile'},
           {text: 'Verificació email', value: 'email_verified_at'},
           {text: 'Últim login', value: 'last_login'},
           {text: 'Rols', value: 'roles', sortable: false},
@@ -194,7 +196,6 @@
           {text: 'Data actualització', value: 'formatted_updated_at'},
           {text: 'Accions', sortable: false}
         ],
-        sendingWelcomeEmail: false,
         sendingResetPassword: false,
         sendingEmailConfirmation: false
       }
@@ -218,17 +219,6 @@
       },
       settings () {
         console.log('settings TODO') // TODO
-      },
-      sendWelcomeEmail (user) {
-        this.sendingWelcomeEmail = true
-        this.$store.dispatch(actions.WELCOME_EMAIL, user).then(response => {
-          this.showMessage(`Correu electrònic enviat correctament`)
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
-          this.sendingWelcomeEmail = false
-        })
       },
       sendResetPasswordEmail (user) {
         this.sendingResetPassword = true

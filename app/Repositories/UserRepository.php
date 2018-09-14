@@ -30,10 +30,15 @@ class UserRepository
             $photo = $user->photo;
             $photo_hash = md5($user->photo);
         }
+        $mobile = null;
+        if (isset($user->mobile)) {
+            $mobile = $user->mobile;
+        }
 
         return User::create([
             'name' => $user->name,
             'email' => $user->email,
+            'mobile' => $mobile,
             'password' => sha1($password),
             'photo' => $photo,
             'photo_hash' => $photo_hash

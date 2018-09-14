@@ -30,7 +30,7 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <google-user-add-form @created="userCreated"></google-user-add-form>
+                      <google-user-add-form @created="userCreated" :existing="true"></google-user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Dades de l'usuari</v-stepper-step>

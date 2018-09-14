@@ -28,12 +28,14 @@ class UserPersonController extends Controller
         $user = User::create([
             'name' => name($request->givenName,$request->sn1,$request->sn2),
             'email' => $request->email,
+            'mobile' => $request->mobile,
             'user_type_id' => $request->user_type_id,
             'password' => sha1(str_random())
         ]);
         $person = Person::create([
             'user_id' => $user->id,
             'givenName' => $request->givenName,
+            'mobile' => $request->mobile,
             'sn1' => $request->sn1,
             'sn2' => $request->sn2,
         ]);
@@ -46,6 +48,7 @@ class UserPersonController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'mobile' => $user->mobile,
             'user_type_id' => $user->user_type_id,
             'givenName' => $person->givenName,
             'sn1' => $person->sn1,

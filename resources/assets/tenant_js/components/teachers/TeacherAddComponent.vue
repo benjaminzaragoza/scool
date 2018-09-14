@@ -26,9 +26,9 @@
         6) Resta dades personals -> Link a la perfil dades personals (opcional)
         7) Resta dades professor -> Link a Fitxa de professor (opcional)
         -->
-    <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="dialog = false">
+    <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="close">
         <v-toolbar color="blue darken-3">
-            <v-btn icon dark @click.native="dialog = false">
+            <v-btn icon dark @click.native="close">
                 <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title class="white--text title">Afegir professor</v-toolbar-title>
@@ -49,6 +49,7 @@
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
                       <user-add-form
+                              :existing="true"
                               :users="users"
                               @created="userCreated"
                               :user-type="TEACHER_TYPE"
@@ -192,6 +193,10 @@
       }
     },
     methods: {
+      close () {
+        this.step = 1
+        this.dialog = false
+      },
       finish () {
         this.showMessage('Professor creat correctament')
         setTimeout(() => { this.dialog = false }, 1000);
@@ -199,10 +204,10 @@
         this.dialog = false
       },
       clear () {
-        this.step= 1,
-        this.user= null,
-        this.employee= null,
-        this.teacher= null
+        this.step = 1,
+        this.user = null,
+        this.employee = null,
+        this.teacher = null
       },
       userCreated (user) {
         this.user = user
