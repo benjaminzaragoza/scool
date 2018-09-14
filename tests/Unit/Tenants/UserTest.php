@@ -716,4 +716,11 @@ class UserTest extends TestCase
         ]);
         $this->assertTrue($user->is(User::findByEmail('pepepardo@jeans.com')));
     }
+
+    /** @test */
+    public function can_have_google_user()
+    {
+        $user = factory(User::class)->create();
+        $this->assertEmpty($user->googleUser);
+    }
 }

@@ -39,7 +39,8 @@ class UserCollection
                 'roles' => $user->roles->pluck('name')->unique()->toArray(),
                 'formatted_created_at' => $user->formatted_created_at,
                 'formatted_updated_at' => $user->formatted_updated_at,
-                'admin' => $user->admin
+                'admin' => $user->admin,
+                'hashid' => $user->hashid
             ];
         });
     }

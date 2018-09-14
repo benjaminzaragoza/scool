@@ -6,6 +6,7 @@ use App\Http\Requests\DestroyTeacher;
 use App\Http\Requests\ListTeachers;
 use App\Http\Requests\ShowTeachersManagment;
 use App\Http\Requests\StoreTeacher;
+use App\Http\Resources\Tenant\UserCollection;
 use App\Models\AdministrativeStatus;
 use App\Models\Department;
 use App\Models\Force;
@@ -94,7 +95,8 @@ class TeachersController extends Controller
         $forces = Force::all();
         $administrativeStatuses = AdministrativeStatus::all();
         $departments = Department::all();
-        $users = User::all();
+
+        $users = (new UserCollection(User::with('roles')->get()))->transform();
 
         return view('tenants.teachers.show', compact(
             'pendingTeachers',

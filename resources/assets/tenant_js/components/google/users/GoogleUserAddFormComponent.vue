@@ -5,7 +5,7 @@
                   v-model="newUser"
         ></v-switch>
         <select-user v-if="!newUser" :users="users" v-model="user" :item-value="null"></select-user>
-        <v-container fluid grid-list-md text-xs-center>
+        <v-container v-else fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex md6>
                     <v-text-field
@@ -84,7 +84,9 @@
         secondaryEmail: '',
         creating: false,
         errors: [],
-        newUser: true
+        newUser: true,
+        users: [],
+        user: null
       }
     },
     props: {
@@ -124,7 +126,20 @@
         return primaryEmailErrors
       }
     },
+    watch: {
+      // whenever question changes, this function will run
+      newUser: function (newUser) {
+        if (newUser === false && this.users.length === 0) this.fetchUsers()
+      }
+    },
     methods: {
+      fetchUsers () {
+        axios.get('/api/v1/users').then(response => {
+          this.users = response.data
+        }).catch(error => {
+          this.showError(error)
+        })
+      },
       create () {
         this.$v.$touch()
         if (!this.$v.$invalid) {

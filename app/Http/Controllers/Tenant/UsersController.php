@@ -38,15 +38,10 @@ class UsersController extends Controller
      */
     public function show(ShowUsersManagement $request)
     {
-        $users = $this->getUsers();
+        $users = User::getUsers();
         $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
         $roles = Role::all()->pluck('name');
         return view('tenants.users.show',compact('users','userTypes','roles'));
-    }
-
-    protected function getUsers()
-    {
-        return (new UserCollection(User::with('roles')->get()))->transform();
     }
 
     /**
@@ -57,7 +52,7 @@ class UsersController extends Controller
      */
     public function index(ShowUsersManagement $request)
     {
-        return $this->getUsers();
+        return User::getUsers();
     }
 
     /**

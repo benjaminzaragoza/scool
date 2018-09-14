@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\Tenant\UserCollection;
 use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
 use Illuminate\Auth\MustVerifyEmail;
@@ -593,4 +594,21 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         return self::where('email','=',$email)->first();
     }
 
+    /**
+     * Get users.
+     *
+     * @return mixed
+     */
+    public static function getUsers()
+    {
+        return (new UserCollection(User::with('roles')->get()))->transform();
+    }
+
+    /**
+     * Get the google user record associated with the user.
+     */
+    public function googleUser()
+    {
+        return $this->hasOne(GoogleUser::class);
+    }
 }
