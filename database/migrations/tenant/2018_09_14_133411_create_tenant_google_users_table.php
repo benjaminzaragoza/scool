@@ -16,7 +16,8 @@ class CreateTenantGoogleUsersTable extends Migration
         Schema::create('google_users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('google_id');
+            $table->unsignedInteger('google_id')->unique();;
+            $table->unsignedInteger('google_email')->unique();;
             $table->timestamps();
         });
     }
