@@ -404,7 +404,8 @@ if (! function_exists('tenant_migrate')) {
 
         Artisan::call('migrate', [
             '--database' => 'tenant',
-            '--path' => 'database/migrations/tenant'
+            '--path' => 'database/migrations/tenant',
+            '--force'
         ]);
     }
 }
@@ -419,7 +420,8 @@ if (! function_exists('tenant_seed')) {
 
         Artisan::call('db:seed', [
             '--database' => 'tenant',
-            '--class' => 'TenantDatabaseSeeder'
+            '--class' => 'TenantDatabaseSeeder',
+            '--force'
         ]);
     }
 }
