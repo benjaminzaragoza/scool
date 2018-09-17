@@ -263,14 +263,15 @@ if (! function_exists('create_default_tenant')) {
             $tenant = $user->addTenant($tenant = create_iesebre_tenant());
         }
 
+        dump('prova0');
         create_mysql_full_database(
             $tenant->database,
             $tenant->username ,
             $tenant->password,
             $tenant->hostname);
-
+        dump('prova1');
         create_admin_user_on_tenant($tenant->user, $tenant, env('ADMIN_USER_PASSWORD','123456'));
-
+        dump('prova2');
         DB::purge('tenant');
 
         main_connect();
@@ -405,7 +406,7 @@ if (! function_exists('tenant_migrate')) {
         Artisan::call('migrate', [
             '--database' => 'tenant',
             '--path' => 'database/migrations/tenant',
-            '--force'
+            '--force' => true
         ]);
     }
 }
@@ -421,7 +422,7 @@ if (! function_exists('tenant_seed')) {
         Artisan::call('db:seed', [
             '--database' => 'tenant',
             '--class' => 'TenantDatabaseSeeder',
-            '--force'
+            '--force' => true
         ]);
     }
 }
@@ -434,16 +435,23 @@ if (! function_exists('tenant_seed')) {
  */
 function create_mysql_full_database($name, $user , $password = null, $host = null)
 {
+    dump('11');
     create_mysql_database($name);
+    dump('12');
     $password = create_mysql_user($user, $password, $host);
+    dump('13');
     mysql_grant_privileges($user, $name, $host);
-
+    dump('14');
     $hostname = 'localhost';
+    dump('15');
     if ($host) $hostname = $host;
+    dump('16');
     tenant_connect($hostname, $name, $password, $name);
+    dump('17');
     tenant_migrate();
+    dump('18');
     tenant_seed();
-
+    dump('19');
     return $password;
 }
 
