@@ -259,6 +259,7 @@ if (! function_exists('create_default_tenant')) {
     function create_default_tenant() {
         $user = App\User::find(1);
         $tenant = Tenant::where('subdomain','iesebre')->first();
+        $tenant_user = $tenant->user;
         if (! $tenant) {
             $tenant = $user->addTenant($tenant = create_iesebre_tenant());
         }
@@ -269,7 +270,7 @@ if (! function_exists('create_default_tenant')) {
             $tenant->password,
             $tenant->hostname);
 
-        create_admin_user_on_tenant($tenant->user, $tenant, env('ADMIN_USER_PASSWORD','123456'));
+        create_admin_user_on_tenant($tenant_user, $tenant, env('ADMIN_USER_PASSWORD','123456'));
 
         DB::purge('tenant');
 

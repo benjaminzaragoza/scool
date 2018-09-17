@@ -40,9 +40,6 @@ crear un nou certificat tipus LetsEncrypt a domini cal posar:
  Domains: scool.cat,*.scool.cat
  Provider: Digital Ocean
 
-
-
-
 - https://medium.com/@taylorotwell/wildcard-letsencrypt-certificates-on-forge-d3bdec43692a
 
 # Eines extres instal·lades
@@ -67,3 +64,14 @@ Host scool-cat_231518
 També podem utilitzar desdel projecte:
 
  $ php artisan publish:connect
+
+# Fitxers privats que s'han d'instal·lar manualment al servidor explotació
+
+S'ha de copiar de local a explotació (no estan a Github) les següents carpetes/fitxers:
+
+- app/private_helpers
+- storage/photos
+
+Directoris que s'han de crear:
+
+ mkdir -p /home/forge/scool.cat/storage/app/iesebre/teacher_photos
