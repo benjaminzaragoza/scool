@@ -79,3 +79,20 @@ Directoris que s'han de crear:
  
 # Configuració email
 
+Al fitxer ewnv explotació utilitzem Mailgun:
+
+MAIL_DRIVER=mailgun
+MAILGUN_DOMAIN=mailgun.iesebre.com
+MAILGUN_SECRET=SECRETE_HERE
+# TODO Dinamically taken from TENANT INFO on database
+MAIL_FROM_ADDRESS=noreply@iesebre.com
+MAIL_FROM_NAME="Institut de l'Ebre"
+
+# Errors típics i solucions
+
+## 500 Key path "file:///home/forge/scool.cat/storage/oauth-public.key" does not exist or is not readable
+
+
+```
+php artisan passport:install
+```
