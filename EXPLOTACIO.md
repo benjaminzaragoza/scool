@@ -71,7 +71,11 @@ S'ha de copiar de local a explotació (no estan a Github) les següents carpetes
 
 - app/private_helpers
 - storage/photos
+- storage/app/iesebre/user_photos/default.png
 
 Directoris que s'han de crear:
 
  mkdir -p /home/forge/scool.cat/storage/app/iesebre/teacher_photos
+ 
+# Configuració email
+
