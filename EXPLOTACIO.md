@@ -71,7 +71,8 @@ S'ha de copiar de local a explotació (no estan a Github) les següents carpetes
 
 - app/private_helpers
 - storage/photos
-- storage/app/iesebre/user_photos/default.png
+- storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json
+
 
 Directoris que s'han de crear:
 
@@ -88,7 +89,14 @@ MAILGUN_SECRET=SECRETE_HERE
 MAIL_FROM_ADDRESS=noreply@iesebre.com
 MAIL_FROM_NAME="Institut de l'Ebre"
 
+# Configuració Google Apps
+
 # Errors típics i solucions
+
+## file does not exist quan necessitem Google Apps
+
+Fitxer Json
+
 
 ## 500 Key path "file:///home/forge/scool.cat/storage/oauth-public.key" does not exist or is not readable
 
