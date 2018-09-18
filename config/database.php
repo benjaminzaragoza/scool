@@ -79,6 +79,21 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+        ],
+
+        'ebre_escool' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('EBRE_ESCOOL_LOCAL_TUNNEL_PORT', '3307'),
+            'database' => env('EBRE_ESCOOL_DATABASE', 'ebre_escool'),
+            'username' => env('EBRE_ESCOOL_USER', 'forge'),
+            'password' => env('EBRE_ESCOOL_PASSWD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
         ]
     ],
 

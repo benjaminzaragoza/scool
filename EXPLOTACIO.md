@@ -93,9 +93,9 @@ MAIL_FROM_NAME="Institut de l'Ebre"
 
 # Errors típics i solucions
 
-## file does not exist quan necessitem Google Apps
+## File does not exist quan necessitem Google Apps
 
-Fitxer Json
+Fitxer Json storage/app/gsuite_service_accounts/scool-07eed0b50a6f.json
 
 
 ## 500 Key path "file:///home/forge/scool.cat/storage/oauth-public.key" does not exist or is not readable
@@ -104,3 +104,28 @@ Fitxer Json
 ```
 php artisan passport:install
 ```
+
+# Tunel SSH (base de dades ebre-escool)
+
+sudo apt-get install autossh
+(ssh-keygen? sinó tenim clau creada)
+ssh-copy-id -i ~/.ssh/id_rsa -p 8022 sergi@escool.iesebre.com
+
+EXPLOTACIó
+autossh -M 10984 -o "PubkeyAuthentication=yes" -o "PasswordAuthentication=no" -i /home/forge/.ssh/id_rsa -R 3306:localhost:6606 sergi@escool.iesebre.com -p 8022
+
+LOCAL:
+
+
+SUPERVISOR
+
+/etc/supervisor/conf.d/ebre_escool_autossh_tunel.conf
+[program:ebre-escool-autossh-tunel]
+process_name=%(program_name)s_%(process_num)02d
+command=autossh -M 10984 -o "PubkeyAuthentication=yes" -o "PasswordAuthentication=no" -i /home/sergi/.ssh/id_rsa -L 3307:localhost:3306 sergi@185.13.76.85 -p 8022
+autostart=true
+autorestart=true
+user=sergi
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/tunel.log
