@@ -44,19 +44,17 @@
                     ></v-text-field>
                 </v-flex>
                 <v-flex md1>
-                    <v-select
+                    <v-combobox
                             name="identifierType"
                             label="Tipus id"
-                            autocomplete
                             required
-                            combobox
                             clearable
                             :error-messages="identifierTypeErrors"
                             @input="$v.identifierType.$touch()"
                             @blur="$v.identifierType.$touch()"
                             :items="identifierTypes"
                             v-model="identifierType"
-                    ></v-select>
+                    ></v-combobox>
                 </v-flex>
                 <v-flex md1>
                     <v-text-field
@@ -153,14 +151,14 @@
                     ></v-text-field>
                 </v-flex>
                 <v-flex md1>
-                    <v-select
+                    <v-combobox
                             name="postal_code"
                             label="Codi postal"
-                            autocomplete
+
                             :loading="loadingPostalCode"
                             cache-items
                             required
-                            combobox
+                            autocomplete
                             clearable
                             :error-messages="postalCodeErrors"
                             @input="$v.postal_code.$touch()"
@@ -168,19 +166,18 @@
                             :items="postalCodes"
                             :search-input.sync="searchPostalCodes"
                             v-model="postal_code"
-                    ></v-select>
+                    ></v-combobox>
                 </v-flex>
                 <v-flex md3>
-                    <v-select
+                    <v-combobox
                             name="locality"
                             label="Localitat"
                             tabindex = "-1"
                             item-text="name"
-                            autocomplete
                             :loading="loadingLocality"
                             cache-items
                             required
-                            combobox
+                            autocomplete
                             clearable
                             :items="localities"
                             :search-input.sync="searchLocalities"
@@ -188,10 +185,10 @@
                             v-model="locality"
                             @input="$v.locality.$touch()"
                             @blur="$v.locality.$touch()"
-                    ></v-select>
+                    ></v-combobox>
                 </v-flex>
                 <v-flex md2>
-                    <v-select
+                    <v-combobox
                             name="province"
                             label="Província"
                             tabindex = "-1"
@@ -200,7 +197,6 @@
                             :loading="loadingProvince"
                             cache-items
                             required
-                            combobox
                             clearable
                             :items="provinces"
                             :search-input.sync="searchProvinces"
@@ -208,7 +204,7 @@
                             :error-messages="provinceErrors"
                             @input="$v.province.$touch()"
                             @blur="$v.province.$touch()"
-                    ></v-select>
+                    ></v-combobox>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -362,10 +358,9 @@
                     ></specialty-select>
                 </v-flex>
                 <v-flex md5>
-                    <v-select
+                    <v-autocomplete
                             name="force"
                             label="Cos"
-                            autocomplete
                             tabindex="-1"
                             required
                             clearable
@@ -376,7 +371,7 @@
                             v-model="force"
                             item-text="name"
                     >
-                    </v-select>
+                    </v-autocomplete>
                 </v-flex>
                 <v-flex md4>
                     <v-text-field
@@ -425,10 +420,9 @@
                     ></v-text-field>
                 </v-flex>
                 <v-flex md5>
-                    <v-select
+                    <v-autocomplete
                             name="administrative_status"
                             label="Situació administrativa"
-                            autocomplete
                             required
                             clearable
                             :items="administrativeStatuses"
@@ -438,7 +432,7 @@
                             @blur="$v.administrative_status.$touch()"
                             item-text="name"
                     >
-                    </v-select>
+                    </v-autocomplete>
                 </v-flex>
                 <v-flex md6>
                     <v-text-field
