@@ -363,7 +363,7 @@ class UserTest extends TestCase
     public function users_have_a_default_photo()
     {
         $this->assertEquals(User::DEFAULT_PHOTO,'default.png');
-        $this->assertEquals(User::DEFAULT_PHOTO_PATH,'user_photos/default.png');
+        $this->assertEquals(User::DEFAULT_PHOTO_PATH,'img/default.png');
         $this->assertEquals(User::PHOTOS_PATH,'user_photos');
     }
 

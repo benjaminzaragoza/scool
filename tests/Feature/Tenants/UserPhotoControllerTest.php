@@ -51,8 +51,9 @@ class UserPhotoControllerTest extends BaseTenantTest
         $user = factory(User::class)->create();
         $response = $this->get('/user/' . $user->getRouteKey() . '/photo');
         $response->assertSuccessful();
-        $this->assertEquals(Storage::disk('local')->path('tenant_test/' . User::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
-        $this->assertFileEquals(Storage::disk('local')->path('tenant_test/' . User::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
+        $this->assertEquals(public_path(User::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
+//        $this->assertFileEquals(Storage::disk('local')->path('tenant_test/' . User::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
+        $this->assertFileEquals(public_path(User::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
 
         $user2 = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',

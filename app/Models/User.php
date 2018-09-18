@@ -33,7 +33,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
 
     const DEFAULT_PHOTO = 'default.png';
     const PHOTOS_PATH = 'user_photos';
-    const DEFAULT_PHOTO_PATH = self::PHOTOS_PATH . '/' . self::DEFAULT_PHOTO;
+    const DEFAULT_PHOTO_PATH = 'img/' . self::DEFAULT_PHOTO;
 
     protected $guard_name = 'web';
 

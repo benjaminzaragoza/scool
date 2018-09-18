@@ -21,12 +21,14 @@ class UserPhotoController extends Controller
      * @param Request $request
      * @param $tenant
      * @param User $user
+     * @return
      */
     public function show(Request $request, $tenant, User $user)
     {
         if (! $user->photo || ! Storage::disk('local')->exists($user->photo)) {
-            return response()->file(Storage::disk('local')->path(
-                $this->basePath($tenant,User::DEFAULT_PHOTO_PATH)));
+//            return response()->file(Storage::disk('local')->path(
+//                $this->basePath($tenant,User::DEFAULT_PHOTO_PATH)));
+            return response()->file(public_path(User::DEFAULT_PHOTO_PATH));
         }
         return response()->file(Storage::disk('local')->path($user->photo));
     }

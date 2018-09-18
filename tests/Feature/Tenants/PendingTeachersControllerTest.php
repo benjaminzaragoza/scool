@@ -37,6 +37,7 @@ class PendingTeachersControllerTest extends BaseTenantTest
     /** @test */
     public function users_can_see_create_pending_teacher()
     {
+        $this->withoutExceptionHandling();
 
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
