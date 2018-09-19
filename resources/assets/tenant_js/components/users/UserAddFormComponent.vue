@@ -51,7 +51,7 @@
                             v-model="personalEmail"
                             :error-messages="emailErrors"
                             @input="inputEmail()"
-                            @blur="$v.personalEmail.$touch()"
+                            @blur="personalEmailBlur()"
                             :disabled="loadingProposedUser"
                             :loading="loadingProposedUser"
                             required
@@ -134,6 +134,7 @@
         creating: false,
         deleting: false,
         loadingProposedUser: false,
+        checkingPersonalEmail: false,
         newUser: true,
         welcomeEmail: true,
         googleUser: true,
@@ -210,6 +211,24 @@
       inputEmail () {
         this.errors['email'] = ''
         this.$v.sn1.$touch()
+      },
+      personalEmailBlur () {
+        this.$v.personalEmail.$touch()
+        this.checkPersonalEmail()
+      },
+      checkPersonalEmail () {
+        this.checkingPersonalEmail = true
+        if (this.personalEmail) {
+          axios.get('/api/v1/users/email/' + this.personalEmail).then(response => {
+            this.checkingPersonalEmail = false
+            this.username = response.data
+            this.email = this.username + '@' + window.tenant.email_domain
+            this.showMessage('Ja existeix un usuari amb aquest correu electrònic')
+          }).catch(error => {
+            this.checkingPersonalEmail = false
+            if (error.status !== 404) this.showError(error)
+          })
+        }
       },
       sn1Blur () {
         this.$v.sn1.$touch()
