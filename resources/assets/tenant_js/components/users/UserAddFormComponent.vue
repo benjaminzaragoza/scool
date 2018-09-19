@@ -7,43 +7,55 @@
         <select-user v-if="!newUser" :users="users" v-model="user" :item-value="null"></select-user>
         <v-container v-else fluid grid-list-md text-xs-center>
             <v-layout row wrap>
-                <v-flex md4>
+                <v-flex md3>
                     <v-text-field
                             label="Nom"
                             v-model="givenName"
                             :error-messages="givenNameErrors"
                             @input="$v.givenName.$touch()"
                             @blur="$v.givenName.$touch()"
+                            tabindex="1"
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md4>
+                <v-flex md3>
                     <v-text-field
                             label="Cognom1"
                             v-model="sn1"
                             :error-messages="sn1Errors"
                             @input="$v.sn1.$touch()"
                             @blur="sn1Blur()"
+                            tabindex="2"
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md4>
+                <v-flex md3>
                     <v-text-field
                             label="Cognom2"
                             v-model="sn2"
+                            required
+                            tabindex="3"
+                    ></v-text-field>
+                </v-flex>
+                <v-flex md3>
+                    <v-text-field
+                            label="Usuari"
+                            v-model="username"
+                            readonly
                             required
                     ></v-text-field>
                 </v-flex>
                 <v-flex md3>
                     <v-text-field
                             :label="'Correu electrònic personal (no utilitzeu ' + tenant.email_domain +')'"
-                            v-model="email"
+                            v-model="personalEmail"
                             :error-messages="emailErrors"
                             @input="inputEmail()"
-                            @blur="$v.email.$touch()"
+                            @blur="$v.personalEmail.$touch()"
                             :disabled="loadingProposedUser"
                             :loading="loadingProposedUser"
                             required
+                            tabindex="4"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md3>
@@ -51,6 +63,7 @@
                             label="Telèfon mòbil"
                             v-model="mobile"
                             required
+                            tabindex="5"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md2>
@@ -104,7 +117,7 @@
     validations: {
       givenName: { required },
       sn1: { required },
-      email: { required, email }
+      personalEmail: { required, email }
     },
     data () {
       return {
@@ -114,6 +127,7 @@
         sn1: '',
         sn2: '',
         email: '',
+        personalEmail: '',
         mobile: '',
         password: '',
         errors: [],
@@ -168,9 +182,9 @@
       },
       emailErrors () {
         const emailErrors = []
-        if (!this.$v.email.$dirty) return emailErrors
-        !this.$v.email.email && emailErrors.push('El correu electrònic ha de ser vàlid')
-        !this.$v.email.required && emailErrors.push('El correu electrònic és obligatori.')
+        if (!this.$v.personalEmail.$dirty) return emailErrors
+        !this.$v.personalEmail.email && emailErrors.push('El correu electrònic ha de ser vàlid')
+        !this.$v.personalEmail.required && emailErrors.push('El correu electrònic és obligatori.')
         this.errors['email'] && emailErrors.push(this.errors['email'])
         return emailErrors
       }
@@ -219,21 +233,39 @@
         if (this.user) this.$emit('created', this.user)
         else this.showError('Cal seleccionar un usuari!')
       },
+      getFamilyName (sn1, sn2) {
+        return sn2 ? sn1 + ' ' + sn2 : sn1
+      },
       createGoogleUser () {
-        console.log('TODO create Google User')
+        axios.post('/api/v1/gsuite/users', {
+          givenName: this.givenName,
+          familyName: this.getFamilyName(this.sn1, this.sn2),
+          primaryEmail: this.email,
+          mobile: this.mobile,
+          secondaryEmail: this.personalEmail
+        }).then(response => {
+          this.showMessage('Usuari Google creat correctament')
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+        })
       },
       createLdapUser () {
         console.log('TODO create Ldap User')
       },
       create () {
         this.$v.$touch()
+        if (this.personalEmail.endsWith(this.tenant.email_domain)) {
+          this.showError('Cal indicar un email personal, no es pot utilitzar el domini ' + this.tenant.email_domain)
+          return
+        }
         if (!this.$v.$invalid) {
           this.creating = true
           this.$store.dispatch(actions.STORE_USER_PERSON, {
             givenName: this.givenName,
             sn1: this.sn1,
             sn2: this.sn2,
-            email: this.email,
+            email: this.personalEmail,
             mobile: this.mobile,
             user_type_id: this.userType,
             role: this.role
@@ -242,7 +274,7 @@
             this.user = response.data
             this.$v.$reset()
             this.welcomeEmail && this.sendWelcomeEmail(this.user)
-            this.googleUser && this.createGoogleUser(this.user)
+            this.googleUser && this.createGoogleUser()
             this.ldapUser && this.createLdapUser(this.user)
             this.$emit('created', this.user)
           }).catch(error => {

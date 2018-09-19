@@ -239,8 +239,6 @@ class UsersControllerTest extends BaseTenantTest
     public function user_cannot_delete_users()
     {
         $regularUser = create(User::class);
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
-        Config::set('auth.providers.users.model', User::class);
         $this->actingAs($regularUser,'api');
 
         $userToDelete = create(User::class);
@@ -275,6 +273,58 @@ class UsersControllerTest extends BaseTenantTest
 
         $response = $this->get('/users');
 
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function can_get_user_info()
+    {
+        $manager = create(User::class);
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager,'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $response = $this->get('/api/v1/users/' . $user->id);
+        $response->assertSuccessful();
+
+        $user = json_decode($response->getContent());
+        $this->assertEquals(2,$user->id);
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $this->assertEquals('pepepardojeans@gmail.com',$user->email);
+        $this->assertNull($user->email_verified_at);
+        $this->assertEquals('654789524',$user->mobile);
+        $this->assertNull($user->last_login);
+        $this->assertNull($user->last_login_ip);
+        $this->assertNotNull($user->created_at);
+        $this->assertNotNull($user->updated_at);
+        $this->assertEmpty($user->roles);
+        $this->assertNotNull($user->formatted_created_at);
+        $this->assertNotNull($user->formatted_updated_at);
+        $this->assertEquals(0,$user->admin);
+        $this->assertEquals('Ay',$user->hashid);
+    }
+
+    /** @test */
+    public function regular_user_cannot_get_user_info()
+    {
+        $regularUser = create(User::class);
+        $this->actingAs($regularUser,'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $response = $this->get('/api/v1/users/' . $user->id);
         $response->assertStatus(403);
     }
 }

@@ -60,7 +60,7 @@ class GoogleUsersController extends Controller
      */
     public function store(StoreGoogleUsers $request)
     {
-        if (google_user_exists($request->primaryEmail)) abort('422','Already exists');
+        if (google_user_exists($request->primaryEmail)) abort('422','Google user already exists');
         $directory = new GoogleDirectory();
         $user = [
             'givenName' => $request->givenName,
@@ -76,9 +76,9 @@ class GoogleUsersController extends Controller
         if ($request->id) $user['id'] = $request->id;
 
         try {
-            $users = get_object_vars($directory->user($user));
+            $user = get_object_vars($directory->user($user));
             Cache::forget('google_users');
-            return $users;
+            return $user;
         } catch (Google_Service_Exception $e) {
             abort('422',$e);
         }

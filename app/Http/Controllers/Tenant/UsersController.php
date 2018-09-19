@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Requests\AddUser;
 use App\Http\Requests\DeleteUser;
+use App\Http\Requests\GetUser;
 use App\Http\Requests\ShowUsersManagement;
 use App\Http\Resources\Tenant\UserCollection;
 use App\Http\Resources\Tenant\UserResource;
@@ -42,6 +43,17 @@ class UsersController extends Controller
         $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
         $roles = Role::all()->pluck('name');
         return view('tenants.users.show',compact('users','userTypes','roles'));
+    }
+
+    /**
+     * @param GetUser $request
+     * @param $tenant
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get(GetUser $request, $tenant, User $user)
+    {
+        return $user->map();
     }
 
     /**

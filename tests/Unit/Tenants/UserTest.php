@@ -723,4 +723,32 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
         $this->assertEmpty($user->googleUser);
     }
+
+    /** @test */
+    public function map()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $mappedUser = $user->map();
+
+        $this->assertEquals(1,$mappedUser['id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
+        $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
+        $this->assertNull($mappedUser['email_verified_at']);
+        $this->assertEquals('654789524',$mappedUser['mobile']);
+        $this->assertNull($mappedUser['last_login']);
+        $this->assertNull($mappedUser['last_login_ip']);
+        $this->assertInstanceOf(Carbon::class,$mappedUser['created_at']);
+        $this->assertInstanceOf(Carbon::class,$mappedUser['updated_at']);
+        $this->assertEmpty($mappedUser['roles']);
+        $this->assertEquals($mappedUser['created_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_created_at']);
+        $this->assertEquals($mappedUser['updated_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_updated_at']);
+        $this->assertNull($mappedUser['admin']);
+        $this->assertEquals('MX',$mappedUser['hashid']);
+    }
 }

@@ -60,6 +60,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/users', 'Tenant\UsersController@index');
             Route::post('/users', 'Tenant\UsersController@store');
             Route::delete('/users/{user}', 'Tenant\UsersController@destroy');
+            Route::get('/users/{user}', 'Tenant\UsersController@get');
+
+            //GET USER BY EMAIL
+            Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');
 
             // Available users
             // TODO: UMMMMM

@@ -3,14 +3,11 @@
 namespace Tests\Feature;
 
 use App\Models\Address;
-use App\Models\AdministrativeStatus;
 use App\Models\Employee;
 use App\Models\Identifier;
-use App\Models\IdentifierType;
 use App\Models\Job;
 use App\Models\Location;
 use App\Models\Person;
-use App\Models\Teacher;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -44,7 +41,6 @@ class ApprovedTeacherControllerTest extends BaseTenantTest
     /** @test */
     public function store_approved_teacher()
     {
-        $this->withoutExceptionHandling();
         $manager = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'TeachersManager']);
         Config::set('auth.providers.users.model', User::class);

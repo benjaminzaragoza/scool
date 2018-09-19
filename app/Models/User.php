@@ -611,4 +611,24 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     {
         return $this->hasOne(GoogleUser::class);
     }
+
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'email_verified_at' => $this->email_verified_at,
+            'mobile' => $this->mobile,
+            'last_login' => $this->last_login,
+            'last_login_ip' => $this->last_login_ip,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'roles' => $this->roles->pluck('name')->unique()->toArray(),
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'admin' => $this->admin,
+            'hashid' => $this->hashid
+        ];
+    }
 }
