@@ -143,6 +143,45 @@ class GoogleUsersControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group slow
+     * @group google
+     */
+    public function create_user_with_user_id()
+    {
+        config_google_api();
+        config_google_api();
+        tune_google_client();
+
+        $usersManager = create(User::class);
+        $this->actingAs($usersManager,'api');
+        $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
+        Config::set('auth.providers.users.model', User::class);
+        $usersManager->assignRole($role);
+
+        try {
+            google_user_remove('provauser123@iesebre.com');
+        } catch (\Exception $e) {
+
+        }
+
+        sleep(5);
+        $response = $this->json('POST','/api/v1/gsuite/users', [
+            'id' => 454545,
+            'givenName' => 'prova',
+            'familyName' => '123',
+            'primaryEmail' => 'provauser123@iesebre.com'
+        ]);
+
+        $response->assertSuccessful();
+        sleep(5);
+        $this->assertTrue(google_user_exists('provauser123@iesebre.com'));
+
+        $user = google_user_get('provauser123@iesebre.com');
+        $this->assertEquals(454545,$user->externalIds[0]['value']);
+    }
+
+    /**
+     * @test
      * @group google
      */
     public function create_user_validation()

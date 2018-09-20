@@ -6,6 +6,7 @@ use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Requests\DestroyGoogleUsers;
 use App\Http\Requests\ListGoogleUsers;
 use App\Http\Requests\StoreGoogleUsers;
+use App\Models\GoogleUser;
 use Cache;
 use Google_Service_Exception;
 
@@ -24,20 +25,8 @@ class GoogleUsersController extends Controller
      */
     public function show(ListGoogleUsers $request)
     {
-        $users = $this->getGoogleUsers();
+        $users = GoogleUser::getGoogleUsers();
         return view('tenants.google_users.show', compact('users'));
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getGoogleUsers()
-    {
-        $users = collect([]);
-        return Cache::rememberForever('google_users', function() use ($users){
-            $directory = new GoogleDirectory();
-            return collect($directory->users());
-        });
     }
 
     /**
@@ -49,7 +38,7 @@ class GoogleUsersController extends Controller
     public function index(ListGoogleUsers $request)
     {
         Cache::forget('google_users');
-        return $this->getGoogleUsers();
+        return GoogleUser::getGoogleUsers();
     }
 
     /**

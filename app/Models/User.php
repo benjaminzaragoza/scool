@@ -498,6 +498,15 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * @param GoogleUser $googleUser
+     */
+    public function assignGoogleUser(GoogleUser $googleUser)
+    {
+        $googleUser->user_id = $this->id;
+        $googleUser->save();
+    }
+
+    /**
      * Assign teacher data.
      *
      * @param $data
@@ -618,6 +627,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'corporativeEmail' => optional($this->googleUser)->google_email,
+            'googleId' => optional($this->googleUser)->google_id,
             'email_verified_at' => $this->email_verified_at,
             'mobile' => $this->mobile,
             'last_login' => $this->last_login,

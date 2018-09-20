@@ -2,6 +2,7 @@
 
 namespace App\GoogleGSuite;
 
+use App\Models\GoogleUser;
 use App\Models\GoogleWatch;
 use Carbon\Carbon;
 use Google_Service_Directory_Channel;
@@ -36,7 +37,7 @@ class GoogleDirectory
      * @param int $maxResults
      * @return array
      */
-    public function users($maxResults = 500)
+    public function users($maxResults = 500, $iterations = null)
     {
         $continue = true;
         $users = [];
@@ -50,21 +51,7 @@ class GoogleDirectory
             $pageToken = $r->nextPageToken;
             if(!$r->nextPageToken) $continue = false;
             $googleUsers = collect($r->users)->map(function ($user) {
-                    return [
-                        'id' => $user->id,
-                        'primaryEmail' => $user->primaryEmail,
-                        'isAdmin' => $user->isAdmin,
-                        'familyName' => $user->name->familyName,
-                        'fullName' => $user->name->fullName,
-                        'givenName' => $user->name->givenName,
-                        'lastLoginTime' => $user->lastLoginTime,
-                        'creationTime' => $user->creationTime,
-                        'suspended' => $user->suspended,
-                        'suspensionReason' => $user->suspensionReason,
-                        'thumbnailPhotoUrl' => $user->thumbnailPhotoUrl,
-                        'orgUnitPath' => $user->orgUnitPath,
-                        'organizations' => $user->organizations,
-                    ];
+                return GoogleUser::map($user);
                 });
             $users = array_merge($users,$googleUsers->toArray());
         }

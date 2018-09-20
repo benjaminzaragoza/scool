@@ -5018,7 +5018,7 @@ if (!function_exists('name')) {
      * @return string
      */
     function name($givenName,$sn1, $sn2= '') {
-        return trim(trim(ucfirst(strtolower($givenName))) . ' ' . trim(ucfirst(strtolower($sn1))) . ' ' . trim(ucfirst(strtolower($sn2))));
+        return trim((ucfirst(strtolower(trim($givenName))) . ' ' . ucfirst(strtolower(trim($sn1))) . ' ' . ucfirst(strtolower(trim($sn2)))));
     }
 }
 

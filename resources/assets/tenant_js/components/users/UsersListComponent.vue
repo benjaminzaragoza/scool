@@ -54,7 +54,10 @@
                                         {{ user.name }}
                                     </td>
                                     <td class="text-xs-left">{{ user.email }}</td>
-                                    <td class="text-xs-left">{{ user.corporativeEmail }}</td>
+                                    <td class="text-xs-left">
+                                        <a v-if="user.corporativeEmail" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
+                                        <add-corporative-email-icon :user="user" v-else></add-corporative-email-icon>
+                                    </td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>
                                     <td class="text-xs-left">
@@ -172,13 +175,15 @@
   import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
   import ShowUserIcon from './ShowUserIconComponent.vue'
   import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
+  import AddCorporativeEmailIcon from '../google/users/AddCorporativeEmailIcon'
   import axios from 'axios'
 
   export default {
     mixins: [withSnackbar, SendsWelcomeEmail],
     components: {
       'confirm-icon': ConfirmIcon,
-      'show-user-icon': ShowUserIcon
+      'show-user-icon': ShowUserIcon,
+      'add-corporative-email-icon': AddCorporativeEmailIcon
     },
     data () {
       return {
@@ -189,7 +194,7 @@
           {text: 'Id', align: 'left', value: 'id'},
           {text: 'Name', value: 'name'},
           {text: 'Email', value: 'email'},
-          {text: 'Email corporatiu', value: 'corporative_email'},
+          {text: 'Email corporatiu', value: 'corporativeEmail'},
           {text: 'Mòbil', value: 'mobile'},
           {text: 'Verificació email', value: 'email_verified_at'},
           {text: 'Últim login', value: 'last_login'},

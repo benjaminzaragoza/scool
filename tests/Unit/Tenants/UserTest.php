@@ -7,6 +7,7 @@ use App\Models\AdministrativeStatus;
 use App\Models\Employee;
 use App\Models\Family;
 use App\Models\Force;
+use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Location;
@@ -733,12 +734,20 @@ class UserTest extends TestCase
             'mobile' => '654789524'
         ]);
 
+        GoogleUser::create([
+            'user_id' => $user->id,
+            'google_id' => '87781322135468787',
+            'google_email' => 'pepepardo@iesebre.com',
+        ]);
+
         $mappedUser = $user->map();
 
         $this->assertEquals(1,$mappedUser['id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
+        $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
+        $this->assertEquals('87781322135468787',$mappedUser['googleId']);
         $this->assertNull($mappedUser['email_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
         $this->assertNull($mappedUser['last_login']);
@@ -750,5 +759,20 @@ class UserTest extends TestCase
         $this->assertEquals($mappedUser['updated_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_updated_at']);
         $this->assertNull($mappedUser['admin']);
         $this->assertEquals('MX',$mappedUser['hashid']);
+    }
+
+    /** @test */
+    public function assignGoogleUser()
+    {
+        $user = factory(User::class)->create();
+
+        $user->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@iesebre.com'
+        ]));
+
+        $this->assertNotNull($user->googleUser);
+        $this->assertEquals('231312312',$user->googleUser->google_id);
+        $this->assertEquals('prova@iesebre.com',$user->googleUser->google_email);
     }
 }

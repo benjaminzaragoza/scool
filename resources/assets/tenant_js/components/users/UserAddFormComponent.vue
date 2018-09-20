@@ -284,6 +284,7 @@
       },
       createGoogleUser () {
         axios.post('/api/v1/gsuite/users', {
+          id: this.user.id,
           givenName: this.givenName,
           familyName: this.getFamilyName(this.sn1, this.sn2),
           primaryEmail: this.email,

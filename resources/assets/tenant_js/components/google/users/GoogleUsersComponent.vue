@@ -77,10 +77,13 @@
                             >
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
+                                        <td class="text-xs-left" v-html="user.employeeId"></td>
+                                        <td class="text-xs-left" v-html="user.personalEmail"></td>
                                         <td class="text-xs-left" v-html="user.fullName"></td>
                                         <td class="text-xs-left">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
                                         </td>
+                                        <td class="text-xs-left" v-html="user.mobile"></td>
                                         <td class="text-xs-left" v-html="user.orgUnitPath"></td>
                                         <td class="text-xs-left" v-html="user.isAdmin"></td>
                                         <td class="text-xs-left" v-html="user.suspended"></td>
@@ -144,8 +147,11 @@
       },
       headers () {
         let headers = []
+        headers.push({text: 'User id', value: 'employeeId'})
+        headers.push({text: 'Email personal', value: 'personalEmail'})
         headers.push({text: 'Nom', value: 'fullName'})
         headers.push({text: 'Correu electrònic', value: 'primaryEmail'})
+        headers.push({text: 'Mòbil', value: 'mobile'})
         headers.push({text: 'Path', value: 'orgUnitPath'})
         headers.push({text: 'Administrador', value: 'isAdmin'})
         headers.push({text: 'Suspès?', value: 'suspended'})
