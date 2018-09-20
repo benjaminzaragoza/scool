@@ -49,11 +49,17 @@ class UserGsuiteControllerTest extends BaseTenantTest
         ]);
 
         $response = $this->json('POST', '/api/v1/user/' . $user->id . '/gsuite', [
-            'google_id' => '789466518897',
+            'google_id' => '104838924762351808886',
             'google_email' => 'pepepardo@iesebre.com'
         ]);
 
         $response->assertSuccessful();
+
+        $user = $user->fresh();
+
+        $this->assertEquals($user->id, $user->googleUser->user_id);
+        $this->assertEquals('104838924762351808886', $user->googleUser->google_id);
+        $this->assertEquals('pepepardo@iesebre.com', $user->googleUser->google_email);
     }
 
     /** @test */

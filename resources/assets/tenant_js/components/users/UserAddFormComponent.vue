@@ -290,15 +290,27 @@
           mobile: this.mobile,
           secondaryEmail: this.personalEmail
         }).then(response => {
-          this.showMessage('Usuari Google creat correctament')
-          this.associateGoogleUserToLocalUser()
+          this.associateGoogleUserToLocalUser(response.data)
         }).catch(error => {
           console.log(error)
           this.showError(error)
         })
       },
-      associateGoogleUserToLocalUser () {
-
+      associateGoogleUserToLocalUser (googleUser) {
+        console.log(googleUser)
+        console.log('ID:')
+        console.log(googleUser.id)
+        console.log('primaryEmail:')
+        console.log(googleUser.primaryEmail)
+        axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+          google_id: googleUser.id,
+          google_email: googleUser.primaryEmail
+        }).then(response => {
+          this.showMessage('Usuari Google creat correctament')
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+        })
       },
       createLdapUser () {
         console.log('TODO create Ldap User')

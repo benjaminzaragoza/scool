@@ -12,4 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 class GoogleUser extends Model
 {
     protected $guarded = [];
+
+    /**
+     * Get the user that owns the phone.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
