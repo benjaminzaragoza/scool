@@ -3867,7 +3867,7 @@ if (!function_exists('initialize_teachers')) {
 
         User::createIfNotExists([
             'name' => 'Lluc Ulldemolins Nolla',
-            'email' => 'lluculldemolins@iesebre.com',
+            'email' => 'lulldem2@xtec.cat',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
         ])->addRole(Role::findByName('Teacher'))

@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" @keydown.esc="dialog = false">
-        <v-btn slot="activator" icon class="mx-0" >
+        <v-btn slot="activator" icon class="mx-0" title="Editar plaça">
             <v-icon color="teal">edit</v-icon>
         </v-btn>
         <v-card>

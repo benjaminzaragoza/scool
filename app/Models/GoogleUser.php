@@ -92,11 +92,18 @@ class GoogleUser extends Model
         return null;
     }
 
+    /**
+     * Search personal email.
+     *
+     * @param $personalEmail
+     * @param null $users
+     * @return null
+     */
     public static function searchPersonalEmail($personalEmail, $users = null)
     {
         if (!$users) $users = self::getGoogleUsers();
         foreach ($users as $user) {
-            if ( $user['personalEmail'] != null && $user['personalEmail']== $personalEmail) return $user;
+            if ( array_key_exists('personalEmail',$user) && $user['personalEmail'] != null && $user['personalEmail']== $personalEmail) return $user;
         }
         return null;
     }
@@ -105,37 +112,35 @@ class GoogleUser extends Model
     {
         if (!$users) $users = self::getGoogleUsers();
         foreach ($users as $user) {
-            if ( $user['mobile'] != null && $user['mobile']== $mobile) return $user;
+            if ( array_key_exists('mobile',$user) && $user['mobile'] != null && $user['mobile']== $mobile) return $user;
         }
         return null;
-
     }
 
     public static function searchName($name, $users = null)
     {
         if (!$users) $users = self::getGoogleUsers();
+        foreach ($users as $user) {
+            if ( array_key_exists('name',$user) && $user['name'] != null && $user['name']== $name) return $user;
+        }
+        return null;
 
     }
 
-    public static function search()
+    /**
+     * Search.
+     *
+     * @param $user
+     * @return null
+     */
+    public static function search($user)
     {
-
         $users = self::getGoogleUsers();
-//        var_dump($users);
-//        die();
-        if($user = self::searchEmployeeId(130, $users)) {
-            dd($user);
-            return $user;
-        }
-        if($user = self::searchPersonalEmail('todo', $users)) return $user;
-        if($user = self::searchMobile('todo', $users)) return $user;
-        if($user = self::searchName('todo', $users)) return $user;
+        if($foundUser = self::searchEmployeeId($user['employeeId'], $users)) return $foundUser;
+        if($foundUser = self::searchPersonalEmail($user['personalEmail'], $users)) return $foundUser;
+        if($foundUser = self::searchMobile($user['mobile'], $users)) return $foundUser;
+        if($foundUser = self::searchName($user['name'], $users)) return $foundUser;
         return null;
-        // - SearchGoogleUser:
-        // - Hi ha algun usuari a Google amb employeeId = user.id ?
-        // - Hi ha algun usuari a Google amb secondaryEmail = user.email
-        // - Hi ha algun usuari a Google amb mobile = user.mobile
-        // - Hi ha algun usuari a Google amb givenName i familyName igual al del usuari?
     }
 
     /**

@@ -49,10 +49,16 @@ class GoogleUsersSearchControllerTest extends BaseTenantTest
         $usersManager->assignRole($role);
 
         $response = $this->json('POST','/api/v1/gsuite/users/search',[
-
+            'employeeId' => 11,
+            'personalEmail' => 'sdas@dsas.es',
+            'mobile' =>  '123456789',
+            'name' =>  'Pepe Pardo Jeans'
         ]);
 
         $response->assertSuccessful();
+
+        $user = json_decode($response->getContent());
+        dd($user);
     }
 
     /**

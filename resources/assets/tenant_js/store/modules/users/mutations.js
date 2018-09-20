@@ -9,5 +9,8 @@ export default {
   },
   [ types.ADD_USER ] (state, user) {
     state.users.push(user)
+  },
+  [ types.EDIT_USER ] (state, user) {
+    state.users.push(user)
   }
 }

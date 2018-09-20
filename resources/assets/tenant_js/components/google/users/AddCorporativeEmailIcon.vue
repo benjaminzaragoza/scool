@@ -1,6 +1,6 @@
 <template>
     <span style="display:inline-block">
-        <v-btn icon class="mx-0" title="Afegiu correu corporatiu" @click.native.stop="prepareDialog">
+        <v-btn icon class="mx-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
             <v-icon color="primary">add</v-icon>
         </v-btn>
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
@@ -30,8 +30,12 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  import withSnackbar from '../../mixins/withSnackbar'
+
   export default {
     name: 'AddCorporativeEmailIcon',
+    mixins: [withSnackbar],
     data () {
       return {
         dialog: false
@@ -44,29 +48,28 @@
       }
     },
     methods: {
-      prepareDialog () {
+      addGoogleUser () {
         console.log('USER:')
         console.log(this.user)
-
-        // TODO:
-        // - SearchGoogleUser:
-        // - Hi ha algun usuari a Google amb employeeId = user.id ?
-        // - Hi ha algun usuari a Google amb secondaryEmail = user.email
-        // - Hi ha algun usuari a Google amb mobile = user.mobile
-        // - Hi ha algun usuari a Google amb givenName i familyName igual al del usuari?
-
-        // this.dialog = true
-        // TODO
-        // if (! _.isEmpty(this.internalUser) && this.users.length > 0) {
-        //   this.dialog = true
-        //   return
-        // }
-        // axios.get('/api/v1/user').then(response => {
-        //   this.internalUser = response.data
-        //   this.dialog = true
-        // }).catch(error => {
-        //   console.log(error)
-        // })
+        axios.post('/api/v1/gsuite/users/search', {
+          employeeId: this.user.id,
+          personalEmail: this.user.email
+        }).then(response => {
+          console.log('RESPONSE.DATA  11:')
+          console.log(response.data)
+          axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+            google_id: response.data.id,
+            google_email: response.data.primaryEmail
+          }).then(response => {
+            this.showMessage('Usuari Google assignat correctament')
+            this.$emit('added', response.data)
+          }).catch(error => {
+            console.log(error)
+            this.showError(error)
+          })
+        }).catch(error => {
+          console.log(error)
+        })
       }
     }
   }

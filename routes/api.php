@@ -124,13 +124,13 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/gsuite/users', 'Tenant\GoogleUsersController@store');
             Route::delete('/gsuite/users/{user}', 'Tenant\GoogleUsersController@destroy');
 
-
+            //Associate Gsuite user to user
             Route::post('/user/{user}/gsuite','Tenant\UserGsuiteController@store');
 
             Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
 
 
-            //Google Apps/GSuite users
+            //Google Ldap users
             Route::get('/ldap/users', 'Tenant\LdapUsersController@index');
             Route::post('/ldap/users', 'Tenant\LdapUsersController@store');
 //            Route::delete('/ldap/users/{user}', 'Tenant\LdapUsersController@destroy');

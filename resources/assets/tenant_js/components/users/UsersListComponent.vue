@@ -56,7 +56,7 @@
                                     <td class="text-xs-left">{{ user.email }}</td>
                                     <td class="text-xs-left">
                                         <a v-if="user.corporativeEmail" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
-                                        <add-corporative-email-icon :user="user" v-else></add-corporative-email-icon>
+                                        <add-corporative-email-icon :user="user" v-else @added="googleUserAdded()"></add-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>
@@ -269,6 +269,9 @@
         }).then(() => {
           this.deleting = false
         })
+      },
+      googleUserAdded () {
+        this.refresh()
       }
     },
     created () {
