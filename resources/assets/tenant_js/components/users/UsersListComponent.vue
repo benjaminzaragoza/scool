@@ -10,7 +10,7 @@
 
                         <v-list>
                             <v-list-tile>
-                                <v-list-tile-title>TODO: llista d'usuaris</v-list-tile-title>
+                                <v-list-tile-title>TODO: llista d'usuaris AAAAAAAA</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -54,6 +54,7 @@
                                         {{ user.name }}
                                     </td>
                                     <td class="text-xs-left">{{ user.email }}</td>
+                                    <td class="text-xs-left">{{ user.corporativeEmail }}</td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>
                                     <td class="text-xs-left">
@@ -188,6 +189,7 @@
           {text: 'Id', align: 'left', value: 'id'},
           {text: 'Name', value: 'name'},
           {text: 'Email', value: 'email'},
+          {text: 'Email corporatiu', value: 'corporative_email'},
           {text: 'Mòbil', value: 'mobile'},
           {text: 'Verificació email', value: 'email_verified_at'},
           {text: 'Últim login', value: 'last_login'},
