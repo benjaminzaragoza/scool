@@ -297,11 +297,6 @@
         })
       },
       associateGoogleUserToLocalUser (googleUser) {
-        console.log(googleUser)
-        console.log('ID:')
-        console.log(googleUser.id)
-        console.log('primaryEmail:')
-        console.log(googleUser.primaryEmail)
         axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
           google_id: googleUser.id,
           google_email: googleUser.primaryEmail
