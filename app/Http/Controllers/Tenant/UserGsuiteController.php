@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Tenant;
 
+
+use App\Http\Requests\AddUser;
+use App\Http\Requests\AssociateGsuiteUserToUser;
 use App\Http\Requests\GetUser;
 use App\Models\User;
 
 /**
- * Class UserNamesController.
+ * Class UserGsuiteController.
  *
  * @package App\Http\Controllers
  */
-class UserNamesController extends Controller
+class UserGsuiteController extends Controller
 {
 
     protected $repository;
@@ -21,9 +24,9 @@ class UserNamesController extends Controller
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get(GetUser $request, $tenant, $name)
+    public function store(AssociateGsuiteUserToUser $request, $tenant, $email)
     {
-        return User::where('name',$name)->firstOrFail()->map();
+
     }
 
 

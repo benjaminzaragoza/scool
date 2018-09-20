@@ -34,10 +34,10 @@ class UserPersonController extends Controller
         ]);
         $person = Person::create([
             'user_id' => $user->id,
-            'givenName' => $request->givenName,
+            'givenName' => format_name($request->givenName),
             'mobile' => $request->mobile,
-            'sn1' => $request->sn1,
-            'sn2' => $request->sn2,
+            'sn1' => format_name($request->sn1),
+            'sn2' => format_name($request->sn2),
         ]);
 
         if($request->role) {

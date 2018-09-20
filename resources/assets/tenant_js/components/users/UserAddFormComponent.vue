@@ -13,7 +13,7 @@
                             v-model="givenName"
                             :error-messages="givenNameErrors"
                             @input="$v.givenName.$touch()"
-                            @blur="$v.givenName.$touch()"
+                            @blur="givenNameBlur()"
                             tabindex="1"
                             required
                     ></v-text-field>
@@ -33,6 +33,7 @@
                     <v-text-field
                             label="Cognom2"
                             v-model="sn2"
+                            @blur="sn2Blur()"
                             required
                             tabindex="3"
                     ></v-text-field>
@@ -135,6 +136,7 @@
         deleting: false,
         loadingProposedUser: false,
         checkingPersonalEmail: false,
+        checkingUsername: false,
         newUser: true,
         welcomeEmail: true,
         googleUser: true,
@@ -230,9 +232,34 @@
           })
         }
       },
+      checkUsername () {
+        this.checkingUsername = true
+        if (this.name) {
+          axios.get('/api/v1/users/name/' + this.name).then(response => {
+            this.checkingUsername = false
+            this.showMessage('Vigileu! Ja existeix un usuari amb aquest nom i correu electrònic: ' + response.data.email + '. Potser no cal crear aquest usuari?')
+          }).catch(error => {
+            this.checkingUsername = false
+            if (error.status !== 404) this.showError(error)
+          })
+        }
+      },
+      formatName (name) {
+        const lc = name.toLowerCase()
+        return lc.charAt(0).toUpperCase() + lc.slice(1)
+      },
+      givenNameBlur () {
+        this.$v.givenName.$touch()
+        this.givenName = this.formatName(this.givenName)
+      },
       sn1Blur () {
         this.$v.sn1.$touch()
+        this.sn1 = this.formatName(this.sn1)
         this.proposeFreeUserName(this.givenName, this.sn1)
+      },
+      sn2Blur () {
+        this.sn2 = this.formatName(this.sn2)
+        this.checkUsername()
       },
       proposeFreeUserName (name, sn1) {
         this.loadingProposedUser = true
@@ -264,10 +291,14 @@
           secondaryEmail: this.personalEmail
         }).then(response => {
           this.showMessage('Usuari Google creat correctament')
+          this.associateGoogleUserToLocalUser()
         }).catch(error => {
           console.log(error)
           this.showError(error)
         })
+      },
+      associateGoogleUserToLocalUser () {
+
       },
       createLdapUser () {
         console.log('TODO create Ldap User')

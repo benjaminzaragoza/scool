@@ -38,7 +38,6 @@ class GoogleUsersControllerTest extends BaseTenantTest
      */
     public function show_google_users()
     {
-//        $this->withoutExceptionHandling();
         config_google_api();
         tune_google_client();
         $usersManager = create(User::class);
@@ -114,7 +113,6 @@ class GoogleUsersControllerTest extends BaseTenantTest
      */
     public function create_user()
     {
-        $this->withoutExceptionHandling();
         config_google_api();
         config_google_api();
         tune_google_client();
