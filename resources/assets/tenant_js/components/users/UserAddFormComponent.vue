@@ -210,11 +210,11 @@
       },
       inputEmail () {
         this.errors['email'] = ''
-        this.$v.sn1.$touch()
+        this.$v.personalEmail.$touch()
       },
       personalEmailBlur () {
         this.$v.personalEmail.$touch()
-        this.checkPersonalEmail()
+        if (!this.$v.personalEmail.$error) this.checkPersonalEmail()
       },
       checkPersonalEmail () {
         this.checkingPersonalEmail = true

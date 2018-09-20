@@ -15,11 +15,11 @@ use App\Repositories\UserRepository;
 use Spatie\Permission\Models\Role;
 
 /**
- * Class UserEmailsController.
+ * Class UserNamesController.
  *
  * @package App\Http\Controllers
  */
-class UserEmailsController extends Controller
+class UserNamesController extends Controller
 {
 
     protected $repository;
@@ -30,9 +30,9 @@ class UserEmailsController extends Controller
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get(GetUser $request, $tenant, $email)
+    public function get(GetUser $request, $tenant, $name)
     {
-        return User::where('email',$email)->firstOrFail()->map();
+        return User::where('name',$name)->firstOrFail()->map();
     }
 
 

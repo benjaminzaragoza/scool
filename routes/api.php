@@ -65,6 +65,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //GET USER BY EMAIL
             Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');
 
+            //GET USER BY name
+            Route::get('/users/name/{name}', 'Tenant\UserNamesController@get');
+
             // Available users
             // TODO: UMMMMM
 //            Route::get('/users/available', 'Tenant\UsersAvailableController@index');
