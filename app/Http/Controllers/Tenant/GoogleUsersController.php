@@ -37,7 +37,7 @@ class GoogleUsersController extends Controller
      */
     public function index(ListGoogleUsers $request)
     {
-        Cache::forget('google_users');
+        if (!$request->cache) Cache::forget('google_users');
         return GoogleUser::getGoogleUsers();
     }
 

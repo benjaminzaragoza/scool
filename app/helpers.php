@@ -3842,6 +3842,7 @@ if (!function_exists('initialize_teachers')) {
             'email' => 'eduardserra@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
+            'mobile' => 655873817
         ])->addRole(Role::findByName('Teacher'))
             ->assignFullName([
                 'givenName' => 'Eduard',

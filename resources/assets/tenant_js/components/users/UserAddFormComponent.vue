@@ -302,7 +302,7 @@
           google_id: googleUser.id,
           google_email: googleUser.primaryEmail
         }).then(response => {
-          this.showMessage('Usuari Google creat correctament')
+          this.showMessage('Usuari Google associat correctament')
         }).catch(error => {
           console.log(error)
           this.showError(error)

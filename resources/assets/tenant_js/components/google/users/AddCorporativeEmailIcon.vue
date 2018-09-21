@@ -53,7 +53,8 @@
         console.log(this.user)
         axios.post('/api/v1/gsuite/users/search', {
           employeeId: this.user.id,
-          personalEmail: this.user.email
+          personalEmail: this.user.email,
+          mobile: this.user.mobile
         }).then(response => {
           console.log('RESPONSE.DATA  11:')
           console.log(response.data)

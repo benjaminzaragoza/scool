@@ -55,7 +55,10 @@
                                     </td>
                                     <td class="text-xs-left">{{ user.email }}</td>
                                     <td class="text-xs-left">
-                                        <a v-if="user.corporativeEmail" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
+                                        <template v-if="user.corporativeEmail">
+                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
+                                            <edit-corporative-email-icon :user="user" @associated="refresh"></edit-corporative-email-icon>
+                                        </template>
                                         <add-corporative-email-icon :user="user" v-else @added="googleUserAdded()"></add-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
@@ -176,6 +179,7 @@
   import ShowUserIcon from './ShowUserIconComponent.vue'
   import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
   import AddCorporativeEmailIcon from '../google/users/AddCorporativeEmailIcon'
+  import EditCorporativeEmailIcon from '../google/users/EditCorporativeEmailIcon'
   import axios from 'axios'
 
   export default {
@@ -183,7 +187,8 @@
     components: {
       'confirm-icon': ConfirmIcon,
       'show-user-icon': ShowUserIcon,
-      'add-corporative-email-icon': AddCorporativeEmailIcon
+      'add-corporative-email-icon': AddCorporativeEmailIcon,
+      'edit-corporative-email-icon': EditCorporativeEmailIcon
     },
     data () {
       return {

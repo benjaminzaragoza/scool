@@ -3,6 +3,7 @@
 namespace Tests\Feature\Tenants;
 
 
+use App\Models\GoogleUser;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -31,6 +32,37 @@ class UserGsuiteControllerTest extends BaseTenantTest
         ]);
 
         $this->app[Kernel::class]->setArtisan(null);
+    }
+
+    /** @test */
+    public function cannnot_associate_multiple_gsuite_users_to_user()
+    {
+        $this->withoutExceptionHandling();
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        GoogleUser::create([
+            'user_id' => $user->id,
+            'google_id' => '89743132884',
+            'google_email' => 'pepepardo@iesebre.com',
+        ]);
+
+        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/gsuite', [
+            'google_id' => '104838924762351808886',
+            'google_email' => 'pepepardojeans@iesebre.com'
+        ]);
+
+        $response->assertSuccessful();
+
     }
 
     /** @test */

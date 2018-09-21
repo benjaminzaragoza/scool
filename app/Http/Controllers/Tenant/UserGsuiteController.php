@@ -25,6 +25,9 @@ class UserGsuiteController extends Controller
      */
     public function store(AssociateGsuiteUserToUser $request, $tenant, User $user)
     {
+        if  ($existing = GoogleUser::where('user_id',$user->id)->first()) {
+            GoogleUser::destroy($existing->id);
+        }
         GoogleUser::create([
             'user_id' => $user->id,
             'google_id' => $request->google_id,
