@@ -61,6 +61,39 @@ class UserGsuiteControllerTest extends BaseTenantTest
         $this->assertEquals($user->id, $user->googleUser->user_id);
         $this->assertEquals('104838924762351808886', $user->googleUser->google_id);
         $this->assertEquals('pepepardo@iesebre.com', $user->googleUser->google_email);
+
+    }
+
+    /** @test */
+    public function can_associate_gsuite_user_to_user_and_test_googleuser()
+    {
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/gsuite', [
+            'google_id' => '104838924762351808886',
+            'google_email' => 'pepepardo@iesebre.com'
+        ]);
+
+        $response->assertSuccessful();
+
+        $user = $user->fresh();
+
+        $this->assertEquals($user->id, $user->googleUser->user_id);
+        $this->assertEquals('104838924762351808886', $user->googleUser->google_id);
+        $this->assertEquals('pepepardo@iesebre.com', $user->googleUser->google_email);
+
+        // TODO -> Asser google user is modified (employeeId = user->id i personalEmail)
+        $this->assertTrue(false);
     }
 
     /** @test */

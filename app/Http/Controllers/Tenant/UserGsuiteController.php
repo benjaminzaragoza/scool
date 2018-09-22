@@ -34,6 +34,8 @@ class UserGsuiteController extends Controller
             'google_id' => $request->google_id,
             'google_email' => $request->google_email,
         ]);
+
+        // TODO edit google user to modify employeeId == user->id i emailPersonal => user.email
     }
 
     /**

@@ -73,6 +73,7 @@ class GoogleUser extends Model
             'thumbnailPhotoUrl' => $user->thumbnailPhotoUrl,
             'orgUnitPath' => $user->orgUnitPath,
             'organizations' => $user->organizations,
+            'json' => json_encode($user)
         ];
     }
 
