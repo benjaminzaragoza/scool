@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Http\Requests\UnAssociateGsuiteUserToUser;
 use App\Models\GoogleUser;
 use App\Http\Requests\AssociateGsuiteUserToUser;
 use App\Http\Requests\GetUser;
@@ -35,5 +36,17 @@ class UserGsuiteController extends Controller
         ]);
     }
 
-
+    /**
+     * Destroy.
+     * 
+     * @param UnAssociateGsuiteUserToUser $request
+     * @param $tenant
+     * @param User $user
+     */
+    public function destroy(UnAssociateGsuiteUserToUser $request, $tenant, User $user)
+    {
+        if ($existing = GoogleUser::where('user_id', $user->id)->first()) {
+            GoogleUser::destroy($existing->id);
+        }
+    }
 }

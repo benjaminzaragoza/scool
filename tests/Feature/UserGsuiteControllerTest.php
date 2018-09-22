@@ -35,37 +35,6 @@ class UserGsuiteControllerTest extends BaseTenantTest
     }
 
     /** @test */
-    public function cannnot_associate_multiple_gsuite_users_to_user()
-    {
-        $this->withoutExceptionHandling();
-        $manager = factory(User::class)->create();
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
-        $this->actingAs($manager, 'api');
-
-        $user = factory(User::class)->create([
-            'name' => 'Pepe Pardo Jeans',
-            'email' => 'pepepardojeans@gmail.com',
-            'mobile' => '654789524'
-        ]);
-
-        GoogleUser::create([
-            'user_id' => $user->id,
-            'google_id' => '89743132884',
-            'google_email' => 'pepepardo@iesebre.com',
-        ]);
-
-        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/gsuite', [
-            'google_id' => '104838924762351808886',
-            'google_email' => 'pepepardojeans@iesebre.com'
-        ]);
-
-        $response->assertSuccessful();
-
-    }
-
-    /** @test */
     public function can_associate_gsuite_user_to_user()
     {
         $manager = factory(User::class)->create();
@@ -127,4 +96,52 @@ class UserGsuiteControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
+    /** @test */
+    public function can_unassociate_gsuite_user_to_user()
+    {
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        GoogleUser::create([
+            'user_id' => $user->id,
+            'google_id' => 7896454538713789,
+            'google_email' => 'pepepardojeans@iesebre.com',
+        ]);
+
+        $this->assertEquals(7896454538713789,$user->googleUser->google_id);
+        $this->assertEquals('pepepardojeans@iesebre.com',$user->googleUser->google_email);
+
+        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/gsuite');
+
+        $response->assertSuccessful();
+
+        $user = $user->fresh();
+        $this->assertNull($user->googleUser);
+    }
+
+    /** @test */
+    public function regular_user_cannot_unassociate_gsuite_user_to_user()
+    {
+        $regularUser = factory(User::class)->create();
+        $this->actingAs($regularUser, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/gsuite');
+
+        $response->assertStatus(403);
+    }
 }

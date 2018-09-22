@@ -126,6 +126,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //Associate Gsuite user to user
             Route::post('/user/{user}/gsuite','Tenant\UserGsuiteController@store');
+            Route::delete('/user/{user}/gsuite','Tenant\UserGsuiteController@destroy');
 
             Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
 

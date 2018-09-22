@@ -57,9 +57,8 @@
                                     <td class="text-xs-left">
                                         <template v-if="user.corporativeEmail">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
-                                            <edit-corporative-email-icon :user="user" @associated="refresh"></edit-corporative-email-icon>
                                         </template>
-                                        <add-corporative-email-icon :user="user" v-else @added="googleUserAdded()"></add-corporative-email-icon>
+                                        <manage-corporative-email-icon :user="user" @associated="refresh" @added="googleUserAdded()"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>
@@ -178,8 +177,7 @@
   import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
   import ShowUserIcon from './ShowUserIconComponent.vue'
   import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
-  import AddCorporativeEmailIcon from '../google/users/AddCorporativeEmailIcon'
-  import EditCorporativeEmailIcon from '../google/users/EditCorporativeEmailIcon'
+  import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
   import axios from 'axios'
 
   export default {
@@ -187,8 +185,7 @@
     components: {
       'confirm-icon': ConfirmIcon,
       'show-user-icon': ShowUserIcon,
-      'add-corporative-email-icon': AddCorporativeEmailIcon,
-      'edit-corporative-email-icon': EditCorporativeEmailIcon
+      'manage-corporative-email-icon': ManageCorporativeEmailIcon
     },
     data () {
       return {

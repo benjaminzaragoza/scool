@@ -77,7 +77,15 @@ Vue.component('ldap-users', require('./components/ldap/users/LdapUsersComponent.
 Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddComponent.vue'));
 
 window.Vuetify = require('vuetify');
-Vue.use(Vuetify)
+
+import ca from 'vuetify/src/locale/ca.ts'
+
+Vue.use(Vuetify,{
+  lang: {
+    locales: { ca },
+    current: 'ca'
+  }
+})
 
 import FullCalendar from 'vue-full-calendar'
 Vue.use(FullCalendar)

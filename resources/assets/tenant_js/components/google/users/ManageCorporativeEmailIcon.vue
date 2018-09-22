@@ -1,7 +1,15 @@
 <template>
     <span style="display:inline-block">
-        <v-btn icon class="mx-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
-            <v-icon small color="teal">edit</v-icon>
+        <template v-if="user.corporativeEmail">
+            <v-btn icon class="mx-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
+                <v-icon small color="teal">edit</v-icon>
+            </v-btn>
+            <v-btn icon class="mx-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser">
+                <v-icon small color="red">remove</v-icon>
+            </v-btn>
+        </template>
+        <v-btn v-else icon class="mx-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
+            <v-icon color="primary">add</v-icon>
         </v-btn>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
             <v-card>
@@ -51,7 +59,7 @@
   import axios from 'axios'
 
   export default {
-    name: 'EditCorporativeEmailIcon',
+    name: 'ManageCorporativeEmailIcon',
     mixins: [withSnackbar],
     components: {
       'google-users-select': GoogleUsersSelectComponent
@@ -71,6 +79,30 @@
       }
     },
     methods: {
+      unassignGoogleUser () {
+        console.log('HEY')
+      },
+      addGoogleUser () {
+        axios.post('/api/v1/gsuite/users/search', {
+          employeeId: this.user.id,
+          personalEmail: this.user.email,
+          mobile: this.user.mobile
+        }).then(response => {
+          axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+            google_id: response.data.id,
+            google_email: response.data.primaryEmail
+          }).then(response => {
+            this.showMessage('Usuari Google assignat correctament')
+            this.$emit('added', response.data)
+          }).catch(error => {
+            console.log(error)
+            this.showError(error)
+          })
+        }).catch(error => {
+          console.log(error)
+          this.dialog = true
+        })
+      },
       select (googleUser) {
         this.selectedGoogleuser = googleUser
       },
@@ -85,8 +117,11 @@
           this.dialog = false
           this.associating = false
         }).catch(error => {
+          console.log('ERROR')
           console.log(error)
-          if (error.status === 422) this.showError("sdasdsda")
+          console.log('STATUS')
+          console.log(error.status)
+          if (error.status === 422) this.showError('Error de validació, possiblement el compte de Google que voleu assignar ja està assignat a un altre usuari.')
           else this.showError(error)
           this.associating = false
         })
