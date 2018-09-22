@@ -72,6 +72,18 @@ class GoogleDirectory
         return $this->get_user($user);
     }
 
+    public function editUser($user)
+    {
+//        dump($user->name);
+//        dump($user->email);
+//        dump($user->googleUser->google_email);
+//        dd($this->directory->users);
+
+        $googleUser = new Google_Service_Directory_User();
+        $this->prepareGoogleUser($user, $googleUser);
+        return $this->directory->users->update($user['primaryEmail'], $googleUser);
+    }
+
     /**
      * get user.
      *
@@ -80,7 +92,6 @@ class GoogleDirectory
      */
     protected function get_user($user)
     {
-//        dd($user);
         $r = $this->directory->users->get($user);
         return $r;
     }
@@ -93,54 +104,7 @@ class GoogleDirectory
     protected function create_user($user)
     {
         $googleUser = new Google_Service_Directory_User();
-
-        // Mandatory: First name, Last name, Primary email
-        $name = new  \Google_Service_Directory_UserName();
-        $name->setGivenName($user['givenName']);
-        $name->setFamilyName($user['familyName']);
-        if (array_key_exists('fullName',$user)) {
-            $name->setFullName($user['fullName']);
-        } else {
-            $name->setFullName($user['givenName'] . ' ' . $user['familyName']);
-        }
-        $googleUser->setName($name);
-        $googleUser->setPrimaryEmail($user['primaryEmail']);
-        $path = '/';
-        if (array_key_exists('path',$user)) $path = $user['path'];
-        $googleUser->setOrgUnitPath($path);
-        $changePasswordAtNextLogin = false;
-        if (array_key_exists('changePasswordAtNextLogin',$user)) $changePasswordAtNextLogin = true;
-        $googleUser->setChangePasswordAtNextLogin($changePasswordAtNextLogin);
-        $hashFunction = 'SHA-1';
-        if (array_key_exists('hashFunction',$user)) $hashFunction = $user['hashFunction'];
-        $googleUser->setHashFunction($hashFunction);
-        $password = str_random();
-        if (array_key_exists('password',$user)) $password = $user['password'];
-        if (is_sha1($password)) {
-            $googleUser->setPassword($password);
-        } else {
-            $googleUser->setPassword(sha1($password));
-        }
-
-        if (array_key_exists('secondaryEmail',$user)) {
-            $email = new  \Google_Service_Directory_UserEmail();
-            $email->setAddress($user['secondaryEmail']);
-            $email->setType('home');
-            $googleUser->setEmails([$email]);
-        }
-        if (array_key_exists('mobile',$user)) {
-            $phone = new  \Google_Service_Directory_UserPhone();
-            $phone->setValue($user['mobile']);
-            $phone->setPrimary(true);
-            $phone->setType('mobile');
-            $googleUser->setPhones([$phone]);
-        }
-        if (array_key_exists('id',$user)) {
-            $id = new  \Google_Service_Directory_UserExternalId();
-            $id->setValue($user['id']);
-            $id->setType('organization');
-            $googleUser->setExternalIds([$id]);
-        }
+        $this->prepareGoogleUser($user, $googleUser);
 
         return $this->directory->users->insert($googleUser);
     }
@@ -257,6 +221,61 @@ class GoogleDirectory
                 'channel_type' => $event,
                 'expiration_time2' => Carbon::createFromTimestampMs($r->expiration)
             ]);
+        }
+    }
+
+    /**
+     * @param $user
+     * @param $googleUser
+     */
+    protected function prepareGoogleUser($user, $googleUser): void
+    {
+        // Mandatory: First name, Last name, Primary email
+        $name = new  \Google_Service_Directory_UserName();
+        $name->setGivenName($user['givenName']);
+        $name->setFamilyName($user['familyName']);
+        if (array_key_exists('fullName', $user)) {
+            $name->setFullName($user['fullName']);
+        } else {
+            $name->setFullName($user['givenName'] . ' ' . $user['familyName']);
+        }
+        $googleUser->setName($name);
+        $googleUser->setPrimaryEmail($user['primaryEmail']);
+        $path = '/';
+        if (array_key_exists('path', $user)) $path = $user['path'];
+        $googleUser->setOrgUnitPath($path);
+        $changePasswordAtNextLogin = false;
+        if (array_key_exists('changePasswordAtNextLogin', $user)) $changePasswordAtNextLogin = true;
+        $googleUser->setChangePasswordAtNextLogin($changePasswordAtNextLogin);
+        $hashFunction = 'SHA-1';
+        if (array_key_exists('hashFunction', $user)) $hashFunction = $user['hashFunction'];
+        $googleUser->setHashFunction($hashFunction);
+        $password = str_random();
+        if (array_key_exists('password', $user)) $password = $user['password'];
+        if (is_sha1($password)) {
+            $googleUser->setPassword($password);
+        } else {
+            $googleUser->setPassword(sha1($password));
+        }
+
+        if (array_key_exists('secondaryEmail', $user)) {
+            $email = new  \Google_Service_Directory_UserEmail();
+            $email->setAddress($user['secondaryEmail']);
+            $email->setType('home');
+            $googleUser->setEmails([$email]);
+        }
+        if (array_key_exists('mobile', $user)) {
+            $phone = new  \Google_Service_Directory_UserPhone();
+            $phone->setValue($user['mobile']);
+            $phone->setPrimary(true);
+            $phone->setType('mobile');
+            $googleUser->setPhones([$phone]);
+        }
+        if (array_key_exists('id', $user)) {
+            $id = new  \Google_Service_Directory_UserExternalId();
+            $id->setValue($user['id']);
+            $id->setType('organization');
+            $googleUser->setExternalIds([$id]);
         }
     }
 }

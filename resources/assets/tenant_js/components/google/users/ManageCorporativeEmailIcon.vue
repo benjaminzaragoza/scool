@@ -7,6 +7,9 @@
             <v-btn icon class="mx-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser">
                 <v-icon small color="red">remove</v-icon>
             </v-btn>
+            <v-btn icon class="mx-0" title="Sincronitzar" @click.native.stop="sync">
+                <v-icon small color="teal">sync</v-icon>
+            </v-btn>
         </template>
         <v-btn v-else icon class="mx-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
             <v-icon color="primary">add</v-icon>
@@ -79,6 +82,7 @@
         refreshing: false,
         associating: false,
         unassociating: false,
+        syncing: false,
         selectedGoogleuser: null
       }
     },
@@ -89,6 +93,18 @@
       }
     },
     methods: {
+      sync () {
+        console.log('TODO')
+        this.syncing = true
+        axios.put('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
+          this.showMessage('Usuari Google sincronitzat correctament')
+          this.syncing = false
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+          this.syncing = false
+        })
+      },
       unassignGoogleUser () {
         this.unassociating = true
         axios.delete('/api/v1/user/' + this.user.id + '/gsuite').then(response => {

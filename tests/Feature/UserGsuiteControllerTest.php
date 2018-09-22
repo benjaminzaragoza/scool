@@ -177,4 +177,114 @@ class UserGsuiteControllerTest extends BaseTenantTest
 
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     * @group google
+     */
+    public function sync_user_to_gsuite_user()
+    {
+        config_google_api();
+        tune_google_client();
+        $this->withoutExceptionHandling();
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        GoogleUser::create([
+            'user_id' => $user->id,
+            'google_id' => 7896454538713789,
+            'google_email' => 'pepepardojeans@iesebre.com',
+        ]);
+
+        $response = $this->json('PUT', '/api/v1/user/' . $user->id . '/gsuite');
+
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+
+        $this->assertEquals('pepepardojeans@gmail.com',$result->emails[0]->address);
+        $this->assertEquals('654789524',$result->phones[0]->value);
+        $this->assertEquals($user->id,$result->externalIds[0]->value);
+    }
+
+    /**
+     * @test
+     * @group google
+     */
+    public function sync_user_to_gsuite_user_throws_422error_without_valid_google_user_associated()
+    {
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        GoogleUser::create([
+            'user_id' => $user->id,
+            'google_id' => 7896454538713789,
+            'google_email' => 'dsadasdasasdasdasddasasdasdadsasdasdasdasd@iesebre.com',
+        ]);
+
+        $response = $this->json('PUT', '/api/v1/user/' . $user->id . '/gsuite');
+
+        $response->assertStatus(422);
+        $this->assertEquals('No existeix el compte de Google dsadasdasasdasdasddasasdasdadsasdasdasdasd@iesebre.com', json_decode($response->getContent())->message);
+    }
+
+    /**
+     * @test
+     * @google
+     */
+    public function sync_user_to_gsuite_user_throws_422error_without_google_user_associated()
+    {
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $response = $this->json('PUT', '/api/v1/user/' . $user->id . '/gsuite');
+
+        $response->assertStatus(422);
+        $this->assertEquals("L'usuari Pepe Pardo Jeans no té un compte de Google associat", json_decode($response->getContent())->message);
+    }
+
+    /**
+     * @test
+     */
+    public function regular_user_cannot_sync_user_to_gsuite_user()
+    {
+        $regularUser = factory(User::class)->create();
+        $this->actingAs($regularUser, 'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $response = $this->json('PUT', '/api/v1/user/' . $user->id . '/gsuite');
+
+        $response->assertStatus(403);
+    }
 }

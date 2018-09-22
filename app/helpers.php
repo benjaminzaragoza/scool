@@ -697,6 +697,10 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        Gate::define('edit-gsuite-users', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
         Gate::define('delete-gsuite-users', function ($user) {
             return $user->hasRole('UsersManager');
         });
@@ -4628,6 +4632,23 @@ if (! function_exists('google_user_get')) {
     }
 }
 
+if (! function_exists('google_user_edit')) {
+    /**
+     * Edit Google User
+     *
+     * @param $user
+     */
+    function google_user_edit($user)
+    {
+        try {
+            (new GoogleDirectory())->editUser($user);
+        } catch (Google_Service_Exception $e) {
+            dump('Error editing google user. ' . $e->getMessage());
+        }
+
+    }
+}
+
 if (! function_exists('google_user_create')) {
     /**
      * Create Google User
@@ -5038,6 +5059,17 @@ if (!function_exists('fullname')) {
             $fullname = $fullname . ' ' . trim($sn2);
         }
         $fullname = $fullname . ', ' . trim($givenName);
+        return trim($fullname);
+    }
+}
+
+if (!function_exists('fullsurname')) {
+    function fullsurname( $sn1, $sn2 = '')
+    {
+        $fullname = trim($sn1);
+        if ($sn2) {
+            $fullname = $fullname . ' ' . trim($sn2);
+        }
         return trim($fullname);
     }
 }
