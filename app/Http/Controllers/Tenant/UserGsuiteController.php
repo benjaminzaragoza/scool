@@ -38,7 +38,7 @@ class UserGsuiteController extends Controller
 
     /**
      * Destroy.
-     * 
+     *
      * @param UnAssociateGsuiteUserToUser $request
      * @param $tenant
      * @param User $user

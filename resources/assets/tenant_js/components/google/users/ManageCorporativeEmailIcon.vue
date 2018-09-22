@@ -39,6 +39,15 @@
                             <v-card-text>
                                 <v-subheader class="pa-0">Escolliu un compte de Google que vulgueu associar a l'usuari {{ user.name }} ({{ user.email }})</v-subheader>
                                 <google-users-select :user="user" v-if="dialog" ref="select" @selected="select"></google-users-select>
+                                <v-btn class="mt-3" color="primary" href="https://iesebre.scool.test/google_users?action=create" target="_blank">
+                                    <v-icon>add</v-icon> Creeu un nou compte de Google
+                                </v-btn>
+                                <div>
+                                    Un cop creat el nou compte, actualitzeu
+                                    <v-btn icon @click="refresh" :loading="refreshing" :disabled="refreshing">
+                                        <v-icon>refresh</v-icon>
+                                    </v-btn>
+                                </div>
                             </v-card-text>
                             <v-card-actions>
                                 <v-btn color="primary" @click="associate" :disabled="associating || !selectedGoogleuser" :loading="associating">Associar</v-btn>
@@ -69,6 +78,7 @@
         dialog: false,
         refreshing: false,
         associating: false,
+        unassociating: false,
         selectedGoogleuser: null
       }
     },
@@ -80,7 +90,16 @@
     },
     methods: {
       unassignGoogleUser () {
-        console.log('HEY')
+        this.unassociating = true
+        axios.delete('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
+          this.showMessage('Usuari Google desassociat correctament')
+          this.$emit('unassociated')
+          this.unassociating = false
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+          this.unassociating = false
+        })
       },
       addGoogleUser () {
         axios.post('/api/v1/gsuite/users/search', {
@@ -117,10 +136,6 @@
           this.dialog = false
           this.associating = false
         }).catch(error => {
-          console.log('ERROR')
-          console.log(error)
-          console.log('STATUS')
-          console.log(error.status)
           if (error.status === 422) this.showError('Error de validació, possiblement el compte de Google que voleu assignar ja està assignat a un altre usuari.')
           else this.showError(error)
           this.associating = false

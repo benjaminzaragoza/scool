@@ -26,7 +26,8 @@ class GoogleUsersController extends Controller
     public function show(ListGoogleUsers $request)
     {
         $users = GoogleUser::getGoogleUsers();
-        return view('tenants.google_users.show', compact('users'));
+        $action = $request->action;
+        return view('tenants.google_users.show', compact('users','action'));
     }
 
     /**

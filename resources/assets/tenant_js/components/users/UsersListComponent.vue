@@ -58,7 +58,7 @@
                                         <template v-if="user.corporativeEmail">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
                                         </template>
-                                        <manage-corporative-email-icon :user="user" @associated="refresh" @added="googleUserAdded()"></manage-corporative-email-icon>
+                                        <manage-corporative-email-icon :user="user" @unassociated="refresh" @associated="refresh" @added="googleUserAdded()"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
                                     <td class="text-xs-left">{{ user.email_verified_at }}</td>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <google-user-add></google-user-add>
+    <google-user-add action="{{ $action }}"></google-user-add>
 
     <google-users :users="{{ $users }}"></google-users>
 

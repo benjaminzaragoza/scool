@@ -64,6 +64,12 @@
         user: null
       }
     },
+    props: {
+      action: {
+        type: String,
+        default: null
+      }
+    },
     methods: {
       close () {
         this.step = 1
@@ -82,6 +88,9 @@
         this.user = adaptedUser
         this.step = 2
       }
+    },
+    created () {
+      if (this.action && this.action === 'create') this.dialog = true
     }
   }
 </script>
