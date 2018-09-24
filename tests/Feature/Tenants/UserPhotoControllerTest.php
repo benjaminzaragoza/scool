@@ -210,7 +210,7 @@ class UserPhotoControllerTest extends BaseTenantTest
         $result = $response->getContent();
         $user = $user->fresh();
         $this->assertNull($user->photo);
-        
+
         $this->assertEquals($result,$path);
         Storage::disk('local')->assertMissing($path);
 

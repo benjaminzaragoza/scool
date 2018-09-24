@@ -15,7 +15,7 @@
                         @change="photoChange"/>
             </form>
         </v-avatar>
-        <confirm-icon v-if="removable"
+        <confirm-icon v-if="removable && user.photo"
                       icon="delete"
                       color="pink"
                       :working="deleting"
@@ -29,9 +29,11 @@
 <script>
   import axios from 'axios'
   import ConfirmIconComponent from './ConfirmIconComponent'
+  import withSnackbar from '../mixins/withSnackbar'
 
   export default {
     name: 'UserAvatarComponent',
+    mixins: [withSnackbar],
     components: {
       'confirm-icon': ConfirmIconComponent
     },
@@ -108,12 +110,13 @@
       },
       remove () {
         this.deleting = true
-        axios.post(this.removeUrl, { path: this.path })
+        axios.delete('/api/v1/user/' + this.user.id + '/photo')
           .then(response => {
             this.deleting = false
             this.path = ''
             this.$emit('input', this.path)
-            this.$refs.previewImage.setAttribute('src', 'img/placeholder.png')
+            this.$refs.previewImage.setAttribute('src', 'img/default.png')
+            this.user.photo = null
           })
           .catch(error => {
             this.deleting = false
