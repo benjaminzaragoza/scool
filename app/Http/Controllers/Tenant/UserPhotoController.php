@@ -102,6 +102,7 @@ class UserPhotoController extends Controller
      */
     public function destroy(DeleteUserPhoto $request, $tenant, User $user)
     {
+        Storage::disk('local')->delete($user->photo);
         $path = $user->photo;
         $user->photo = null;
         $user->photo_hash = null;

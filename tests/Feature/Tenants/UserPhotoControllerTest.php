@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Tenant;
 
+use App\Events\UserPhotoRemoved;
 use App\Events\UserPhotoUploaded;
 use App\Models\User;
 use Config;
 use Event;
+use Illuminate\Http\Testing\File as TestFile;
 use File;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -181,6 +183,7 @@ class UserPhotoControllerTest extends BaseTenantTest
     /** @test */
     public function delete_user_photo()
     {
+        $this->withoutExceptionHandling();
         Storage::fake('local');
         Event::fake();
 
@@ -190,20 +193,27 @@ class UserPhotoControllerTest extends BaseTenantTest
         $manager->assignRole($role);
         $this->actingAs($manager,'api');
 
+        $file = TestFile::create($filename = '1_sergi-tur-badenas_sergiturbadenas-at-gmailcom.png');
+        $result1 = Storage::disk('local')->putFileAs('iesebre/user_photos', $file, $filename);
+
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
-            'email' => 'pepepardo@jeans.com',
-            'photo' => 'iesebre/user_photos/1_sergi-tur-badenas_sergiturbadenas-at-gmailcom.png',
-            'photo_hash' => md5('iesebre/user_photos/1_sergi-tur-badenas_sergiturbadenas-at-gmailcom.png')
+            'email' => 'pepepardo@jeans.com'
         ]);
+        $user->photo = $path = 'iesebre/user_photos/' . $filename;
+        $user->photo_hash =md5($path);
+        $user->save();
+        Storage::disk('local')->assertExists($path);
 
         $response = $this->json('DELETE','/api/v1/user/' . $user->id . '/photo');
         $response->assertSuccessful();
-        $path = $response->getContent();
+        $result = $response->getContent();
         $user = $user->fresh();
         $this->assertNull($user->photo);
-        $this->assertNull($user->photo_hash);
+        
+        $this->assertEquals($result,$path);
         Storage::disk('local')->assertMissing($path);
+
         Event::assertDispatched(UserPhotoRemoved::class, function ($e) use ($path) {
             return $e->path === $path;
         });
