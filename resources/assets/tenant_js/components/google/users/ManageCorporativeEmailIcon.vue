@@ -94,7 +94,6 @@
     },
     methods: {
       sync () {
-        console.log('TODO')
         this.syncing = true
         axios.put('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
           this.showMessage('Usuari Google sincronitzat correctament')

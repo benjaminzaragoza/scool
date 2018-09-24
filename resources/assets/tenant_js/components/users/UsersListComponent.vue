@@ -19,7 +19,7 @@
                     <v-btn icon class="white--text" @click="settings">
                         <v-icon>settings</v-icon>
                     </v-btn>
-                    <v-btn icon class="white--text" @click="refresh">
+                    <v-btn icon class="white--text" @click="refresh" :disabled="refreshing" :loading="refreshing">
                         <v-icon>refresh</v-icon>
                     </v-btn>
                 </v-toolbar>
@@ -38,22 +38,35 @@
                                 ></v-text-field>
                             </v-card-title>
                             <v-data-table
-                            class="px-0 mb-2 hidden-sm-and-down"
-                            :headers="headers"
-                            :items="internalUsers"
-                            :search="search"
-                            item-key="id"
-                            expand
+                                class="px-0 mb-2 hidden-sm-and-down"
+                                :headers="headers"
+                                :items="internalUsers"
+                                :search="search"
+                                item-key="id"
+                                disable-initial-sort
+                                no-results-text="No s'ha trobat cap registre coincident"
+                                no-data-text="No hi han dades disponibles"
+                                rows-per-page-text="Usuaris per pàgina"
+                                :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
                             >
                             <template slot="items" slot-scope="{item: user}">
-                                <tr @click="expand($event, props)">
+                                <tr>
                                     <td class="text-xs-left">
                                         {{ user.id }}
+                                    </td>
+                                    <td>
+                                        <user-avatar :hash-id="user.hashid"
+                                                     :alt="user.name"
+                                                     :user="user"
+                                                     :editable="true"
+                                                     :removable="true"
+                                        ></user-avatar>
                                     </td>
                                     <td class="text-xs-left">
                                         {{ user.name }}
                                     </td>
                                     <td class="text-xs-left">{{ user.email }}</td>
+                                    <td class="text-xs-left">{{ formatBoolean(user.email_verified_at) }}</td>
                                     <td class="text-xs-left">
                                         <template v-if="user.corporativeEmail">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
@@ -61,7 +74,6 @@
                                         <manage-corporative-email-icon :user="user" @unassociated="refresh" @associated="refresh" @added="googleUserAdded()"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left">{{ user.mobile }}</td>
-                                    <td class="text-xs-left">{{ user.email_verified_at }}</td>
                                     <td class="text-xs-left">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ user.last_login }}</span>
@@ -177,6 +189,7 @@
   import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
   import ShowUserIcon from './ShowUserIconComponent.vue'
   import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
+  import UserAvatar from '../ui/UserAvatarComponent'
   import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
   import axios from 'axios'
 
@@ -185,20 +198,23 @@
     components: {
       'confirm-icon': ConfirmIcon,
       'show-user-icon': ShowUserIcon,
-      'manage-corporative-email-icon': ManageCorporativeEmailIcon
+      'manage-corporative-email-icon': ManageCorporativeEmailIcon,
+      'user-avatar': UserAvatar
     },
     data () {
       return {
         showDeleteUserDialog: false,
         search: '',
         deleting: false,
+        refreshing: false,
         headers: [
           {text: 'Id', align: 'left', value: 'id'},
+          {text: 'Avatar', value: 'photo', sortable: false},
           {text: 'Name', value: 'name'},
           {text: 'Email', value: 'email'},
+          {text: 'Verificat', value: 'email_verified_at'},
           {text: 'Email corporatiu', value: 'corporativeEmail'},
           {text: 'Mòbil', value: 'mobile'},
-          {text: 'Verificació email', value: 'email_verified_at'},
           {text: 'Últim login', value: 'last_login'},
           {text: 'Rols', value: 'roles', sortable: false},
           {text: 'Data creació', value: 'formatted_created_at'},
@@ -221,8 +237,16 @@
       })
     },
     methods: {
+      formatBoolean (boolean) {
+        return boolean ? 'Sí' : 'No'
+      },
       refresh () {
-        this.$store.dispatch(actions.FETCH_USERS).catch(error => {
+        this.refreshing = true
+        this.$store.dispatch(actions.FETCH_USERS).then(response => {
+          this.refreshing = false
+          this.showMessage('Usuaris actualizats correctament')
+        }).catch(error => {
+          this.refreshing = false
           this.showError(error)
         })
       },

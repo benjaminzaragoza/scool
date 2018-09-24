@@ -99,6 +99,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //User photos
             Route::post('/user/{user}/photo','Tenant\UserPhotoController@store');
+            Route::delete('/user/{user}/photo','Tenant\UserPhotoController@destroy');
 
             //Jobs
             Route::get('/jobs', 'Tenant\JobsController@index');

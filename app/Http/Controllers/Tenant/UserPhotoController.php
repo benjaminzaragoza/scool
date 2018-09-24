@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Events\UserPhotoRemoved;
 use App\Events\UserPhotoUploaded;
+use App\Http\Requests\DeleteUserPhoto;
 use App\Http\Requests\StoreUserPhoto;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -72,6 +74,7 @@ class UserPhotoController extends Controller
         );
 
         $user->photo = $path;
+        $user->photo_hash = md5($path);
         $user->save();
         event(new UserPhotoUploaded($path));
 
@@ -90,4 +93,21 @@ class UserPhotoController extends Controller
         return $tenant. '/' . $path;
     }
 
+    /**
+     * Destroy.
+     * @param StoreUserPhoto $request
+     * @param $tenant
+     * @param User $user
+     * @return mixed
+     */
+    public function destroy(DeleteUserPhoto $request, $tenant, User $user)
+    {
+        $path = $user->photo;
+        $user->photo = null;
+        $user->photo_hash = null;
+        $user->save();
+        event(new UserPhotoRemoved($path));
+
+        return $path;
+    }
 }

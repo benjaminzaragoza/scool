@@ -1,15 +1,60 @@
 <template>
-    <v-avatar color="grey lighten-4" :size="size" v-if="hashId" :tile="tile" @dblclick="dblclick">
-        <img :src="'/user/' + hashId + '/photo'"
-             :alt="alt"
-             :title="alt">
-    </v-avatar>
+    <span>
+        <v-avatar color="grey lighten-4" :size="size" v-if="hashId" :tile="tile" @click="change">
+            <img ref="previewImage"
+                 :src="'/user/' + hashId + '/photo'"
+                 :alt="alt"
+                 :title="alt">
+            <form class="upload" v-if="editable">
+                <input
+                        ref="file"
+                        type="file"
+                        name="photo"
+                        accept="image/*"
+                        :disabled="uploading"
+                        @change="photoChange"/>
+            </form>
+        </v-avatar>
+        <confirm-icon v-if="removable"
+                      icon="delete"
+                      color="pink"
+                      :working="deleting"
+                      @confirmed="remove()"
+                      tooltip="Eliminar foto"
+                      message="Segur que voleu esborrar la foto de l'usuari?"
+        ></confirm-icon>
+    </span>
 </template>
 
 <script>
+  import axios from 'axios'
+  import ConfirmIconComponent from './ConfirmIconComponent'
+
   export default {
     name: 'UserAvatarComponent',
+    components: {
+      'confirm-icon': ConfirmIconComponent
+    },
+    data () {
+      return {
+        uploading: false,
+        deleting: false,
+        path: ''
+      }
+    },
     props: {
+      editable: {
+        type: Boolean,
+        default: false
+      },
+      removable: {
+        type: Boolean,
+        default: false
+      },
+      user: {
+        type: Object,
+        default: () => { return {} }
+      },
       hashId: {
         required: true
       },
@@ -26,13 +71,63 @@
       }
     },
     methods: {
-      dblclick () {
-        this.$emit('dblclick')
+      photoChange (event) {
+        this.uploading = true
+        let target = event.target || event.srcElement
+        if (target.value.length !== 0) {
+          const formData = new FormData()
+          formData.append('photo', this.$refs.file.files[0])
+          this.preview()
+          this.save(formData)
+        }
+      },
+      save (formData) {
+        axios.post('/api/v1/user/' + this.user.id + '/photo', formData)
+          .then(response => {
+            this.uploading = false
+            this.path = response.data
+            this.$emit('input', this.path)
+          })
+          .catch(error => {
+            this.uploading = false
+            console.log(error)
+            this.showError(error)
+          })
+      },
+      preview () {
+        if (this.$refs.file.files && this.$refs.file.files[0]) {
+          let reader = new FileReader()
+          reader.onload = e => {
+            this.$refs.previewImage.setAttribute('src', e.target.result)
+          }
+          reader.readAsDataURL(this.$refs.file.files[0])
+        }
+      },
+      change () {
+        if (this.editable) this.$refs.file.click()
+      },
+      remove () {
+        this.deleting = true
+        axios.post(this.removeUrl, { path: this.path })
+          .then(response => {
+            this.deleting = false
+            this.path = ''
+            this.$emit('input', this.path)
+            this.$refs.previewImage.setAttribute('src', 'img/placeholder.png')
+          })
+          .catch(error => {
+            this.deleting = false
+            console.log(error)
+            this.showError(error)
+          })
       }
     }
   }
 </script>
 
 <style scoped>
-
+    .upload > input
+    {
+        display: none;
+    }
 </style>

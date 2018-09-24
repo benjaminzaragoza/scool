@@ -129,6 +129,7 @@ class UserPhotoControllerTest extends BaseTenantTest
         $path = $response->getContent();
         $user = $user->fresh();
         $this->assertEquals($user->photo,$path);
+        $this->assertEquals($user->photo_hash,md5($path));
         Storage::disk('local')->assertExists($path);
         Event::assertDispatched(UserPhotoUploaded::class, function ($e) use ($path) {
             return $e->path === $path;
@@ -174,6 +175,48 @@ class UserPhotoControllerTest extends BaseTenantTest
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/photo', [
             'photo' => ''
         ]);
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function delete_user_photo()
+    {
+        Storage::fake('local');
+        Event::fake();
+
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager,'api');
+
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com',
+            'photo' => 'iesebre/user_photos/1_sergi-tur-badenas_sergiturbadenas-at-gmailcom.png',
+            'photo_hash' => md5('iesebre/user_photos/1_sergi-tur-badenas_sergiturbadenas-at-gmailcom.png')
+        ]);
+
+        $response = $this->json('DELETE','/api/v1/user/' . $user->id . '/photo');
+        $response->assertSuccessful();
+        $path = $response->getContent();
+        $user = $user->fresh();
+        $this->assertNull($user->photo);
+        $this->assertNull($user->photo_hash);
+        Storage::disk('local')->assertMissing($path);
+        Event::assertDispatched(UserPhotoRemoved::class, function ($e) use ($path) {
+            return $e->path === $path;
+        });
+    }
+
+    /** @test */
+    public function regular_user_cannot_delete_user_photo()
+    {
+        $regularuser = factory(User::class)->create();
+        $this->actingAs($regularuser,'api');
+
+        $user = factory(User::class)->create();
+        $response = $this->json('DELETE','/api/v1/user/' . $user->id . '/photo');
         $response->assertStatus(403);
     }
 

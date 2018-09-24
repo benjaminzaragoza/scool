@@ -651,6 +651,10 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole(['UsersManager','TeachersManager']);
         });
 
+        Gate::define('remove-user-photo', function ($user) {
+            return $user->hasRole(['UsersManager','TeachersManager']);
+        });
+
         Gate::define('approve-teacher', function ($user) {
             return $user->hasRole(['UsersManager','TeachersManager']);
         });
