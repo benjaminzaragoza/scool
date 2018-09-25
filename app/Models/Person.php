@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\Tenant\PersonCollection;
 use App\Models\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -31,7 +32,8 @@ class Person extends Model implements HasMedia
      */
     public static function getPeople()
     {
-        return (new PersonCollection(User::with('roles')->get()))->transform();
+        return (new PersonCollection(Person::with(['user','user.googleUser'])->get()))->transform();
+//        return (new PersonCollection(User::all()))->transform();
     }
 
     /**

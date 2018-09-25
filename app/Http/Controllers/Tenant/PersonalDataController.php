@@ -20,7 +20,7 @@ class PersonalDataController extends Controller
      */
     public function show(ShowPersonalData $request)
     {
-        $people = Person::all();
+        $people = Person::getPeople();
         return view ('tenants.people.show', compact('people'));
     }
 
