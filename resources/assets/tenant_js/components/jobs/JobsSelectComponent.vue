@@ -1,14 +1,14 @@
 <template>
-    <v-select
+    <v-autocomplete
             :label="label"
             :items="filteredJobs"
             v-model="internalJob"
-            item-text="active_user_description"
+            item-text="full_search"
             :error-messages="errorMessages"
             chips
-            autocomplete
             clearable
             @input="input"
+            return-object
     >
         <template slot="selection" slot-scope="data">
         <v-chip
@@ -32,7 +32,7 @@
                 <v-list-tile-sub-title v-html="job.active_user_description"></v-list-tile-sub-title>
             </v-list-tile-content>
         </template>
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <script>

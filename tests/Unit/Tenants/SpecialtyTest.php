@@ -43,4 +43,19 @@ class SpecialtyTest extends TestCase
 
         $this->assertTrue($specialty->is(Specialty::findByCode('507')));
     }
+
+    /**
+     * @test
+     */
+    public function full_search()
+    {
+        $specialty = Specialty::firstOrCreate([
+            'code' => '507',
+            'name' => 'Informàtica',
+            'force_id' => 1,
+            'family_id' => 1
+        ]);
+
+        $this->assertEquals('507 Informàtica',$specialty->fullSearch);
+    }
 }

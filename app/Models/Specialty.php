@@ -13,6 +13,10 @@ class Specialty extends Revisionable
 {
     protected $guarded = [];
 
+    protected $appends = [
+        'full_search'
+    ];
+
     /**
      * Identifiable name.
      *
@@ -65,5 +69,16 @@ class Specialty extends Revisionable
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    /**
+     * full_search attribute.
+     *
+     * @param  string $value
+     * @return string
+     */
+    public function getFullSearchAttribute($value)
+    {
+        return "$this->code $this->name";
     }
 }

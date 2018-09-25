@@ -3,7 +3,6 @@
         <v-layout row wrap>
             <v-flex xs12>
                 <v-toolbar color="blue darken-3">
-                    <v-toolbar-side-icon class="white--text"></v-toolbar-side-icon>
                     <v-toolbar-title class="white--text title">Professors pendents</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn icon class="white--text" @click="settings">
@@ -12,8 +11,14 @@
                     <v-btn icon class="white--text" @click="refresh">
                         <v-icon>refresh</v-icon>
                     </v-btn>
+                    <v-btn icon class="white--text" @click="minimized = false" v-if="minimized">
+                        <v-icon>add</v-icon>
+                    </v-btn>
+                    <v-btn v-else icon class="white--text" @click="minimized = true">
+                        <v-icon>minimize</v-icon>
+                    </v-btn>
                 </v-toolbar>
-                <v-card>
+                <v-card v-if="!minimized">
                     <v-card-text class="px-0 mb-2">
                         <v-card>
                             <v-card-title>
@@ -111,6 +116,7 @@
     mixins: [withSnackbar],
     data () {
       return {
+        minimized: true,
         removing: false,
         search: '',
         deleting: false,
@@ -184,6 +190,9 @@
     },
     created () {
       this.$store.commit(mutations.SET_PENDING_TEACHERS, this.pendingTeachers)
+      if (this.pendingTeachers.length > 0) {
+        this.minimized = false
+      }
     }
   }
 </script>

@@ -49,9 +49,7 @@
                                         <td class="text-xs-left" v-html="person.id"></td>
                                         <td class="text-xs-left" v-html="person.identifier_id"></td>
                                         <td class="text-xs">
-                                            <user-avatar :hash-id="person.user_hashid"
-                                                         :alt="person.user_fullname"
-                                            ></user-avatar>
+                                            <a target="_blank" :href="'/users?action=show&id=' + person.userId">{{ person.userEmail }}</a>
                                         </td>
                                         <td class="text-xs-left" v-html="person.givenName"></td>
                                         <td class="text-xs-left" v-html="person.sn1"></td>
@@ -133,7 +131,7 @@
         let headers = []
         headers.push({text: 'Id', align: 'left', value: 'id'})
         headers.push({text: 'Identifier', value: 'identifier_id'})
-        headers.push({text: 'Usuari', value: 'user_id'})
+        headers.push({text: 'Usuari', value: 'userEmail'})
         // headers.push({text: 'Foto', value: 'full_search', sortable: false})
         headers.push({text: 'Nom', value: 'givenName'})
         headers.push({text: '1r Cognom', value: 'sn1'})
@@ -149,7 +147,7 @@
         headers.push({text: 'Data actualització', value: 'formatted_updated_at'})
         headers.push({text: 'Accions', sortable: false})
         return headers
-      },
+      }
     },
     props: {
       people: {

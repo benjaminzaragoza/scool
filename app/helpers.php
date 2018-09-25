@@ -3641,7 +3641,7 @@ if (!function_exists('initialize_substitutes')) {
         // Javier (Xavi) Sancho Fabregat substitut de profe 41 Jaume Ramos 47643281T
         User::createIfNotExists([
             'name' => 'Javier Sancho Fabregat',
-            'email' => 'javiersancho@iesebre.com',
+            'email' => 'kalzakath1@gmail.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
         ])->addRole(Role::findByName('Teacher'))

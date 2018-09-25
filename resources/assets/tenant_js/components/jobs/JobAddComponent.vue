@@ -1,16 +1,24 @@
 <template>
-    <v-container fluid grid-list-md text-xs-center>
-        <v-layout row wrap>
-            <v-flex xs12>
-                <v-alert v-model="error" type="error" dismissible>
-                    <template v-for="error in errors">{{ error[0] }}</template>
-                </v-alert>
-                <v-toolbar color="blue darken-3">
-                    <v-toolbar-side-icon class="white--text"></v-toolbar-side-icon>
-                    <v-toolbar-title class="white--text title">Afegeix una nova plaça</v-toolbar-title>
-                    <v-spacer></v-spacer>
-                </v-toolbar>
-                <v-card>
+    <span>
+        <v-btn
+                fab
+                bottom
+                right
+                color="pink"
+                dark
+                fixed
+                @click.stop="dialog = !dialog"
+        >
+            <v-icon>add</v-icon>
+        </v-btn>
+        <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="dialog = false">
+            <v-toolbar color="blue darken-3">
+                <v-btn icon dark @click.native="dialog = false">
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <v-toolbar-title class="white--text title">Afegir plaça</v-toolbar-title>
+            </v-toolbar>
+            <v-card>
                     <v-card-text class="px-0 mb-2">
                         <v-container fluid grid-list-md text-xs-center>
                             <v-layout row wrap>
@@ -79,7 +87,7 @@
                                                             :error-messages="orderErrors"
                                                             @input="$v.order.$touch()"
                                                             @blur="$v.order.$touch()"
-                                                            ></v-text-field>
+                                                    ></v-text-field>
                                                 </v-flex>
                                                 <v-flex md6>
                                                     <v-text-field
@@ -91,21 +99,27 @@
                                             </v-layout>
                                         </v-container>
                                         <v-btn flat color="red" @click="clear">Netejar</v-btn>
-                                        <v-btn @click="add"
+                                        <v-btn @click="add(false)"
                                                color="teal"
                                                class="white--text"
                                                :loading="adding"
                                                :disabled="adding"
                                         >Afegir</v-btn>
+                                        <v-btn @click="add(true)"
+                                               color="primary"
+                                               class="white--text"
+                                               :loading="adding"
+                                               :disabled="adding"
+                                        >Afegir i tancar</v-btn>
                                     </form>
                                 </v-flex>
                             </v-layout>
                         </v-container>
                     </v-card-text>
                 </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
+        </v-dialog>
+    </span>
+
 </template>
 
 <script>
@@ -137,6 +151,7 @@
     },
     data () {
       return {
+        dialog: false,
         error: false,
         errors: [],
         adding: false,
@@ -178,7 +193,7 @@
     },
     watch: {
       specialty: function (newSpecialty) {
-        if (newSpecialty) this.family = this.getSpecialty(newSpecialty).family_id
+        if (newSpecialty) this.family = this.getSpecialty(newSpecialty.id).family_id
         else this.family = null
       },
       users () {
@@ -219,14 +234,17 @@
       getSpecialty (specialtyId) {
         return this.specialties.find(specialty => specialty.id === specialtyId)
       },
-      add () {
+      add (close) {
+        close = close || false
+        console.log('CLOSE:')
+        console.log(close)
         if (!this.$v.$invalid) {
           this.adding = true
           this.$store.dispatch(actions.STORE_JOB, {
             type: this.jobType,
             code: this.code,
             family: this.family,
-            specialty: this.specialty,
+            specialty: this.specialty.id,
             holder: this.holder,
             order: this.order,
             notes: this.notes
@@ -234,6 +252,7 @@
             this.adding = false
             this.showMessage('Plaça afegida correctament')
             this.clear()
+            if (close) this.dialog = false
           }).catch(error => {
             this.adding = false
             console.log(error)

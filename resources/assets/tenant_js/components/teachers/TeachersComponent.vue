@@ -19,7 +19,7 @@
                     <v-btn icon class="white--text" @click="settings">
                         <v-icon>settings</v-icon>
                     </v-btn>
-                    <v-btn icon class="white--text" @click="refresh">
+                    <v-btn icon class="white--text" @click="refresh" :disabled="refreshing" :loading="refreshing">
                         <v-icon>refresh</v-icon>
                     </v-btn>
                 </v-toolbar>
@@ -50,23 +50,34 @@
                                     no-results-text="No s'ha trobat cap registre coincident"
                                     no-data-text="No hi han dades disponibles"
                                     rows-per-page-text="Professors per pàgina"
+                                    :rows-per-page-items="[5,10,25,50,100,{'text':'Tots','value':-1}]"
                             >
                                 <template slot="items" slot-scope="{ item: teacher }">
                                     <tr>
                                         <td class="text-xs-left">
-                                            {{ teacher.id }}
-                                        </td>
-                                        <td class="text-xs-left">{{ teacher.code }}</td>
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ teacher.code }}</span>
+                                                <span>{{ teacher.id }}</span>
+                                            </v-tooltip>
+                                            </td>
                                         <td class="text-xs">
                                             <user-avatar :hash-id="teacher.hashid"
                                                          :alt="teacher.fullname"
+                                                         :editable="true"
+                                                         :removable="true"
+                                                         :user="teacher.user"
                                             ></user-avatar>
                                         </td>
                                         <td class="text-xs-left">
                                             <span :title="teacher.email" v-html="teacher.fullname "></span>
                                         </td>
                                         <td class="text-xs-left">
-                                            <a :href="'https://admin.google.com/u/3/ac/users/' + teacher.gsuite_id" target="_blank"> TODO {{ teacher.email }}</a>
+                                            <a :href="'https://admin.google.com/u/3/ac/users/' + teacher.google_id" target="_blank"> {{ teacher.google_email }}</a>
+                                            <manage-corporative-email-icon
+                                                    :user="teacher.user"
+                                                    @unassociated="refresh"
+                                                    @associated="refresh"
+                                                    @added="refresh"></manage-corporative-email-icon>
                                         </td>
                                         <td class="text-xs-left">
                                             <span :title="teacher.department" v-html="teacher.department_code"></span>
@@ -102,7 +113,7 @@
                                         <td class="text-xs-left">
                                             <show-teacher-icon :teacher="teacher" :teachers="teachers"></show-teacher-icon>
 
-                                            <v-btn icon class="mx-0" @click="editItem(teacher)">
+                                            <v-btn icon class="mx-0" @click="editTeacher(teacher)">
                                                 <v-icon color="teal">edit</v-icon>
                                             </v-btn>
                                             <confirm-icon
@@ -137,6 +148,7 @@
   import axios from 'axios'
   import withSnackbar from '../mixins/withSnackbar'
   import UserAvatar from '../ui/UserAvatarComponent'
+  import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 
   export default {
     mixins: [withSnackbar],
@@ -144,7 +156,8 @@
       'show-teacher-icon': ShowTeacherIcon,
       'administrative-status-select': AdministrativeStatusSelect,
       'confirm-icon': ConfirmIcon,
-      'user-avatar': UserAvatar
+      'user-avatar': UserAvatar,
+      'manage-corporative-email-icon': ManageCorporativeEmailIcon
     },
     data () {
       return {
@@ -152,7 +165,8 @@
         showDeletePendingTeacherDialog: false,
         search: '',
         deleting: false,
-        removing: false
+        removing: false,
+        refreshing: false
       }
     },
     computed: {
@@ -165,11 +179,10 @@
       },
       headers () {
         let headers = []
-        headers.push({text: 'Id', align: 'left', value: 'id'})
         headers.push({text: 'Codi', value: 'code'})
         headers.push({text: 'Foto', value: 'full_search', sortable: false})
         headers.push({text: 'Nom', value: 'fullname'})
-        headers.push({text: 'GSuite', value: 'fullname'})
+        headers.push({text: 'Google', value: 'fullname'})
         headers.push({text: 'Departament', value: 'department_code'})
         headers.push({text: 'Especialitat', value: 'specialty_code'})
         headers.push({text: 'Familia', value: 'family_code'})
@@ -204,9 +217,17 @@
       }
     },
     methods: {
+      editTeacher () {
+        console.log('TODO EDIT TEACHERS')
+      },
       refresh () {
-        this.$store.dispatch(actions.GET_TEACHERS).catch(error => {
+        this.refreshing = true
+        this.$store.dispatch(actions.GET_TEACHERS).then(response => {
+          this.showMessage('Professors actualitzats correctament')
+          this.refreshing = false
+        }).catch(error => {
           this.showError(error)
+          this.refreshing = false
         })
       },
       settings () {

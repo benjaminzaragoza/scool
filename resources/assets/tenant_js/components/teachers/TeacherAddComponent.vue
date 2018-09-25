@@ -32,13 +32,6 @@
                 <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title class="white--text title">Afegir professor</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon class="white--text">
-                <v-icon>settings</v-icon>
-            </v-btn>
-            <v-btn icon class="white--text">
-                <v-icon>refresh</v-icon>
-            </v-btn>
         </v-toolbar>
         <v-card>
             <v-stepper v-model="step" vertical>

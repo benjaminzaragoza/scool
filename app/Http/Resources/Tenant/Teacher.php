@@ -39,7 +39,7 @@ class Teacher extends JsonResource
         }
         return [
             'user_id' => optional($this->user)->id,
-            'teacher_id' => $this->id,
+            'id' => $this->id,
             'code' => $this->code,
             'formatted_created_at_diff' => $this->formatted_created_at_diff,
             'formatted_created_at' => $this->formatted_created_at,
@@ -98,7 +98,10 @@ class Teacher extends JsonResource
             'address_location' =>  optional(optional(optional(optional($this->user)->person)->address)->location)->name,
             'address_postalcode' =>  optional(optional(optional(optional($this->user)->person)->address)->location)->postalcode,
             'address_province' =>  optional(optional(optional(optional($this->user)->person)->address)->province)->name,
-            'media' => optional(optional($this->user)->person)->media
+            'media' => optional(optional($this->user)->person)->media,
+            'google_id' => optional(optional($this->user)->googleUser)->google_id,
+            'google_email' => optional(optional($this->user)->googleUser)->google_email,
+            'user' => $this->user
         ];
     }
 }

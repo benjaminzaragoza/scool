@@ -52,6 +52,7 @@ class TeachersController extends Controller
                 'specialty.family',
                 'administrativeStatus',
                 'user',
+                'user.googleUser',
                 'user.jobs',
                 'user.jobs.specialty',
                 'user.jobs.family',
@@ -96,7 +97,7 @@ class TeachersController extends Controller
         $administrativeStatuses = AdministrativeStatus::all();
         $departments = Department::all();
 
-        $users = (new UserCollection(User::with('roles')->get()))->transform();
+        $users = (new UserCollection(User::with(['roles','person','googleUser'])->get()))->transform();
 
         return view('tenants.teachers.show', compact(
             'pendingTeachers',

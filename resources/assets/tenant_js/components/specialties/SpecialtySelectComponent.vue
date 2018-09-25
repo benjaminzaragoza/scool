@@ -9,8 +9,9 @@
             @blur="blur()"
             :items="specialties"
             v-model="internalSpecialty"
-            item-text="name"
+            item-text="full_search"
             :item-value="itemValue"
+            return-object
     >
         <template slot="item" slot-scope="{item: specialty}">
             <v-list-tile-content v-text="specialty.code + ' ' + specialty.name"></v-list-tile-content>

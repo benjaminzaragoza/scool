@@ -21,6 +21,7 @@
                 @blur="$v.specialty.$touch()"
                 v-model="specialty"
                 :required="false"
+                item-value="id"
         ></specialty-select>
         <department-select
                 :departments="departments"

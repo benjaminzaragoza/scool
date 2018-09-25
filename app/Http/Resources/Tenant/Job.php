@@ -112,7 +112,8 @@ class Job extends JsonResource
             'formatted_created_at' => $this->formatted_created_at,
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
-            'notes' => $this->notes
+            'notes' => $this->notes,
+            'full_search' => "$this->fullcode $this->holder_description"
         ];
     }
 }
