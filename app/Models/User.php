@@ -626,7 +626,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'givenName' => optional($this->person)->givenName,
+            'sn1' => optional($this->person)->sn1,
+            'sn2' => optional($this->person)->sn2,
             'email' => $this->email,
+            'hash_id' => $this->hash_id,
             'photo' => $this->photo,
             'corporativeEmail' => optional($this->googleUser)->google_email,
             'googleId' => optional($this->googleUser)->google_id,
@@ -639,6 +643,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'roles' => $this->roles->pluck('name')->unique()->toArray(),
             'formatted_created_at' => $this->formatted_created_at,
             'formatted_updated_at' => $this->formatted_updated_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
             'admin' => $this->admin,
             'hashid' => $this->hashid
         ];

@@ -308,16 +308,16 @@
         },
         {
             "name": "adldap2/adldap2",
-            "version": "v9.1.0",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "a1a53addc2db95b8309bdabb37a424abc0814fd8"
+                "reference": "120e5d116a63abc0b29f25cdc048fdf5d008e788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/a1a53addc2db95b8309bdabb37a424abc0814fd8",
-                "reference": "a1a53addc2db95b8309bdabb37a424abc0814fd8",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/120e5d116a63abc0b29f25cdc048fdf5d008e788",
+                "reference": "120e5d116a63abc0b29f25cdc048fdf5d008e788",
                 "shasum": ""
             },
             "require": {
@@ -357,7 +357,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2018-09-07T13:36:11+00:00"
+            "time": "2018-09-24T14:13:57+00:00"
         },
         {
             "name": "adldap2/adldap2-laravel",

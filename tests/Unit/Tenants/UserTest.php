@@ -11,6 +11,7 @@ use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Location;
+use App\Models\Person;
 use App\Models\Position;
 use App\Models\Province;
 use App\Models\Specialty;
@@ -64,6 +65,26 @@ class UserTest extends TestCase
         ]);
 
         $this->assertEquals('08:00:00PM 01-12-2016', $user->formatted_created_at);
+    }
+
+    /** @test */
+    function can_get_created_at_timestamp()
+    {
+        $user = factory(User::class)->make([
+            'created_at' => Carbon::parse('2016-12-01 8:00pm'),
+        ]);
+
+        $this->assertEquals('1480618800', $user->created_at_timestamp);
+    }
+
+    /** @test */
+    function can_get_updated_at_timestamp()
+    {
+        $user = factory(User::class)->make([
+            'updated_at' => Carbon::parse('2016-12-01 8:00pm'),
+        ]);
+
+        $this->assertEquals('1480618800', $user->updated_at_timestamp);
     }
 
     /** @test */
@@ -740,11 +761,20 @@ class UserTest extends TestCase
             'google_email' => 'pepepardo@iesebre.com',
         ]);
 
+        Person::create([
+            'user_id' => $user->id,
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+        ]);
+
         $mappedUser = $user->map();
 
         $this->assertEquals(1,$mappedUser['id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
-        $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
+        $this->assertEquals('Pepe',$mappedUser['givenName']);
+        $this->assertEquals('Pardo',$mappedUser['sn1']);
+        $this->assertEquals('Jeans',$mappedUser['sn2']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
         $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);
@@ -757,6 +787,8 @@ class UserTest extends TestCase
         $this->assertEmpty($mappedUser['roles']);
         $this->assertEquals($mappedUser['created_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_created_at']);
         $this->assertEquals($mappedUser['updated_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_updated_at']);
+        $this->assertEquals($mappedUser['created_at']->timestamp,$mappedUser['created_at_timestamp']);
+        $this->assertEquals($mappedUser['updated_at']->timestamp,$mappedUser['updated_at_timestamp']);
         $this->assertNull($mappedUser['admin']);
         $this->assertEquals('MX',$mappedUser['hashid']);
     }

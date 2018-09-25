@@ -30,17 +30,102 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <user-add-form @created="userCreated" :users="users"></user-add-form>
+                      <user-add-form @created="userCreated" @googleUsercreated="googleUserCreated" :users="users"></user-add-form>
                   </v-card>
                 </v-stepper-content>
-                <v-stepper-step :complete="step > 2" step="2">Dades de l'usuari</v-stepper-step>
+                <v-stepper-step :complete="step > 2" step="2">Avatar</v-stepper-step>
                 <v-stepper-content step="2">
-                    <template v-if="user">
-                    Google Suite User link: <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id"> {{ user.primaryEmail }}</a>
+                    <template>
+                        <v-card>
+                            <v-container grid-list-lg fluid>
+                                <v-layout row wrap>
+                                     <v-flex xs2>
+                                         <template v-if="user">
+                                              <user-avatar :hash-id="user.hashid"
+                                                           :alt="user.name"
+                                                           :user="user"
+                                                           :editable="true"
+                                                           :removable="true"
+                                                           size="64"
+                                              ></user-avatar>
+                                             <span class="ml-2">Avatar (feu clic per canviar-lo)</span>
+                                             <v-divider class="mt-3 mb-3"></v-divider>
+                                             <v-list>
+                                                <v-subheader>Usuari</v-subheader>
+                                                <v-list-tile>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>
+                                                            {{ user.name }}
+                                                        </v-list-tile-title>
+                                                        <v-list-tile-sub-title>Nom</v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                                <v-list-tile>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>
+                                                            {{ user.email }}
+                                                        </v-list-tile-title>
+                                                        <v-list-tile-sub-title>Email</v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+
+                                         </template>
+                                        <template v-else>
+                                            <v-progress-circular indeterminate color="primary"></v-progress-circular> Carregant...
+                                        </template>
+                                     </v-flex>
+                                     <v-flex xs8>
+                                        <v-list two-line>
+                                            <v-subheader>Comptes externes</v-subheader>
+                                            <v-list-tile>
+                                                <v-list-tile-content>
+                                                    <v-list-tile-title>
+                                                        <a v-if="googleUser" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + googleUser.id"> {{ googleUser.primaryEmail }}</a>
+                                                        <template v-else>
+                                                            <v-progress-circular indeterminate color="primary"
+                                                            ></v-progress-circular>
+                                                            Esperant les dades de l'usuari de Google
+                                                        </template>
+                                                    </v-list-tile-title>
+                                                    <v-list-tile-sub-title>Email corporatiu (Google)</v-list-tile-sub-title>
+                                                </v-list-tile-content>
+                                            </v-list-tile>
+                                            <v-list-tile>
+                                                <v-list-tile-content>
+                                                    <v-list-tile-title>
+                                                        cn=Bla bla bla,dc=iesebre,dc=com()TODO
+                                                    </v-list-tile-title>
+                                                    <v-list-tile-sub-title>Ldap cn(TODO)</v-list-tile-sub-title>
+                                                </v-list-tile-content>
+                                            </v-list-tile>
+                                            <v-list-tile>
+                                                <v-list-tile-content>
+                                                    <v-list-tile-title v-if="user">
+                                                        <a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id='"> {{ user.name }}</a>
+                                                    </v-list-tile-title>
+                                                    <template v-else>
+                                                            <v-progress-circular indeterminate color="primary"></v-progress-circular> Carregant...
+                                                        </template>
+                                                    <v-list-tile-sub-title>Usuari de moodle</v-list-tile-sub-title>
+                                                </v-list-tile-content>
+                                            </v-list-tile>
+                                    </v-list>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                         </v-card>
                     </template>
                     <v-btn @click="close">Tancar</v-btn>
                     <v-btn color="error" @click="step = 1">Endarrera</v-btn>
+                    <v-btn color="error" @click="step = 3">Següent</v-btn>
                 </v-stepper-content>
+                <v-stepper-content step="3">
+                    <v-btn @click="close">Tancar</v-btn>
+                    <v-btn color="error" @click="step = 2">Endarrera</v-btn>
+                    <v-btn color="error" @click="step = 4">Següent</v-btn>
+                </v-stepper-content>
+
             </v-stepper>
         </v-card>
     </v-dialog>
@@ -50,17 +135,20 @@
 <script>
   import UserAddForm from './UserAddFormComponent'
   import * as mutations from '../../store/mutation-types'
+  import UserAvatar from '../ui/UserAvatarComponent'
 
   export default {
     name: 'UserAddComponent',
     components: {
-      'user-add-form': UserAddForm
+      'user-add-form': UserAddForm,
+      'user-avatar': UserAvatar
     },
     data () {
       return {
         dialog: false,
         step: 1,
-        user: null
+        user: null,
+        googleUser: null
       }
     },
     props: {
@@ -73,19 +161,15 @@
       close () {
         this.step = 1
         this.dialog = false
+        this.user = null
+        this.googleUser = null
       },
       userCreated (user) {
-        let adaptedUser = {}
-        adaptedUser.fullName = user.name.fullName
-        adaptedUser.primaryEmail = user.primaryEmail
-        adaptedUser.orgUnitPath = user.orgUnitPath
-        adaptedUser.isAdmin = false
-        adaptedUser.suspended = false
-        adaptedUser.creationTime = user.creationTime
-        adaptedUser.suspensionReason = user.suspensionReason
-        this.$store.commit(mutations.ADD_GOOGLE_USER, adaptedUser)
-        this.user = adaptedUser
+        this.user = user
         this.step = 2
+      },
+      googleUserCreated (user) {
+        this.googleUser = user
       }
     }
   }

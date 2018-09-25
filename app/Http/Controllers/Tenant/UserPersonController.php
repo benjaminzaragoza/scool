@@ -44,16 +44,18 @@ class UserPersonController extends Controller
             $user->assignRole(Role::findByName($request->role,'web'));
         }
 
-        return collect([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'mobile' => $user->mobile,
-            'user_type_id' => $user->user_type_id,
-            'givenName' => $person->givenName,
-            'sn1' => $person->sn1,
-            'sn2' => $person->sn2
-        ]);
+        return $user->map();
+
+//        return collect([
+//            'id' => $user->id,
+//            'name' => $user->name,
+//            'email' => $user->email,
+//            'mobile' => $user->mobile,
+//            'user_type_id' => $user->user_type_id,
+//            'givenName' => $person->givenName,
+//            'sn1' => $person->sn1,
+//            'sn2' => $person->sn2
+//        ]);
     }
 
     /**

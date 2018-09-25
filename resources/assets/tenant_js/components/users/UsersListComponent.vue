@@ -217,8 +217,8 @@
           {text: 'Mòbil', value: 'mobile'},
           {text: 'Últim login', value: 'last_login'},
           {text: 'Rols', value: 'roles', sortable: false},
-          {text: 'Data creació', value: 'formatted_created_at'},
-          {text: 'Data actualització', value: 'formatted_updated_at'},
+          {text: 'Data creació', value: 'created_at_timestamp'},
+          {text: 'Data actualització', value: 'updated_at_timestamp'},
           {text: 'Accions', sortable: false}
         ],
         sendingResetPassword: false,

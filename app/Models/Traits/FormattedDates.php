@@ -21,6 +21,26 @@ trait FormattedDates
     }
 
     /**
+     * created_at_timestamp attribute.
+     *
+     * @return mixed
+     */
+    public function getCreatedAtTimestampAttribute()
+    {
+        return optional($this->created_at)->timestamp;
+    }
+
+    /**
+     * created_at_timestamp attribute.
+     *
+     * @return mixed
+     */
+    public function getUpdatedAtTimestampAttribute()
+    {
+        return optional($this->updated_at)->timestamp;
+    }
+
+    /**
      * formatted_updated_at_date attribute.
      *
      * @return mixed

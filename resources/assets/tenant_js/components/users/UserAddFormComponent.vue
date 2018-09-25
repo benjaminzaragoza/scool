@@ -59,7 +59,7 @@
                             tabindex="4"
                     ></v-text-field>
                 </v-flex>
-                <v-flex md3>
+                <v-flex md1>
                     <v-text-field
                             label="Telèfon mòbil"
                             v-model="mobile"
@@ -71,6 +71,12 @@
                     <v-switch
                             :label="welcomeEmail ? 'Email de benvinguda' : 'NO enviar email'"
                             v-model="welcomeEmail"
+                    ></v-switch>
+                </v-flex>
+                <v-flex md2>
+                    <v-switch
+                            :label="moodleUser ? 'Crear usuari Moodle' : 'NO crear usuari Moodle'"
+                            v-model="moodleUser"
                     ></v-switch>
                 </v-flex>
                 <v-flex md2>
@@ -140,7 +146,8 @@
         newUser: true,
         welcomeEmail: true,
         googleUser: true,
-        ldapUser: true
+        ldapUser: true,
+        moodleUser: true
       }
     },
     props: {
@@ -303,6 +310,7 @@
           google_email: googleUser.primaryEmail
         }).then(response => {
           this.showMessage('Usuari Google associat correctament')
+          this.$emit('googleUsercreated', googleUser)
         }).catch(error => {
           console.log(error)
           this.showError(error)

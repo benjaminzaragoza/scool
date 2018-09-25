@@ -64,7 +64,7 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertEquals('Pardo',$result->sn1);
         $this->assertEquals('Jeans',$result->sn2);
         $this->assertEquals('pepepardo@jeans.com',$result->email);
-        $this->assertEquals(1,$result->user_type_id);
+        $this->assertEquals('Ay',$result->hash_id);
 
         $user = User::findByName('Pepe Pardo Jeans');
         $this->assertNotNull($user);
@@ -109,7 +109,6 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertEquals('Pardo',$result->sn1);
         $this->assertEquals('Jeans',$result->sn2);
         $this->assertEquals('pepepardo@jeans.com',$result->email);
-        $this->assertEquals(1,$result->user_type_id);
 
         $user = User::findByName('Pepe Pardo Jeans');
         $this->assertNotNull($user);
