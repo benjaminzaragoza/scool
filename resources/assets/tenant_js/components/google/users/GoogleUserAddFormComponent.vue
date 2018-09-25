@@ -1,7 +1,7 @@
 <template>
     <form>
         <v-switch v-show="existing"
-                  :label="newUser ? 'Nou usuari' : 'Escollir un usuari existent'"
+                  :label="newUser ? 'Compte de Google (sense associar a usuari)' : 'Crear per a un usuari existent'"
                   v-model="newUser"
         ></v-switch>
         <select-user v-if="!newUser" :users="users" v-model="user" :item-value="null"></select-user>

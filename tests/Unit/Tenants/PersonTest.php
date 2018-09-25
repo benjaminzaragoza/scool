@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Tenants;
 
+use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Person;
 use App\Models\User;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Tests\TestCase;
@@ -118,5 +120,65 @@ class PersonTest extends TestCase
         $this->assertTrue($person2->is(Person::findByIdentifier('Z2514326V',2)));
         $this->assertTrue($person2->is(Person::findByIdentifier('Z2514326V', $nie)));
         $this->assertNull(Person::findByIdentifier('Z2514326V'));
+    }
+
+    /**
+     * @test
+     */
+    public function map()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        GoogleUser::create([
+            'user_id' => $user->id,
+            'google_id' => 123125634,
+            'google_email' => 'pepepardo@iesebre.com'
+        ]);
+
+        $person = Person::create([
+            'user_id' => $user->id,
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'birthdate' => 'Jeans',
+            'birthplace_id' => 'Jeans',
+            'gender' => 'Home',
+            'civil_status' => 'Casat/da',
+            'phone' => '977504878',
+            'other_phones' => 'Casat/da',
+            'mobile' => '678514427',
+            'other_mobiles' => '678514427',
+            'email' => 'pepepardojeans@gmail.com',
+            'other_emails' => 'pepepardojeans@gmail.com',
+            'notes' => 'Bla bla bla',
+        ]);
+
+        $mappedPerson = $person->map();
+
+        $this->assertEquals(1,$mappedPerson['id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedPerson['name']);
+        $this->assertEquals('Pepe',$mappedPerson['givenName']);
+        $this->assertEquals('Pardo',$mappedPerson['sn1']);
+        $this->assertEquals('Jeans',$mappedPerson['sn2']);
+        $this->assertEquals('pepepardojeans@gmail.com',$mappedPerson['email']);
+        $this->assertEquals('pepepardojeans@gmail.com',$mappedPerson['userEmail']);
+        $this->assertEquals('pepepardo@iesebre.com',$mappedPerson['corporativeEmail']);
+        $this->assertEquals('123125634',$mappedPerson['googleId']);
+        $this->assertNull($mappedPerson['email_verified_at']);
+        $this->assertEquals('678514427',$mappedPerson['mobile']);
+        $this->assertNull($mappedPerson['last_login']);
+        $this->assertNull($mappedPerson['last_login_ip']);
+        $this->assertInstanceOf(Carbon::class,$mappedPerson['created_at']);
+        $this->assertInstanceOf(Carbon::class,$mappedPerson['updated_at']);
+        $this->assertEquals($mappedPerson['created_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_created_at']);
+        $this->assertEquals($mappedPerson['updated_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_updated_at']);
+        $this->assertEquals($mappedPerson['created_at']->timestamp,$mappedPerson['created_at_timestamp']);
+        $this->assertEquals($mappedPerson['updated_at']->timestamp,$mappedPerson['updated_at_timestamp']);
+        $this->assertEmpty($mappedPerson['admin']);
+        $this->assertEquals('MX',$mappedPerson['hash_id']);
     }
 }

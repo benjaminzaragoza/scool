@@ -120,7 +120,18 @@
                     <v-btn color="error" @click="step = 1">Endarrera</v-btn>
                     <v-btn color="error" @click="step = 3">Següent</v-btn>
                 </v-stepper-content>
+                <v-stepper-step :complete="step > 3" step="3">Dades Personals</v-stepper-step>
                 <v-stepper-content step="3">
+                    TODO Dades personals
+
+                    <v-btn @click="close">Tancar</v-btn>
+                    <v-btn color="error" @click="step = 2">Endarrera</v-btn>
+                    <v-btn color="error" @click="step = 4">Següent</v-btn>
+                </v-stepper-content>
+                <v-stepper-step :complete="step > 4" step="4">Assignar rol</v-stepper-step>
+
+                <v-stepper-content step="4">
+                    TODO assignar rol
                     <v-btn @click="close">Tancar</v-btn>
                     <v-btn color="error" @click="step = 2">Endarrera</v-btn>
                     <v-btn color="error" @click="step = 4">Següent</v-btn>

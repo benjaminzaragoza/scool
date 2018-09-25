@@ -121,7 +121,7 @@
                                                     :working="removing"
                                                     @confirmed="remove(user)"
                                                     tooltip="Eliminar"
-                                                    message="Esteu segurs que voleu eliminar l'usuari?"
+                                                    message="Esteu segurs que voleu eliminar el compte de Google?"
                                             ></confirm-icon>
                                             <confirm-icon v-if="!user.suspended"
                                                     :id="'google_user_suspend_' + user.primaryEmail.replace('@','_')"
@@ -244,8 +244,22 @@
       remove (user) {
         this.removing = true
         axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
-          this.removing = false
-          this.$store.commit(mutations.DELETE_GOOGLE_USER, user )
+          if (user.employeeId) {
+            axios.delete('/api/v1/user/' + user.employeeId + '/gsuite').then(response => {
+              this.showMessage('Usuari esborrat correctament')
+              this.removing = false
+              this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
+            }).catch(error => {
+              console.log(error)
+              this.showMessage('Usuari esborrat correctament de Google però amb error local')
+              this.showError(error)
+              this.removing = false
+            })
+          } else {
+            this.showMessage('Usuari esborrat correctament')
+            this.removing = false
+            this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
+          }
           this.showMessage('Usuari esborrat correctament')
         }).catch(error => {
           this.removing = false

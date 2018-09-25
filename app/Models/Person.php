@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -13,7 +14,8 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
  */
 class Person extends Model implements HasMedia
 {
-    use HasMediaTrait;
+    use HasMediaTrait, FormattedDates;
+
 
     protected $guarded = [];
 
@@ -21,6 +23,16 @@ class Person extends Model implements HasMedia
         'name',
         'fullname'
     ];
+
+    /**
+     * Get people.
+     *
+     * @return mixed
+     */
+    public static function getPeople()
+    {
+        return (new PersonCollection(User::with('roles')->get()))->transform();
+    }
 
     /**
      * Get the user.
@@ -95,5 +107,32 @@ class Person extends Model implements HasMedia
         $identifier = Identifier::where('value',$identifier)->where('type_id',$type)->first();
         if(!$identifier) return null;
         return self::where('identifier_id', $identifier->id)->first();
+    }
+
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'givenName' => $this->givenName,
+            'sn1' => $this->sn1,
+            'sn2' => $this->sn2,
+            'name' => optional($this->user)->name,
+            'email' => $this->email,
+            'userEmail' => optional($this->user)->email,
+            'corporativeEmail' => optional(optional($this->user)->googleUser)->google_email,
+            'googleId' => optional(optional($this->user)->googleUser)->google_id,
+            'email_verified_at' => optional($this->user)->email_verified_at,
+            'mobile' => $this->mobile,
+            'last_login' => optional($this->user)->last_login,
+            'last_login_ip' => optional($this->user)->last_login_ip,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'admin' => optional($this->user)->admin,
+            'hash_id' => optional($this->user)->hash_id,
+        ];
     }
 }

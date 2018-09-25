@@ -35,17 +35,6 @@ class PersonalDataControllerTest extends BaseTenantTest
     /** @test */
     public function show_personal_data_management()
     {
-        $this->withoutExceptionHandling();
-
-//        initialize_tenant_roles_and_permissions();
-//        initialize_user_types();
-//        initialize_job_types();
-//        initialize_forces();
-//        initialize_departments();
-//        initialize_families();
-//        initialize_specialities();
-//        initialize_users();
-//        initialize_teachers();
 
         $usersManager = create(User::class);
         $this->actingAs($usersManager);
