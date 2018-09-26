@@ -1,7 +1,7 @@
 <template>
     <form>
         <!--TODO Cal ? -->
-        <v-switch v-show="existing"
+        <v-switch v-if="existing"
                 :label="newPerson ? 'Nova usuari' : 'Escollir una persona existent'"
                 v-model="newPerson"
         ></v-switch>
