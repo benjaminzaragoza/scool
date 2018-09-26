@@ -791,6 +791,7 @@ class UserTest extends TestCase
         $this->assertEquals($mappedUser['updated_at']->timestamp,$mappedUser['updated_at_timestamp']);
         $this->assertNull($mappedUser['admin']);
         $this->assertEquals('MX',$mappedUser['hashid']);
+        $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$mappedUser['full_search']);
     }
 
     /** @test */
@@ -806,5 +807,16 @@ class UserTest extends TestCase
         $this->assertNotNull($user->googleUser);
         $this->assertEquals('231312312',$user->googleUser->google_id);
         $this->assertEquals('prova@iesebre.com',$user->googleUser->google_email);
+    }
+
+    /** @test */
+    public function full_search_attribute() {
+        $user = factory(User::class)->create([
+            'email' => 'pepepardojeans@gmail.com',
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+
+        $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$user->full_search);
+
     }
 }

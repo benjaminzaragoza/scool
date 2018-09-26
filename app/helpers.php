@@ -5329,8 +5329,8 @@ if (!function_exists('check_teacher')) {
      * @return bool
      */
     function check_teacher($teacher) {
-        return array_key_exists('user_id', $teacher) &&
-            array_key_exists('teacher_id', $teacher) &&
+        return array_key_exists('id', $teacher) &&
+            array_key_exists('user_id', $teacher) &&
             array_key_exists('code', $teacher) &&
             array_key_exists('formatted_created_at_diff', $teacher) &&
             array_key_exists('formatted_created_at', $teacher) &&

@@ -202,4 +202,43 @@ class Job extends Revisionable
         }
     }
 
+    /**
+     * Get holder
+     */
+    public function getHolderAttribute()
+    {
+        $holder = null;
+        if ($this->holders->first()) {
+            return $this->holders->first();
+        }
+        return $holder;
+    }
+
+    /**
+     * holder_description attribute.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getHolderDescriptionAttribute($value)
+    {
+        $holder_name = optional($this->holder)->name;
+        if ($teacher = optional(optional($this->holder)->teacher)) {
+            $holder_description = $teacher->code . ' ' . $holder_name;
+        } else {
+            $holder_description = $holder_name;
+        }
+        return trim($holder_description);
+    }
+
+    /**
+     * full_search attribute.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getFullSearchAttribute($value)
+    {
+        return trim("$this->fullcode $this->holder_description");
+    }
 }

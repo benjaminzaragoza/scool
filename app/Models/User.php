@@ -49,7 +49,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     protected $appends = [
         'formatted_created_at',
         'formatted_updated_at',
-        'hashid'
+        'hashid',
+        'full_search'
     ];
 
     /**
@@ -621,6 +622,10 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         return $this->hasOne(GoogleUser::class);
     }
 
+    /**
+     * Map
+     * @return array
+     */
     public function map()
     {
         return [
@@ -646,7 +651,19 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'created_at_timestamp' => $this->created_at_timestamp,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'admin' => $this->admin,
-            'hashid' => $this->hashid
+            'hashid' => $this->hashid,
+            'full_search' => $this->full_search,
         ];
+    }
+
+    /**
+     * full_search_attribute
+     *
+     * @param $value
+     * @return string
+     */
+    public function getFullSearchAttribute($value)
+    {
+        return "$this->email $this->name";
     }
 }

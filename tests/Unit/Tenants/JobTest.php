@@ -8,6 +8,7 @@ use App\Models\Force;
 use App\Models\Job;
 use App\Models\JobType;
 use App\Models\Specialty;
+use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Config;
@@ -316,6 +317,62 @@ class JobTest extends TestCase
         $this->assertNotNull($job->substitutes);
         $substitute = $job->substitutes()->first();
         $this->assertEquals('Pepe Pardo Jeans',$substitute->name);
+
+    }
+
+    /**
+     * @test
+     */
+    public function holder_description()
+    {
+        $job = Job::firstOrCreate([
+            'type_id' => 1,
+            'specialty_id' => 1,
+            'family_id' => 1,
+            'code' => '040',
+            'order' => 2
+        ]);
+        $this->assertEquals('', $job->holder_description);
+
+        $user = factory(User::class)->create(['name' => 'Pepe Pardo Jeans']);
+        Employee::create([
+            'user_id' => $user->id,
+            'job_id' => $job->id,
+            'holder' => 1
+        ]);
+        $job = $job->refresh();
+        $this->assertEquals('Pepe Pardo Jeans', $job->holder_description);
+        Teacher::create([
+            'user_id' => $user->id,
+            'code' => 40
+        ]);
+        $job = $job->refresh();
+        $this->assertEquals('40 Pepe Pardo Jeans', $job->holder_description);
+    }
+
+    /**
+     * @test
+     */
+    public function full_search()
+    {
+        $specialty = Specialty::create([
+            'code' => '507',
+            'name' => 'INFORMÀTICA',
+            'force_id' => 1
+        ]);
+        $family = Family::create([
+            'name' => 'INFORMÀTICA',
+            'code' => 'INF',
+        ]);
+        $job = Job::firstOrCreate([
+            'type_id' => 1,
+            'specialty_id' => $specialty->id,
+            'family_id' => $family->id,
+            'code' => '040',
+            'order' => 2
+        ]);
+
+        $this->assertEquals('INF_507_2_040', $job->full_search);
 
     }
 }
