@@ -75,17 +75,9 @@
                 </v-stepper-content>
                 <v-stepper-step step="4">Dades personals</v-stepper-step>
                 <v-stepper-content step="4">
-                  <v-card>
-                      <ul>
-                          <li>Tinc nomes givenName, sn1 i sn2 i per tant ja tin un person id</li>
-                          <li>Dades imprescindibles: email i tlf mòbil (SMS i gent sense email)</li>
-                          <li>Dades secundaries: Adreça i DNI</li>
-                          <li>Altres dades: Data naixament, lloc de naixement, sexe, altres emails i tlfs, notes, esta civil</li>
-                      </ul>
+                  <v-card class="mb-5">
+                      <personal-data-form></personal-data-form>
                   </v-card>
-                    <v-btn color="success" @click.native="">Guardar canvis</v-btn>
-                  <v-btn color="primary" @click.native="step = 5">Continuar</v-btn>
-                  <v-btn @click.native="step = 3" flat>Cancel</v-btn>
                 </v-stepper-content>
                 <v-stepper-step step="5">Fitxa del professor</v-stepper-step>
                 <v-stepper-content step="5">
@@ -134,6 +126,7 @@
   import UserAddForm from '../users/UserAddFormComponent'
   import AssignJobToUser from '../jobs/AssignJobToUserComponent'
   import AssignTeacherInfoToUser from '../teachers/AssignTeacherInfoToUserComponent'
+  import PersonalDataForm from '../people/PersonalDataForm'
   import withSnackbar from '../mixins/withSnackbar'
   import * as actions from '../../store/action-types'
 
@@ -142,7 +135,8 @@
     components: {
       'user-add-form': UserAddForm,
       'assign-job-to-user': AssignJobToUser,
-      'assign-teacher-info-to-user': AssignTeacherInfoToUser
+      'assign-teacher-info-to-user': AssignTeacherInfoToUser,
+      'personal-data-form': PersonalDataForm
     },
     mixins: [withSnackbar],
     data () {
