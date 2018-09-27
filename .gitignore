@@ -21,4 +21,3 @@ app/private_helpers.php
 .env.backup
 .env.dusk.local
 .env.dusk.testing
-
