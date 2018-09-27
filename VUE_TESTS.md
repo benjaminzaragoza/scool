@@ -28,6 +28,7 @@ describe('Foo', function () {
     const localVue = createLocalVue();
     localVue.use(VueRouter);
     localVue.use(Vuetify);
+    
 
     wrp = mount(Foo, {
       localVue: localVue,
@@ -43,3 +44,8 @@ describe('Foo', function () {
 - https://nick-basile.com/blog/post/testing-a-vuejs-and-laravel-todo-app
 - https://nick-basile.com/blog/post/testing-a-vuejs-and-laravel-todo-app
 - https://laracasts.com/series/testing-vue
+
+# Vue loader
+
+yarn add vue-loader
+https://vue-loader.vuejs.org/migrating.html#importing-sfcs-from-dependenciesb
