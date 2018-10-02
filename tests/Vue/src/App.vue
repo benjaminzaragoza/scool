@@ -5,15 +5,12 @@
 </template>
 
 <script>
-import MessageToggle from '@/components/MessageToggle.vue'
-import BirthdateInputComponent from '@/components/BirthdateInputComponent.vue'
-import List from '@/components/List.vue'
+
+import BirthdateInputComponent from '../../../resources/assets/tenant_js/components/ui/BirthDateInputComponent.vue'
 
 export default {
   components: {
-    MessageToggle,
-    List,
-    'birthdate-input':  BirthdateInputComponent
+    'birthdate-input': BirthdateInputComponent
   }
 }
 </script>
