@@ -38,9 +38,11 @@ class IncidentTest extends TestCase
             'description' => 'bla bla bla'
         ]);
         $this->assertNull($incident->user);
-        $incident->assignUser($user = factory(User::class)->create());
+        $result = $incident->assignUser($user = factory(User::class)->create());
+        $incident = $incident->fresh();
         $this->assertNotNull($incident->user);
         $this->assertEquals($user->id,$incident->user->id);
+        $this->assertTrue($incident->is($result));
     }
 
     /** @test */
@@ -51,13 +53,16 @@ class IncidentTest extends TestCase
         ]);
         $this->assertNull($incident->user);
         $user = factory(User::class)->create();
-        $incident->assignUser($user->id);
+        $result = $incident->assignUser($user->id);
+        $incident = $incident->fresh();
+
         $this->assertNotNull($incident->user);
         $this->assertEquals($user->id,$incident->user->id);
+        $this->assertTrue($incident->is($result));
     }
 
     /** @test */
-    public function throwns_exception_assigninig_incorrect_user() {
+    public function throwns_exception_assigning_incorrect_user() {
         $incident = Incident::create([
             'subject' => 'No funciona PC aula 5',
             'description' => 'bla bla bla'

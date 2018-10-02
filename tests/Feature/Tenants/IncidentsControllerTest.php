@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Models\Incident;
 use App\Models\User;
 use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -59,7 +60,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $user = $user->fresh();
 
         $this->assertCount(1,$user->incidents);
-        dd($user->incidents->first());
+        $this->assertTrue(Incident::first()->is($user->incidents->first()));
 
     }
 
@@ -85,15 +86,53 @@ class IncidentsControllerTest extends BaseTenantTest {
     /**
      * @test
      */
-    public function regular_user_cannot_set_incidences()
+    public function regular_user_cannot_store_incidences()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        $this->actingAs($user,'api');
+        $incident = Incident::create([
+            'subject' => 'No funciona Aula 36 pc 1',
+            'description' => 'bla bla bla'
+        ]);
+        $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
+        $response->assertSuccessful();
+    }
+
+    /**
+     * @test
+     */
+    public function can_show_incidence()
     {
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
 
-        $response =  $this->json('POST','/api/v1/incidents',$incident = [
-            'subject' => 'Ordinador Aula 36 no funcion',
-            'description' => "El ordinador de l'aula 36 bla bla la"
+        $incident = Incident::create([
+            'subject' => 'No funciona Aula 36 pc 1',
+            'description' => 'bla bla bla'
         ]);
+        $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function regular_user_cannot_show_incidence()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+
+        $incident = Incident::create([
+            'subject' => 'No funciona Aula 36 pc 1',
+            'description' => 'bla bla bla'
+        ]);
+        $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
+        $response->assertStatus(403);
+    }
+
+
 }

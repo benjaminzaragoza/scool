@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Tenant\Api;
 
+use App\Http\Requests\ShowIncident;
 use App\Http\Requests\StoreIncident;
 use App\Models\Incident;
+use App\Tenant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,18 +34,19 @@ class IncidentsController extends Controller
      */
     public function store(StoreIncident $request)
     {
-        return Incident::create($request->only('subject','description')->assignUser($request->user->id));
+        return (Incident::create($request->only('subject','description'))->assignUser($request->user()));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ShowIncident $request
+     * @param Incident $incident
+     * @return Incident
      */
-    public function show($id)
+    public function show(ShowIncident $request, $tenant,Incident $incident)
     {
-        //
+        return $incident;
     }
 
     /**

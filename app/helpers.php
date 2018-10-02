@@ -863,6 +863,10 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('Incidents');
         });
 
+        Gate::define('show-incident', function ($user) {
+            return $user->hasRole('Incidents');
+        });
+
 
     }
 }

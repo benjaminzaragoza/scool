@@ -22,14 +22,16 @@ class Incident extends Model
      */
     public function assignUser($user)
     {
+        if (! $user instanceof User && ! is_integer($user) )
+            throw new \InvalidArgumentException("L'usuari especificat no és correcte");
         if ($user instanceof User) {
-            $this->user()->associate($user);
-            return $this;
+            $this->user_id = $user->id;
         } else if (is_integer($user)) {
-            $this->user()->associate(User::findOrFail($user));
-            return $this;
+            $this->user_id = $user;
         }
-        throw new \InvalidArgumentException("L'usuari especificat no és correcte");
+        $this->save();
+        return $this;
+
     }
 
     /**
