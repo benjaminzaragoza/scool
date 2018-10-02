@@ -858,6 +858,11 @@ if (!function_exists('initialize_gates')) {
             }
         });
 
+        //INCIDENTS
+        Gate::define('store-incident', function ($user) {
+            return $user->hasRole('Incidents');
+        });
+
 
     }
 }

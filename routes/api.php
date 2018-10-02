@@ -147,6 +147,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Re(send) welcome user email
             Route::get('/email/welcome/{user}', 'Auth\Tenant\ForgotPasswordController@welcome');
 
+            // INCIDENTS
+            Route::apiResource('incidents', 'Tenant\Api\IncidentsController');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {

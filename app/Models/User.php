@@ -666,4 +666,12 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     {
         return "$this->email $this->name";
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function incidents()
+    {
+        return $this->hasMany(Incident::class);
+    }
 }
