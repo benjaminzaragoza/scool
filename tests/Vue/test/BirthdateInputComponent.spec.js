@@ -15,19 +15,12 @@ describe('BirthdateInputComponent.vue', () => {
         })
     })
 
-    it('todo', () => {
-        // const items = ['', '']
-        // const wrapper = shallowMount(List, {
-        //     propsData: { items }
-        // })
-        // expect(wrapper.findAll('li')).toHaveLength(items.length)
-        // const msg = 'Hello'
-        // console.log(wrp.element)
-        // console.log(wrp.html())
-        // expect(wrp.contains('div')).toBe(/true)
-
-
-        // console.log(wrp.vm)
-        expect(wrp.html()).toContain('AAA')
+    it('check_default_label', () => {
+      expect(wrp.vm.$refs.text.label).toBe('Data de naixement')
     })
+
+  it('can_change_label', () => {
+    wrp.setProps({ label: 'prova' })
+    expect(wrp.vm.$refs.text.label).toBe('prova')
+  })
 })

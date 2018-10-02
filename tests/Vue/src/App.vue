@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <birthdate-input></birthdate-input>
+    <birthdate-input label="PROVA"></birthdate-input>
   </div>
 </template>
 
