@@ -40,14 +40,17 @@
                                                 </v-flex>
                                                 <v-flex md12>
                                                     <v-textarea
+                                                            v-model="description"
                                                             name="description"
                                                             label="Descripció"
                                                             hint="Descripció de la incidència. Mireu de ser el més concisos possibles evitant descripcions genèriques tipus no funciona. "
+                                                            :error-messages="descriptionErrors"
+                                                            @input="$v.description.$touch()"
+                                                            @blur="$v.description.$touch()"
                                                     ></v-textarea>
                                                 </v-flex>
                                             </v-layout>
                                         </v-container>
-                                        <v-btn flat color="red" @click="clear">Netejar</v-btn>
                                         <v-btn @click="add(false)"
                                                color="teal"
                                                class="white--text"
@@ -78,13 +81,15 @@
   export default {
     mixins: [validationMixin, withSnackbar],
     validations: {
-      subject: {required}
+      subject: {required},
+      description: {required}
     },
     data () {
       return {
         dialog: false,
         subject: '',
-        description: ''
+        description: '',
+        adding: false
       }
     },
     computed: {
@@ -93,6 +98,17 @@
         if (!this.$v.subject.$dirty) return errors
         !this.$v.subject.required && errors.push('És obligatori indicar un títol.')
         return errors
+      },
+      descriptionErrors () {
+        const errors = []
+        if (!this.$v.description.$dirty) return errors
+        !this.$v.description.required && errors.push('És obligatori indicar una descripció.')
+        return errors
+      }
+    },
+    methods: {
+      add () {
+        console.log('TODO ADD')
       }
     }
   }

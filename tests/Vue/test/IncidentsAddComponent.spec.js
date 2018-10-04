@@ -17,5 +17,6 @@ describe('IncidentAddComponent.vue', () => {
     expect(wrp.vm.dialog).toBe(false)
     expect(wrp.vm.subject).toBe('')
     expect(wrp.vm.description).toBe('')
+    expect(wrp.vm.adding).toBe(false)
   })
 })
