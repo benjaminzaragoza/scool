@@ -78,6 +78,7 @@ Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddCompo
 
 // Incidents
 Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'));
+Vue.component('incident-add', require('./components/incidents/IncidentAddComponent.vue'));
 
 window.Vuetify = require('vuetify');
 

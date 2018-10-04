@@ -8101,17 +8101,23 @@ if (! function_exists('is_sha1')) {
 
 if (! function_exists('create_fake_incidents')) {
     function create_fake_incidents() {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+        $user2 = factory(User::class)->create([
+            'name' => 'Carles Puigdemont'
+        ]);
         Incident::create([
             'subject' => 'No funciona PC1 aula 5',
             'description' => 'bla bla bla'
-        ]);
+        ])->assignUser($user);
         Incident::create([
             'subject' => 'No funciona PC2 aula 25',
             'description' => 'hey hey hey'
-        ]);
+        ])->assignUser($user);
         Incident::create([
             'subject' => 'No funciona projecte Sala Mestral',
             'description' => 'jorl jorl jorl'
-        ]);
+        ])->assignUser($user2);
     }
 }

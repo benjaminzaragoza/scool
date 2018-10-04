@@ -38,8 +38,12 @@ class IncidentsControllerAPITest extends BaseTenantTest {
      */
     public function can_list_incidents()
     {
-        $user = factory(User::class)->create();
-        $another_user = factory(User::class)->create();
+        $user = factory(User::class)->create([
+            'name' => 'Carles Puigdemont'
+        ]);
+        $another_user = factory(User::class)->create([
+            'name' => 'Carme Forcadell'
+        ]);
         Incident::create([
             'subject' => 'No funciona pc2 Aula 36',
             'description' => 'bla bla bla'
@@ -64,13 +68,15 @@ class IncidentsControllerAPITest extends BaseTenantTest {
         $this->assertCount(3,$incidents);
 
         $this->assertEquals($user->id,$incidents[0]->user_id);
-        $this->assertEquals('sdadas',$incidents[0]->username);
+        $this->assertEquals('Carles Puigdemont',$incidents[0]->username);
         $this->assertEquals('No funciona pc2 Aula 36',$incidents[0]->subject);
         $this->assertEquals('bla bla bla',$incidents[0]->description);
         $this->assertEquals($user->id,$incidents[1]->user_id);
+        $this->assertEquals('Carles Puigdemont',$incidents[1]->username);
         $this->assertEquals('No funciona pc1 Aula 20',$incidents[1]->subject);
         $this->assertEquals('ji ji ji',$incidents[1]->description);
         $this->assertEquals($another_user->id,$incidents[2]->user_id);
+        $this->assertEquals('Carme Forcadell',$incidents[2]->username);
         $this->assertEquals('No funciona projector sala Mestral',$incidents[2]->subject);
         $this->assertEquals('jorl jorl jorl',$incidents[2]->description);
     }

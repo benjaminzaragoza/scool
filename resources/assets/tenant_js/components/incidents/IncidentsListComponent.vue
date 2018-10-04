@@ -2,7 +2,45 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
+                <v-toolbar color="blue darken-3">
+                    <v-menu bottom>
+                        <v-btn slot="activator" icon dark>
+                            <v-icon>more_vert</v-icon>
+                        </v-btn>
+                        <v-list>
+                            <v-list-tile href="/jobs/sheet_holders" target="_blank">
+                                <v-list-tile-title>Llençol de places amb titulars</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/jobs/sheet_active_users" target="_blank">
+                                <v-list-tile-title>TODO 1</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/jobs/sheet_substitutes" target="_blank">
+                                <v-list-tile-title>TODO 2</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+                    </v-menu>
+                    <v-toolbar-title class="white--text title">Incidències</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn icon class="white--text" @click="settings">
+                        <v-icon>settings</v-icon>
+                    </v-btn>
+                    <v-btn icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                        <v-icon>refresh</v-icon>
+                    </v-btn>
+                </v-toolbar>
+
                 <v-card>
+                    <v-card-title>
+                        TODO
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                                append-icon="search"
+                                label="Buscar"
+                                single-line
+                                hide-details
+                                v-model="search"
+                        ></v-text-field>
+                    </v-card-title>
                     <v-data-table
                             class="px-0 mb-2 hidden-sm-and-down"
                             :headers="headers"
@@ -16,7 +54,7 @@
                         <template slot="items" slot-scope="{item: incident}">
                             <tr>
                                 <td class="text-xs-left" v-html="incident.id"></td>
-                                <td class="text-xs-left" v-html="incident.user_id"></td>
+                                <td class="text-xs-left" v-html="incident.username"></td>
                                 <td class="text-xs-left" v-html="incident.subject"></td>
                                 <td class="text-xs-left" v-html="incident.description"></td>
                                 <td class="text-xs-left">
@@ -35,7 +73,8 @@
   export default {
     data () {
       return {
-        search: ''
+        search: '',
+        refreshing: false
       }
     },
     props: {
@@ -59,6 +98,15 @@
         headers.push({text: 'Description', value: 'description'})
         headers.push({text: 'Accions', sortable: false})
         return headers
+      }
+    },
+    methods: {
+      settings () {
+        console.log('TODO settings')
+      },
+      refresh () {
+        this.refreshing = true
+        console.log('TODO refreshing')
       }
     }
   }

@@ -12,9 +12,15 @@ use App\Models\Incident;
  */
 class IncidentsController extends Controller{
 
+    /**
+     * Index.
+     *
+     * @param ListIncidents $Request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(ListIncidents $Request)
     {
-        $incidents = Incident::all();
+        $incidents = Incident::getIncidents();
         return view('tenants.incidents.index',compact('incidents'));
     }
 }

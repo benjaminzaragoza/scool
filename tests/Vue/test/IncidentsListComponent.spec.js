@@ -1,8 +1,7 @@
-import { createLocalVue, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import IncidentsListComponent from '../../../resources/assets/tenant_js/components/incidents/IncidentsListComponent.vue'
 import Vuetify from 'vuetify'
 import Vue from 'vue'
-// import VueRouter from 'vue-router'
 
 describe('IncidentsListComponent.vue', () => {
   let wrp
@@ -10,11 +9,6 @@ describe('IncidentsListComponent.vue', () => {
   beforeEach(() => {
     // Vue.use(VueRouter)
     Vue.use(Vuetify)
-
-    // Avoid warning: [Vuetify] Unable to locate target [data-app]
-    const el = document.createElement('div')
-    el.setAttribute('data-app', true)
-    document.body.appendChild(el)
 
     wrp = mount(IncidentsListComponent, {
       propsData: {
@@ -45,7 +39,14 @@ describe('IncidentsListComponent.vue', () => {
     })
   })
 
+  it('check_default_state', () => {
+    expect(wrp.vm.refreshing).toBe(false)
+    expect(wrp.vm.search).toBe('')
+  })
+
   it('renders_incidents', () => {
+    expect(wrp.html()).toContain('Sergi Tur Badenas')
+    expect(wrp.html()).toContain('Pepe Pardo Jeans')
     expect(wrp.html()).toContain('No funciona pc1 aula 20')
     expect(wrp.html()).toContain('No funciona pc2 aula 25')
     expect(wrp.html()).toContain('No funciona projector Sala Mestral')
