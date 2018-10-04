@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\Tenant\IncidentCollection;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,5 +41,31 @@ class Incident extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Map.
+     *
+     * @return array
+     */
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'username' => optional($this->user)->name,
+            'subject' => $this->subject,
+            'description' => $this->description
+        ];
+    }
+
+    /**
+     * Get incidents.
+     *
+     * @return mixed
+     */
+    public static function getIncidents()
+    {
+        return (new IncidentCollection(Incident::with('user')->get()))->transform();
     }
 }

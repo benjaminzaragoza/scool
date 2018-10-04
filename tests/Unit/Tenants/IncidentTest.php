@@ -74,4 +74,26 @@ class IncidentTest extends TestCase
 
         }
     }
+
+    /** @test */
+    public function map()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+        ])->assignUser($user);
+
+        $mappedIncident = $incident->map();
+
+        $this->assertEquals(1,$mappedIncident['id']);
+        $this->assertEquals($user->id,$mappedIncident['user_id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['username']);
+        $this->assertEquals('No funciona pc2 aula 15',$mappedIncident['subject']);
+        $this->assertEquals('bla bla bla',$mappedIncident['description']);
+
+    }
 }

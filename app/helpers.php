@@ -10,6 +10,7 @@ use App\Models\Family;
 use App\Models\Force;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
+use App\Models\Incident;
 use App\Models\Law;
 use App\Models\Lesson;
 use App\Models\Location;
@@ -200,12 +201,28 @@ if (! function_exists('create_tenant_admin_user')) {
      */
     function create_tenant_admin_user()
     {
-        if (! App\Models\User::where('email',env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'))->first()) {
-            App\Models\User::forceCreate([
+        if (! App\User::where('email',env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'))->first()) {
+            App\User::forceCreate([
                 'name' => env('ADMIN_USER_NAME','Sergi Tur Badenas'),
                 'email' => env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'),
-                'password' => env('ADMIN_USER_PASSWORD','123456'), // 123456 en sha1
+                'password' => bcrypt(env('ADMIN_USER_PASSWORD','123456')),
                 'admin' => true
+            ]);
+        }
+    }
+}
+
+if (! function_exists('create_tenant_user_without_permissions')) {
+    /**
+     *
+     */
+    function create_tenant_user_without_permissions()
+    {
+        if (! App\Models\User::where('email',env('USER_WITHOUT_PERMISSIONS_EMAIL','pepe@pringao.com'))->first()) {
+            App\Models\User::forceCreate([
+                'name' => env('USER_WITHOUT_PERMISSIONS_NAME','Pepe Pringao'),
+                'email' => env('USER_WITHOUT_PERMISSIONS_EMAIL','pepe@pringao.com'),
+                'password' => env('USER_WITHOUT_PERMISSIONS_PASSWORD','7c4a8d09ca3762af61e59520943dc26494f8941b') // 123456
             ]);
         }
     }
@@ -606,7 +623,8 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'StaffManager',
             'TeachersManager',
             'PhotoTeachersManager',
-            'LessonsManager'
+            'LessonsManager',
+            'Incidents'
         ];
 
         // Manager
@@ -859,6 +877,10 @@ if (!function_exists('initialize_gates')) {
         });
 
         //INCIDENTS
+        Gate::define('list-incidents', function ($user) {
+            return $user->hasRole('Incidents');
+        });
+
         Gate::define('store-incident', function ($user) {
             return $user->hasRole('Incidents');
         });
@@ -877,6 +899,12 @@ if (!function_exists('initialize_menus')) {
             'icon' => 'home',
             'text' => 'Principal',
             'href' => '/home'
+        ]);
+
+        Menu::firstOrCreate([
+            'icon' => 'build',
+            'text' => 'Incidències',
+            'href' => '/incidents'
         ]);
 
         Menu::firstOrCreate([
@@ -3142,7 +3170,7 @@ if (!function_exists('initialize_teachers_informatica')) {
             )->assignTeacher(Teacher::firstOrCreate([
                 'code' => '040',
                 'department_id' => Department::findByCode('INFORMÀTICA')->id
-            ]));
+            ]))->assignRole('Incidents');
 
         User::createIfNotExists([
             'name' => 'Jaume Ramos Prades',
@@ -8067,5 +8095,23 @@ if (!function_exists('get_current_git_commit')) {
 if (! function_exists('is_sha1')) {
     function is_sha1($str) {
         return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
+    }
+}
+
+
+if (! function_exists('create_fake_incidents')) {
+    function create_fake_incidents() {
+        Incident::create([
+            'subject' => 'No funciona PC1 aula 5',
+            'description' => 'bla bla bla'
+        ]);
+        Incident::create([
+            'subject' => 'No funciona PC2 aula 25',
+            'description' => 'hey hey hey'
+        ]);
+        Incident::create([
+            'subject' => 'No funciona projecte Sala Mestral',
+            'description' => 'jorl jorl jorl'
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api;
 
+use App\Http\Requests\ListIncidents;
 use App\Http\Requests\ShowIncident;
 use App\Http\Requests\StoreIncident;
 use App\Models\Incident;
@@ -19,11 +20,12 @@ class IncidentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param ListIncidents $request
+     * @return Incident[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function index()
+    public function index(ListIncidents $request)
     {
-        //
+        return Incident::getIncidents();
     }
 
     /**

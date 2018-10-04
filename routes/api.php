@@ -148,8 +148,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/email/welcome/{user}', 'Auth\Tenant\ForgotPasswordController@welcome');
 
             // INCIDENTS
-            Route::post('incidents', 'Tenant\Api\IncidentsController@store');
-            Route::get('incidents/{incident}', 'Tenant\Api\IncidentsController@show');
+            Route::get('/incidents', 'Tenant\Api\IncidentsController@index');
+            Route::post('/incidents', 'Tenant\Api\IncidentsController@store');
+            Route::get('/incidents/{incident}', 'Tenant\Api\IncidentsController@show');
 
         });
 

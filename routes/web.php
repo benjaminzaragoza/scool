@@ -124,6 +124,10 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/lessons','Tenant\LessonsController@show');
 
+            Route::get('/incidents','Tenant\IncidentsController@index');
+
+            Route::view('/blank','tenants.blank');
+
         });
     });
 

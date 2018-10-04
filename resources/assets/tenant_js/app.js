@@ -76,6 +76,9 @@ Vue.component('google-user-add', require('./components/google/users/GoogleUserAd
 Vue.component('ldap-users', require('./components/ldap/users/LdapUsersComponent.vue'));
 Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddComponent.vue'));
 
+// Incidents
+Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'));
+
 window.Vuetify = require('vuetify');
 
 import ca from 'vuetify/src/locale/ca.ts'
