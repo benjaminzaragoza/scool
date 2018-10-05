@@ -236,8 +236,6 @@
       },
       add (close) {
         close = close || false
-        console.log('CLOSE:')
-        console.log(close)
         if (!this.$v.$invalid) {
           this.adding = true
           this.$store.dispatch(actions.STORE_JOB, {
