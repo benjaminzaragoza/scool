@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import IncidentsListComponent from '../../../resources/assets/tenant_js/components/incidents/IncidentsListComponent.vue'
+import IncidentsListComponent from '../../../../resources/assets/tenant_js/components/incidents/IncidentsListComponent.vue'
 import Vuetify from 'vuetify'
 import Vue from 'vue'
 

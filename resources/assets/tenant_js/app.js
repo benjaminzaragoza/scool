@@ -80,6 +80,9 @@ Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddCompo
 Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'));
 Vue.component('incident-add', require('./components/incidents/IncidentAddComponent.vue'));
 
+//UI
+Vue.component('floating-add', require('./components/ui/FloatingAddComponent'));
+
 window.Vuetify = require('vuetify');
 
 import ca from 'vuetify/src/locale/ca.ts'

@@ -1,5 +1,5 @@
 // setup JSDOM
-//https://github.com/vuejs/vue-cli/pull/2573
+// https://github.com/vuejs/vue-cli/pull/2573
 require('jsdom-global')(undefined, { pretendToBeVisual: true })
 
 // make expect available globally
@@ -16,3 +16,17 @@ const el = document.createElement('div')
 el.setAttribute('data-app', true)
 document.body.appendChild(el)
 
+// https://github.com/eddyerburgh/avoriaz/issues/77
+// Avoid error: TypeError: Cannot read property 'split' of undefined
+const { getComputedStyle } = window
+window.getComputedStyle = function getComputedStyleStub(el) {
+  return {
+    ...getComputedStyle(el),
+    transitionDelay: '',
+    transitionDuration: '',
+    animationDelay: '',
+    animationDuration: ''
+  }
+}
+
+global.axios = require('axios')

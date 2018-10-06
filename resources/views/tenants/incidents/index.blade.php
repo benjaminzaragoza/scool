@@ -1,7 +1,9 @@
 @extends('tenants.layouts.app')
 
 @section('content')
-    <incident-add></incident-add>
+    <floating-add>
+        <incident-add></incident-add>
+    </floating-add>
 
     <incidents-list :incidents="{{ $incidents }}"></incidents-list>
 
