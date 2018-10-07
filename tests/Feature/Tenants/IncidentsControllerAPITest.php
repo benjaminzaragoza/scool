@@ -108,10 +108,14 @@ class IncidentsControllerAPITest extends BaseTenantTest {
         $this->actingAs($user,'api');
 
         $response =  $this->json('POST','/api/v1/incidents',$incident = [
-            'subject' => 'Ordinador Aula 36 no funcion',
+            'subject' => 'Ordinador Aula 36 no funciona',
             'description' => "El ordinador de l'aula 36 bla bla la"
         ]);
         $response->assertSuccessful();
+        $createdIncident = json_decode($response->getContent());
+
+        $this->assertEquals($createdIncident->subject,'Ordinador Aula 36 no funciona');
+        $this->assertEquals($createdIncident->description,"El ordinador de l'aula 36 bla bla la");
 
         $this->assertDatabaseHas('incidents',$incident);
 

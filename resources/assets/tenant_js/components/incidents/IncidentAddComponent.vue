@@ -78,19 +78,13 @@
     },
     methods: {
       add () {
-        // console.log('TODO ADD')
-        // console.log('DEFAULT URL:')
-        // console.log(axios.defaults.baseURL)
-        // console.log(axios.defaults)
-        // axios.defaults.adapter = require('axios/lib/adapters/http')
-
         // eslint-disable-next-line no-undef
         axios.post('/api/v1/incidents', {
-          subject: 'dsadssda',
-          description: 'dsadsasda'
+          subject: this.subject,
+          description: this.description
         }).then(response => {
-          console.log('################# DONE ####################')
-          console.log(response)
+          this.$emit('added', response.data)
+          // this.showMessage('Incidència afegida correctament')
         }).catch(error => {
           console.log(error)
         })
