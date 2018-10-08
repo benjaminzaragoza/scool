@@ -1,11 +1,9 @@
 /* eslint-disable no-undef */
 import { mount } from '@vue/test-utils'
-import IncidentAdd from '../../../../resources/assets/tenant_js/components/incidents/IncidentAddComponent.vue'
+import IncidentAdd from '../../../../../resources/assets/tenant_js/components/incidents/IncidentAddComponent.vue'
 import Vuetify from 'vuetify'
 import Vue from 'vue'
 import moxios from 'moxios'
-import sinon from 'sinon'
-import Vuex from 'vuex'
 
 describe('IncidentAddComponent.vue', () => {
   let wrp
@@ -43,30 +41,15 @@ describe('IncidentAddComponent.vue', () => {
 
   it('adds_an_incident', (done) => {
 
-    let actions = {
-      actionClick: sinon.stub()
-    }
-
-    let mutations = {
-      SET_SNACKBAR_SHOW: sinon.stub(),
-      SET_SNACKBAR_COLOR: sinon.stub(),
-      SET_SNACKBAR_TEXT: sinon.stub(),
-      SET_SNACKBAR_SUBTEXT: sinon.stub()
-    }
-
-    let getters = {
-      snackbarTimeout: sinon.stub()
-    }
-
-    Vue.use(Vuex)
-    let store = new Vuex.Store({
-      state: {},
-      // getters,
-      mutations,
-      actions
+    wrp = mount(IncidentAdd, {
+      mocks: {
+        $store: {
+          state: {
+            username: 'Alice'
+          }
+        }
+      }
     })
-
-    wrp = mount(IncidentAdd, { store })
 
     moxios.stubRequest('/api/v1/incidents', {
       status: 200,
@@ -88,8 +71,7 @@ describe('IncidentAddComponent.vue', () => {
       // this.$store.commit(mutations.SET_SNACKBAR_COLOR, color || 'error')
       // if (typeof message === 'string') {
       //   this.$store.commit(mutations.SET_SNACKBAR_TEXT, message)
-      console.log('actionClick: ' + actions.actionClick.calledOnce)
-      expect(actions.actionClick.calledOnce).toBe(true)
+
 
       emitted('added')
       expect(wrp.emitted().added[0][0].subject).toBe('No funciona PC1 Aula 34')

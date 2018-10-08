@@ -84,7 +84,7 @@
           description: this.description
         }).then(response => {
           this.$emit('added', response.data)
-          // this.showMessage('Incidència afegida correctament')
+          this.showMessage('Incidència afegida correctament')
         }).catch(error => {
           console.log(error)
         })
