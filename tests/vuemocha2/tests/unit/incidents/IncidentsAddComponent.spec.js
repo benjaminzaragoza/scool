@@ -1,12 +1,11 @@
 /* eslint-disable no-undef */
-import { mount, Wrapper } from '@vue/test-utils'
-import IncidentAdd from '../../../../resources/assets/tenant_js/components/incidents/IncidentAddComponent.vue'
+import { mount } from '@vue/test-utils'
+import IncidentAdd from '../../../../../resources/assets/tenant_js/components/incidents/IncidentAddComponent.vue'
 import Vuetify from 'vuetify'
 import Vue from 'vue'
 import moxios from 'moxios'
 import sinon from 'sinon'
 import Vuex from 'vuex'
-import TestHelpers from '../helpers.js'
 
 describe('IncidentAddComponent.vue', () => {
   let wrp
@@ -19,13 +18,12 @@ describe('IncidentAddComponent.vue', () => {
     // https://github.com/vuejs/vue-test-utils/issues/532
     // It will be solved in Vue 2.6 https://github.com/vuejs/vue/pull/8240
     Vue.config.silent = true
-    // Assign test helpers methods to wrapper
-    Object.assign(Wrapper.prototype, TestHelpers)
     wrp = mount(IncidentAdd)
     moxios.install(axios)
   })
 
   afterEach(function () {
+    // import and pass your custom axios instance to this method
     moxios.uninstall(axios)
   })
 
@@ -36,14 +34,15 @@ describe('IncidentAddComponent.vue', () => {
   })
 
   it('shows_add_form', () => {
-    wrp.assertContains('form')
-    wrp.assertContains("input[name='subject']")
-    wrp.assertContains("textarea[name='description']")
-    wrp.assertContains('button#add_incident_button')
-    wrp.assertContains('button#add_and_close_incident_button')
+    contains('form')
+    contains("input[name='subject']")
+    contains("textarea[name='description']")
+    contains('button#add_incident_button')
+    contains('button#add_and_close_incident_button')
   })
 
   it('adds_an_incident', (done) => {
+
     let actions = {
       actionClick: sinon.stub()
     }
@@ -56,13 +55,13 @@ describe('IncidentAddComponent.vue', () => {
     }
 
     let getters = {
-      snackbarTimeout: () => { return 6000 }
+      snackbarTimeout: sinon.stub()
     }
 
     Vue.use(Vuex)
     let store = new Vuex.Store({
       state: {},
-      getters,
+      // getters,
       mutations,
       actions
     })
@@ -77,10 +76,10 @@ describe('IncidentAddComponent.vue', () => {
       }
     })
 
-    wrp.type("input[name='subject']", 'No funciona Pc2 Aula 34')
-    wrp.type("textarea[name='description']", 'Bla bla bla bla')
+    type("input[name='subject']", 'No funciona Pc2 Aula 34')
+    type("textarea[name='description']", 'Bla bla bla bla')
 
-    wrp.click('#add_incident_button')
+    click('#add_incident_button')
 
     moxios.wait(() => {
       // see('Incidència afegida correctament')
@@ -89,22 +88,58 @@ describe('IncidentAddComponent.vue', () => {
       // this.$store.commit(mutations.SET_SNACKBAR_COLOR, color || 'error')
       // if (typeof message === 'string') {
       //   this.$store.commit(mutations.SET_SNACKBAR_TEXT, message)
+      console.log('actionClick: ' + actions.actionClick.calledOnce)
+      expect(actions.actionClick.calledOnce).toBe(true)
 
-      wrp.assertEmitted('added')
-
-      // console.log('actionClick: ' + actions.actionClick.calledOnce)
-      // expect(actions.actionClick.calledOnce).toBe(true)
-
+      emitted('added')
       expect(wrp.emitted().added[0][0].subject).toBe('No funciona PC1 Aula 34')
       expect(wrp.emitted().added[0][0].description).toBe('bla bla bla bla')
       done()
     })
+
+    // Assert
+    // 0) Test adding state changes temporarily
+    // 1) subject and description are emptied
+    // 2) Show a message (after waiting for axios promise to finish)
   })
 
   it('adds_and_close_an_incident', () => {
-    wrp.type("input[name='subject']", 'No funciona Pc2 Aula 34')
-    wrp.type("textarea[name='description']", 'Bla bla bla bla')
+    type("input[name='subject']", 'No funciona Pc2 Aula 34')
+    type("textarea[name='description']", 'Bla bla bla bla')
 
-    wrp.click('#add_and_close_incident_button')
+    click('#add_and_close_incident_button')
+
+    // Assert
+    // 1) subject and description are emptied
+    // 2) Show a message (after waiting for axios promise to finish)
+    // 3) Emit close event to allow parent component (dialog) to be closed
   })
+
+  let contains = (selector) => {
+    expect(wrp.contains(selector)).toBe(true)
+  }
+
+  let see = (text, selector) => {
+    let wrap = selector ? wrp.find(selector) : wrp
+    expect(wrap.html()).toContain(text)
+  }
+
+  let emitted = (event) => {
+    expect(wrp.emitted()[event]).toBeTruthy()
+  }
+
+  let eventContains = (event, key, value) => {
+    expect(wrp.emitted()[event][key]).toBe(value)
+  }
+
+  let type = (selector, text) => {
+    let node = wrp.find(selector)
+    node.element.value = text
+    node.trigger('input')
+  }
+
+  let click = selector => {
+    wrp.find(selector).trigger('click')
+  }
+
 })
