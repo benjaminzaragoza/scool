@@ -12,21 +12,23 @@
     "stats": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js --profile --json > stats.json"
   },
   "devDependencies": {
+    "@vue/eslint-config-standard": "^3.0.5",
     "acacha-forms": "^1.0.10",
     "admin-lte": "^2.4.8",
     "axios": "^0.8",
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^8.2.2",
     "babel-plugin-transform-optional-chaining": "^7.0.0-beta.3",
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap": "3.3.7",
     "cross-env": "^5.2.0",
-    "eslint": "^3.14.1",
+    "eslint": "^4.16.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-friendly-formatter": "^2.0.7",
     "eslint-loader": "^1.6.1",
-    "eslint-plugin-html": "^2.0.0",
+    "eslint-plugin-html": "^4.0.6",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^2.0.1",
+    "eslint-plugin-vue": "^4.7.1",
     "font-awesome": "^4.7.0",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
@@ -34,7 +36,9 @@
     "laravel-mix": "^2.1.14",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
+    "moxios": "^0.4.0",
     "popper.js": "^1.14.4",
+    "sinon": "^6.3.5",
     "vue": "^2.5.17"
   },
   "dependencies": {
@@ -51,7 +55,7 @@
     "vue-filepond": "^2.1.6",
     "vue-full-calendar": "^4.0.0-1",
     "vuelidate": "^0.6.2",
-    "vuetify": "^1.2.2",
+    "vuetify": "^1.2.7",
     "vuex": "^3.0.1"
   }
 }
