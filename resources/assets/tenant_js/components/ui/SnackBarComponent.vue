@@ -14,7 +14,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import * as mutations from '../store/mutation-types'
+  import * as mutations from '../../store/mutation-types'
 
   export default {
     computed: {

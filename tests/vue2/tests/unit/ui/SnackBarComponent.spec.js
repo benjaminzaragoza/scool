@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { mount } from '@vue/test-utils'
-import SnackBarComponent from '../../../../resources/assets/tenant_js/components/ui/SnackBarComponent.vue'
+import SnackBarComponent from '../../../../../resources/assets/tenant_js/components/ui/SnackBarComponent.vue'
 import Vuetify from 'vuetify'
 import Vue from 'vue'
 import Vuex from 'vuex'

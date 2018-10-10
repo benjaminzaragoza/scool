@@ -1,5 +1,6 @@
 {
   "presets": ["stage-2"],
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"],
   "env": {
     "development": {
       "presets": [
