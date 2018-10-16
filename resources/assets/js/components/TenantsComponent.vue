@@ -7,19 +7,19 @@
 
 <script>
 
-  import CreateTenant from './CreateTenantComponent'
-  import ListTenants from './ListTenantsComponent'
+import CreateTenant from './CreateTenantComponent'
+import ListTenants from './ListTenantsComponent'
 
-  export default {
-    components: {
-      'create-tenant': CreateTenant,
-      'list-tenants': ListTenants
-    },
-    props: {
-      tenants: {
-        type: Array,
-        required: false
-      }
+export default {
+  components: {
+    'create-tenant': CreateTenant,
+    'list-tenants': ListTenants
+  },
+  props: {
+    tenants: {
+      type: Array,
+      required: false
     }
   }
+}
 </script>

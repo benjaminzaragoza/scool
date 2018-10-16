@@ -42,57 +42,57 @@
 </template>
 
 <script>
-  import TestConnectionButtonComponent from './TestConnectionButtonComponent'
-  import TestAdminUserButtonComponent from './TestAdminUserButtonComponent'
-  import DeleteTenantButtonComponent from './DeleteTenantButtonComponent'
-  import EditTenantNameIconComponent from './EditTenantNameIconComponent'
-  import ChangePasswordTenantAdminButtonComponent from './ChangePasswordTenantAdminButtonComponent'
-  import * as types from '../store/mutation-types'
-  import * as actions from '../store/action-types'
-  import { mapGetters } from 'vuex'
-  import swal from 'sweetalert'
+import TestConnectionButtonComponent from './TestConnectionButtonComponent'
+import TestAdminUserButtonComponent from './TestAdminUserButtonComponent'
+import DeleteTenantButtonComponent from './DeleteTenantButtonComponent'
+import EditTenantNameIconComponent from './EditTenantNameIconComponent'
+import ChangePasswordTenantAdminButtonComponent from './ChangePasswordTenantAdminButtonComponent'
+import * as types from '../store/mutation-types'
+import * as actions from '../store/action-types'
+import { mapGetters } from 'vuex'
+import swal from 'sweetalert'
 
-  export default {
-    components: {
-      'test-connection-button': TestConnectionButtonComponent,
-      'test-admin-user-button': TestAdminUserButtonComponent,
-      'delete-tenant-button': DeleteTenantButtonComponent,
-      'edit-tenant-name-icon': EditTenantNameIconComponent,
-      'change-password-tenant-admin-button': ChangePasswordTenantAdminButtonComponent
-    },
-    data () {
-      return {
-        loading: false
-      }
-    },
-    computed: {
-      ...mapGetters({
-        internalTenants: 'tenants'
+export default {
+  components: {
+    'test-connection-button': TestConnectionButtonComponent,
+    'test-admin-user-button': TestAdminUserButtonComponent,
+    'delete-tenant-button': DeleteTenantButtonComponent,
+    'edit-tenant-name-icon': EditTenantNameIconComponent,
+    'change-password-tenant-admin-button': ChangePasswordTenantAdminButtonComponent
+  },
+  data () {
+    return {
+      loading: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      internalTenants: 'tenants'
+    })
+  },
+  props: {
+    tenants: {
+      type: Array,
+      required: false
+    }
+  },
+  methods: {
+    refresh () {
+      this.loading = true
+      this.$store.dispatch(actions.GET_TENANTS).then(() => {
+        this.loading = false
+      }).catch(error => {
+        console.log(error)
+        swal('Error', 'Ha passat un error', 'error')
+        this.loading = false
       })
     },
-    props: {
-      tenants: {
-        type: Array,
-        required: false
-      }
-    },
-    methods: {
-      refresh () {
-        this.loading = true
-        this.$store.dispatch(actions.GET_TENANTS).then(() => {
-          this.loading = false
-        }).catch(error => {
-          console.log(error)
-          swal('Error', 'Ha passat un error', 'error')
-          this.loading = false
-        })
-      },
-      fullUrl (subdomain) {
+    fullUrl (subdomain) {
         return 'http://' + subdomain + '.' + Laravel.app.domain // eslint-disable-line
-      }
-    },
-    mounted () {
-      this.$store.commit(types.SET_TENANTS, this.tenants)
     }
+  },
+  mounted () {
+    this.$store.commit(types.SET_TENANTS, this.tenants)
   }
+}
 </script>

@@ -20,53 +20,53 @@
 </style>
 
 <script>
-  import swal from 'sweetalert'
+import swal from 'sweetalert'
 
-  export default {
-    data () {
-      return {
-        editing: false,
-        name: this.value,
-        oldValue: this.value
-      }
+export default {
+  data () {
+    return {
+      editing: false,
+      name: this.value,
+      oldValue: this.value
+    }
+  },
+  props: {
+    value: {
+      type: String,
+      required: true
     },
-    props: {
-      value: {
-        type: String,
-        required: true
-      },
-      tenant: {
-        type: Object,
-        required: true
-      }
+    tenant: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    cancel () {
+      this.editing = false
+      this.name = this.oldValue
     },
-    methods: {
-      cancel () {
-        this.editing = false
-        this.name = this.oldValue
-      },
-      startEdit () {
-        this.editing = true
-        this.oldValue = this.name
-      },
-      edit () {
+    startEdit () {
+      this.editing = true
+      this.oldValue = this.name
+    },
+    edit () {
         axios.put('api/v1/tenant/' + this.tenant.id + '/name',{'name': this.name}) // eslint-disable-line
-          .then(response => {
-            this.editing = false
-          }).catch(error => {
-            console.log(error)
-            this.editing = false
-            this.oldValue = this.name
-            swal('Error', 'Error editant el camp')
-          })
-      }
-    },
-    directives: {
-      focus: {
-        inserted: function (el) {
-          el.focus()
-        }
+        .then(response => {
+          this.editing = false
+        }).catch(error => {
+          console.log(error)
+          this.editing = false
+          this.oldValue = this.name
+          swal('Error', 'Error editant el camp')
+        })
+    }
+  },
+  directives: {
+    focus: {
+      inserted: function (el) {
+        el.focus()
       }
     }
   }
+}
 </script>
