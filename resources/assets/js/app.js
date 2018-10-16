@@ -5,9 +5,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import store from './store'
+import * as mutations from './store/mutation-types'
+import * as actions from './store/action-types'
 
-window.Vue = require('vue');
+require('./bootstrap')
+
+window.Vue = require('vue')
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,14 +19,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('tenants', require('./components/TenantsComponent.vue'));
-Vue.component('push', require('./components/PushComponent.vue'));
-
-
-import store from './store'
-import * as mutations from './store/mutation-types'
-import * as actions from './store/action-types'
-
+window.Vue.component('tenants', require('./components/TenantsComponent.vue'))
+window.Vue.component('push', require('./components/PushComponent.vue'))
 
 if (window.user) {
   store.commit(mutations.LOGGED_USER, window.user)
@@ -30,7 +28,8 @@ if (window.user) {
   store.dispatch(actions.LOGGED_USER)
 }
 
-const app = new Vue({
+// eslint-disable-next-line no-unused-vars
+const app = new window.Vue({
   el: '#app',
   store
-});
+})

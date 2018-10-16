@@ -43,53 +43,53 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import swal from 'sweetalert'
-  import Form from 'acacha-forms'
+import { mapGetters } from 'vuex'
+import swal from 'sweetalert'
+import Form from 'acacha-forms'
 
-  export default {
-    data () {
-      return {
-        cssClass: 'btn-warning',
-        text: 'Change Password',
-        form: new Form({ password: '', password_confirmation: '' }),
-        loading: false,
-        changingPassword: false
-      }
+export default {
+  data () {
+    return {
+      cssClass: 'btn-warning',
+      text: 'Change Password',
+      form: new Form({ password: '', password_confirmation: '' }),
+      loading: false,
+      changingPassword: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'loggedUser'
+    ])
+  },
+  props: {
+    tenant: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    clearErrors (name) {
+      if (name === 'password_confirmation') name = 'password'
+      this.form.errors.clear(name)
     },
-    computed: {
-      ...mapGetters([
-        'loggedUser'
-      ])
-    },
-    props: {
-      tenant: {
-        type: Object,
-        required: true
-      }
-    },
-    methods: {
-      clearErrors (name) {
-        if (name === 'password_confirmation') name = 'password'
-        this.form.errors.clear(name)
-      },
-      changePassword () {
-        this.changingPassword = true
-        this.form.put('/api/v1/tenant/' + this.tenant.id + '/password', {
-          password: this.form.password,
-          password_confirmation: this.form.password_confirmation
-        }).then((response) => {
-          this.changingPassword = false
-        }).catch((error) => {
-          this.changingPassword = false
-          console.log(error)
-          if (error.response) {
-            if (parseInt(error.response.status) !== 422) swal('Error', error.message, 'error')
-          } else {
-            swal('Error', error.message, 'error')
-          }
-        })
-      }
+    changePassword () {
+      this.changingPassword = true
+      this.form.put('/api/v1/tenant/' + this.tenant.id + '/password', {
+        password: this.form.password,
+        password_confirmation: this.form.password_confirmation
+      }).then((response) => {
+        this.changingPassword = false
+      }).catch((error) => {
+        this.changingPassword = false
+        console.log(error)
+        if (error.response) {
+          if (parseInt(error.response.status) !== 422) swal('Error', error.message, 'error')
+        } else {
+          swal('Error', error.message, 'error')
+        }
+      })
     }
   }
+}
 </script>

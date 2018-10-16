@@ -62,47 +62,47 @@
 </style>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as types from '../store/mutation-types'
-  import Form from 'acacha-forms'
-  import swal from 'sweetalert'
+import { mapGetters } from 'vuex'
+import * as types from '../store/mutation-types'
+import Form from 'acacha-forms'
+import swal from 'sweetalert'
 
-  export default {
-    data () {
-      return {
-        form: new Form({ name: '', subdomain: '', password: '', password_confirmation: '' })
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'loggedUser'
-      ])
-    },
-    methods: {
-      domain () {
-        return window.Laravel.app.domain
-      },
-      create () {
-        this.form.subdomain = this.form.subdomain.toLowerCase()
-        this.form.post('/api/v1/tenant').then((response) => {
-          this.$store.commit(types.ADD_TENANT, response.data)
-        }).catch((error) => {
-          console.log(error)
-          console.dir(error)
-          if (error.response) {
-            if (parseInt(error.response.status) !== 422) swal('Error', error.message, 'error')
-          } else {
-            swal('Error', error.message, 'error')
-          }
-        })
-      },
-      clearErrors (name) {
-        if (name === 'password_confirmation') name = 'password'
-        this.form.errors.clear(name)
-      }
-    },
-    mounted () {
-      this.form.clearOnSubmit = true
+export default {
+  data () {
+    return {
+      form: new Form({ name: '', subdomain: '', password: '', password_confirmation: '' })
     }
+  },
+  computed: {
+    ...mapGetters([
+      'loggedUser'
+    ])
+  },
+  methods: {
+    domain () {
+      return window.Laravel.app.domain
+    },
+    create () {
+      this.form.subdomain = this.form.subdomain.toLowerCase()
+      this.form.post('/api/v1/tenant').then((response) => {
+        this.$store.commit(types.ADD_TENANT, response.data)
+      }).catch((error) => {
+        console.log(error)
+        console.dir(error)
+        if (error.response) {
+          if (parseInt(error.response.status) !== 422) swal('Error', error.message, 'error')
+        } else {
+          swal('Error', error.message, 'error')
+        }
+      })
+    },
+    clearErrors (name) {
+      if (name === 'password_confirmation') name = 'password'
+      this.form.errors.clear(name)
+    }
+  },
+  mounted () {
+    this.form.clearOnSubmit = true
   }
+}
 </script>
