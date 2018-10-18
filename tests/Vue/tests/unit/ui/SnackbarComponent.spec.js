@@ -35,6 +35,11 @@ describe('SnackBarComponent.vue', () => {
     })
   })
 
+  it('check_default_timetout', () => {
+    const wrapper = shallowMount(SnackBarComponent, { store, localVue })
+    expect(wrapper.html()).contains('timeout="6000"')
+  })
+
   it('renders_texts', () => {
     const wrapper = shallowMount(SnackBarComponent, { store, localVue })
     expect(wrapper.text()).to.include('TEXT PRINCIPAL')

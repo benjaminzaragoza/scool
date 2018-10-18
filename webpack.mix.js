@@ -11,23 +11,23 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
+mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/app-landing.js', 'public/js/app-landing.js')
    .sourceMaps()
    .combine([
-       'resources/assets/css/bootstrap.min.css',
-       'resources/assets/css/font-awesome.min.css',
-       'resources/assets/css/ionicons.min.css',
+       'resources/css/bootstrap.min.css',
+       'resources/css/font-awesome.min.css',
+       'resources/css/ionicons.min.css',
        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'node_modules/icheck/skins/square/blue.css'
    ], 'public/css/all.css')
    .combine([
-       'resources/assets/css/bootstrap.min.css',
-       'resources/assets/css/pratt_landing.min.css'
+       'resources/css/bootstrap.min.css',
+       'resources/css/pratt_landing.min.css'
    ], 'public/css/all-landing.css')
    // PACKAGE (ADMINLTE-LARAVEL) RESOURCES
-   .copy('resources/assets/img/*.*','public/img/')
+   .copy('resources/img/*.*','public/img/')
    //VENDOR RESOURCES
    .copy('node_modules/font-awesome/fonts/*.*','public/fonts/')
    .copy('node_modules/ionicons/dist/fonts/*.*','public/fonts/')
@@ -38,8 +38,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .copy('node_modules/icheck/skins/square/blue.png','public/css')
    .copy('node_modules/icheck/skins/square/blue@2x.png','public/css');
 
-mix.js('resources/assets/tenant_js/app.js', 'public/tenant/js').sourceMaps()
-  .sass('resources/assets/tenant_sass/app.scss', 'public/tenant/css');
+mix.js('resources/tenant_js/app.js', 'public/tenant/js').sourceMaps()
+  .sass('resources/tenant_sass/app.scss', 'public/tenant/css');
 
 if (mix.config.inProduction) {
   mix.version();
