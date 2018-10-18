@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <birthdate-input label="PROVA"></birthdate-input>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-
-import BirthdateInputComponent from '../../../resources/assets/tenant_js/components/ui/BirthDateInputComponent.vue'
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
+  name: 'app',
   components: {
-    'birthdate-input': BirthdateInputComponent
+    HelloWorld
   }
 }
 </script>
@@ -18,6 +19,10 @@ export default {
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
   color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
