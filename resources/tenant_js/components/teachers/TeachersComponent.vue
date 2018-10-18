@@ -139,118 +139,118 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as mutations from '../../store/mutation-types'
-  import * as actions from '../../store/action-types'
-  import ShowTeacherIcon from './ShowTeacherIconComponent.vue'
-  import AdministrativeStatusSelect from './AdministrativeStatusSelectComponent.vue'
-  import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
-  import axios from 'axios'
-  import withSnackbar from '../mixins/withSnackbar'
-  import UserAvatar from '../ui/UserAvatarComponent'
-  import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
+import { mapGetters } from 'vuex'
+import * as mutations from '../../store/mutation-types'
+import * as actions from '../../store/action-types'
+import ShowTeacherIcon from './ShowTeacherIconComponent.vue'
+import AdministrativeStatusSelect from './AdministrativeStatusSelectComponent.vue'
+import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
+import axios from 'axios'
+import withSnackbar from '../mixins/withSnackbar'
+import UserAvatar from '../ui/UserAvatarComponent'
+import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 
-  export default {
-    mixins: [withSnackbar],
-    components: {
-      'show-teacher-icon': ShowTeacherIcon,
-      'administrative-status-select': AdministrativeStatusSelect,
-      'confirm-icon': ConfirmIcon,
-      'user-avatar': UserAvatar,
-      'manage-corporative-email-icon': ManageCorporativeEmailIcon
-    },
-    data () {
-      return {
-        administrativeStatus: {},
-        showDeletePendingTeacherDialog: false,
-        search: '',
-        deleting: false,
-        removing: false,
-        refreshing: false
-      }
-    },
-    computed: {
-      ...mapGetters({
-        internalTeachers: 'teachers'
-      }),
-      filteredTeachers: function () {
-        if (this.showStatusHeader) return this.internalTeachers
-        return this.internalTeachers.filter(teacher => teacher.administrative_status_id === this.administrativeStatus.id)
-      },
-      headers () {
-        let headers = []
-        headers.push({text: 'Codi', value: 'code'})
-        headers.push({text: 'Foto', value: 'full_search', sortable: false})
-        headers.push({text: 'Nom', value: 'fullname'})
-        headers.push({text: 'Google', value: 'fullname'})
-        headers.push({text: 'Departament', value: 'department_code'})
-        headers.push({text: 'Especialitat', value: 'specialty_code'})
-        headers.push({text: 'Familia', value: 'family_code'})
-        if (this.showStatusHeader) headers.push({text: 'Estatus', value: 'administrative_status_code'})
-        headers.push({text: 'Plaça', value: 'job'})
-        if (this.showSubstituteHeaders) {
-          headers.push({text: 'Data inici', value: 'job_start_at'})
-          headers.push({text: 'Data fí', value: 'job_end_at'})
-        }
-        headers.push({text: 'Data creació', value: 'formatted_created_at'})
-        headers.push({text: 'Data actualització', value: 'formatted_updated_at'})
-        headers.push({text: 'Accions', sortable: false})
-        return headers
-      },
-      showStatusHeader () {
-        if (this.administrativeStatus != null && Object.keys(this.administrativeStatus).length !== 0) return false
-        return true
-      },
-      showSubstituteHeaders () {
-        if (this.administrativeStatus != null && Object.keys(this.administrativeStatus).length !== 0 && this.administrativeStatus.code === 'SUBSTITUT') return true
-        return false
-      }
-    },
-    props: {
-      teachers: {
-        type: Array,
-        required: true
-      },
-      administrativeStatuses: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      editTeacher () {
-        console.log('TODO EDIT TEACHERS')
-      },
-      refresh () {
-        this.refreshing = true
-        this.$store.dispatch(actions.GET_TEACHERS).then(response => {
-          this.showMessage('Professors actualitzats correctament')
-          this.refreshing = false
-        }).catch(error => {
-          this.showError(error)
-          this.refreshing = false
-        })
-      },
-      settings () {
-        console.log('settings TODO') //TODO
-      },
-      remove (teacher) {
-        this.removing = true
-        axios.delete('/api/v1/approved_teacher/' + teacher.user_id).then(response => {
-          this.removing = false
-          this.$store.commit(mutations.DELETE_TEACHER, teacher)
-        }).catch(error => {
-          this.removing = false
-          console.log(error)
-        })
-      },
-      teacherDescription (teacherCode) {
-        let teacher = this.teachers.find(teacher => { return teacher.code === teacherCode })
-        if (teacher) return teacher.user.name + ' (' + teacher.code + ')'
-        return ''
-      }
-    },
-    created () {
-      this.$store.commit(mutations.SET_TEACHERS, this.teachers)
+export default {
+  mixins: [withSnackbar],
+  components: {
+    'show-teacher-icon': ShowTeacherIcon,
+    'administrative-status-select': AdministrativeStatusSelect,
+    'confirm-icon': ConfirmIcon,
+    'user-avatar': UserAvatar,
+    'manage-corporative-email-icon': ManageCorporativeEmailIcon
+  },
+  data () {
+    return {
+      administrativeStatus: {},
+      showDeletePendingTeacherDialog: false,
+      search: '',
+      deleting: false,
+      removing: false,
+      refreshing: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      internalTeachers: 'teachers'
+    }),
+    filteredTeachers: function () {
+      if (this.showStatusHeader) return this.internalTeachers
+      return this.internalTeachers.filter(teacher => teacher.administrative_status_id === this.administrativeStatus.id)
+    },
+    headers () {
+      let headers = []
+      headers.push({ text: 'Codi', value: 'code' })
+      headers.push({ text: 'Foto', value: 'full_search', sortable: false })
+      headers.push({ text: 'Nom', value: 'fullname' })
+      headers.push({ text: 'Google', value: 'fullname' })
+      headers.push({ text: 'Departament', value: 'department_code' })
+      headers.push({ text: 'Especialitat', value: 'specialty_code' })
+      headers.push({ text: 'Familia', value: 'family_code' })
+      if (this.showStatusHeader) headers.push({ text: 'Estatus', value: 'administrative_status_code' })
+      headers.push({ text: 'Plaça', value: 'job' })
+      if (this.showSubstituteHeaders) {
+        headers.push({ text: 'Data inici', value: 'job_start_at' })
+        headers.push({ text: 'Data fí', value: 'job_end_at' })
+      }
+      headers.push({ text: 'Data creació', value: 'formatted_created_at' })
+      headers.push({ text: 'Data actualització', value: 'formatted_updated_at' })
+      headers.push({ text: 'Accions', sortable: false })
+      return headers
+    },
+    showStatusHeader () {
+      if (this.administrativeStatus != null && Object.keys(this.administrativeStatus).length !== 0) return false
+      return true
+    },
+    showSubstituteHeaders () {
+      if (this.administrativeStatus != null && Object.keys(this.administrativeStatus).length !== 0 && this.administrativeStatus.code === 'SUBSTITUT') return true
+      return false
+    }
+  },
+  props: {
+    teachers: {
+      type: Array,
+      required: true
+    },
+    administrativeStatuses: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    editTeacher () {
+      console.log('TODO EDIT TEACHERS')
+    },
+    refresh () {
+      this.refreshing = true
+      this.$store.dispatch(actions.GET_TEACHERS).then(response => {
+        this.showMessage('Professors actualitzats correctament')
+        this.refreshing = false
+      }).catch(error => {
+        this.showError(error)
+        this.refreshing = false
+      })
+    },
+    settings () {
+      console.log('settings TODO') // TODO
+    },
+    remove (teacher) {
+      this.removing = true
+      axios.delete('/api/v1/approved_teacher/' + teacher.user_id).then(response => {
+        this.removing = false
+        this.$store.commit(mutations.DELETE_TEACHER, teacher)
+      }).catch(error => {
+        this.removing = false
+        console.log(error)
+      })
+    },
+    teacherDescription (teacherCode) {
+      let teacher = this.teachers.find(teacher => { return teacher.code === teacherCode })
+      if (teacher) return teacher.user.name + ' (' + teacher.code + ')'
+      return ''
+    }
+  },
+  created () {
+    this.$store.commit(mutations.SET_TEACHERS, this.teachers)
   }
+}
 </script>

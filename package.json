@@ -16,7 +16,7 @@
     "acacha-forms": "^1.0.10",
     "admin-lte": "^2.4.8",
     "axios": "^0.8",
-    "babel-eslint": "^8.2.2",
+    "babel-eslint": "^8.2.6",
     "babel-plugin-transform-optional-chaining": "^7.0.0-beta.3",
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap": "3.3.7",

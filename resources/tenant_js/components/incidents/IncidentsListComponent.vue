@@ -50,7 +50,7 @@
                     rows-per-page-text="Incidències per pàgina"
             >
                 <template slot="items" slot-scope="{item: incident}">
-                    <tr>
+                    <tr :id="'incident_row_' + incident.id">
                         <td class="text-xs-left" v-html="incident.id"></td>
                         <td class="text-xs-left" v-html="incident.username"></td>
                         <td class="text-xs-left" v-html="incident.subject"></td>
@@ -66,6 +66,9 @@
 </template>
 
 <script>
+import * as actions from '../../store/action-types'
+import * as mutations from '../../store/mutation-types'
+
 export default {
   data () {
     return {
@@ -77,13 +80,18 @@ export default {
     incidents: {
       type: Array,
       default: function () {
-        return []
+        return undefined
       }
+    }
+  },
+  watch: {
+    incidents (newIncidents) {
+      this.$store.commit(mutations.SET_INCIDENTS, newIncidents)
     }
   },
   computed: {
     filteredIncidents: function () {
-      return this.incidents
+      return this.$store.getters.incidents
     },
     headers () {
       let headers = []
@@ -103,9 +111,23 @@ export default {
       console.log('TODO settings')
     },
     refresh () {
+      return this.fetch()
+    },
+    fetch () {
       this.refreshing = true
-      console.log('TODO refreshing')
+      this.$store.dispatch(actions.SET_INCIDENTS).then(response => {
+        // this.showMessage('Professors actualitzats correctament')
+        this.refreshing = false
+      }).catch(error => {
+        console.log(error)
+        // this.showError(error)
+        this.refreshing = false
+      })
     }
+  },
+  created () {
+    if (this.incidents === undefined) this.fetch()
+    else this.$store.commit(mutations.SET_INCIDENTS, this.incidents)
   }
 }
 </script>

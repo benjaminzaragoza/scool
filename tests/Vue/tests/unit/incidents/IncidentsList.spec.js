@@ -1,90 +1,151 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai'
-import { shallowMount, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import IncidentsListComponent from '../../../../../resources/tenant_js/components/incidents/IncidentsListComponent'
 import Vue from 'vue'
-// import Vuex from 'vuex'
+import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-// import sinon from 'sinon'
+import sinon from 'sinon'
 
-// Vue.use(Vuex)
+Vue.use(Vuex)
 Vue.use(Vuetify)
+Vue.config.silent = true
 
 describe.only('IncidentsListComponent.vue', () => {
-  // let getters
-  // let actions
-  // let store
+  let getters
+  let emptyGetters
+  let actions
+  let mutations
+  let store
+  let emptyStore
+  let sampleIncidents = [
+    {
+      id: 1,
+      username: 'Pepe Pardo Jeans',
+      subject: 'No funciona PC1 Aula 30',
+      description: 'Bla bla bla'
+    },
+    {
+      id: 2,
+      username: 'Pepa Parda Jeans',
+      subject: 'No funciona PC2 Aula 31',
+      description: 'JO JO JO'
+    },
+    {
+      id: 3,
+      username: 'Carles Puigdemont',
+      subject: 'No funciona PC1 Aula 32',
+      description: 'HEY HEY HEY'
+    }
+  ]
 
   beforeEach(() => {
-    // actions = {
-    //   SET_SNACKBAR_SHOW: sinon.stub()
-    // }
-    // getters = {
-    //   snackbarTimeout: sinon.stub(),
-    //   snackbarColor: sinon.stub(),
-    //   snackbarShow: sinon.stub(),
-    //   snackbarText: () => { return 'TEXT PRINCIPAL' },
-    //   snackbarSubtext: () => { return 'TEXT SECUNDARI' }
-    // }
-    // store = new Vuex.Store({
-    //   state: {},
-    //   getters,
-    //   actions
-    // })
+    getters = {
+      incidents: function () {
+        return sampleIncidents
+      }
+    }
+    emptyGetters = {
+      incidents: function () {
+        return []
+      }
+    }
+    let setIncidentsActionStub = sinon.stub()
+    setIncidentsActionStub.returns({ data: sampleIncidents })
+    actions = {
+      SET_INCIDENTS: setIncidentsActionStub
+    }
+    let setIncidentsMutationStub = sinon.stub()
+    mutations = {
+      SET_INCIDENTS: setIncidentsMutationStub
+    }
+    store = new Vuex.Store({
+      state: {},
+      getters,
+      actions,
+      mutations
+    })
+    emptyStore = new Vuex.Store({
+      state: {},
+      emptyGetters,
+      actions,
+      mutations
+    })
   })
 
-  it.only('shows_tasks', () => {
+  it('shows_tasks', () => {
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
-        incidents: [
-          {
-            id: 1,
-            username: 'Pepe Pardo Jeans',
-            subject: 'No funciona PC1 Aula 30',
-            description: 'Bla bla bla'
-          },
-          {
-            id: 2,
-            username: 'Pepa Parda Jeans',
-            subject: 'No funciona PC2 Aula 31',
-            description: 'JO JO JO'
-          },
-          {
-            id: 3,
-            username: 'CArles puigdemont',
-            subject: 'No funciona PC1 Aula 32',
-            description: 'HEY HEY HEY'
-          }
-        ]
-      }
+        incidents: sampleIncidents
+      },
+      store
     })
-    console.log('TEXT:')
-    console.log(wrapper.text())
-    console.log('HTML:')
-    console.log(wrapper.html())
+    expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
 
-    expect(wrapper.text()).to.contains('Pepe Pardo Jeans')
+    let incidentRow1 = wrapper.find('tr#incident_row_1')
+    let incidentRow2 = wrapper.find('tr#incident_row_2')
+    let incidentRow3 = wrapper.find('tr#incident_row_3')
 
-    expect(wrapper.text()).to.not.contains('No hi han dades disponibles')
+    expect(incidentRow1.text()).to.contains('1')
+    expect(incidentRow1.text()).to.contains('Pepe Pardo Jeans')
+    expect(incidentRow1.text()).to.contains('No funciona PC1 Aula 30')
+    expect(incidentRow1.text()).to.contains('Bla bla bla')
+
+    expect(incidentRow2.text()).to.contains('2')
+    expect(incidentRow2.text()).to.contains('Pepa Parda Jeans')
+    expect(incidentRow2.text()).to.contains('No funciona PC2 Aula 31')
+    expect(incidentRow2.text()).to.contains('JO JO JO')
+
+    expect(incidentRow3.text()).to.contains('3')
+    expect(incidentRow3.text()).to.contains('Carles Puigdemont')
+    expect(incidentRow3.text()).to.contains('No funciona PC1 Aula 32')
+    expect(incidentRow3.text()).to.contains('HEY HEY HEY')
+  })
+
+  it('gets_incidents_from_api_when_no_incidents_prop_is_given', () => {
+    const wrapper = mount(IncidentsListComponent, {
+      store
+    })
+    expect(actions.SET_INCIDENTS.calledOnce).to.be.true
+
+    let incidentRow1 = wrapper.find('tr#incident_row_1')
+    let incidentRow2 = wrapper.find('tr#incident_row_2')
+    let incidentRow3 = wrapper.find('tr#incident_row_3')
+
+    expect(incidentRow1.text()).to.contains('1')
+    expect(incidentRow1.text()).to.contains('Pepe Pardo Jeans')
+    expect(incidentRow1.text()).to.contains('No funciona PC1 Aula 30')
+    expect(incidentRow1.text()).to.contains('Bla bla bla')
+
+    expect(incidentRow2.text()).to.contains('2')
+    expect(incidentRow2.text()).to.contains('Pepa Parda Jeans')
+    expect(incidentRow2.text()).to.contains('No funciona PC2 Aula 31')
+    expect(incidentRow2.text()).to.contains('JO JO JO')
+
+    expect(incidentRow3.text()).to.contains('3')
+    expect(incidentRow3.text()).to.contains('Carles Puigdemont')
+    expect(incidentRow3.text()).to.contains('No funciona PC1 Aula 32')
+    expect(incidentRow3.text()).to.contains('HEY HEY HEY')
+  })
+
+  it('watch_for_changes_in_incidents_prop', () => {
+    mount(IncidentsListComponent, { store })
+    expect(actions.SET_INCIDENTS.calledOnce).to.be.true
   })
 
   it('shows_no_data_available_when_no_incidents_are_provided', () => {
-    const wrapper = mount(IncidentsListComponent)
-    expect(wrapper.text()).contains('No hi han dades disponibles')
-  })
-
-  it('shows_no_data_available_when_no_incidents_are_provided_2', () => {
+    store.getters = {
+      incidents: function () {
+        return []
+      }
+    }
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
         incidents: []
-      }
+      },
+      store: emptyStore
     })
+    expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
     expect(wrapper.text()).contains('No hi han dades disponibles')
-  })
-
-  // TODO
-  it.skip('todo3', () => {
-    const wrapper = shallowMount(IncidentsListComponent)
-    expect(wrapper.text()).contains('todo1')
   })
 })

@@ -20,6 +20,8 @@ class IncidentsController extends Controller{
      */
     public function index(ListIncidents $Request)
     {
+        // TODO
+//        create_fake_incidents();
         $incidents = Incident::getIncidents();
         return view('tenants.incidents.index',compact('incidents'));
     }
