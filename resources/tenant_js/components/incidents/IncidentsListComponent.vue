@@ -22,7 +22,7 @@
             <v-btn icon class="white--text" @click="settings">
                 <v-icon>settings</v-icon>
             </v-btn>
-            <v-btn icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+            <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
                 <v-icon>refresh</v-icon>
             </v-btn>
         </v-toolbar>
@@ -111,7 +111,7 @@ export default {
       console.log('TODO settings')
     },
     refresh () {
-      return this.fetch()
+      this.fetch()
     },
     fetch () {
       this.refreshing = true

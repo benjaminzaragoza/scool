@@ -11,7 +11,7 @@ Vue.use(Vuex)
 Vue.use(Vuetify)
 Vue.config.silent = true
 
-describe.only('IncidentsListComponent.vue', () => {
+describe('IncidentsListComponent.vue', () => {
   let getters
   let emptyGetters
   let actions
@@ -103,9 +103,7 @@ describe.only('IncidentsListComponent.vue', () => {
   })
 
   it('gets_incidents_from_api_when_no_incidents_prop_is_given', () => {
-    const wrapper = mount(IncidentsListComponent, {
-      store
-    })
+    const wrapper = mount(IncidentsListComponent, { store })
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
 
     let incidentRow1 = wrapper.find('tr#incident_row_1')
@@ -147,5 +145,11 @@ describe.only('IncidentsListComponent.vue', () => {
     })
     expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
     expect(wrapper.text()).contains('No hi han dades disponibles')
+  })
+
+  it('refresh_incidents', () => {
+    const wrapper = mount(IncidentsListComponent, { store })
+    wrapper.find('#incidents_refresh_button').trigger('click')
+    expect(actions.SET_INCIDENTS.calledOnce).to.be.true
   })
 })
