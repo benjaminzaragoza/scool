@@ -5,8 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import ca from 'vuetify/src/locale/ca.ts'
-
+import ca from './i18n/ca'
 import FullCalendar from 'vue-full-calendar'
 
 import store from './store'
@@ -96,7 +95,7 @@ window.Vue.component('floating-add', require('./components/ui/FloatingAddCompone
 
 window.Vuetify = require('vuetify')
 
-window.Vue.use(Vuetify, {
+window.Vue.use(window.Vuetify, {
   lang: {
     locales: { ca },
     current: 'ca'

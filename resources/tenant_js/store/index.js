@@ -6,6 +6,7 @@ import users from './modules/users'
 import googleUsers from './modules/google_users'
 import staff from './modules/jobs'
 import teachers from './modules/teachers'
+import incidents from './modules/incidents'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     users,
     staff,
     teachers,
-    googleUsers
+    googleUsers,
+    incidents
   },
   strict: debug
 })

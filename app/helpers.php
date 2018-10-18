@@ -205,7 +205,7 @@ if (! function_exists('create_tenant_admin_user')) {
             App\User::forceCreate([
                 'name' => env('ADMIN_USER_NAME','Sergi Tur Badenas'),
                 'email' => env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'),
-                'password' => bcrypt(env('ADMIN_USER_PASSWORD','123456')),
+                'password' => sha1(env('ADMIN_USER_PASSWORD_ON_TENANT','123456')),
                 'admin' => true
             ]);
         }
@@ -1170,7 +1170,7 @@ if (!function_exists('initialize_janitors')) {
 if (!function_exists('initialize_teachers_ppas')) {
     function initialize_teachers_ppas()
     {
-        User::createIfNotExists([
+        $dolors = User::createIfNotExists([
             'name' => 'Dolors Sanjuan Aubà',
             'email' => 'dolorssanjuanauba@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
@@ -1194,6 +1194,7 @@ if (!function_exists('initialize_teachers_ppas')) {
             ]))->assignPosition(Position::firstOrCreate([
                 'name' => 'Tutora de CAM'
             ]));
+        $dolors->assignRole('Incidents');
 
         User::createIfNotExists([
             'name' => 'Julià Curto De la Vega',
@@ -3952,7 +3953,7 @@ if (!function_exists('initialize_families')) {
             'code' => 'ARTS'
         ]);
 
-      
+
         Family::firstOrCreate([
             'name' => 'Administració i gestió',
             'code' => 'ADMIN'
@@ -4009,7 +4010,7 @@ if (!function_exists('initialize_families')) {
 //            'name' => 'FOL',
 //            'code' => 'FOL'
 //        ]);
-      
+
     }
 }
 
