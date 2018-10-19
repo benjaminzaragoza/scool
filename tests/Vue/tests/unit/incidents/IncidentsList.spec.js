@@ -17,9 +17,11 @@ describe('IncidentsListComponent.vue', () => {
   let getters
   let emptyGetters
   let actions
+  let actionsError
   let mutations
   let store
   let emptyStore
+  let errorStore
   let sampleIncidents = [
     {
       id: 1,
@@ -71,6 +73,17 @@ describe('IncidentsListComponent.vue', () => {
       state: {},
       emptyGetters,
       actions,
+      mutations
+    })
+    let setIncidentsActionStubRejects = sinon.stub()
+    setIncidentsActionStubRejects.rejects({})
+    actionsError = {
+      SET_INCIDENTS: setIncidentsActionStubRejects
+    }
+    errorStore = new Vuex.Store({
+      state: {},
+      emptyGetters,
+      actions: actionsError,
       mutations
     })
   })
@@ -168,5 +181,34 @@ describe('IncidentsListComponent.vue', () => {
       expect(showMessage.called).to.be.true
       done()
     })
+  })
+
+  it('refresh_incidents_shows_error', (done) => {
+    let showError = sinon.spy()
+
+    const wrapper = mount(IncidentsListComponent, {
+      mocks: {
+        $snackbar: {
+          showError
+        }
+      },
+      store: errorStore
+    })
+    wrapper.find('#incidents_refresh_button').trigger('click')
+    expect(actionsError.SET_INCIDENTS.calledOnce).to.be.true
+
+    setTimeout(() => {
+      expect(showError.called).to.be.true
+      done()
+    },
+    50)
+    // DOES NOT WORK WITH NEXT TICK
+    // wrapper.vm.$nextTick(() => {
+    //   // expect(wrapper.vm.$snackbar.showError.called).to.be.true
+    //   console.log('ARRIBA QUI 1')
+    //   expect(showError.called).to.be.true
+    //   console.log('ARRIBA QUI 2')
+    //   done()
+    // })
   })
 })
