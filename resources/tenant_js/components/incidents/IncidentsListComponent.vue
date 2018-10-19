@@ -116,11 +116,10 @@ export default {
     fetch () {
       this.refreshing = true
       this.$store.dispatch(actions.SET_INCIDENTS).then(response => {
-        // this.showMessage('Professors actualitzats correctament')
+        this.$snackbar.showMessage('Incidències actualitzades correctament')
         this.refreshing = false
       }).catch(error => {
-        console.log(error)
-        // this.showError(error)
+        this.$snackbar.showError(error)
         this.refreshing = false
       })
     }

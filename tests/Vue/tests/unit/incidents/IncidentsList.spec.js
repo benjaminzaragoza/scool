@@ -6,9 +6,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import sinon from 'sinon'
+import Snackbar from '../../../../../resources/tenant_js/plugins/snackbar'
 
 Vue.use(Vuex)
 Vue.use(Vuetify)
+Vue.use(Snackbar)
 Vue.config.silent = true
 
 describe('IncidentsListComponent.vue', () => {
@@ -147,9 +149,24 @@ describe('IncidentsListComponent.vue', () => {
     expect(wrapper.text()).contains('No hi han dades disponibles')
   })
 
-  it('refresh_incidents', () => {
-    const wrapper = mount(IncidentsListComponent, { store })
+  it('refresh_incidents', (done) => {
+    let showMessage = sinon.spy()
+
+    const wrapper = mount(IncidentsListComponent, {
+      mocks: {
+        $snackbar: {
+          showMessage
+        }
+      },
+      store
+    })
     wrapper.find('#incidents_refresh_button').trigger('click')
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
+
+    wrapper.vm.$nextTick(() => {
+      // expect(wrapper.vm.$snackbar.showMessage.called).to.be.true
+      expect(showMessage.called).to.be.true
+      done()
+    })
   })
 })

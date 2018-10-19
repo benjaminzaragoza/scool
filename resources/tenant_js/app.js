@@ -14,10 +14,13 @@ import * as mutations from './store/mutation-types'
 
 import { mapGetters } from 'vuex'
 import withSnackbar from './components/mixins/withSnackbar'
+import snackbar from './plugins/snackbar'
 
 require('./bootstrap')
 
 window.Vue = require('vue')
+
+window.Vue.use(snackbar)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

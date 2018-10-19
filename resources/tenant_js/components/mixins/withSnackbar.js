@@ -34,11 +34,9 @@ export default {
         if (message.data && message.data.message) this.$store.commit(mutations.SET_SNACKBAR_SUBTEXT, message.data.message)
         else this.$store.commit(mutations.SET_SNACKBAR_SUBTEXT, message.statusText)
         this.cleanState()
-        return
       } else {
         this.$store.commit(mutations.SET_SNACKBAR_TEXT, 'Error de xarxa')
         this.cleanState()
-        return
       }
     }
   }
