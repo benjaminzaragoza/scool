@@ -15,5 +15,8 @@ export default {
   },
   open (incident) {
     return axios.delete('/api/v1/closed_incidents/' + incident.id)
+  },
+  delete (incident) {
+    return axios.delete('/api/v1/incidents/' + incident.id)
   }
 }

@@ -74,7 +74,13 @@ class Incident extends Model
             'description' => $this->description,
             'closed_at' => $this->closed_at,
             'formatted_closed_at' => $this->formatted_closed_at,
-            'closed_at_timestamp' => $this->closed_at_timestamp
+            'closed_at_timestamp' => $this->closed_at_timestamp,
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at
         ];
     }
 

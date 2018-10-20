@@ -97,6 +97,12 @@ class IncidentTest extends TestCase
         $this->assertEquals('pepepardo@jeans.com',$mappedIncident['user_email']);
         $this->assertEquals('No funciona pc2 aula 15',$mappedIncident['subject']);
         $this->assertEquals('bla bla bla',$mappedIncident['description']);
+        $this->assertNotNull($mappedIncident['created_at']);
+        $this->assertNotNull($mappedIncident['updated_at']);
+        $this->assertNotNull($mappedIncident['created_at_timestamp']);
+        $this->assertNotNull($mappedIncident['updated_at_timestamp']);
+        $this->assertNotNull($mappedIncident['formatted_created_at']);
+        $this->assertNotNull($mappedIncident['formatted_updated_at']);
 
         $this->assertNull($mappedIncident['closed_at']);
         $this->assertNull($mappedIncident['formatted_closed_at']);

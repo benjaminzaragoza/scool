@@ -56,8 +56,11 @@
                         <td class="text-xs-left" v-html="incident.subject"></td>
                         <td class="text-xs-left" v-html="incident.description"></td>
                         <td class="text-xs-left" v-html="incident.formatted_closed_at"></td>
+                        <td class="text-xs-left" v-html="incident.formatted_created_at"></td>
+                        <td class="text-xs-left" v-html="incident.formatted_updated_at"></td>
                         <td class="text-xs-left">
                             <incident-close :incident="incident"></incident-close>
+                            <incident-delete :incident="incident"></incident-delete>
                         </td>
                     </tr>
                 </template>
@@ -70,11 +73,13 @@
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
+import IncidentDeleteComponent from './IncidentDeleteComponent'
 
 export default {
   name: 'IncidentsList',
   components: {
-    'incident-close': IncidentCloseComponent
+    'incident-close': IncidentCloseComponent,
+    'incident-delete': IncidentDeleteComponent
   },
   data () {
     return {
@@ -101,7 +106,7 @@ export default {
     },
     headers () {
       let headers = []
-      headers.push({ text: 'Id', align: 'left', value: 'id' })
+      headers.push({ text: 'Id', align: 'left', value: 'id', width: "1%" })
       // if (this.showJobTypeHeader) {
       //   headers.push({text: 'Tipus', value: 'type'})
       // }
@@ -109,6 +114,8 @@ export default {
       headers.push({ text: 'Títol', value: 'subject' })
       headers.push({ text: 'Description', value: 'description' })
       headers.push({ text: 'Tancada', value: 'closed_at_timestamp' })
+      headers.push({ text: 'Creada', value: 'created_at_timestamp' })
+      headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       headers.push({ text: 'Accions', sortable: false })
       return headers
     }

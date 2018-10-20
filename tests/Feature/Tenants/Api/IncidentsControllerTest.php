@@ -154,7 +154,6 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function regular_user_cannot_store_incidences()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);
@@ -200,5 +199,33 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertStatus(403);
     }
 
+
+    /**
+     * @test
+     */
+    public function manager_can_delete_incidents()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Carles Puigdemont'
+        ]);
+        $otherUser = factory(User::class)->create([
+            'name' => 'Carme Forcadell'
+        ]);
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+
+        $this->actingAs($user,'api');
+
+        $incident= Incident::create([
+            'subject' => "No funciona res a l'aula 45",
+            'description' => 'Bla bla bla'
+        ])->assignUser($otherUser);
+
+        $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id);
+        $response->assertSuccessful();
+        $incident = $incident->fresh();
+        $this->assertNull($incident);
+    }
 
 }

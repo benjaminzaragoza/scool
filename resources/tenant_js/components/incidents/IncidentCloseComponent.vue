@@ -1,6 +1,6 @@
 <template>
     <v-btn flat :color="color" icon :title="title"
-           :loading="loading" :disabled="loading" :id="'close_incident_' + incident.id" @click="toogle">
+           :loading="loading" :disabled="loading" :id="'close_incident_' + incident.id" @click="toggle">
         <v-icon v-text="icon"></v-icon>
     </v-btn>
 </template>
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    toogle () {
+    toggle () {
       this.loading = true
       this.$store.dispatch(this.action, this.incident).then(response => {
         this.$snackbar.showMessage(this.actionMessage)

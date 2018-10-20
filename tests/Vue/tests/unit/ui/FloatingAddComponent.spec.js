@@ -14,7 +14,7 @@ describe('FloatingAddComponent.vue', () => {
   it('shows_button_but_not_dialog', () => {
     let wrapper = shallowMount(FloatingAddComponent)
     wrapper.assertContains('vbtn-stub')
-    wrapper.assertNotVisible('vdialog-stub')
+    wrapper.assertNotContains('vdialog-stub')
   })
 
   it('shows_dialog', () => {
@@ -29,7 +29,7 @@ describe('FloatingAddComponent.vue', () => {
   it('watches_for_changes_in_dialog_prop', () => {
     let wrapper = shallowMount(FloatingAddComponent)
     wrapper.assertContains('vbtn-stub')
-    wrapper.assertNotVisible('vdialog-stub')
+    wrapper.assertNotContains('vdialog-stub')
 
     wrapper.setProps({ dialog: true })
     wrapper.assertContains('vdialog-stub')

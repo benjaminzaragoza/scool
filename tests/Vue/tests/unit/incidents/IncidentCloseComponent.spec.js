@@ -22,16 +22,16 @@ describe('IncidentCloseComponent.vue', () => {
 
   beforeEach(() => {
     Object.assign(Wrapper.prototype, TestHelpers)
-    let closeIncindentStub = sinon.stub()
-    closeIncindentStub.resolves({})
-    let openIncindentStub = sinon.stub()
-    openIncindentStub.resolves({})
+    let closeIncidentStub = sinon.stub()
+    closeIncidentStub.resolves({})
+    let openIncidentStub = sinon.stub()
+    openIncidentStub.resolves({})
     actions = {
-      CLOSE_INCIDENT: closeIncindentStub,
-      OPEN_INCIDENT: openIncindentStub
+      CLOSE_INCIDENT: closeIncidentStub,
+      OPEN_INCIDENT: openIncidentStub
     }
     let closeIncidentsErrorStub = sinon.stub()
-    closeIncindentStub.rejects({})
+    closeIncidentsErrorStub.rejects({})
     actionsError = {
       CLOSE_INCIDENT: closeIncidentsErrorStub
     }

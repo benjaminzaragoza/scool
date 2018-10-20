@@ -151,6 +151,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/incidents', 'Tenant\Api\IncidentsController@index');
             Route::post('/incidents', 'Tenant\Api\IncidentsController@store');
             Route::get('/incidents/{incident}', 'Tenant\Api\IncidentsController@show');
+            Route::delete('/incidents/{incident}', 'Tenant\Api\IncidentsController@destroy');
 
             //Closed incidents
             Route::post('/closed_incidents/{incident}', 'Tenant\Api\ClosedIncidentsController@store');

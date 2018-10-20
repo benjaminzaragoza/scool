@@ -42,5 +42,15 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.DELETE_INCIDENT ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.delete(incident).then(response => {
+        context.commit(mutations.DELETE_INCIDENT, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }

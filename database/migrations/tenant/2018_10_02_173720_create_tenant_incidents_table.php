@@ -16,8 +16,8 @@ class CreateTenantIncidentsTable extends Migration
         Schema::create('incidents', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
-            $table->string('subject');
-            $table->string('description');
+            $table->text('subject');
+            $table->text('description');
             $table->dateTime('closed_at')->nullable();
             $table->timestamps();
         });

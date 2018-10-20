@@ -22,5 +22,11 @@ export default {
     incidentInState.closed_at = null
     incidentInState.closed_at_timestamp = null
     incidentInState.formatted_closed_at = null
+  },
+  [ mutations.DELETE_INCIDENT ] (state, incident) {
+    let incidentInState = state.incidents.find((element) => {
+      return element.id === incident.id
+    })
+    state.incidents.splice(state.incidents.indexOf(incidentInState), 1)
   }
 }

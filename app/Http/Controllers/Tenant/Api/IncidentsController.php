@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api;
 
+use App\Http\Requests\DeleteIncident;
 use App\Http\Requests\ListIncidents;
 use App\Http\Requests\ShowIncident;
 use App\Http\Requests\StoreIncident;
@@ -66,11 +67,13 @@ class IncidentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return Incident
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(DeleteIncident $request, $tenant, Incident $incident)
     {
-        //
+        $incident->delete();
+        return $incident;
     }
 }
