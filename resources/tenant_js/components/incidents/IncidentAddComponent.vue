@@ -45,50 +45,54 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required } from 'vuelidate/lib/validators'
-  import withSnackbar from '../mixins/withSnackbar'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
+import * as actions from '../../store/action-types'
 
-  export default {
-    mixins: [validationMixin, withSnackbar],
-    validations: {
-      subject: {required},
-      description: {required}
+export default {
+  mixins: [validationMixin],
+  validations: {
+    subject: { required },
+    description: { required }
+  },
+  data () {
+    return {
+      subject: '',
+      description: '',
+      adding: false
+    }
+  },
+  computed: {
+    subjectErrors () {
+      const errors = []
+      if (!this.$v.subject.$dirty) return errors
+      !this.$v.subject.required && errors.push('És obligatori indicar un títol.')
+      return errors
     },
-    data () {
-      return {
-        subject: '',
-        description: '',
-        adding: false
-      }
-    },
-    computed: {
-      subjectErrors () {
-        const errors = []
-        if (!this.$v.subject.$dirty) return errors
-        !this.$v.subject.required && errors.push('És obligatori indicar un títol.')
-        return errors
-      },
-      descriptionErrors () {
-        const errors = []
-        if (!this.$v.description.$dirty) return errors
-        !this.$v.description.required && errors.push('És obligatori indicar una descripció.')
-        return errors
-      }
-    },
-    methods: {
-      add () {
-        // eslint-disable-next-line no-undef
-        axios.post('/api/v1/incidents', {
-          subject: this.subject,
-          description: this.description
-        }).then(response => {
-          this.$emit('added', response.data)
-          this.showMessage('Incidència afegida correctament')
-        }).catch(error => {
-          console.log(error)
-        })
-      }
+    descriptionErrors () {
+      const errors = []
+      if (!this.$v.description.$dirty) return errors
+      !this.$v.description.required && errors.push('És obligatori indicar una descripció.')
+      return errors
+    }
+  },
+  methods: {
+    add (close = false) {
+      this.adding = true
+      this.$store.dispatch(actions.ADD_INCIDENT, {
+        subject: this.subject,
+        description: this.description
+      }).then(response => {
+        this.$snackbar.showMessage('Incidència creada correctament')
+        this.adding = false
+        this.$emit('added', response.data)
+        if (close) this.$emit('close')
+      }).catch(error => {
+        console.log(error)
+        this.$snackbar.showError(error)
+        this.adding = false
+      })
     }
   }
+}
 </script>

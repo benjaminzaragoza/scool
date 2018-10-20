@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai'
-import { mount } from '@vue/test-utils'
+import { mount, Wrapper } from '@vue/test-utils'
 import IncidentsListComponent from '../../../../../resources/tenant_js/components/incidents/IncidentsListComponent'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import sinon from 'sinon'
 import Snackbar from '../../../../../resources/tenant_js/plugins/snackbar'
+import TestHelpers from '../helpers.js'
 
 Vue.use(Vuex)
 Vue.use(Vuetify)
@@ -44,6 +45,7 @@ describe('IncidentsListComponent.vue', () => {
   ]
 
   beforeEach(() => {
+    Object.assign(Wrapper.prototype, TestHelpers)
     getters = {
       incidents: function () {
         return sampleIncidents
@@ -101,20 +103,20 @@ describe('IncidentsListComponent.vue', () => {
     let incidentRow2 = wrapper.find('tr#incident_row_2')
     let incidentRow3 = wrapper.find('tr#incident_row_3')
 
-    expect(incidentRow1.text()).to.contains('1')
-    expect(incidentRow1.text()).to.contains('Pepe Pardo Jeans')
-    expect(incidentRow1.text()).to.contains('No funciona PC1 Aula 30')
-    expect(incidentRow1.text()).to.contains('Bla bla bla')
+    incidentRow1.seeText('1')
+    incidentRow1.seeText('Pepe Pardo Jeans')
+    incidentRow1.seeText('No funciona PC1 Aula 30')
+    incidentRow1.seeText('Bla bla bla')
 
-    expect(incidentRow2.text()).to.contains('2')
-    expect(incidentRow2.text()).to.contains('Pepa Parda Jeans')
-    expect(incidentRow2.text()).to.contains('No funciona PC2 Aula 31')
-    expect(incidentRow2.text()).to.contains('JO JO JO')
+    incidentRow2.seeText('2')
+    incidentRow2.seeText('Pepa Parda Jeans')
+    incidentRow2.seeText('No funciona PC2 Aula 31')
+    incidentRow2.seeText('JO JO JO')
 
-    expect(incidentRow3.text()).to.contains('3')
-    expect(incidentRow3.text()).to.contains('Carles Puigdemont')
-    expect(incidentRow3.text()).to.contains('No funciona PC1 Aula 32')
-    expect(incidentRow3.text()).to.contains('HEY HEY HEY')
+    incidentRow3.seeText('3')
+    incidentRow3.seeText('Carles Puigdemont')
+    incidentRow3.seeText('No funciona PC1 Aula 32')
+    incidentRow3.seeText('HEY HEY HEY')
   })
 
   it('gets_incidents_from_api_when_no_incidents_prop_is_given', () => {
@@ -125,20 +127,20 @@ describe('IncidentsListComponent.vue', () => {
     let incidentRow2 = wrapper.find('tr#incident_row_2')
     let incidentRow3 = wrapper.find('tr#incident_row_3')
 
-    expect(incidentRow1.text()).to.contains('1')
-    expect(incidentRow1.text()).to.contains('Pepe Pardo Jeans')
-    expect(incidentRow1.text()).to.contains('No funciona PC1 Aula 30')
-    expect(incidentRow1.text()).to.contains('Bla bla bla')
+    incidentRow1.seeText('1')
+    incidentRow1.seeText('Pepe Pardo Jeans')
+    incidentRow1.seeText('No funciona PC1 Aula 30')
+    incidentRow1.seeText('Bla bla bla')
 
-    expect(incidentRow2.text()).to.contains('2')
-    expect(incidentRow2.text()).to.contains('Pepa Parda Jeans')
-    expect(incidentRow2.text()).to.contains('No funciona PC2 Aula 31')
-    expect(incidentRow2.text()).to.contains('JO JO JO')
+    incidentRow2.seeText('2')
+    incidentRow2.seeText('Pepa Parda Jeans')
+    incidentRow2.seeText('No funciona PC2 Aula 31')
+    incidentRow2.seeText('JO JO JO')
 
-    expect(incidentRow3.text()).to.contains('3')
-    expect(incidentRow3.text()).to.contains('Carles Puigdemont')
-    expect(incidentRow3.text()).to.contains('No funciona PC1 Aula 32')
-    expect(incidentRow3.text()).to.contains('HEY HEY HEY')
+    incidentRow3.seeText('3')
+    incidentRow3.seeText('Carles Puigdemont')
+    incidentRow3.seeText('No funciona PC1 Aula 32')
+    incidentRow3.seeText('HEY HEY HEY')
   })
 
   it('watch_for_changes_in_incidents_prop', () => {
@@ -159,7 +161,7 @@ describe('IncidentsListComponent.vue', () => {
       store: emptyStore
     })
     expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
-    expect(wrapper.text()).contains('No hi han dades disponibles')
+    wrapper.seeText('No hi han dades disponibles')
   })
 
   it('refresh_incidents', (done) => {
@@ -173,7 +175,7 @@ describe('IncidentsListComponent.vue', () => {
       },
       store
     })
-    wrapper.find('#incidents_refresh_button').trigger('click')
+    wrapper.click('#incidents_refresh_button')
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
 
     wrapper.vm.$nextTick(() => {
@@ -194,7 +196,7 @@ describe('IncidentsListComponent.vue', () => {
       },
       store: errorStore
     })
-    wrapper.find('#incidents_refresh_button').trigger('click')
+    wrapper.click('#incidents_refresh_button')
     expect(actionsError.SET_INCIDENTS.calledOnce).to.be.true
 
     setTimeout(() => {
