@@ -16,7 +16,9 @@ Vue.config.silent = true
 
 describe('IncidentCloseComponent.vue', () => {
   let store
+  let storeError
   let actions
+  let actionsError
 
   beforeEach(() => {
     Object.assign(Wrapper.prototype, TestHelpers)
@@ -28,9 +30,18 @@ describe('IncidentCloseComponent.vue', () => {
       CLOSE_INCIDENT: closeIncindentStub,
       OPEN_INCIDENT: openIncindentStub
     }
+    let closeIncidentsErrorStub = sinon.stub()
+    closeIncindentStub.rejects({})
+    actionsError = {
+      CLOSE_INCIDENT: closeIncidentsErrorStub
+    }
     store = new Vuex.Store({
       state: {},
       actions
+    })
+    storeError = new Vuex.Store({
+      state: {},
+      actions: actionsError
     })
   })
 
@@ -71,13 +82,39 @@ describe('IncidentCloseComponent.vue', () => {
     20)
   })
 
-  it.only('opens_incident', (done) => {
-    let showMessage = sinon.spy()
+  it('shows_error_when_closes_incident', (done) => {
+    let showError = sinon.spy()
 
     const wrapper = mount(IncidentCloseComponent, {
       propsData: {
         incident: {
           id: 1
+        }
+      },
+      mocks: {
+        $snackbar: {
+          showError
+        }
+      },
+      store: storeError
+    })
+    wrapper.click('#close_incident_1')
+
+    setTimeout(() => {
+      expect(showError.called).to.be.true
+      done()
+    },
+    20)
+  })
+
+  it('opens_incident', (done) => {
+    let showMessage = sinon.spy()
+
+    const wrapper = mount(IncidentCloseComponent, {
+      propsData: {
+        incident: {
+          id: 1,
+          closed_at: {}
         }
       },
       mocks: {
@@ -88,7 +125,7 @@ describe('IncidentCloseComponent.vue', () => {
       store
     })
     wrapper.click('#close_incident_1')
-    expect(actions.CLOSE_INCIDENT.calledOnce).to.be.true
+    expect(actions.OPEN_INCIDENT.calledOnce).to.be.true
 
     setTimeout(() => {
       expect(showMessage.called).to.be.true

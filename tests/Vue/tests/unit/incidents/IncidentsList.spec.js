@@ -49,7 +49,8 @@ describe('IncidentsListComponent.vue', () => {
       user_email: 'carles@puigdemont.cat',
       subject: 'No funciona PC1 Aula 32',
       description: 'HEY HEY HEY',
-      closed_at: '2018:12:08 14:23:24'
+      closed_at: {},
+      formatted_closed_at: '2018:12:08 14:23:24'
     }
   ]
 
@@ -99,7 +100,7 @@ describe('IncidentsListComponent.vue', () => {
     })
   })
 
-  it.only('shows_tasks', () => {
+  it('shows_tasks', () => {
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
         incidents: sampleIncidents
