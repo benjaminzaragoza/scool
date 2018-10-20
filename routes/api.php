@@ -154,8 +154,13 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/incidents/{incident}', 'Tenant\Api\IncidentsController@destroy');
 
             //Closed incidents
-            Route::post('/closed_incidents/{incident}', 'Tenant\Api\ClosedIncidentsController@store');
-            Route::delete('/closed_incidents/{incident}', 'Tenant\Api\ClosedIncidentsController@destroy');
+            Route::post('/closed_incidents/{incident}', 'Tenant\Api\IncidentsClosedController@store');
+            Route::delete('/closed_incidents/{incident}', 'Tenant\Api\IncidentsClosedController@destroy');
+
+            //Incidents individual fields
+            Route::put('/incidents/{incident}/subject','Tenant\Api\IncidentsSubjectController@update');
+            Route::put('/incidents/{incident}/description','Tenant\Api\IncidentsDescriptionController@update');
+
 
         });
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\Tenant\IncidentCollection;
+use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
 use Carbon\Carbon;
 use http\Exception\InvalidArgumentException;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Incident extends Model
 {
-    use FormattedDates;
+    use FormattedDates, ApiURI;
 
     protected $guarded = ['user_id'];
 
@@ -80,7 +81,8 @@ class Incident extends Model
             'formatted_created_at' => $this->formatted_created_at,
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
-            'formatted_updated_at' => $this->formatted_updated_at
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'api_uri' => $this->api_uri
         ];
     }
 

@@ -53,7 +53,9 @@
                     <tr :id="'incident_row_' + incident.id">
                         <td class="text-xs-left" v-html="incident.id"></td>
                         <td class="text-xs-left" :title="incident.user_email" v-html="incident.username"></td>
-                        <td class="text-xs-left" v-html="incident.subject"></td>
+                        <td>
+                            <inline-text-fielt-edit-dialog v-model="incident" field="subject"></inline-text-fielt-edit-dialog>
+                        </td>
                         <td class="text-xs-left" v-html="incident.description"></td>
                         <td class="text-xs-left" v-html="incident.formatted_closed_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at"></td>
@@ -74,12 +76,14 @@ import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
+import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 
 export default {
   name: 'IncidentsList',
   components: {
     'incident-close': IncidentCloseComponent,
-    'incident-delete': IncidentDeleteComponent
+    'incident-delete': IncidentDeleteComponent,
+    'inline-text-fielt-edit-dialog': InlineTextFieldEditDialog
   },
   data () {
     return {
@@ -106,7 +110,7 @@ export default {
     },
     headers () {
       let headers = []
-      headers.push({ text: 'Id', align: 'left', value: 'id', width: "1%" })
+      headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       // if (this.showJobTypeHeader) {
       //   headers.push({text: 'Tipus', value: 'type'})
       // }

@@ -903,6 +903,12 @@ if (!function_exists('initialize_gates')) {
         Gate::define('delete-incident', function ($user) {
             return $user->hasRole('IncidentsManager');
         });
+
+        Gate::define('update-incident', function ($user, $incident) {
+            if($incident->user_id  == $user->id) return true;
+            return $user->hasRole('IncidentsManager');
+        });
+
     }
 }
 

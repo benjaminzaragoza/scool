@@ -103,6 +103,7 @@ class IncidentTest extends TestCase
         $this->assertNotNull($mappedIncident['updated_at_timestamp']);
         $this->assertNotNull($mappedIncident['formatted_created_at']);
         $this->assertNotNull($mappedIncident['formatted_updated_at']);
+        $this->assertEquals('incidents',$mappedIncident['api_uri']);
 
         $this->assertNull($mappedIncident['closed_at']);
         $this->assertNull($mappedIncident['formatted_closed_at']);
@@ -195,5 +196,16 @@ class IncidentTest extends TestCase
         ]);
 
         $this->assertEquals('1480618800', $incident->closed_at_timestamp);
+    }
+
+    /** @test */
+    function can_get_api_uri()
+    {
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+        ]);
+
+        $this->assertEquals('incidents', $incident->api_uri);
     }
 }

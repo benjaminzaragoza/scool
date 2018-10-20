@@ -3,14 +3,8 @@
 namespace App\Http\Controllers\Tenant\Api;
 
 use App\Http\Requests\CloseIncident;
-use App\Http\Requests\ListIncidents;
 use App\Http\Requests\OpenIncident;
-use App\Http\Requests\ShowIncident;
-use App\Http\Requests\StoreIncident;
 use App\Models\Incident;
-use App\Tenant;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 /**
@@ -18,7 +12,7 @@ use App\Http\Controllers\Controller;
  *
  * @package App\Http\Controllers\Api
  */
-class ClosedIncidentsController extends Controller
+class IncidentsClosedController extends Controller
 {
     /**
      * Store a newly created resource in storage.
