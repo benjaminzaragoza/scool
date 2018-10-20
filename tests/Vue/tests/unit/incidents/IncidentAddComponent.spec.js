@@ -73,7 +73,6 @@ describe('IncidentsAddComponent.vue', () => {
     wrapper.type("input[name='subject']", 'No funciona PC1 Aula 30')
     wrapper.type("textarea[name='description']", 'Bla bla bla')
     wrapper.click('#add_incident_button')
-    expect(actions.ADD_INCIDENT.calledOnce).to.be.true
     expect(actions.ADD_INCIDENT.getCall(0).args[1].subject).equals('No funciona PC1 Aula 30')
     expect(actions.ADD_INCIDENT.getCall(0).args[1].description).equals('Bla bla bla')
 

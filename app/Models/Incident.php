@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\Tenant\IncidentCollection;
+use App\Models\Traits\FormattedDates;
 use Carbon\Carbon;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Incident extends Model
 {
+    use FormattedDates;
+
     protected $guarded = ['user_id'];
 
     /**
@@ -68,7 +71,10 @@ class Incident extends Model
             'username' => optional($this->user)->name,
             'user_email' => optional($this->user)->email,
             'subject' => $this->subject,
-            'description' => $this->description
+            'description' => $this->description,
+            'closed_at' => $this->closed_at,
+            'formatted_closed_at' => $this->formatted_closed_at,
+            'closed_at_timestamp' => $this->closed_at_timestamp
         ];
     }
 
@@ -104,5 +110,25 @@ class Incident extends Model
         $this->closed_at = null;
         $this->save();
         return $this;
+    }
+
+    /**
+     * formatted_closed_at_date attribute.
+     *
+     * @return mixed
+     */
+    public function getFormattedClosedAtAttribute()
+    {
+        return optional($this->closed_at)->format('h:i:sA d-m-Y');
+    }
+
+    /**
+     * closed_at_timestamp attribute.
+     *
+     * @return mixed
+     */
+    public function getClosedAtTimestampAttribute()
+    {
+        return optional($this->closed_at)->timestamp;
     }
 }

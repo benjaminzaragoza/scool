@@ -30,7 +30,7 @@ class ClosedIncidentsController extends Controller
      */
     public function store(CloseIncident $request, $tenant, Incident $incident)
     {
-        return $incident->close();
+        return $incident->close()->map();
     }
 
     /**
@@ -43,6 +43,6 @@ class ClosedIncidentsController extends Controller
      */
     public function destroy(OpenIncident $request, $tenant, Incident $incident)
     {
-        return $incident->open();
+        return $incident->open()->map();
     }
 }

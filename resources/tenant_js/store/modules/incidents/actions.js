@@ -13,11 +13,30 @@ export default {
       })
     })
   },
-
   [ actions.ADD_INCIDENT ] (context, incident) {
     return new Promise((resolve, reject) => {
       api.store(incident).then(response => {
         context.commit(mutations.ADD_INCIDENT, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.CLOSE_INCIDENT ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.close(incident).then(response => {
+        context.commit(mutations.CLOSE_INCIDENT, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.OPEN_INCIDENT ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.open(incident).then(response => {
+        context.commit(mutations.OPEN_INCIDENT, response.data)
         resolve(response)
       }).catch(error => {
         reject(error)

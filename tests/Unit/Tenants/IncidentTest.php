@@ -5,6 +5,7 @@ namespace Tests\Unit\Tenants;
 use App\Console\Kernel;
 use App\Models\Incident;
 use App\Models\User;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -97,6 +98,16 @@ class IncidentTest extends TestCase
         $this->assertEquals('No funciona pc2 aula 15',$mappedIncident['subject']);
         $this->assertEquals('bla bla bla',$mappedIncident['description']);
 
+        $this->assertNull($mappedIncident['closed_at']);
+        $this->assertNull($mappedIncident['formatted_closed_at']);
+        $this->assertNull($mappedIncident['closed_at_timestamp']);
+
+        $incident->close();
+        $incident= $incident->fresh();
+        $mappedIncident = $incident->map();
+        $this->assertNotNull($mappedIncident['closed_at']);
+        $this->assertNotNull($mappedIncident['formatted_closed_at']);
+        $this->assertNotNull($mappedIncident['closed_at_timestamp']);
     }
 
     /**
@@ -142,5 +153,41 @@ class IncidentTest extends TestCase
 
         $incident = $incident->fresh();
         $this->assertNull($incident->closed_at);
+    }
+
+    /** @test */
+    function can_get_formatted_created_at_date()
+    {
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+            'created_at' => Carbon::parse('2016-12-01 8:00pm')
+        ]);
+
+        $this->assertEquals('08:00:00PM 01-12-2016', $incident->formatted_created_at);
+    }
+
+    /** @test */
+    function can_get_formatted_closed_at_date()
+    {
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+            'closed_at' => Carbon::parse('2016-12-01 8:00pm')
+        ]);
+
+        $this->assertEquals('08:00:00PM 01-12-2016', $incident->formatted_closed_at);
+    }
+
+    /** @test */
+    function can_get_closed_at_timestamp()
+    {
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+            'closed_at' => Carbon::parse('2016-12-01 8:00pm')
+        ]);
+
+        $this->assertEquals('1480618800', $incident->closed_at_timestamp);
     }
 }

@@ -30,7 +30,8 @@ describe('IncidentsListComponent.vue', () => {
       user_id: 1,
       user_email: 'pepepardo@jeans.com',
       subject: 'No funciona PC1 Aula 30',
-      description: 'Bla bla bla'
+      description: 'Bla bla bla',
+      closed_at: null
     },
     {
       id: 2,
@@ -38,7 +39,8 @@ describe('IncidentsListComponent.vue', () => {
       user_id: 2,
       user_email: 'pepaparda@jeans.com',
       subject: 'No funciona PC2 Aula 31',
-      description: 'JO JO JO'
+      description: 'JO JO JO',
+      closed_at: null
     },
     {
       id: 3,
@@ -46,7 +48,8 @@ describe('IncidentsListComponent.vue', () => {
       user_id: 3,
       user_email: 'carles@puigdemont.cat',
       subject: 'No funciona PC1 Aula 32',
-      description: 'HEY HEY HEY'
+      description: 'HEY HEY HEY',
+      closed_at: '2018:12:08 14:23:24'
     }
   ]
 
@@ -96,7 +99,7 @@ describe('IncidentsListComponent.vue', () => {
     })
   })
 
-  it('shows_tasks', () => {
+  it.only('shows_tasks', () => {
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
         incidents: sampleIncidents
@@ -126,6 +129,7 @@ describe('IncidentsListComponent.vue', () => {
     incidentRow3.seeHtml('carles@puigdemont.cat')
     incidentRow3.seeText('No funciona PC1 Aula 32')
     incidentRow3.seeText('HEY HEY HEY')
+    incidentRow3.seeText('2018:12:08 14:23:24')
   })
 
   it('gets_incidents_from_api_when_no_incidents_prop_is_given', () => {

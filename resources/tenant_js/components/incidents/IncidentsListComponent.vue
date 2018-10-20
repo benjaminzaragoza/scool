@@ -55,8 +55,9 @@
                         <td class="text-xs-left" :title="incident.user_email" v-html="incident.username"></td>
                         <td class="text-xs-left" v-html="incident.subject"></td>
                         <td class="text-xs-left" v-html="incident.description"></td>
+                        <td class="text-xs-left" v-html="incident.formatted_closed_at"></td>
                         <td class="text-xs-left">
-                            TODO ACTIONS
+                            <incident-close :incident="incident"></incident-close>
                         </td>
                     </tr>
                 </template>
@@ -68,8 +69,13 @@
 <script>
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
+import IncidentCloseComponent from './IncidentCloseComponent'
 
 export default {
+  name: 'IncidentsList',
+  components: {
+    'incident-close': IncidentCloseComponent
+  },
   data () {
     return {
       search: '',
@@ -102,6 +108,7 @@ export default {
       headers.push({ text: 'Usuari', value: 'user_id' })
       headers.push({ text: 'Títol', value: 'subject' })
       headers.push({ text: 'Description', value: 'description' })
+      headers.push({ text: 'Tancada', value: 'closed_at_timestamp' })
       headers.push({ text: 'Accions', sortable: false })
       return headers
     }
