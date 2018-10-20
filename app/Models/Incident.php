@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\Tenant\IncidentCollection;
+use Carbon\Carbon;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,17 @@ use Illuminate\Database\Eloquent\Model;
 class Incident extends Model
 {
     protected $guarded = ['user_id'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'closed_at'
+    ];
 
     /**
      * Assign user.
@@ -54,6 +66,7 @@ class Incident extends Model
             'id' => $this->id,
             'user_id' => $this->user_id,
             'username' => optional($this->user)->name,
+            'user_email' => optional($this->user)->email,
             'subject' => $this->subject,
             'description' => $this->description
         ];
@@ -67,5 +80,29 @@ class Incident extends Model
     public static function getIncidents()
     {
         return (new IncidentCollection(Incident::with('user')->get()))->transform();
+    }
+
+    /**
+     * Close incident.
+     *
+     * @return $this
+     */
+    public function close()
+    {
+        $this->closed_at = Carbon::now();
+        $this->save();
+        return $this;
+    }
+
+    /**
+     * Open incident.
+     *
+     * @return $this
+     */
+    public function open()
+    {
+        $this->closed_at = null;
+        $this->save();
+        return $this;
     }
 }

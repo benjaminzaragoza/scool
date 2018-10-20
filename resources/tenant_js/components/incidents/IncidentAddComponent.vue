@@ -4,6 +4,8 @@
             <v-layout row wrap>
             <v-flex md12>
                 <v-text-field
+                        ref="subject_field"
+                        v-focus
                         v-model="subject"
                         name="subject"
                         label="Títol"
@@ -41,6 +43,11 @@
            :loading="adding"
            :disabled="adding"
         >Afegir i tancar</v-btn>
+        <v-btn @click="close()"
+               id="close_button"
+               color="error"
+               class="white--text"
+        >Tancar</v-btn>
     </form>
 </template>
 
@@ -50,6 +57,7 @@ import { required } from 'vuelidate/lib/validators'
 import * as actions from '../../store/action-types'
 
 export default {
+  name: 'IncidentAdd',
   mixins: [validationMixin],
   validations: {
     subject: { required },
@@ -77,6 +85,9 @@ export default {
     }
   },
   methods: {
+    close () {
+      this.$emit('close')
+    },
     add (close = false) {
       this.adding = true
       this.$store.dispatch(actions.ADD_INCIDENT, {
@@ -86,13 +97,16 @@ export default {
         this.$snackbar.showMessage('Incidència creada correctament')
         this.adding = false
         this.$emit('added', response.data)
-        if (close) this.$emit('close')
+        if (close) this.close()
       }).catch(error => {
         console.log(error)
         this.$snackbar.showError(error)
         this.adding = false
       })
     }
+  },
+  mounted() {
+    this.$nextTick(this.$refs.subject_field.focus)
   }
 }
 </script>

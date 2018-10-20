@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\Api;
 
 use App\Models\Incident;
 use App\Models\User;
@@ -13,9 +13,9 @@ use Illuminate\Contracts\Console\Kernel;
 /**
  * Class IncidentsControllerTest.
  *
- * @package Tests\Feature\Tenants
+ * @package Tests\Feature\Tenants\Api
  */
-class IncidentsControllerAPITest extends BaseTenantTest {
+class IncidentsControllerTest extends BaseTenantTest {
 
     use RefreshDatabase;
 
@@ -112,10 +112,14 @@ class IncidentsControllerAPITest extends BaseTenantTest {
             'description' => "El ordinador de l'aula 36 bla bla la"
         ]);
         $response->assertSuccessful();
+
         $createdIncident = json_decode($response->getContent());
 
         $this->assertEquals($createdIncident->subject,'Ordinador Aula 36 no funciona');
         $this->assertEquals($createdIncident->description,"El ordinador de l'aula 36 bla bla la");
+        $this->assertEquals($createdIncident->user_id,$user->id);
+        $this->assertEquals($createdIncident->username,$user->name);
+        $this->assertEquals($createdIncident->user_email,$user->email);
 
         $this->assertDatabaseHas('incidents',$incident);
 

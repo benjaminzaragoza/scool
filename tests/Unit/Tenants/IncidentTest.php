@@ -79,7 +79,8 @@ class IncidentTest extends TestCase
     public function map()
     {
         $user = factory(User::class)->create([
-            'name' => 'Pepe Pardo Jeans'
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com'
         ]);
 
         $incident = Incident::create([
@@ -92,8 +93,54 @@ class IncidentTest extends TestCase
         $this->assertEquals(1,$mappedIncident['id']);
         $this->assertEquals($user->id,$mappedIncident['user_id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['username']);
+        $this->assertEquals('pepepardo@jeans.com',$mappedIncident['user_email']);
         $this->assertEquals('No funciona pc2 aula 15',$mappedIncident['subject']);
         $this->assertEquals('bla bla bla',$mappedIncident['description']);
 
+    }
+
+    /**
+     * @test
+     */
+    public function close()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com'
+        ]);
+
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+        ])->assignUser($user);
+
+        $this->assertNull($incident->closed_at);
+
+        $incident->close();
+
+        $incident = $incident->fresh();
+        $this->assertNotNull($incident->closed_at);
+    }
+
+    /**
+     * @test
+     */
+    public function open()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com'
+        ]);
+
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+        ])->assignUser($user);
+        $incident->close();
+
+        $incident->open();
+
+        $incident = $incident->fresh();
+        $this->assertNull($incident->closed_at);
     }
 }

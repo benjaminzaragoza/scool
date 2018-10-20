@@ -5,6 +5,15 @@ export default {
   assertContains: function (selector) {
     expect(this.contains(selector)).to.be.true
   },
+  assertNotContains: function (selector) {
+    expect(this.contains(selector)).to.be.false
+  },
+  assertVisible: function (selector) {
+    expect(this.find(selector).isVisible()).to.be.true
+  },
+  assertNotVisible: function (selector) {
+    expect(this.find(selector).isVisible()).to.be.true
+  },
   seeHtml: function (text, selector) {
     let wrap = selector ? this.find(selector) : this
     expect(wrap.html()).contains(text)

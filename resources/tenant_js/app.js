@@ -90,6 +90,7 @@ window.Vue.component('ldap-users', require('./components/ldap/users/LdapUsersCom
 window.Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddComponent.vue'))
 
 // Incidents
+window.Vue.component('incidents', require('./components/incidents/IncidentsComponent.vue'))
 window.Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'))
 window.Vue.component('incident-add', require('./components/incidents/IncidentAddComponent.vue'))
 
@@ -110,6 +111,12 @@ if (window.user) {
   store.commit(mutations.USER, window.user)
   store.commit(mutations.LOGGED, true)
 }
+
+window.Vue.directive('focus', {
+  inserted: function (el) {
+    el.focus()
+  }
+})
 
 // eslint-disable-next-line no-unused-vars
 const app = new window.Vue({

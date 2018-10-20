@@ -52,7 +52,7 @@
                 <template slot="items" slot-scope="{item: incident}">
                     <tr :id="'incident_row_' + incident.id">
                         <td class="text-xs-left" v-html="incident.id"></td>
-                        <td class="text-xs-left" v-html="incident.username"></td>
+                        <td class="text-xs-left" :title="incident.user_email" v-html="incident.username"></td>
                         <td class="text-xs-left" v-html="incident.subject"></td>
                         <td class="text-xs-left" v-html="incident.description"></td>
                         <td class="text-xs-left">

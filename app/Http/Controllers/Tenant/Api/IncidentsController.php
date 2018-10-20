@@ -36,7 +36,7 @@ class IncidentsController extends Controller
      */
     public function store(StoreIncident $request)
     {
-        return (Incident::create($request->only('subject','description'))->assignUser($request->user()));
+        return Incident::create($request->only('subject','description'))->assignUser($request->user())->map();
     }
 
     /**

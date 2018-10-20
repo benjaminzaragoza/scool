@@ -27,18 +27,24 @@ describe('IncidentsListComponent.vue', () => {
     {
       id: 1,
       username: 'Pepe Pardo Jeans',
+      user_id: 1,
+      user_email: 'pepepardo@jeans.com',
       subject: 'No funciona PC1 Aula 30',
       description: 'Bla bla bla'
     },
     {
       id: 2,
       username: 'Pepa Parda Jeans',
+      user_id: 2,
+      user_email: 'pepaparda@jeans.com',
       subject: 'No funciona PC2 Aula 31',
       description: 'JO JO JO'
     },
     {
       id: 3,
       username: 'Carles Puigdemont',
+      user_id: 3,
+      user_email: 'carles@puigdemont.cat',
       subject: 'No funciona PC1 Aula 32',
       description: 'HEY HEY HEY'
     }
@@ -105,16 +111,19 @@ describe('IncidentsListComponent.vue', () => {
 
     incidentRow1.seeText('1')
     incidentRow1.seeText('Pepe Pardo Jeans')
+    incidentRow1.seeHtml('pepepardo@jeans.com')
     incidentRow1.seeText('No funciona PC1 Aula 30')
     incidentRow1.seeText('Bla bla bla')
 
     incidentRow2.seeText('2')
     incidentRow2.seeText('Pepa Parda Jeans')
+    incidentRow2.seeHtml('pepaparda@jeans.com')
     incidentRow2.seeText('No funciona PC2 Aula 31')
     incidentRow2.seeText('JO JO JO')
 
     incidentRow3.seeText('3')
     incidentRow3.seeText('Carles Puigdemont')
+    incidentRow3.seeHtml('carles@puigdemont.cat')
     incidentRow3.seeText('No funciona PC1 Aula 32')
     incidentRow3.seeText('HEY HEY HEY')
   })

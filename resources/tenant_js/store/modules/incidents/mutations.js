@@ -5,6 +5,6 @@ export default {
     state.incidents = incidents
   },
   [ mutations.ADD_INCIDENT ] (state, incident) {
-    state.incidents = state.incidents.splice(0, 0, incident)
+    state.incidents.push(incident)
   }
 }

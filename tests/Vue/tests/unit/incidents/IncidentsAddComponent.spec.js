@@ -46,8 +46,18 @@ describe('IncidentsAddComponent.vue', () => {
 
   it('contains_add_buttons', () => {
     const wrapper = mount(IncidentsAddComponent)
-    wrapper.assertContains("input[name='subject']")
-    wrapper.assertContains("textarea[name='description']")
+    wrapper.assertContains('#add_incident_button')
+    wrapper.assertContains('#add_and_close_incident_button')
+  })
+
+  it('contains_close_button', () => {
+    const wrapper = mount(IncidentsAddComponent)
+    wrapper.assertContains('#close_button')
+  })
+
+  it('closes', () => {
+    const wrapper = mount(IncidentsAddComponent)
+    wrapper.click('#close_button')
   })
 
   it('adds_incidents', (done) => {
@@ -75,7 +85,7 @@ describe('IncidentsAddComponent.vue', () => {
     20)
   })
 
-  it.only('adds_incidents_and_close', (done) => {
+  it('adds_incidents_and_close', (done) => {
     let showMessage = sinon.spy()
 
     const wrapper = mount(IncidentsAddComponent, {

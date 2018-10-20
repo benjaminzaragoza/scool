@@ -624,7 +624,8 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'TeachersManager',
             'PhotoTeachersManager',
             'LessonsManager',
-            'Incidents'
+            'Incidents',
+            'IncidentsManager'
         ];
 
         // Manager
@@ -889,7 +890,15 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('Incidents');
         });
 
+        Gate::define('close-incident', function ($user, $incident) {
+            if($incident->user_id  == $user->id) return true;
+            return $user->hasRole('IncidentsManager');
+        });
 
+        Gate::define('open-incident', function ($user, $incident) {
+            if($incident->user_id  == $user->id) return true;
+            return $user->hasRole('IncidentsManager');
+        });
     }
 }
 
