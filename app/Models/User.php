@@ -6,6 +6,7 @@ use App\Http\Resources\Tenant\UserCollection;
 use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
 use Auth;
+use Cache;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
@@ -689,15 +690,22 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         return $this->getAllPermissions();
     }
 
+    /**
+     * @return mixed
+     */
     public function getCanAttribute()
     {
-        foreach (Permission::all() as $permission) {
+        $permissions = Cache::rememberForever('permissions', function () {
+            return Permission::all();
+        });
+        $can = collect([]);
+        foreach ($permissions as $permission) {
             if ($this->can($permission->name)) {
-                $permissions[$permission->name] = true;
+                $can[$permission->name] = true;
             } else {
-                $permissions[$permission->name] = false;
+                $can[$permission->name] = false;
             }
         }
-        return $permissions;
+        return $can;
     }
 }

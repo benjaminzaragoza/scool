@@ -859,13 +859,13 @@ class UserTest extends TestCase
         Permission::create(['name' => 'task.index']);
         $user = factory(User::class)->create();
         $user->givePermissionTo('task.store');
-        $this->assertNotNull($user->can);
-        $this->assertTrue(is_array($user->can));
-        $this->assertCount(4,$user->can);
+        $can = $user->can;
+        $this->assertNotNull($can);
+        $this->assertCount(4,$can);
 
-        $this->assertTrue($user->can['task.store']);
-        $this->assertFalse($user->can['task.update']);
-        $this->assertFalse($user->can['task.destroy']);
-        $this->assertFalse($user->can['task.index']);
+        $this->assertTrue($can['task.store']);
+        $this->assertFalse($can['task.update']);
+        $this->assertFalse($can['task.destroy']);
+        $this->assertFalse($can['task.index']);
     }
 }
