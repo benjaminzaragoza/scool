@@ -23,6 +23,8 @@ use Carbon\Carbon;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Storage;
 use Tests\TestCase;
@@ -817,6 +819,53 @@ class UserTest extends TestCase
         ]);
 
         $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$user->full_search);
+    }
 
+    /**
+     * @test
+     */
+    public function all_permissions_attribute_returns_null_when_no_permissions()
+    {
+        $user = factory(User::class)->create();
+        $this->assertCount(0,$user->all_permissions);
+    }
+
+    /**
+     * @test
+     */
+    public function all_permissions_attribute()
+    {
+        Permission::create(['name' => 'task.store']);
+        Permission::create(['name' => 'task.update']);
+        Permission::create(['name' => 'task.destroy']);
+        $user = factory(User::class)->create();
+        $user->givePermissionTo('task.store');
+        $user->givePermissionTo('task.update');
+        $user->givePermissionTo('task.destroy');
+        $this->assertNotNull($user->all_permissions);
+        $this->assertInstanceOf(Collection::class,$user->all_permissions);
+        $this->assertCount(3,$user->all_permissions);
+        $this->assertEquals('task.store',$user->all_permissions[0]->name);
+    }
+
+    /**
+     * @test
+     */
+    public function can_attribute()
+    {
+        Permission::create(['name' => 'task.store']);
+        Permission::create(['name' => 'task.update']);
+        Permission::create(['name' => 'task.destroy']);
+        Permission::create(['name' => 'task.index']);
+        $user = factory(User::class)->create();
+        $user->givePermissionTo('task.store');
+        $this->assertNotNull($user->can);
+        $this->assertTrue(is_array($user->can));
+        $this->assertCount(4,$user->can);
+
+        $this->assertTrue($user->can['task.store']);
+        $this->assertFalse($user->can['task.update']);
+        $this->assertFalse($user->can['task.destroy']);
+        $this->assertFalse($user->can['task.index']);
     }
 }

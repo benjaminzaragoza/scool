@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Resources\Tenant\UserCollection;
 use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
+use Auth;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
@@ -19,6 +20,7 @@ use Laravel\Passport\HasApiTokens;
 use Session;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use Storage;
 
@@ -50,7 +52,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         'formatted_created_at',
         'formatted_updated_at',
         'hashid',
-        'full_search'
+        'full_search',
+        'all_permissions',
+        'can'
     ];
 
     /**
@@ -673,5 +677,27 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function incidents()
     {
         return $this->hasMany(Incident::class);
+    }
+
+    /**
+     * Get all user permissions.
+     *
+     * @return bool
+     */
+    public function getAllPermissionsAttribute()
+    {
+        return $this->getAllPermissions();
+    }
+
+    public function getCanAttribute()
+    {
+        foreach (Permission::all() as $permission) {
+            if ($this->can($permission->name)) {
+                $permissions[$permission->name] = true;
+            } else {
+                $permissions[$permission->name] = false;
+            }
+        }
+        return $permissions;
     }
 }
