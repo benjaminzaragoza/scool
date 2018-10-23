@@ -1,10 +1,10 @@
-<template class="limit">
+<template>
     <v-edit-dialog
             :return-value.sync="value"
             lazy
             @save="save"
             large
-    > {{ value }}
+    > <span class="limit">{{ value }}</span>
         <v-textarea
                 v-focus
                 slot="input"

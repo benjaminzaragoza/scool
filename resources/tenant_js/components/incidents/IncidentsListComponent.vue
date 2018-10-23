@@ -153,11 +153,3 @@ export default {
 }
 </script>
 
-<style scoped>
-    .limit {
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-</style>
