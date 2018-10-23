@@ -16,6 +16,7 @@ https://github.com/acacha/scool/blob/3121765083986b15adc95e618f62f476fcc73e3c/ap
 
 Problema: permissos als menus si mostrar o no mostrar les opcions
 
+Cal revisar component Pare App.vue i app.blade.php i l'ús de la funció checkRoles
 
 CURRICULUM
 
