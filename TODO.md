@@ -1,3 +1,22 @@
+# USER RESOURCE vs user map
+
+No puc utilitzar les dos coses pq aleshores inc codi wet i no tinc Single Source of truth
+
+Antic Fitxer resource he eliminat:
+
+https://github.com/acacha/scool/blob/3121765083986b15adc95e618f62f476fcc73e3c/app/Http/Resources/UserResource.php
+
+Té roles i permissions
+
+Map té més info però no té aquesta concreta (roles i permissions)
+
+Hi ha el UserResource del Tenant i el que no és del Tenant:
+
+https://github.com/acacha/scool/blob/3121765083986b15adc95e618f62f476fcc73e3c/app/Http/Resources/Tenant/UserResource.php
+
+Problema: permissos als menus si mostrar o no mostrar les opcions
+
+
 CURRICULUM
 
 == Passar faltes ==

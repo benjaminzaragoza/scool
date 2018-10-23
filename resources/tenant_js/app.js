@@ -7,18 +7,15 @@
 
 import ca from './i18n/ca'
 import FullCalendar from 'vue-full-calendar'
-
 import store from './store'
-import * as actions from './store/action-types'
 import * as mutations from './store/mutation-types'
-
-import { mapGetters } from 'vuex'
-import withSnackbar from './components/mixins/withSnackbar'
 import snackbar from './plugins/snackbar'
+import AppComponent from './components/App.vue'
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+import './bootstrap'
 
-require('./bootstrap')
-
-window.Vue = require('vue')
+window.Vue = Vue
 
 window.Vue.use(snackbar)
 
@@ -97,7 +94,7 @@ window.Vue.component('incident-add', require('./components/incidents/IncidentAdd
 // UI
 window.Vue.component('floating-add', require('./components/ui/FloatingAddComponent'))
 
-window.Vuetify = require('vuetify')
+window.Vuetify = Vuetify
 
 window.Vue.use(window.Vuetify, {
   lang: {
@@ -119,91 +116,4 @@ window.Vue.directive('focus', {
 })
 
 // eslint-disable-next-line no-unused-vars
-const app = new window.Vue({
-  el: '#app',
-  store,
-  mixins: [ withSnackbar ],
-  data: () => ({
-    drawer: null,
-    drawerRight: false,
-    editingUser: false,
-    changingPassword: false,
-    confirmingEmail: false,
-    updatingUser: false,
-    items: window.scool_menu
-  }),
-  computed: {
-    ...mapGetters({
-      user: 'user'
-    })
-  },
-  methods: {
-    editUser () {
-      this.editingUser = true
-      this.$nextTick(this.$refs.email.focus)
-    },
-    updateUser () {
-      this.updatingUser = true
-      this.$store.dispatch(actions.UPDATE_USER, this.user).then(response => {
-        this.showMessage('User modified ok!')
-      }).catch(error => {
-        console.dir(error)
-        this.showError(error)
-      }).then(() => {
-        this.editingUser = false
-        this.updatingUser = false
-      })
-    },
-    updateEmail (email) {
-      this.$store.commit(mutations.USER, { ...this.user, email })
-    },
-    updateName (name) {
-      this.$store.commit(mutations.USER, { ...this.user, name })
-    },
-    toogleRightDrawer () {
-      this.drawerRight = !this.drawerRight
-    },
-    checkRoles (item) {
-      if (item.role) {
-        return this.$store.getters.roles.find(function (role) {
-          return role == item.role // eslint-disable-line
-        })
-      }
-      return true
-    },
-    menuItemSelected (item) {
-      if (item.href) {
-        if (item.new) {
-          window.open(item.href)
-        } else {
-          window.location.href = item.href
-        }
-      }
-    },
-    changePassword () {
-      this.changingPassword = true
-      this.$store.dispatch(actions.REMEMBER_PASSWORD, this.user.email).then(response => {
-        this.showMessage(`Correu electrònic enviat per canviar la paraula de pas`)
-      }).catch(error => {
-        console.dir(error)
-        this.showError(error)
-      }).then(() => {
-        this.changingPassword = false
-      })
-    },
-    confirmEmail () {
-      this.confirmingEmail = true
-      this.$store.dispatch(actions.CONFIRM_EMAIL).then(response => {
-        this.showMessage(`Correu electrònic enviat per tal de confirmar el email`)
-      }).catch(error => {
-        console.dir(error)
-        this.showError(error)
-      }).then(() => {
-        this.confirmingEmail = false
-      })
-    }
-  },
-  created () {
-    this.isEmailVerified = window.user.email_verified_at
-  }
-})
+const app = new window.Vue(AppComponent)

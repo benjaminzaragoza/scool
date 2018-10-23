@@ -107,8 +107,6 @@
                                                       confirm="Enviar"
                                         ></confirm-icon>
 
-
-
                                         <confirm-icon v-show="!user.email_verified_at" icon="email"
                                                       :working="sendingEmailConfirmation"
                                                       @confirmed="sendEmailConfirmation(user)"
@@ -182,123 +180,123 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as mutations from '../../store/mutation-types'
-  import * as actions from '../../store/action-types'
-  import withSnackbar from '../mixins/withSnackbar'
-  import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
-  import ShowUserIcon from './ShowUserIconComponent.vue'
-  import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
-  import UserAvatar from '../ui/UserAvatarComponent'
-  import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
-  import axios from 'axios'
+import { mapGetters } from 'vuex'
+import * as mutations from '../../store/mutation-types'
+import * as actions from '../../store/action-types'
+import withSnackbar from '../mixins/withSnackbar'
+import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
+import ShowUserIcon from './ShowUserIconComponent.vue'
+import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
+import UserAvatar from '../ui/UserAvatarComponent'
+import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
+import axios from 'axios'
 
-  export default {
-    mixins: [withSnackbar, SendsWelcomeEmail],
-    components: {
-      'confirm-icon': ConfirmIcon,
-      'show-user-icon': ShowUserIcon,
-      'manage-corporative-email-icon': ManageCorporativeEmailIcon,
-      'user-avatar': UserAvatar
+export default {
+  mixins: [withSnackbar, SendsWelcomeEmail],
+  components: {
+    'confirm-icon': ConfirmIcon,
+    'show-user-icon': ShowUserIcon,
+    'manage-corporative-email-icon': ManageCorporativeEmailIcon,
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      showDeleteUserDialog: false,
+      search: '',
+      deleting: false,
+      refreshing: false,
+      headers: [
+        { text: 'Id', align: 'left', value: 'id' },
+        { text: 'Avatar', value: 'photo', sortable: false },
+        { text: 'Name', value: 'name' },
+        { text: 'Email', value: 'email' },
+        { text: 'Verificat', value: 'email_verified_at' },
+        { text: 'Email corporatiu', value: 'corporativeEmail' },
+        { text: 'Mòbil', value: 'mobile' },
+        { text: 'Últim login', value: 'last_login' },
+        { text: 'Rols', value: 'roles', sortable: false },
+        { text: 'Data creació', value: 'created_at_timestamp' },
+        { text: 'Data actualització', value: 'updated_at_timestamp' },
+        { text: 'Accions', sortable: false }
+      ],
+      sendingResetPassword: false,
+      sendingEmailConfirmation: false
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      internalUsers: 'users'
+    })
+  },
+  methods: {
+    formatBoolean (boolean) {
+      return boolean ? 'Sí' : 'No'
     },
-    data () {
-      return {
-        showDeleteUserDialog: false,
-        search: '',
-        deleting: false,
-        refreshing: false,
-        headers: [
-          {text: 'Id', align: 'left', value: 'id'},
-          {text: 'Avatar', value: 'photo', sortable: false},
-          {text: 'Name', value: 'name'},
-          {text: 'Email', value: 'email'},
-          {text: 'Verificat', value: 'email_verified_at'},
-          {text: 'Email corporatiu', value: 'corporativeEmail'},
-          {text: 'Mòbil', value: 'mobile'},
-          {text: 'Últim login', value: 'last_login'},
-          {text: 'Rols', value: 'roles', sortable: false},
-          {text: 'Data creació', value: 'created_at_timestamp'},
-          {text: 'Data actualització', value: 'updated_at_timestamp'},
-          {text: 'Accions', sortable: false}
-        ],
-        sendingResetPassword: false,
-        sendingEmailConfirmation: false
-      }
-    },
-    props: {
-      users: {
-        type: Array,
-        required: false
-      }
-    },
-    computed: {
-      ...mapGetters({
-        internalUsers: 'users'
+    refresh () {
+      this.refreshing = true
+      this.$store.dispatch(actions.FETCH_USERS).then(response => {
+        this.refreshing = false
+        this.showMessage('Usuaris actualizats correctament')
+      }).catch(error => {
+        this.refreshing = false
+        this.showError(error)
       })
     },
-    methods: {
-      formatBoolean (boolean) {
-        return boolean ? 'Sí' : 'No'
-      },
-      refresh () {
-        this.refreshing = true
-        this.$store.dispatch(actions.FETCH_USERS).then(response => {
-          this.refreshing = false
-          this.showMessage('Usuaris actualizats correctament')
-        }).catch(error => {
-          this.refreshing = false
-          this.showError(error)
-        })
-      },
-      settings () {
-        console.log('settings TODO') // TODO
-      },
-      sendResetPasswordEmail (user) {
-        this.sendingResetPassword = true
-        axios.post('password/email', {
-          email: user.email
-        }).then(response => {
-          this.sendingResetPassword = false
-          this.showMessage(`Correu electrònic enviat correctament`)
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
-        })
-      },
-      sendEmailConfirmation (user) {
-        this.sendingEmailConfirmation = true
-        this.$store.dispatch(actions.CONFIRM_USER_EMAIL, user).then(response => {
-          this.showMessage(`Correu electrònic enviat per tal de confirmar el email`)
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
-          this.sendingEmailConfirmation = false
-        })
-      },
-      formatRoles (user) {
-        return Object.values(user.roles).join(', ')
-      },
-      showConfirmationDialog (user) {
-        this.currentUser = user
-        this.showDeleteUserDialog = true
-      },
-      deleteUser () {
-        this.deleting = true
-        this.$store.dispatch(actions.DELETE_USER, this.currentUser).then(response => {
-          this.deleting = false
-          this.showDeleteUserDialog = false
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
-          this.deleting = false
-        }).then(() => {
-          this.deleting = false
-        })
-      }
+    settings () {
+      console.log('settings TODO') // TODO
     },
-    created () {
-      this.$store.commit(mutations.SET_USERS, this.users)
+    sendResetPasswordEmail (user) {
+      this.sendingResetPassword = true
+      axios.post('password/email', {
+        email: user.email
+      }).then(response => {
+        this.sendingResetPassword = false
+        this.showMessage(`Correu electrònic enviat correctament`)
+      }).catch(error => {
+        console.log(error)
+        this.showError(error)
+      })
+    },
+    sendEmailConfirmation (user) {
+      this.sendingEmailConfirmation = true
+      this.$store.dispatch(actions.CONFIRM_USER_EMAIL, user).then(response => {
+        this.showMessage(`Correu electrònic enviat per tal de confirmar el email`)
+      }).catch(error => {
+        console.dir(error)
+        this.showError(error)
+      }).then(() => {
+        this.sendingEmailConfirmation = false
+      })
+    },
+    formatRoles (user) {
+      return Object.values(user.roles).join(', ')
+    },
+    showConfirmationDialog (user) {
+      this.currentUser = user
+      this.showDeleteUserDialog = true
+    },
+    deleteUser () {
+      this.deleting = true
+      this.$store.dispatch(actions.DELETE_USER, this.currentUser).then(response => {
+        this.deleting = false
+        this.showDeleteUserDialog = false
+      }).catch(error => {
+        console.log(error)
+        this.showError(error)
+        this.deleting = false
+      }).then(() => {
+        this.deleting = false
+      })
     }
+  },
+  created () {
+    this.$store.commit(mutations.SET_USERS, this.users)
   }
+}
 </script>
