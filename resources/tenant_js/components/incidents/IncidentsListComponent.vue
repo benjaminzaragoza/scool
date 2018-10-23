@@ -54,10 +54,10 @@
                         <td class="text-xs-left" v-html="incident.id"></td>
                         <td class="text-xs-left" :title="incident.user_email" v-html="incident.username"></td>
                         <td>
-                            <inline-text-field-edit-dialog v-model="incident" field="subject"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="incident" field="subject" label="Descripció"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left" :title="incident.description">
-                            <inline-text-area-edit-dialog v-model="incident" field="description"></inline-text-area-edit-dialog>
+                            <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció"></inline-text-area-edit-dialog>
                         </td>
                         <td class="text-xs-left" v-html="incident.formatted_closed_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at"></td>

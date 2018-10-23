@@ -1,5 +1,6 @@
 <template>
     <v-edit-dialog
+            full-width
             :return-value.sync="value"
             lazy
             @save="save"
@@ -10,8 +11,11 @@
                 slot="input"
                 v-model="value"
                 :rules="valueRules"
-                label="Edit"
-                single-line
+                :label="label"
+                auto-grow
+                clearable
+                rows="15"
+                cols="75"
                 cancel-text="Cancel·lar"
                 save-text="Guardar"
         ></v-textarea>
@@ -48,6 +52,10 @@ export default {
     field: {
       type: String,
       required: true
+    },
+    label: {
+      type: String,
+      default: this.field
     }
   },
   methods: {

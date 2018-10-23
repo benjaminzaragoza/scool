@@ -8,7 +8,7 @@
                 v-focus
                 v-model="value"
                 slot="input"
-                label="Edit"
+                :label="this.label"
                 single-line
                 :rules="valueRules"
         ></v-text-field>
@@ -45,6 +45,10 @@ export default {
     field: {
       type: String,
       required: true
+    },
+    label: {
+      type: String,
+      default: this.field
     }
   },
   methods: {
