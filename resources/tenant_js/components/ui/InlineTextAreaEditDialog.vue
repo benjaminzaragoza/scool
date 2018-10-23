@@ -1,17 +1,20 @@
-<template>
+<template class="limit">
     <v-edit-dialog
             :return-value.sync="value"
             lazy
             @save="save"
+            large
     > {{ value }}
-        <v-text-field
+        <v-textarea
                 v-focus
-                v-model="value"
                 slot="input"
+                v-model="value"
+                :rules="valueRules"
                 label="Edit"
                 single-line
-                :rules="valueRules"
-        ></v-text-field>
+                cancel-text="Cancel·lar"
+                save-text="Guardar"
+        ></v-textarea>
     </v-edit-dialog>
 </template>
 
@@ -53,9 +56,9 @@ export default {
     },
     save () {
       if (!this.$v.$invalid) {
-        window.axios.put(this.url(), {
-          subject: this.value
-        }).then(() => {
+        const data = {}
+        data[this.field] = this.value
+        window.axios.put(this.url(), data).then(() => {
           this.$emit('save', this.value)
         }).catch(error => {
           console.log(error)
@@ -66,3 +69,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+    .limit {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

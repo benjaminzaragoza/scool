@@ -123,174 +123,174 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import withSnackbar from '../mixins/withSnackbar'
-  import { required, maxLength, requiredIf, numeric } from 'vuelidate/lib/validators'
-  import * as actions from '../../store/action-types'
-  import JobTypeSelect from './JobTypeSelectComponent.vue'
-  import SpecialtySelect from '../specialties/SpecialtySelectComponent'
-  import FamilySelect from '../families/FamilySelectComponent'
-  import UserSelect from '../users/UsersSelectComponent.vue'
-  import axios from 'axios'
+import { validationMixin } from 'vuelidate'
+import withSnackbar from '../mixins/withSnackbar'
+import { required, maxLength, requiredIf, numeric } from 'vuelidate/lib/validators'
+import * as actions from '../../store/action-types'
+import JobTypeSelect from './JobTypeSelectComponent.vue'
+import SpecialtySelect from '../specialties/SpecialtySelectComponent'
+import FamilySelect from '../families/FamilySelectComponent'
+import UserSelect from '../users/UsersSelectComponent.vue'
+import axios from 'axios'
 
-  export default {
-    mixins: [validationMixin, withSnackbar],
-    components: {
-      'job-type-select': JobTypeSelect,
-      'specialty-select': SpecialtySelect,
-      'family-select': FamilySelect,
-      'user-select': UserSelect
-    },
-    validations: {
-      code: {required, maxLength: maxLength(4)},
-      jobType: {required},
-      specialty: {requiredIf: requiredIf((component) => {
-        return component.jobType === component.teacherId
-      })},
-      order: {required, numeric}
-    },
-    data () {
-      return {
-        dialog: false,
-        error: false,
-        errors: [],
-        adding: false,
-        jobType: null,
-        specialty: null,
-        code: this.proposedCode,
-        family: null,
-        holder: null,
-        notes: '',
-        order: 1,
-        internalUsers: this.users
-      }
-    },
-    props: {
-      proposedCode: {
-        type: String,
-        required: false
-      },
-      teacherType: {
-        type: String,
-        required: true
-      },
-      jobTypes: {
-        type: Array,
-        required: true
-      },
-      specialties: {
-        type: Array,
-        required: true
-      },
-      families: {
-        type: Array,
-        required: true
-      },
-      users: {
-        type: Array,
-        required: true
-      }
-    },
-    watch: {
-      specialty: function (newSpecialty) {
-        if (newSpecialty) this.family = this.getSpecialty(newSpecialty.id).family_id
-        else this.family = null
-      },
-      users () {
-        this.internalUsers = this.users
-      }
-    },
-    computed: {
-      isTeacher () {
-        return this.jobType && (this.jobType === this.teacherId)
-      },
-      codeErrors () {
-        const errors = []
-        if (!this.$v.code.$dirty) return errors
-        !this.$v.code.maxLength && errors.push('El codi ha de tenir com a màxim 4 caràcters.')
-        !this.$v.code.required && errors.push('El codi és obligatori.')
-        return errors
-      },
-      jobTypeErrors () {
-        const errors = []
-        if (!this.$v.jobType.$dirty) return errors
-        this.$v.jobType.$error && errors.push('El tipus és obligatori.')
-        return errors
-      },
-      specialtyErrors () {
-        const errors = []
-        if (!this.$v.specialty.$dirty) return errors
-        this.$v.specialty.$error && errors.push('La especialitat és obligatoria si el tipus és professor/a.')
-        return errors
-      },
-      orderErrors () {
-        const errors = []
-        if (!this.$v.order.$dirty) return errors
-        this.$v.order.$error && errors.push('Cal indicar un ordre (enter positiu)')
-        return errors
-      }
-    },
-    methods: {
-      getSpecialty (specialtyId) {
-        return this.specialties.find(specialty => specialty.id === specialtyId)
-      },
-      add (close) {
-        close = close || false
-        if (!this.$v.$invalid) {
-          this.adding = true
-          this.$store.dispatch(actions.STORE_JOB, {
-            type: this.jobType,
-            code: this.code,
-            family: this.family,
-            specialty: this.specialty.id,
-            holder: this.holder,
-            order: this.order,
-            notes: this.notes
-          }).then(response => {
-            this.adding = false
-            this.showMessage('Plaça afegida correctament')
-            this.clear()
-            if (close) this.dialog = false
-          }).catch(error => {
-            this.adding = false
-            console.log(error)
-            if (error.status === 422) this.mapErrors(error.data.errors)
-            this.showError(error)
-          })
-        } else {
-          this.$v.$touch()
-        }
-      },
-      mapErrors (errors) {
-        this.error = true
-        Object.values(errors).forEach(error => {
-          this.errors.push(error)
-        })
-      },
-      clear () {
-        axios.get('/api/v1/jobs/nextAvailableCode').then(response => {
-          this.code = response.data
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
-        })
-        axios.get('/api/v1/available-users').then(response => {
-          this.internalUsers = response.data
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
-        })
-        this.jobType = this.teacherId
-        this.specialty = null
-        this.family = null
-        this.holder = null
-        this.order = 1
-        this.notes = ''
-      }
-    },
-    created () {
-      this.teacherId = this.jobTypes.find(jobType => jobType.name === 'Professor/a').id
-      this.jobType = this.teacherId
+export default {
+  mixins: [validationMixin, withSnackbar],
+  components: {
+    'job-type-select': JobTypeSelect,
+    'specialty-select': SpecialtySelect,
+    'family-select': FamilySelect,
+    'user-select': UserSelect
+  },
+  validations: {
+    code: { required, maxLength: maxLength(4) },
+    jobType: { required },
+    specialty: { requiredIf: requiredIf((component) => {
+      return component.jobType === component.teacherId
+    }) },
+    order: { required, numeric }
+  },
+  data () {
+    return {
+      dialog: false,
+      error: false,
+      errors: [],
+      adding: false,
+      jobType: null,
+      specialty: null,
+      code: this.proposedCode,
+      family: null,
+      holder: null,
+      notes: '',
+      order: 1,
+      internalUsers: this.users
     }
+  },
+  props: {
+    proposedCode: {
+      type: String,
+      required: false
+    },
+    teacherType: {
+      type: String,
+      required: true
+    },
+    jobTypes: {
+      type: Array,
+      required: true
+    },
+    specialties: {
+      type: Array,
+      required: true
+    },
+    families: {
+      type: Array,
+      required: true
+    },
+    users: {
+      type: Array,
+      required: true
+    }
+  },
+  watch: {
+    specialty: function (newSpecialty) {
+      if (newSpecialty) this.family = this.getSpecialty(newSpecialty.id).family_id
+      else this.family = null
+    },
+    users () {
+      this.internalUsers = this.users
+    }
+  },
+  computed: {
+    isTeacher () {
+      return this.jobType && (this.jobType === this.teacherId)
+    },
+    codeErrors () {
+      const errors = []
+      if (!this.$v.code.$dirty) return errors
+      !this.$v.code.maxLength && errors.push('El codi ha de tenir com a màxim 4 caràcters.')
+      !this.$v.code.required && errors.push('El codi és obligatori.')
+      return errors
+    },
+    jobTypeErrors () {
+      const errors = []
+      if (!this.$v.jobType.$dirty) return errors
+      this.$v.jobType.$error && errors.push('El tipus és obligatori.')
+      return errors
+    },
+    specialtyErrors () {
+      const errors = []
+      if (!this.$v.specialty.$dirty) return errors
+      this.$v.specialty.$error && errors.push('La especialitat és obligatoria si el tipus és professor/a.')
+      return errors
+    },
+    orderErrors () {
+      const errors = []
+      if (!this.$v.order.$dirty) return errors
+      this.$v.order.$error && errors.push('Cal indicar un ordre (enter positiu)')
+      return errors
+    }
+  },
+  methods: {
+    getSpecialty (specialtyId) {
+      return this.specialties.find(specialty => specialty.id === specialtyId)
+    },
+    add (close) {
+      close = close || false
+      if (!this.$v.$invalid) {
+        this.adding = true
+        this.$store.dispatch(actions.STORE_JOB, {
+          type: this.jobType,
+          code: this.code,
+          family: this.family,
+          specialty: this.specialty.id,
+          holder: this.holder,
+          order: this.order,
+          notes: this.notes
+        }).then(response => {
+          this.adding = false
+          this.showMessage('Plaça afegida correctament')
+          this.clear()
+          if (close) this.dialog = false
+        }).catch(error => {
+          this.adding = false
+          console.log(error)
+          if (error.status === 422) this.mapErrors(error.data.errors)
+          this.showError(error)
+        })
+      } else {
+        this.$v.$touch()
+      }
+    },
+    mapErrors (errors) {
+      this.error = true
+      Object.values(errors).forEach(error => {
+        this.errors.push(error)
+      })
+    },
+    clear () {
+      axios.get('/api/v1/jobs/nextAvailableCode').then(response => {
+        this.code = response.data
+      }).catch(error => {
+        console.log(error)
+        this.showError(error)
+      })
+      axios.get('/api/v1/available-users').then(response => {
+        this.internalUsers = response.data
+      }).catch(error => {
+        console.log(error)
+        this.showError(error)
+      })
+      this.jobType = this.teacherId
+      this.specialty = null
+      this.family = null
+      this.holder = null
+      this.order = 1
+      this.notes = ''
+    }
+  },
+  created () {
+    this.teacherId = this.jobTypes.find(jobType => jobType.name === 'Professor/a').id
+    this.jobType = this.teacherId
   }
+}
 </script>

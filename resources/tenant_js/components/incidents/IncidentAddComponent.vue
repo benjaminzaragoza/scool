@@ -89,23 +89,25 @@ export default {
       this.$emit('close')
     },
     add (close = false) {
-      this.adding = true
-      this.$store.dispatch(actions.ADD_INCIDENT, {
-        subject: this.subject,
-        description: this.description
-      }).then(response => {
-        this.$snackbar.showMessage('Incidència creada correctament')
-        this.adding = false
-        this.$emit('added', response.data)
-        if (close) this.close()
-      }).catch(error => {
-        console.log(error)
-        this.$snackbar.showError(error)
-        this.adding = false
-      })
+      if (!this.$v.$invalid) {
+        this.adding = true
+        this.$store.dispatch(actions.ADD_INCIDENT, {
+          subject: this.subject,
+          description: this.description
+        }).then(response => {
+          this.$snackbar.showMessage('Incidència creada correctament')
+          this.adding = false
+          this.$emit('added', response.data)
+          if (close) this.close()
+        }).catch(error => {
+          console.log(error)
+          this.$snackbar.showError(error)
+          this.adding = false
+        })
+      }
     }
   },
-  mounted() {
+  mounted () {
     this.$nextTick(this.$refs.subject_field.focus)
   }
 }
