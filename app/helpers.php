@@ -1,7 +1,6 @@
 <?php
 
 use App\GoogleGSuite\GoogleDirectory;
-use App\Http\Resources\UserResource;
 use App\Models\Address;
 use App\Models\AdministrativeStatus;
 use App\Models\Course;
@@ -604,7 +603,7 @@ if (!function_exists('get_tenant')) {
 if (!function_exists('formatted_logged_user')) {
     function formatted_logged_user()
     {
-        return json_encode((new UserResource(Auth::user()))->resolve());
+        return json_encode(optional(Auth::user())->map());
     }
 }
 

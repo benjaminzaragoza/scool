@@ -35,8 +35,35 @@ class PendingTeachersControllerTest extends BaseTenantTest
     }
 
     /** @test */
+    public function logged_users_can_see_create_pending_teacher()
+    {
+        initialize_tenant_roles_and_permissions();
+        initialize_user_types();
+        initialize_job_types();
+        initialize_forces();
+        initialize_departments();
+        initialize_families();
+        initialize_specialities();
+        initialize_users();
+        initialize_teachers();
+
+        $user= factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/add_teacher');
+        $response->assertSuccessful();
+
+        $response->assertViewIs('tenants.teacher.pending.show_form');
+        $response->assertViewHas('specialties');
+        $response->assertViewHas('forces');
+        $response->assertViewHas('administrative_statuses');
+        $response->assertViewHas('teachers');
+    }
+
+    /** @test */
     public function users_can_see_create_pending_teacher()
     {
+        $this->withoutExceptionHandling();
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();

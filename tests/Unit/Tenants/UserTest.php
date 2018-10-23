@@ -22,6 +22,7 @@ use App\Models\User;
 use Cache;
 use Carbon\Carbon;
 use Config;
+use Gate;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -867,6 +868,10 @@ class UserTest extends TestCase
         $user->givePermissionTo('task.store');
         $user->givePermissionTo('task.update');
         $user->givePermissionTo('task.destroy');
+
+        Cache::shouldReceive('rememberForever')
+            ->andReturn($user->getAllPermissions());
+
         $this->assertNotNull($user->all_permissions);
         $this->assertInstanceOf(Collection::class,$user->all_permissions);
         $this->assertCount(3,$user->all_permissions);
@@ -882,6 +887,11 @@ class UserTest extends TestCase
         Permission::create(['name' => 'task.update']);
         Permission::create(['name' => 'task.destroy']);
         Permission::create(['name' => 'task.index']);
+
+        Cache::shouldReceive('rememberForever')
+            ->once()
+            ->andReturn(Permission::all());
+
         $user = factory(User::class)->create();
         $user->givePermissionTo('task.store');
         $can = $user->can;
@@ -892,5 +902,15 @@ class UserTest extends TestCase
         $this->assertFalse($can['task.update']);
         $this->assertFalse($can['task.destroy']);
         $this->assertFalse($can['task.index']);
+    }
+
+    /**
+     * @test
+     */
+    public function abilities_attribute()
+    {
+//        dump(Gate::abilities());
+        $user = factory(User::class)->create();
+        $abilities = $user->abilities;
     }
 }

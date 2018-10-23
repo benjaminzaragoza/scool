@@ -7,6 +7,7 @@ use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
 use Auth;
 use Cache;
+use Gate;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
@@ -689,7 +690,24 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function getAllPermissionsAttribute()
     {
-        return $this->getAllPermissions();
+        return Cache::rememberForever('user_all_permissions', function () {
+            return $this->getAllPermissions();
+        });
+    }
+
+    /**
+     * Get all user permissions.
+     *
+     * @return bool
+     */
+    public function getAbilitiesAttribute()
+    {
+        // TODO
+        $abilities = [];
+        foreach (Gate::abilities() as $ability) {
+            dump($ability);
+        }
+        return $abilities;
     }
 
     /**
@@ -697,7 +715,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function getCanAttribute()
     {
-        $permissions = Cache::rememberForever('permissions', function () {
+        $permissions = Cache::rememberForever('user_permissions', function () {
             return Permission::all();
         });
         $can = [];

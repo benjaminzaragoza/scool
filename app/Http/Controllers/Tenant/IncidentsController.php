@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Requests\ListIncidents;
 use App\Models\Incident;
+use Gate;
+use Spatie\Permission\Models\Permission;
 
 /**
  * Class IncidentsController.
@@ -20,8 +22,6 @@ class IncidentsController extends Controller{
      */
     public function index(ListIncidents $Request)
     {
-        // TODO
-//        create_fake_incidents();
         $incidents = Incident::getIncidents();
         return view('tenants.incidents.index',compact('incidents'));
     }
