@@ -658,6 +658,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'admin' => $this->admin,
             'hashid' => $this->hashid,
             'full_search' => $this->full_search,
+            'can' => $this->can,
+            'all_permissions' => $this->all_permissions
         ];
     }
 
@@ -698,7 +700,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         $permissions = Cache::rememberForever('permissions', function () {
             return Permission::all();
         });
-        $can = collect([]);
+        $can = [];
         foreach ($permissions as $permission) {
             if ($this->can($permission->name)) {
                 $can[$permission->name] = true;

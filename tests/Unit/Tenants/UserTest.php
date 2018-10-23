@@ -19,6 +19,7 @@ use App\Models\Job;
 use App\Models\JobType;
 use App\Models\Teacher;
 use App\Models\User;
+use Cache;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -794,6 +795,30 @@ class UserTest extends TestCase
         $this->assertNull($mappedUser['admin']);
         $this->assertEquals('MX',$mappedUser['hashid']);
         $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$mappedUser['full_search']);
+
+        //Permissions
+        Permission::create(['name' => 'task.store']);
+        Permission::create(['name' => 'task.update']);
+        Permission::create(['name' => 'task.destroy']);
+
+        Cache::shouldReceive('rememberForever')
+            ->once()
+            ->andReturn(Permission::all());
+        $user = factory(User::class)->create();
+
+        $user = $user->fresh();
+        $user->givePermissionTo('task.store');
+        $user->givePermissionTo('task.update');
+        $mappedUser = $user->map();
+
+        $this->assertCount(3,$mappedUser['can']);
+        $this->assertTrue($mappedUser['can']['task.store']);
+        $this->assertTrue($mappedUser['can']['task.update']);
+        $this->assertFalse($mappedUser['can']['task.destroy']);
+        $this->assertCount(2,$mappedUser['all_permissions']);
+        $this->assertEquals('task.store',$mappedUser['all_permissions']->toArray()[0]['name']);
+        $this->assertEquals('task.update',$mappedUser['all_permissions']->toArray()[1]['name']);
+
     }
 
     /** @test */
