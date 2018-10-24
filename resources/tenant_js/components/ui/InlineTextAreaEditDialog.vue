@@ -55,7 +55,7 @@ export default {
     },
     label: {
       type: String,
-      default: this.field
+      default: ''
     }
   },
   methods: {
