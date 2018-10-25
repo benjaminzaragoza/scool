@@ -91,6 +91,36 @@ describe.only('permissions.js', () => {
     // expect(wrapper.find('button').isVisible()).to.be.true
   })
 
+  it('show_update_button_when_user_have_permission_to_update_task_data', () => {
+    window.user = {
+      id: 1,
+      permissions: [
+        'task.update'
+      ]
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-can="permission"><button>Update</button></span>
+    </div>`,
+      data () {
+        return {
+          task: {
+            id: 1,
+            name: 'Comprar pa',
+            completed: false,
+            user_id: 45
+          },
+          permission: 'task.update'
+        }
+      }
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).to.have.string('<button>')
+
+    // expect(wrapper.find('button').isVisible()).to.be.true
+  })
+
   it('show_update_button_when_user_can_update_task_because_task_is_owned', () => {
     window.user = {
       id: 1
@@ -170,17 +200,7 @@ describe.only('permissions.js', () => {
       template: `
     <div>
       <span v-role="Manager"><button>Update</button></span>
-    </div>`,
-      data () {
-        return {
-          task: {
-            id: 1,
-            name: 'Comprar pa',
-            completed: false,
-            user_id: 45
-          }
-        }
-      }
+    </div>`
     }
     const wrapper = mount(Component, { localVue })
     expect(wrapper.html()).to.have.string('<button>')
@@ -195,15 +215,40 @@ describe.only('permissions.js', () => {
       template: `
     <div>
       <span v-role="Manager"><button>Update</button></span>
+    </div>`
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).not.to.have.string('<button>')
+  })
+
+  it('not_shows_update_button_if_user_have_incorrect_role', () => {
+    window.user = {
+      id: 1,
+      roles: [ 'Student' ]
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-role="Manager"><button>Update</button></span>
+    </div>`
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).not.to.have.string('<button>')
+  })
+
+  it('not_shows_update_button_if_user_doesnt_have_roles_data', () => {
+    window.user = {
+      id: 1,
+      roles: [ 'Student' ]
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-role="role"><button>Update</button></span>
     </div>`,
       data () {
         return {
-          task: {
-            id: 1,
-            name: 'Comprar pa',
-            completed: false,
-            user_id: 45
-          }
+          role: 'Manager'
         }
       }
     }
@@ -211,27 +256,23 @@ describe.only('permissions.js', () => {
     expect(wrapper.html()).not.to.have.string('<button>')
   })
 
-  it('not_shows_update_button_if_user_doesnt_have_roles', () => {
+  it('shows_update_button_if_user_have_correct_role_data', () => {
     window.user = {
-      id: 1
+      id: 1,
+      roles: [ 'Manager' ]
     }
     const Component = {
       template: `
     <div>
-      <span v-role="Manager"><button>Update</button></span>
+      <span v-role="role"><button>Update</button></span>
     </div>`,
       data () {
         return {
-          task: {
-            id: 1,
-            name: 'Comprar pa',
-            completed: false,
-            user_id: 45
-          }
+          role: 'Manager'
         }
       }
     }
     const wrapper = mount(Component, { localVue })
-    expect(wrapper.html()).not.to.have.string('<button>')
+    expect(wrapper.html()).to.have.string('<button>')
   })
 })

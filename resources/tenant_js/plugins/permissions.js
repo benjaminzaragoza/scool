@@ -52,15 +52,14 @@ export default {
         const action = binding.arg
         const resource = binding.value
         let permission
-
         if (resource instanceof Object) permission = binding.expression + '.' + action
-        else permission = binding.expression
+        else permission = binding.value || binding.expression
         if (!can(permission, resource)) disappear(el, binding.modifiers)
       }
     })
     Vue.directive('role', {
       bind (el, binding, vnode, oldVnode) {
-        const role = binding.expression
+        const role = binding.value || binding.expression
         if (!haveRole(role)) disappear(el, binding.modifiers)
       }
     })
