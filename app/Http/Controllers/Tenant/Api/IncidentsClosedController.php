@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Tenant\Api;
 
-use App\Http\Requests\CloseIncident;
-use App\Http\Requests\OpenIncident;
+use App\Http\Requests\Incidents\CloseIncident;
+use App\Http\Requests\Incidents\OpenIncident;
 use App\Models\Incident;
 use App\Http\Controllers\Controller;
 

@@ -636,9 +636,11 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             Role::firstOrCreate(['name' => $role]);
         }
 
+        // NOTA: només posar aqui permissos que no estiguin relacionats amb una habilitat/Gate Laravel
+        // Vegeu initialize_gates
         $permissions = [
-        ];
 
+        ];
 
         foreach ($permissions as $permission) {
             $permission = Permission::firstOrCreate(['name' => $permission]);
@@ -877,37 +879,36 @@ if (!function_exists('initialize_gates')) {
         });
 
         //INCIDENTS
-        Gate::define('list-incidents', function ($user) {
+        Gate::define('incident.list', function ($user) {
             return $user->hasRole('Incidents');
         });
 
-        Gate::define('store-incident', function ($user) {
+        Gate::define('incident.store', function ($user) {
             return $user->hasRole('Incidents');
         });
 
-        Gate::define('show-incident', function ($user) {
+        Gate::define('incident.show', function ($user) {
             return $user->hasRole('Incidents');
         });
 
-        Gate::define('close-incident', function ($user, $incident) {
+        Gate::define('incident.close', function ($user, $incident) {
             if($incident->user_id  == $user->id) return true;
             return $user->hasRole('IncidentsManager');
         });
 
-        Gate::define('open-incident', function ($user, $incident) {
+        Gate::define('incident.open', function ($user, $incident) {
             if($incident->user_id  == $user->id) return true;
             return $user->hasRole('IncidentsManager');
         });
 
-        Gate::define('delete-incident', function ($user) {
+        Gate::define('incident.delete', function ($user) {
             return $user->hasRole('IncidentsManager');
         });
 
-        Gate::define('update-incident', function ($user, $incident) {
+        Gate::define('incident.update', function ($user, $incident) {
             if($incident->user_id  == $user->id) return true;
             return $user->hasRole('IncidentsManager');
         });
-
     }
 }
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Incidents;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateSubjectIncident.
+ * Class UpdateDescriptionIncident.
  *
  * @package App\Http\Requests
  */
-class UpdateSubjectIncident extends FormRequest
+class UpdateDescriptionIncident extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class UpdateSubjectIncident extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('update-incident', $this->incident);
+        return Auth::user()->can('incident.update', $this->incident);
     }
 
     /**
@@ -29,6 +29,6 @@ class UpdateSubjectIncident extends FormRequest
      */
     public function rules()
     {
-        return ['subject' => 'required'];
+        return ['description' => 'required'];
     }
 }

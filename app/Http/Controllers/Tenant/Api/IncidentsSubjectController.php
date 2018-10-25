@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateSubjectIncident;
+use App\Http\Requests\Incidents\UpdateSubjectIncident;
 use App\Models\Incident;
 
 /**

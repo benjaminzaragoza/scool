@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Incidents;
 
-use Auth;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class StoreIncident.
- *
+ * Class ListIncidents
  * @package App\Http\Requests
  */
-class StoreIncident extends FormRequest
+class ListIncidents extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +18,7 @@ class StoreIncident extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('store-incident');
+        return Gate::allows('incident.list');
     }
 
     /**
@@ -30,8 +29,7 @@ class StoreIncident extends FormRequest
     public function rules()
     {
         return [
-            'subject' => 'required',
-            'description' => 'required'
+            //
         ];
     }
 }

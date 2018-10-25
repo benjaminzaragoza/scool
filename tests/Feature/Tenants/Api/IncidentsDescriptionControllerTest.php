@@ -38,6 +38,7 @@ class IncidentsDescriptionController extends BaseTenantTest {
      */
     public function manager_can_update_incident_description()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);

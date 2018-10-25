@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Incidents;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -19,7 +19,7 @@ class OpenIncident extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('open-incident',$this->incident);
+        return Auth::user()->can('incident.open',$this->incident);
     }
 
     /**

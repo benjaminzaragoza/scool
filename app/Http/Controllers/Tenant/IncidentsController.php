@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\Http\Requests\ListIncidents;
+use App\Http\Requests\Incidents\ListIncidents;
 use App\Models\Incident;
 use Gate;
-use Spatie\Permission\Models\Permission;
 
 /**
  * Class IncidentsController.

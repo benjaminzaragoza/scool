@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Tenant\Api;
 
-use App\Http\Requests\DeleteIncident;
-use App\Http\Requests\ListIncidents;
-use App\Http\Requests\ShowIncident;
-use App\Http\Requests\StoreIncident;
+use App\Http\Requests\Incidents\DeleteIncident;
+use App\Http\Requests\Incidents\ListIncidents;
+use App\Http\Requests\Incidents\ShowIncident;
+use App\Http\Requests\Incidents\StoreIncident;
 use App\Models\Incident;
-use App\Tenant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

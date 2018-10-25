@@ -54,7 +54,10 @@ export default {
         const resource = binding.value
         let permission
         if (resource instanceof Object) permission = binding.expression + '.' + action
-        else permission = binding.value || binding.expression
+        else {
+          if (binding.value === null) return true
+          permission = binding.value || binding.expression
+        }
         if (!can(permission, resource)) disappear(el, binding.modifiers)
       }
     })

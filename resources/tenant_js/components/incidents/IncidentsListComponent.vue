@@ -63,8 +63,8 @@
                         <td class="text-xs-left" v-html="incident.formatted_created_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_updated_at"></td>
                         <td class="text-xs-left">
-                            <incident-close :incident="incident"></incident-close>
-                            <incident-delete :incident="incident"></incident-delete>
+                            <incident-close :incident="incident" v-can:close="incident"></incident-close>
+                            <incident-delete :incident="incident" v-can:delete="incident"></incident-delete>
                         </td>
                     </tr>
                 </template>
