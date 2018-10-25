@@ -10,6 +10,7 @@ describe.only('permissions.js', () => {
     localVue.use(Permissions)
     expect(localVue.prototype.$can).to.be.a('function')
     expect(localVue.prototype.$cannot).to.be.a('function')
+    expect(localVue.prototype.$haveRole).to.be.a('function')
   })
 
   it('show_hidden_update_button_when_user_dont_have_permission_to_update_task_and_hidden_modifier_is_active', () => {
@@ -158,5 +159,79 @@ describe.only('permissions.js', () => {
     }
     const wrapper = mount(Component, { localVue })
     expect(wrapper.html()).to.not.have.string('<button>')
+  })
+
+  it('shows_update_button_if_user_have_correct_role', () => {
+    window.user = {
+      id: 1,
+      roles: [ 'Manager' ]
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-role="Manager"><button>Update</button></span>
+    </div>`,
+      data () {
+        return {
+          task: {
+            id: 1,
+            name: 'Comprar pa',
+            completed: false,
+            user_id: 45
+          }
+        }
+      }
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).to.have.string('<button>')
+  })
+
+  it('not_shows_update_button_if_user_have_incorrect_role', () => {
+    window.user = {
+      id: 1,
+      roles: [ 'Student' ]
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-role="Manager"><button>Update</button></span>
+    </div>`,
+      data () {
+        return {
+          task: {
+            id: 1,
+            name: 'Comprar pa',
+            completed: false,
+            user_id: 45
+          }
+        }
+      }
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).not.to.have.string('<button>')
+  })
+
+  it('not_shows_update_button_if_user_doesnt_have_roles', () => {
+    window.user = {
+      id: 1
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-role="Manager"><button>Update</button></span>
+    </div>`,
+      data () {
+        return {
+          task: {
+            id: 1,
+            name: 'Comprar pa',
+            completed: false,
+            user_id: 45
+          }
+        }
+      }
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).not.to.have.string('<button>')
   })
 })

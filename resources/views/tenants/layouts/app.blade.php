@@ -27,7 +27,7 @@
     >
         <v-list dense>
             <template v-for="(item, i) in items">
-                <template v-if="checkRoles(item)">
+                <template v-role="item.role">
                     <v-layout
                             row
                             v-if="item.heading"

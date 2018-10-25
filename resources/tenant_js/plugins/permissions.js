@@ -12,6 +12,15 @@ const disappear = (el, modifiers) => {
   el.innerHTML = ''
 }
 
+const haveRole = (role) => {
+  const userRoles = window.user && window.user.roles
+  if (userRoles) {
+    if (userRoles.indexOf(role) === -1) return false
+    else return true
+  }
+  return false
+}
+
 const can = (permission, resource = null) => {
   const user = window.user
   const userPermissions = window.user && window.user.permissions
@@ -49,8 +58,15 @@ export default {
         if (!can(permission, resource)) disappear(el, binding.modifiers)
       }
     })
+    Vue.directive('role', {
+      bind (el, binding, vnode, oldVnode) {
+        const role = binding.expression
+        if (!haveRole(role)) disappear(el, binding.modifiers)
+      }
+    })
     // If authorID id is equal to current userId permission is always granted
     Vue.prototype.$can = can
     Vue.prototype.$cannot = cannot
+    Vue.prototype.$haveRole = haveRole
   }
 }
