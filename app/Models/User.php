@@ -23,6 +23,7 @@ use Session;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Storage;
 
@@ -651,7 +652,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'last_login_ip' => $this->last_login_ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'roles' => $this->roles->pluck('name')->unique()->toArray(),
+            'roles' => $this->userRoles(),
+            'permissions' => $this->userPermissions(),
             'formatted_created_at' => $this->formatted_created_at,
             'formatted_updated_at' => $this->formatted_updated_at,
             'created_at_timestamp' => $this->created_at_timestamp,
@@ -662,6 +664,32 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'can' => $this->can,
             'all_permissions' => $this->all_permissions
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function userPermissions()
+    {
+        if ($this->isSuperAdmin()) {
+            return Cache::rememberForever('permissionNames', function () {
+                return Permission::all()->pluck('name')->unique()->toArray();
+            });
+        }
+        return $this->permissions->pluck('name')->unique()->toArray();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function userRoles()
+    {
+        if ($this->isSuperAdmin()) {
+            return Cache::rememberForever('roleNames', function () {
+                return Role::all()->pluck('name')->unique()->toArray();
+            });
+        }
+        return $this->roles->pluck('name')->unique()->toArray();
     }
 
     /**
@@ -705,7 +733,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         // TODO
         $abilities = [];
         foreach (Gate::abilities() as $ability) {
-            dump($ability);
+//            dump($ability);
         }
         return $abilities;
     }
@@ -715,7 +743,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function getCanAttribute()
     {
-        $permissions = Cache::rememberForever('user_permissions', function () {
+        $permissions = Cache::rememberForever('permissions', function () {
             return Permission::all();
         });
         $can = [];

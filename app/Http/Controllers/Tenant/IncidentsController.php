@@ -20,7 +20,7 @@ class IncidentsController extends Controller{
      * @param ListIncidents $Request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(ListIncidents $Request)
+    public function index(ListIncidents $request)
     {
         $incidents = Incident::getIncidents();
         return view('tenants.incidents.index',compact('incidents'));

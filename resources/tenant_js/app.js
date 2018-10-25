@@ -10,6 +10,7 @@ import FullCalendar from 'vue-full-calendar'
 import store from './store'
 import * as mutations from './store/mutation-types'
 import snackbar from './plugins/snackbar'
+import permissions from './plugins/permissions'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -18,6 +19,7 @@ import './bootstrap'
 window.Vue = Vue
 
 window.Vue.use(snackbar)
+window.Vue.use(permissions)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

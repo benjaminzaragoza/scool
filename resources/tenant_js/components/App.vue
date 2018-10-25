@@ -51,7 +51,7 @@ export default {
     },
     checkRoles (item) {
       if (item.role) {
-        return this.$store.getters.roles.find(function (role) {
+        return this.$store.getters.userRoles.find(function (role) {
             return role == item.role // eslint-disable-line
         })
       }

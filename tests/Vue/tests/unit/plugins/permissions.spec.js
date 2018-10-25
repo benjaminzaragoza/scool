@@ -3,20 +3,20 @@ import Permissions from '../../../../../resources/tenant_js/plugins/permissions'
 import { expect } from 'chai'
 import { createLocalVue, mount } from '@vue/test-utils'
 
-describe('permissions.js', () => {
+describe.only('permissions.js', () => {
   let localVue
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Permissions)
     expect(localVue.prototype.$can).to.be.a('function')
+    expect(localVue.prototype.$cannot).to.be.a('function')
   })
 
   it('show_hidden_update_button_when_user_dont_have_permission_to_update_task_and_hidden_modifier_is_active', () => {
-    window.Laravel = {
-      user: {
-        id: 1
-      }
+    window.user = {
+      id: 1
     }
+
     const Component = {
       template: `
     <div>
@@ -38,10 +38,8 @@ describe('permissions.js', () => {
   })
 
   it('show_disabled_update_button_when_user_dont_have_permission_to_update_task_and_disabled_modifier_is_active', () => {
-    window.Laravel = {
-      user: {
-        id: 1
-      }
+    window.user = {
+      id: 1
     }
     const Component = {
       template: `
@@ -64,13 +62,11 @@ describe('permissions.js', () => {
   })
 
   it('show_update_button_when_user_have_permission_to_update_task', () => {
-    window.Laravel = {
-      user: {
-        id: 1,
-        permissions: [
-          'task.update'
-        ]
-      }
+    window.user = {
+      id: 1,
+      permissions: [
+        'task.update'
+      ]
     }
     const Component = {
       template: `
@@ -95,11 +91,10 @@ describe('permissions.js', () => {
   })
 
   it('show_update_button_when_user_can_update_task_because_task_is_owned', () => {
-    window.Laravel = {
-      user: {
-        id: 1
-      }
+    window.user = {
+      id: 1
     }
+
     const Component = {
       template: `
     <div>
@@ -121,10 +116,8 @@ describe('permissions.js', () => {
   })
 
   it('not_shows_update_button_when_user_not_owns_the_task_and_dont_have_permissions_to_update_task', () => {
-    window.Laravel = {
-      user: {
-        id: 1
-      }
+    window.user = {
+      id: 1
     }
     const Component = {
       template: `

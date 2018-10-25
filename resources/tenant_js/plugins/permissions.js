@@ -13,8 +13,8 @@ const disappear = (el, modifiers) => {
 }
 
 const can = (permission, resource = null) => {
-  const user = window.Laravel && window.Laravel.user
-  const userPermissions = window.Laravel && window.Laravel.user && window.Laravel.user.permissions
+  const user = window.user
+  const userPermissions = window.user && window.user.permissions
 
   if (resource instanceof Object) {
     if (user.id === resource.user_id) {
@@ -25,6 +25,10 @@ const can = (permission, resource = null) => {
     if (userPermissions.indexOf(permission) === -1) return false
     return true
   } else return false
+}
+
+const cannot = (permission, resource = null) => {
+  return !can(permission, resource)
 }
 
 export default {
@@ -47,5 +51,6 @@ export default {
     })
     // If authorID id is equal to current userId permission is always granted
     Vue.prototype.$can = can
+    Vue.prototype.$cannot = cannot
   }
 }

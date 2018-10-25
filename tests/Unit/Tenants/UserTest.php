@@ -26,6 +26,7 @@ use Gate;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Mockery\Matcher\Closure;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Storage;
@@ -751,6 +752,58 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function map_roles_and_permissions_in_admin()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+        $user->admin = true;
+
+        Permission::create(['name' => 'task.store']);
+        Permission::create(['name' => 'task.update']);
+        Permission::create(['name' => 'task.destroy']);
+
+        Role::create(['name' => 'Manager']);
+        Role::create(['name' => 'Student']);
+        Role::create(['name' => 'Teacher']);
+        Role::create(['name' => 'Director']);
+
+        Cache::shouldReceive('rememberForever')
+            ->with('roleNames',\Closure::class)
+            ->once()
+            ->andReturn(Role::all()->pluck('name')->unique()->toArray());
+        Cache::shouldReceive('rememberForever')
+            ->with('permissionNames',\Closure::class)
+            ->once()
+            ->andReturn(Permission::all()->pluck('name')->unique()->toArray());
+
+        Cache::shouldReceive('rememberForever')
+            ->with('permissions',\Closure::class)
+            ->once()
+            ->andReturn(Permission::all());
+
+        Cache::shouldReceive('rememberForever')
+            ->with('user_all_permissions',\Closure::class)
+            ->once()
+            ->andReturn($user->getAllPermissions());
+
+        $mappedUser = $user->map();
+
+        $this->assertCount(3,$mappedUser['permissions']);
+        $this->assertEquals('task.store',$mappedUser['permissions'][0]);
+        $this->assertEquals('task.update',$mappedUser['permissions'][1]);
+        $this->assertEquals('task.destroy',$mappedUser['permissions'][2]);
+        $this->assertCount(4,$mappedUser['roles']);
+        $this->assertEquals('Manager',$mappedUser['roles'][0]);
+        $this->assertEquals('Student',$mappedUser['roles'][1]);
+        $this->assertEquals('Teacher',$mappedUser['roles'][2]);
+        $this->assertEquals('Director',$mappedUser['roles'][3]);
+
+    }
+
+    /** @test */
     public function map()
     {
         $user = factory(User::class)->create([
@@ -797,29 +850,46 @@ class UserTest extends TestCase
         $this->assertEquals('MX',$mappedUser['hashid']);
         $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$mappedUser['full_search']);
 
-        //Permissions
+        //All Permissions i Permissions
         Permission::create(['name' => 'task.store']);
         Permission::create(['name' => 'task.update']);
         Permission::create(['name' => 'task.destroy']);
 
         Cache::shouldReceive('rememberForever')
-            ->once()
             ->andReturn(Permission::all());
         $user = factory(User::class)->create();
 
-        $user = $user->fresh();
         $user->givePermissionTo('task.store');
         $user->givePermissionTo('task.update');
         $mappedUser = $user->map();
+
+        $this->assertCount(2,$mappedUser['permissions']);
+        $this->assertEquals('task.store',$mappedUser['permissions'][0]);
+        $this->assertEquals('task.update',$mappedUser['permissions'][1]);
 
         $this->assertCount(3,$mappedUser['can']);
         $this->assertTrue($mappedUser['can']['task.store']);
         $this->assertTrue($mappedUser['can']['task.update']);
         $this->assertFalse($mappedUser['can']['task.destroy']);
-        $this->assertCount(2,$mappedUser['all_permissions']);
+        $this->assertCount(3,$mappedUser['all_permissions']);
         $this->assertEquals('task.store',$mappedUser['all_permissions']->toArray()[0]['name']);
         $this->assertEquals('task.update',$mappedUser['all_permissions']->toArray()[1]['name']);
 
+
+        //Roles
+        Role::create(['name' => 'Manager']);
+        Role::create(['name' => 'Student']);
+        Role::create(['name' => 'Teacher']);
+
+        $user = factory(User::class)->create();
+
+        $user->assignRole('Manager');
+        $user->assignRole('Student');
+        $mappedUser = $user->map();
+
+        $this->assertCount(2,$mappedUser['roles']);
+        $this->assertEquals('Manager',$mappedUser['roles'][0]);
+        $this->assertEquals('Student',$mappedUser['roles'][1]);
     }
 
     /** @test */
