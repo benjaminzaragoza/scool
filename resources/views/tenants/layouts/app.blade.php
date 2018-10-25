@@ -27,7 +27,7 @@
     >
         <v-list dense>
             <template v-for="(item, i) in items">
-                <template v-role="item.role">
+                <template v-if="$haveRole(item.role)">
                     <v-layout
                             row
                             v-if="item.heading"

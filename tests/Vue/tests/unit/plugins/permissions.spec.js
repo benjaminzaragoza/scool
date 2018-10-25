@@ -3,7 +3,7 @@ import Permissions from '../../../../../resources/tenant_js/plugins/permissions'
 import { expect } from 'chai'
 import { createLocalVue, mount } from '@vue/test-utils'
 
-describe.only('permissions.js', () => {
+describe('permissions.js', () => {
   let localVue
   beforeEach(() => {
     localVue = createLocalVue()
@@ -269,6 +269,26 @@ describe.only('permissions.js', () => {
       data () {
         return {
           role: 'Manager'
+        }
+      }
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).to.have.string('<button>')
+  })
+
+  it('shows_update_button_if_role_is_null', () => {
+    window.user = {
+      id: 1,
+      roles: [ 'Manager' ]
+    }
+    const Component = {
+      template: `
+    <div>
+      <span v-role="role"><button>Update</button></span>
+    </div>`,
+      data () {
+        return {
+          role: null
         }
       }
     }

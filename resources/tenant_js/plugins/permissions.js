@@ -13,6 +13,7 @@ const disappear = (el, modifiers) => {
 }
 
 const haveRole = (role) => {
+  if (role == null) return true
   const userRoles = window.user && window.user.roles
   if (userRoles) {
     if (userRoles.indexOf(role) === -1) return false
@@ -59,6 +60,7 @@ export default {
     })
     Vue.directive('role', {
       bind (el, binding, vnode, oldVnode) {
+        if (binding.value === null) return true
         const role = binding.value || binding.expression
         if (!haveRole(role)) disappear(el, binding.modifiers)
       }
