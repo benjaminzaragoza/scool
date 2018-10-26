@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Job;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -19,7 +20,7 @@ class ShowJobsManagement extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('show-jobs');
+        return Auth::user()->can('show-jobs',Job::class);
     }
 
     /**

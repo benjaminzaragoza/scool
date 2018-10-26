@@ -635,9 +635,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function map()
     {
+//        dd((boolean)$this->admin);
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
             'givenName' => optional($this->person)->givenName,
             'sn1' => optional($this->person)->sn1,
             'sn2' => optional($this->person)->sn2,
@@ -652,6 +654,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'last_login_ip' => $this->last_login_ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+//            'roles' => [],
+//            'permissions' => [],
             'roles' => $this->userRoles(),
             'permissions' => $this->userPermissions(),
             'formatted_created_at' => $this->formatted_created_at,

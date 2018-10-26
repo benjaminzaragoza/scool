@@ -610,6 +610,22 @@ if (!function_exists('formatted_logged_user')) {
 if (!function_exists('initialize_tenant_roles_and_permissions')) {
     function initialize_tenant_roles_and_permissions()
     {
+        // NOTA: només posar aqui permissos que no estiguin relacionats amb una habilitat/Gate Laravel
+        // Vegeu initialize_gates
+        $permissions = [
+//            'incident.list',
+//            'incident.show',
+//            'incident.store',
+//            'incident.update',
+//            'incident.destroy',
+//            'incident.open',
+//            'incident.close',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
         $roles = [
             'Student',
             'Teacher',
@@ -634,16 +650,6 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
 
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
-        }
-
-        // NOTA: només posar aqui permissos que no estiguin relacionats amb una habilitat/Gate Laravel
-        // Vegeu initialize_gates
-        $permissions = [
-
-        ];
-
-        foreach ($permissions as $permission) {
-            $permission = Permission::firstOrCreate(['name' => $permission]);
         }
     }
 }
@@ -879,6 +885,12 @@ if (!function_exists('initialize_gates')) {
         });
 
         //INCIDENTS
+        // IMPORTANT: Laravel permission package automatizally registers Gates/abilities
+        // for each Permission defined (NOTE: not listes in Gate::abilities but works using
+        // Gate::before to test if a permission is registered)
+        // So no need to defined Gates if we define Permissions?
+        // TODO
+
         Gate::define('incident.list', function ($user) {
             return $user->hasRole('Incidents');
         });
@@ -901,7 +913,7 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('IncidentsManager');
         });
 
-        Gate::define('incident.delete', function ($user) {
+        Gate::define('incident.destroy', function ($user) {
             return $user->hasRole('IncidentsManager');
         });
 

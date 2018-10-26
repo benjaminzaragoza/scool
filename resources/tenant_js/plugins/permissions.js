@@ -14,6 +14,7 @@ const disappear = (el, modifiers) => {
 
 const haveRole = (role) => {
   if (role == null) return true
+  if (window.user && window.user.isSuperAdmin) return true
   const userRoles = window.user && window.user.roles
   if (userRoles) {
     if (userRoles.indexOf(role) === -1) return false
@@ -24,7 +25,8 @@ const haveRole = (role) => {
 
 const can = (permission, resource = null) => {
   const user = window.user
-  const userPermissions = window.user && window.user.permissions
+  if (user && user.isSuperAdmin) return true
+  const userPermissions = user && user.permissions
 
   if (resource instanceof Object) {
     if (user.id === resource.user_id) {

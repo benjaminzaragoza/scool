@@ -17,7 +17,6 @@ class TenantDatabaseSeeder extends Seeder
     {
         seed_provinces();
         $this->call(LocationsTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
 
         initialize_menus();
         initialize_tenant_roles_and_permissions();

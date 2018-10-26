@@ -61,6 +61,8 @@ class JobsControllerTest extends BaseTenantTest
     /** @test */
     public function show_jobs_management_jobs_data()
     {
+        $this->withoutExceptionHandling();
+//        $this->markTestSkipped('TODO');
         $staffManager = create(User::class);
         $this->actingAs($staffManager);
         $role = Role::firstOrCreate(['name' => 'StaffManager']);

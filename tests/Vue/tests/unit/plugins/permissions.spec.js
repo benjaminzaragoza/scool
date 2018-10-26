@@ -13,6 +13,54 @@ describe('permissions.js', () => {
     expect(localVue.prototype.$haveRole).to.be.a('function')
   })
 
+  it('show_update_button_when_user_is_superAdmin', () => {
+    window.user = {
+      id: 1,
+      isSuperAdmin: true
+    }
+
+    const Component = {
+      template: `
+    <div>
+      <span v-can="'task.update'"><button>Update</button></span>
+    </div>`
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).to.have.string('<button>')
+  })
+
+  it('show_update_button_when_user_is_superAdmin_using_can', () => {
+    window.user = {
+      id: 1,
+      isSuperAdmin: true
+    }
+
+    const Component = {
+      template: `
+    <div>
+      <span v-if="$can('task.update')"><button>Update</button></span>
+    </div>`
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).to.have.string('<button>')
+  })
+
+  it('show_update_button_when_user_is_superAdmin_using_haveRole', () => {
+    window.user = {
+      id: 1,
+      isSuperAdmin: true
+    }
+
+    const Component = {
+      template: `
+    <div>
+      <span v-if="$haveRole('Manager')"><button>Update</button></span>
+    </div>`
+    }
+    const wrapper = mount(Component, { localVue })
+    expect(wrapper.html()).to.have.string('<button>')
+  })
+
   it('show_hidden_update_button_when_user_dont_have_permission_to_update_task_and_hidden_modifier_is_active', () => {
     window.user = {
       id: 1
@@ -21,18 +69,8 @@ describe('permissions.js', () => {
     const Component = {
       template: `
     <div>
-      <span v-can.hidden="task.update"><button>Update</button></span>
-    </div>`,
-      data () {
-        return {
-          task: {
-            id: 1,
-            name: 'Comprar pa',
-            completed: false,
-            user_id: 45
-          }
-        }
-      }
+      <span v-can.hidden="'task.update'"><button>Update</button></span>
+    </div>`
     }
     const wrapper = mount(Component, { localVue })
     expect(wrapper.html()).to.have.string('<button style="display: none;">')
@@ -45,7 +83,7 @@ describe('permissions.js', () => {
     const Component = {
       template: `
     <div>
-      <span v-can.disabled="task.update"><button>Update</button></span>
+      <span v-can.disabled="'task.update'"><button>Update</button></span>
     </div>`,
       data () {
         return {
@@ -72,18 +110,8 @@ describe('permissions.js', () => {
     const Component = {
       template: `
     <div>
-      <span v-can="task.update"><button>Update</button></span>
-    </div>`,
-      data () {
-        return {
-          task: {
-            id: 1,
-            name: 'Comprar pa',
-            completed: false,
-            user_id: 45
-          }
-        }
-      }
+      <span v-can="'task.update'"><button>Update</button></span>
+    </div>`
     }
     const wrapper = mount(Component, { localVue })
     expect(wrapper.html()).to.have.string('<button>')

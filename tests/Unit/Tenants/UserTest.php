@@ -830,6 +830,7 @@ class UserTest extends TestCase
         $this->assertEquals(1,$mappedUser['id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe',$mappedUser['givenName']);
+        $this->assertFalse($mappedUser['isSuperAdmin']);
         $this->assertEquals('Pardo',$mappedUser['sn1']);
         $this->assertEquals('Jeans',$mappedUser['sn2']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
