@@ -1,65 +1,87 @@
 <template>
     <v-card>
-            <v-toolbar dark color="primary" :id="'incident_' + incident.id + '_show_toolbar'">
+        <v-toolbar dark color="primary" :id="'incident_' + incident.id + '_show_toolbar'">
                 <v-btn :id="'incident_' + incident.id + '_show_close_button'" icon dark @click.native="$emit('close')">
                     <v-icon>close</v-icon>
                 </v-btn>
-                <v-toolbar-title v-html="incident.subject"></v-toolbar-title>
+                <v-toolbar-title> Incidència: {{ incident.subject }}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn dark flat @click.native="$emit('close')">Guardar</v-btn>
                 </v-toolbar-items>
             </v-toolbar>
-            <v-list three-line subheader>
-                <v-subheader>User Controls</v-subheader>
-                <v-list-tile avatar>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Content filtering</v-list-tile-title>
-                        <v-list-tile-sub-title>Set the content filtering level to restrict apps that can be downloaded
-                        </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile avatar>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Password</v-list-tile-title>
-                        <v-list-tile-sub-title>Require password for purchase or use password to restrict purchase
-                        </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
-            <v-divider></v-divider>
-            <v-list three-line subheader>
-                <v-subheader>General</v-subheader>
-                <v-list-tile avatar>
-                    <v-list-tile-action>
-                        TODO
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Notifications</v-list-tile-title>
-                        <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded
-                        </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile avatar>
-                    <v-list-tile-action>
-                        dasd
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Sound</v-list-tile-title>
-                        <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply
-                        </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile avatar>
-                    <v-list-tile-action>
-                        TODO
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-                        <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
+        <v-container text-md-center class="pb-0 pt-1">
+            <v-layout row wrap>
+                <v-flex md8>
+                    <v-list three-line subheader>
+                        <v-subheader>Dades</v-subheader>
+                        <v-list-tile avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title> {{ incident.username + ' - ( ' + incident.user_email +' )'}}</v-list-tile-title>
+                                <v-list-tile-sub-title>Creada per
+                                </v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-text="state"></v-list-tile-title>
+                                <v-list-tile-sub-title>Estat
+                                </v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                </v-flex>
+                <v-flex md4>
+                    <v-list three-line subheader>
+                        <v-subheader>Altres dades</v-subheader>
+                        <v-list-tile avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-text="incident.formatted_created_at"></v-list-tile-title>
+                                <v-list-tile-sub-title>Data de creació
+                                </v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-text="incident.formatted_updated_at">Password</v-list-tile-title>
+                                <v-list-tile-sub-title>Data de modificació
+                                </v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <v-divider></v-divider>
+        <v-container text-md-center class="pb-0">
+            <v-layout row wrap>
+                <v-flex md12>
+                    <v-textarea
+                            outline
+                            name="input-7-4"
+                            label="Descripció"
+                            :value="incident.description"
+                    ></v-textarea>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <v-divider></v-divider>
+        <v-container text-md-center class="pb-0 pt-1">
+            <v-layout row wrap>
+                <v-flex md12>
+                    <v-list three-line subheader>
+                        <v-subheader>Comentaris</v-subheader>
+                        <v-list-tile avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title> TODO COMENTRAI 1</v-list-tile-title>
+                                <v-list-tile-sub-title>das
+                                </v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                </v-flex>
+            </v-layout>
+        </v-container>
         </v-card>
 </template>
 
@@ -75,6 +97,12 @@ export default {
     incident: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    state () {
+      if (this.incident.closed_at) return 'Tancada el ' + this.incident.formatted_closed_at
+      return 'Oberta'
     }
   }
 }
