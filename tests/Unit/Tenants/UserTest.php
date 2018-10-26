@@ -780,11 +780,6 @@ class UserTest extends TestCase
             ->andReturn(Permission::all()->pluck('name')->unique()->toArray());
 
         Cache::shouldReceive('rememberForever')
-            ->with('permissions',\Closure::class)
-            ->once()
-            ->andReturn(Permission::all());
-
-        Cache::shouldReceive('rememberForever')
             ->with('user_all_permissions',\Closure::class)
             ->once()
             ->andReturn($user->getAllPermissions());
@@ -868,10 +863,6 @@ class UserTest extends TestCase
         $this->assertEquals('task.store',$mappedUser['permissions'][0]);
         $this->assertEquals('task.update',$mappedUser['permissions'][1]);
 
-        $this->assertCount(3,$mappedUser['can']);
-        $this->assertTrue($mappedUser['can']['task.store']);
-        $this->assertTrue($mappedUser['can']['task.update']);
-        $this->assertFalse($mappedUser['can']['task.destroy']);
         $this->assertCount(3,$mappedUser['all_permissions']);
         $this->assertEquals('task.store',$mappedUser['all_permissions']->toArray()[0]['name']);
         $this->assertEquals('task.update',$mappedUser['all_permissions']->toArray()[1]['name']);
@@ -947,41 +938,5 @@ class UserTest extends TestCase
         $this->assertInstanceOf(Collection::class,$user->all_permissions);
         $this->assertCount(3,$user->all_permissions);
         $this->assertEquals('task.store',$user->all_permissions[0]->name);
-    }
-
-    /**
-     * @test
-     */
-    public function can_attribute()
-    {
-        Permission::create(['name' => 'task.store']);
-        Permission::create(['name' => 'task.update']);
-        Permission::create(['name' => 'task.destroy']);
-        Permission::create(['name' => 'task.index']);
-
-        Cache::shouldReceive('rememberForever')
-            ->once()
-            ->andReturn(Permission::all());
-
-        $user = factory(User::class)->create();
-        $user->givePermissionTo('task.store');
-        $can = $user->can;
-        $this->assertNotNull($can);
-        $this->assertCount(4,$can);
-
-        $this->assertTrue($can['task.store']);
-        $this->assertFalse($can['task.update']);
-        $this->assertFalse($can['task.destroy']);
-        $this->assertFalse($can['task.index']);
-    }
-
-    /**
-     * @test
-     */
-    public function abilities_attribute()
-    {
-//        dump(Gate::abilities());
-        $user = factory(User::class)->create();
-        $abilities = $user->abilities;
     }
 }

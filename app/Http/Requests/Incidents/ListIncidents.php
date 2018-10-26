@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Incidents;
 
+use App\Models\Incident;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -18,7 +19,7 @@ class ListIncidents extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('incident.list');
+        return Gate::allows('incident.list', Incident::class);
     }
 
     /**

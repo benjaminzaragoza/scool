@@ -66,7 +66,9 @@ class IncidentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param DeleteIncident $request
+     * @param $tenant
+     * @param Incident $incident
      * @return Incident
      * @throws \Exception
      */

@@ -47,7 +47,6 @@ class JobsController extends Controller
                 'substitutes.teacher')->get()));
     }
 
-
     /**
      * Show staff management.
      *

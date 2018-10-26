@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Incidents;
 
+use App\Models\Incident;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -19,7 +20,7 @@ class ShowIncident extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('incident.show');
+        return Auth::user()->can('incident.show', Incident::class);
     }
 
     /**

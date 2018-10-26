@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Incidents;
 
+use App\Models\Incident;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -19,7 +20,7 @@ class DeleteIncident extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('incident.delete');
+        return Auth::user()->can('incident.destroy',Incident::class);
     }
 
     /**

@@ -56,8 +56,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         'formatted_updated_at',
         'hashid',
         'full_search',
-        'all_permissions',
-        'can'
+        'all_permissions'
     ];
 
     /**
@@ -635,7 +634,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function map()
     {
-//        dd((boolean)$this->admin);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -654,8 +652,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'last_login_ip' => $this->last_login_ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-//            'roles' => [],
-//            'permissions' => [],
             'roles' => $this->userRoles(),
             'permissions' => $this->userPermissions(),
             'formatted_created_at' => $this->formatted_created_at,
@@ -665,7 +661,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'admin' => $this->admin,
             'hashid' => $this->hashid,
             'full_search' => $this->full_search,
-            'can' => $this->can,
             'all_permissions' => $this->all_permissions
         ];
     }
@@ -725,39 +720,5 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         return Cache::rememberForever('user_all_permissions', function () {
             return $this->getAllPermissions();
         });
-    }
-
-    /**
-     * Get all user permissions.
-     *
-     * @return bool
-     */
-    public function getAbilitiesAttribute()
-    {
-        // TODO
-        $abilities = [];
-        foreach (Gate::abilities() as $ability) {
-//            dump($ability);
-        }
-        return $abilities;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCanAttribute()
-    {
-        $permissions = Cache::rememberForever('permissions', function () {
-            return Permission::all();
-        });
-        $can = [];
-        foreach ($permissions as $permission) {
-            if ($this->can($permission->name)) {
-                $can[$permission->name] = true;
-            } else {
-                $can[$permission->name] = false;
-            }
-        }
-        return $can;
     }
 }
