@@ -23,7 +23,7 @@ export default {
     expect(wrap.text()).contains(text)
   },
   assertEmitted: function (event) {
-    expect(this.emitted()[event]).toBeTruthy()
+    expect(this.emitted()[event]).not.to.be.an('undefined')
   },
   assertEventContains: function (event, key, value) {
     expect(this.emitted()[event][key]).toBe(value)

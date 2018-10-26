@@ -3,7 +3,7 @@
             :return-value.sync="value"
             lazy
             @save="save"
-    > {{ value }}
+    > <span class="limit" :title="value">{{ value }}</span>
         <v-text-field
                 v-focus
                 v-model="value"
@@ -70,3 +70,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+    .limit {
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

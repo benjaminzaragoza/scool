@@ -22,62 +22,62 @@
 </template>
 
 <script>
-  export default {
-    name: 'ConfirmIcon',
-    data () {
-      return {
-        dialog: false
-      }
+export default {
+  name: 'ConfirmIcon',
+  data () {
+    return {
+      dialog: false
+    }
+  },
+  props: {
+    icon: {
+      type: String,
+      required: true
     },
-    props: {
-      icon: {
-        type: String,
-        required: true
-      },
-      color: {
-        type: String,
-        default: 'primary'
-      },
-      dark: {
-        type: Boolean,
-        default: false
-      },
-      title: {
-        type: String,
-        default: 'Si us plau confirmeu...'
-      },
-      message: {
-        type: String,
-        default: 'Segur que voleu realitzar aquesta acció?'
-      },
-      confirm: {
-        type: String,
-        default: 'Confirmar'
-      },
-      cancel: {
-        type: String,
-        default: 'Cancel·lar'
-      },
-      working: {
-        type: Boolean,
-        default: false
-      },
-      tooltip: {
-        type: String,
-        default: null
-      }
+    color: {
+      type: String,
+      default: 'primary'
     },
-    watch: {
-      working: function (newValue, oldVAlue) {
-        if (oldVAlue) {
-          this.dialog = false
-        }
-      }
+    dark: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-      action () {
-        this.$emit('confirmed')
+    title: {
+      type: String,
+      default: 'Si us plau confirmeu...'
+    },
+    message: {
+      type: String,
+      default: 'Segur que voleu realitzar aquesta acció?'
+    },
+    confirm: {
+      type: String,
+      default: 'Confirmar'
+    },
+    cancel: {
+      type: String,
+      default: 'Cancel·lar'
+    },
+    working: {
+      type: Boolean,
+      default: false
+    },
+    tooltip: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    working: function (newValue, oldVAlue) {
+      if (oldVAlue) {
+        this.dialog = false
       }
     }
+  },
+  methods: {
+    action () {
+      this.$emit('confirmed')
+    }
   }
+}
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <v-btn flat :color="color" icon :title="title"
+    <v-btn flat :color="color" icon :title="title" class="ma-0"
            :loading="loading" :disabled="loading" :id="'close_incident_' + incident.id" @click="toggle">
         <v-icon v-text="icon"></v-icon>
     </v-btn>

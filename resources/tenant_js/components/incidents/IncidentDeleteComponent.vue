@@ -1,5 +1,5 @@
 <template>
-    <v-btn flat color="error" icon title="Eliminar la incidència"
+    <v-btn flat color="error" icon title="Eliminar la incidència" class="ma-0"
            :loading="loading" :disabled="loading" :id="'delete_incident_' + incident.id" @click="remove">
         <v-icon>delete</v-icon>
     </v-btn>

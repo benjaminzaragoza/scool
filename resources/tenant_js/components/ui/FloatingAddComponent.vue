@@ -47,7 +47,7 @@ export default {
     },
     title: {
       type: String,
-      default: 'YOUR TITLE HERE'
+      default: ''
     }
   },
   methods: {

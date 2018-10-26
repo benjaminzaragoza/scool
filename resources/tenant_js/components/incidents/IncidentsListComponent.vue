@@ -54,15 +54,22 @@
                         <td class="text-xs-left" v-html="incident.id"></td>
                         <td class="text-xs-left" :title="incident.user_email" v-html="incident.username"></td>
                         <td>
-                            <inline-text-field-edit-dialog v-model="incident" field="subject" label="Descripció"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="incident" field="subject" label="Títol" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left" :title="incident.description">
-                            <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció"></inline-text-area-edit-dialog>
+                            <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
                         <td class="text-xs-left" v-html="incident.formatted_closed_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_updated_at"></td>
                         <td class="text-xs-left">
+                            <fullscreen-dialog
+                                    v-model="showDialog"
+                                    title="Mostra la incidència"
+                                    :resource="incident"
+                                    v-if="showDialog === false || showDialog === incident.id">
+                                <incident-show :incident="incident" v-can:show="incident" @close="showDialog = false"></incident-show>
+                            </fullscreen-dialog>
                             <incident-close :incident="incident" v-can:close="incident"></incident-close>
                             <incident-delete :incident="incident" v-can:delete="incident"></incident-delete>
                         </td>
@@ -77,13 +84,16 @@
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
+import IncidentShowComponent from './IncidentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
-
+import FullScreenDialog from '../ui/FullScreenDialog'
 export default {
   name: 'IncidentsList',
   components: {
+    'fullscreen-dialog': FullScreenDialog,
+    'incident-show': IncidentShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
@@ -92,7 +102,8 @@ export default {
   data () {
     return {
       search: '',
-      refreshing: false
+      refreshing: false,
+      showDialog: false
     }
   },
   props: {
@@ -152,4 +163,3 @@ export default {
   }
 }
 </script>
-
