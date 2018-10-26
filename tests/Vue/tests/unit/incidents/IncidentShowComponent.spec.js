@@ -9,7 +9,7 @@ import TestHelpers from '../helpers.js'
 Vue.use(Vuetify)
 Vue.config.silent = true
 
-describe.only('IncidentsShowComponent.vue', () => {
+describe('IncidentsShowComponent.vue', () => {
   beforeEach(() => {
     Object.assign(Wrapper.prototype, TestHelpers)
   })
