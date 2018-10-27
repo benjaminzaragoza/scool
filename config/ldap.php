@@ -34,7 +34,7 @@ return [
             |
             */
 
-            'auto_connect' => env('ADLDAP_AUTO_CONNECT', true),
+            'auto_connect' => env('LDAP_AUTO_CONNECT', true),
 
             /*
             |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return [
             |
             */
 
-            'connection_settings' => [
+            'settings' => [
 
                 /*
                 |--------------------------------------------------------------------------
@@ -94,11 +94,11 @@ return [
                 |
                 | The account prefix option is the prefix of your user accounts in LDAP directory.
                 |
-                | This string is prepended to authenticating users usernames.
+                | This string is prepended to all authenticating users usernames.
                 |
                 */
 
-                'account_prefix' => env('ADLDAP_ACCOUNT_PREFIX', ''),
+                'account_prefix' => env('LDAP_ACCOUNT_PREFIX', ''),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -107,11 +107,11 @@ return [
                 |
                 | The account suffix option is the suffix of your user accounts in your LDAP directory.
                 |
-                | This string is appended to authenticating users usernames.
+                | This string is appended to all authenticating users usernames.
                 |
                 */
 
-                'account_suffix' => env('ADLDAP_ACCOUNT_SUFFIX', ''),
+                'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', ''),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -127,7 +127,7 @@ return [
                 |
                 */
 
-                'hosts' => explode(' ', env('ADLDAP_CONTROLLERS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org')),
+                'hosts' => explode(' ', env('LDAP_HOSTS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org')),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ return [
                 |
                 */
 
-                'port' => env('ADLDAP_PORT', 389),
+                'port' => env('LDAP_PORT', 389),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -151,7 +151,7 @@ return [
                 |
                 */
 
-                'timeout' => env('ADLDAP_TIMEOUT', 5),
+                'timeout' => env('LDAP_TIMEOUT', 5),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -167,7 +167,7 @@ return [
                 |
                 */
 
-                'base_dn' => env('ADLDAP_BASEDN', 'dc=corp,dc=acme,dc=org'),
+                'base_dn' => env('LDAP_BASE_DN', 'dc=corp,dc=acme,dc=org'),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -182,8 +182,8 @@ return [
                 |
                 */
 
-                'username' => env('ADLDAP_USERNAME'),
-                'password' => env('ADLDAP_PASSWORD'),
+                'username' => env('LDAP_USERNAME'),
+                'password' => env('LDAP_PASSWORD'),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -209,14 +209,14 @@ return [
                 | If you need to be able to change user passwords on your server, then an
                 | SSL or TLS connection is required. All other operations are allowed
                 | on unsecured protocols.
-                | 
-                | One of these options are definitely recommended if you 
+                |
+                | One of these options are definitely recommended if you
                 | have the ability to connect to your server securely.
                 |
                 */
 
-                'use_ssl' => env('ADLDAP_USE_SSL', false),
-                'use_tls' => env('ADLDAP_USE_TLS', false),
+                'use_ssl' => env('LDAP_USE_SSL', false),
+                'use_tls' => env('LDAP_USE_TLS', false),
 
             ],
 
