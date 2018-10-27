@@ -161,6 +161,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/incidents/{incident}/subject','Tenant\Api\IncidentsSubjectController@update');
             Route::put('/incidents/{incident}/description','Tenant\Api\IncidentsDescriptionController@update');
 
+            // Incident Replies
+            Route::get('/incidents/{incident}/replies','Tenant\Api\IncidentRepliesController@index');
 
         });
 

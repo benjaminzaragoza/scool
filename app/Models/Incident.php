@@ -139,4 +139,20 @@ class Incident extends Model
     {
         return optional($this->closed_at)->timestamp;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->morphMany(Reply::class, 'repliable');
+    }
+
+    /**
+     * @param $reply
+     */
+    public function addReply($reply)
+    {
+        $this->replies()->save($reply);
+    }
 }

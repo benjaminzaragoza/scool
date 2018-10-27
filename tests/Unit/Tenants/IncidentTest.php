@@ -4,6 +4,7 @@ namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
 use App\Models\Incident;
+use App\Models\Reply;
 use App\Models\User;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -207,5 +208,25 @@ class IncidentTest extends TestCase
         ]);
 
         $this->assertEquals('incidents', $incident->api_uri);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_reply()
+    {
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+        ]);
+        $reply = Reply::create([
+            'body' => 'Si us plau podeu detallar una mica més el problema?'
+        ]);
+        $this->assertCount(0,$incident->replies);
+        $incident->addReply($reply);
+        $incident = $incident->fresh();
+        $this->assertCount(1,$incident->replies);
+        $this->assertTrue($incident->replies->first()->is($reply));
+        $this->assertEquals('Si us plau podeu detallar una mica més el problema?', $incident->replies->first()->body);
     }
 }

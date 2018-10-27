@@ -73,7 +73,8 @@
                         <v-subheader>Comentaris</v-subheader>
                         <v-list-tile avatar>
                             <v-list-tile-content>
-                                <v-list-tile-title> TODO COMENTRAI 1</v-list-tile-title>
+                                <v-list-tile-title> TODO COMENTRAI 1: Utilitzar quelcom similar a Disqus: https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/1
+                                Conceptes i similar a : https://github.com/laracasts/Lets-Build-a-Forum-in-Laravel/tree/830a38217edbbc1a541425642859f02aaf0b90c6</v-list-tile-title>
                                 <v-list-tile-sub-title>das
                                 </v-list-tile-sub-title>
                             </v-list-tile-content>
