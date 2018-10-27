@@ -17,6 +17,7 @@ class CreateTenantRepliesTable extends Migration
         Schema::create('replies', function (Blueprint $table) {
             $table->increments('id');
             $table->text('body');
+            $table->unsignedInteger('user_id');
             $table->nullableMorphs('repliable');
             $table->timestamps();
         });
