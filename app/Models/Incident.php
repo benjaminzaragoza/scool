@@ -94,7 +94,7 @@ class Incident extends Model
      */
     public static function getIncidents()
     {
-        return (new IncidentCollection(Incident::with('user')->get()))->transform();
+        return (new IncidentCollection(Incident::with('user','comments')->get()))->transform();
     }
 
     /**
