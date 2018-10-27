@@ -52,7 +52,7 @@
                 <template slot="items" slot-scope="{item: incident}">
                     <tr :id="'incident_row_' + incident.id">
                         <td class="text-xs-left" v-html="incident.id"></td>
-                        <td class="text-xs-left" :title="incident.user_email" v-html="incident.username"></td>
+                        <td class="text-xs-left" :title="incident.user_email" v-html="incident.user_name"></td>
                         <td>
                             <inline-text-field-edit-dialog v-model="incident" field="subject" label="Títol" @save="refresh"></inline-text-field-edit-dialog>
                         </td>

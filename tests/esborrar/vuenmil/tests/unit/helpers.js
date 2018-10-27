@@ -8,7 +8,9 @@ export default {
     expect(wrap.html()).toContain(text)
   },
   assertEmitted: function (event) {
-    expect(this.emitted()[event]).toBeTruthy()
+    let eventObj = expect(this.emitted()[event])
+    eventObj.toBeTruthy()
+    return eventObj
   },
   assertEventContains: function (event, key, value) {
     expect(this.emitted()[event][key]).toBe(value)

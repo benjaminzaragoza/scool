@@ -31,7 +31,8 @@ describe('IncidentsShowComponent.vue', () => {
       propsData: {
         incident: {
           id: 1,
-          subject: "No funciona res a l'aula 24"
+          subject: "No funciona res a l'aula 24",
+          comments: []
         }
       }
     })
@@ -49,5 +50,61 @@ describe('IncidentsShowComponent.vue', () => {
     })
     wrapper.click('#incident_1_show_close_button')
     wrapper.assertEmitted('close')
+  })
+
+  it('not_show_comments_list_when_no_comments', () => {
+    const wrapper = mount(IncidentShowComponent, {
+      propsData: {
+        incident: {
+          id: 1,
+          subject: "No funciona res a l'aula 24"
+        }
+      }
+    })
+    wrapper.assertNotContains('#incident_1_comments')
+  })
+
+  it('not_show_comments_list_when_comments_are_void', () => {
+    const wrapper = mount(IncidentShowComponent, {
+      propsData: {
+        incident: {
+          id: 1,
+          subject: "No funciona res a l'aula 24",
+          comments: []
+        }
+      }
+    })
+    wrapper.assertNotContains('#incident_1_comments')
+  })
+
+  it('show_comments', () => {
+    const wrapper = mount(IncidentShowComponent, {
+      propsData: {
+        incident: {
+          id: 1,
+          subject: "No funciona res a l'aula 24",
+          comments: [
+            {
+              id: 1,
+              body: 'Podeu aportar més informació si us plau?'
+            }
+          ]
+        }
+      }
+    })
+    wrapper.assertContains('#incident_1_comments')
+  })
+
+  // TODO
+  it.skip('shows_add_comment', () => {
+    const wrapper = mount(IncidentShowComponent, {
+      propsData: {
+        incident: {
+          id: 1,
+          subject: "No funciona res a l'aula 24"
+        }
+      }
+    })
+    wrapper.assertContains('#incident_1_comments')
   })
 })

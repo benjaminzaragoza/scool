@@ -26,7 +26,7 @@ describe('IncidentsListComponent.vue', () => {
   let sampleIncidents = [
     {
       id: 1,
-      username: 'Pepe Pardo Jeans',
+      user_name: 'Pepe Pardo Jeans',
       user_id: 1,
       user_email: 'pepepardo@jeans.com',
       subject: 'No funciona PC1 Aula 30',
@@ -35,7 +35,7 @@ describe('IncidentsListComponent.vue', () => {
     },
     {
       id: 2,
-      username: 'Pepa Parda Jeans',
+      user_name: 'Pepa Parda Jeans',
       user_id: 2,
       user_email: 'pepaparda@jeans.com',
       subject: 'No funciona PC2 Aula 31',
@@ -44,7 +44,7 @@ describe('IncidentsListComponent.vue', () => {
     },
     {
       id: 3,
-      username: 'Carles Puigdemont',
+      user_name: 'Carles Puigdemont',
       user_id: 3,
       user_email: 'carles@puigdemont.cat',
       subject: 'No funciona PC1 Aula 32',

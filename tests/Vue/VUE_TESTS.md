@@ -66,13 +66,14 @@ global.axios = require('axios') // Node global
 window.axios = require('axios') // Browser
 ```
 
-IMPORTANT:
+IMPORTANT!!!!!:
 
 Carpeta tests/Vue ha de tenir la seva propia instal·lació local de paquets (sembla que no ho necessiti pq sinó ho té ho 
 busca en les carpetes pare però aleshores hi ha errors: [Vuetify] Multiple instances of Vue detected)
 
 ```
 npm install vuetify vuex sinon
+npm install --save-dev moxios axios
 ```
 
 IMPORTANT 2: DON'T USE localVue!!!!!!!!!!!!!!!
@@ -81,6 +82,18 @@ IMPORTANT 2: DON'T USE localVue!!!!!!!!!!!!!!!
 
 
 # Troubleshooting
+
+## SyntaxError: The string did not match the expected pattern using Moxios/Aios
+
+
+Cal tenir en compte que tant el projecte (arrel) com la carpeta de testos (Vue o tests/Vue) han de tenir els paquets instal·lats en local:
+
+```
+cd tests/Vue
+npm install --save-dev moxios axios
+``` 
+
+Això és un problema que passa generalemnt amb treballar en objectes globals
 
 ## VUE WARN "TypeError: Cannot read property 'getters' of undefined"
 

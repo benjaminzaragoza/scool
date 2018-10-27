@@ -17,7 +17,7 @@
                         <v-subheader>Dades</v-subheader>
                         <v-list-tile avatar>
                             <v-list-tile-content>
-                                <v-list-tile-title> {{ incident.username + ' - ( ' + incident.user_email +' )'}}</v-list-tile-title>
+                                <v-list-tile-title> {{ incident.user_name + ' - ( ' + incident.user_email +' )'}}</v-list-tile-title>
                                 <v-list-tile-sub-title>Creada per
                                 </v-list-tile-sub-title>
                             </v-list-tile-content>
@@ -68,9 +68,26 @@
         <v-divider></v-divider>
         <v-container text-md-center class="pb-0 pt-1">
             <v-layout row wrap>
+                <v-list three-line subheader>
+                    <v-subheader>Comentaris</v-subheader>
+                </v-list>
                 <v-flex md12>
-                    <v-list three-line subheader>
-                        <v-subheader>Comentaris</v-subheader>
+                    <reply-add :repliable="incident"></reply-add>
+                </v-flex>
+                <v-flex md12>
+                    <v-list :id="'incident_' + incident.id + '_comments'" three-line subheader v-if="incident.comments && incident.comments.length > 0">
+                        <v-list-tile avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    <v-textarea
+                                            outline
+                                            name="input-7-4"
+                                            label="Outline textarea"
+                                            value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+                                    ></v-textarea>
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
                         <v-list-tile avatar>
                             <v-list-tile-content>
                                 <v-list-tile-title> TODO COMENTRAI 1: Utilitzar quelcom similar a Disqus: https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/1
@@ -87,8 +104,12 @@
 </template>
 
 <script>
+import ReplyAddComponent from '../replies/ReplyAddComponent'
 export default {
   name: 'IncidentShowComponent',
+  components: {
+    'reply-add': ReplyAddComponent
+  },
   data () {
     return {
       todo: false

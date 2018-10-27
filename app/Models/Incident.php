@@ -82,7 +82,8 @@ class Incident extends Model
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
-            'api_uri' => $this->api_uri
+            'api_uri' => $this->api_uri,
+            'comments' => $this->comments
         ];
     }
 
@@ -149,10 +150,26 @@ class Incident extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->replies();
+    }
+
+    /**
      * @param $reply
      */
     public function addReply($reply)
     {
         $this->replies()->save($reply);
+    }
+
+    /**
+     * @param $reply
+     */
+    public function addComment($reply)
+    {
+        $this->addReply($reply);
     }
 }

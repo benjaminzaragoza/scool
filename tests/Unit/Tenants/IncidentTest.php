@@ -110,6 +110,31 @@ class IncidentTest extends TestCase
         $this->assertNull($mappedIncident['formatted_closed_at']);
         $this->assertNull($mappedIncident['closed_at_timestamp']);
 
+        $this->assertCount(0, $mappedIncident['comments']);
+
+        $user = factory(User::class)->create();
+        $comment = Reply::create([
+            'body' => 'Si us plau podeu aportar més info',
+            'user_id' => $user->id
+        ]);
+        $user2 = factory(User::class)->create();
+        $comment2 = Reply::create([
+            'body' => 'en concret no funciona bla bla bla',
+            'user_id' => $user2->id
+        ]);
+        $user = factory(User::class)->create();
+        $comment3 = Reply::create([
+            'body' => 'Ok! Solucionat',
+            'user_id' => $user->id
+        ]);
+        $incident->addComment($comment);
+        $incident->addComment($comment2);
+        $incident->addComment($comment3);
+
+        $incident= $incident->fresh();
+        $mappedIncident = $incident->map();
+
+        $this->assertCount(3, $mappedIncident['comments']);
         $incident->close();
         $incident= $incident->fresh();
         $mappedIncident = $incident->map();
