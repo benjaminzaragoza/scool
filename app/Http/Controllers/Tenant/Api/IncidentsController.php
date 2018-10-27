@@ -31,7 +31,7 @@ class IncidentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreIncident $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreIncident $request)
@@ -48,7 +48,7 @@ class IncidentsController extends Controller
      */
     public function show(ShowIncident $request, $tenant,Incident $incident)
     {
-        return $incident;
+        return $incident->map();
     }
 
     /**

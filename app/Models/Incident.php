@@ -69,7 +69,7 @@ class Incident extends Model
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'username' => optional($this->user)->name,
+            'user_name' => optional($this->user)->name,
             'user_email' => optional($this->user)->email,
             'subject' => $this->subject,
             'description' => $this->description,

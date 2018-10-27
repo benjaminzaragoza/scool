@@ -68,15 +68,15 @@ class IncidentsControllerTest extends BaseTenantTest {
         $this->assertCount(3,$incidents);
 
         $this->assertEquals($user->id,$incidents[0]->user_id);
-        $this->assertEquals('Carles Puigdemont',$incidents[0]->username);
+        $this->assertEquals('Carles Puigdemont',$incidents[0]->user_name);
         $this->assertEquals('No funciona pc2 Aula 36',$incidents[0]->subject);
         $this->assertEquals('bla bla bla',$incidents[0]->description);
         $this->assertEquals($user->id,$incidents[1]->user_id);
-        $this->assertEquals('Carles Puigdemont',$incidents[1]->username);
+        $this->assertEquals('Carles Puigdemont',$incidents[1]->user_name);
         $this->assertEquals('No funciona pc1 Aula 20',$incidents[1]->subject);
         $this->assertEquals('ji ji ji',$incidents[1]->description);
         $this->assertEquals($another_user->id,$incidents[2]->user_id);
-        $this->assertEquals('Carme Forcadell',$incidents[2]->username);
+        $this->assertEquals('Carme Forcadell',$incidents[2]->user_name);
         $this->assertEquals('No funciona projector sala Mestral',$incidents[2]->subject);
         $this->assertEquals('jorl jorl jorl',$incidents[2]->description);
     }
@@ -118,7 +118,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $this->assertEquals($createdIncident->subject,'Ordinador Aula 36 no funciona');
         $this->assertEquals($createdIncident->description,"El ordinador de l'aula 36 bla bla la");
         $this->assertEquals($createdIncident->user_id,$user->id);
-        $this->assertEquals($createdIncident->username,$user->name);
+        $this->assertEquals($createdIncident->user_name,$user->name);
         $this->assertEquals($createdIncident->user_email,$user->email);
 
         $this->assertDatabaseHas('incidents',$incident);
@@ -155,16 +155,12 @@ class IncidentsControllerTest extends BaseTenantTest {
     public function regular_user_cannot_store_incidences()
     {
         $user = factory(User::class)->create();
-        $role = Role::firstOrCreate(['name' => 'Incidents']);
-        Config::set('auth.providers.users.model', User::class);
-        $user->assignRole($role);
         $this->actingAs($user,'api');
-        $incident = Incident::create([
-            'subject' => 'No funciona Aula 36 pc 1',
-            'description' => 'bla bla bla'
+        $response =  $this->json('POST','/api/v1/incidents', [
+            'subject' => 'Ordinador Aula 36 no funciona',
+            'description' => "El ordinador de l'aula 36 bla bla la"
         ]);
-        $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
-        $response->assertSuccessful();
+        $response->assertStatus(403);
     }
 
     /**
@@ -173,14 +169,30 @@ class IncidentsControllerTest extends BaseTenantTest {
     public function can_show_incidence()
     {
         $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
         $this->actingAs($user,'api');
 
         $incident = Incident::create([
             'subject' => 'No funciona Aula 36 pc 1',
             'description' => 'bla bla bla'
         ]);
+        $incidentUser = factory(User::class)->create([
+            'name' => 'Carles Puigdemont',
+            'email' => 'krls@republicatalana.cat'
+        ]);
+        $incident->assignUser($incidentUser);
         $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
-        $response->assertStatus(403);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($incidentUser->id,$result->user_id);
+        $this->assertEquals('Carles Puigdemont',$result->user_name);
+        $this->assertEquals('krls@republicatalana.cat',$result->user_email);
+        $this->assertEquals('No funciona Aula 36 pc 1',$result->subject);
+        $this->assertNull($result->closed_at);
+        $this->assertNotNull($result->created_at);
+        $this->assertNotNull($result->updated_at);
     }
 
     /**

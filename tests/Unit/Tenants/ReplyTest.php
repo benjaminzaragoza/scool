@@ -34,7 +34,10 @@ class ReplyTest extends TestCase
     /** @test */
     public function map()
     {
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create([
+            'name' => 'Oriol Junqueras',
+            'email' => 'oriol@junqueras.cat'
+        ]);
         $reply = Reply::create([
             'body' => 'Ja us hem arreglat la incidència',
             'user_id' =>  $user->id
@@ -44,8 +47,8 @@ class ReplyTest extends TestCase
 
         $this->assertEquals('Ja us hem arreglat la incidència',$mappedReply['body']);
         $this->assertEquals($user->id,$mappedReply['user_id']);
-        $this->assertEquals($user->user_name,$mappedReply['user_name']);
-        $this->assertEquals($user->user_email,$mappedReply['user_email']);
+        $this->assertEquals('Oriol Junqueras',$mappedReply['user_name']);
+        $this->assertEquals('oriol@junqueras.cat',$mappedReply['user_email']);
 
     }
 }
