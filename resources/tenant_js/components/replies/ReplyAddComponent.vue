@@ -34,15 +34,12 @@ export default {
     },
     add () {
       this.adding = true
-      // console.log(this.uri())
-      // console.log(window.axios)
-      // console.log(window.axios.defaults)
-      window.axios.post(this.uri()).then((response) => {
-        console.log(response)
+      window.axios.post(this.uri(), {
+        body: this.newReply
+      }).then((response) => {
         this.$emit('added', response.data)
         this.adding = false
       }).catch((error) => {
-        console.log(error)
         this.$snackbar.showError(error)
         this.adding = false
       })

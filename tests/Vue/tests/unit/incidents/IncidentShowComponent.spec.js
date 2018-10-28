@@ -95,8 +95,7 @@ describe('IncidentsShowComponent.vue', () => {
     wrapper.assertContains('#incident_1_comments')
   })
 
-  // TODO
-  it.skip('shows_add_comment', () => {
+  it('shows_add_comment', () => {
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -105,6 +104,52 @@ describe('IncidentsShowComponent.vue', () => {
         }
       }
     })
-    wrapper.assertContains('#incident_1_comments')
+    wrapper.assertContains('#add_reply_button')
+  })
+
+  it('shows_comments', () => {
+    const wrapper = mount(IncidentShowComponent, {
+      propsData: {
+        incident: {
+          id: 1,
+          subject: "No funciona res a l'aula 24",
+          comments: [
+            {
+              id: 1,
+              body: 'Si us plau podeu aportar informació més detallada?',
+              user_id: 1,
+              user: {
+                name: 'Carles Puigdemont'
+              }
+            },
+            {
+              id: 2,
+              body: "NO s'encen el ordinador 1 de la fila 3",
+              user_id: 2,
+              user: {
+                name: 'Pepe Pardo Jeans'
+              }
+            },
+            {
+              id: 3,
+              body: 'Ok. Solucionat! Tanquem la incidència',
+              user_id: 1,
+              user: {
+                name: 'Carles Puigdemont'
+              }
+            }
+          ]
+        }
+      }
+    })
+    const comment1 = wrapper.find('#incident_1_comment_1')
+    comment1.seeText('Si us plau podeu aportar informació més detallada?')
+    comment1.seeText('Carles Puigdemont')
+    const comment2 = wrapper.find('#incident_1_comment_2')
+    comment2.seeText("NO s'encen el ordinador 1 de la fila 3")
+    comment2.seeText('Pepe Pardo Jeans')
+    const comment3 = wrapper.find('#incident_1_comment_3')
+    comment3.seeText('Ok. Solucionat! Tanquem la incidència')
+    comment1.seeText('Carles Puigdemont')
   })
 })

@@ -28,5 +28,11 @@ export default {
       return element.id === incident.id
     })
     state.incidents.splice(state.incidents.indexOf(incidentInState), 1)
+  },
+  [ mutations.UPDATE_INCIDENT ] (state, incident) {
+    let incidentInState = state.incidents.find((element) => {
+      return element.id === incident.id
+    })
+    state.incidents[state.incidents.idexOf(incidentInState)] = incident
   }
 }

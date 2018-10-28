@@ -6,22 +6,19 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import TestHelpers from '../helpers.js'
 import moxios from 'moxios'
+import sinon from 'sinon'
 
 Vue.use(Vuetify)
 Vue.config.silent = true
 
-describe.only('ReplyAddComponent.vue', () => {
+describe('ReplyAddComponent.vue', () => {
   beforeEach(() => {
-    console.log('beforeEach')
     Object.assign(Wrapper.prototype, TestHelpers)
     moxios.install(window.axios)
-    // moxios.install(global.axios)
   })
 
   afterEach(function () {
-    console.log('afterEach')
     moxios.uninstall(window.axios)
-    // moxios.uninstall(global.axios)
   })
 
   it('shows_a_form', () => {
@@ -30,7 +27,7 @@ describe.only('ReplyAddComponent.vue', () => {
     wrapper.assertContains("textarea[name='body']")
   })
 
-  it.only('adds_a_reply', (done) => {
+  it('adds_a_reply', (done) => {
     window.user = {
       id: 1
     }
@@ -57,7 +54,43 @@ describe.only('ReplyAddComponent.vue', () => {
 
     moxios.wait(function () {
       const event = wrapper.assertEmitted('added')
-      console.log(event)
+      expect(event[0][0].id).equals(1)
+      expect(event[0][0].body).equals('Si us plau podeu proporcionar més informació?')
+      expect(event[0][0].user_id).equals(1)
+      done()
+    })
+  })
+
+  it('shows_error_when_adding_incorrect_reply', (done) => {
+    let showError = sinon.spy()
+
+    window.user = {
+      id: 1
+    }
+
+    moxios.stubRequest('/api/v1/incidents/1/replies', {
+      status: 422
+    })
+
+    const wrapper = mount(ReplyAddComponent, {
+      propsData: {
+        repliable: {
+          id: 1,
+          api_uri: 'incidents'
+        }
+      },
+      mocks: {
+        $snackbar: {
+          showError
+        }
+      }
+    })
+    wrapper.type('[name="body"]', '')
+    wrapper.click('#add_reply_button')
+
+    moxios.wait(function () {
+      wrapper.assertNotEmitted('added')
+      expect(showError.called).to.be.true
       done()
     })
   })

@@ -27,105 +27,105 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import ConfirmIconComponent from './ConfirmIconComponent'
-  import withSnackbar from '../mixins/withSnackbar'
+import axios from 'axios'
+import ConfirmIconComponent from './ConfirmIconComponent'
+import withSnackbar from '../mixins/withSnackbar'
 
-  export default {
-    name: 'UserAvatarComponent',
-    mixins: [withSnackbar],
-    components: {
-      'confirm-icon': ConfirmIconComponent
+export default {
+  name: 'UserAvatarComponent',
+  mixins: [withSnackbar],
+  components: {
+    'confirm-icon': ConfirmIconComponent
+  },
+  data () {
+    return {
+      uploading: false,
+      deleting: false,
+      path: ''
+    }
+  },
+  props: {
+    editable: {
+      type: Boolean,
+      default: false
     },
-    data () {
-      return {
-        uploading: false,
-        deleting: false,
-        path: ''
+    removable: {
+      type: Boolean,
+      default: false
+    },
+    user: {
+      type: Object,
+      default: () => { return {} }
+    },
+    hashId: {
+      required: true
+    },
+    size: {
+      type: String,
+      default: '40'
+    },
+    alt: {
+      required: true
+    },
+    tile: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    photoChange (event) {
+      this.uploading = true
+      let target = event.target || event.srcElement
+      if (target.value.length !== 0) {
+        const formData = new FormData()
+        formData.append('photo', this.$refs.file.files[0])
+        this.preview()
+        this.save(formData)
       }
     },
-    props: {
-      editable: {
-        type: Boolean,
-        default: false
-      },
-      removable: {
-        type: Boolean,
-        default: false
-      },
-      user: {
-        type: Object,
-        default: () => { return {} }
-      },
-      hashId: {
-        required: true
-      },
-      size: {
-        type: String,
-        default: '40'
-      },
-      alt: {
-        required: true
-      },
-      tile: {
-        type: Boolean,
-        default: false
-      }
+    save (formData) {
+      axios.post('/api/v1/user/' + this.user.id + '/photo', formData)
+        .then(response => {
+          this.uploading = false
+          this.path = response.data
+          this.$emit('input', this.path)
+        })
+        .catch(error => {
+          this.uploading = false
+          console.log(error)
+          this.showError(error)
+        })
     },
-    methods: {
-      photoChange (event) {
-        this.uploading = true
-        let target = event.target || event.srcElement
-        if (target.value.length !== 0) {
-          const formData = new FormData()
-          formData.append('photo', this.$refs.file.files[0])
-          this.preview()
-          this.save(formData)
+    preview () {
+      if (this.$refs.file.files && this.$refs.file.files[0]) {
+        let reader = new FileReader()
+        reader.onload = e => {
+          this.$refs.previewImage.setAttribute('src', e.target.result)
         }
-      },
-      save (formData) {
-        axios.post('/api/v1/user/' + this.user.id + '/photo', formData)
-          .then(response => {
-            this.uploading = false
-            this.path = response.data
-            this.$emit('input', this.path)
-          })
-          .catch(error => {
-            this.uploading = false
-            console.log(error)
-            this.showError(error)
-          })
-      },
-      preview () {
-        if (this.$refs.file.files && this.$refs.file.files[0]) {
-          let reader = new FileReader()
-          reader.onload = e => {
-            this.$refs.previewImage.setAttribute('src', e.target.result)
-          }
-          reader.readAsDataURL(this.$refs.file.files[0])
-        }
-      },
-      change () {
-        if (this.editable) this.$refs.file.click()
-      },
-      remove () {
-        this.deleting = true
-        axios.delete('/api/v1/user/' + this.user.id + '/photo')
-          .then(response => {
-            this.deleting = false
-            this.path = ''
-            this.$emit('input', this.path)
-            this.$refs.previewImage.setAttribute('src', 'img/default.png')
-            this.user.photo = null
-          })
-          .catch(error => {
-            this.deleting = false
-            console.log(error)
-            this.showError(error)
-          })
+        reader.readAsDataURL(this.$refs.file.files[0])
       }
+    },
+    change () {
+      if (this.editable) this.$refs.file.click()
+    },
+    remove () {
+      this.deleting = true
+      axios.delete('/api/v1/user/' + this.user.id + '/photo')
+        .then(response => {
+          this.deleting = false
+          this.path = ''
+          this.$emit('input', this.path)
+          this.$refs.previewImage.setAttribute('src', 'img/default.png')
+          this.user.photo = null
+        })
+        .catch(error => {
+          this.deleting = false
+          console.log(error)
+          this.showError(error)
+        })
     }
   }
+}
 </script>
 
 <style scoped>

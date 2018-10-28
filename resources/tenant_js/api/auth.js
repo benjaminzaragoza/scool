@@ -12,7 +12,7 @@ export default {
       'name': user.name,
       'email': user.email,
       'password': user.password,
-      'password_confirmation': user.password_confirmation,
+      'password_confirmation': user.password_confirmation
     })
   },
   remember (email) {

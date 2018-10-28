@@ -18,5 +18,8 @@ export default {
   },
   delete (incident) {
     return axios.delete('/api/v1/incidents/' + incident.id)
+  },
+  update (incident) {
+    return axios.put('/api/v1/incidents/' + incident.id, incident)
   }
 }

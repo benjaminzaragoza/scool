@@ -85,8 +85,6 @@
                                         <td class="text-xs-left" :title="job.family_description" v-html="job.family_code"></td>
                                         <td class="text-xs-left" :title="job.specialty_description" v-html="job.specialty_code"></td>
 
-
-
                                         <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-edit-dialog
                                                     :return-value.sync="job.notes"
@@ -176,133 +174,133 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as mutations from '../../store/mutation-types'
-  import * as actions from '../../store/action-types'
-  import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
-  import JobTypeSelect from './JobTypeSelectComponent.vue'
-  import AddSubstituteIcon from './AddSubstituteIconComponent'
-  import StopSubstitutionIcon from './StopSubstitutionIconComponent'
-  import RemoveSubstitutesIcon from './RemoveSubstitutesIconComponent'
-  import SubstituteAvatars from './SubstituteAvatarsComponent'
-  import EditJobIcon from './JobEditIconComponent'
-  import AddHolderToJobIcon from './AddHolderToJobIconComponent'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import { mapGetters } from 'vuex'
+import * as mutations from '../../store/mutation-types'
+import * as actions from '../../store/action-types'
+import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
+import JobTypeSelect from './JobTypeSelectComponent.vue'
+import AddSubstituteIcon from './AddSubstituteIconComponent'
+import StopSubstitutionIcon from './StopSubstitutionIconComponent'
+import RemoveSubstitutesIcon from './RemoveSubstitutesIconComponent'
+import SubstituteAvatars from './SubstituteAvatarsComponent'
+import EditJobIcon from './JobEditIconComponent'
+import AddHolderToJobIcon from './AddHolderToJobIconComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    components: {
-      'confirm-icon': ConfirmIcon,
-      'job-type-select': JobTypeSelect,
-      'add-substitute-icon': AddSubstituteIcon,
-      'stop-substitution-icon': StopSubstitutionIcon,
-      'remove-substitutes-icon': RemoveSubstitutesIcon,
-      'substitute-avatars': SubstituteAvatars,
-      'job-edit-icon': EditJobIcon,
-      'add-holder-to-job-icon': AddHolderToJobIcon,
-      'user-avatar': UserAvatar
-    },
-    data () {
-      return {
-        search: '',
-        deleting: false,
-        jobType: null,
-        refreshing: false
-      }
-    },
-    computed: {
-      ...mapGetters({
-        internaljobs: 'jobs'
-      }),
-      filteredJobs: function () {
-        if (this.showJobTypeHeader) return this.internaljobs
-        return this.internaljobs.filter(job => job.type_id === this.jobType)
-      },
-      headers () {
-        let headers = []
-        headers.push({text: 'Id', align: 'left', value: 'id'})
-        if (this.showJobTypeHeader) {
-          headers.push({text: 'Tipus', value: 'type'})
-        }
-        headers.push({text: 'Codi', value: 'code'})
-        headers.push({text: 'Titular', value: 'holder_description', sortable: false})
-        headers.push({text: 'Treballador actual', value: 'active_user_description', sortable: false})
-        headers.push({text: 'Substituts', sortable: false})
-        headers.push({text: 'Codi complet', value: 'fullcode'})
-        headers.push({text: 'Order', value: 'order'})
-        headers.push({text: 'Família', value: 'family'})
-        headers.push({text: 'Especialitat', value: 'specialty'})
-        headers.push({text: 'Notes', value: 'notes'})
-        if (this.showSubstituteHeaders) {
-          headers.push({text: 'Data inici', value: 'todo'})
-          headers.push({text: 'Data fí', value: 'todo'})
-        }
-        headers.push({text: 'Data creació', value: 'formatted_created_at_diff'})
-        headers.push({text: 'Data actualització', value: 'formatted_updated_at_diff'})
-        headers.push({text: 'Accions', sortable: false})
-        return headers
-      },
-      showJobTypeHeader () {
-        if (this.jobType) return false
-        return true
-      }
-    },
-    props: {
-      jobs: {
-        type: Array,
-        required: true
-      },
-      jobTypes: {
-        type: Array,
-        required: true
-      },
-      specialties: {
-        type: Array,
-        required: true
-      },
-      families: {
-        type: Array,
-        required: true
-      },
-      users: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      availableUsers (job) {
-        let availableUsers = JSON.parse(JSON.stringify(this.users))
-        availableUsers.push({
-          id: job.holder_id,
-          hashid: job.holder_hashid,
-          name: job.holder_name
-        })
-        return availableUsers
-      },
-      refresh () {
-        this.refreshing = true
-        this.$store.dispatch(actions.GET_JOBS).then(response => {
-          this.refreshing = false
-        }).catch(error => {
-          this.showError(error)
-        })
-      },
-      settings () {
-        console.log('settings TODO')
-      },
-      remove (job) {
-        this.deleting = true
-        this.$store.dispatch(actions.DELETE_JOB, job).then(response => {
-          this.deleting = false
-        }).catch(error => {
-          this.deleting = false
-          console.log(error)
-          this.showError(error)
-        })
-      }
-    },
-    created () {
-      this.$store.commit(mutations.SET_JOBS, this.jobs)
-      this.jobType = this.jobTypes.find(jobType => jobType.name === 'Professor/a').id
+export default {
+  components: {
+    'confirm-icon': ConfirmIcon,
+    'job-type-select': JobTypeSelect,
+    'add-substitute-icon': AddSubstituteIcon,
+    'stop-substitution-icon': StopSubstitutionIcon,
+    'remove-substitutes-icon': RemoveSubstitutesIcon,
+    'substitute-avatars': SubstituteAvatars,
+    'job-edit-icon': EditJobIcon,
+    'add-holder-to-job-icon': AddHolderToJobIcon,
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      search: '',
+      deleting: false,
+      jobType: null,
+      refreshing: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      internaljobs: 'jobs'
+    }),
+    filteredJobs: function () {
+      if (this.showJobTypeHeader) return this.internaljobs
+      return this.internaljobs.filter(job => job.type_id === this.jobType)
+    },
+    headers () {
+      let headers = []
+      headers.push({ text: 'Id', align: 'left', value: 'id' })
+      if (this.showJobTypeHeader) {
+        headers.push({ text: 'Tipus', value: 'type' })
+      }
+      headers.push({ text: 'Codi', value: 'code' })
+      headers.push({ text: 'Titular', value: 'holder_description', sortable: false })
+      headers.push({ text: 'Treballador actual', value: 'active_user_description', sortable: false })
+      headers.push({ text: 'Substituts', sortable: false })
+      headers.push({ text: 'Codi complet', value: 'fullcode' })
+      headers.push({ text: 'Order', value: 'order' })
+      headers.push({ text: 'Família', value: 'family' })
+      headers.push({ text: 'Especialitat', value: 'specialty' })
+      headers.push({ text: 'Notes', value: 'notes' })
+      if (this.showSubstituteHeaders) {
+        headers.push({ text: 'Data inici', value: 'todo' })
+        headers.push({ text: 'Data fí', value: 'todo' })
+      }
+      headers.push({ text: 'Data creació', value: 'formatted_created_at_diff' })
+      headers.push({ text: 'Data actualització', value: 'formatted_updated_at_diff' })
+      headers.push({ text: 'Accions', sortable: false })
+      return headers
+    },
+    showJobTypeHeader () {
+      if (this.jobType) return false
+      return true
+    }
+  },
+  props: {
+    jobs: {
+      type: Array,
+      required: true
+    },
+    jobTypes: {
+      type: Array,
+      required: true
+    },
+    specialties: {
+      type: Array,
+      required: true
+    },
+    families: {
+      type: Array,
+      required: true
+    },
+    users: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    availableUsers (job) {
+      let availableUsers = JSON.parse(JSON.stringify(this.users))
+      availableUsers.push({
+        id: job.holder_id,
+        hashid: job.holder_hashid,
+        name: job.holder_name
+      })
+      return availableUsers
+    },
+    refresh () {
+      this.refreshing = true
+      this.$store.dispatch(actions.GET_JOBS).then(response => {
+        this.refreshing = false
+      }).catch(error => {
+        this.showError(error)
+      })
+    },
+    settings () {
+      console.log('settings TODO')
+    },
+    remove (job) {
+      this.deleting = true
+      this.$store.dispatch(actions.DELETE_JOB, job).then(response => {
+        this.deleting = false
+      }).catch(error => {
+        this.deleting = false
+        console.log(error)
+        this.showError(error)
+      })
+    }
+  },
+  created () {
+    this.$store.commit(mutations.SET_JOBS, this.jobs)
+    this.jobType = this.jobTypes.find(jobType => jobType.name === 'Professor/a').id
   }
+}
 </script>
