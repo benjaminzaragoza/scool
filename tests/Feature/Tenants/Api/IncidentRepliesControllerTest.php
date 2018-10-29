@@ -92,6 +92,18 @@ class IncidentRepliesControllerTest extends BaseTenantTest
         return $user;
     }
 
+    protected function createUserWithRoleIncidentsManager()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com'
+        ]);
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        return $user;
+    }
+
     /**
      * @test
      */
@@ -149,5 +161,72 @@ class IncidentRepliesControllerTest extends BaseTenantTest
         $this->assertEquals( $user->id, $result->user_id);
         $this->assertEquals($user->name, $result->user_name);
         $this->assertEquals($user->email, $result->user_email);
+    }
+
+    /**
+     * @test
+     */
+    public function incidents_manager_can_add_a_reply_to_an_incident()
+    {
+        $incident = $this->createIncident();
+        $user = $this->createUserWithRoleIncidentsManager();
+        $this->actingAs($user,'api');
+        $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/replies',[
+            'body' => 'Ja us hem resolt la incidència.'
+        ]);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals('Ja us hem resolt la incidència.', $result->body);
+        $this->assertEquals( $user->id, $result->user_id);
+        $this->assertEquals($user->name, $result->user_name);
+        $this->assertEquals($user->email, $result->user_email);
+    }
+
+    /**
+     * @test
+     */
+    public function incidents_manager_can_delete_a_reply()
+    {
+        $incident = $this->createIncident();
+        $user = $this->createUserWithRoleIncidentsManager();
+        $incident->addComment($reply=Reply::create(['body' => 'No funciona res', 'user_id' => $user->id]));
+        $this->actingAs($user,'api');
+        $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id);
+
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        dump($result);
+        $reply = $reply->fresh();
+        $this->assertNull($reply);
+        $this->assertEquals('No funciona res', $result->body);
+        $this->assertEquals( $user->id, $result->user_id);
+    }
+
+    /**
+     * @test
+     */
+    public function regular_user_cannot_delete_a_reply()
+    {
+        $incident = $this->createIncident();
+        $user = factory(User::class)->create();
+        $incident->addComment($reply=Reply::create(['body' => 'No funciona res', 'user_id' => $user->id]));
+        $this->actingAs($user,'api');
+        $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id);
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function user_with_role_incidents_cannot_delete_a_reply()
+    {
+        $incident = $this->createIncident();
+        $user = $this->createUserWithRoleIncidents();
+        $incident->addComment($reply=Reply::create(['body' => 'No funciona res', 'user_id' => $user->id]));
+        $this->actingAs($user,'api');
+        $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id);
+
+        $response->assertStatus(403);
     }
 }

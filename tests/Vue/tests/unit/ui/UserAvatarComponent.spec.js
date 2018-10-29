@@ -12,7 +12,7 @@ describe('UserAvatarComponent.vue', () => {
     Object.assign(Wrapper.prototype, TestHelpers)
   })
 
-  it.only('shows_v_avatar', () => {
+  it('shows_v_avatar', () => {
     let wrapper = shallowMount(UserAvatarComponent, {
       propsData: {
         alt: 'Alt de prova',

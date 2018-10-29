@@ -886,15 +886,15 @@ if (!function_exists('initialize_gates')) {
 
         //INCIDENTS
         Gate::define('incident.list', function ($user) {
-            return $user->hasRole('Incidents');
+            return $user->hasRole('Incidents') || $user->hasRole('IncidentsManager');
         });
 
         Gate::define('incident.store', function ($user) {
-            return $user->hasRole('Incidents');
+            return $user->hasRole('Incidents') || $user->hasRole('IncidentsManager');
         });
 
         Gate::define('incident.show', function ($user) {
-            return $user->hasRole('Incidents');
+            return $user->hasRole('Incidents') || $user->hasRole('IncidentsManager');
         });
 
         Gate::define('incident.close', function ($user, $incident) {

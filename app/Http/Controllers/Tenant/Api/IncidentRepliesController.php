@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api;
 
+use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
 use App\Http\Requests\Incidents\StoreIncidentReplies;
 use App\Models\Incident;
@@ -40,5 +41,19 @@ class IncidentRepliesController
         ]);
         $incident->addReply($reply);
         return $reply->map();
+    }
+
+    /**
+     * @param DestroyIncidentReplies $request
+     * @param $tenant
+     * @param Incident $incident
+     * @param Reply $reply
+     * @return Reply
+     * @throws \Exception
+     */
+    public function destroy(DestroyIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
+    {
+        $reply->delete();
+        return $reply;
     }
 }

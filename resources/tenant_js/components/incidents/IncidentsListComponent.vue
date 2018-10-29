@@ -48,6 +48,8 @@
                     no-results-text="No s'ha trobat cap registre coincident"
                     no-data-text="No hi han dades disponibles"
                     rows-per-page-text="Incidències per pàgina"
+                    :rows-per-page-items="[5,10,25,50,100,200,{'text':'Tots','value':-1}]"
+                    :pagination.sync="pagination"
             >
                 <template slot="items" slot-scope="{item: incident}">
                     <tr :id="'incident_row_' + incident.id">
@@ -103,7 +105,10 @@ export default {
     return {
       search: '',
       refreshing: false,
-      showDialog: false
+      showDialog: false,
+      pagination: {
+        rowsPerPage: 25
+      }
     }
   },
   props: {

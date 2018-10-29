@@ -164,7 +164,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Incident Replies
             Route::get('/incidents/{incident}/replies','Tenant\Api\IncidentRepliesController@index');
             Route::post('/incidents/{incident}/replies','Tenant\Api\IncidentRepliesController@store');
-
+            Route::delete('/incidents/{incident}/replies/{reply}','Tenant\Api\IncidentRepliesController@destroy');
         });
 
         Route::group(['prefix' => 'v1'], function () {
