@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App;
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\JobType;
@@ -134,7 +135,7 @@ class JobSubstitutionsControllerTest extends BaseTenantTest
         $response = $this->json('POST','/api/v1/job/' . $job->id . '/substitution', []);
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
-        $this->assertEquals('The given data was invalid.',$result->message);
+        $this->assertEquals('Les dades proporcionades no són vàlides',$result->message);
         $this->assertEquals('El camp user és obligatori.',$result->errors->user[0]);
         $this->assertEquals('El camp start at és obligatori.',$result->errors->start_at[0]);
     }
@@ -159,7 +160,7 @@ class JobSubstitutionsControllerTest extends BaseTenantTest
         ]);
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
-        $this->assertEquals('The given data was invalid.',$result->message);
+        $this->assertEquals('Les dades proporcionades no són vàlides',$result->message);
         $this->assertEquals('El camp user és obligatori.',$result->errors->user[0]);
         $this->assertEquals('end at ha de ser una data posterior a start at.',$result->errors->end_at[0]);
     }

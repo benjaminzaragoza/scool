@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants;
 
+use App;
 use App\Events\TeacherPhotosUploaded;
 use App\Models\User;
 use Config;
@@ -128,7 +129,7 @@ class TeachersPhotosControllerTest extends BaseTenantTest
 
         $response->assertStatus(422);
         $result =json_decode($response->getContent());
-        $this->assertEquals($result->message,'The given data was invalid.');
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides');
         $this->assertEquals($result->errors->teacher_photos[0],'teacher photos ha de ser un arxiu amb format: zip.');
     }
 
@@ -145,7 +146,7 @@ class TeachersPhotosControllerTest extends BaseTenantTest
 
         $response->assertStatus(422);
         $result =json_decode($response->getContent());
-        $this->assertEquals($result->message,'The given data was invalid.');
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides');
         $this->assertEquals($result->errors->teacher_photos[0],'El camp teacher photos és obligatori.');
     }
 

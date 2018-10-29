@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants;
 
+use App;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use Config;

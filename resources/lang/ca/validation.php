@@ -11,7 +11,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages.
     |
     */
-
+    'message' => 'Les dades proporcionades no són vàlides',
     'accepted' => ':attribute ha de ser acceptat.',
     'active_url' => ':attribute no és un URL vàlid.',
     'after' => ':attribute ha de ser una data posterior a :date.',

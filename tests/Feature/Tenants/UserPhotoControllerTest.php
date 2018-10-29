@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenant;
 
+use App;
 use App\Events\UserPhotoRemoved;
 use App\Events\UserPhotoUploaded;
 use App\Models\User;
@@ -153,7 +154,7 @@ class UserPhotoControllerTest extends BaseTenantTest
 
         $response->assertStatus(422);
         $result =json_decode($response->getContent());
-        $this->assertEquals($result->message,'The given data was invalid.');
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides');
         $this->assertEquals($result->errors->photo[0],'El camp photo és obligatori.');
 
 
@@ -164,7 +165,7 @@ class UserPhotoControllerTest extends BaseTenantTest
         ]);
         $response->assertStatus(422);
         $result =json_decode($response->getContent());
-        $this->assertEquals($result->message,'The given data was invalid.');
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides');
         $this->assertEquals($result->errors->photo[0],'photo ha de ser una imatge.');
 
     }

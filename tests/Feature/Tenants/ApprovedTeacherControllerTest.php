@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App;
 use App\Models\Address;
 use App\Models\Employee;
 use App\Models\Identifier;
@@ -261,7 +262,7 @@ class ApprovedTeacherControllerTest extends BaseTenantTest
 
         $response->assertStatus(422);
         $response = json_decode($response->getContent());
-        $this->assertEquals('The given data was invalid.', $response->message);
+        $this->assertEquals('Les dades proporcionades no són vàlides', $response->message);
 
     }
 

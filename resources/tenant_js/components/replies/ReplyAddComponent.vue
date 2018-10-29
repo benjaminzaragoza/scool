@@ -39,6 +39,7 @@ export default {
       }).then((response) => {
         this.$emit('added', response.data)
         this.adding = false
+        this.newReply = ''
       }).catch((error) => {
         this.$snackbar.showError(error)
         this.adding = false

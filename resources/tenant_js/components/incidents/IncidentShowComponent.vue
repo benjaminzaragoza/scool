@@ -75,54 +75,6 @@
                     <reply-add :repliable="incident" @added="addComment"></reply-add>
                 </v-flex>
                 <v-flex md12>
-                    <!--<span :id="'incident_' + incident.id + '_comments'" three-line subheader v-if="incident.comments && incident.comments.length > 0">-->
-                        <!--<v-card :id="'incident_' + incident.id + '_comment_' + comment.id" avatar v-for="comment in incident.comments" :key="comment.id">-->
-                            <!--<v-layout>-->
-                                <!--<v-flex xs1>-->
-                                    <!--<user-avatar :hash-id="comment.user.hashid"-->
-                                                 <!--:alt="comment.user.name"-->
-                                                 <!--v-if="comment.user.hashid"-->
-                                    <!--&gt;</user-avatar>-->
-                                <!--</v-flex>-->
-                                <!--<v-flex xs10>-->
-                                    <!--<v-card-title primary-title v-html="comment.body"></v-card-title>-->
-                                    <!--<v-card-text v-html="comment.user.name"></v-card-text>-->
-                                <!--</v-flex>-->
-                                <!--<v-flex xs1>-->
-                                    <!--<v-card-actions class="pa-3">-->
-                                        <!--<v-icon>delete</v-icon>-->
-                                    <!--</v-card-actions>-->
-                                <!--</v-flex>-->
-                            <!--</v-layout>-->
-                        <!--</v-card>-->
-                    <!--</span>-->
-
-                    <!--<span :id="'incident_' + incident.id + '_comments'" >-->
-                        <!--<v-card :id="'incident_' + incident.id + '_comment_' + comment.id"-->
-                                <!--avatar-->
-                                <!--hover-->
-                                <!--raised-->
-                                <!--tile-->
-                                <!--v-for="comment in incident.comments"-->
-                                <!--:key="comment.id"-->
-                                <!--class="mb-1">-->
-                            <!--<v-layout>-->
-                                <!--<v-flex xs1 align-center>-->
-                                    <!--<user-avatar :hash-id="comment.user.hashid"-->
-                                                 <!--:alt="comment.user.name"-->
-                                                 <!--v-if="comment.user.hashid"-->
-                                    <!--&gt;</user-avatar>-->
-                                <!--</v-flex>-->
-                                <!--<v-flex xs10>-->
-                                    <!--<v-card-title primary-title v-text="comment.body" style="border: solid 1px"></v-card-title>-->
-                                <!--</v-flex>-->
-                                <!--<v-flex xs1>-->
-                                    <!--<v-card-actions><v-btn>Listen now</v-btn></v-card-actions>-->
-                                <!--</v-flex>-->
-                            <!--</v-layout>-->
-                        <!--</v-card>-->
-                    <!--</span>-->
-
                     <v-list two-line
                             :id="'incident_' + incident.id + '_comments'"
                             subheader
@@ -140,7 +92,7 @@
                                     <v-list-tile-title :title="comment.body">{{ comment.body }}</v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-icon>delete</v-icon>
+                                    <reply-delete v-role="IncidentsManager" :repliable="incident" :reply="comment" @deleted="deletedComment"></reply-delete>
                                 </v-list-tile-action>
                             </v-list-tile>
                             <v-divider></v-divider>
@@ -154,6 +106,7 @@
 
 <script>
 import ReplyAddComponent from '../replies/ReplyAddComponent'
+import ReplyDeleteComponent from '../replies/ReplyDeleteComponent'
 import * as actions from '../../store/action-types'
 import UserAvatar from '../ui/UserAvatarComponent'
 
@@ -161,6 +114,7 @@ export default {
   name: 'IncidentShowComponent',
   components: {
     'reply-add': ReplyAddComponent,
+    'reply-delete': ReplyDeleteComponent,
     'user-avatar': UserAvatar
   },
   data () {
@@ -181,12 +135,18 @@ export default {
     }
   },
   methods: {
-    addComment () {
+    refresh_incidents (message) {
       this.$store.dispatch(actions.SET_INCIDENTS).then(() => {
-        this.$snackbar.showMessage('Comentari afegit correctament')
+        this.$snackbar.showMessage(message)
       }).catch(error => {
         this.$snackbar.showError(error)
       })
+    },
+    addComment () {
+      this.refresh_incidents('Comentari afegit correctament')
+    },
+    deletedComment () {
+      this.refresh_incidents('Comentari eliminat correctament')
     }
   }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants;
 
+use App;
 use App\Models\Employee;
 use App\Models\Family;
 use App\Models\Specialty;
@@ -161,7 +162,7 @@ class JobsControllerTest extends BaseTenantTest
         ]);
         $result = json_decode($response->getContent());
         $response->assertStatus(422);
-        $this->assertEquals('The given data was invalid.',$result->message);
+        $this->assertEquals('Les dades proporcionades no són vàlides',$result->message);
         $this->assertEquals('El camp code és obligatori.',$result->errors->code[0]);
         $this->assertEquals('El camp type és obligatori.',$result->errors->type[0]);
 
@@ -171,7 +172,7 @@ class JobsControllerTest extends BaseTenantTest
         ]);
         $result = json_decode($response->getContent());
         $response->assertStatus(422);
-        $this->assertEquals('The given data was invalid.',$result->message);
+        $this->assertEquals('Les dades proporcionades no són vàlides',$result->message);
         $this->assertEquals('El camp family és obligatori quan type és Professor/a.',$result->errors->family[0]);
         $this->assertEquals('El camp specialty és obligatori quan type és Professor/a.',$result->errors->specialty[0]);
 

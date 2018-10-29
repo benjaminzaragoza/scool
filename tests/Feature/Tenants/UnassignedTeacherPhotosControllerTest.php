@@ -93,7 +93,7 @@ class UnassignedTeacherPhotosControllerTest extends BaseTenantTest
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
 
-        $this->assertEquals($result->message,"The given data was invalid." );
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides' );
         $this->assertEquals($result->errors->teacher_photo[0],"El camp teacher photo és obligatori." );
 
         $response = $this->json('POST','/api/v1/unassigned_teacher_photo',[
@@ -103,7 +103,7 @@ class UnassignedTeacherPhotosControllerTest extends BaseTenantTest
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
 
-        $this->assertEquals($result->message,"The given data was invalid." );
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides' );
         $this->assertEquals($result->errors->teacher_photo[0],"teacher photo ha de ser una imatge." );
 
         $response = $this->json('POST','/api/v1/unassigned_teacher_photo',[
@@ -113,7 +113,7 @@ class UnassignedTeacherPhotosControllerTest extends BaseTenantTest
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
 
-        $this->assertEquals($result->message,"The given data was invalid." );
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides' );
         $this->assertEquals($result->errors->teacher_photo[0],"teacher photo ha de ser una imatge." );
 
         $response = $this->json('POST','/api/v1/unassigned_teacher_photo',[
@@ -123,7 +123,7 @@ class UnassignedTeacherPhotosControllerTest extends BaseTenantTest
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
 
-        $this->assertEquals($result->message,"The given data was invalid." );
+        $this->assertEquals($result->message,'Les dades proporcionades no són vàlides');
         $this->assertEquals($result->errors->teacher_photo[0],"Les dimensions de la imatge teacher photo no són vàlides." );
     }
 
