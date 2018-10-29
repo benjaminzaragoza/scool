@@ -195,7 +195,6 @@ class IncidentRepliesControllerTest extends BaseTenantTest
 
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        dump($result);
         $reply = $reply->fresh();
         $this->assertNull($reply);
         $this->assertEquals('No funciona res', $result->body);
@@ -228,5 +227,27 @@ class IncidentRepliesControllerTest extends BaseTenantTest
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id);
 
         $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function incidents_manager_can_update_a_reply()
+    {
+        $this->withoutExceptionHandling();
+        $incident = $this->createIncident();
+        $user = $this->createUserWithRoleIncidentsManager();
+        $incident->addComment($reply=Reply::create(['body' => 'No funciona res', 'user_id' => $user->id]));
+        $this->actingAs($user,'api');
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id,[
+            'body' => 'No funciona PC1 Aula 20'
+        ]);
+
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $reply = $reply->fresh();
+        $this->assertEquals($reply->id, $result->id);
+        $this->assertEquals('No funciona PC1 Aula 20', $result->body);
+        $this->assertEquals( $user->id, $result->user_id);
     }
 }

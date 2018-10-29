@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Api;
 use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
 use App\Http\Requests\Incidents\StoreIncidentReplies;
+use App\Http\Requests\Incidents\UpdateIncidentReplies;
 use App\Models\Incident;
 use App\Models\Reply;
 use Auth;
@@ -41,6 +42,21 @@ class IncidentRepliesController
         ]);
         $incident->addReply($reply);
         return $reply->map();
+    }
+
+    /**
+     * @param UpdateIncidentReplies $request
+     * @param $tenant
+     * @param Incident $incident
+     * @param Reply $reply
+     * @return Reply
+     * @throws \Exception
+     */
+    public function update(UpdateIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
+    {
+        $reply->body = $request->body;
+        $reply->save();
+        return $reply;
     }
 
     /**
