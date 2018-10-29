@@ -21,6 +21,16 @@ class Reply extends Model
     }
 
     /**
+     * Return associated incident.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function incident()
+    {
+        return $this->repliable();
+    }
+
+    /**
      * Get the user that owns the reply.
      */
     public function user()

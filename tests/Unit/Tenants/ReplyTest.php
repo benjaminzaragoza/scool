@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
+use App\Models\Incident;
 use App\Models\Reply;
 use App\Models\User;
 use Tests\TestCase;
@@ -50,5 +51,27 @@ class ReplyTest extends TestCase
         $this->assertEquals('Oriol Junqueras',$mappedReply['user_name']);
         $this->assertEquals('oriol@junqueras.cat',$mappedReply['user_email']);
 
+    }
+
+    /**
+     * @test
+     */
+    public function a_reply_can_have_an_associated_incident()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Oriol Junqueras',
+            'email' => 'oriol@junqueras.cat'
+        ]);
+        $reply = Reply::create([
+            'body' => 'Ja us hem arreglat la incidència',
+            'user_id' =>  $user->id
+        ]);
+        $incident = Incident::create([
+            'subject' => 'No funciona PC 1 Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $incident->addComment($reply);
+
+        $this->assertTrue($reply->incident->is($incident));
     }
 }

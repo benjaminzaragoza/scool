@@ -19,7 +19,7 @@ class UpdateIncidentReplies extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('incident.update', $this->incident);
+        return Auth::user()->hasRole('IncidentsManager') && optional($this->reply->incident)->is($this->incident);
     }
 
     /**

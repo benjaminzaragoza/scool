@@ -232,9 +232,8 @@ class IncidentRepliesControllerTest extends BaseTenantTest
     /**
      * @test
      */
-    public function incidents_manager_can_update_a_reply()
+    public function incidents_manager_can_update_a_reply_associated_to_an_incident()
     {
-        $this->withoutExceptionHandling();
         $incident = $this->createIncident();
         $user = $this->createUserWithRoleIncidentsManager();
         $incident->addComment($reply=Reply::create(['body' => 'No funciona res', 'user_id' => $user->id]));
@@ -249,5 +248,20 @@ class IncidentRepliesControllerTest extends BaseTenantTest
         $this->assertEquals($reply->id, $result->id);
         $this->assertEquals('No funciona PC1 Aula 20', $result->body);
         $this->assertEquals( $user->id, $result->user_id);
+    }
+
+    /**
+     * @test
+     */
+    public function incidents_manager_cannot_update_a_reply_not_associated_to_an_incident()
+    {
+        $incident = $this->createIncident();
+        $user = $this->createUserWithRoleIncidentsManager();
+        $reply=Reply::create(['body' => 'No funciona res', 'user_id' => $user->id]);
+        $this->actingAs($user,'api');
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id,[
+            'body' => 'No funciona PC1 Aula 20'
+        ]);
+        $response->assertStatus(403);
     }
 }

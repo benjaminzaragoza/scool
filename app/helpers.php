@@ -619,7 +619,7 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'incident.update',
             'incident.destroy',
             'incident.open',
-            'incident.close',
+            'incident.close'
         ];
 
         foreach ($permissions as $permission) {
