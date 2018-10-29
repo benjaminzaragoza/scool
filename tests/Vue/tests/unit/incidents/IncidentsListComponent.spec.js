@@ -100,61 +100,70 @@ describe('IncidentsListComponent.vue', () => {
     })
   })
 
-  it('shows_tasks', () => {
+  it('shows_tasks', (done) => {
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
         incidents: sampleIncidents
       },
-      store
+      store,
+      sync: false // https://github.com/vuejs/vue-test-utils/issues/829
     })
     expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
 
-    let incidentRow1 = wrapper.find('tr#incident_row_1')
-    let incidentRow2 = wrapper.find('tr#incident_row_2')
-    let incidentRow3 = wrapper.find('tr#incident_row_3')
+    setTimeout(() => {
+      let incidentRow1 = wrapper.find('tr#incident_row_1')
+      let incidentRow2 = wrapper.find('tr#incident_row_2')
+      let incidentRow3 = wrapper.find('tr#incident_row_3')
 
-    incidentRow1.seeText('1')
-    incidentRow1.seeText('Pepe Pardo Jeans')
-    incidentRow1.seeHtml('pepepardo@jeans.com')
-    incidentRow1.seeText('No funciona PC1 Aula 30')
-    incidentRow1.seeText('Bla bla bla')
+      incidentRow1.seeText('1')
+      incidentRow1.seeText('Pepe Pardo Jeans')
+      incidentRow1.seeHtml('pepepardo@jeans.com')
+      incidentRow1.seeText('No funciona PC1 Aula 30')
+      incidentRow1.seeText('Bla bla bla')
 
-    incidentRow2.seeText('2')
-    incidentRow2.seeText('Pepa Parda Jeans')
-    incidentRow2.seeHtml('pepaparda@jeans.com')
-    incidentRow2.seeText('No funciona PC2 Aula 31')
-    incidentRow2.seeText('JO JO JO')
+      incidentRow2.seeText('2')
+      incidentRow2.seeText('Pepa Parda Jeans')
+      incidentRow2.seeHtml('pepaparda@jeans.com')
+      incidentRow2.seeText('No funciona PC2 Aula 31')
+      incidentRow2.seeText('JO JO JO')
 
-    incidentRow3.seeText('3')
-    incidentRow3.seeText('Carles Puigdemont')
-    incidentRow3.seeHtml('carles@puigdemont.cat')
-    incidentRow3.seeText('No funciona PC1 Aula 32')
-    incidentRow3.seeText('HEY HEY HEY')
-    incidentRow3.seeText('2018:12:08 14:23:24')
+      incidentRow3.seeText('3')
+      incidentRow3.seeText('Carles Puigdemont')
+      incidentRow3.seeHtml('carles@puigdemont.cat')
+      incidentRow3.seeText('No funciona PC1 Aula 32')
+      incidentRow3.seeText('HEY HEY HEY')
+      incidentRow3.seeText('2018:12:08 14:23:24')
+      done()
+    },
+    50)
   })
 
-  it('gets_incidents_from_api_when_no_incidents_prop_is_given', () => {
-    const wrapper = mount(IncidentsListComponent, { store })
+  it('gets_incidents_from_api_when_no_incidents_prop_is_given', (done) => {
+    const wrapper = mount(IncidentsListComponent, { store, sync: false })
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
 
-    let incidentRow1 = wrapper.find('tr#incident_row_1')
-    let incidentRow2 = wrapper.find('tr#incident_row_2')
-    let incidentRow3 = wrapper.find('tr#incident_row_3')
+    setTimeout(() => {
+      let incidentRow1 = wrapper.find('tr#incident_row_1')
+      let incidentRow2 = wrapper.find('tr#incident_row_2')
+      let incidentRow3 = wrapper.find('tr#incident_row_3')
 
-    incidentRow1.seeText('1')
-    incidentRow1.seeText('Pepe Pardo Jeans')
-    incidentRow1.seeText('No funciona PC1 Aula 30')
-    incidentRow1.seeText('Bla bla bla')
+      incidentRow1.seeText('1')
+      incidentRow1.seeText('Pepe Pardo Jeans')
+      incidentRow1.seeText('No funciona PC1 Aula 30')
+      incidentRow1.seeText('Bla bla bla')
 
-    incidentRow2.seeText('2')
-    incidentRow2.seeText('Pepa Parda Jeans')
-    incidentRow2.seeText('No funciona PC2 Aula 31')
-    incidentRow2.seeText('JO JO JO')
+      incidentRow2.seeText('2')
+      incidentRow2.seeText('Pepa Parda Jeans')
+      incidentRow2.seeText('No funciona PC2 Aula 31')
+      incidentRow2.seeText('JO JO JO')
 
-    incidentRow3.seeText('3')
-    incidentRow3.seeText('Carles Puigdemont')
-    incidentRow3.seeText('No funciona PC1 Aula 32')
-    incidentRow3.seeText('HEY HEY HEY')
+      incidentRow3.seeText('3')
+      incidentRow3.seeText('Carles Puigdemont')
+      incidentRow3.seeText('No funciona PC1 Aula 32')
+      incidentRow3.seeText('HEY HEY HEY')
+      done()
+    },
+    50)
   })
 
   it('watch_for_changes_in_incidents_prop', () => {

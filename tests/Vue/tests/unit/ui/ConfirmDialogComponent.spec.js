@@ -40,35 +40,27 @@ describe('ConfirmDialogComponent.vue', () => {
   })
 
   it('shows_vdialog', () => {
-    let wrapper = shallowMount(ConfirmDialogComponent, {
-      dataProps: {
-        message: 'Aquesta acció no es pot desfer.',
-        title: 'Esteu segurs?',
-        confirmText: 'Confirmar'
-      },
-      store: storeShow
-    })
+    let wrapper = shallowMount(ConfirmDialogComponent, { store: storeShow })
     wrapper.assertContains('vdialog-stub')
+    wrapper.assertContains('vcard-stub')
     expect(gettersShow.CONFIRM_DIALOG_SHOW.calledOnce).to.be.true
   })
 
-  it.only('shows_vdialog_props', (done) => {
+  it('shows_vdialog_with_custom_message_title_and_confirm_text', () => {
     document.body.innerHTML = ''
 
     let wrapper = mount(ConfirmDialogComponent, {
-      dataProps: {
+      propsData: {
         message: 'Aquesta acció no es pot desfer.',
         title: 'Esteu segurs?',
         confirmText: 'Confirmar'
       },
       store: storeShow
     })
-    // expect(gettersShow.CONFIRM_DIALOG_SHOW.calledOnce).to.be.true
-    setTimeout(() => {
-      console.log('####################### HEY')
-      console.log(wrapper.html())
-      done()
-    }, 300)
+    expect(gettersShow.CONFIRM_DIALOG_SHOW.calledOnce).to.be.true
+    wrapper.seeText('Aquesta acció no es pot desfer.')
+    wrapper.seeText('Esteu segurs?')
+    wrapper.seeText('Confirmar')
   })
 
   it('not_shows_vdialog', () => {

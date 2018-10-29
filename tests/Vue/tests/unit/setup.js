@@ -12,3 +12,14 @@ document.body.appendChild(el)
 // https://github.com/vuejs/vue-test-utils/issues/974
 global.requestAnimationFrame = cb => cb()
 window.requestAnimationFrame = cb => cb()
+
+// const { getComputedStyle } = window
+// window.getComputedStyle = function getComputedStyleStub (el) {
+//   return {
+//     ...getComputedStyle(el),
+//     transitionDelay: '',
+//     transitionDuration: '',
+//     animationDelay: '',
+//     animationDuration: ''
+//   }
+// }

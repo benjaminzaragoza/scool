@@ -92,7 +92,6 @@ export default {
         })
         .catch(error => {
           this.uploading = false
-          console.log(error)
           this.showError(error)
         })
     },

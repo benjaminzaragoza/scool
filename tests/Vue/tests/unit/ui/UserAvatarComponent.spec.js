@@ -19,7 +19,6 @@ describe('UserAvatarComponent.vue', () => {
         hashId: 232
       }
     })
-    console.log(wrapper.html())
     wrapper.assertContains('vavatar-stub')
   })
 })

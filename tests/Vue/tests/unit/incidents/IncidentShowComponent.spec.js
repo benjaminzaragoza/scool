@@ -86,7 +86,10 @@ describe('IncidentsShowComponent.vue', () => {
           comments: [
             {
               id: 1,
-              body: 'Podeu aportar més informació si us plau?'
+              body: 'Podeu aportar més informació si us plau?',
+              user: {
+                hashid: 'Mx'
+              }
             }
           ]
         }
