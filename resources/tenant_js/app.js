@@ -11,6 +11,8 @@ import store from './store'
 import * as mutations from './store/mutation-types'
 import snackbar from './plugins/snackbar'
 import permissions from './plugins/permissions'
+import confirm from './plugins/confirm/index.js'
+
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -20,6 +22,7 @@ window.Vue = Vue
 
 window.Vue.use(snackbar)
 window.Vue.use(permissions)
+window.Vue.use(confirm)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

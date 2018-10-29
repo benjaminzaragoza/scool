@@ -167,7 +167,7 @@ describe('IncidentsListComponent.vue', () => {
   })
 
   it('watch_for_changes_in_incidents_prop', () => {
-    mount(IncidentsListComponent, { store })
+    mount(IncidentsListComponent, { store, sync: false })
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
   })
 
@@ -175,7 +175,8 @@ describe('IncidentsListComponent.vue', () => {
     store.getters = {
       incidents: function () {
         return []
-      }
+      },
+      sync: false
     }
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
@@ -196,7 +197,8 @@ describe('IncidentsListComponent.vue', () => {
           showMessage
         }
       },
-      store
+      store,
+      sync: false
     })
     wrapper.click('#incidents_refresh_button')
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
@@ -217,7 +219,8 @@ describe('IncidentsListComponent.vue', () => {
           showError
         }
       },
-      store: errorStore
+      store: errorStore,
+      sync: false
     })
     wrapper.click('#incidents_refresh_button')
     expect(actionsError.SET_INCIDENTS.calledOnce).to.be.true
