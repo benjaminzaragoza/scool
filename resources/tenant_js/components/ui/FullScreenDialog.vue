@@ -1,7 +1,11 @@
 <template>
     <span>
-        <v-btn flat icon :title="title" color="primary" dark class="ma-0" @click="toggle">
-            <v-icon>visibility</v-icon>
+        <v-btn flat icon :title="title" :color="color" dark class="ma-0" @click="toggle">
+            <v-badge left overlap :color="badgeColor" v-if="badge">
+              <span slot="badge" v-text="badge">6</span>
+              <v-icon large v-text="icon"></v-icon>
+            </v-badge>
+            <v-icon v-else v-text="icon"></v-icon>
         </v-btn>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <slot></slot>
@@ -17,6 +21,22 @@ export default {
     event: 'toggle'
   },
   props: {
+    badgeColor: {
+      type: String,
+      default: 'primary'
+    },
+    badge: {
+      type: Number,
+      default: null
+    },
+    color: {
+      type: String,
+      default: 'primary'
+    },
+    icon: {
+      type: String,
+      default: 'visibility'
+    },
     resource: {
       type: Object,
       required: false

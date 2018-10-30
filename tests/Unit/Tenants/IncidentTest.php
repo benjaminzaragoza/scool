@@ -104,10 +104,14 @@ class IncidentTest extends TestCase
         $this->assertNotNull($mappedIncident['updated_at_timestamp']);
         $this->assertNotNull($mappedIncident['formatted_created_at']);
         $this->assertNotNull($mappedIncident['formatted_updated_at']);
+        $this->assertNotNull($mappedIncident['formatted_created_at_diff']);
+        $this->assertNotNull($mappedIncident['formatted_updated_at_diff']);
+
         $this->assertEquals('incidents',$mappedIncident['api_uri']);
 
         $this->assertNull($mappedIncident['closed_at']);
         $this->assertNull($mappedIncident['formatted_closed_at']);
+        $this->assertNull($mappedIncident['formatted_closed_at_diff']);
         $this->assertNull($mappedIncident['closed_at_timestamp']);
 
         $this->assertCount(0, $mappedIncident['comments']);

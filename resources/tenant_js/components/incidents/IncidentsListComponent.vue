@@ -61,10 +61,21 @@
                         <td class="text-xs-left" :title="incident.description">
                             <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-html="incident.formatted_closed_at"></td>
-                        <td class="text-xs-left" v-html="incident.formatted_created_at"></td>
-                        <td class="text-xs-left" v-html="incident.formatted_updated_at"></td>
+                        <td class="text-xs-left" v-html="incident.formatted_closed_at_diff" :title="incident.formatted_closed_at"></td>
+                        <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
+                        <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
+                            <fullscreen-dialog
+                                    :badge="incident.comments && incident.comments.length"
+                                    badge-color="teal"
+                                    icon="chat_bubble_outline"
+                                    color="teal"
+                                    v-model="addCommentDialog"
+                                    title="Afegir un comentari"
+                                    :resource="incident"
+                                    v-if="addCommentDialog === false || addCommentDialog === incident.id">
+                                <incident-add-comment :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false"></incident-add-comment>
+                            </fullscreen-dialog>
                             <fullscreen-dialog
                                     v-model="showDialog"
                                     title="Mostra la incidència"
@@ -87,6 +98,7 @@ import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowComponent from './IncidentShowComponent'
+import IncidentAddCommentComponent from './IncidentAddCommentComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
@@ -95,6 +107,7 @@ export default {
   name: 'IncidentsList',
   components: {
     'fullscreen-dialog': FullScreenDialog,
+    'incident-add-comment': IncidentAddCommentComponent,
     'incident-show': IncidentShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
@@ -106,6 +119,7 @@ export default {
       search: '',
       refreshing: false,
       showDialog: false,
+      addCommentDialog: false,
       pagination: {
         rowsPerPage: 25
       }

@@ -75,13 +75,16 @@ class Incident extends Model
             'description' => $this->description,
             'closed_at' => $this->closed_at,
             'formatted_closed_at' => $this->formatted_closed_at,
+            'formatted_closed_at_diff' => $this->formatted_closed_at_diff,
             'closed_at_timestamp' => $this->closed_at_timestamp,
             'created_at' => $this->created_at,
             'created_at_timestamp' => $this->created_at_timestamp,
             'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'api_uri' => $this->api_uri,
             'comments' => $this->comments
         ];
@@ -139,6 +142,17 @@ class Incident extends Model
     public function getClosedAtTimestampAttribute()
     {
         return optional($this->closed_at)->timestamp;
+    }
+
+    /**
+     * formatted_closed_at_date attribute.
+     *
+     * @return mixed
+     */
+    public function getFormattedClosedAtDiffAttribute()
+    {
+        Carbon::setLocale(config('app.locale'));
+        return optional($this->closed_at)->diffForHumans(Carbon::now());
     }
 
     /**

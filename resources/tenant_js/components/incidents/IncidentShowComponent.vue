@@ -1,15 +1,15 @@
 <template>
     <v-card>
         <v-toolbar dark color="primary" :id="'incident_' + incident.id + '_show_toolbar'">
-                <v-btn :id="'incident_' + incident.id + '_show_close_button'" icon dark @click.native="$emit('close')">
-                    <v-icon>close</v-icon>
-                </v-btn>
-                <v-toolbar-title> Incidència: {{ incident.subject }}</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn dark flat @click.native="$emit('close')">Guardar</v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
+            <v-btn :id="'incident_' + incident.id + '_show_close_button'" icon dark @click.native="$emit('close')">
+                <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title> Incidència: {{ incident.subject }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn dark flat @click.native="$emit('close')">Guardar</v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
         <v-container text-md-center class="pb-0 pt-1">
             <v-layout row wrap>
                 <v-flex md8>

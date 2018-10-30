@@ -50,7 +50,8 @@ describe('IncidentsListComponent.vue', () => {
       subject: 'No funciona PC1 Aula 32',
       description: 'HEY HEY HEY',
       closed_at: {},
-      formatted_closed_at: '2018:12:08 14:23:24'
+      formatted_closed_at: '2018:12:08 14:23:24',
+      formatted_closed_at_diff: '1 segon abans'
     }
   ]
 
@@ -132,7 +133,7 @@ describe('IncidentsListComponent.vue', () => {
       incidentRow3.seeHtml('carles@puigdemont.cat')
       incidentRow3.seeText('No funciona PC1 Aula 32')
       incidentRow3.seeText('HEY HEY HEY')
-      incidentRow3.seeText('2018:12:08 14:23:24')
+      incidentRow3.seeText('1 segon abans')
       done()
     },
     50)

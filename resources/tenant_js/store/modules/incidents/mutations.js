@@ -14,6 +14,7 @@ export default {
     incidentInState.closed_at = incident.closed_at
     incidentInState.closed_at_timestamp = incident.closed_at_timestamp
     incidentInState.formatted_closed_at = incident.formatted_closed_at
+    incidentInState.formatted_closed_at_diff = incident.formatted_closed_at_diff
   },
   [ mutations.OPEN_INCIDENT ] (state, incident) {
     let incidentInState = state.incidents.find((element) => {
@@ -22,6 +23,8 @@ export default {
     incidentInState.closed_at = null
     incidentInState.closed_at_timestamp = null
     incidentInState.formatted_closed_at = null
+    incidentInState.formatted_closed_at_diff = null
+
   },
   [ mutations.DELETE_INCIDENT ] (state, incident) {
     let incidentInState = state.incidents.find((element) => {

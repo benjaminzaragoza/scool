@@ -71,4 +71,5 @@ trait FormattedDates
         Carbon::setLocale(config('app.locale'));
         return optional($this->updated_at)->diffForHumans(Carbon::now());
     }
+
 }
