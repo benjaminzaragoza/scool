@@ -74,7 +74,7 @@
                                     title="Afegir un comentari"
                                     :resource="incident"
                                     v-if="addCommentDialog === false || addCommentDialog === incident.id">
-                                <incident-add-comment :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false"></incident-add-comment>
+                                <incident-show :show-data="false" :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false"></incident-show>
                             </fullscreen-dialog>
                             <fullscreen-dialog
                                     v-model="showDialog"
@@ -98,7 +98,6 @@ import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowComponent from './IncidentShowComponent'
-import IncidentAddCommentComponent from './IncidentAddCommentComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
@@ -107,7 +106,6 @@ export default {
   name: 'IncidentsList',
   components: {
     'fullscreen-dialog': FullScreenDialog,
-    'incident-add-comment': IncidentAddCommentComponent,
     'incident-show': IncidentShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,

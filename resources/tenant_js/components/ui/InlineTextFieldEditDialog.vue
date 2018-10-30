@@ -64,13 +64,13 @@ export default {
       return '/api/v1/' + this.object.api_uri + '/' + this.object.id + '/' + this.field
     },
     save () {
+      console.log('SAVE#############################')
       if (!this.$v.$invalid) {
         window.axios.put(this.url(), {
           subject: this.value
         }).then(() => {
           this.$emit('save', this.value)
         }).catch(error => {
-          console.log(error)
           this.$snackbar.showError(error)
         })
       }

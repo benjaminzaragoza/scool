@@ -25,6 +25,6 @@ class IncidentsDescriptionController extends Controller
     {
         $incident->description = $request->description;
         $incident->save();
-        return $incident;
+        return $incident->map();
     }
 }

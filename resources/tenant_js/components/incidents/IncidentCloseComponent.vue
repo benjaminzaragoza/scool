@@ -1,5 +1,10 @@
 <template>
-    <v-btn flat :color="color" icon :title="title" class="ma-0"
+    <v-btn v-if="alt" flat :title="title" class="ma-0"
+           :loading="loading" :disabled="loading" :id="'close_incident_' + incident.id" @click="toggle" >
+        {{ text }}
+        <v-icon v-text="icon" right dark></v-icon>
+    </v-btn>
+    <v-btn v-else flat :color="color" icon :title="title" class="ma-0"
            :loading="loading" :disabled="loading" :id="'close_incident_' + incident.id" @click="toggle">
         <v-icon v-text="icon"></v-icon>
     </v-btn>
@@ -20,14 +25,21 @@ export default {
     incident: {
       type: Object,
       required: true
+    },
+    alt: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    text () {
+      return this.close ? 'Tancar' : 'Obrir'
+    },
     icon () {
       return this.close ? 'lock' : 'lock_open'
     },
     color () {
-      return this.close ? 'error' : 'success'
+      return this.close ? 'success' : 'purple'
     },
     title () {
       return this.close ? 'Tancar la incidència' : 'Obrir la incidència'

@@ -8,17 +8,32 @@
                          :alt="incident.user.name"
                          v-if="incident.user.hashid"
             ></user-avatar>
-            <v-icon v-if="incident.closed_at" color="red" title="Tancada">lock</v-icon>
-            <v-icon v-else color="green" title="Oberta">lock_open</v-icon>
-            <v-toolbar-title>{{ incident.subject }}</v-toolbar-title>
+            <span class="hidden-sm-and-down">
+                <v-btn v-if="incident.closed_at" flat>
+                    <v-icon left dark>lock</v-icon>
+                    Tancada
+                </v-btn>
+                <v-btn v-else flat>
+                    <v-icon left dark>lock_open</v-icon>
+                    Oberta
+                </v-btn>
+            </span>
+            <v-toolbar-title>
+                <inline-text-field-edit-dialog v-model="incident" field="subject" label="Títol"></inline-text-field-edit-dialog>
+            </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn dark flat @click.native="$emit('close')">Guardar</v-btn>
+                <incident-close :incident="incident" v-can:close="incident" :alt="true" class="hidden-sm-and-down"></incident-close>
+                <incident-delete :incident="incident" v-role="'IncidentsManager'" :alt="true" @before="$emit('close')" class="hidden-sm-and-down"></incident-delete>
+                <v-btn dark flat @click.native="$emit('close')" class="hidden-sm-and-down">
+                    Sortir
+                    <v-icon right dark>exit_to_app</v-icon>
+                </v-btn>
             </v-toolbar-items>
         </v-toolbar>
         <v-container text-md-center class="pb-0 pt-1">
-            <v-expansion-panel class="mb-1" expandable>
-                <v-expansion-panel-content :value="true">
+            <v-expansion-panel class="mb-3 mt-2" expandable>
+                <v-expansion-panel-content :value="showData">
                     <div slot="header" class="font-weight-medium">Dades de la incidència</div>
                     <v-layout row wrap>
                         <v-flex md8>
@@ -32,6 +47,10 @@
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-list-tile avatar>
+                                    <v-list-tile-action>
+                                        <v-icon v-if="incident.closed_at">lock</v-icon>
+                                        <v-icon v-else>lock_open</v-icon>
+                                    </v-list-tile-action>
                                     <v-list-tile-content>
                                         <v-list-tile-title v-html="state"></v-list-tile-title>
                                         <v-list-tile-sub-title>Estat
@@ -64,36 +83,54 @@
         </v-container>
         <v-divider></v-divider>
         <v-container text-md-center class="pb-0">
-            <v-layout row wrap>
+            <v-layout>
                 <v-flex md12>
-                    <v-textarea
-                            outline
-                            name="input-7-4"
-                            label="Descripció"
-                            :value="incident.description"
-                    ></v-textarea>
+
+                    <v-expansion-panel class="mb-3 mt-2" expandable>
+                        <v-expansion-panel-content :value="true">
+                            <div slot="header" class="font-weight-medium">Descripció</div>
+                            <v-layout row wrap>
+                                <v-flex class="ma-3 white-space-pre-wrap">
+                                    <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció" @save="refresh" :limit="false"></inline-text-area-edit-dialog>
+                                </v-flex>
+                            </v-layout>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+
                 </v-flex>
             </v-layout>
         </v-container>
-        <v-divider></v-divider>
         <incident-comments :incident="incident"></incident-comments>
     </v-card>
 </template>
 
 <script>
 import IncidentCommentsComponent from './IncidentCommentsComponent'
+import IncidentCloseComponent from './IncidentCloseComponent'
+import IncidentDeleteComponent from './IncidentDeleteComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
+import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
+import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
+import * as actions from '../../store/action-types'
 
 export default {
   name: 'IncidentShowComponent',
   components: {
     'incident-comments': IncidentCommentsComponent,
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
+    'incident-close': IncidentCloseComponent,
+    'incident-delete': IncidentDeleteComponent,
+    'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
   },
   props: {
     incident: {
       type: Object,
       required: true
+    },
+    showData: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -101,6 +138,19 @@ export default {
       if (this.incident.closed_at) return 'Tancada <span title="' + this.incident.formatted_closed_at + '">' + this.incident.formatted_closed_at_diff + '</span>'
       return 'Oberta'
     }
+  },
+  methods: {
+    refresh () {
+      this.$store.dispatch(actions.SET_INCIDENTS).catch(error => {
+        this.$snackbar.showError(error)
+      })
+    }
   }
 }
 </script>
+
+<style scoped>
+    .white-space-pre-wrap {
+        white-space: pre-wrap;
+    }
+</style>

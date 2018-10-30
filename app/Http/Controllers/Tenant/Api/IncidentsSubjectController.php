@@ -25,6 +25,6 @@ class IncidentsSubjectController extends Controller
     {
         $incident->subject = $request->subject;
         $incident->save();
-        return $incident;
+        return $incident->map();
     }
 }

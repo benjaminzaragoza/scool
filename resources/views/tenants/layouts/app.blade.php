@@ -46,9 +46,7 @@
                                 <v-icon>@{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-content>
-                                <v-list-tile-title>
-                                    @{{ item.text }}
-                                </v-list-tile-title>
+                                <v-list-tile-title v-text="item.text"></v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
                         <v-list-tile
@@ -60,9 +58,7 @@
                                 <v-icon>@{{ child.icon }}</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-content>
-                                <v-list-tile-title>
-                                    @{{ child.text }}
-                                </v-list-tile-title>
+                                <v-list-tile-title v-text="child.text"></v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
                     </v-list-group>
@@ -71,9 +67,7 @@
                             <v-icon>@{{ item.icon }}</v-icon>
                         </v-list-tile-action>
                         <v-list-tile-content>
-                            <v-list-tile-title>
-                                @{{ item.text }}
-                            </v-list-tile-title>
+                            <v-list-tile-title v-text="item.text"></v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
                 </template>

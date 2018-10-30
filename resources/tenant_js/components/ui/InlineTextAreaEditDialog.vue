@@ -5,14 +5,13 @@
             lazy
             @save="save"
             large
-    > <span class="limit">{{ value }}</span>
+    > <span :class="{ limit: limit }">{{ value }}</span>
         <v-textarea
                 v-focus
                 slot="input"
                 v-model="value"
                 :rules="valueRules"
                 :label="label"
-                auto-grow
                 clearable
                 rows="15"
                 cols="75"
@@ -56,6 +55,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    limit: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
