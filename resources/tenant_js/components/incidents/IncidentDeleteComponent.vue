@@ -22,16 +22,19 @@ export default {
     }
   },
   methods: {
-    remove () {
-      this.loading = true
-      this.$store.dispatch(actions.DELETE_INCIDENT, this.incident).then(response => {
-        this.$snackbar.showMessage('Incidència eliminada correctament')
-        this.loading = false
-      }).catch(error => {
-        console.log(error)
-        this.$snackbar.showError(error)
-        this.loading = false
-      })
+    async remove () {
+      let res = await this.$confirm('Les incidències esborrades no es poden recuperar.', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      if (res) {
+        this.loading = true
+        this.$store.dispatch(actions.DELETE_INCIDENT, this.incident).then(response => {
+          this.$snackbar.showMessage('Incidència eliminada correctament')
+          this.loading = false
+        }).catch(error => {
+          console.log(error)
+          this.$snackbar.showError(error)
+          this.loading = false
+        })
+      }
     }
   }
 }

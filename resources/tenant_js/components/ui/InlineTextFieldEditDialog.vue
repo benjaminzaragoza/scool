@@ -51,6 +51,14 @@ export default {
       default: ''
     }
   },
+  watch: {
+    object (newValue) {
+      this.value = newValue[this.field]
+    },
+    field (newValue) {
+      this.value = this.object[newValue]
+    }
+  },
   methods: {
     url () {
       return '/api/v1/' + this.object.api_uri + '/' + this.object.id + '/' + this.field
