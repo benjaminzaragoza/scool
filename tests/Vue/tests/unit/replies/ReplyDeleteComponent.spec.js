@@ -38,6 +38,8 @@ describe('ReplyDeleteComponent.vue', () => {
   })
 
   it('deletes_a_reply', (done) => {
+    let confirm = sinon.stub().resolves(true)
+
     window.user = {
       id: 1
     }
@@ -60,6 +62,9 @@ describe('ReplyDeleteComponent.vue', () => {
         reply: {
           id: 1
         }
+      },
+      mocks: {
+        $confirm: confirm
       }
     })
 
@@ -76,7 +81,7 @@ describe('ReplyDeleteComponent.vue', () => {
 
   it('shows_error_when_deleting_incorrect_reply', (done) => {
     let showError = sinon.spy()
-
+    let confirm = sinon.stub().resolves(true)
     window.user = {
       id: 1
     }
@@ -98,7 +103,8 @@ describe('ReplyDeleteComponent.vue', () => {
       mocks: {
         $snackbar: {
           showError
-        }
+        },
+        $confirm: confirm
       }
     })
     wrapper.click('#reply_1_delete_button')

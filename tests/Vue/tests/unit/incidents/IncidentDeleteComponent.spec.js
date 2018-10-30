@@ -55,6 +55,7 @@ describe('IncidentDeleteComponent.vue', () => {
 
   it('deletes_incident', (done) => {
     let showMessage = sinon.spy()
+    let confirm = sinon.stub().resolves(true)
 
     const wrapper = mount(IncidentDeleteComponent, {
       propsData: {
@@ -65,14 +66,15 @@ describe('IncidentDeleteComponent.vue', () => {
       mocks: {
         $snackbar: {
           showMessage
-        }
+        },
+        $confirm: confirm
       },
       store
     })
     wrapper.click('#delete_incident_1')
-    expect(actions.DELETE_INCIDENT.calledOnce).to.be.true
 
     setTimeout(() => {
+      expect(actions.DELETE_INCIDENT.calledOnce).to.be.true
       expect(showMessage.called).to.be.true
       done()
     },
@@ -81,6 +83,7 @@ describe('IncidentDeleteComponent.vue', () => {
 
   it('shows_error_when_deletes_incident', (done) => {
     let showError = sinon.spy()
+    let confirm = sinon.stub().resolves(true)
 
     const wrapper = mount(IncidentDeleteComponent, {
       propsData: {
@@ -91,7 +94,8 @@ describe('IncidentDeleteComponent.vue', () => {
       mocks: {
         $snackbar: {
           showError
-        }
+        },
+        $confirm: confirm
       },
       store: storeError
     })

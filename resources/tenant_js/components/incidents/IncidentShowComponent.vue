@@ -92,7 +92,7 @@
                                     <v-list-tile-title :title="comment.body">{{ comment.body }}</v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <reply-delete v-role="IncidentsManager" :repliable="incident" :reply="comment" @deleted="deletedComment"></reply-delete>
+                                    <reply-delete v-role="'IncidentsManager'" :repliable="incident" :reply="comment" @deleted="deletedComment"></reply-delete>
                                 </v-list-tile-action>
                             </v-list-tile>
                             <v-divider></v-divider>
@@ -116,11 +116,6 @@ export default {
     'reply-add': ReplyAddComponent,
     'reply-delete': ReplyDeleteComponent,
     'user-avatar': UserAvatar
-  },
-  data () {
-    return {
-      todo: false
-    }
   },
   props: {
     incident: {

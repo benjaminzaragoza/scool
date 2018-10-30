@@ -70,10 +70,10 @@
                                     title="Mostra la incidència"
                                     :resource="incident"
                                     v-if="showDialog === false || showDialog === incident.id">
-                                <incident-show :incident="incident" v-can:show="incident" @close="showDialog = false"></incident-show>
+                                <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false"></incident-show>
                             </fullscreen-dialog>
                             <incident-close :incident="incident" v-can:close="incident"></incident-close>
-                            <incident-delete :incident="incident" v-can:delete="incident"></incident-delete>
+                            <incident-delete :incident="incident" v-role="'IncidentsManager'"></incident-delete>
                         </td>
                     </tr>
                 </template>
