@@ -19,7 +19,7 @@
                 </v-btn>
             </span>
             <v-toolbar-title>
-                <inline-text-field-edit-dialog v-model="incident" field="subject" label="Títol"></inline-text-field-edit-dialog>
+                <inline-text-field-edit-dialog :object="incident" field="subject" label="Títol" @save="refresh"></inline-text-field-edit-dialog>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
@@ -91,7 +91,7 @@
                             <div slot="header" class="font-weight-medium">Descripció</div>
                             <v-layout row wrap>
                                 <v-flex class="ma-3 white-space-pre-wrap">
-                                    <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció" @save="refresh" :limit="false"></inline-text-area-edit-dialog>
+                                    <inline-text-area-edit-dialog :object="incident" field="description" label="Descripció" @save="refresh" :limit="false"></inline-text-area-edit-dialog>
                                 </v-flex>
                             </v-layout>
                         </v-expansion-panel-content>
