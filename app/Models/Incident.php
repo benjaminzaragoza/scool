@@ -6,7 +6,6 @@ use App\Http\Resources\Tenant\IncidentCollection;
 use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
 use Carbon\Carbon;
-use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -71,6 +70,7 @@ class Incident extends Model
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
             'user_email' => optional($this->user)->email,
+            'user' => $this->user,
             'subject' => $this->subject,
             'description' => $this->description,
             'closed_at' => $this->closed_at,

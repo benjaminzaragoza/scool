@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     icon () {
-      return this.close ? 'close' : 'folder_open'
+      return this.close ? 'lock' : 'lock_open'
     },
     color () {
       return this.close ? 'error' : 'success'
