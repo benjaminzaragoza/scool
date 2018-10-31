@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,7 +11,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Reply extends Model
 {
+    use FormattedDates;
+
     protected $guarded = [];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * Get all of the owning commentable models.
@@ -47,7 +60,28 @@ class Reply extends Model
             'body' => $this->body,
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
-            'user_email' => optional($this->user)->email
+            'user_email' => optional($this->user)->email,
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
         ];
+    }
+
+    /**
+     * Map collection.
+     *
+     * @param $replies
+     * @return mixed
+     */
+    public static function mapCollection($replies)
+    {
+        return $replies->map(function($reply) {
+            return $reply->map();
+        });
     }
 }
