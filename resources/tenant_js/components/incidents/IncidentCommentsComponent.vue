@@ -1,9 +1,20 @@
 <template>
     <v-container text-md-center class="pb-0 pt-1">
         <v-layout row wrap>
-            <v-list three-line subheader>
-                <v-subheader>Comentaris</v-subheader>
-            </v-list>
+            <v-flex md8>
+                <v-list three-line subheader>
+                    <v-subheader>
+                        Comentaris
+                    </v-subheader>
+                </v-list>
+            </v-flex>
+            <v-flex md4>
+                <v-switch
+                        :label="orderCommentByDateAsc ? 'Els últims comentaris primer' : 'Els primers comentaris primer'"
+                        v-model="orderCommentByDateAsc"
+                ></v-switch>
+            </v-flex>
+
             <v-flex md12>
                 <reply-add :repliable="incident" @added="addComment"></reply-add>
             </v-flex>
@@ -12,7 +23,7 @@
                         :id="'incident_' + incident.id + '_comments'"
                         subheader
                         v-if="incident.comments && incident.comments.length > 0">
-                        <span :id="'incident_' + incident.id + '_comment_' + comment.id" avatar v-for="comment in incident.comments" :key="comment.id">
+                        <span :id="'incident_' + incident.id + '_comment_' + comment.id" avatar v-for="comment in orderedComments" :key="comment.id">
                             <v-list-tile>
                                 <v-list-tile-avatar class="comment-avatar">
                                     <user-avatar :hash-id="comment.user.hashid"
@@ -21,7 +32,7 @@
                                     ></user-avatar>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-sub-title><span :title="comment.user.email + ' - ' + comment.user_id">{{comment.user.name}}</span> &#8226; a year ago</v-list-tile-sub-title>
+                                    <v-list-tile-sub-title><span :title="comment.user.email + ' - ' + comment.user_id">{{comment.user.name}}</span> &#8226; <span :title="comment.formatted_created_at">{{comment.formatted_created_at_diff}}</span></v-list-tile-sub-title>
                                     <v-list-tile-title :title="comment.body" class="height-auto-24-pre-wrap">{{ comment.body }}</v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
@@ -42,6 +53,12 @@ import ReplyDeleteComponent from '../replies/ReplyDeleteComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
 import * as actions from '../../store/action-types'
 
+let compareCommentBytimestamp = (a, b) => {
+  if (a.created_at_timestamp < b.created_at_timestamp) { return -1 }
+  if (a.created_at_timestamp > b.created_at_timestamp) { return 1 }
+  return 0
+}
+
 export default {
   name: 'IncidentCommentsComponent',
   components: {
@@ -51,7 +68,14 @@ export default {
   },
   data () {
     return {
-      value: ''
+      value: '',
+      orderCommentByDateAsc: false
+    }
+  },
+  computed: {
+    orderedComments () {
+      if (!this.orderCommentByDateAsc) return this.incident.comments.concat().sort(compareCommentBytimestamp)
+      return this.incident.comments.concat().sort(compareCommentBytimestamp).reverse()
     }
   },
   props: {
