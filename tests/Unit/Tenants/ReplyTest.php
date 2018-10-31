@@ -50,6 +50,7 @@ class ReplyTest extends TestCase
         $this->assertEquals($user->id,$mappedReply['user_id']);
         $this->assertEquals('Oriol Junqueras',$mappedReply['user_name']);
         $this->assertEquals('oriol@junqueras.cat',$mappedReply['user_email']);
+        $this->assertTrue(($mappedReply['user']->is($user)));
         $this->assertNotNull($mappedReply['created_at']);
         $this->assertNotNull($mappedReply['created_at_timestamp']);
         $this->assertNotNull($mappedReply['formatted_created_at']);

@@ -59,6 +59,7 @@ class Reply extends Model
         return [
             'body' => $this->body,
             'user_id' => $this->user_id,
+            'user'=> $this->user,
             'user_name' => optional($this->user)->name,
             'user_email' => optional($this->user)->email,
             'created_at' => $this->created_at,

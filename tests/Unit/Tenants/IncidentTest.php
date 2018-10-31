@@ -143,20 +143,19 @@ class IncidentTest extends TestCase
 
         $incident= $incident->fresh();
         $mappedIncident = $incident->map();
-//        dump($mappedIncident['comments']);
         $this->assertCount(3, $mappedIncident['comments']);
-        $this->assertEquals('Si us plau podeu aportar més info',$mappedIncident['comments'][0]->body);
-        $this->assertEquals(2,$mappedIncident['comments'][0]->user_id);
-        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][0]->user->name);
-        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][0]->user->email);
-        $this->assertEquals('En concret no funciona bla bla bla',$mappedIncident['comments'][1]->body);
-        $this->assertEquals(3,$mappedIncident['comments'][1]->user_id);
-        $this->assertEquals('Carles Puigdemont',$mappedIncident['comments'][1]->user->name);
-        $this->assertEquals('krls@republicacatalana.cat',$mappedIncident['comments'][1]->user->email);
-        $this->assertEquals('Ok! Solucionat',$mappedIncident['comments'][2]->body);
-        $this->assertEquals(2,$mappedIncident['comments'][2]->user_id);
-        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][2]->user->name);
-        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][2]->user->email);
+        $this->assertEquals('Si us plau podeu aportar més info',$mappedIncident['comments'][0]['body']);
+        $this->assertEquals(2,$mappedIncident['comments'][0]['user_id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][0]['user']->name);
+        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][0]['user']->email);
+        $this->assertEquals('En concret no funciona bla bla bla',$mappedIncident['comments'][1]['body']);
+        $this->assertEquals(3,$mappedIncident['comments'][1]['user']->id);
+        $this->assertEquals('Carles Puigdemont',$mappedIncident['comments'][1]['user']->name);
+        $this->assertEquals('krls@republicacatalana.cat',$mappedIncident['comments'][1]['user']->email);
+        $this->assertEquals('Ok! Solucionat',$mappedIncident['comments'][2]['body']);
+        $this->assertEquals(2,$mappedIncident['comments'][2]['user_id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][2]['user']->name);
+        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][2]['user']->email);
 
         $incident->close();
         $incident= $incident->fresh();

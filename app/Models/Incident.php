@@ -86,7 +86,7 @@ class Incident extends Model
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'api_uri' => $this->api_uri,
-            'comments' => $this->comments
+            'comments' => Reply::mapCollection($this->comments)
         ];
     }
 
