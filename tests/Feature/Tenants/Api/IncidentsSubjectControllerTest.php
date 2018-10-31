@@ -56,7 +56,7 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
         ]);
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertEquals($result->description,$result->description);
+        $this->assertEquals($incident->description,$result->description);
         $this->assertEquals($result->id,$incident->id);
 
         $incident = $incident->fresh();

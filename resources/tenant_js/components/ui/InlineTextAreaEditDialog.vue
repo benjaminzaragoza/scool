@@ -80,7 +80,6 @@ export default {
         window.axios.put(this.url(), data).then(() => {
           this.$emit('save', this.value)
         }).catch(error => {
-          console.log(error)
           this.$snackbar.showError(error)
         })
       }

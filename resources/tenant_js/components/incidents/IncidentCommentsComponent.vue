@@ -33,7 +33,9 @@
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
                                     <v-list-tile-sub-title><span :title="comment.user.email + ' - ' + comment.user_id">{{comment.user.name}}</span> &#8226; <span :title="comment.formatted_created_at">{{comment.formatted_created_at_diff}}</span></v-list-tile-sub-title>
-                                    <v-list-tile-title :title="comment.body" class="height-auto-24-pre-wrap">{{ comment.body }}</v-list-tile-title>
+                                    <v-list-tile-title :title="comment.body" class="height-auto-24-pre-wrap">
+                                        <inline-text-area-edit-dialog :object="comment" field="body" label="Comentari" @save="refresh" :limit="false"></inline-text-area-edit-dialog>
+                                    </v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
                                     <reply-delete v-role="'IncidentsManager'" :repliable="incident" :reply="comment" @deleted="deletedComment"></reply-delete>
@@ -51,6 +53,7 @@
 import ReplyAddComponent from '../replies/ReplyAddComponent'
 import ReplyDeleteComponent from '../replies/ReplyDeleteComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
+import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import * as actions from '../../store/action-types'
 
 let compareCommentBytimestamp = (a, b) => {
@@ -64,7 +67,8 @@ export default {
   components: {
     'reply-add': ReplyAddComponent,
     'reply-delete': ReplyDeleteComponent,
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
+    'inline-text-area-edit-dialog': InlineTextAreaEditDialog
   },
   data () {
     return {
@@ -85,7 +89,7 @@ export default {
     }
   },
   methods: {
-    refresh_incidents (message) {
+    refresh (message) {
       this.$store.dispatch(actions.SET_INCIDENTS).then(() => {
         this.$snackbar.showMessage(message)
       }).catch(error => {
@@ -93,10 +97,10 @@ export default {
       })
     },
     addComment () {
-      this.refresh_incidents('Comentari afegit correctament')
+      this.refresh('Comentari afegit correctament')
     },
     deletedComment () {
-      this.refresh_incidents('Comentari eliminat correctament')
+      this.refresh('Comentari eliminat correctament')
     }
   }
 }

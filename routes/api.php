@@ -166,6 +166,11 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/incidents/{incident}/replies','Tenant\Api\IncidentRepliesController@store');
             Route::put('/incidents/{incident}/replies/{reply}','Tenant\Api\IncidentRepliesController@update');
             Route::delete('/incidents/{incident}/replies/{reply}','Tenant\Api\IncidentRepliesController@destroy');
+
+            //BodyReplies
+            Route::put('/replies/{reply}/body','Tenant\Api\RepliesBodyController@update');
+//            $response = $this->json('PUT','/api/v1/replies/' . $reply->id . '/body',[
+
         });
 
         Route::group(['prefix' => 'v1'], function () {
