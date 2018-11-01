@@ -22,36 +22,36 @@
 </template>
 
 <script>
-  export default {
-    name: 'SubjectLessonsComponent',
-    data () {
-      return {
-        internalLessons: this.lessons,
-        search: ''
-      }
+export default {
+  name: 'SubjectLessonsComponent',
+  data () {
+    return {
+      internalLessons: this.lessons,
+      search: ''
+    }
+  },
+  computed: {
+    filteredLessons () {
+      return this.internalLessons
     },
-    computed: {
-      filteredLessons () {
-        return this.internalLessons
-      },
-      headers () {
-        let headers = []
-        headers.push({text: 'Id', align: 'left', value: 'id'})
-        // if (this.showJobTypeHeader) {
-        //   headers.push({text: 'Tipus', value: 'type'})
-        // }
-        headers.push({text: 'subject_id', value: 'subject_id'})
-        headers.push({text: 'job_id', value: 'job_id'})
-        headers.push({text: 'start_date', value: 'start'})
-        headers.push({text: 'end_date', value: 'end'})
-        return headers
-      }
-    },
-    props: {
-      lessons: {
-        type: Array,
-        required: true
-      }
+    headers () {
+      let headers = []
+      headers.push({ text: 'Id', align: 'left', value: 'id' })
+      // if (this.showJobTypeHeader) {
+      //   headers.push({text: 'Tipus', value: 'type'})
+      // }
+      headers.push({ text: 'subject_id', value: 'subject_id' })
+      headers.push({ text: 'job_id', value: 'job_id' })
+      headers.push({ text: 'start_date', value: 'start' })
+      headers.push({ text: 'end_date', value: 'end' })
+      return headers
+    }
+  },
+  props: {
+    lessons: {
+      type: Array,
+      required: true
     }
   }
+}
 </script>

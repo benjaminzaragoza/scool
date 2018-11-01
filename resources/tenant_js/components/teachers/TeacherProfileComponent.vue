@@ -251,76 +251,76 @@
 </style>
 
 <script>
-  import PersonalDataCard from '../people/PersonalDataCardComponent'
+import PersonalDataCard from '../people/PersonalDataCardComponent'
 
-  export default {
-    components: {
-      'personal-data-card': PersonalDataCard
+export default {
+  components: {
+    'personal-data-card': PersonalDataCard
+  },
+  props: {
+    teacher: {
+      type: Object,
+      required: true
     },
-    props: {
-      teacher: {
-        type: Object,
-        required: true
-      },
-      teachers: {
-        type: Array,
-        required: true
+    teachers: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    specialty () {
+      if (this.teacher && this.teacher.teacher && this.teacher.teacher.specialty) {
+        return this.teacher.teacher.specialty.code + ' ' + this.teacher.teacher.specialty.name
       }
     },
-    methods: {
-      specialty () {
-        if (this.teacher && this.teacher.teacher && this.teacher.teacher.specialty) {
-          return this.teacher.teacher.specialty.code + ' ' + this.teacher.teacher.specialty.name
-        }
-      },
-      family () {
-        if (this.teacher && this.teacher.teacher && this.teacher.teacher.specialty && this.teacher.teacher.specialty.family) {
-          return this.teacher.teacher.specialty.family.code + ' ' + this.teacher.teacher.specialty.family.name
-        }
-      },
-      force () {
-        if (this.teacher && this.teacher.teacher && this.teacher.teacher.specialty && this.teacher.teacher.specialty.force) {
-          return this.teacher.teacher.specialty.force.name
-        }
-      },
-      status () {
-        if (this.teacher && this.teacher.teacher && this.teacher.teacher.administrative_status) {
-          return this.teacher.teacher.administrative_status.name
-        }
-      },
-      job () {
-        if (this.teacher.jobs[0]) {
-          return this.teacher.jobs[0].family.code + '_' + this.teacher.jobs[0].specialty.code + '_' + this.teacher.jobs[0].order + '_' + this.teacher.jobs[0].code
-        }
-      },
-      jobDescription () {
-        if (this.teacher.jobs[0]) {
-          return 'Plaça num ' + this.teacher.jobs[0].order + ' de la família ' + this.teacher.jobs[0].family.name + ', especialitat ' + this.teacher.jobs[0].specialty.name + ', assignada al professor ' + this.teacherDescription(this.teacher.jobs[0].code)
-        }
-        return ''
-      },
-      jobFamily () {
-        if (this.teacher.jobs[0]) {
-          return this.teacher.jobs[0].family.name
-        }
-        return ''
-      },
-      jobSpecialty () {
-        if (this.teacher.jobs[0]) {
-          return this.teacher.jobs[0].specialty.name
-        }
-        return ''
-      },
-      jobOrder () {
-        if (this.teacher.jobs[0]) {
-          return this.teacher.jobs[0].order
-        }
-        return ''
-      },
-      teacherDescription (teacherCode) {
-        let teacher = this.teachers.find(teacher => { return teacher.code === teacherCode })
-        return teacher.name + ' (' + teacher.code + ')'
+    family () {
+      if (this.teacher && this.teacher.teacher && this.teacher.teacher.specialty && this.teacher.teacher.specialty.family) {
+        return this.teacher.teacher.specialty.family.code + ' ' + this.teacher.teacher.specialty.family.name
       }
+    },
+    force () {
+      if (this.teacher && this.teacher.teacher && this.teacher.teacher.specialty && this.teacher.teacher.specialty.force) {
+        return this.teacher.teacher.specialty.force.name
+      }
+    },
+    status () {
+      if (this.teacher && this.teacher.teacher && this.teacher.teacher.administrative_status) {
+        return this.teacher.teacher.administrative_status.name
+      }
+    },
+    job () {
+      if (this.teacher.jobs[0]) {
+        return this.teacher.jobs[0].family.code + '_' + this.teacher.jobs[0].specialty.code + '_' + this.teacher.jobs[0].order + '_' + this.teacher.jobs[0].code
+      }
+    },
+    jobDescription () {
+      if (this.teacher.jobs[0]) {
+        return 'Plaça num ' + this.teacher.jobs[0].order + ' de la família ' + this.teacher.jobs[0].family.name + ', especialitat ' + this.teacher.jobs[0].specialty.name + ', assignada al professor ' + this.teacherDescription(this.teacher.jobs[0].code)
+      }
+      return ''
+    },
+    jobFamily () {
+      if (this.teacher.jobs[0]) {
+        return this.teacher.jobs[0].family.name
+      }
+      return ''
+    },
+    jobSpecialty () {
+      if (this.teacher.jobs[0]) {
+        return this.teacher.jobs[0].specialty.name
+      }
+      return ''
+    },
+    jobOrder () {
+      if (this.teacher.jobs[0]) {
+        return this.teacher.jobs[0].order
+      }
+      return ''
+    },
+    teacherDescription (teacherCode) {
+      let teacher = this.teachers.find(teacher => { return teacher.code === teacherCode })
+      return teacher.name + ' (' + teacher.code + ')'
     }
   }
+}
 </script>

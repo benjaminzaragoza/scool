@@ -40,7 +40,6 @@ export default {
           this.$snackbar.showMessage('Incidència eliminada correctament')
           this.loading = false
         }).catch(error => {
-          console.log(error)
           this.$snackbar.showError(error)
           this.loading = false
         })

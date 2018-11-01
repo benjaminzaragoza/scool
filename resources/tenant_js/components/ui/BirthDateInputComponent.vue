@@ -31,19 +31,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'BirthDateInput',
-    data () {
-      return {
-        menu: false,
-        date: null
-      }
-    },
-    props: {
-      label: {
-        type: String,
-        default: 'Data de naixement'
-      }
+export default {
+  name: 'BirthDateInput',
+  data () {
+    return {
+      menu: false,
+      date: null
+    }
+  },
+  props: {
+    label: {
+      type: String,
+      default: 'Data de naixement'
     }
   }
+}
 </script>

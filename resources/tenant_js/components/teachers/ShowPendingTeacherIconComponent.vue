@@ -47,43 +47,43 @@
 </style>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import PendingTeacher from './Mixins/PendingTeacher'
-  import TeacherSelect from './TeacherSelectComponent.vue'
+import { validationMixin } from 'vuelidate'
+import PendingTeacher from './Mixins/PendingTeacher'
+import TeacherSelect from './TeacherSelectComponent.vue'
 
-  export default {
-    components: { TeacherSelect },
-    mixins: [validationMixin, PendingTeacher],
-    data () {
-      return {
-        dialog: false
-      }
+export default {
+  components: { TeacherSelect },
+  mixins: [validationMixin, PendingTeacher],
+  data () {
+    return {
+      dialog: false
+    }
+  },
+  props: {
+    pendingTeacher: {
+      type: Object,
+      required: true
     },
-    props: {
-      pendingTeacher: {
-        type: Object,
-        required: true
-      },
-      jobs: {
-        type: Array,
-        required: true
-      },
-      teachers: {
-        type: Array,
-        required: true
-      },
-      specialties: {
-        type: Array,
-        required: true
-      },
-      forces: {
-        type: Array,
-        required: true
-      },
-      administrativeStatuses: {
-        type: Array,
-        required: true
-      }
+    jobs: {
+      type: Array,
+      required: true
+    },
+    teachers: {
+      type: Array,
+      required: true
+    },
+    specialties: {
+      type: Array,
+      required: true
+    },
+    forces: {
+      type: Array,
+      required: true
+    },
+    administrativeStatuses: {
+      type: Array,
+      required: true
     }
   }
+}
 </script>

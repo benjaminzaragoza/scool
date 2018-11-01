@@ -30,48 +30,48 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import withSnackbar from '../../mixins/withSnackbar'
+import axios from 'axios'
+import withSnackbar from '../../mixins/withSnackbar'
 
-  export default {
-    name: 'AddCorporativeEmailIcon',
-    mixins: [withSnackbar],
-    data () {
-      return {
-        dialog: false
-      }
-    },
-    props: {
-      user: {
-        type: Object,
-        default: () => { return {} }
-      }
-    },
-    methods: {
-      addGoogleUser () {
-        console.log('USER:')
-        console.log(this.user)
-        axios.post('/api/v1/gsuite/users/search', {
-          employeeId: this.user.id,
-          personalEmail: this.user.email,
-          mobile: this.user.mobile
+export default {
+  name: 'AddCorporativeEmailIcon',
+  mixins: [withSnackbar],
+  data () {
+    return {
+      dialog: false
+    }
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => { return {} }
+    }
+  },
+  methods: {
+    addGoogleUser () {
+      console.log('USER:')
+      console.log(this.user)
+      axios.post('/api/v1/gsuite/users/search', {
+        employeeId: this.user.id,
+        personalEmail: this.user.email,
+        mobile: this.user.mobile
+      }).then(response => {
+        console.log('RESPONSE.DATA  11:')
+        console.log(response.data)
+        axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+          google_id: response.data.id,
+          google_email: response.data.primaryEmail
         }).then(response => {
-          console.log('RESPONSE.DATA  11:')
-          console.log(response.data)
-          axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
-            google_id: response.data.id,
-            google_email: response.data.primaryEmail
-          }).then(response => {
-            this.showMessage('Usuari Google assignat correctament')
-            this.$emit('added', response.data)
-          }).catch(error => {
-            console.log(error)
-            this.showError(error)
-          })
+          this.showMessage('Usuari Google assignat correctament')
+          this.$emit('added', response.data)
         }).catch(error => {
           console.log(error)
+          this.showError(error)
         })
-      }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
+}
 </script>

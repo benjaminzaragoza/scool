@@ -10,39 +10,39 @@
 </style>
 
 <script>
-  import * as actions from '../../store/action-types'
+import * as actions from '../../store/action-types'
 
-  export default {
-    data () {
-      return {
-        logoutLoading: false
-      }
+export default {
+  data () {
+    return {
+      logoutLoading: false
+    }
+  },
+  props: {
+    color: {
+      type: String,
+      default: 'orange'
     },
-    props: {
-      color: {
-        type: String,
-        default: 'orange'
-      },
-      flat: {
-        type: Boolean,
-        default: true
-      },
-      redirect: {
-        type: String,
-        default: '/'
-      }
+    flat: {
+      type: Boolean,
+      default: true
     },
-    methods: {
-      logout () {
-        this.logoutLoading = true
-        this.$store.dispatch(actions.LOGOUT).then(response => {
-          window.location = this.redirect
-        }).catch(error => {
-          console.log(error)
-        }).then(() => {
-          this.logoutLoading = false
-        })
-      }
+    redirect: {
+      type: String,
+      default: '/'
+    }
+  },
+  methods: {
+    logout () {
+      this.logoutLoading = true
+      this.$store.dispatch(actions.LOGOUT).then(response => {
+        window.location = this.redirect
+      }).catch(error => {
+        console.log(error)
+      }).then(() => {
+        this.logoutLoading = false
+      })
     }
   }
+}
 </script>

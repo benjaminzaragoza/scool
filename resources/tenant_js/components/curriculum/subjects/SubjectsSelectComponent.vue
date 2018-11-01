@@ -21,52 +21,52 @@
 </template>
 
 <script>
-  export default {
-    name: 'SubjectsSelectComponent',
-    data () {
-      return {
-        internalSubject: this.subject
-      }
+export default {
+  name: 'SubjectsSelectComponent',
+  data () {
+    return {
+      internalSubject: this.subject
+    }
+  },
+  model: {
+    prop: 'subject',
+    event: 'input'
+  },
+  props: {
+    subjects: {
+      type: Array,
+      required: true
     },
-    model: {
-      prop: 'subject',
-      event: 'input'
+    name: {
+      type: String,
+      default: 'subject'
     },
-    props: {
-      subjects: {
-        type: Array,
-        required: true
-      },
-      name: {
-        type: String,
-        default: 'subject'
-      },
-      subject: {},
-      label: {
-        type: String,
-        default: 'Escolliu una Unitat Formativa'
-      },
-      errorMessages: {
-        type: Array,
-        required: false
-      },
-      itemValue: {
-        type: String,
-        default: 'id'
-      }
+    subject: {},
+    label: {
+      type: String,
+      default: 'Escolliu una Unitat Formativa'
     },
-    watch: {
-      subject (newSubject) {
-        this.internalSubject = newSubject
-      }
+    errorMessages: {
+      type: Array,
+      required: false
     },
-    methods: {
-      input () {
-        this.$emit('input', this.internalSubject)
-      },
-      blur () {
-        this.$emit('blur', this.internalSubject)
-      }
+    itemValue: {
+      type: String,
+      default: 'id'
+    }
+  },
+  watch: {
+    subject (newSubject) {
+      this.internalSubject = newSubject
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.internalSubject)
+    },
+    blur () {
+      this.$emit('blur', this.internalSubject)
     }
   }
+}
 </script>

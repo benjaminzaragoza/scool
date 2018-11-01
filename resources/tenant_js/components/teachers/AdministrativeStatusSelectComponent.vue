@@ -17,38 +17,38 @@
 </style>
 
 <script>
-  export default {
-    data () {
-      return {
-        internalAdministrativeStatus: this.administrativeStatus
-      }
+export default {
+  data () {
+    return {
+      internalAdministrativeStatus: this.administrativeStatus
+    }
+  },
+  model: {
+    prop: 'administrativeStatus',
+    event: 'input'
+  },
+  props: {
+    administrativeStatus: {},
+    label: {
+      type: String,
+      default: 'Escolliu el tipus de professor'
     },
-    model: {
-      prop: 'administrativeStatus',
-      event: 'input'
+    administrativeStatuses: {
+      type: Array,
+      required: true
     },
-    props: {
-      administrativeStatus: {},
-      label: {
-        type: String,
-        default: 'Escolliu el tipus de professor'
-      },
-      administrativeStatuses: {
-        type: Array,
-        required: true
-      },
-      errorMessages: {
-        required: false
-      },
-      itemValue: {
-        type: String,
-        default: 'id'
-      }
+    errorMessages: {
+      required: false
     },
-    methods: {
-      input (value) {
-        this.$emit('input', value)
-      }
+    itemValue: {
+      type: String,
+      default: 'id'
+    }
+  },
+  methods: {
+    input (value) {
+      this.$emit('input', value)
     }
   }
+}
 </script>

@@ -53,8 +53,6 @@ export default {
     },
     add () {
       this.$v.newReply.$touch()
-      console.log('INVALID:')
-      console.log(this.$v.$invalid)
       if (this.$v.$invalid) return
       this.adding = true
       window.axios.post(this.uri(), {

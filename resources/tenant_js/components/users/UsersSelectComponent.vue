@@ -42,56 +42,56 @@
 </style>
 
 <script>
-  import UserAvatar from '../ui/UserAvatarComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    components: {
-      'user-avatar': UserAvatar
+export default {
+  components: {
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      internalUser: this.user
+    }
+  },
+  model: {
+    prop: 'user',
+    event: 'input'
+  },
+  props: {
+    name: {
+      type: String,
+      default: 'user'
     },
-    data () {
-      return {
-        internalUser: this.user
-      }
+    user: {},
+    label: {
+      type: String,
+      default: 'Escolliu un usuari'
     },
-    model: {
-      prop: 'user',
-      event: 'input'
+    users: {
+      type: Array,
+      required: true
     },
-    props: {
-      name: {
-        type: String,
-        default: 'user'
-      },
-      user: {},
-      label: {
-        type: String,
-        default: 'Escolliu un usuari'
-      },
-      users: {
-        type: Array,
-        required: true
-      },
-      itemValue: {
-        type: String,
-        default: 'id'
-      },
-      errorMessages: {
-        type: Array,
-        required: false
-      }
+    itemValue: {
+      type: String,
+      default: 'id'
     },
-    watch: {
-      user (newUser) {
-        this.internalUser = newUser
-      }
+    errorMessages: {
+      type: Array,
+      required: false
+    }
+  },
+  watch: {
+    user (newUser) {
+      this.internalUser = newUser
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.internalUser)
     },
-    methods: {
-      input () {
-        this.$emit('input', this.internalUser)
-      },
-      blur () {
-        this.$emit('blur', this.internalUser)
-      }
+    blur () {
+      this.$emit('blur', this.internalUser)
     }
   }
+}
 </script>

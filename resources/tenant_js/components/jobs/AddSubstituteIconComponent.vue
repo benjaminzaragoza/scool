@@ -90,83 +90,83 @@
 </template>
 
 <script>
-  import AvailableUsers from './AvailableUsersComponent'
-  import withSnackbar from '../mixins/withSnackbar'
-  import axios from 'axios'
-  import moment from 'moment'
-  import DatePicker from '../ui/DatePicker'
-  import { validationMixin } from 'vuelidate'
-  import { required } from 'vuelidate/lib/validators'
-  import SubstituteAvatars from './SubstituteAvatarsComponent'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import AvailableUsers from './AvailableUsersComponent'
+import withSnackbar from '../mixins/withSnackbar'
+import axios from 'axios'
+import moment from 'moment'
+import DatePicker from '../ui/DatePicker'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
+import SubstituteAvatars from './SubstituteAvatarsComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'AddSubstituteIconComponent',
-    mixins: [withSnackbar, validationMixin],
-    components: {
-      'available-users': AvailableUsers,
-      'date-picker': DatePicker,
-      'substitute-avatars': SubstituteAvatars,
-      'user-avatar': UserAvatar
+export default {
+  name: 'AddSubstituteIconComponent',
+  mixins: [withSnackbar, validationMixin],
+  components: {
+    'available-users': AvailableUsers,
+    'date-picker': DatePicker,
+    'substitute-avatars': SubstituteAvatars,
+    'user-avatar': UserAvatar
+  },
+  validations: {
+    start_date: { required },
+    user: { required }
+  },
+  data () {
+    return {
+      user: {},
+      dialog: false,
+      start_date: moment(new Date()).format('YYYY-MM-DD'),
+      adding: false
+    }
+  },
+  props: {
+    job: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    activeSubstitute () {
+      if (this.job.substitutes.filter(substitute => substitute.end_at == null).length > 0) return true
+      if (this.job.substitutes.filter(substitute => {
+        return moment(substitute.end_at).isAfter(moment())
+      }).length > 0) return true
+      return false
+    }
+  },
+  methods: {
+    substitutesNames () {
+      return this.job.substitutes.map(substitute => substitute.name).join(', ')
     },
-    validations: {
-      start_date: { required },
-      user: { required }
-    },
-    data () {
-      return {
-        user: {},
-        dialog: false,
-        start_date: moment(new Date()).format('YYYY-MM-DD'),
-        adding: false
-      }
-    },
-    props: {
-      job: {
-        type: Object,
-        required: true
-      }
-    },
-    computed: {
-      activeSubstitute () {
-        if (this.job.substitutes.filter(substitute => substitute.end_at == null).length > 0) return true
-        if (this.job.substitutes.filter(substitute => {
-          return moment(substitute.end_at).isAfter(moment())
-        }).length > 0) return true
-        return false
-      }
-    },
-    methods: {
-      substitutesNames () {
-        return this.job.substitutes.map(substitute => substitute.name).join(', ')
-      },
-      addSubstitute () {
-        this.$v.$touch()
-        if (!this.$v.$invalid) {
-          this.adding = true
-          axios.post('/api/v1/job/' + this.job.id + '/substitution', {
-            user: this.user.id,
-            start_at: this.start_date
-          }).then(response => {
-            this.showMessage('Substitut afegit correctament')
-            this.dialog = false
-            this.adding = false
-            this.$emit('change')
-          }).catch(error => {
-            this.adding = false
-            console.log(error)
-            this.showError(error)
-          })
-        } else {
-          if (this.$v.user.$dirty) {
-            !this.$v.user.required && this.showError('Cal escollir un usuari com a substitut')
-          }
-          if (this.$v.start_date.$dirty) {
-            !this.$v.start_date.required && this.showError("Cal indicar una data d'inici de la substitució")
-          }
-          this.$v.$touch()
+    addSubstitute () {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.adding = true
+        axios.post('/api/v1/job/' + this.job.id + '/substitution', {
+          user: this.user.id,
+          start_at: this.start_date
+        }).then(response => {
+          this.showMessage('Substitut afegit correctament')
+          this.dialog = false
+          this.adding = false
+          this.$emit('change')
+        }).catch(error => {
+          this.adding = false
+          console.log(error)
+          this.showError(error)
+        })
+      } else {
+        if (this.$v.user.$dirty) {
+          !this.$v.user.required && this.showError('Cal escollir un usuari com a substitut')
         }
+        if (this.$v.start_date.$dirty) {
+          !this.$v.start_date.required && this.showError("Cal indicar una data d'inici de la substitució")
+        }
+        this.$v.$touch()
       }
     }
   }
+}
 </script>

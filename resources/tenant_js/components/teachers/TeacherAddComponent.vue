@@ -123,94 +123,94 @@
 </template>
 
 <script>
-  import UserAddForm from '../users/UserAddFormComponent'
-  import AssignJobToUser from '../jobs/AssignJobToUserComponent'
-  import AssignTeacherInfoToUser from '../teachers/AssignTeacherInfoToUserComponent'
-  import PersonalDataForm from '../people/PersonalDataForm'
-  import withSnackbar from '../mixins/withSnackbar'
-  import * as actions from '../../store/action-types'
+import UserAddForm from '../users/UserAddFormComponent'
+import AssignJobToUser from '../jobs/AssignJobToUserComponent'
+import AssignTeacherInfoToUser from '../teachers/AssignTeacherInfoToUserComponent'
+import PersonalDataForm from '../people/PersonalDataForm'
+import withSnackbar from '../mixins/withSnackbar'
+import * as actions from '../../store/action-types'
 
-  export default {
-    name: 'TeacherAddComponent',
-    components: {
-      'user-add-form': UserAddForm,
-      'assign-job-to-user': AssignJobToUser,
-      'assign-teacher-info-to-user': AssignTeacherInfoToUser,
-      'personal-data-form': PersonalDataForm
-    },
-    mixins: [withSnackbar],
-    data () {
-      return {
-        dialog: false,
-        step: 1,
-        user: null,
-        employee: null,
-        teacher: null
-      }
-    },
-    watch: {
-      dialog (newDialog) {
-        if (newDialog === false) {
-          this.$store.dispatch(actions.GET_TEACHERS).catch(error => {
-            this.showError(error)
-          })
-        }
-      }
-    },
-    props: {
-      users: {
-        type: Array,
-        required: true
-      },
-      jobs: {
-        type: Array,
-        required: true
-      },
-      specialties: {
-        type: Array,
-        required: true
-      },
-      administrativeStatuses: {
-        type: Array,
-        required: true
-      },
-      departments: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      close () {
-        this.step = 1
-        this.dialog = false
-      },
-      finish () {
-        this.showMessage('Professor creat correctament')
-        setTimeout(() => { this.dialog = false }, 1000);
-        this.clear()
-        this.dialog = false
-      },
-      clear () {
-        this.step = 1,
-        this.user = null,
-        this.employee = null,
-        this.teacher = null
-      },
-      userCreated (user) {
-        this.user = user
-        this.step = 2
-      },
-      jobAssigned (employee) {
-        this.employee = employee
-        this.step = 3
-      },
-      teacherAssigned (teacher) {
-        this.teacher = teacher
-        this.step = 4
-      }
-    },
-    created () {
-      this.TEACHER_TYPE = 1
+export default {
+  name: 'TeacherAddComponent',
+  components: {
+    'user-add-form': UserAddForm,
+    'assign-job-to-user': AssignJobToUser,
+    'assign-teacher-info-to-user': AssignTeacherInfoToUser,
+    'personal-data-form': PersonalDataForm
+  },
+  mixins: [withSnackbar],
+  data () {
+    return {
+      dialog: false,
+      step: 1,
+      user: null,
+      employee: null,
+      teacher: null
     }
+  },
+  watch: {
+    dialog (newDialog) {
+      if (newDialog === false) {
+        this.$store.dispatch(actions.GET_TEACHERS).catch(error => {
+          this.showError(error)
+        })
+      }
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    },
+    jobs: {
+      type: Array,
+      required: true
+    },
+    specialties: {
+      type: Array,
+      required: true
+    },
+    administrativeStatuses: {
+      type: Array,
+      required: true
+    },
+    departments: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    close () {
+      this.step = 1
+      this.dialog = false
+    },
+    finish () {
+      this.showMessage('Professor creat correctament')
+      setTimeout(() => { this.dialog = false }, 1000)
+      this.clear()
+      this.dialog = false
+    },
+    clear () {
+      this.step = 1,
+      this.user = null,
+      this.employee = null,
+      this.teacher = null
+    },
+    userCreated (user) {
+      this.user = user
+      this.step = 2
+    },
+    jobAssigned (employee) {
+      this.employee = employee
+      this.step = 3
+    },
+    teacherAssigned (teacher) {
+      this.teacher = teacher
+      this.step = 4
+    }
+  },
+  created () {
+    this.TEACHER_TYPE = 1
   }
+}
 </script>

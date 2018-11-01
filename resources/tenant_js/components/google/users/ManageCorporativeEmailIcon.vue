@@ -66,102 +66,102 @@
 </template>
 
 <script>
-  import withSnackbar from '../../mixins/withSnackbar'
-  import GoogleUsersSelectComponent from './GoogleUsersSelectComponent'
-  import axios from 'axios'
+import withSnackbar from '../../mixins/withSnackbar'
+import GoogleUsersSelectComponent from './GoogleUsersSelectComponent'
+import axios from 'axios'
 
-  export default {
-    name: 'ManageCorporativeEmailIcon',
-    mixins: [withSnackbar],
-    components: {
-      'google-users-select': GoogleUsersSelectComponent
+export default {
+  name: 'ManageCorporativeEmailIcon',
+  mixins: [withSnackbar],
+  components: {
+    'google-users-select': GoogleUsersSelectComponent
+  },
+  data () {
+    return {
+      dialog: false,
+      refreshing: false,
+      associating: false,
+      unassociating: false,
+      syncing: false,
+      selectedGoogleuser: null
+    }
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => { return {} }
+    }
+  },
+  methods: {
+    sync () {
+      this.syncing = true
+      axios.put('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
+        this.showMessage('Usuari Google sincronitzat correctament')
+        this.syncing = false
+      }).catch(error => {
+        console.log(error)
+        this.showError(error)
+        this.syncing = false
+      })
     },
-    data () {
-      return {
-        dialog: false,
-        refreshing: false,
-        associating: false,
-        unassociating: false,
-        syncing: false,
-        selectedGoogleuser: null
-      }
+    unassignGoogleUser () {
+      this.unassociating = true
+      axios.delete('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
+        this.showMessage('Usuari Google desassociat correctament')
+        this.$emit('unassociated')
+        this.unassociating = false
+      }).catch(error => {
+        console.log(error)
+        this.showError(error)
+        this.unassociating = false
+      })
     },
-    props: {
-      user: {
-        type: Object,
-        default: () => { return {} }
-      }
-    },
-    methods: {
-      sync () {
-        this.syncing = true
-        axios.put('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
-          this.showMessage('Usuari Google sincronitzat correctament')
-          this.syncing = false
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
-          this.syncing = false
-        })
-      },
-      unassignGoogleUser () {
-        this.unassociating = true
-        axios.delete('/api/v1/user/' + this.user.id + '/gsuite').then(response => {
-          this.showMessage('Usuari Google desassociat correctament')
-          this.$emit('unassociated')
-          this.unassociating = false
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
-          this.unassociating = false
-        })
-      },
-      addGoogleUser () {
-        axios.post('/api/v1/gsuite/users/search', {
-          employeeId: this.user.id,
-          personalEmail: this.user.email,
-          mobile: this.user.mobile
-        }).then(response => {
-          axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
-            google_id: response.data.id,
-            google_email: response.data.primaryEmail
-          }).then(response => {
-            this.showMessage('Usuari Google assignat correctament')
-            this.$emit('added', response.data)
-          }).catch(error => {
-            console.log(error)
-            this.showError(error)
-          })
-        }).catch(error => {
-          console.log(error)
-          this.dialog = true
-        })
-      },
-      select (googleUser) {
-        this.selectedGoogleuser = googleUser
-      },
-      associate () {
-        this.associating = true
+    addGoogleUser () {
+      axios.post('/api/v1/gsuite/users/search', {
+        employeeId: this.user.id,
+        personalEmail: this.user.email,
+        mobile: this.user.mobile
+      }).then(response => {
         axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
-          google_id: this.selectedGoogleuser.id,
-          google_email: this.selectedGoogleuser.primaryEmail
+          google_id: response.data.id,
+          google_email: response.data.primaryEmail
         }).then(response => {
-          this.showMessage('Usuari Google associat correctament')
-          this.$emit('associated', response.data)
-          this.dialog = false
-          this.associating = false
+          this.showMessage('Usuari Google assignat correctament')
+          this.$emit('added', response.data)
         }).catch(error => {
-          if (error.status === 422) this.showError('Error de validació, possiblement el compte de Google que voleu assignar ja està assignat a un altre usuari.')
-          else this.showError(error)
-          this.associating = false
+          console.log(error)
+          this.showError(error)
         })
-      },
-      openDialog () {
+      }).catch(error => {
+        console.log(error)
         this.dialog = true
-      },
-      refresh () {
-        this.$refs.select.refresh()
-      }
+      })
+    },
+    select (googleUser) {
+      this.selectedGoogleuser = googleUser
+    },
+    associate () {
+      this.associating = true
+      axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+        google_id: this.selectedGoogleuser.id,
+        google_email: this.selectedGoogleuser.primaryEmail
+      }).then(response => {
+        this.showMessage('Usuari Google associat correctament')
+        this.$emit('associated', response.data)
+        this.dialog = false
+        this.associating = false
+      }).catch(error => {
+        if (error.status === 422) this.showError('Error de validació, possiblement el compte de Google que voleu assignar ja està assignat a un altre usuari.')
+        else this.showError(error)
+        this.associating = false
+      })
+    },
+    openDialog () {
+      this.dialog = true
+    },
+    refresh () {
+      this.$refs.select.refresh()
     }
   }
+}
 </script>

@@ -45,17 +45,17 @@
 </style>
 
 <script>
-  export default {
-    data () {
-      return {
-        data: 'example'
-      }
-    },
-    props: {
-      families: {
-        type: Array,
-        required: true
-      }
+export default {
+  data () {
+    return {
+      data: 'example'
+    }
+  },
+  props: {
+    families: {
+      type: Array,
+      required: true
     }
   }
+}
 </script>

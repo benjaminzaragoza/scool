@@ -41,43 +41,43 @@
 </template>
 
 <script>
-  import UserAvatar from '../ui/UserAvatarComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'AuditLogComponent',
-    components: {
-      'user-avatar': UserAvatar
-    },
-    data () {
-      return {
-        pagination: {
-          sortBy: 'id',
-          'descending': true
-        },
-        internalEntries: this.entries,
-        headers: [
-          {text: 'Id', value: 'id'},
-          {text: 'Descripció', value: 'description'},
-          {text: 'Element modificat', value: 'element'},
-          {text: 'Típus modificació', value: 'type'},
-          {text: 'Usuari', value: 'user_description'},
-          {text: 'Camp modificat', value: 'key'},
-          {text: 'Antic valor', value: 'old_value'},
-          {text: 'Nou valor', value: 'new_value'},
-          {text: 'Data modificació', value: 'created_at'}
-        ]
-      }
-    },
-    props: {
-      entries: {
-        type: Array,
-        required: true
-      }
-    },
-    watch: {
-      entries () {
-        this.internalEntries = this.entries
-      }
+export default {
+  name: 'AuditLogComponent',
+  components: {
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      pagination: {
+        sortBy: 'id',
+        'descending': true
+      },
+      internalEntries: this.entries,
+      headers: [
+        { text: 'Id', value: 'id' },
+        { text: 'Descripció', value: 'description' },
+        { text: 'Element modificat', value: 'element' },
+        { text: 'Típus modificació', value: 'type' },
+        { text: 'Usuari', value: 'user_description' },
+        { text: 'Camp modificat', value: 'key' },
+        { text: 'Antic valor', value: 'old_value' },
+        { text: 'Nou valor', value: 'new_value' },
+        { text: 'Data modificació', value: 'created_at' }
+      ]
+    }
+  },
+  props: {
+    entries: {
+      type: Array,
+      required: true
+    }
+  },
+  watch: {
+    entries () {
+      this.internalEntries = this.entries
     }
   }
+}
 </script>

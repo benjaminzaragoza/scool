@@ -122,121 +122,121 @@
 </template>
 
 <script>
-  import DatePicker from '../ui/DatePicker'
-  import withSnackbar from '../mixins/withSnackbar'
-  import axios from 'axios'
-  import moment from 'moment'
-  import { validationMixin } from 'vuelidate'
-  import { required } from 'vuelidate/lib/validators'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import DatePicker from '../ui/DatePicker'
+import withSnackbar from '../mixins/withSnackbar'
+import axios from 'axios'
+import moment from 'moment'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'SubstituteAvatarsComponent',
-    mixins: [withSnackbar, validationMixin],
-    components: {
-      'date-picker': DatePicker,
-      'user-avatar': UserAvatar
-    },
-    validations: {
-      start_date: { required }
-    },
-    data () {
-      return {
-        dialog: false,
-        currentSubstitute: null,
-        start_date: null,
-        end_date: null,
-        finishingSubstitution: false,
-        modifying: false,
-        removing: false,
-        confirmDialog: false
-      }
-    },
-    props: {
-      job: {
-        required: true
-      }
-    },
-    watch: {
-      currentSubstitute (newValue) {
-        if (newValue) {
-          if (newValue.start_at) this.start_date = moment(newValue.start_at).format('YYYY-MM-DD')
-          if (newValue.end_at) this.end_date = moment(newValue.end_at).format('YYYY-MM-DD')
-        }
-      }
-    },
-    methods: {
-      disableFinishSubstitutionButton () {
-        if (this.currentSubstitute && this.currentSubstitute.end_at !== null) return true
-        if (this.finishingSubstitution) return true
-        return false
-      },
-      finishSubstitution () {
-        this.finishingSubstitution = true
-        axios.put('/api/v1/job/' + this.job.id + '/substitution', {
-          user_id: this.currentSubstitute.id,
-          end_at: moment().format('YYYY-MM-DD hh:mm:ss')
-        }).then(response => {
-          this.finishingSubstitution = false
-          this.dialog = false
-          this.showMessage('Substitució finalitzada correctament')
-          this.$emit('change')
-        }).catch(error => {
-          this.finishingSubstitution = false
-          console.log(error)
-          this.showError(error)
-        })
-      },
-      modify () {
-        this.$v.$touch()
-        if (!this.$v.$invalid) {
-          this.modifying = true
-          let postdata = {
-            user_id: this.currentSubstitute.id,
-            start_at: this.start_date
-          }
-          if (this.end_date) postdata.end_at = this.end_date
-          axios.put('/api/v1/job/' + this.job.id + '/substitution', postdata).then(response => {
-            this.modifying = false
-            this.dialog = false
-            this.showMessage('Modificació realitzada correctament')
-            this.$emit('change')
-          }).catch(error => {
-            this.modifying = false
-            console.log(error)
-            this.showError(error)
-          })
-        } else {
-          if (this.$v.start_date.$dirty) {
-            !this.$v.start_date.required && this.showError("Cal especificar una data d'inici")
-          }
-          this.$v.$touch()
-        }
-      },
-      confirmRemove () {
-        this.confirmDialog = true
-      },
-      remove () {
-        this.removing = true
-        axios.delete('/api/v1/job/' + this.job.id + '/substitution/' + this.currentSubstitute.id).then(response => {
-          this.removing = false
-          this.confirmDialog = false
-          this.dialog = false
-          this.showMessage("S'ha esborrat la substitució correctament")
-          this.$emit('change')
-        }).catch(error => {
-          this.removing = false
-          console.log(error)
-          this.showError(error)
-        })
-      },
-      showSubstituteDialog (substitute) {
-        this.currentSubstitute = substitute
-        this.dialog = true
-      },
-      substitutesNames () {
-        return this.job.substitutes.map(substitute => substitute.name).join(', ')
+export default {
+  name: 'SubstituteAvatarsComponent',
+  mixins: [withSnackbar, validationMixin],
+  components: {
+    'date-picker': DatePicker,
+    'user-avatar': UserAvatar
+  },
+  validations: {
+    start_date: { required }
+  },
+  data () {
+    return {
+      dialog: false,
+      currentSubstitute: null,
+      start_date: null,
+      end_date: null,
+      finishingSubstitution: false,
+      modifying: false,
+      removing: false,
+      confirmDialog: false
+    }
+  },
+  props: {
+    job: {
+      required: true
+    }
+  },
+  watch: {
+    currentSubstitute (newValue) {
+      if (newValue) {
+        if (newValue.start_at) this.start_date = moment(newValue.start_at).format('YYYY-MM-DD')
+        if (newValue.end_at) this.end_date = moment(newValue.end_at).format('YYYY-MM-DD')
       }
     }
+  },
+  methods: {
+    disableFinishSubstitutionButton () {
+      if (this.currentSubstitute && this.currentSubstitute.end_at !== null) return true
+      if (this.finishingSubstitution) return true
+      return false
+    },
+    finishSubstitution () {
+      this.finishingSubstitution = true
+      axios.put('/api/v1/job/' + this.job.id + '/substitution', {
+        user_id: this.currentSubstitute.id,
+        end_at: moment().format('YYYY-MM-DD hh:mm:ss')
+      }).then(response => {
+        this.finishingSubstitution = false
+        this.dialog = false
+        this.showMessage('Substitució finalitzada correctament')
+        this.$emit('change')
+      }).catch(error => {
+        this.finishingSubstitution = false
+        console.log(error)
+        this.showError(error)
+      })
+    },
+    modify () {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.modifying = true
+        let postdata = {
+          user_id: this.currentSubstitute.id,
+          start_at: this.start_date
+        }
+        if (this.end_date) postdata.end_at = this.end_date
+        axios.put('/api/v1/job/' + this.job.id + '/substitution', postdata).then(response => {
+          this.modifying = false
+          this.dialog = false
+          this.showMessage('Modificació realitzada correctament')
+          this.$emit('change')
+        }).catch(error => {
+          this.modifying = false
+          console.log(error)
+          this.showError(error)
+        })
+      } else {
+        if (this.$v.start_date.$dirty) {
+          !this.$v.start_date.required && this.showError("Cal especificar una data d'inici")
+        }
+        this.$v.$touch()
+      }
+    },
+    confirmRemove () {
+      this.confirmDialog = true
+    },
+    remove () {
+      this.removing = true
+      axios.delete('/api/v1/job/' + this.job.id + '/substitution/' + this.currentSubstitute.id).then(response => {
+        this.removing = false
+        this.confirmDialog = false
+        this.dialog = false
+        this.showMessage("S'ha esborrat la substitució correctament")
+        this.$emit('change')
+      }).catch(error => {
+        this.removing = false
+        console.log(error)
+        this.showError(error)
+      })
+    },
+    showSubstituteDialog (substitute) {
+      this.currentSubstitute = substitute
+      this.dialog = true
+    },
+    substitutesNames () {
+      return this.job.substitutes.map(substitute => substitute.name).join(', ')
+    }
   }
+}
 </script>

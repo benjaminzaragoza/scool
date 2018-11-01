@@ -87,82 +87,82 @@ class UploadController extends Controller
 </template>
 
 <script>
-  import filesize from 'filesize'
-  import vueFilePond from 'vue-filepond'
+import filesize from 'filesize'
+import vueFilePond from 'vue-filepond'
 
-  import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js'
-  import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js'
 
-  import 'filepond/dist/filepond.min.css'
-  import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 
-  const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview)
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview)
 
-  export default {
-    name: 'ModelDocsComponent',
-    components: {
-      FilePond
+export default {
+  name: 'ModelDocsComponent',
+  components: {
+    FilePond
+  },
+  data () {
+    return {
+      dialog: false,
+      internalMedia: this.media,
+      myFiles: []
+    }
+  },
+  props: {
+    media: {
+      type: Array,
+      default: []
     },
-    data () {
-      return {
-        dialog: false,
-        internalMedia: this.media,
-        myFiles: []
-      }
+    icon: {
+      type: String,
+      default: 'attach_file'
     },
-    props: {
-      media: {
-        type: Array,
-        default: []
-      },
-      icon: {
-        type: String,
-        default: 'attach_file'
-      },
-      color: {
-        type: String,
-        default: 'primary'
-      },
-      dark: {
-        type: Boolean,
-        default: false
-      },
-      tooltip: {
-        type: String,
-        default: 'Fitxers associats'
-      },
-      title: {
-        type: String,
-        default: 'Fitxers associats'
-      },
-      cancel: {
-        type: String,
-        default: 'Sortir'
-      }
+    color: {
+      type: String,
+      default: 'primary'
     },
-    computed: {
-      collections () {
-        return [...new Set(this.media.map(x => x.collection_name))]
-      }
+    dark: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-      filteredMedia (collection) {
-        return this.media.filter(x => x.collection_name === collection);
-      },
-      iconByMimeType (mimeType) {
-        if (mimeType.startsWith('image')) {
-          return 'image'
-        }
-        // TODO other mime types to icons
-        return 'cancel'
-      },
-      filesize (size) {
-        return filesize(size)
-      },
-      handleFilePondInit () {
-        console.log('FilePond has initialized')
-        // FilePond instance methods are available on `this.$refs.pond`
+    tooltip: {
+      type: String,
+      default: 'Fitxers associats'
+    },
+    title: {
+      type: String,
+      default: 'Fitxers associats'
+    },
+    cancel: {
+      type: String,
+      default: 'Sortir'
+    }
+  },
+  computed: {
+    collections () {
+      return [...new Set(this.media.map(x => x.collection_name))]
+    }
+  },
+  methods: {
+    filteredMedia (collection) {
+      return this.media.filter(x => x.collection_name === collection)
+    },
+    iconByMimeType (mimeType) {
+      if (mimeType.startsWith('image')) {
+        return 'image'
       }
+      // TODO other mime types to icons
+      return 'cancel'
+    },
+    filesize (size) {
+      return filesize(size)
+    },
+    handleFilePondInit () {
+      console.log('FilePond has initialized')
+      // FilePond instance methods are available on `this.$refs.pond`
     }
   }
+}
 </script>

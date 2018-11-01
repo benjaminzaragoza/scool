@@ -89,70 +89,70 @@
 </template>
 
 <script>
-  import withSnackbar from '../../mixins/withSnackbar'
-  import axios from 'axios'
-  import ConfirmIcon from '../../ui/ConfirmIconComponent'
+import withSnackbar from '../../mixins/withSnackbar'
+import axios from 'axios'
+import ConfirmIcon from '../../ui/ConfirmIconComponent'
 
-  export default {
-    name: 'GoogleGroupsComponent',
-    mixins: [withSnackbar],
-    components: {
-      'confirm-icon': ConfirmIcon
+export default {
+  name: 'GoogleGroupsComponent',
+  mixins: [withSnackbar],
+  components: {
+    'confirm-icon': ConfirmIcon
+  },
+  data () {
+    return {
+      search: '',
+      internalGroups: this.groups,
+      removing: false,
+      refreshing: false
+    }
+  },
+  computed: {
+    filteredGroups: function () {
+      return this.internalGroups
     },
-    data () {
-      return {
-        search: '',
-        internalGroups: this.groups,
-        removing: false,
-        refreshing: false
-      }
+    headers () {
+      let headers = []
+      headers.push({ text: 'Id', align: 'left', value: 'id' })
+      headers.push({ text: 'name', value: 'name' })
+      headers.push({ text: 'email', value: 'email' })
+      headers.push({ text: 'Membres del grup', value: 'directMembersCount' })
+      headers.push({ text: 'Created by admin', value: 'adminCreated' })
+      headers.push({ text: 'Alias', value: 'aliases' })
+      headers.push({ text: 'Descripció', value: 'description' })
+      headers.push({ text: 'Accions', sortable: false })
+      return headers
+    }
+  },
+  props: {
+    groups: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    refresh () {
+      this.refreshing = true
+      axios.get('/api/v1/gsuite/groups').then(response => {
+        this.refreshing = false
+        this.internalGroups = response.data
+      }).catch(error => {
+        this.refreshing = false
+        console.log(error)
+      })
     },
-    computed: {
-      filteredGroups: function () {
-        return this.internalGroups
-      },
-      headers () {
-        let headers = []
-        headers.push({text: 'Id', align: 'left', value: 'id'})
-        headers.push({text: 'name', value: 'name'})
-        headers.push({text: 'email', value: 'email'})
-        headers.push({text: 'Membres del grup', value: 'directMembersCount'})
-        headers.push({text: 'Created by admin', value: 'adminCreated'})
-        headers.push({text: 'Alias', value: 'aliases'})
-        headers.push({text: 'Descripció', value: 'description'})
-        headers.push({text: 'Accions', sortable: false})
-        return headers
-      }
-    },
-    props: {
-      groups: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      refresh () {
-        this.refreshing = true
-        axios.get('/api/v1/gsuite/groups').then(response => {
-          this.refreshing = false
-          this.internalGroups = response.data
-        }).catch(error => {
-          this.refreshing = false
-          console.log(error)
-        })
-      },
-      remove (group) {
-        this.removing = true
-        axios.delete('/api/v1/gsuite/groups/' + group.id).then(response => {
-          this.removing = false
-          this.refresh()
-          this.showMessage('Grup esborrat correctament')
-        }).catch(error => {
-          this.removing = false
-          console.log(error)
-          this.showError(error)
-        })
-      }
+    remove (group) {
+      this.removing = true
+      axios.delete('/api/v1/gsuite/groups/' + group.id).then(response => {
+        this.removing = false
+        this.refresh()
+        this.showMessage('Grup esborrat correctament')
+      }).catch(error => {
+        this.removing = false
+        console.log(error)
+        this.showError(error)
+      })
     }
   }
+}
 </script>

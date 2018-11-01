@@ -21,52 +21,52 @@
 </template>
 
 <script>
-  export default {
-    name: 'DepartmentsSelectComponent',
-    data () {
-      return {
-        internalDepartment: this.department
-      }
+export default {
+  name: 'DepartmentsSelectComponent',
+  data () {
+    return {
+      internalDepartment: this.department
+    }
+  },
+  model: {
+    prop: 'department',
+    event: 'input'
+  },
+  props: {
+    departments: {
+      type: Array,
+      required: true
     },
-    model: {
-      prop: 'department',
-      event: 'input'
+    name: {
+      type: String,
+      default: 'department'
     },
-    props: {
-      departments: {
-        type: Array,
-        required: true
-      },
-      name: {
-        type: String,
-        default: 'department'
-      },
-      department: {},
-      label: {
-        type: String,
-        default: 'Escolliu un departament'
-      },
-      errorMessages: {
-        type: Array,
-        required: false
-      },
-      itemValue: {
-        type: String,
-        default: 'id'
-      }
+    department: {},
+    label: {
+      type: String,
+      default: 'Escolliu un departament'
     },
-    watch: {
-      department (newDepartment) {
-        this.internalDepartment = newDepartment
-      }
+    errorMessages: {
+      type: Array,
+      required: false
     },
-    methods: {
-      input () {
-        this.$emit('input', this.internalDepartment)
-      },
-      blur () {
-        this.$emit('blur', this.internalDepartment)
-      }
+    itemValue: {
+      type: String,
+      default: 'id'
+    }
+  },
+  watch: {
+    department (newDepartment) {
+      this.internalDepartment = newDepartment
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.internalDepartment)
+    },
+    blur () {
+      this.$emit('blur', this.internalDepartment)
     }
   }
+}
 </script>

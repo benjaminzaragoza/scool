@@ -264,47 +264,47 @@
 </style>
 
 <script>
-  import axios from 'axios'
+import axios from 'axios'
 
-  export default {
-    data () {
-      return {
-        dialog: false,
-        internalUser: this.user
-      }
+export default {
+  data () {
+    return {
+      dialog: false,
+      internalUser: this.user
+    }
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => { return {} }
     },
-    props: {
-      user: {
-        type: Object,
-        default: () => { return {} }
-      },
-      users: {
-        type: Array,
-        default: () => []
-      },
-      icon: {
-        type: Boolean,
-        default: true
-      }
+    users: {
+      type: Array,
+      default: () => []
     },
-    watch: {
-      user: function (newUser) {
-        this.internalUser = this.user
+    icon: {
+      type: Boolean,
+      default: true
+    }
+  },
+  watch: {
+    user: function (newUser) {
+      this.internalUser = this.user
+    }
+  },
+  methods: {
+    prepareDialog () {
+      if (!_.isEmpty(this.internalUser) && this.users.length > 0) {
+        this.dialog = true
+        return
       }
-    },
-    methods: {
-      prepareDialog () {
-        if (! _.isEmpty(this.internalUser) && this.users.length > 0) {
-          this.dialog = true
-          return
-        }
-        axios.get('/api/v1/user').then(response => {
-          this.internalUser = response.data
-          this.dialog = true
-        }).catch(error => {
-          console.log(error)
-        })
-      }
+      axios.get('/api/v1/user').then(response => {
+        this.internalUser = response.data
+        this.dialog = true
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
+}
 </script>

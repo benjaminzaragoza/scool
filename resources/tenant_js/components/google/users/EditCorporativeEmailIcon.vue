@@ -46,57 +46,57 @@
 </template>
 
 <script>
-  import withSnackbar from '../../mixins/withSnackbar'
-  import GoogleUsersSelectComponent from './GoogleUsersSelectComponent'
-  import axios from 'axios'
+import withSnackbar from '../../mixins/withSnackbar'
+import GoogleUsersSelectComponent from './GoogleUsersSelectComponent'
+import axios from 'axios'
 
-  export default {
-    name: 'EditCorporativeEmailIcon',
-    mixins: [withSnackbar],
-    components: {
-      'google-users-select': GoogleUsersSelectComponent
+export default {
+  name: 'EditCorporativeEmailIcon',
+  mixins: [withSnackbar],
+  components: {
+    'google-users-select': GoogleUsersSelectComponent
+  },
+  data () {
+    return {
+      dialog: false,
+      refreshing: false,
+      associating: false,
+      selectedGoogleuser: null
+    }
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => { return {} }
+    }
+  },
+  methods: {
+    select (googleUser) {
+      this.selectedGoogleuser = googleUser
     },
-    data () {
-      return {
-        dialog: false,
-        refreshing: false,
-        associating: false,
-        selectedGoogleuser: null
-      }
+    associate () {
+      this.associating = true
+      axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+        google_id: this.selectedGoogleuser.id,
+        google_email: this.selectedGoogleuser.primaryEmail
+      }).then(response => {
+        this.showMessage('Usuari Google associat correctament')
+        this.$emit('associated', response.data)
+        this.dialog = false
+        this.associating = false
+      }).catch(error => {
+        console.log(error)
+        if (error.status === 422) this.showError('sdasdsda')
+        else this.showError(error)
+        this.associating = false
+      })
     },
-    props: {
-      user: {
-        type: Object,
-        default: () => { return {} }
-      }
+    openDialog () {
+      this.dialog = true
     },
-    methods: {
-      select (googleUser) {
-        this.selectedGoogleuser = googleUser
-      },
-      associate () {
-        this.associating = true
-        axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
-          google_id: this.selectedGoogleuser.id,
-          google_email: this.selectedGoogleuser.primaryEmail
-        }).then(response => {
-          this.showMessage('Usuari Google associat correctament')
-          this.$emit('associated', response.data)
-          this.dialog = false
-          this.associating = false
-        }).catch(error => {
-          console.log(error)
-          if (error.status === 422) this.showError("sdasdsda")
-          else this.showError(error)
-          this.associating = false
-        })
-      },
-      openDialog () {
-        this.dialog = true
-      },
-      refresh () {
-        this.$refs.select.refresh()
-      }
+    refresh () {
+      this.$refs.select.refresh()
     }
   }
+}
 </script>

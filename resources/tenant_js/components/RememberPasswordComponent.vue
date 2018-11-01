@@ -42,66 +42,65 @@
     </v-dialog>
 </template>
 
-
 <script>
-  import * as actions from '../store/action-types'
-  import sleep from '../utils/sleep'
-  import withSnackbar from './mixins/withSnackbar'
+import * as actions from '../store/action-types'
+import sleep from '../utils/sleep'
+import withSnackbar from './mixins/withSnackbar'
 
-  export default {
-    mixins: [withSnackbar],
-    data () {
-      return {
-        valid: false,
-        internalAction: this.action,
-        loading: false,
-        done: false,
-        errorMessage: '',
-        errors: [],
-        email: '',
-        emailRules: [
-          (v) => !!v || 'Email is mandatory',
-          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email have to be valid'
-        ]
+export default {
+  mixins: [withSnackbar],
+  data () {
+    return {
+      valid: false,
+      internalAction: this.action,
+      loading: false,
+      done: false,
+      errorMessage: '',
+      errors: [],
+      email: '',
+      emailRules: [
+        (v) => !!v || 'Email is mandatory',
+        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email have to be valid'
+      ]
+    }
+  },
+  props: {
+    action: {
+      type: String,
+      default: null
+    }
+  },
+  methods: {
+    rememberPassword () {
+      if (this.$refs.resetPasswordForm.validate()) {
+        this.loading = true
+        this.$store.dispatch(actions.REMEMBER_PASSWORD, this.email).then(response => {
+          this.loading = false
+          this.done = true
+          sleep(4000).then(() => { this.showRememberPassword = false })
+        }).catch(error => {
+          if (error.status === 422) {
+            this.showError('Email incorrecte!')
+          } else {
+            this.showError(error)
+          }
+        }).then(() => {
+          this.loading = false
+        })
       }
-    },
-    props: {
-      action: {
-        type: String,
-        default: null
-      }
-    },
-    methods: {
-      rememberPassword () {
-        if (this.$refs.resetPasswordForm.validate()) {
-          this.loading = true
-          this.$store.dispatch(actions.REMEMBER_PASSWORD, this.email).then(response => {
-            this.loading = false
-            this.done = true
-            sleep(4000).then(() => { this.showRememberPassword = false })
-          }).catch(error => {
-            if (error.status === 422) {
-              this.showError('Email incorrecte!')
-            } else {
-              this.showError(error)
-            }
-          }).then(() => {
-            this.loading = false
-          })
-        }
-      }
-    },
-    computed: {
-      showRememberPassword: {
-        get () {
-          if (this.internalAction && this.internalAction === 'request_new_password') return true
-          return false
-        },
-        set (value) {
-          if (value) this.internalAction = 'request_new_password'
-          else this.internalAction = null
-        }
+    }
+  },
+  computed: {
+    showRememberPassword: {
+      get () {
+        if (this.internalAction && this.internalAction === 'request_new_password') return true
+        return false
+      },
+      set (value) {
+        if (value) this.internalAction = 'request_new_password'
+        else this.internalAction = null
       }
     }
   }
+}
 </script>

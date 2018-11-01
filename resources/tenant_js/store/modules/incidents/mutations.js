@@ -24,7 +24,6 @@ export default {
     incidentInState.closed_at_timestamp = null
     incidentInState.formatted_closed_at = null
     incidentInState.formatted_closed_at_diff = null
-
   },
   [ mutations.DELETE_INCIDENT ] (state, incident) {
     let incidentInState = state.incidents.find((element) => {

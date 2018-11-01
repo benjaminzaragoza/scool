@@ -27,63 +27,63 @@
 </template>
 
 <script>
-  import SubjectsSelect from '../curriculum/subjects/SubjectsSelectComponent.vue'
-  import SubjectInfo from '../curriculum/subjects/SubjectInfoComponent.vue'
-  import SubjectLessons from '../curriculum/subjects/SubjectLessonsComponent.vue'
-  import axios from 'axios'
-  import withSnackbar from '../mixins/withSnackbar'
+import SubjectsSelect from '../curriculum/subjects/SubjectsSelectComponent.vue'
+import SubjectInfo from '../curriculum/subjects/SubjectInfoComponent.vue'
+import SubjectLessons from '../curriculum/subjects/SubjectLessonsComponent.vue'
+import axios from 'axios'
+import withSnackbar from '../mixins/withSnackbar'
 
-  export default {
-    name: 'LessonsManagerComponent',
-    components: {
-      'subjects-select': SubjectsSelect,
-      'subject-info': SubjectInfo,
-      'subject-lessons': SubjectLessons
-    },
-    mixins: [withSnackbar],
-    data () {
-      return {
-        subject: null,
-        calculating: false,
-        internalLessons: this.lessons
-      }
-    },
-    computed: {
-      events () {
-        return this.internalLessons.map(lesson => {
-          return {
-            title: lesson.subject_name,
-            start: lesson.start,
-            end: lesson.end
-          }
-        })
-      }
-    },
-    props: {
-      subjects: {
-        type: Array,
-        required: true
-      },
-      lessons: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      calculate () {
-        if (this.subject) {
-          this.calculating = true
-          axios.post('/api/v1/lessons/subject/' + this.subject + '/calculate').then(response => {
-            this.calculating = false
-          }).catch(error => {
-            this.calculating = false
-            console.log(error)
-            this.showError(error)
-          })
+export default {
+  name: 'LessonsManagerComponent',
+  components: {
+    'subjects-select': SubjectsSelect,
+    'subject-info': SubjectInfo,
+    'subject-lessons': SubjectLessons
+  },
+  mixins: [withSnackbar],
+  data () {
+    return {
+      subject: null,
+      calculating: false,
+      internalLessons: this.lessons
+    }
+  },
+  computed: {
+    events () {
+      return this.internalLessons.map(lesson => {
+        return {
+          title: lesson.subject_name,
+          start: lesson.start,
+          end: lesson.end
         }
+      })
+    }
+  },
+  props: {
+    subjects: {
+      type: Array,
+      required: true
+    },
+    lessons: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    calculate () {
+      if (this.subject) {
+        this.calculating = true
+        axios.post('/api/v1/lessons/subject/' + this.subject + '/calculate').then(response => {
+          this.calculating = false
+        }).catch(error => {
+          this.calculating = false
+          console.log(error)
+          this.showError(error)
+        })
       }
     }
   }
+}
 </script>
 
 <style scoped>

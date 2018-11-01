@@ -154,146 +154,146 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as mutations from '../../../store/mutation-types'
+import { mapGetters } from 'vuex'
+import * as mutations from '../../../store/mutation-types'
 
-  import withSnackbar from '../../mixins/withSnackbar'
-  import axios from 'axios'
-  import ConfirmIcon from '../../ui/ConfirmIconComponent'
-  import showGoogleUserIcon from './ShowGoogleUserIconComponent'
+import withSnackbar from '../../mixins/withSnackbar'
+import axios from 'axios'
+import ConfirmIcon from '../../ui/ConfirmIconComponent'
+import showGoogleUserIcon from './ShowGoogleUserIconComponent'
 
-  export default {
-    name: 'GoogleUsersComponent',
-    mixins: [withSnackbar],
-    components: {
-      'confirm-icon': ConfirmIcon,
-      'show-google-user-icon': showGoogleUserIcon
+export default {
+  name: 'GoogleUsersComponent',
+  mixins: [withSnackbar],
+  components: {
+    'confirm-icon': ConfirmIcon,
+    'show-google-user-icon': showGoogleUserIcon
+  },
+  data () {
+    return {
+      search: '',
+      removing: false,
+      suspending: false,
+      activating: false,
+      refreshing: false,
+      settingsDialog: false,
+      googleWatch: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      internalUsers: 'googleUsers'
+    }),
+    filteredUsers: function () {
+      return this.internalUsers
     },
-    data () {
-      return {
-        search: '',
-        removing: false,
-        suspending: false,
-        activating: false,
-        refreshing: false,
-        settingsDialog: false,
-        googleWatch: false
-      }
-    },
-    computed: {
-      ...mapGetters({
-        internalUsers: 'googleUsers'
-      }),
-      filteredUsers: function () {
-        return this.internalUsers
-      },
-      headers () {
-        let headers = []
-        headers.push({text: 'Avatar', value: 'thumbnailPhotoUrl', sortable: false})
-        headers.push({text: 'Nom', value: 'fullName'})
-        headers.push({text: 'Correu electrònic', value: 'primaryEmail'})
-        headers.push({text: 'User id', value: 'employeeId'})
-        headers.push({text: 'Email personal', value: 'personalEmail'})
-        headers.push({text: 'Mòbil', value: 'mobile'})
-        headers.push({text: 'Path', value: 'orgUnitPath'})
-        headers.push({text: 'Admin?', value: 'isAdmin'})
-        headers.push({text: 'Suspès?', value: 'suspended'})
-        headers.push({text: 'Últim login', value: 'lastLoginTime'})
-        headers.push({text: 'Data creació', value: 'creationTime'})
-        headers.push({text: 'Accions', sortable: false})
-        return headers
-      }
-    },
-    watch: {
-      googleWatch (newValue) {
-        console.log('googleWatch changed to : ' + newValue)
-        if (newValue) {
-          axios.get('/api/v1/gsuite/users/watch').then(response => {
-            console.log(response)
-          }).catch(error => {
-            console.log(error)
-          })
-        }
-      }
-    },
-    props: {
-      users: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      formatBoolean (boolean) {
-        return boolean ? 'Sí' : 'No'
-      },
-      formatOrgUnitPath (orgUnitPath) {
-        if (orgUnitPath.length > 17) {
-          return orgUnitPath.substr(0, 17) + '...'
-        } else return orgUnitPath
-      },
-      refresh () {
-        this.refreshing = true
-        axios.get('/api/v1/gsuite/users').then(response => {
-          this.refreshing = false
-          this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
+    headers () {
+      let headers = []
+      headers.push({ text: 'Avatar', value: 'thumbnailPhotoUrl', sortable: false })
+      headers.push({ text: 'Nom', value: 'fullName' })
+      headers.push({ text: 'Correu electrònic', value: 'primaryEmail' })
+      headers.push({ text: 'User id', value: 'employeeId' })
+      headers.push({ text: 'Email personal', value: 'personalEmail' })
+      headers.push({ text: 'Mòbil', value: 'mobile' })
+      headers.push({ text: 'Path', value: 'orgUnitPath' })
+      headers.push({ text: 'Admin?', value: 'isAdmin' })
+      headers.push({ text: 'Suspès?', value: 'suspended' })
+      headers.push({ text: 'Últim login', value: 'lastLoginTime' })
+      headers.push({ text: 'Data creació', value: 'creationTime' })
+      headers.push({ text: 'Accions', sortable: false })
+      return headers
+    }
+  },
+  watch: {
+    googleWatch (newValue) {
+      console.log('googleWatch changed to : ' + newValue)
+      if (newValue) {
+        axios.get('/api/v1/gsuite/users/watch').then(response => {
+          console.log(response)
         }).catch(error => {
-          this.refreshing = false
           console.log(error)
         })
-      },
-      remove (user) {
-        this.removing = true
-        axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
-          if (user.employeeId) {
-            axios.delete('/api/v1/user/' + user.employeeId + '/gsuite').then(response => {
-              this.showMessage('Usuari esborrat correctament')
-              this.removing = false
-              this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
-            }).catch(error => {
-              console.log(error)
-              this.showMessage('Usuari esborrat correctament de Google però amb error local')
-              this.showError(error)
-              this.removing = false
-            })
-          } else {
+      }
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    formatBoolean (boolean) {
+      return boolean ? 'Sí' : 'No'
+    },
+    formatOrgUnitPath (orgUnitPath) {
+      if (orgUnitPath.length > 17) {
+        return orgUnitPath.substr(0, 17) + '...'
+      } else return orgUnitPath
+    },
+    refresh () {
+      this.refreshing = true
+      axios.get('/api/v1/gsuite/users').then(response => {
+        this.refreshing = false
+        this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
+      }).catch(error => {
+        this.refreshing = false
+        console.log(error)
+      })
+    },
+    remove (user) {
+      this.removing = true
+      axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
+        if (user.employeeId) {
+          axios.delete('/api/v1/user/' + user.employeeId + '/gsuite').then(response => {
             this.showMessage('Usuari esborrat correctament')
             this.removing = false
             this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
-          }
+          }).catch(error => {
+            console.log(error)
+            this.showMessage('Usuari esborrat correctament de Google però amb error local')
+            this.showError(error)
+            this.removing = false
+          })
+        } else {
           this.showMessage('Usuari esborrat correctament')
-        }).catch(error => {
           this.removing = false
-          console.log(error)
-          this.showError(error)
-        })
-      },
-      suspend (user) {
-        this.suspending = true
-        // TODO
-        axios.delete('/api/v1/gsuite/active/users/' + user.id).then(response => {
-          this.suspending = false
-          this.showMessage('Usuari suspès correctament')
-        }).catch(error => {
-          this.suspending = false
-          console.log(error)
-          this.showError(error)
-        })
-      },
-      activate (user) {
-        this.activating = true
-        // TODO
-        axios.post('/api/v1/gsuite/active/users/' + user.id).then(response => {
-          this.activating = false
-          this.showMessage('Usuari activat correctament')
-        }).catch(error => {
-          this.activating = false
-          console.log(error)
-          this.showError(error)
-        })
-      }
+          this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
+        }
+        this.showMessage('Usuari esborrat correctament')
+      }).catch(error => {
+        this.removing = false
+        console.log(error)
+        this.showError(error)
+      })
     },
-    created () {
-      this.$store.commit(mutations.SET_GOOGLE_USERS, this.users)
+    suspend (user) {
+      this.suspending = true
+      // TODO
+      axios.delete('/api/v1/gsuite/active/users/' + user.id).then(response => {
+        this.suspending = false
+        this.showMessage('Usuari suspès correctament')
+      }).catch(error => {
+        this.suspending = false
+        console.log(error)
+        this.showError(error)
+      })
+    },
+    activate (user) {
+      this.activating = true
+      // TODO
+      axios.post('/api/v1/gsuite/active/users/' + user.id).then(response => {
+        this.activating = false
+        this.showMessage('Usuari activat correctament')
+      }).catch(error => {
+        this.activating = false
+        console.log(error)
+        this.showError(error)
+      })
     }
+  },
+  created () {
+    this.$store.commit(mutations.SET_GOOGLE_USERS, this.users)
   }
+}
 </script>

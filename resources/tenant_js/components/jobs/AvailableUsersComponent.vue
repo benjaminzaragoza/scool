@@ -44,52 +44,52 @@
 </template>
 
 <script>
-  import UserAvatar from '../ui/UserAvatarComponent'
-  import axios from 'axios'
-  import withSnackbar from '../mixins/withSnackbar'
+import UserAvatar from '../ui/UserAvatarComponent'
+import axios from 'axios'
+import withSnackbar from '../mixins/withSnackbar'
 
-  export default {
-    name: 'AvailableUsersComponent',
-    components: {
-      'user-avatar': UserAvatar
-    },
-    mixins: [withSnackbar],
-    data () {
-      return {
-        users: [],
-        internalUser: this.user
-      }
-    },
-    model: {
-      prop: 'user',
-      event: 'input'
-    },
-    props: {
-      jobType: {
-        type: Number,
-        default: 1
-      },
-      user: {
-        required: true
-      }
-    },
-    watch: {
-      user (newUser) {
-        this.internalUser = newUser
-      }
-    },
-    methods: {
-      input () {
-        this.$emit('input', this.internalUser)
-      }
-    },
-    mounted () {
-      axios.get('/api/v1/available-users/' + this.jobType).then(response => {
-        this.users = response.data
-      }).catch(error => {
-        console.log(error)
-        this.showError(error)
-      })
+export default {
+  name: 'AvailableUsersComponent',
+  components: {
+    'user-avatar': UserAvatar
+  },
+  mixins: [withSnackbar],
+  data () {
+    return {
+      users: [],
+      internalUser: this.user
     }
+  },
+  model: {
+    prop: 'user',
+    event: 'input'
+  },
+  props: {
+    jobType: {
+      type: Number,
+      default: 1
+    },
+    user: {
+      required: true
+    }
+  },
+  watch: {
+    user (newUser) {
+      this.internalUser = newUser
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.internalUser)
+    }
+  },
+  mounted () {
+    axios.get('/api/v1/available-users/' + this.jobType).then(response => {
+      this.users = response.data
+    }).catch(error => {
+      console.log(error)
+      this.showError(error)
+    })
   }
+}
 </script>

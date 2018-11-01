@@ -9,20 +9,20 @@
 </style>
 
 <script>
-  import interactsWithGravatar from './mixins/interactsWithGravatar'
+import interactsWithGravatar from './mixins/interactsWithGravatar'
 
-  export default {
-    name: 'Gravatar',
-    mixins: [ interactsWithGravatar ],
-    props: {
-      user: {
-        type: Object,
-        required: true
-      },
-      size: {
-        type: String,
-        default: '100px'
-      }
+export default {
+  name: 'Gravatar',
+  mixins: [ interactsWithGravatar ],
+  props: {
+    user: {
+      type: Object,
+      required: true
+    },
+    size: {
+      type: String,
+      default: '100px'
     }
   }
+}
 </script>

@@ -44,32 +44,32 @@
 </style>
 
 <script>
-  import UserAvatar from '../ui/UserAvatarComponent'
-  export default {
-    components: {
-      'user-avatar': UserAvatar
+import UserAvatar from '../ui/UserAvatarComponent'
+export default {
+  components: {
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      user: {}
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
     },
-    data () {
-      return {
-        user: {}
-      }
-    },
-    props: {
-      users: {
-        type: Array,
-        required: true
-      },
-      label: {
-        type: String,
-        default: "Escolliu l'usuari a suplantar"
-      }
-    },
-    watch: {
-      user (user) {
-        if (user) {
-          window.location.href = '/impersonate/take/' + user
-        }
+    label: {
+      type: String,
+      default: "Escolliu l'usuari a suplantar"
+    }
+  },
+  watch: {
+    user (user) {
+      if (user) {
+        window.location.href = '/impersonate/take/' + user
       }
     }
   }
+}
 </script>

@@ -40,47 +40,47 @@
 </style>
 
 <script>
-  import UserAvatar from '../ui/UserAvatarComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    components: {
-      'user-avatar': UserAvatar
+export default {
+  components: {
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      internalTeacher: this.teacher
+    }
+  },
+  model: {
+    prop: 'teacher',
+    event: 'input'
+  },
+  props: {
+    name: {
+      type: String,
+      default: 'teacher'
     },
-    data () {
-      return {
-        internalTeacher: this.teacher
-      }
+    teacher: {
+      type: Object
     },
-    model: {
-      prop: 'teacher',
-      event: 'input'
+    label: {
+      type: String,
+      default: 'Escolliu un professor'
     },
-    props: {
-      name: {
-        type: String,
-        default: 'teacher'
-      },
-      teacher: {
-        type: Object
-      },
-      label: {
-        type: String,
-        default: 'Escolliu un professor'
-      },
-      teachers: {
-        type: Array,
-        required: true
-      }
-    },
-    watch: {
-      teacher (newTeacher) {
-        this.internalTeacher = newTeacher
-      }
-    },
-    methods: {
-      input (value) {
-        this.$emit('input', value)
-      }
+    teachers: {
+      type: Array,
+      required: true
+    }
+  },
+  watch: {
+    teacher (newTeacher) {
+      this.internalTeacher = newTeacher
+    }
+  },
+  methods: {
+    input (value) {
+      this.$emit('input', value)
     }
   }
+}
 </script>

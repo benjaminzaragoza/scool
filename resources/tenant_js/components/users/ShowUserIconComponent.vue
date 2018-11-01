@@ -265,51 +265,51 @@
 </style>
 
 <script>
-  import axios from 'axios'
-  import PersonalDataCard from '../people/PersonalDataCardComponent'
+import axios from 'axios'
+import PersonalDataCard from '../people/PersonalDataCardComponent'
 
-  export default {
-    components: {
-      'personal-data-card': PersonalDataCard
+export default {
+  components: {
+    'personal-data-card': PersonalDataCard
+  },
+  data () {
+    return {
+      dialog: false,
+      internalUser: this.user
+    }
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => { return {} }
     },
-    data () {
-      return {
-        dialog: false,
-        internalUser: this.user
-      }
+    users: {
+      type: Array,
+      default: () => []
     },
-    props: {
-      user: {
-        type: Object,
-        default: () => { return {} }
-      },
-      users: {
-        type: Array,
-        default: () => []
-      },
-      icon: {
-        type: Boolean,
-        default: true
+    icon: {
+      type: Boolean,
+      default: true
+    }
+  },
+  watch: {
+    user: function (newUser) {
+      this.internalUser = this.user
+    }
+  },
+  methods: {
+    prepareDialog () {
+      if (!_.isEmpty(this.internalUser) && this.users.length > 0) {
+        this.dialog = true
+        return
       }
-    },
-    watch: {
-      user: function (newUser) {
-        this.internalUser = this.user
-      }
-    },
-    methods: {
-      prepareDialog () {
-        if (! _.isEmpty(this.internalUser) && this.users.length > 0) {
-          this.dialog = true
-          return
-        }
-        axios.get('/api/v1/user').then(response => {
-          this.internalUser = response.data
-          this.dialog = true
-        }).catch(error => {
-          console.log(error)
-        })
-      }
+      axios.get('/api/v1/user').then(response => {
+        this.internalUser = response.data
+        this.dialog = true
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
+}
 </script>

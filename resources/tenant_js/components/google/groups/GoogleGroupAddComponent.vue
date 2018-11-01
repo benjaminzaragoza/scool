@@ -46,24 +46,24 @@
 </template>
 
 <script>
-  import GoogleGroupAddForm from './GoogleGroupAddFormComponent'
-  export default {
-    name: 'GoogleGroupAddComponent',
-    components: {
-      'google-group-add-form': GoogleGroupAddForm
-    },
-    data () {
-      return {
-        dialog: false,
-        step: 1,
-        group: null,
-      }
-    },
-    methods: {
-      groupCreated (group) {
-        this.group = group
-        this.step = 2
-      }
+import GoogleGroupAddForm from './GoogleGroupAddFormComponent'
+export default {
+  name: 'GoogleGroupAddComponent',
+  components: {
+    'google-group-add-form': GoogleGroupAddForm
+  },
+  data () {
+    return {
+      dialog: false,
+      step: 1,
+      group: null
+    }
+  },
+  methods: {
+    groupCreated (group) {
+      this.group = group
+      this.step = 2
     }
   }
+}
 </script>

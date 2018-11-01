@@ -5,28 +5,28 @@
 </template>
 
 <script>
-  export default {
-    name: 'DialogComponent',
-    data () {
-      return {
-        internalValue: this.value
-      }
+export default {
+  name: 'DialogComponent',
+  data () {
+    return {
+      internalValue: this.value
+    }
+  },
+  props: {
+    value: {},
+    maxWidth: {
+      type: String,
+      default: '650px'
     },
-    props: {
-      value: {},
-      maxWidth: {
-        type: String,
-        default: '650px'
-      },
-      fullscreen: {
-        type: Boolean,
-        default: false
-      }
-    },
-    watch: {
-      internalValue (newValue) {
-        this.$emit('input', newValue)
-      }
+    fullscreen: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    internalValue (newValue) {
+      this.$emit('input', newValue)
     }
   }
+}
 </script>

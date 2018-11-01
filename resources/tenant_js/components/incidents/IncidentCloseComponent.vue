@@ -59,7 +59,6 @@ export default {
         this.loading = false
         this.close = !this.close
       }).catch(error => {
-        console.log(error)
         this.$snackbar.showError(error)
         this.loading = false
       })

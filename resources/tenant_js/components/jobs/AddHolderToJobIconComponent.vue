@@ -63,79 +63,79 @@
 </template>
 
 <script>
-  import * as actions from '../../store/action-types'
-  import { validationMixin } from 'vuelidate'
-  import withSnackbar from '../mixins/withSnackbar'
-  import { required } from 'vuelidate/lib/validators'
-  import UserSelect from '../users/UsersSelectComponent.vue'
+import * as actions from '../../store/action-types'
+import { validationMixin } from 'vuelidate'
+import withSnackbar from '../mixins/withSnackbar'
+import { required } from 'vuelidate/lib/validators'
+import UserSelect from '../users/UsersSelectComponent.vue'
 
-  export default {
-    name: 'AddHolderToJobIconComponent',
-    components: {
-      'user-select': UserSelect
+export default {
+  name: 'AddHolderToJobIconComponent',
+  components: {
+    'user-select': UserSelect
+  },
+  mixins: [validationMixin, withSnackbar],
+  data () {
+    return {
+      dialog: false,
+      adding: false,
+      holder: null,
+      internalUsers: this.users
+    }
+  },
+  validations: {
+    holder: { required }
+  },
+  props: {
+    job: {
+      type: Object,
+      required: true
     },
-    mixins: [validationMixin, withSnackbar],
-    data () {
-      return {
-        dialog: false,
-        adding: false,
-        holder: null,
-        internalUsers: this.users
-      }
-    },
-    validations: {
-      holder: {required}
-    },
-    props: {
-      job: {
-        type: Object,
-        required: true
-      },
-      users: {
-        type: Array,
-        required: true
-      }
-    },
-    computed: {
-      holderErrors () {
-        const errors = []
-        if (!this.$v.holder.$dirty) return errors
-        !this.$v.holder.required && errors.push('Cal especificar un titular per a la plaça.')
-        return errors
-      }
-    },
-    watch: {
-      users () {
-        this.internalUsers = this.users
-      }
-    },
-    methods: {
-      addHolder () {
-        if (!this.$v.$invalid) {
-          this.adding = true
-          this.$store.dispatch(actions.EDIT_JOB, {
-            id: this.job.id,
-            type: this.job.type_id,
-            code: this.job.code,
-            family: this.job.family_id,
-            specialty: this.job.specialty_id,
-            holder: this.holder,
-            order: this.job.order,
-            notes: this.job.notes
-          }).then(response => {
-            this.adding = false
-            this.dialog = false
-            this.showMessage('Titular afegir correctament al a plaça')
-          }).catch(error => {
-            this.adding = false
-            console.log(error)
-            if (error.status === 422) this.mapErrors(error.data.errors)
-            this.showError(error)
-          })
-        } else {
-          this.$v.$touch()
-        }
+    users: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    holderErrors () {
+      const errors = []
+      if (!this.$v.holder.$dirty) return errors
+      !this.$v.holder.required && errors.push('Cal especificar un titular per a la plaça.')
+      return errors
+    }
+  },
+  watch: {
+    users () {
+      this.internalUsers = this.users
+    }
+  },
+  methods: {
+    addHolder () {
+      if (!this.$v.$invalid) {
+        this.adding = true
+        this.$store.dispatch(actions.EDIT_JOB, {
+          id: this.job.id,
+          type: this.job.type_id,
+          code: this.job.code,
+          family: this.job.family_id,
+          specialty: this.job.specialty_id,
+          holder: this.holder,
+          order: this.job.order,
+          notes: this.job.notes
+        }).then(response => {
+          this.adding = false
+          this.dialog = false
+          this.showMessage('Titular afegir correctament al a plaça')
+        }).catch(error => {
+          this.adding = false
+          console.log(error)
+          if (error.status === 422) this.mapErrors(error.data.errors)
+          this.showError(error)
+        })
+      } else {
+        this.$v.$touch()
       }
     }
   }
+}
 </script>

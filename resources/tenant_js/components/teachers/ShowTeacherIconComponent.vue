@@ -265,51 +265,51 @@
 </style>
 
 <script>
-  import axios from 'axios'
-  import PersonalDataCard from '../people/PersonalDataCardComponent'
+import axios from 'axios'
+import PersonalDataCard from '../people/PersonalDataCardComponent'
 
-  export default {
-    components: {
-      'personal-data-card': PersonalDataCard
+export default {
+  components: {
+    'personal-data-card': PersonalDataCard
+  },
+  data () {
+    return {
+      dialog: false,
+      internalTeacher: this.teacher
+    }
+  },
+  props: {
+    teacher: {
+      type: Object,
+      default: () => { return {} }
     },
-    data () {
-      return {
-        dialog: false,
-        internalTeacher: this.teacher
-      }
+    teachers: {
+      type: Array,
+      default: () => []
     },
-    props: {
-      teacher: {
-        type: Object,
-        default: () => { return {} }
-      },
-      teachers: {
-        type: Array,
-        default: () => []
-      },
-      icon: {
-        type: Boolean,
-        default: true
+    icon: {
+      type: Boolean,
+      default: true
+    }
+  },
+  watch: {
+    teacher: function (newTeacher) {
+      this.internalTeacher = this.teacher
+    }
+  },
+  methods: {
+    prepareDialog () {
+      if (!_.isEmpty(this.internalTeacher) && this.teachers.length > 0) {
+        this.dialog = true
+        return
       }
-    },
-    watch: {
-      teacher: function (newTeacher) {
-        this.internalTeacher = this.teacher
-      }
-    },
-    methods: {
-      prepareDialog () {
-        if (! _.isEmpty(this.internalTeacher) && this.teachers.length > 0) {
-          this.dialog = true
-          return
-        }
-        axios.get('/api/v1/teacher').then(response => {
-          this.internalTeacher = response.data
-          this.dialog = true
-        }).catch(error => {
-          console.log(error)
-        })
-      }
+      axios.get('/api/v1/teacher').then(response => {
+        this.internalTeacher = response.data
+        this.dialog = true
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
+}
 </script>

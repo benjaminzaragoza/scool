@@ -25,35 +25,35 @@
 </template>
 
 <script>
-  import moment from 'moment'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import moment from 'moment'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'JobsSheetComponent',
-    components: {
-      'user-avatar': UserAvatar
-    },
-    props: {
-      jobs: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      academicPeriod () {
-        // 1 setembre a 31 Agost
-        const month = moment().format('M')
-        const year = moment().format('YYYY')
-        if (month >= 9) {
-          const nextYear = moment().add(1, 'years').format('YYYY')
-          return year + '-' + nextYear
-        } else {
-          const previousYear = moment().subtract(1, 'years').format('YYYY')
-          return previousYear + '-' + year
-        }
+export default {
+  name: 'JobsSheetComponent',
+  components: {
+    'user-avatar': UserAvatar
+  },
+  props: {
+    jobs: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    academicPeriod () {
+      // 1 setembre a 31 Agost
+      const month = moment().format('M')
+      const year = moment().format('YYYY')
+      if (month >= 9) {
+        const nextYear = moment().add(1, 'years').format('YYYY')
+        return year + '-' + nextYear
+      } else {
+        const previousYear = moment().subtract(1, 'years').format('YYYY')
+        return previousYear + '-' + year
       }
     }
   }
+}
 </script>
 
 <style scoped>

@@ -99,100 +99,100 @@
 </style>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as mutations from '../../store/mutation-types'
-  import * as actions from '../../store/action-types'
-  import ShowPendingTeacherIcon from './ShowPendingTeacherIconComponent.vue'
-  import withSnackbar from '../mixins/withSnackbar'
-  import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import { mapGetters } from 'vuex'
+import * as mutations from '../../store/mutation-types'
+import * as actions from '../../store/action-types'
+import ShowPendingTeacherIcon from './ShowPendingTeacherIconComponent.vue'
+import withSnackbar from '../mixins/withSnackbar'
+import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    components: {
-      'show-pending-teacher-icon': ShowPendingTeacherIcon,
-      'confirm-icon': ConfirmIcon,
-      'user-avatar': UserAvatar
+export default {
+  components: {
+    'show-pending-teacher-icon': ShowPendingTeacherIcon,
+    'confirm-icon': ConfirmIcon,
+    'user-avatar': UserAvatar
+  },
+  mixins: [withSnackbar],
+  data () {
+    return {
+      minimized: true,
+      removing: false,
+      search: '',
+      deleting: false,
+      headers: [
+        { text: 'Id', align: 'left', value: 'id' },
+        { text: 'Especialitat', value: 'specialty.code' },
+        { text: 'Name', value: 'name' },
+        { text: 'Email', value: 'email' },
+        { text: 'Mòbil', value: 'mobile' },
+        { text: 'Substitueix', value: 'teacher_id' },
+        { text: 'Data incorporació', value: 'start_date' },
+        { text: 'Data creació', value: 'formatted_created_at' },
+        { text: 'Data actualització', value: 'formatted_updated_at' },
+        { text: 'Accions', sortable: false }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters({
+      internalPendingTeachers: 'pendingTeachers'
+    })
+  },
+  props: {
+    teachers: {
+      type: Array,
+      required: true
     },
-    mixins: [withSnackbar],
-    data () {
-      return {
-        minimized: true,
-        removing: false,
-        search: '',
-        deleting: false,
-        headers: [
-          {text: 'Id', align: 'left', value: 'id'},
-          {text: 'Especialitat', value: 'specialty.code'},
-          {text: 'Name', value: 'name'},
-          {text: 'Email', value: 'email'},
-          {text: 'Mòbil', value: 'mobile'},
-          {text: 'Substitueix', value: 'teacher_id'},
-          {text: 'Data incorporació', value: 'start_date'},
-          {text: 'Data creació', value: 'formatted_created_at'},
-          {text: 'Data actualització', value: 'formatted_updated_at'},
-          {text: 'Accions', sortable: false}
-        ]
-      }
+    jobs: {
+      type: Array,
+      required: true
     },
-    computed: {
-      ...mapGetters({
-        internalPendingTeachers: 'pendingTeachers'
+    pendingTeachers: {
+      type: Array,
+      required: true
+    },
+    specialties: {
+      type: Array,
+      required: true
+    },
+    forces: {
+      type: Array,
+      required: true
+    },
+    administrativeStatuses: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    settings () {
+      // TODO: Settings like configure people will recieve notifications about pending teachers
+      // Links to add to welcome emails, etc.
+      console.log('TODO SETTINGS')
+    },
+    refresh () {
+      this.$store.dispatch(actions.GET_PENDING_TEACHERS).catch(error => {
+        this.showError(error)
       })
     },
-    props: {
-      teachers: {
-        type: Array,
-        required: true
-      },
-      jobs: {
-        type: Array,
-        required: true
-      },
-      pendingTeachers: {
-        type: Array,
-        required: true
-      },
-      specialties: {
-        type: Array,
-        required: true
-      },
-      forces: {
-        type: Array,
-        required: true
-      },
-      administrativeStatuses: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      settings () {
-        // TODO: Settings like configure people will recieve notifications about pending teachers
-        // Links to add to welcome emails, etc.
-        console.log('TODO SETTINGS')
-      },
-      refresh () {
-        this.$store.dispatch(actions.GET_PENDING_TEACHERS).catch(error => {
-          this.showError(error)
-        })
-      },
-      remove (teacher) {
-        this.removing = true
-        this.$store.dispatch(actions.REMOVE_PENDING_TEACHER, teacher).then(response => {
-          this.removing = false
-          this.showMessage('El professor pendent ha estat esborrat correctament')
-        }).catch(error => {
-          console.log(error)
-          this.removing = false
-          this.showError(error)
-        })
-      }
-    },
-    created () {
-      this.$store.commit(mutations.SET_PENDING_TEACHERS, this.pendingTeachers)
-      if (this.pendingTeachers.length > 0) {
-        this.minimized = false
-      }
+    remove (teacher) {
+      this.removing = true
+      this.$store.dispatch(actions.REMOVE_PENDING_TEACHER, teacher).then(response => {
+        this.removing = false
+        this.showMessage('El professor pendent ha estat esborrat correctament')
+      }).catch(error => {
+        console.log(error)
+        this.removing = false
+        this.showError(error)
+      })
+    }
+  },
+  created () {
+    this.$store.commit(mutations.SET_PENDING_TEACHERS, this.pendingTeachers)
+    if (this.pendingTeachers.length > 0) {
+      this.minimized = false
     }
   }
+}
 </script>

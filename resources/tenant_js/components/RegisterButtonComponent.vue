@@ -83,86 +83,86 @@
 </style>
 
 <script>
-  import * as actions from '../store/action-types'
-  import withSnackbar from './mixins/withSnackbar'
-  export default {
-    mixins: [withSnackbar],
-    data () {
-      return {
-        errors: [],
-        internalAction: this.action,
-        name: '',
-        nameRules: [
-          (v) => !!v || 'User name is mandatory'
-        ],
-        email: '',
-        emailRules: [
-          (v) => !!v || 'Mail is mandatory',
-          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email have to be valid'
-        ],
-        password: '',
-        passwordRules: [
-          (v) => !!v || 'Password is mandatory',
-          (v) => v.length >= 6 || 'Password at least have to be 6 characters'
-        ],
-        passwordConfirmation: '',
-        valid: false,
-        registerLoading: false
-      }
+import * as actions from '../store/action-types'
+import withSnackbar from './mixins/withSnackbar'
+export default {
+  mixins: [withSnackbar],
+  data () {
+    return {
+      errors: [],
+      internalAction: this.action,
+      name: '',
+      nameRules: [
+        (v) => !!v || 'User name is mandatory'
+      ],
+      email: '',
+      emailRules: [
+        (v) => !!v || 'Mail is mandatory',
+        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email have to be valid'
+      ],
+      password: '',
+      passwordRules: [
+        (v) => !!v || 'Password is mandatory',
+        (v) => v.length >= 6 || 'Password at least have to be 6 characters'
+      ],
+      passwordConfirmation: '',
+      valid: false,
+      registerLoading: false
+    }
+  },
+  props: {
+    action: {
+      type: String,
+      default: null
     },
-    props: {
-      action: {
-        type: String,
-        default: null
+    show: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    showRegister: {
+      get () {
+        if (this.internalAction && this.internalAction === 'register') return true
+        return false
       },
-      show: {
-        type: Boolean,
-        default: true
+      set (value) {
+        if (value) this.internalAction = 'register'
+        else this.internalAction = null
       }
-    },
-    computed: {
-      showRegister: {
-        get () {
-          if (this.internalAction && this.internalAction === 'register') return true
-          return false
-        },
-        set (value) {
-          if (value) this.internalAction = 'register'
-          else this.internalAction = null
+    }
+  },
+  methods: {
+    register () {
+      if (this.$refs.registrationForm.validate()) {
+        this.registerLoading = true
+        const user = {
+          'name': this.name,
+          'email': this.email,
+          'password': this.password,
+          'password_confirmation': this.passwordConfirmation
         }
-      }
-    },
-    methods: {
-      register () {
-        if (this.$refs.registrationForm.validate()) {
-          this.registerLoading = true
-          const user = {
-            'name': this.name,
-            'email': this.email,
-            'password': this.password,
-            'password_confirmation': this.passwordConfirmation
+        this.$store.dispatch(actions.REGISTER, user).then(response => {
+          this.registerLoading = false
+          this.showRegister = false
+          window.location = '/home'
+        }).catch(error => {
+          if (error.status === 422) {
+            this.showError({
+              message: 'Invalid data'
+            })
+          } else {
+            this.showError(error)
           }
-          this.$store.dispatch(actions.REGISTER, user).then(response => {
-            this.registerLoading = false
-            this.showRegister = false
-            window.location = '/home'
-          }).catch(error => {
-            if (error.status === 422) {
-              this.showError({
-                message: 'Invalid data'
-              })
-            } else {
-              this.showError(error)
-            }
-            this.errors = error.data.errors
-          }).catch(error => {
-            console.log(error)
-            this.registerLoading = false
-          }).then(() => {
-            this.registerLoading = false
-          })
-        }
+          this.errors = error.data.errors
+        }).catch(error => {
+          console.log(error)
+          this.registerLoading = false
+        }).then(() => {
+          this.registerLoading = false
+        })
       }
     }
   }
+}
 </script>

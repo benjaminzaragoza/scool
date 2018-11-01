@@ -24,18 +24,18 @@
 </style>
 
 <script>
-  export default {
-    data () {
-      return {
-        showError: true,
-        showWarning: true
-      }
-    },
-    props: {
-      loggedUser: {
-        type: String,
-        required: true
-      }
+export default {
+  data () {
+    return {
+      showError: true,
+      showWarning: true
+    }
+  },
+  props: {
+    loggedUser: {
+      type: String,
+      required: true
     }
   }
+}
 </script>

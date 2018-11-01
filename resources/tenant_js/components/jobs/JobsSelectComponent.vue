@@ -36,60 +36,60 @@
 </template>
 
 <script>
-  import UserAvatar from '../ui/UserAvatarComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'JobsSelectComponent',
-    components: {
-      'user-avatar': UserAvatar
+export default {
+  name: 'JobsSelectComponent',
+  components: {
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      internalJob: this.job
+    }
+  },
+  computed: {
+    filteredJobs () {
+      if (this.onlyAvailables) return this.jobs.filter(job => job.holder_id === null)
+      return this.jobs
+    }
+  },
+  watch: {
+    job (newjob) {
+      this.internalJob = newjob
     },
-    data () {
-      return {
-        internalJob: this.job
-      }
+    filteredJobs (newFilteredJobs) {
+      if (newFilteredJobs.length === 0) this.$emit('empty')
+    }
+  },
+  model: {
+    prop: 'job',
+    event: 'input'
+  },
+  props: {
+    errorMessages: {
+      required: false
     },
-    computed: {
-      filteredJobs () {
-        if (this.onlyAvailables) return this.jobs.filter(job => job.holder_id === null)
-        return this.jobs
-      }
+    onlyAvailables: {
+      type: Boolean,
+      default: false
     },
-    watch: {
-      job (newjob) {
-        this.internalJob = newjob
-      },
-      filteredJobs (newFilteredJobs) {
-        if (newFilteredJobs.length === 0) this.$emit('empty')
-      }
+    job: {
+      type: Object
     },
-    model: {
-      prop: 'job',
-      event: 'input'
+    label: {
+      type: String,
+      default: 'Escolliu la plaça'
     },
-    props: {
-      errorMessages: {
-        required: false
-      },
-      onlyAvailables: {
-        type: Boolean,
-        default: false
-      },
-      job: {
-        type: Object
-      },
-      label: {
-        type: String,
-        default: 'Escolliu la plaça'
-      },
-      jobs: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      input (value) {
-        this.$emit('input', value)
-      }
+    jobs: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    input (value) {
+      this.$emit('input', value)
     }
   }
+}
 </script>

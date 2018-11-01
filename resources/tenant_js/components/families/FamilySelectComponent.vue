@@ -19,58 +19,58 @@
 </template>
 
 <script>
-  export default {
-    name: 'FamilySelectComponent',
-    model: {
-      prop: 'family',
-      event: 'input'
+export default {
+  name: 'FamilySelectComponent',
+  model: {
+    prop: 'family',
+    event: 'input'
+  },
+  data () {
+    return {
+      internalFamily: this.family
+    }
+  },
+  props: {
+    name: {
+      type: String,
+      default: 'name'
     },
-    data () {
-      return {
-        internalFamily: this.family
-      }
+    label: {
+      type: String,
+      default: 'Família'
     },
-    props: {
-      name: {
-        type: String,
-        default: 'name'
-      },
-      label: {
-        type: String,
-        default: 'Família'
-      },
-      families: {
-        type: Array,
-        required: true
-      },
-      family: {
-        required: true
-      },
-      errorMessages: {
-        type: Array,
-        required: false
-      },
-      required: {
-        type: Boolean,
-        default: true
-      },
-      itemValue: {
-        type: String,
-        default: 'id'
-      }
+    families: {
+      type: Array,
+      required: true
     },
-    watch: {
-      family (newFamily) {
-        this.internalFamily = newFamily
-      }
+    family: {
+      required: true
     },
-    methods: {
-      input () {
-        this.$emit('input', this.internalFamily)
-      },
-      blur () {
-        this.$emit('blur', this.internalFamily)
-      }
+    errorMessages: {
+      type: Array,
+      required: false
+    },
+    required: {
+      type: Boolean,
+      default: true
+    },
+    itemValue: {
+      type: String,
+      default: 'id'
+    }
+  },
+  watch: {
+    family (newFamily) {
+      this.internalFamily = newFamily
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.internalFamily)
+    },
+    blur () {
+      this.$emit('blur', this.internalFamily)
     }
   }
+}
 </script>

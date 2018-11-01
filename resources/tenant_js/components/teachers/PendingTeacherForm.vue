@@ -209,7 +209,6 @@
             </v-layout>
         </v-container>
 
-
         <h1 class="subheading primary--text">
             <div>
                 <p>Contacte</p>
@@ -530,347 +529,347 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import withSnackbar from '../mixins/withSnackbar'
-  import axios from 'axios'
-  import PendingTeacher from './Mixins/PendingTeacher'
-  import TeacherSelect from './TeacherSelectComponent.vue'
-  import UploadCardComponent from '../ui/UploadCardComponent.vue'
-  import ProposedUser from '../users/ProposedUserComponent.vue'
-  import JobsSelectForPendingTeacher from '../jobs/JobsSelectForPendingTeacher.vue'
-  import SpecialtySelect from '../specialties/SpecialtySelectComponent'
+import { validationMixin } from 'vuelidate'
+import withSnackbar from '../mixins/withSnackbar'
+import axios from 'axios'
+import PendingTeacher from './Mixins/PendingTeacher'
+import TeacherSelect from './TeacherSelectComponent.vue'
+import UploadCardComponent from '../ui/UploadCardComponent.vue'
+import ProposedUser from '../users/ProposedUserComponent.vue'
+import JobsSelectForPendingTeacher from '../jobs/JobsSelectForPendingTeacher.vue'
+import SpecialtySelect from '../specialties/SpecialtySelectComponent'
 
-  export default {
-    name: 'PendingTeacherForm',
-    components: {
-      'upload-card': UploadCardComponent,
-      'teacher-select': TeacherSelect,
-      'proposed-user': ProposedUser,
-      'jobs-select-for-pendingteacher': JobsSelectForPendingTeacher,
-      'specialty-select': SpecialtySelect
+export default {
+  name: 'PendingTeacherForm',
+  components: {
+    'upload-card': UploadCardComponent,
+    'teacher-select': TeacherSelect,
+    'proposed-user': ProposedUser,
+    'jobs-select-for-pendingteacher': JobsSelectForPendingTeacher,
+    'specialty-select': SpecialtySelect
+  },
+  mixins: [validationMixin, withSnackbar, PendingTeacher],
+  data () {
+    return {
+      ready: false,
+      creating: false
+    }
+  },
+  props: {
+    pendingTeacher: {
+      type: Object,
+      default: null
     },
-    mixins: [validationMixin, withSnackbar, PendingTeacher],
-    data () {
-      return {
-        ready: false,
-        creating: false
+    confirmMode: {
+      type: Boolean,
+      default: false
+    },
+    jobs: {
+      type: Array,
+      default: () => { return [] }
+    }
+  },
+  watch: {
+    birthdateMenu (val) {
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
+    },
+    searchPostalCodes (val) {
+      val && (val.length > 1) && this.queryPostalCodes(val)
+    },
+    searchLocalities (val) {
+      val && (val.length > 1) && this.queryLocalities(val)
+    },
+    searchProvinces (val) {
+      val && (val.length > 1) && this.queryProvinces(val)
+    },
+    postal_code: function (newPostalCode) {
+      this.setLocality(newPostalCode)
+      this.setProvince(newPostalCode)
+    },
+    specialty: function (newSpecialty) {
+      this.setForce(newSpecialty)
+    }
+  },
+  methods: {
+    cancel () {
+      this.$emit('cancel')
+    },
+    setForce (specialty) {
+      if (specialty) {
+        let foundForce = this.forces.find(force => {
+          return force.id === specialty.force_id
+        })
+        if (foundForce) this.force = foundForce
       }
     },
-    props: {
-      pendingTeacher: {
-        type: Object,
-        default: null
-      },
-      confirmMode: {
-        type: Boolean,
-        default: false
-      },
-      jobs: {
-        type: Array,
-        default: () => { return [] }
+    setLocality (postalCode) {
+      if (postalCode) {
+        let foundLocality = this.allLocalities.find(locality => {
+          return locality.postalcode === postalCode
+        })
+        if (foundLocality) {
+          this.localities.push(foundLocality)
+          this.locality = foundLocality
+        }
       }
     },
-    watch: {
-      birthdateMenu (val) {
-        val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
-      },
-      searchPostalCodes (val) {
-        val && (val.length > 1) && this.queryPostalCodes(val)
-      },
-      searchLocalities (val) {
-        val && (val.length > 1) && this.queryLocalities(val)
-      },
-      searchProvinces (val) {
-        val && (val.length > 1) && this.queryProvinces(val)
-      },
-      postal_code: function (newPostalCode) {
-        this.setLocality(newPostalCode)
-        this.setProvince(newPostalCode)
-      },
-      specialty: function (newSpecialty) {
-        this.setForce(newSpecialty)
+    setProvince (postalCode) {
+      if (postalCode) {
+        let foundProvince = this.allProvinces.find(province => {
+          return postalCode.startsWith(province.postal_code_prefix)
+        })
+        if (foundProvince) {
+          this.provinces.push(foundProvince)
+          this.province = foundProvince
+        }
       }
     },
-    methods: {
-      cancel () {
-        this.$emit('cancel')
-      },
-      setForce (specialty) {
-        if (specialty) {
-          let foundForce = this.forces.find(force => {
-            return force.id === specialty.force_id
-          })
-          if (foundForce) this.force = foundForce
-        }
-      },
-      setLocality (postalCode) {
-        if (postalCode) {
-          let foundLocality = this.allLocalities.find(locality => {
-            return locality.postalcode === postalCode
-          })
-          if (foundLocality) {
-            this.localities.push(foundLocality)
-            this.locality = foundLocality
-          }
-        }
-      },
-      setProvince (postalCode) {
-        if (postalCode) {
-          let foundProvince = this.allProvinces.find(province => {
-            return postalCode.startsWith(province.postal_code_prefix)
-          })
-          if (foundProvince) {
-            this.provinces.push(foundProvince)
-            this.province = foundProvince
-          }
-        }
-      },
-      getSpecialty (specialtyId) {
-        return this.specialties.find(specialty => specialty.id === specialtyId)
-      },
-      getForce (forceId) {
-        return this.forces.find(force => force.id === forceId)
-      },
-      getAdministrativestatus (statusId) {
-        return this.administrativeStatuses.find(status => status.id === statusId)
-      },
-      getTeacher (teacherId) {
-        return this.teachers.find(teacher => teacher.teacher_id === teacherId)
-      },
-      queryPostalCodes (v) {
-        this.postalCodes = this.allPostalCodes.filter(postalCode => {
-          return (postalCode || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-        })
-      },
-      queryLocalities (v) {
-        this.localities = this.allLocalities.filter(locality => {
-          return (locality.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-        })
-      },
-      queryProvinces (v) {
-        this.provinces = this.allProvinces.filter(province => {
-          return (province.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-        })
-      },
-      validateDNI (dni) {
-        let numero, lt, letra
-        let regexpdni = /^[XYZ]?\d{5,8}[A-Z]$/
+    getSpecialty (specialtyId) {
+      return this.specialties.find(specialty => specialty.id === specialtyId)
+    },
+    getForce (forceId) {
+      return this.forces.find(force => force.id === forceId)
+    },
+    getAdministrativestatus (statusId) {
+      return this.administrativeStatuses.find(status => status.id === statusId)
+    },
+    getTeacher (teacherId) {
+      return this.teachers.find(teacher => teacher.teacher_id === teacherId)
+    },
+    queryPostalCodes (v) {
+      this.postalCodes = this.allPostalCodes.filter(postalCode => {
+        return (postalCode || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+      })
+    },
+    queryLocalities (v) {
+      this.localities = this.allLocalities.filter(locality => {
+        return (locality.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+      })
+    },
+    queryProvinces (v) {
+      this.provinces = this.allProvinces.filter(province => {
+        return (province.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+      })
+    },
+    validateDNI (dni) {
+      let numero, lt, letra
+      let regexpdni = /^[XYZ]?\d{5,8}[A-Z]$/
 
-        dni = dni.toUpperCase()
+      dni = dni.toUpperCase()
 
-        if (regexpdni.test(dni) === true) {
-          numero = dni.substr(0, dni.length - 1)
-          numero = numero.replace('X', 0)
-          numero = numero.replace('Y', 1)
-          numero = numero.replace('Z', 2)
-          lt = dni.substr(dni.length - 1, 1)
-          numero = numero % 23
-          letra = 'TRWAGMYFPDXBNJZSQVHLCKET'
-          letra = letra.substring(numero, numero + 1)
-          if (letra !== lt) return false
-          else return true
-        } else return false
-      },
-      createTeacher (teacher) {
-        if (!this.$v.$invalid) {
-          if (this.identifierType === 'NIF' && !this.validateDNI(this.identifier)) {
-            this.showError('El DNI no és vàlid')
-            return
-          }
-          let postData = { ...this.getPostTeacher(), username: this.username, job_id: this.job.id, pending_teacher_id: this.pendingTeacher.id }
-          this.creating = true
-          axios.post('/api/v1/approved_teacher', postData).then(response => {
-            this.creating = false
-          }).catch(error => {
-            this.creating = false
-            console.log(error)
-            this.showError(error)
-          })
-        } else {
-          this.$v.$touch()
-          console.log(this.$v.form.$errors)
+      if (regexpdni.test(dni) === true) {
+        numero = dni.substr(0, dni.length - 1)
+        numero = numero.replace('X', 0)
+        numero = numero.replace('Y', 1)
+        numero = numero.replace('Z', 2)
+        lt = dni.substr(dni.length - 1, 1)
+        numero = numero % 23
+        letra = 'TRWAGMYFPDXBNJZSQVHLCKET'
+        letra = letra.substring(numero, numero + 1)
+        if (letra !== lt) return false
+        else return true
+      } else return false
+    },
+    createTeacher (teacher) {
+      if (!this.$v.$invalid) {
+        if (this.identifierType === 'NIF' && !this.validateDNI(this.identifier)) {
+          this.showError('El DNI no és vàlid')
+          return
         }
-      },
-      submit () {
+        let postData = { ...this.getPostTeacher(), username: this.username, job_id: this.job.id, pending_teacher_id: this.pendingTeacher.id }
+        this.creating = true
+        axios.post('/api/v1/approved_teacher', postData).then(response => {
+          this.creating = false
+        }).catch(error => {
+          this.creating = false
+          console.log(error)
+          this.showError(error)
+        })
+      } else {
         this.$v.$touch()
-        if (!this.$v.$invalid) {
-          if (this.identifierType === 'NIF' && !this.validateDNI(this.identifier)) {
-            this.showError('El DNI no és vàlid')
-            return
-          }
-          axios.post('api/v1/add_teacher', this.getPostTeacher()).then(response => {
-            this.showMessage('Dades enviades correctament')
-            this.clear()
-            this.$v.$reset()
-          }).catch(error => {
-            console.log(error)
-            this.showError(error)
-          })
-        } else {
-          this.$v.$touch()
-        }
-      },
-      getPostTeacher () {
-        let teacher = {
-          name: this.name,
-          sn1: this.sn1,
-          sn2: this.sn2,
-          identifier_type: this.identifierType,
-          identifier: this.identifier,
-          birthdate: this.birthdate,
-          street: this.street,
-          number: this.number,
-          floor: this.floor,
-          floor_number: this.floor_number,
-          postal_code: this.postal_code,
-          locality_id: this.locality.id,
-          locality: this.locality.name,
-          province_id: this.province.id,
-          province: this.province.name,
-          email: this.email,
-          other_emails: this.other_emails.join(),
-          mobile: this.mobile,
-          other_mobiles: this.other_mobiles.join(),
-          phone: this.phone,
-          other_phones: this.other_phones.join(),
-          degree: this.degree,
-          other_degrees: this.other_degrees,
-          languages: this.languages,
-          profiles: this.profiles,
-          other_training: this.other_training,
-          force_id: this.force.id,
-          force: this.force.name,
-          specialty_id: this.specialty,
-          specialty: this.getSpecialty(this.specialty).name,
-          teacher_start_date: this.teacher_start_date,
-          start_date: this.start_date,
-          opositions_date: this.opositions_date,
-          administrative_status_id: this.administrative_status.id,
-          administrative_status: this.administrative_status.name,
-          destination_place: this.destination_place,
-          teacher_id: this.teacher.teacher_id,
-          teacher: this.teacher.name,
-          teacher_hashid: this.teacher.hashid
-        }
-        if (this.photo) teacher.photo = this.photo
-        if (this.identifier_photocopy) teacher.identifier_photocopy = this.identifier_photocopy
-        return teacher
-      },
-      clear () {
-        this.name = ''
-        this.sn1 = ''
-        this.sn2 = ''
-        this.identifier = ''
-        this.birthdate = ''
-        this.street = ''
-        this.number = ''
-        this.floor = ''
-        this.floor_number = ''
-        this.postal_code = ''
-        this.locality = ''
-        this.province = ''
-        this.email = ''
-        this.other_emails = []
-        this.mobile = ''
-        this.other_mobiles = []
-        this.phone = ''
-        this.other_phones = []
-        this.degree = ''
-        this.other_degrees = ''
-        this.languages = ''
-        this.profiles = ''
-        this.other_training = ''
-        this.force = ''
-        this.specialty = ''
-        this.teacher_start_date = ''
-        this.start_date = ''
-        this.opositions_date = ''
-        this.administrative_status = ''
-        this.destination_place = ''
-        this.teacher = {}
-        // this.checkbox = false
-      },
-      saveBirthdate (date) {
-        this.$refs.menu.save(date)
-      },
-      fetchAllProvinces () {
-        return new Promise((resolve, reject) => {
-          this.loadingProvince = true
-          axios.get('/api/v1/provinces').then(response => {
-            this.allProvinces = response.data
-            this.loadingProvince = false
-            resolve(response)
-          }).catch(error => {
-            this.loadingProvince = false
-            console.log(error)
-            this.showError(error)
-            reject(error)
-          })
-        })
-      },
-      fetchAllLocalities () {
-        return new Promise((resolve, reject) => {
-          this.loadingLocality = true
-          axios.get('/api/v1/localities').then(response => {
-            this.allLocalities = response.data
-            this.allPostalCodes = [...new Set(this.allLocalities.map(locality => locality['postalcode']))] // Remove duplicates
-            this.loadingLocality = false
-            this.fillTipicalLocaties()
-            resolve(response)
-          }).catch(error => {
-            this.loadingLocality = false
-            console.log(error)
-            this.showError(error)
-            reject(error)
-          })
-        })
-      },
-      fillTipicalLocaties () {
-        this.localities = this.allLocalities.filter(locality => {
-          return locality.postalcode.startsWith('43')
-        })
-      },
-      mapTeacher (pendingTeacher) {
-        this.name = pendingTeacher.name
-        this.sn1 = pendingTeacher.sn1
-        this.sn2 = pendingTeacher.sn2
-        this.identifier = pendingTeacher.identifier
-        this.birthdate = pendingTeacher.birthdate
-        this.street = pendingTeacher.street
-        this.number = pendingTeacher.number
-        this.floor = pendingTeacher.floor
-        this.floor_number = pendingTeacher.floor_number
-        this.postal_code = pendingTeacher.postal_code
-        this.locality = pendingTeacher.locality
-        this.province = pendingTeacher.province
-        this.email = pendingTeacher.email
-        this.other_emails = pendingTeacher.other_emails && pendingTeacher.other_emails.split(',')
-        this.phone = pendingTeacher.phone
-        this.other_phones = pendingTeacher.other_phones && pendingTeacher.other_phones.split(',')
-        this.mobile = pendingTeacher.mobile
-        this.other_mobiles = pendingTeacher.other_mobiles && pendingTeacher.other_mobiles.split(',')
-        this.degree = pendingTeacher.degree
-        this.other_degrees = pendingTeacher.other_degrees
-        this.languages = pendingTeacher.languages
-        this.profiles = pendingTeacher.profiles
-        this.other_training = pendingTeacher.other_training
-        this.force = this.getForce(pendingTeacher.force_id)
-        this.specialty = this.getSpecialty(pendingTeacher.specialty_id)
-        this.teacher_start_date = pendingTeacher.teacher_start_date
-        this.start_date = pendingTeacher.start_date
-        this.opositions_date = pendingTeacher.opositions_date
-        this.administrative_status = this.getAdministrativestatus(pendingTeacher.administrative_status_id)
-        this.destination_place = pendingTeacher.destination_place
-        this.teacher = this.getTeacher(pendingTeacher.teacher_id)
-        this.ready = true
+        console.log(this.$v.form.$errors)
       }
     },
-    created () {
-      this.fetchAllProvinces().then(response => {
-        this.fetchAllLocalities().then(response => {
-          if (this.pendingTeacher) this.mapTeacher(this.pendingTeacher)
+    submit () {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        if (this.identifierType === 'NIF' && !this.validateDNI(this.identifier)) {
+          this.showError('El DNI no és vàlid')
+          return
+        }
+        axios.post('api/v1/add_teacher', this.getPostTeacher()).then(response => {
+          this.showMessage('Dades enviades correctament')
+          this.clear()
+          this.$v.$reset()
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+        })
+      } else {
+        this.$v.$touch()
+      }
+    },
+    getPostTeacher () {
+      let teacher = {
+        name: this.name,
+        sn1: this.sn1,
+        sn2: this.sn2,
+        identifier_type: this.identifierType,
+        identifier: this.identifier,
+        birthdate: this.birthdate,
+        street: this.street,
+        number: this.number,
+        floor: this.floor,
+        floor_number: this.floor_number,
+        postal_code: this.postal_code,
+        locality_id: this.locality.id,
+        locality: this.locality.name,
+        province_id: this.province.id,
+        province: this.province.name,
+        email: this.email,
+        other_emails: this.other_emails.join(),
+        mobile: this.mobile,
+        other_mobiles: this.other_mobiles.join(),
+        phone: this.phone,
+        other_phones: this.other_phones.join(),
+        degree: this.degree,
+        other_degrees: this.other_degrees,
+        languages: this.languages,
+        profiles: this.profiles,
+        other_training: this.other_training,
+        force_id: this.force.id,
+        force: this.force.name,
+        specialty_id: this.specialty,
+        specialty: this.getSpecialty(this.specialty).name,
+        teacher_start_date: this.teacher_start_date,
+        start_date: this.start_date,
+        opositions_date: this.opositions_date,
+        administrative_status_id: this.administrative_status.id,
+        administrative_status: this.administrative_status.name,
+        destination_place: this.destination_place,
+        teacher_id: this.teacher.teacher_id,
+        teacher: this.teacher.name,
+        teacher_hashid: this.teacher.hashid
+      }
+      if (this.photo) teacher.photo = this.photo
+      if (this.identifier_photocopy) teacher.identifier_photocopy = this.identifier_photocopy
+      return teacher
+    },
+    clear () {
+      this.name = ''
+      this.sn1 = ''
+      this.sn2 = ''
+      this.identifier = ''
+      this.birthdate = ''
+      this.street = ''
+      this.number = ''
+      this.floor = ''
+      this.floor_number = ''
+      this.postal_code = ''
+      this.locality = ''
+      this.province = ''
+      this.email = ''
+      this.other_emails = []
+      this.mobile = ''
+      this.other_mobiles = []
+      this.phone = ''
+      this.other_phones = []
+      this.degree = ''
+      this.other_degrees = ''
+      this.languages = ''
+      this.profiles = ''
+      this.other_training = ''
+      this.force = ''
+      this.specialty = ''
+      this.teacher_start_date = ''
+      this.start_date = ''
+      this.opositions_date = ''
+      this.administrative_status = ''
+      this.destination_place = ''
+      this.teacher = {}
+      // this.checkbox = false
+    },
+    saveBirthdate (date) {
+      this.$refs.menu.save(date)
+    },
+    fetchAllProvinces () {
+      return new Promise((resolve, reject) => {
+        this.loadingProvince = true
+        axios.get('/api/v1/provinces').then(response => {
+          this.allProvinces = response.data
+          this.loadingProvince = false
+          resolve(response)
+        }).catch(error => {
+          this.loadingProvince = false
+          console.log(error)
+          this.showError(error)
+          reject(error)
         })
       })
+    },
+    fetchAllLocalities () {
+      return new Promise((resolve, reject) => {
+        this.loadingLocality = true
+        axios.get('/api/v1/localities').then(response => {
+          this.allLocalities = response.data
+          this.allPostalCodes = [...new Set(this.allLocalities.map(locality => locality['postalcode']))] // Remove duplicates
+          this.loadingLocality = false
+          this.fillTipicalLocaties()
+          resolve(response)
+        }).catch(error => {
+          this.loadingLocality = false
+          console.log(error)
+          this.showError(error)
+          reject(error)
+        })
+      })
+    },
+    fillTipicalLocaties () {
+      this.localities = this.allLocalities.filter(locality => {
+        return locality.postalcode.startsWith('43')
+      })
+    },
+    mapTeacher (pendingTeacher) {
+      this.name = pendingTeacher.name
+      this.sn1 = pendingTeacher.sn1
+      this.sn2 = pendingTeacher.sn2
+      this.identifier = pendingTeacher.identifier
+      this.birthdate = pendingTeacher.birthdate
+      this.street = pendingTeacher.street
+      this.number = pendingTeacher.number
+      this.floor = pendingTeacher.floor
+      this.floor_number = pendingTeacher.floor_number
+      this.postal_code = pendingTeacher.postal_code
+      this.locality = pendingTeacher.locality
+      this.province = pendingTeacher.province
+      this.email = pendingTeacher.email
+      this.other_emails = pendingTeacher.other_emails && pendingTeacher.other_emails.split(',')
+      this.phone = pendingTeacher.phone
+      this.other_phones = pendingTeacher.other_phones && pendingTeacher.other_phones.split(',')
+      this.mobile = pendingTeacher.mobile
+      this.other_mobiles = pendingTeacher.other_mobiles && pendingTeacher.other_mobiles.split(',')
+      this.degree = pendingTeacher.degree
+      this.other_degrees = pendingTeacher.other_degrees
+      this.languages = pendingTeacher.languages
+      this.profiles = pendingTeacher.profiles
+      this.other_training = pendingTeacher.other_training
+      this.force = this.getForce(pendingTeacher.force_id)
+      this.specialty = this.getSpecialty(pendingTeacher.specialty_id)
+      this.teacher_start_date = pendingTeacher.teacher_start_date
+      this.start_date = pendingTeacher.start_date
+      this.opositions_date = pendingTeacher.opositions_date
+      this.administrative_status = this.getAdministrativestatus(pendingTeacher.administrative_status_id)
+      this.destination_place = pendingTeacher.destination_place
+      this.teacher = this.getTeacher(pendingTeacher.teacher_id)
+      this.ready = true
     }
+  },
+  created () {
+    this.fetchAllProvinces().then(response => {
+      this.fetchAllLocalities().then(response => {
+        if (this.pendingTeacher) this.mapTeacher(this.pendingTeacher)
+      })
+    })
   }
+}
 </script>

@@ -51,57 +51,57 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import withSnackbar from '../../mixins/withSnackbar'
+import axios from 'axios'
+import withSnackbar from '../../mixins/withSnackbar'
 
-  export default {
-    name: 'GoogleUsersSelectComponent',
-    mixins: [withSnackbar],
-    data () {
-      return {
-        isEditing: true,
-        googleUser: null,
-        googleUsers: []
-      }
-    },
-    props: {
-      user: {
-        type: Object,
-        default: () => { return {} }
-      }
-    },
-    methods: {
-      remove () {
-        this.googleUser = null
-      },
-      refresh () {
-        this.getGoogleUsers(true)
-      },
-      selectCurrentUser () {
-        if (this.user.corporativeEmail) {
-          this.googleUser = this.googleUsers.find(googleUser => {
-            return googleUser.primaryEmail === this.user.corporativeEmail
-          })
-          if (!this.googleUser) this.showError('El compte ' + this.user.corporativeEmail + ' no existeix a Google')
-        }
-      },
-      getGoogleUsers (refresh) {
-        refresh = refresh || false
-        this.refreshing = true
-        let url = '/api/v1/gsuite/users'
-        if (!refresh) url = url + '?cache=true'
-        axios.get(url).then(response => {
-          this.refreshing = false
-          this.googleUsers = response.data
-          this.selectCurrentUser()
-        }).catch(error => {
-          this.refreshing = false
-          console.log(error)
-        })
-      }
-    },
-    created () {
-      this.googleUsers = this.getGoogleUsers()
+export default {
+  name: 'GoogleUsersSelectComponent',
+  mixins: [withSnackbar],
+  data () {
+    return {
+      isEditing: true,
+      googleUser: null,
+      googleUsers: []
     }
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => { return {} }
+    }
+  },
+  methods: {
+    remove () {
+      this.googleUser = null
+    },
+    refresh () {
+      this.getGoogleUsers(true)
+    },
+    selectCurrentUser () {
+      if (this.user.corporativeEmail) {
+        this.googleUser = this.googleUsers.find(googleUser => {
+          return googleUser.primaryEmail === this.user.corporativeEmail
+        })
+        if (!this.googleUser) this.showError('El compte ' + this.user.corporativeEmail + ' no existeix a Google')
+      }
+    },
+    getGoogleUsers (refresh) {
+      refresh = refresh || false
+      this.refreshing = true
+      let url = '/api/v1/gsuite/users'
+      if (!refresh) url = url + '?cache=true'
+      axios.get(url).then(response => {
+        this.refreshing = false
+        this.googleUsers = response.data
+        this.selectCurrentUser()
+      }).catch(error => {
+        this.refreshing = false
+        console.log(error)
+      })
+    }
+  },
+  created () {
+    this.googleUsers = this.getGoogleUsers()
   }
+}
 </script>

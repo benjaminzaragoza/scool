@@ -14,83 +14,83 @@
 </template>
 
 <script>
-  import Chart from 'chart.js'
+import Chart from 'chart.js'
 
-  export default {
-    data () {
-      return {
-        todo: null
-      }
-    },
-    mounted () {
-      let config = {
-        type: 'line',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [
-              50,
-              100,
-              150,
-              200,
-              250,
-              300,
-              400
-            ],
-            fill: false
-          }, {
-            label: 'My Second dataset',
-            fill: false,
-            backgroundColor: 'rgb(54, 162, 235)',
-            borderColor: 'rgb(54, 162, 235)',
-            data: [
-              50,
-              10,
-              50,
-              200,
-              230,
-              140,
-              450
-            ]
-          }]
+export default {
+  data () {
+    return {
+      todo: null
+    }
+  },
+  mounted () {
+    let config = {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            400
+          ],
+          fill: false
+        }, {
+          label: 'My Second dataset',
+          fill: false,
+          backgroundColor: 'rgb(54, 162, 235)',
+          borderColor: 'rgb(54, 162, 235)',
+          data: [
+            50,
+            10,
+            50,
+            200,
+            230,
+            140,
+            450
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Chart.js Line Chart'
         },
-        options: {
-          responsive: true,
-          title: {
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        },
+        scales: {
+          xAxes: [{
             display: true,
-            text: 'Chart.js Line Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: false,
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            xAxes: [{
+            scaleLabel: {
               display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Month'
-              }
-            }],
-            yAxes: [{
+              labelString: 'Month'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
               display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Value'
-              }
-            }]
-          }
+              labelString: 'Value'
+            }
+          }]
         }
       }
-
-      new Chart(this.$refs.chart.getContext('2d'), config)
     }
+
+    new Chart(this.$refs.chart.getContext('2d'), config)
   }
+}
 </script>

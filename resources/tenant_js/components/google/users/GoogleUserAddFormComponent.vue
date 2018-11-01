@@ -57,112 +57,112 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import withSnackbar from '../../mixins/withSnackbar'
-  import { required, email } from 'vuelidate/lib/validators'
-  import axios from 'axios'
-  import hasTenantInfo from '../../mixins/hasTenantInfo'
-  import SelectUser from '../../users/UsersSelectComponent'
+import { validationMixin } from 'vuelidate'
+import withSnackbar from '../../mixins/withSnackbar'
+import { required, email } from 'vuelidate/lib/validators'
+import axios from 'axios'
+import hasTenantInfo from '../../mixins/hasTenantInfo'
+import SelectUser from '../../users/UsersSelectComponent'
 
-  export default {
-    name: 'GoogleUserAddFormComponent',
-    components: {
-      'select-user': SelectUser
+export default {
+  name: 'GoogleUserAddFormComponent',
+  components: {
+    'select-user': SelectUser
+  },
+  mixins: [validationMixin, withSnackbar, hasTenantInfo],
+  validations: {
+    givenName: { required },
+    familyName: { required },
+    primaryEmail: { required, email }
+  },
+  data () {
+    return {
+      givenName: '',
+      familyName: '',
+      primaryEmail: '',
+      mobile: '',
+      secondaryEmail: '',
+      creating: false,
+      errors: [],
+      newUser: true,
+      users: [],
+      user: null
+    }
+  },
+  props: {
+    existing: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    clear () {
+      this.givenName = ''
+      this.primaryEmail = ''
+      this.familyName = ''
+      this.mobile = ''
+      this.secondaryEmail = ''
     },
-    mixins: [validationMixin, withSnackbar, hasTenantInfo],
-    validations: {
-      givenName: { required },
-      familyName: { required },
-      primaryEmail: { required, email }
+    givenNameErrors () {
+      const givenNameErrors = []
+      if (!this.$v.givenName.$dirty) return givenNameErrors
+      !this.$v.givenName.required && givenNameErrors.push('El nom és obligatori.')
+      this.errors['givenName'] && givenNameErrors.push(this.errors['givenNameErrors'])
+      return givenNameErrors
     },
-    data () {
-      return {
-        givenName: '',
-        familyName: '',
-        primaryEmail: '',
-        mobile: '',
-        secondaryEmail: '',
-        creating: false,
-        errors: [],
-        newUser: true,
-        users: [],
-        user: null
-      }
+    familyNameErrors () {
+      const familyNameErrors = []
+      if (!this.$v.familyName.$dirty) return familyNameErrors
+      !this.$v.familyName.required && familyNameErrors.push('El cognom és obligatori.')
+      this.errors['familyName'] && familyNameErrors.push(this.errors['familyName'])
+      return familyNameErrors
     },
-    props: {
-      existing: {
-        type: Boolean,
-        default: false
-      }
+    primaryEmailErrors () {
+      const primaryEmailErrors = []
+      if (!this.$v.primaryEmail.$dirty) return primaryEmailErrors
+      !this.$v.primaryEmail.email && primaryEmailErrors.push('El correu electrònic ha de ser vàlid')
+      !this.$v.primaryEmail.required && primaryEmailErrors.push('El correu electrònic és obligatori.')
+      this.errors['primaryEmail'] && primaryEmailErrors.push(this.errors['primaryEmail'])
+      return primaryEmailErrors
+    }
+  },
+  watch: {
+    // whenever question changes, this function will run
+    newUser: function (newUser) {
+      if (newUser === false && this.users.length === 0) this.fetchUsers()
+    }
+  },
+  methods: {
+    fetchUsers () {
+      axios.get('/api/v1/users').then(response => {
+        this.users = response.data
+      }).catch(error => {
+        this.showError(error)
+      })
     },
-    computed: {
-      clear () {
-        this.givenName = ''
-        this.primaryEmail = ''
-        this.familyName = ''
-        this.mobile = ''
-        this.secondaryEmail = ''
-      },
-      givenNameErrors () {
-        const givenNameErrors = []
-        if (!this.$v.givenName.$dirty) return givenNameErrors
-        !this.$v.givenName.required && givenNameErrors.push('El nom és obligatori.')
-        this.errors['givenName'] && givenNameErrors.push(this.errors['givenNameErrors'])
-        return givenNameErrors
-      },
-      familyNameErrors () {
-        const familyNameErrors = []
-        if (!this.$v.familyName.$dirty) return familyNameErrors
-        !this.$v.familyName.required && familyNameErrors.push('El cognom és obligatori.')
-        this.errors['familyName'] && familyNameErrors.push(this.errors['familyName'])
-        return familyNameErrors
-      },
-      primaryEmailErrors () {
-        const primaryEmailErrors = []
-        if (!this.$v.primaryEmail.$dirty) return primaryEmailErrors
-        !this.$v.primaryEmail.email && primaryEmailErrors.push('El correu electrònic ha de ser vàlid')
-        !this.$v.primaryEmail.required && primaryEmailErrors.push('El correu electrònic és obligatori.')
-        this.errors['primaryEmail'] && primaryEmailErrors.push(this.errors['primaryEmail'])
-        return primaryEmailErrors
-      }
-    },
-    watch: {
-      // whenever question changes, this function will run
-      newUser: function (newUser) {
-        if (newUser === false && this.users.length === 0) this.fetchUsers()
-      }
-    },
-    methods: {
-      fetchUsers () {
-        axios.get('/api/v1/users').then(response => {
-          this.users = response.data
+    create () {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.creating = true
+        axios.post('/api/v1/gsuite/users', {
+          givenName: this.givenName,
+          familyName: this.familyName,
+          primaryEmail: this.primaryEmail,
+          mobile: this.mobile,
+          secondaryEmail: this.secondaryEmail
+        }).then(response => {
+          this.creating = false
+          this.$emit('created', response.data)
+          this.showMessage('Usuari creat correctament')
         }).catch(error => {
+          this.creating = false
+          console.log(error)
           this.showError(error)
         })
-      },
-      create () {
+      } else {
         this.$v.$touch()
-        if (!this.$v.$invalid) {
-          this.creating = true
-          axios.post('/api/v1/gsuite/users', {
-            givenName: this.givenName,
-            familyName: this.familyName,
-            primaryEmail: this.primaryEmail,
-            mobile: this.mobile,
-            secondaryEmail: this.secondaryEmail
-          }).then(response => {
-            this.creating = false
-            this.$emit('created', response.data)
-            this.showMessage('Usuari creat correctament')
-          }).catch(error => {
-            this.creating = false
-            console.log(error)
-            this.showError(error)
-          })
-        } else {
-          this.$v.$touch()
-        }
       }
     }
   }
+}
 </script>

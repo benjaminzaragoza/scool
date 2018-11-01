@@ -144,44 +144,44 @@
 </template>
 
 <script>
-  import UserAddForm from './UserAddFormComponent'
-  import * as mutations from '../../store/mutation-types'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import UserAddForm from './UserAddFormComponent'
+import * as mutations from '../../store/mutation-types'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'UserAddComponent',
-    components: {
-      'user-add-form': UserAddForm,
-      'user-avatar': UserAvatar
+export default {
+  name: 'UserAddComponent',
+  components: {
+    'user-add-form': UserAddForm,
+    'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      dialog: false,
+      step: 1,
+      user: null,
+      googleUser: null
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    close () {
+      this.step = 1
+      this.dialog = false
+      this.user = null
+      this.googleUser = null
     },
-    data () {
-      return {
-        dialog: false,
-        step: 1,
-        user: null,
-        googleUser: null
-      }
+    userCreated (user) {
+      this.user = user
+      this.step = 2
     },
-    props: {
-      users: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      close () {
-        this.step = 1
-        this.dialog = false
-        this.user = null
-        this.googleUser = null
-      },
-      userCreated (user) {
-        this.user = user
-        this.step = 2
-      },
-      googleUserCreated (user) {
-        this.googleUser = user
-      }
+    googleUserCreated (user) {
+      this.googleUser = user
     }
   }
+}
 </script>

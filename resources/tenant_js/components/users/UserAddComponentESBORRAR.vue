@@ -71,104 +71,103 @@
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
-  import * as actions from '../../store/action-types'
-  import withSnackbar from '../mixins/withSnackbar'
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, email } from 'vuelidate/lib/validators'
+import * as actions from '../../store/action-types'
+import withSnackbar from '../mixins/withSnackbar'
 
-  export default {
-    mixins: [validationMixin, withSnackbar],
-    validations: {
-      name: { required, maxLength: maxLength(255) },
-      email: { required, email }
-    },
-    data () {
-      return {
-        name: '',
-        email: '',
-        password: '',
-        userType: null,
-        role: null,
-        creating: false,
-        creatingAndInviting: false,
-        errors: []
-      }
-    },
-    props: {
-      roles: {
-        type: Array,
-        required: true
-      }
-    },
-    computed: {
-      nameErrors () {
-        const nameErrors = []
-        if (!this.$v.name.$dirty) return nameErrors
-        !this.$v.name.maxLength && nameErrors.push('El nom ha de tenir com a màxim 255 caràcters.')
-        !this.$v.name.required && nameErrors.push('El nom és obligatori.')
-        this.errors['name'] && nameErrors.push(this.errors['name'])
-        return nameErrors
-      },
-      emailErrors () {
-        const emailErrors = []
-        if (!this.$v.email.$dirty) return emailErrors
-        !this.$v.email.email && emailErrors.push('El correu electrònic ha de ser vàlid')
-        !this.$v.email.required && emailErrors.push('El correu electrònic és obligatori.')
-        this.errors['email'] && emailErrors.push(this.errors['email'])
-        return emailErrors
-      }
-    },
-    methods: {
-      selectedUserType (userType) {
-        this.role = userType.roles
-      },
-      create () {
-        this.$v.$touch()
-        if (!this.$v.$invalid) {
-          this.creating = true
-
-          this.$store.dispatch(actions.STORE_USER, {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            type: this.userType && this.userType.name,
-            roles: this.role
-          }).then(response => {
-            this.creating = false
-            this.clear()
-            this.$v.$reset()
-          }).catch(error => {
-            if (error && error.status === 422) {
-              this.errors = error.data && error.data.errors
-              this.creating = false
-              this.showError(error)
-            }
-          }).then(() => {
-            this.creating = false
-          })
-        }
-      },
-      createAndInvite () {
-        // TODO
-      },
-      clear () {
-        this.$v.$reset()
-        this.name = ''
-        this.email = ''
-        this.password = ''
-        this.userType = null
-        this.role = []
-      }
-    },
-    created () {
-      this.userTypes = [
-        { name: 'Professor/a', roles: ['Professor'] },
-        { name: 'Alumne/a', roles: ['Professor'] },
-        { name: 'Personal de consergeria', roles: ['Conserge'] },
-        { name: "Personal d'administració", roles: ['Administratiu'] },
-        { name: 'Familiar', roles: ['Familiar'] }
-      ]
+export default {
+  mixins: [validationMixin, withSnackbar],
+  validations: {
+    name: { required, maxLength: maxLength(255) },
+    email: { required, email }
+  },
+  data () {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      userType: null,
+      role: null,
+      creating: false,
+      creatingAndInviting: false,
+      errors: []
     }
-  }
-</script>
+  },
+  props: {
+    roles: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    nameErrors () {
+      const nameErrors = []
+      if (!this.$v.name.$dirty) return nameErrors
+      !this.$v.name.maxLength && nameErrors.push('El nom ha de tenir com a màxim 255 caràcters.')
+      !this.$v.name.required && nameErrors.push('El nom és obligatori.')
+      this.errors['name'] && nameErrors.push(this.errors['name'])
+      return nameErrors
+    },
+    emailErrors () {
+      const emailErrors = []
+      if (!this.$v.email.$dirty) return emailErrors
+      !this.$v.email.email && emailErrors.push('El correu electrònic ha de ser vàlid')
+      !this.$v.email.required && emailErrors.push('El correu electrònic és obligatori.')
+      this.errors['email'] && emailErrors.push(this.errors['email'])
+      return emailErrors
+    }
+  },
+  methods: {
+    selectedUserType (userType) {
+      this.role = userType.roles
+    },
+    create () {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.creating = true
 
+        this.$store.dispatch(actions.STORE_USER, {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          type: this.userType && this.userType.name,
+          roles: this.role
+        }).then(response => {
+          this.creating = false
+          this.clear()
+          this.$v.$reset()
+        }).catch(error => {
+          if (error && error.status === 422) {
+            this.errors = error.data && error.data.errors
+            this.creating = false
+            this.showError(error)
+          }
+        }).then(() => {
+          this.creating = false
+        })
+      }
+    },
+    createAndInvite () {
+      // TODO
+    },
+    clear () {
+      this.$v.$reset()
+      this.name = ''
+      this.email = ''
+      this.password = ''
+      this.userType = null
+      this.role = []
+    }
+  },
+  created () {
+    this.userTypes = [
+      { name: 'Professor/a', roles: ['Professor'] },
+      { name: 'Alumne/a', roles: ['Professor'] },
+      { name: 'Personal de consergeria', roles: ['Conserge'] },
+      { name: "Personal d'administració", roles: ['Administratiu'] },
+      { name: 'Familiar', roles: ['Familiar'] }
+    ]
+  }
+}
+</script>

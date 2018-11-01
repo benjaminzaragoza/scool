@@ -49,7 +49,6 @@
                 <span v-if="fileUploaded">Foto pujada</span>
             </template>
 
-
             <v-alert :value="true" type="error" v-for="error in errors" :key="error.id">
                 <template v-for="errorMessage in errors">
                     {{ errorMessage[0] }}
@@ -191,7 +190,6 @@
                     </template>
                 </template>
             </v-autocomplete>
-
 
             <v-alert :value="true" type="error" v-for="error in zipErrors" :key="error.id">
                 <template v-for="errorMessage in errors">
@@ -418,293 +416,293 @@
 </style>
 
 <script>
-  import axios from 'axios'
-  import withSnackbar from '../mixins/withSnackbar'
-  import UserAvatar from '../ui/UserAvatarComponent'
+import axios from 'axios'
+import withSnackbar from '../mixins/withSnackbar'
+import UserAvatar from '../ui/UserAvatarComponent'
 
-  export default {
-    name: 'TeachersPhotosComponent',
-    components: {
-      'user-avatar': UserAvatar
-    },
-    mixins: [withSnackbar],
-    data () {
-      return {
-        searchTeacherPhoto: '',
-        pagination: {
-          rowsPerPage: 12
-        },
-        assigningPhoto: false,
-        assigningPhotos: false,
-        unassigningPhoto: false,
-        confirmingRemove: null,
-        dimensionsAlert: true,
-        deleting: null,
-        deletingZip: false,
-        uploading: false,
-        uploadingZip: false,
-        fileUploaded: false,
-        refreshing: false,
-        photo: null,
-        zipFile: null,
-        availableGrid: false,
-        enabledGrid: true,
-        photoPath: '',
-        internalAvailablePhotos: this.availablePhotos,
-        internalZips: this.zips,
-        errors: [],
-        zipErrors: [],
-        onlyteachersWithoutPhoto: true,
-        editing: null,
-        filename: '',
-        pushEditing: false,
-        removingAll: false,
-        removeAlldialog: false,
-        removeDialog: false,
-        internalTeachers: this.teachers
-      }
-    },
-    computed: {
-      showPhoto () {
-        return this.uploading || this.uploadingZip || this.fileUploaded
+export default {
+  name: 'TeachersPhotosComponent',
+  components: {
+    'user-avatar': UserAvatar
+  },
+  mixins: [withSnackbar],
+  data () {
+    return {
+      searchTeacherPhoto: '',
+      pagination: {
+        rowsPerPage: 12
       },
-      filteredTeachers () {
-        let result = []
-        if (this.onlyteachersWithoutPhoto) {
-          result = this.internalTeachers.filter(teacher => {
-            return teacher.user.photo === null
-          })
-        } else result = this.internalTeachers
-
-        result.map(teacher => {
-          teacher.name = teacher.user.name
-          return teacher
+      assigningPhoto: false,
+      assigningPhotos: false,
+      unassigningPhoto: false,
+      confirmingRemove: null,
+      dimensionsAlert: true,
+      deleting: null,
+      deletingZip: false,
+      uploading: false,
+      uploadingZip: false,
+      fileUploaded: false,
+      refreshing: false,
+      photo: null,
+      zipFile: null,
+      availableGrid: false,
+      enabledGrid: true,
+      photoPath: '',
+      internalAvailablePhotos: this.availablePhotos,
+      internalZips: this.zips,
+      errors: [],
+      zipErrors: [],
+      onlyteachersWithoutPhoto: true,
+      editing: null,
+      filename: '',
+      pushEditing: false,
+      removingAll: false,
+      removeAlldialog: false,
+      removeDialog: false,
+      internalTeachers: this.teachers
+    }
+  },
+  computed: {
+    showPhoto () {
+      return this.uploading || this.uploadingZip || this.fileUploaded
+    },
+    filteredTeachers () {
+      let result = []
+      if (this.onlyteachersWithoutPhoto) {
+        result = this.internalTeachers.filter(teacher => {
+          return teacher.user.photo === null
         })
+      } else result = this.internalTeachers
 
-        return result
-      }
+      result.map(teacher => {
+        teacher.name = teacher.user.name
+        return teacher
+      })
+
+      return result
+    }
+  },
+  props: {
+    availablePhotos: {
+      type: Array,
+      required: true
     },
-    props: {
-      availablePhotos: {
-        type: Array,
-        required: true
-      },
-      zips: {
-        type: Array,
-        required: true
-      },
-      teachers: {
-        type: Array,
-        required: true
-      }
+    zips: {
+      type: Array,
+      required: true
     },
-    methods: {
-      teacherPhotoPath (teacher) {
-        return '/user/' + teacher.user.hashid + '/photo?hash=' + teacher.user.photo_hash
-      },
-      assignPhotos () {
-        this.assigningPhotos = true
-        axios.post('/api/v1/teachers/photos').then(response => {
-          this.assigningPhotos = false
-          this.showMessage(response.data + ' Fotos assignades correctament')
-          this.refresh()
-        }).catch(error => {
+    teachers: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    teacherPhotoPath (teacher) {
+      return '/user/' + teacher.user.hashid + '/photo?hash=' + teacher.user.photo_hash
+    },
+    assignPhotos () {
+      this.assigningPhotos = true
+      axios.post('/api/v1/teachers/photos').then(response => {
+        this.assigningPhotos = false
+        this.showMessage(response.data + ' Fotos assignades correctament')
+        this.refresh()
+      }).catch(error => {
+        console.log(error)
+        this.assigningPhotos = false
+        this.showError(error)
+      })
+    },
+    assignPhoto (teacher) {
+      this.assigningPhoto = true
+      axios.post('/api/v1/teacher/' + teacher.user.id + '/photo', {
+        photo: this.photo.slug
+      }).then(response => {
+        this.assigningPhoto = false
+        teacher.user.photo = response.data.photo
+        teacher.user.photo_hash = response.data.photo_hash
+        this.refresh()
+        this.showMessage('Foto assignada correctament')
+      }).catch(error => {
+        console.log(error)
+        this.assigningPhoto = false
+        this.showError(error)
+      })
+    },
+    unassignPhoto (teacher) {
+      this.unassigningPhoto = true
+      axios.delete('/api/v1/teacher/' + teacher.user.id + '/photo').then(response => {
+        this.unassigningPhoto = false
+        teacher.user.photo = null
+        teacher.user.photo_hash = null
+        this.refresh()
+        this.showMessage('Foto desassignada correctament')
+      }).catch(error => {
+        console.log(error)
+        this.unassigningPhoto = false
+        this.showError(error)
+      })
+    },
+    upload () {
+      this.$refs.photo.click()
+    },
+    uploadZip () {
+      this.$refs.zip.click()
+    },
+    refresh () {
+      this.refreshing = true
+      axios.get('/api/v1/unassigned_teacher_photo')
+        .then(response => {
+          this.refreshing = false
+          this.internalAvailablePhotos = response.data
+        })
+        .catch(error => {
+          this.refreshing = false
           console.log(error)
-          this.assigningPhotos = false
           this.showError(error)
         })
-      },
-      assignPhoto (teacher) {
-        this.assigningPhoto = true
-        axios.post('/api/v1/teacher/' + teacher.user.id + '/photo', {
-          photo: this.photo.slug
-        }).then(response => {
-          this.assigningPhoto = false
-          teacher.user.photo = response.data.photo
-          teacher.user.photo_hash = response.data.photo_hash
-          this.refresh()
-          this.showMessage('Foto assignada correctament')
-        }).catch(error => {
-          console.log(error)
-          this.assigningPhoto = false
-          this.showError(error)
-        })
-      },
-      unassignPhoto (teacher) {
-        this.unassigningPhoto = true
-        axios.delete('/api/v1/teacher/' + teacher.user.id + '/photo').then(response => {
-          this.unassigningPhoto = false
-          teacher.user.photo = null
-          teacher.user.photo_hash = null
-          this.refresh()
-          this.showMessage('Foto desassignada correctament')
-        }).catch(error => {
-          console.log(error)
-          this.unassigningPhoto = false
-          this.showError(error)
-        })
-      },
-      upload () {
-        this.$refs.photo.click()
-      },
-      uploadZip () {
-        this.$refs.zip.click()
-      },
-      refresh () {
-        this.refreshing = true
-        axios.get('/api/v1/unassigned_teacher_photo')
-          .then(response => {
-            this.refreshing = false
-            this.internalAvailablePhotos = response.data
-          })
-          .catch(error => {
-            this.refreshing = false
-            console.log(error)
-            this.showError(error)
-          })
-      },
-      photoChange (event) {
-        this.uploading = true
-        let target = event.target || event.srcElement
-        if (target.value.length !== 0) {
-          const formData = new FormData()
-          formData.append('teacher_photo', this.$refs.photo.files[0])
+    },
+    photoChange (event) {
+      this.uploading = true
+      let target = event.target || event.srcElement
+      if (target.value.length !== 0) {
+        const formData = new FormData()
+        formData.append('teacher_photo', this.$refs.photo.files[0])
 
-          this.preview()
+        this.preview()
 
-          this.save(formData)
+        this.save(formData)
+      }
+    },
+    zipChange (event) {
+      this.uploadingZip = true
+      let target = event.target || event.srcElement
+      if (target.value.length !== 0) {
+        const formData = new FormData()
+        formData.append('photos', this.$refs.zip.files[0])
+        this.saveZip(formData)
+      }
+    },
+    preview () {
+      if (this.$refs.photo.files && this.$refs.photo.files[0]) {
+        let reader = new FileReader()
+        reader.onload = e => {
+          this.$refs.photoImage.setAttribute('src', e.target.result)
         }
-      },
-      zipChange (event) {
-        this.uploadingZip = true
-        let target = event.target || event.srcElement
-        if (target.value.length !== 0) {
-          const formData = new FormData()
-          formData.append('photos', this.$refs.zip.files[0])
-          this.saveZip(formData)
-        }
-      },
-      preview () {
-        if (this.$refs.photo.files && this.$refs.photo.files[0]) {
-          let reader = new FileReader()
-          reader.onload = e => {
-            this.$refs.photoImage.setAttribute('src', e.target.result)
+        reader.readAsDataURL(this.$refs.photo.files[0])
+      }
+    },
+    errorOnPhoto () {
+      // TODO
+    },
+    cancelRemove (photo) {
+      this.confirmingRemove = null
+    },
+    confirmRemove (photo) {
+      this.confirmingRemove = photo.slug
+    },
+    removeSelectedPhoto () {
+      this.deleting = this.photo.slug
+      this.remove(this.photo)
+    },
+    remove (photo) {
+      this.deleting = photo.slug
+      axios.delete('/api/v1/unassigned_teacher_photo/' + photo.slug)
+        .then(response => {
+          this.deleting = null
+          this.internalAvailablePhotos.splice(this.internalAvailablePhotos.indexOf(photo), 1)
+          this.removeDialog = false
+        })
+        .catch(error => {
+          console.log(error)
+          this.showError(error)
+        })
+    },
+    save (formData) {
+      axios.post('/api/v1/unassigned_teacher_photo', formData)
+        .then(response => {
+          this.uploading = false
+          this.fileUploaded = true
+          this.internalAvailablePhotos.push(response.data)
+          this.errors = []
+        })
+        .catch(error => {
+          this.uploading = false
+          console.log(error)
+          this.errors = error.data && error.data.errors
+          this.showError(error)
+        })
+    },
+    saveZip (formData) {
+      axios.post('/api/v1/unassigned_teacher_photos', formData)
+        .then(response => {
+          this.uploadingZip = false
+          this.errors = []
+          const zip = {
+            filename: response.data.filename,
+            slug: response.data.slug
           }
-          reader.readAsDataURL(this.$refs.photo.files[0])
-        }
-      },
-      errorOnPhoto () {
-        // TODO
-      },
-      cancelRemove (photo) {
-        this.confirmingRemove = null
-      },
-      confirmRemove (photo) {
-        this.confirmingRemove = photo.slug
-      },
-      removeSelectedPhoto () {
-        this.deleting = this.photo.slug
-        this.remove(this.photo)
-      },
-      remove (photo) {
-        this.deleting = photo.slug
-        axios.delete('/api/v1/unassigned_teacher_photo/' + photo.slug)
-          .then(response => {
-            this.deleting = null
-            this.internalAvailablePhotos.splice(this.internalAvailablePhotos.indexOf(photo), 1)
-            this.removeDialog = false
-          })
-          .catch(error => {
-            console.log(error)
-            this.showError(error)
-          })
-      },
-      save (formData) {
-        axios.post('/api/v1/unassigned_teacher_photo', formData)
-          .then(response => {
-            this.uploading = false
-            this.fileUploaded = true
-            this.internalAvailablePhotos.push(response.data)
-            this.errors = []
-          })
-          .catch(error => {
-            this.uploading = false
-            console.log(error)
-            this.errors = error.data && error.data.errors
-            this.showError(error)
-          })
-      },
-      saveZip (formData) {
-        axios.post('/api/v1/unassigned_teacher_photos', formData)
-          .then(response => {
-            this.uploadingZip = false
-            this.errors = []
-            const zip = {
-              filename: response.data.filename,
-              slug: response.data.slug
-            }
-            this.internalZips.push(zip)
-            this.zipFile = zip
-          })
-          .catch(error => {
-            this.uploadingZip = false
-            console.log(error)
-            this.errors = error.data && error.data.errors
-            this.showError(error)
-          })
-      },
-      removeSelectedZip () {
-        this.deletingZip = true
-        axios.delete('/api/v1/unassigned_teacher_photos/' + this.zipFile.slug)
-          .then(response => {
-            this.deletingZip = false
-            this.internalZips.splice(this.internalZips.indexOf(this.zipFile), 1)
-          })
-          .catch(error => {
-            console.log(error)
-            this.deletingZip = false
-            this.showError(error)
-          })
-      },
-      confirmEdit (photo) {
-        this.editing = photo.slug
-        this.filename = photo.filename
-        window.Vue.nextTick(() => {
-          document.getElementById('filename').focus()
+          this.internalZips.push(zip)
+          this.zipFile = zip
         })
-      },
-      edit (photo) {
-        this.pushEditing = true
-        axios.put('/api/v1/teacher_photo/' + photo.slug, { filename: this.filename })
-          .then(response => {
-            photo.slug = response.data
-            photo.filename = this.filename
-            this.pushEditing = false
-            this.editing = null
-          })
-          .catch(error => {
-            console.log(error)
-            this.pushEditing = false
-            this.showError(error)
-          })
-      },
-      cancelEditing (photo) {
-        this.editing = null
-      },
-      removeAll () {
-        this.removingAll = true
-        axios.delete('/api/v1/unassigned_teacher_photos')
-          .then(response => {
-            this.removingAll = false
-            this.removeAlldialog = false
-            this.internalAvailablePhotos = []
-          })
-          .catch(error => {
-            console.log(error)
-            this.removingAll = false
-            this.showError(error)
-          })
-      }
+        .catch(error => {
+          this.uploadingZip = false
+          console.log(error)
+          this.errors = error.data && error.data.errors
+          this.showError(error)
+        })
+    },
+    removeSelectedZip () {
+      this.deletingZip = true
+      axios.delete('/api/v1/unassigned_teacher_photos/' + this.zipFile.slug)
+        .then(response => {
+          this.deletingZip = false
+          this.internalZips.splice(this.internalZips.indexOf(this.zipFile), 1)
+        })
+        .catch(error => {
+          console.log(error)
+          this.deletingZip = false
+          this.showError(error)
+        })
+    },
+    confirmEdit (photo) {
+      this.editing = photo.slug
+      this.filename = photo.filename
+      window.Vue.nextTick(() => {
+        document.getElementById('filename').focus()
+      })
+    },
+    edit (photo) {
+      this.pushEditing = true
+      axios.put('/api/v1/teacher_photo/' + photo.slug, { filename: this.filename })
+        .then(response => {
+          photo.slug = response.data
+          photo.filename = this.filename
+          this.pushEditing = false
+          this.editing = null
+        })
+        .catch(error => {
+          console.log(error)
+          this.pushEditing = false
+          this.showError(error)
+        })
+    },
+    cancelEditing (photo) {
+      this.editing = null
+    },
+    removeAll () {
+      this.removingAll = true
+      axios.delete('/api/v1/unassigned_teacher_photos')
+        .then(response => {
+          this.removingAll = false
+          this.removeAlldialog = false
+          this.internalAvailablePhotos = []
+        })
+        .catch(error => {
+          console.log(error)
+          this.removingAll = false
+          this.showError(error)
+        })
     }
   }
+}
 </script>

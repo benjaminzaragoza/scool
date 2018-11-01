@@ -30,21 +30,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'SubjectInfoComponent',
-    props: {
-      subjectId: {
-        required: true
-      },
-      subjects: {
-        type: Array,
-        required: true
-      }
+export default {
+  name: 'SubjectInfoComponent',
+  props: {
+    subjectId: {
+      required: true
     },
-    methods: {
-      subject () {
-        return this.subjects.find(subject => subject.id === this.subjectId)
-      }
+    subjects: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    subject () {
+      return this.subjects.find(subject => subject.id === this.subjectId)
     }
   }
+}
 </script>
