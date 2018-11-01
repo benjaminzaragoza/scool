@@ -5,11 +5,12 @@ import IncidentShowComponent from '../../../../../resources/tenant_js/components
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import TestHelpers from '../helpers.js'
+import sinon from 'sinon'
 
 Vue.use(Vuetify)
 Vue.config.silent = true
 
-describe('IncidentsShowComponent.vue', () => {
+describe('IncidentShowComponent.vue', () => {
   beforeEach(() => {
     Object.assign(Wrapper.prototype, TestHelpers)
   })
@@ -19,7 +20,10 @@ describe('IncidentsShowComponent.vue', () => {
       propsData: {
         incident: {
           id: 1,
-          subject: "No funciona res a l'aula 24"
+          subject: "No funciona res a l'aula 24",
+          user: {
+            hashid: 'Mx'
+          }
         }
       }
     })
@@ -32,7 +36,10 @@ describe('IncidentsShowComponent.vue', () => {
         incident: {
           id: 1,
           subject: "No funciona res a l'aula 24",
-          comments: []
+          comments: [],
+          user: {
+            hashid: 'Mx'
+          }
         }
       }
     })
@@ -44,7 +51,10 @@ describe('IncidentsShowComponent.vue', () => {
       propsData: {
         incident: {
           id: 1,
-          subject: "No funciona res a l'aula 24"
+          subject: "No funciona res a l'aula 24",
+          user: {
+            hashid: 'Mx'
+          }
         }
       }
     })
@@ -57,7 +67,10 @@ describe('IncidentsShowComponent.vue', () => {
       propsData: {
         incident: {
           id: 1,
-          subject: "No funciona res a l'aula 24"
+          subject: "No funciona res a l'aula 24",
+          user: {
+            hashid: 'Mx'
+          }
         }
       }
     })
@@ -70,6 +83,9 @@ describe('IncidentsShowComponent.vue', () => {
         incident: {
           id: 1,
           subject: "No funciona res a l'aula 24",
+          user: {
+            hashid: 'Mx'
+          },
           comments: []
         }
       }
@@ -77,33 +93,15 @@ describe('IncidentsShowComponent.vue', () => {
     wrapper.assertNotContains('#incident_1_comments')
   })
 
-  it('show_comments', () => {
-    const wrapper = mount(IncidentShowComponent, {
-      propsData: {
-        incident: {
-          id: 1,
-          subject: "No funciona res a l'aula 24",
-          comments: [
-            {
-              id: 1,
-              body: 'Podeu aportar més informació si us plau?',
-              user: {
-                hashid: 'Mx'
-              }
-            }
-          ]
-        }
-      }
-    })
-    wrapper.assertContains('#incident_1_comments')
-  })
-
   it('shows_add_comment', () => {
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
           id: 1,
-          subject: "No funciona res a l'aula 24"
+          subject: "No funciona res a l'aula 24",
+          user: {
+            hashid: 'Mx'
+          }
         }
       }
     })
@@ -111,6 +109,7 @@ describe('IncidentsShowComponent.vue', () => {
   })
 
   it('shows_comments', () => {
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -141,10 +140,17 @@ describe('IncidentsShowComponent.vue', () => {
                 name: 'Carles Puigdemont'
               }
             }
-          ]
+          ],
+          user: {
+            hashid: 'Mx'
+          }
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
+    wrapper.assertContains('#incident_1_comments')
     const comment1 = wrapper.find('#incident_1_comment_1')
     comment1.seeText('Si us plau podeu aportar informació més detallada?')
     comment1.seeText('Carles Puigdemont')
@@ -154,5 +160,6 @@ describe('IncidentsShowComponent.vue', () => {
     const comment3 = wrapper.find('#incident_1_comment_3')
     comment3.seeText('Ok. Solucionat! Tanquem la incidència')
     comment1.seeText('Carles Puigdemont')
+    expect(hasRole.called).to.be.true
   })
 })
