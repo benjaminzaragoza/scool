@@ -59,7 +59,6 @@ class ReplyBodyControllerTest extends BaseTenantTest {
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
         $reply = $reply->fresh();
-        dump($result);
         $this->assertEquals($result->body,$reply->body);
         $this->assertEquals($result->id,$reply->id);
 
