@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Reply extends Model
 {
-    use FormattedDates;
+    use FormattedDates, ApiURI;
 
     protected $guarded = [];
 
@@ -59,6 +60,7 @@ class Reply extends Model
         return [
             'id' => $this->id,
             'body' => $this->body,
+            'api_uri' => $this->api_uri,
             'user_id' => $this->user_id,
             'user'=> $this->user,
             'user_name' => optional($this->user)->name,

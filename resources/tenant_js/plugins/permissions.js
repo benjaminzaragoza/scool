@@ -23,6 +23,10 @@ const haveRole = (role) => {
   return false
 }
 
+const hasRole = (role) => {
+  return haveRole(role)
+}
+
 const can = (permission, resource = null) => {
   const user = window.user
   if (user && user.isSuperAdmin) return true
@@ -74,5 +78,6 @@ export default {
     Vue.prototype.$can = can
     Vue.prototype.$cannot = cannot
     Vue.prototype.$haveRole = haveRole
+    Vue.prototype.$hasRole = hasRole
   }
 }

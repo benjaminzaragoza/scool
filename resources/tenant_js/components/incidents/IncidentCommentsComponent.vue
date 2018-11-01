@@ -34,7 +34,8 @@
                                 <v-list-tile-content>
                                     <v-list-tile-sub-title><span :title="comment.user.email + ' - ' + comment.user_id">{{comment.user.name}}</span> &#8226; <span :title="comment.formatted_created_at">{{comment.formatted_created_at_diff}}</span></v-list-tile-sub-title>
                                     <v-list-tile-title :title="comment.body" class="height-auto-24-pre-wrap">
-                                        <inline-text-area-edit-dialog :object="comment" field="body" label="Comentari" @save="refresh" :limit="false"></inline-text-area-edit-dialog>
+                                        <inline-text-area-edit-dialog v-if="$hasRole('IncidentsManager')" :object="comment" field="body" label="Comentari" @save="refresh('Comentari actualitzat correctament')" :limit="false"></inline-text-area-edit-dialog>
+                                        <span v-else v-text="comment.body"></span>
                                     </v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
