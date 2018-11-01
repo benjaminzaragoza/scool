@@ -610,8 +610,6 @@ if (!function_exists('formatted_logged_user')) {
 if (!function_exists('initialize_tenant_roles_and_permissions')) {
     function initialize_tenant_roles_and_permissions()
     {
-        // NOTA: només posar aqui permissos que no estiguin relacionats amb una habilitat/Gate Laravel
-        // Vegeu initialize_gates
         $permissions = [
             'incident.list',
             'incident.show',
@@ -619,7 +617,8 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'incident.update',
             'incident.destroy',
             'incident.open',
-            'incident.close'
+            'incident.close',
+            'reply.update'
         ];
 
         foreach ($permissions as $permission) {
@@ -913,6 +912,10 @@ if (!function_exists('initialize_gates')) {
 
         Gate::define('incident.update', function ($user,$incident) {
             if($incident->user_id  == $user->id) return true;
+            return $user->hasRole('IncidentsManager');
+        });
+
+        Gate::define('reply.update', function ($user) {
             return $user->hasRole('IncidentsManager');
         });
     }

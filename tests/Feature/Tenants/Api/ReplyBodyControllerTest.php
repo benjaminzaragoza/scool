@@ -37,7 +37,6 @@ class ReplyBodyControllerTest extends BaseTenantTest {
      * @test
      */
     public function incidents_manager_can_update_reply_body() {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);
@@ -59,6 +58,8 @@ class ReplyBodyControllerTest extends BaseTenantTest {
         ]);
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
+        $reply = $reply->fresh();
+        dump($result);
         $this->assertEquals($result->body,$reply->body);
         $this->assertEquals($result->id,$reply->id);
 

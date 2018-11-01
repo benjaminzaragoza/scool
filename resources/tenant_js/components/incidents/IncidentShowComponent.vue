@@ -32,9 +32,9 @@
             </v-toolbar-items>
         </v-toolbar>
         <v-container text-md-center class="pb-0 pt-1">
-            <v-expansion-panel class="mb-3 mt-2" expandable>
-                <v-expansion-panel-content :value="showData">
-                    <div slot="header" class="font-weight-medium">Dades de la incidència</div>
+            <v-expansion-panel class="mb-3 mt-2" :value="prova">
+                <v-expansion-panel-content>
+                    <div slot="header" class="font-weight-medium">Dades de la incidència AAA</div>
                     <v-layout row wrap>
                         <v-flex md8>
                             <v-list three-line subheader>
@@ -86,8 +86,8 @@
             <v-layout>
                 <v-flex md12>
 
-                    <v-expansion-panel class="mb-3 mt-2" expandable>
-                        <v-expansion-panel-content :value="true">
+                    <v-expansion-panel class="mb-3 mt-2" :value="0">
+                        <v-expansion-panel-content>
                             <div slot="header" class="font-weight-medium">Descripció</div>
                             <v-layout row wrap>
                                 <v-flex class="ma-3 white-space-pre-wrap">
@@ -122,6 +122,11 @@ export default {
     'incident-delete': IncidentDeleteComponent,
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog
+  },
+  data () {
+    return {
+      prova: this.showData ? 0 : null
+    }
   },
   props: {
     incident: {

@@ -57,6 +57,7 @@ class Reply extends Model
     public function map()
     {
         return [
+            'id' => $this->id,
             'body' => $this->body,
             'user_id' => $this->user_id,
             'user'=> $this->user,

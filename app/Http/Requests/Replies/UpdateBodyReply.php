@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Replies;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -17,7 +18,7 @@ class UpdateBodyReply extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::user()->can('reply.update');
     }
 
     /**

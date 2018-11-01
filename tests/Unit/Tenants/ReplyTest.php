@@ -46,6 +46,7 @@ class ReplyTest extends TestCase
 
         $mappedReply = $reply->map();
 
+        $this->assertEquals(1,($mappedReply['id']));
         $this->assertEquals('Ja us hem arreglat la incidència',$mappedReply['body']);
         $this->assertEquals($user->id,$mappedReply['user_id']);
         $this->assertEquals('Oriol Junqueras',$mappedReply['user_name']);

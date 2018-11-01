@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateBodyReply;
+use App\Http\Requests\Replies\UpdateBodyReply;
 use App\Models\Reply;
 
 /**
@@ -11,6 +11,12 @@ use App\Models\Reply;
  */
 class RepliesBodyController extends Controller {
 
+    /**
+     * @param UpdateBodyReply $request
+     * @param $tenant
+     * @param Reply $reply
+     * @return array
+     */
     public function update(UpdateBodyReply $request, $tenant, Reply $reply)
     {
         $reply->body = $request->body;
