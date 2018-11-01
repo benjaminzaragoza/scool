@@ -5,7 +5,7 @@
             lazy
             @save="save"
             large
-    > <span :class="{ limit: limit }">{{ value }}</span>
+    > <span :class="{ limit: limit }" v-html="markedValue"></span>
         <v-textarea
                 v-focus
                 slot="input"
@@ -24,6 +24,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import marked from 'marked'
 
 export default {
   name: 'InlineTextFieldEditDialog',
@@ -37,6 +38,11 @@ export default {
         v => !!v || ' is required'
       ],
       value: this.object[this.field]
+    }
+  },
+  computed: {
+    markedValue () {
+      return marked(this.value, { sanitize: true })
     }
   },
   model: {

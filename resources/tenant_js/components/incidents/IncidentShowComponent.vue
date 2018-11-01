@@ -34,7 +34,7 @@
         <v-container text-md-center class="pb-0 pt-1">
             <v-expansion-panel class="mb-3 mt-2" :value="prova">
                 <v-expansion-panel-content>
-                    <div slot="header" class="font-weight-medium">Dades de la incidència AAA</div>
+                    <div slot="header" class="font-weight-medium">Dades de la incidència</div>
                     <v-layout row wrap>
                         <v-flex md8>
                             <v-list three-line subheader>
