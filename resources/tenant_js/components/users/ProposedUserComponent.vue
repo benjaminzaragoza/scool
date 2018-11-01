@@ -52,7 +52,6 @@ export default {
           this.$emit('input', this.internalUsername)
         }).catch(error => {
           this.loading = false
-          console.log(error)
           this.showError(error)
         })
       }

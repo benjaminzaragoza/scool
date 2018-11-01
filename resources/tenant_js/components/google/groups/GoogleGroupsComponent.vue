@@ -149,7 +149,6 @@ export default {
         this.showMessage('Grup esborrat correctament')
       }).catch(error => {
         this.removing = false
-        console.log(error)
         this.showError(error)
       })
     }

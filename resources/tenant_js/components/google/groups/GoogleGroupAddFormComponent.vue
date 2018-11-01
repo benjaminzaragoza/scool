@@ -94,7 +94,6 @@ export default {
           this.showMessage('Grup creat correctament')
         }).catch(error => {
           this.creating = false
-          console.log(error)
           this.showError(error)
         })
       } else {

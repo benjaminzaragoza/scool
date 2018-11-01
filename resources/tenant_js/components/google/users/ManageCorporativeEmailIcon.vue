@@ -99,7 +99,6 @@ export default {
         this.showMessage('Usuari Google sincronitzat correctament')
         this.syncing = false
       }).catch(error => {
-        console.log(error)
         this.showError(error)
         this.syncing = false
       })
@@ -111,7 +110,6 @@ export default {
         this.$emit('unassociated')
         this.unassociating = false
       }).catch(error => {
-        console.log(error)
         this.showError(error)
         this.unassociating = false
       })
@@ -129,7 +127,6 @@ export default {
           this.showMessage('Usuari Google assignat correctament')
           this.$emit('added', response.data)
         }).catch(error => {
-          console.log(error)
           this.showError(error)
         })
       }).catch(error => {

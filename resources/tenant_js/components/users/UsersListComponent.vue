@@ -259,7 +259,6 @@ export default {
         this.sendingResetPassword = false
         this.showMessage(`Correu electrònic enviat correctament`)
       }).catch(error => {
-        console.log(error)
         this.showError(error)
       })
     },
@@ -287,7 +286,6 @@ export default {
         this.deleting = false
         this.showDeleteUserDialog = false
       }).catch(error => {
-        console.log(error)
         this.showError(error)
         this.deleting = false
       }).then(() => {

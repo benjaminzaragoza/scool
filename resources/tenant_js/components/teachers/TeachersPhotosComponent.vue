@@ -507,7 +507,6 @@ export default {
         this.showMessage(response.data + ' Fotos assignades correctament')
         this.refresh()
       }).catch(error => {
-        console.log(error)
         this.assigningPhotos = false
         this.showError(error)
       })
@@ -523,7 +522,6 @@ export default {
         this.refresh()
         this.showMessage('Foto assignada correctament')
       }).catch(error => {
-        console.log(error)
         this.assigningPhoto = false
         this.showError(error)
       })
@@ -537,7 +535,6 @@ export default {
         this.refresh()
         this.showMessage('Foto desassignada correctament')
       }).catch(error => {
-        console.log(error)
         this.unassigningPhoto = false
         this.showError(error)
       })
@@ -557,7 +554,6 @@ export default {
         })
         .catch(error => {
           this.refreshing = false
-          console.log(error)
           this.showError(error)
         })
     },
@@ -613,7 +609,6 @@ export default {
           this.removeDialog = false
         })
         .catch(error => {
-          console.log(error)
           this.showError(error)
         })
     },
@@ -627,7 +622,6 @@ export default {
         })
         .catch(error => {
           this.uploading = false
-          console.log(error)
           this.errors = error.data && error.data.errors
           this.showError(error)
         })
@@ -646,7 +640,6 @@ export default {
         })
         .catch(error => {
           this.uploadingZip = false
-          console.log(error)
           this.errors = error.data && error.data.errors
           this.showError(error)
         })
@@ -659,7 +652,6 @@ export default {
           this.internalZips.splice(this.internalZips.indexOf(this.zipFile), 1)
         })
         .catch(error => {
-          console.log(error)
           this.deletingZip = false
           this.showError(error)
         })
@@ -681,7 +673,6 @@ export default {
           this.editing = null
         })
         .catch(error => {
-          console.log(error)
           this.pushEditing = false
           this.showError(error)
         })
@@ -698,7 +689,6 @@ export default {
           this.internalAvailablePhotos = []
         })
         .catch(error => {
-          console.log(error)
           this.removingAll = false
           this.showError(error)
         })

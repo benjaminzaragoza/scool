@@ -246,7 +246,6 @@ export default {
           this.showMessage('Plaça modificada correctament')
         }).catch(error => {
           this.editing = false
-          console.log(error)
           if (error.status === 422) this.mapErrors(error.data.errors)
           this.showError(error)
         })

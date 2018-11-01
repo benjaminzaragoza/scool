@@ -65,7 +65,6 @@ export default {
           this.showMessage('Usuari Google assignat correctament')
           this.$emit('added', response.data)
         }).catch(error => {
-          console.log(error)
           this.showError(error)
         })
       }).catch(error => {

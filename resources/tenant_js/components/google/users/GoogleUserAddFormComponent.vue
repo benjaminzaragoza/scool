@@ -156,7 +156,6 @@ export default {
           this.showMessage('Usuari creat correctament')
         }).catch(error => {
           this.creating = false
-          console.log(error)
           this.showError(error)
         })
       } else {

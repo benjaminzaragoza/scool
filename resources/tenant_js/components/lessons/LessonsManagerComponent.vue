@@ -77,7 +77,6 @@ export default {
           this.calculating = false
         }).catch(error => {
           this.calculating = false
-          console.log(error)
           this.showError(error)
         })
       }

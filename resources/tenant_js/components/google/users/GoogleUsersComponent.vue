@@ -263,7 +263,6 @@ export default {
         this.showMessage('Usuari esborrat correctament')
       }).catch(error => {
         this.removing = false
-        console.log(error)
         this.showError(error)
       })
     },
@@ -275,7 +274,6 @@ export default {
         this.showMessage('Usuari suspès correctament')
       }).catch(error => {
         this.suspending = false
-        console.log(error)
         this.showError(error)
       })
     },
@@ -287,7 +285,6 @@ export default {
         this.showMessage('Usuari activat correctament')
       }).catch(error => {
         this.activating = false
-        console.log(error)
         this.showError(error)
       })
     }

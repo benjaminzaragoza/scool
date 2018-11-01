@@ -277,7 +277,6 @@ export default {
           this.email = this.username + '@' + window.tenant.email_domain
         }).catch(error => {
           this.loadingProposedUser = false
-          console.log(error)
           this.showError(error)
         })
       }
@@ -300,7 +299,6 @@ export default {
       }).then(response => {
         this.associateGoogleUserToLocalUser(response.data)
       }).catch(error => {
-        console.log(error)
         this.showError(error)
       })
     },
@@ -312,7 +310,6 @@ export default {
         this.showMessage('Usuari Google associat correctament')
         this.$emit('googleUsercreated', googleUser)
       }).catch(error => {
-        console.log(error)
         this.showError(error)
       })
     },

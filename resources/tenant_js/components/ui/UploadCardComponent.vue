@@ -119,7 +119,6 @@ export default {
         })
         .catch(error => {
           this.deleting = false
-          console.log(error)
           this.showError(error)
         })
     }

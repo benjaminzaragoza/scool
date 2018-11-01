@@ -85,7 +85,6 @@ export default {
         this.dialog = false
         this.associating = false
       }).catch(error => {
-        console.log(error)
         if (error.status === 422) this.showError('sdasdsda')
         else this.showError(error)
         this.associating = false

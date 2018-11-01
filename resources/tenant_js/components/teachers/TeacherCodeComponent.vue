@@ -62,7 +62,6 @@ export default {
         this.$emit('input', this.internalCode)
       }).catch(error => {
         this.loading = false
-        console.log(error)
         this.showError(error)
       })
     }

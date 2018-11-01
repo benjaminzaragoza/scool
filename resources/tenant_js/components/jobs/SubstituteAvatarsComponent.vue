@@ -183,7 +183,6 @@ export default {
         this.$emit('change')
       }).catch(error => {
         this.finishingSubstitution = false
-        console.log(error)
         this.showError(error)
       })
     },
@@ -203,7 +202,6 @@ export default {
           this.$emit('change')
         }).catch(error => {
           this.modifying = false
-          console.log(error)
           this.showError(error)
         })
       } else {
@@ -226,7 +224,6 @@ export default {
         this.$emit('change')
       }).catch(error => {
         this.removing = false
-        console.log(error)
         this.showError(error)
       })
     },

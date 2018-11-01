@@ -53,7 +53,6 @@ export default {
         this.$emit('change')
       }).catch(error => {
         this.finishingSubstitution = false
-        console.log(error)
         this.showError(error)
       })
     }

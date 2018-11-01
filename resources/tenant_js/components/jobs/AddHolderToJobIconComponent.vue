@@ -128,7 +128,6 @@ export default {
           this.showMessage('Titular afegir correctament al a plaça')
         }).catch(error => {
           this.adding = false
-          console.log(error)
           if (error.status === 422) this.mapErrors(error.data.errors)
           this.showError(error)
         })

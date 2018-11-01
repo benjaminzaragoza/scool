@@ -122,7 +122,6 @@ export default {
           this.employee = response.data
         }).catch(error => {
           this.assigning = false
-          console.log(error)
           this.showError(error)
         })
       } else {

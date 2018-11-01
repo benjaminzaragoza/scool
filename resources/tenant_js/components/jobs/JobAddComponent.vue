@@ -253,7 +253,6 @@ export default {
           if (close) this.dialog = false
         }).catch(error => {
           this.adding = false
-          console.log(error)
           if (error.status === 422) this.mapErrors(error.data.errors)
           this.showError(error)
         })
@@ -271,13 +270,11 @@ export default {
       axios.get('/api/v1/jobs/nextAvailableCode').then(response => {
         this.code = response.data
       }).catch(error => {
-        console.log(error)
         this.showError(error)
       })
       axios.get('/api/v1/available-users').then(response => {
         this.internalUsers = response.data
       }).catch(error => {
-        console.log(error)
         this.showError(error)
       })
       this.jobType = this.teacherId

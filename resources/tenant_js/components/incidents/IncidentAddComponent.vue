@@ -100,7 +100,6 @@ export default {
           this.$emit('added', response.data)
           if (close) this.close()
         }).catch(error => {
-          console.log(error)
           this.$snackbar.showError(error)
           this.adding = false
         })

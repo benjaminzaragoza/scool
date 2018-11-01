@@ -182,7 +182,6 @@ export default {
         this.removing = false
         this.showMessage('El professor pendent ha estat esborrat correctament')
       }).catch(error => {
-        console.log(error)
         this.removing = false
         this.showError(error)
       })

@@ -682,7 +682,6 @@ export default {
           this.creating = false
         }).catch(error => {
           this.creating = false
-          console.log(error)
           this.showError(error)
         })
       } else {
@@ -702,7 +701,6 @@ export default {
           this.clear()
           this.$v.$reset()
         }).catch(error => {
-          console.log(error)
           this.showError(error)
         })
       } else {
@@ -801,7 +799,6 @@ export default {
           resolve(response)
         }).catch(error => {
           this.loadingProvince = false
-          console.log(error)
           this.showError(error)
           reject(error)
         })
@@ -818,7 +815,6 @@ export default {
           resolve(response)
         }).catch(error => {
           this.loadingLocality = false
-          console.log(error)
           this.showError(error)
           reject(error)
         })

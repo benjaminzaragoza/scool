@@ -40,7 +40,6 @@ export default {
         this.showMessage('Tots els substitucions associades a la plaça han estat esborrades')
         this.$emit('change')
       }).catch(error => {
-        console.log(error)
         this.showError(error)
         this.removing = false
       })

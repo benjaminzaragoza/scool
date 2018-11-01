@@ -174,7 +174,6 @@ export default {
           this.$emit('assigned', response.data)
           this.teacher = response.data
         }).catch(error => {
-          console.log(error)
           this.assigning = false
           this.showError(error)
         })

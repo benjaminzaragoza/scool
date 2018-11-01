@@ -210,7 +210,6 @@ export default {
         this.showMessage('Usuari esborrat correctament')
       }).catch(error => {
         this.removing = false
-        console.log(error)
         this.showError(error)
       })
     }

@@ -154,7 +154,6 @@ export default {
           this.$emit('change')
         }).catch(error => {
           this.adding = false
-          console.log(error)
           this.showError(error)
         })
       } else {

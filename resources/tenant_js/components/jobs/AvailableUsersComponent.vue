@@ -87,7 +87,6 @@ export default {
     axios.get('/api/v1/available-users/' + this.jobType).then(response => {
       this.users = response.data
     }).catch(error => {
-      console.log(error)
       this.showError(error)
     })
   }
