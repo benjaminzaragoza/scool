@@ -16,7 +16,7 @@
             </v-flex>
 
             <v-flex md12>
-                <reply-add :repliable="incident" @added="addComment"></reply-add>
+                <reply-add :repliable="incident" @added="addComment" @close="$emit('close')"></reply-add>
             </v-flex>
             <v-flex md12>
                 <v-list two-line

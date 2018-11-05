@@ -100,7 +100,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <incident-comments :incident="incident"></incident-comments>
+        <incident-comments :incident="incident" @close="close"></incident-comments>
     </v-card>
 </template>
 
@@ -149,6 +149,9 @@ export default {
       this.$store.dispatch(actions.SET_INCIDENTS).catch(error => {
         this.$snackbar.showError(error)
       })
+    },
+    close () {
+      this.$emit('close')
     }
   }
 }

@@ -51,6 +51,11 @@ export default {
       return this.close ? 'Incidència tancada correctament' : 'Incidència oberta correctament'
     }
   },
+  watch: {
+    incident (newIncident) {
+      if (newIncident.closed_at) this.close = false
+    }
+  },
   methods: {
     toggle () {
       this.loading = true
