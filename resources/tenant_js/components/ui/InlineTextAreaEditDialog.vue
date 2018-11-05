@@ -5,7 +5,8 @@
             lazy
             @save="save"
             large
-    > <span :class="{ limit: limit }" v-html="markedValue"></span>
+    > <span v-if="marked" :class="{ limit: limit }" :title="value" v-html="markedValue"></span>
+      <span v-else :class="{ limit: limit }" :title="value" v-text="value"></span>
         <v-textarea
                 v-focus
                 slot="input"
@@ -65,6 +66,10 @@ export default {
     limit: {
       type: Boolean,
       default: true
+    },
+    marked: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
@@ -100,5 +105,9 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    p {
+         margin-bottom: 600px;
     }
 </style>

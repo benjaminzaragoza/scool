@@ -55,11 +55,11 @@
                     <tr :id="'incident_row_' + incident.id">
                         <td class="text-xs-left" v-html="incident.id"></td>
                         <td class="text-xs-left" :title="incident.user_email" v-html="incident.user_name"></td>
-                        <td>
+                        <td class="text-xs-left">
                             <inline-text-field-edit-dialog v-model="incident" field="subject" label="Títol" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" :title="incident.description">
-                            <inline-text-area-edit-dialog v-model="incident" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
+                        <td class="text-xs-left">
+                            <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
                         <td class="text-xs-left" v-html="incident.formatted_closed_at_diff" :title="incident.formatted_closed_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>

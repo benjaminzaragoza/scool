@@ -7,7 +7,8 @@
             </v-badge>
             <v-icon v-else v-text="icon"></v-icon>
         </v-btn>
-        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
+                  @keydown.esc.stop.prevent="toggle">
             <slot></slot>
         </v-dialog>
     </span>
@@ -49,8 +50,9 @@ export default {
   },
   methods: {
     toggle () {
-      if (this.resource) this.$emit('toggle', this.resource.id)
-      else this.$emit('toggle', !this.dialog)
+      if (this.resource) {
+        this.dialog ? this.$emit('toggle', false) : this.$emit('toggle', this.resource.id)
+      } else this.$emit('toggle', !this.dialog)
     }
   }
 }
