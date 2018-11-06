@@ -136,8 +136,8 @@
                                     v-if="showDialog === false || showDialog === incident.id">
                                 <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false"></incident-show>
                             </fullscreen-dialog>
-                            <incident-close v-model="incident" v-can:close="incident" @toggle="refresh"></incident-close>
-                            <incident-delete :incident="incident" v-role="'IncidentsManager'"></incident-delete>
+                            <incident-close v-model="incident" v-if="$can('close',incident)" @toggle="refresh"></incident-close>
+                            <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
                     </tr>
                 </template>
@@ -235,7 +235,7 @@ export default {
   },
   computed: {
     creators () {
-      return this.dataIncidents.map(incident => {
+      let creators = this.dataIncidents.map(incident => {
         return {
           id: incident.user_id,
           name: incident.user_name,
@@ -243,20 +243,10 @@ export default {
           hashid: incident.user && incident.user.hashid
         }
       })
-      // return [
-      //   {
-      //     id: 1,
-      //     hashid: 'Mx',
-      //     name: 'Sergi Tur',
-      //     email: 'sergiturbadenas@gmail.com'
-      //   },
-      //   {
-      //     id: 2
-      //   },
-      //   {
-      //     id: 3
-      //   }
-      // ]
+      if (window.user && window.user.id) {
+        return this.moveLoggedUserToFirstPosition(creators)
+      }
+      return creators
     },
     dataIncidents () {
       return this.$store.getters.incidents
@@ -268,7 +258,9 @@ export default {
       return this.dataIncidents.filter(incident => incident.closed_at !== null)
     },
     filteredIncidents: function () {
-      return filters[this.filter](this.dataIncidents)
+      let filteredByState = filters[this.filter](this.dataIncidents)
+      if (this.creator) return filteredByState.filter(incident => { return incident.user_id === this.creator })
+      return filteredByState
     },
     headers () {
       let headers = []
@@ -288,6 +280,14 @@ export default {
     }
   },
   methods: {
+    moveLoggedUserToFirstPosition (users) {
+      let loggedUser = users.find(creator => {
+        return creator.id === window.user.id
+      })
+      users.splice(users.indexOf(loggedUser), 1)
+      users.unshift(loggedUser)
+      return users
+    },
     showClosedIncidents () {
       this.filter = 'closed'
     },
