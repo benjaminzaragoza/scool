@@ -29,15 +29,60 @@
 
         <v-card>
             <v-card-title>
-                TODO Filters
-                <v-spacer></v-spacer>
-                <v-text-field
-                        append-icon="search"
-                        label="Buscar"
-                        single-line
-                        hide-details
-                        v-model="search"
-                ></v-text-field>
+                <v-layout>
+                  <v-flex xs9 style="align-self: flex-end;">
+                      <v-layout>
+                          <v-flex xs3 class="text-sm-left" style="align-self: center;">
+                                <span @click="showOpenIncidents" :class="{ bolder: filter === 'open', 'no-wrap': true }">
+                                    <v-icon color="error" title="Obertes">lock_open</v-icon> Obertes: {{openIncidents.length}}
+                                </span>
+                                <span @click="showClosedIncidents" :class="{ bolder: filter === 'closed', 'no-wrap': true }">
+                                  <v-icon color="success" title="Tancades">lock</v-icon> Tancades: {{closedIncidents.length}}
+                                </span>
+                                <span @click="showAll" :class="{ bolder: filter === 'all', 'no-wrap': true }">
+                                  <v-icon color="primary" title="Total">info</v-icon> Total: {{dataIncidents.length}}
+                                </span>
+                          </v-flex>
+                          <v-flex xs9>
+                               <v-layout>
+                                   <v-flex xs4>
+                                       <user-select
+                                               label="Creada per:"
+                                               :users="creators"
+                                               v-model="creator"
+                                       ></user-select>
+                                   </v-flex>
+                                   <v-flex xs4>
+                                       <user-select
+                                               label="Assignada a:"
+                                               :users="assignees"
+                                               v-model="assignee"
+                                       ></user-select>
+                                   </v-flex>
+                                   <v-flex xs4>
+                                       <v-select
+                                               v-model="selectedTags"
+                                               :items="tags"
+                                               attach
+                                               chips
+                                               label="Etiquetes"
+                                               multiple
+                                       ></v-select>
+                                   </v-flex>
+                               </v-layout>
+                          </v-flex>
+                      </v-layout>
+                  </v-flex>
+                  <v-flex xs3>
+                      <v-text-field
+                              append-icon="search"
+                              label="Buscar"
+                              single-line
+                              hide-details
+                              v-model="search"
+                      ></v-text-field>
+                  </v-flex>
+                </v-layout>
             </v-card-title>
             <v-data-table
                     class="px-0 mb-2 hidden-sm-and-down"
@@ -50,18 +95,26 @@
                     rows-per-page-text="Incidències per pàgina"
                     :rows-per-page-items="[5,10,25,50,100,200,{'text':'Tots','value':-1}]"
                     :pagination.sync="pagination"
+                    :loading="refreshing"
             >
+                <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                 <template slot="items" slot-scope="{item: incident}">
                     <tr :id="'incident_row_' + incident.id">
-                        <td class="text-xs-left" v-html="incident.id"></td>
-                        <td class="text-xs-left" :title="incident.user_email" v-html="incident.user_name"></td>
+                        <td class="text-xs-left" v-text="incident.id"></td>
+                        <td class="text-xs-left" :title="incident.user_email">
+                            <user-avatar class="mr-2" :hash-id="incident.user.hashid"
+                                         :alt="incident.user.name"
+                                         v-if="incident.user.hashid"
+                            ></user-avatar>
+                            {{incident.user_name}}
+                        </td>
                         <td class="text-xs-left">
                             <inline-text-field-edit-dialog v-model="incident" field="subject" label="Títol" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
                             <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-html="incident.formatted_closed_at_diff" :title="incident.formatted_closed_at"></td>
+                        <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
@@ -83,7 +136,7 @@
                                     v-if="showDialog === false || showDialog === incident.id">
                                 <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false"></incident-show>
                             </fullscreen-dialog>
-                            <incident-close :incident="incident" v-can:close="incident"></incident-close>
+                            <incident-close v-model="incident" v-can:close="incident" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-role="'IncidentsManager'"></incident-delete>
                         </td>
                     </tr>
@@ -102,6 +155,25 @@ import IncidentDeleteComponent from './IncidentDeleteComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import FullScreenDialog from '../ui/FullScreenDialog'
+import UserSelect from '../users/UsersSelectComponent.vue'
+import UserAvatar from '../ui/UserAvatarComponent'
+
+var filters = {
+  all: function (incidents) {
+    return incidents
+  },
+  open: function (incidents) {
+    return incidents.filter(function (incident) {
+      return incident.closed_at === null
+    })
+  },
+  closed: function (incidents) {
+    return incidents.filter(function (incident) {
+      return incident.closed_at !== null
+    })
+  }
+}
+
 export default {
   name: 'IncidentsList',
   components: {
@@ -110,7 +182,9 @@ export default {
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
-    'inline-text-area-edit-dialog': InlineTextAreaEditDialog
+    'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
+    'user-select': UserSelect,
+    'user-avatar': UserAvatar
   },
   data () {
     return {
@@ -120,7 +194,30 @@ export default {
       addCommentDialog: false,
       pagination: {
         rowsPerPage: 25
-      }
+      },
+      filter: 'open',
+      selectedTags: [],
+      tags: ['Tag1', 'Tag2', 'Tag3'],
+      creator: null,
+      assignee: null,
+      assignees: [{
+        id: 1,
+        hashid: 'MX',
+        name: 'Sergi Tur',
+        email: 'sergiturbadenas@gmail.com'
+      },
+      {
+        id: 2,
+        hashid: 'RX',
+        name: 'Dolors Sanjuan',
+        email: 'dolors@iesebre.com'
+      },
+      {
+        id: 3,
+        hashid: 'MX',
+        name: 'Pepa Parda',
+        email: 'pepaparda@gmail.com'
+      }]
     }
   },
   props: {
@@ -137,8 +234,41 @@ export default {
     }
   },
   computed: {
-    filteredIncidents: function () {
+    creators () {
+      return this.dataIncidents.map(incident => {
+        return {
+          id: incident.user_id,
+          name: incident.user_name,
+          email: incident.user_email,
+          hashid: incident.user && incident.user.hashid
+        }
+      })
+      // return [
+      //   {
+      //     id: 1,
+      //     hashid: 'Mx',
+      //     name: 'Sergi Tur',
+      //     email: 'sergiturbadenas@gmail.com'
+      //   },
+      //   {
+      //     id: 2
+      //   },
+      //   {
+      //     id: 3
+      //   }
+      // ]
+    },
+    dataIncidents () {
       return this.$store.getters.incidents
+    },
+    openIncidents () {
+      return this.dataIncidents.filter(incident => incident.closed_at === null)
+    },
+    closedIncidents () {
+      return this.dataIncidents.filter(incident => incident.closed_at !== null)
+    },
+    filteredIncidents: function () {
+      return filters[this.filter](this.dataIncidents)
     },
     headers () {
       let headers = []
@@ -146,17 +276,27 @@ export default {
       // if (this.showJobTypeHeader) {
       //   headers.push({text: 'Tipus', value: 'type'})
       // }
-      headers.push({ text: 'Usuari', value: 'user_id' })
+      headers.push({ text: 'Usuari', value: 'user_name' })
       headers.push({ text: 'Títol', value: 'subject' })
       headers.push({ text: 'Description', value: 'description' })
-      headers.push({ text: 'Tancada', value: 'closed_at_timestamp' })
+      if (this.filter !== 'open') headers.push({ text: 'Tancada', value: 'closed_at_timestamp' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
-      headers.push({ text: 'Accions', sortable: false })
+      // user_email is added as value to allow searching by email!
+      headers.push({ text: 'Accions', value: 'user_email', sortable: false })
       return headers
     }
   },
   methods: {
+    showClosedIncidents () {
+      this.filter = 'closed'
+    },
+    showOpenIncidents () {
+      this.filter = 'open'
+    },
+    showAll () {
+      this.filter = 'all'
+    },
     settings () {
       console.log('TODO settings')
     },
@@ -177,6 +317,16 @@ export default {
   created () {
     if (this.incidents === undefined) this.fetch()
     else this.$store.commit(mutations.SET_INCIDENTS, this.incidents)
+    this.filters = Object.keys(filters)
   }
 }
 </script>
+
+<style scoped>
+    .bolder {
+        font-weight: bold;
+    }
+    .no-wrap {
+        white-space: nowrap;
+    }
+</style>

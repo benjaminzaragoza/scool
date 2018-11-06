@@ -54,7 +54,12 @@ export default {
   watch: {
     incident (newIncident) {
       if (newIncident.closed_at) this.close = false
+      else this.close = true
     }
+  },
+  model: {
+    prop: 'incident',
+    event: 'toggle'
   },
   methods: {
     toggle () {
@@ -63,6 +68,7 @@ export default {
         this.$snackbar.showMessage(this.actionMessage)
         this.loading = false
         this.close = !this.close
+        this.$emit('toggle', this.close)
       }).catch(error => {
         this.$snackbar.showError(error)
         this.loading = false

@@ -1,55 +1,66 @@
 # Incidents
 
+**Filtres**:
+
+- [X] Buscador -> Full text search field. DE MOMENT NO CAL ES POT BUSCAR PER TOT LO NECESSARI
+  - [ ] Permetre buscar per estat oberta/tancada (camp full search amb tots els strings de cerca a actions )
+- [X] Mostrar el total d'incidències obertes i tancades
+- [X] Permetre veure les incidències per estat (obertes/tancades/totes)
+- [X] Per defecte mostrar les incidències obertes
+  - [X] IncidentManagers: mostrar totes les incidències obertes
+  - [X] Usuaris normals: mostrar també totes les incidències obertes
+  - [ ] Usuaris normals: Accés directe només veure les meves incidències
+- [ ] Mostrar només les incidències creades per mi
+- [ ] Assignades a mi
+- [ ] On sóc mencionat
+- [ ] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
+- [ ] Mostrar per labels/tags
+- [ ] Mostrar per assignees
+
+**Altres**
+- [ ] Datatables utilitzar expand per mostrar més info sobre la incidència? Comentaris? Descripció completa?
+
 MENU PRINCIPAL INCIDENCIES:
-- Mostrar un badge que indiqui las incidència noves (des de l'últim login?)
+- [ ] Mostrar un badge que indiqui las incidència noves (des de l'últim login?)
 
 RESPONSIVE:
-- Versió Mobile: Datatables canviar per un Data Iterator de Cards (unc incidència un card)
-- 
+- [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
 IMPRESCINDIBLE:
-- Historial: especialment de les accions tipus esborrar incidència o comentaris
-- https://vuetifyjs.com/en/components/timelines
+- [ ] Historial: especialment de les accions tipus esborrar incidència o comentaris
+- [ ] https://vuetifyjs.com/en/components/timelines
 
 Notificacions
-- Per correu -> TODO
-- TODO: a la app o pàgina HTML (permetre notificacions al navegador)
-- Com Github tenir un botó que permeti unsubscribe to notifications
-- Telegram?
+- [ ] Per correu -> TODO
+- [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador)
+- [ ] Com Github tenir un botó que permeti unsubscribe to notifications
+- [ ] Telegram?
 
 Ideas taken from Github
-- Textareas: http://miaolz123.github.io/vue-markdown/
-- https://vuejs.org/v2/examples/
-- https://marked.js.org
-- Boto extra al afegir comentari: Afegir i tancar la incidència (només per managers)
-- Suportar markdown als camps tipus textarea:
-  - Altres extres interessants: @mencions Links HTTP, etc
-  - Poder fer referència+link a un altre incident/issue amb #numissue
-- Labels/Tags: els managers poden crear etiquetes per classificar les incidències (un crud d'etiquetes és necessari per posar etiquetes es vulguin)
-  - Labels/Tags: tenen nom, descripció i color (es pot fer un preview en directe quan es crea/edita un label)
-- Apartat participants
-- Assignar incidències a usuaris (Assignees)  
-
-Filtres:
-- Mostrar només les incidències creades per mi
-- Assignades a mi
-- On sóc mencionat
-- Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
-- Mostrar per labels/tags
-- Mostrar per assignees
-- Mostra el total d'incidències (obertes i tancades)
+- [X] Textareas: http://miaolz123.github.io/vue-markdown/
+- [X] https://vuejs.org/v2/examples/
+- [X] https://marked.js.org
+- [X] Boto extra al afegir comentari: Afegir i tancar la incidència (només per managers)
+- [X] Suportar markdown als camps tipus textarea:
+  - [ ] Altres extres interessants: @mencions Links HTTP, etc
+  - [ ] Poder fer referència+link a un altre incident/issue amb #numissue
+- [ ] Labels/Tags: els managers poden crear etiquetes per classificar les incidències (un crud d'etiquetes és necessari per posar etiquetes es vulguin)
+  - [ ] Labels/Tags: tenen nom, descripció i color (es pot fer un preview en directe quan es crea/edita un label)
+- [ ] Apartat participants: gent que participa de la discusió/comentaris
+- [ ] Assignar incidències a usuaris (Assignees)  
 
 Estadístiques:
-- Totals per tipus (obert tancat)
-- Totals per usuaris
-- Total per departament
-- Gràfiques/quesitos
-- Exportació de dades incidències a CSV
-- Marges temporals: lliure marge però predefinits (any natural- any acadèmic)
+- [ ] Temps mig tancament incidències (Auditories)
+- [ ] Totals per tipus (obert tancat)
+- [ ] Totals per usuaris
+- [ ] Total per departament
+- [ ] Gràfiques/quesitos
+- [ ] Exportació de dades incidències a CSV
+- [ ] Marges temporals: lliure marge però predefinits (any natural- any acadèmic)
 
 EXTRES:
-- Floating button afegir comentari al mostra una incidència: potser múltiples accions
-- Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
+- [ ] Floating button afegir comentari al mostra una incidència: potser múltiples accions
+- [ ] Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
 
 # USER RESOURCE vs user map
 

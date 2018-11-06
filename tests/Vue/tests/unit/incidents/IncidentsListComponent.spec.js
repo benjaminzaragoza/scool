@@ -240,4 +240,30 @@ describe('IncidentsListComponent.vue', () => {
     //   done()
     // })
   })
+
+  it('computes_open_and_closed_an_all_incidents', () => {
+    const wrapper = mount(IncidentsListComponent, {
+      propsData: {
+        incidents: sampleIncidents
+      },
+      store,
+      sync: false // https://github.com/vuejs/vue-test-utils/issues/829
+    })
+    expect(wrapper.vm.openIncidents.length).equals(2)
+    expect(wrapper.vm.closedIncidents.length).equals(1)
+    expect(wrapper.vm.dataIncidents.length).equals(3)
+  })
+
+  it.only('computes_creators', () => {
+    const wrapper = mount(IncidentsListComponent, {
+      propsData: {
+        incidents: sampleIncidents
+      },
+      store,
+      sync: false // https://github.com/vuejs/vue-test-utils/issues/829
+    })
+    console.log('creators')
+    console.log(wrapper.vm.creators)
+    expect(wrapper.vm.creators.length).equals(2)
+  })
 })
