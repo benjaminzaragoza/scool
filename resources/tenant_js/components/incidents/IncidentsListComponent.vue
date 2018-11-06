@@ -34,13 +34,13 @@
                       <v-layout>
                           <v-flex xs3 class="text-sm-left" style="align-self: center;">
                                 <span @click="showOpenIncidents" :class="{ bolder: filter === 'open', 'no-wrap': true }">
-                                    <v-icon color="error" title="Obertes">lock_open</v-icon> Obertes: {{openIncidents.length}}
+                                    <v-icon color="error" title="Obertes">lock_open</v-icon> Obertes: {{openIncidents ? openIncidents.length : 0}}
                                 </span>
                                 <span @click="showClosedIncidents" :class="{ bolder: filter === 'closed', 'no-wrap': true }">
-                                  <v-icon color="success" title="Tancades">lock</v-icon> Tancades: {{closedIncidents.length}}
+                                  <v-icon color="success" title="Tancades">lock</v-icon> Tancades: {{closedIncidents ? closedIncidents.length : 0}}
                                 </span>
                                 <span @click="showAll" :class="{ bolder: filter === 'all', 'no-wrap': true }">
-                                  <v-icon color="primary" title="Total">info</v-icon> Total: {{dataIncidents.length}}
+                                  <v-icon color="primary" title="Total">info</v-icon> Total: {{dataIncidents ? dataIncidents.length : 0}}
                                 </span>
                           </v-flex>
                           <v-flex xs9>
@@ -163,14 +163,14 @@ var filters = {
     return incidents
   },
   open: function (incidents) {
-    return incidents.filter(function (incident) {
+    return incidents ? incidents.filter(function (incident) {
       return incident.closed_at === null
-    })
+    }) : []
   },
   closed: function (incidents) {
-    return incidents.filter(function (incident) {
+    return incidents ? incidents.filter(function (incident) {
       return incident.closed_at !== null
-    })
+    }) : []
   }
 }
 
@@ -235,14 +235,14 @@ export default {
   },
   computed: {
     creators () {
-      let creators = this.dataIncidents.map(incident => {
+      let creators = this.dataIncidents ? this.dataIncidents.map(incident => {
         return {
           id: incident.user_id,
           name: incident.user_name,
           email: incident.user_email,
           hashid: incident.user && incident.user.hashid
         }
-      })
+      }) : []
       if (window.user && window.user.id) {
         return this.moveLoggedUserToFirstPosition(creators)
       }
@@ -252,10 +252,10 @@ export default {
       return this.$store.getters.incidents
     },
     openIncidents () {
-      return this.dataIncidents.filter(incident => incident.closed_at === null)
+      return this.dataIncidents && this.dataIncidents.filter(incident => incident.closed_at === null)
     },
     closedIncidents () {
-      return this.dataIncidents.filter(incident => incident.closed_at !== null)
+      return this.dataIncidents && this.dataIncidents.filter(incident => incident.closed_at !== null)
     },
     filteredIncidents: function () {
       let filteredByState = filters[this.filter](this.dataIncidents)

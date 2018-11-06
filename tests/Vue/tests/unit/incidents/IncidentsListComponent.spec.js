@@ -111,19 +111,25 @@ describe('IncidentsListComponent.vue', () => {
   })
 
   it('shows_tasks', (done) => {
+    let can = sinon.spy()
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
         incidents: sampleIncidents
       },
       store,
-      sync: false // https://github.com/vuejs/vue-test-utils/issues/829
+      sync: false, // https://github.com/vuejs/vue-test-utils/issues/829
+      mocks: {
+        $can: can,
+        $hasRole: hasRole
+      }
     })
     expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
 
     setTimeout(() => {
       let incidentRow1 = wrapper.find('tr#incident_row_1')
       let incidentRow2 = wrapper.find('tr#incident_row_2')
-      let incidentRow3 = wrapper.find('tr#incident_row_3')
+      // let incidentRow3 = wrapper.find('tr#incident_row_3') -> not showed because is closed
 
       incidentRow1.seeText('1')
       incidentRow1.seeText('Pepe Pardo Jeans')
@@ -137,12 +143,12 @@ describe('IncidentsListComponent.vue', () => {
       incidentRow2.seeText('No funciona PC2 Aula 31')
       incidentRow2.seeText('JO JO JO')
 
-      incidentRow3.seeText('3')
-      incidentRow3.seeText('Carles Puigdemont')
-      incidentRow3.seeHtml('carles@puigdemont.cat')
-      incidentRow3.seeText('No funciona PC1 Aula 32')
-      incidentRow3.seeText('HEY HEY HEY')
-      incidentRow3.seeText('1 segon abans')
+      // incidentRow3.seeText('3')
+      // incidentRow3.seeText('Carles Puigdemont')
+      // incidentRow3.seeHtml('carles@puigdemont.cat')
+      // incidentRow3.seeText('No funciona PC1 Aula 32')
+      // incidentRow3.seeText('HEY HEY HEY')
+      // incidentRow3.seeText('1 segon abans')
       done()
     },
     50)
