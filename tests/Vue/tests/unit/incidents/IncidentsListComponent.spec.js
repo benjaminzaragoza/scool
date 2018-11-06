@@ -192,7 +192,16 @@ describe('IncidentsListComponent.vue', () => {
   })
 
   it('watch_for_changes_in_incidents_prop', () => {
-    mount(IncidentsListComponent, { store, sync: false })
+    let can = sinon.spy()
+    let hasRole = sinon.spy()
+    mount(IncidentsListComponent, {
+      store,
+      sync: false,
+      mocks: {
+        $can: can,
+        $hasRole: hasRole
+      }
+    })
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
   })
 
