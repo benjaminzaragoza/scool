@@ -29,6 +29,9 @@ describe('IncidentsListComponent.vue', () => {
       user_name: 'Pepe Pardo Jeans',
       user_id: 1,
       user_email: 'pepepardo@jeans.com',
+      user: {
+        hashid: 'MX'
+      },
       subject: 'No funciona PC1 Aula 30',
       description: 'Bla bla bla',
       closed_at: null
@@ -38,6 +41,9 @@ describe('IncidentsListComponent.vue', () => {
       user_name: 'Pepa Parda Jeans',
       user_id: 2,
       user_email: 'pepaparda@jeans.com',
+      user: {
+        hashid: 'RX'
+      },
       subject: 'No funciona PC2 Aula 31',
       description: 'JO JO JO',
       closed_at: null
@@ -47,6 +53,9 @@ describe('IncidentsListComponent.vue', () => {
       user_name: 'Carles Puigdemont',
       user_id: 3,
       user_email: 'carles@puigdemont.cat',
+      user: {
+        hashid: 'RX'
+      },
       subject: 'No funciona PC1 Aula 32',
       description: 'HEY HEY HEY',
       closed_at: {},
@@ -254,16 +263,31 @@ describe('IncidentsListComponent.vue', () => {
     expect(wrapper.vm.dataIncidents.length).equals(3)
   })
 
-  it.only('computes_creators', () => {
+  it('computes_creators', () => {
+    let can = sinon.spy()
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentsListComponent, {
       propsData: {
         incidents: sampleIncidents
       },
       store,
-      sync: false // https://github.com/vuejs/vue-test-utils/issues/829
+      sync: false, // https://github.com/vuejs/vue-test-utils/issues/829
+      mocks: {
+        $can: can,
+        $hasRole: hasRole
+      }
     })
-    console.log('creators')
-    console.log(wrapper.vm.creators)
-    expect(wrapper.vm.creators.length).equals(2)
+
+    expect(wrapper.vm.creators[0].name).equals('Pepe Pardo Jeans')
+    expect(wrapper.vm.creators[0].email).equals('pepepardo@jeans.com')
+    expect(wrapper.vm.creators[0].hashid).equals('MX')
+    expect(wrapper.vm.creators[1].name).equals('Pepa Parda Jeans')
+    expect(wrapper.vm.creators[1].email).equals('pepaparda@jeans.com')
+    expect(wrapper.vm.creators[1].hashid).equals('RX')
+    expect(wrapper.vm.creators[2].name).equals('Carles Puigdemont')
+    expect(wrapper.vm.creators[2].email).equals('carles@puigdemont.cat')
+    expect(wrapper.vm.creators[2].hashid).equals('RX')
+
+    expect(wrapper.vm.creators.length).equals(3)
   })
 })
