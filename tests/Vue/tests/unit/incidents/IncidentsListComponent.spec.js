@@ -163,7 +163,8 @@ describe('IncidentsListComponent.vue', () => {
       mocks: {
         $can: can,
         $hasRole: hasRole
-      } })
+      }
+    })
     expect(actions.SET_INCIDENTS.calledOnce).to.be.true
 
     setTimeout(() => {
@@ -196,6 +197,8 @@ describe('IncidentsListComponent.vue', () => {
   })
 
   it('shows_no_data_available_when_no_incidents_are_provided', () => {
+    let can = sinon.spy()
+    let hasRole = sinon.spy()
     store.getters = {
       incidents: function () {
         return []
@@ -206,7 +209,11 @@ describe('IncidentsListComponent.vue', () => {
       propsData: {
         incidents: []
       },
-      store: emptyStore
+      store: emptyStore,
+      mocks: {
+        $can: can,
+        $hasRole: hasRole
+      }
     })
     expect(mutations.SET_INCIDENTS.calledOnce).to.be.true
     wrapper.seeText('No hi han dades disponibles')
