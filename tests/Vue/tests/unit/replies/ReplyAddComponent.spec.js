@@ -22,12 +22,20 @@ describe('ReplyAddComponent.vue', () => {
   })
 
   it('shows_a_form', () => {
-    const wrapper = mount(ReplyAddComponent)
+    let hasRole = sinon.spy()
+    const wrapper = mount(ReplyAddComponent, {
+      mocks: {
+        $hasRole: hasRole
+      }
+    })
     expect(wrapper.element).to.be.a('HTMLFormElement')
     wrapper.assertContains("textarea[name='body']")
+    expect(hasRole.called).to.be.true
   })
 
   it('adds_a_reply', (done) => {
+    let hasRole = sinon.spy()
+
     window.user = {
       id: 1
     }
@@ -47,6 +55,9 @@ describe('ReplyAddComponent.vue', () => {
           id: 1,
           api_uri: 'incidents'
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
     wrapper.type('[name="body"]', 'Si us plau podeu proporcionar més informació?')
@@ -57,40 +68,7 @@ describe('ReplyAddComponent.vue', () => {
       expect(event[0][0].id).equals(1)
       expect(event[0][0].body).equals('Si us plau podeu proporcionar més informació?')
       expect(event[0][0].user_id).equals(1)
-      done()
-    })
-  })
-
-  it('shows_error_when_adding_incorrect_reply', (done) => {
-    let showError = sinon.spy()
-
-    window.user = {
-      id: 1
-    }
-
-    moxios.stubRequest('/api/v1/incidents/1/replies', {
-      status: 422
-    })
-
-    const wrapper = mount(ReplyAddComponent, {
-      propsData: {
-        repliable: {
-          id: 1,
-          api_uri: 'incidents'
-        }
-      },
-      mocks: {
-        $snackbar: {
-          showError
-        }
-      }
-    })
-    wrapper.type('[name="body"]', '')
-    wrapper.click('#add_reply_button')
-
-    moxios.wait(function () {
-      wrapper.assertNotEmitted('added')
-      expect(showError.called).to.be.true
+      expect(hasRole.called).to.be.true
       done()
     })
   })

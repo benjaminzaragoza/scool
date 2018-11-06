@@ -43,7 +43,8 @@ export default {
   },
   computed: {
     markedValue () {
-      return marked(this.value, { sanitize: true })
+      if (this.value) return marked(this.value, { sanitize: true })
+      return ''
     }
   },
   model: {

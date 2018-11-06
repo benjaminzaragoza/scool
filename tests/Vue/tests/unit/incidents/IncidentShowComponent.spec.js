@@ -31,6 +31,7 @@ describe('IncidentShowComponent.vue', () => {
   })
 
   it('shows_incident_subject_on_toolbar', () => {
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -41,12 +42,17 @@ describe('IncidentShowComponent.vue', () => {
             hashid: 'Mx'
           }
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
     expect(wrapper.find('#incident_1_show_toolbar').text()).contains("No funciona res a l'aula 24")
+    expect(hasRole.called).to.be.true
   })
 
   it('emit_close_event_when_click_on_close_button', () => {
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -56,13 +62,18 @@ describe('IncidentShowComponent.vue', () => {
             hashid: 'Mx'
           }
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
     wrapper.click('#incident_1_show_close_button')
     wrapper.assertEmitted('close')
+    expect(hasRole.called).to.be.true
   })
 
   it('not_show_comments_list_when_no_comments', () => {
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -72,12 +83,17 @@ describe('IncidentShowComponent.vue', () => {
             hashid: 'Mx'
           }
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
     wrapper.assertNotContains('#incident_1_comments')
+    expect(hasRole.called).to.be.true
   })
 
   it('not_show_comments_list_when_comments_are_void', () => {
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -88,12 +104,17 @@ describe('IncidentShowComponent.vue', () => {
           },
           comments: []
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
+    expect(hasRole.called).to.be.true
     wrapper.assertNotContains('#incident_1_comments')
   })
 
   it('shows_add_comment', () => {
+    let hasRole = sinon.spy()
     const wrapper = mount(IncidentShowComponent, {
       propsData: {
         incident: {
@@ -103,9 +124,13 @@ describe('IncidentShowComponent.vue', () => {
             hashid: 'Mx'
           }
         }
+      },
+      mocks: {
+        $hasRole: hasRole
       }
     })
     wrapper.assertContains('#add_reply_button')
+    expect(hasRole.called).to.be.true
   })
 
   it('shows_comments', () => {
