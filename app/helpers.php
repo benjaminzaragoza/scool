@@ -18,6 +18,7 @@ use App\Models\PendingTeacher;
 use App\Models\Person;
 use App\Models\Position;
 use App\Models\Province;
+use App\Models\Setting;
 use App\Models\Specialty;
 use App\Models\Job;
 use App\Models\JobType;
@@ -917,6 +918,11 @@ if (!function_exists('initialize_gates')) {
 
         Gate::define('reply.update', function ($user) {
             return $user->hasRole('IncidentsManager');
+        });
+
+        // Settings
+        Gate::define('setting.update', function ($user,$setting) {
+            return $user->hasRole(Setting::getRole($setting->key));
         });
     }
 }
@@ -8150,3 +8156,16 @@ if (! function_exists('create_fake_incidents')) {
         ])->assignUser($user2);
     }
 }
+
+if (! function_exists('create_setting')) {
+    function create_setting($key, $value, $role)
+    {
+        $setting = new \App\Models\Setting();
+        $setting->key = $key;
+        $setting->value = $value;
+        $setting->role = $role;
+        $setting->save();
+    }
+}
+
+

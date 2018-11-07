@@ -41,6 +41,7 @@ class User extends Authenticatable
      * Add tenant.
      *
      * @param $tenant
+     * @return mixed
      */
     public function addTenant($tenant)
     {

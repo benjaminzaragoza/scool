@@ -169,8 +169,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //BodyReplies
             Route::put('/replies/{reply}/body','Tenant\Api\RepliesBodyController@update');
-//            $response = $this->json('PUT','/api/v1/replies/' . $reply->id . '/body',[
 
+            //Settings
+            Route::put('/settings/{setting}','Tenant\Api\SettingsController@update');
         });
 
         Route::group(['prefix' => 'v1'], function () {

@@ -1,4 +1,18 @@
+# Settings
+
+Config és realitza amb el sistema habitual de fitxers de configuració i variables entorn amb valors per defecte.
+Algunes settings poden ser "sobreescrites" dinàmicament si l'usuari (manager amb permisos) canvia les settings.
+La sobrescritura la fa un ServiceProvider per a cada Mòdul, accedint a una taula Settings (amb keys values).
+Com l'accés a base de dades es farà a cada petició utilitzarem Cache
+Cada cop es modifiquin les settings cal fer un flush de la cache
+
+SettingsServiceProvider:
+- IncidentsServiceProvider: establir els valors de settings de incidencies
+
 # Incidents
+
+Idees:
+- Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
 
 **Filtres**:
 
@@ -17,6 +31,21 @@
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
 - [ ] Mostrar per labels/tags
 
+**Notificacions/comunicació**
+- [ ] Per correu -> TODO
+  - Creador de la incidència:
+     - [ ] Notificació/correu s'ha creat correctament la incidència
+     - [ ] Rebre notificació cada cop és modifica la incidència
+     - [ ] Rebre correu cada cop s'afegeix un comentari a la incidència
+     - [ ] Mencions?
+  - Correu gestors incidències: (maninfo@iesebre.com)
+    - Settings: permetre indicar quin és el correu
+    - Settings table: key, value, keys poden tenir un prefix per evitar conflictes de noms    
+- [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador)
+- [ ] Com Github tenir un botó que permeti unsubscribe to notifications
+- [ ] Telegram?
+
+
 
 **Altres**
 - [ ] Datatables utilitzar expand per mostrar més info sobre la incidència? Comentaris? Descripció completa?
@@ -27,15 +56,9 @@ MENU PRINCIPAL INCIDENCIES:
 RESPONSIVE:
 - [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
-IMPRESCINDIBLE:
+HISTORIAL:
 - [ ] Historial: especialment de les accions tipus esborrar incidència o comentaris
 - [ ] https://vuetifyjs.com/en/components/timelines
-
-Notificacions
-- [ ] Per correu -> TODO
-- [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador)
-- [ ] Com Github tenir un botó que permeti unsubscribe to notifications
-- [ ] Telegram?
 
 Ideas taken from Github
 - [X] Textareas: http://miaolz123.github.io/vue-markdown/
