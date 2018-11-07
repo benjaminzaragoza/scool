@@ -10,12 +10,13 @@
   - [X] IncidentManagers: mostrar totes les incidències obertes
   - [X] Usuaris normals: mostrar també totes les incidències obertes
   - [ ] Usuaris normals: Accés directe només veure les meves incidències
-- [ ] Mostrar només les incidències creades per mi
-- [ ] Assignades a mi
-- [ ] On sóc mencionat
-- [ ] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
+- [X] Mostrar només les incidències creades per mi. El usuari logat sempre és el primer al desplegable de creadors
+- [X] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
+- [ ] Mostrar per assignees. El usuari logat sempre és el primer al desplegable de assignees
+- [ ] Assignades a mi. 
+- [ ] On sóc mencionat. Depèn implementar mencions (@username)
 - [ ] Mostrar per labels/tags
-- [ ] Mostrar per assignees
+
 
 **Altres**
 - [ ] Datatables utilitzar expand per mostrar més info sobre la incidència? Comentaris? Descripció completa?
