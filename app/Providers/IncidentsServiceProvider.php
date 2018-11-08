@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use Config;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -17,9 +19,9 @@ class IncidentsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Request $request)
     {
-        //
+        $this->setIncidentsManagerEmail($request);
     }
 
     /**
@@ -29,13 +31,21 @@ class IncidentsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->setIncidentsManagerEmail();
+
     }
 
-    protected function setIncidentsManagerEmail()
+    protected function setIncidentsManagerEmail(Request $request)
     {
-        if ($email = Setting::get('incidents_manager_email')) {
-            $this->app['config']['incidents']['incidents_manager_email'] = $email;
-        }
+        if (env('APP_ENV') === 'testing') return;
+//        $tenant = tenant_from_url();
+//        if (! is_null($tenant)) {
+//            if ($tenant = get_tenant($tenant)) {
+//                $tenant->connect();
+//                $tenant->configure();
+//            }
+//            if ($email = Setting::get('incidents_manager_email')) {
+//                Config::set('incidents.manager_email', $email);
+//            }
+//        }
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Models\Incident;
-use Gate;
+use App\Models\Setting;
 
 /**
  * Class IncidentsController.
@@ -21,8 +21,6 @@ class IncidentsController extends Controller{
      */
     public function index(ListIncidents $request)
     {
-        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
-        dump(config('incidents.incidents_manager_email'));
         $incidents = Incident::getIncidents();
         return view('tenants.incidents.index',compact('incidents'));
     }

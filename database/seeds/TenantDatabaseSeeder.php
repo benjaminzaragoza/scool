@@ -45,5 +45,8 @@ class TenantDatabaseSeeder extends Seeder
         initialize_positions();
 
         initialize_subjects();
+
+        initialize_settings();
+
     }
 }

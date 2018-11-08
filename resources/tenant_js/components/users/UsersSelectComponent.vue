@@ -26,10 +26,10 @@
             </v-chip>
         </template>
         <template slot="item" slot-scope="{ item: user }">
-            <v-list-tile-avatar>
+            <v-list-tile-avatar v-if="user">
                 <img :src="'/user/' + user.hashid + '/photo'">
             </v-list-tile-avatar>
-            <v-list-tile-content>
+            <v-list-tile-content v-if="user">
                 <v-list-tile-title v-html="user.name"></v-list-tile-title>
                 <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
             </v-list-tile-content>

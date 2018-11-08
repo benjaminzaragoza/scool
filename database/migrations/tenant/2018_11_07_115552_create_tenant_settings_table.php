@@ -18,6 +18,8 @@ class CreateTenantSettingsTable extends Migration
             $table->string('key')->unique();
             $table->text('value');
             $table->string('role');
+            $table->text('label')->nullable();
+            $table->text('hint')->nullable();
             $table->timestamps();
         });
     }

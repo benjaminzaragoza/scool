@@ -19,9 +19,17 @@
             </v-menu>
             <v-toolbar-title class="white--text title">Incidències</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon class="white--text" @click="settings">
-                <v-icon>settings</v-icon>
-            </v-btn>
+
+            <fullscreen-dialog
+                    :flat="false"
+                    class="white--text"
+                    icon="settings"
+                    v-model="settingsDialog"
+                    color="blue darken-3"
+                    title="Canviar la configuració de les incidències">
+                        <incident-settings @close="settingsDialog = false"></incident-settings>
+            </fullscreen-dialog>
+
             <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
                 <v-icon>refresh</v-icon>
             </v-btn>
@@ -152,6 +160,7 @@ import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowComponent from './IncidentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
+import IncidentSettings from './IncidentSettingsComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import FullScreenDialog from '../ui/FullScreenDialog'
@@ -184,7 +193,8 @@ export default {
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
     'user-select': UserSelect,
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
+    'incident-settings': IncidentSettings
   },
   data () {
     return {
@@ -192,6 +202,7 @@ export default {
       refreshing: false,
       showDialog: false,
       addCommentDialog: false,
+      settingsDialog: false,
       pagination: {
         rowsPerPage: 25
       },
@@ -226,11 +237,6 @@ export default {
       default: function () {
         return undefined
       }
-    }
-  },
-  watch: {
-    incidents (newIncidents) {
-      this.$store.commit(mutations.SET_INCIDENTS, newIncidents)
     }
   },
   computed: {

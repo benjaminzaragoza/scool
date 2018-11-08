@@ -128,6 +128,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::view('/blank','tenants.blank');
 
+            Route::get('/settings','Tenant\SettingsController@index');
+
         });
     });
 

@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-btn flat icon :title="title" :color="color" dark class="ma-0" @click="toggle">
+        <v-btn :flat="flat" icon :title="title" :color="color" dark class="ma-0" @click="toggle">
             <v-badge left overlap :color="badgeColor" v-if="badge">
               <span slot="badge" v-text="badge">6</span>
               <v-icon large v-text="icon"></v-icon>
@@ -22,6 +22,10 @@ export default {
     event: 'toggle'
   },
   props: {
+    flat: {
+      type: Boolean,
+      default: true
+    },
     badgeColor: {
       type: String,
       default: 'primary'

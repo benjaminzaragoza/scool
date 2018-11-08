@@ -10,5 +10,5 @@ return [
     |
     */
 
-    'incidents_manager_email' => env('INCIDENTS_MANAGER_EMAIL', 'maninfo@iesebre.com'),
+    'manager_email' => env('INCIDENTS_MANAGER_EMAIL', 'maninfo@iesebre.com'),
 ];

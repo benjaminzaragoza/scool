@@ -8158,14 +8158,40 @@ if (! function_exists('create_fake_incidents')) {
 }
 
 if (! function_exists('create_setting')) {
-    function create_setting($key, $value, $role)
+    function create_setting($key, $value, $role,$label=null,$hint=null)
     {
         $setting = new \App\Models\Setting();
         $setting->key = $key;
         $setting->value = $value;
         $setting->role = $role;
+        $setting->label = $label;
+        $setting->hint = $hint;
         $setting->save();
     }
 }
+
+if (! function_exists('initialize_settings')) {
+    function initialize_settings()
+    {
+        create_setting(
+            'incidents_manager_email',
+            'incidencies@iesebre.com',
+            'IncidentsManager',
+            'Email del/s gestor/s de les incidències',
+            'Podeu utilitzar una adreça de correu electrònic personal o d\'un grup de gestors'
+            );
+    }
+}
+
+if (! function_exists('tenant_from_url')) {
+    function tenant_from_url()
+    {
+        if (!ends_with($currentUrl = url()->current(), config('app.domain','scool.test'))) return null;
+        $host = parse_url($currentUrl)['host'];
+        if ($host === config('app.domain','scool.test')) return null;
+        return explode('.', $host)[0];
+    }
+}
+
 
 

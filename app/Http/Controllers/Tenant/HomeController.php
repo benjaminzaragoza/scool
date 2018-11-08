@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Models\Family;
 use App\Models\Job;
 use App\Models\JobType;
+use App\Models\Setting;
 use App\Models\Specialty;
 use App\Revisionable\Revision;
 use Illuminate\Http\Request;
