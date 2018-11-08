@@ -16,12 +16,11 @@
             <v-container fluid grid-list-md text-xs-center>
                 <v-layout row wrap>
                     <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
-                    <v-flex md12 v-for="setting in settings" :key="setting.key">
+                    <v-flex md12 v-for="(setting, key)  in settings" :key="setting.key">
                         <v-text-field
                                 :loading="loading"
                                 ref="subject_field"
-                                v-focus
-                                v-model="values[setting.key]"
+                                v-model="settings[key].value"
                                 name="managerEmail"
                                 :label="setting.label"
                                 :hint="setting.hint"
@@ -36,10 +35,9 @@
 
 <script>
 export default {
-  name: 'SettingsComponent',
+  name: 'Settings',
   data () {
     return {
-      values: [],
       loading: false,
       saving: false,
       settings: []
@@ -55,27 +53,26 @@ export default {
       required: true
     }
   },
+  methods: {
+    save () {
+      this.saving = true
+      window.axios.put('/api/v1/settings/filter/incidents', { settings: this.settings }).then(response => {
+        this.saving = false
+        this.$emit('close')
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.saving = false
+      })
+    }
+  },
   created () {
     this.loading = true
     window.axios.get('/api/v1/settings/filter/incidents').then(response => {
       this.loading = false
       this.settings = response.data
-      this.settings.forEach(setting => {
-        this.values[setting.key] = setting.value
-      })
     }).catch(error => {
       this.$snackbar.showError(error)
       this.loading = false
-    })
-  },
-  save () {
-    this.saving = true
-    window.axios.put('/api/v1/settings/filter/incidents', { settings: this.settings }).then(response => {
-      this.saving = false
-      this.$emit('close')
-    }).catch(error => {
-      this.$snackbar.showError(error)
-      this.saving = false
     })
   }
 }

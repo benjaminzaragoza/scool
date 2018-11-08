@@ -31,7 +31,7 @@ class FilteredSettingsController extends Controller
 
     /**
      * Update all module settings.
-     * 
+     *
      * @param Request $request
      * @param $tenant
      * @param $module
@@ -39,11 +39,14 @@ class FilteredSettingsController extends Controller
     public function update(Request $request, $tenant, $module)
     {
         foreach ($request->settings as $settingKey => $settingValue) {
-            if (!starts_with($settingKey,$module)) continue;
-            if ($setting = Setting::where('key',$settingKey)->first()) {
-                $setting->value = $settingValue;
+            if (!starts_with($settingValue['key'],$module)) continue;
+            if ($setting = Setting::where('key',$settingValue['key'])->first()) {
+                dump($settingValue['value']);
+                $setting->value = $settingValue['value'];
                 $setting->save();
-                Cache::forget('setting_' . $setting->key);
+                Cache::forget('setting_' . $settingValue['key']);
+            } else {
+                dd('CACA');
             }
         }
     }
