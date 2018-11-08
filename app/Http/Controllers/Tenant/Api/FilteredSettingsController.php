@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use Cache;
 use Illuminate\Http\Request;
 
 /**
@@ -26,5 +27,24 @@ class FilteredSettingsController extends Controller
         return Setting::all()->filter(function ($setting) use ($module) {
             return starts_with($setting->key, $module);
         });
+    }
+
+    /**
+     * Update all module settings.
+     * 
+     * @param Request $request
+     * @param $tenant
+     * @param $module
+     */
+    public function update(Request $request, $tenant, $module)
+    {
+        foreach ($request->settings as $settingKey => $settingValue) {
+            if (!starts_with($settingKey,$module)) continue;
+            if ($setting = Setting::where('key',$settingKey)->first()) {
+                $setting->value = $settingValue;
+                $setting->save();
+                Cache::forget('setting_' . $setting->key);
+            }
+        }
     }
 }

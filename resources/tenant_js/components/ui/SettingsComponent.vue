@@ -4,12 +4,10 @@
             <v-btn icon dark @click.native="$emit('close')">
                 <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>
-                Configuració del mòdul d'incidències
-            </v-toolbar-title>
+            <v-toolbar-title v-html="title"></v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn dark flat @click.native="$emit('close')" class="hidden-sm-and-down">
+                <v-btn dark flat @click.native="save" class="hidden-sm-and-down" :loading="saving" :disabled="saving">
                     <v-icon right dark class="mr-2">save</v-icon> Guardar
                 </v-btn>
             </v-toolbar-items>
@@ -17,8 +15,10 @@
         <form>
             <v-container fluid grid-list-md text-xs-center>
                 <v-layout row wrap>
+                    <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
                     <v-flex md12 v-for="setting in settings" :key="setting.key">
                         <v-text-field
+                                :loading="loading"
                                 ref="subject_field"
                                 v-focus
                                 v-model="values[setting.key]"
@@ -36,17 +36,28 @@
 
 <script>
 export default {
-  name: 'IncidentSettingsComponent',
+  name: 'SettingsComponent',
   data () {
     return {
       values: [],
       loading: false,
+      saving: false,
       settings: []
+    }
+  },
+  props: {
+    module: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
     }
   },
   created () {
     this.loading = true
-    window.axios.get('/ap1/v1/settings/filter/incidents').then(response => {
+    window.axios.get('/api/v1/settings/filter/incidents').then(response => {
       this.loading = false
       this.settings = response.data
       this.settings.forEach(setting => {
@@ -55,6 +66,16 @@ export default {
     }).catch(error => {
       this.$snackbar.showError(error)
       this.loading = false
+    })
+  },
+  save () {
+    this.saving = true
+    window.axios.put('/api/v1/settings/filter/incidents', { settings: this.settings }).then(response => {
+      this.saving = false
+      this.$emit('close')
+    }).catch(error => {
+      this.$snackbar.showError(error)
+      this.saving = false
     })
   }
 }

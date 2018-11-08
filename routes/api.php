@@ -174,6 +174,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/settings/{setting}','Tenant\Api\SettingsController@update');
 
             Route::get('/settings/filter/{module}','Tenant\Api\FilteredSettingsController@index');
+            Route::put('/settings/filter/{module}','Tenant\Api\FilteredSettingsController@update');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {

@@ -27,7 +27,7 @@
                     v-model="settingsDialog"
                     color="blue darken-3"
                     title="Canviar la configuració de les incidències">
-                        <incident-settings @close="settingsDialog = false"></incident-settings>
+                        <settings module="incidents" title="Configuració del mòdul d'incidències" @close="settingsDialog = false"></settings>
             </fullscreen-dialog>
 
             <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
@@ -160,7 +160,7 @@ import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowComponent from './IncidentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
-import IncidentSettings from './IncidentSettingsComponent'
+import Settings from '../ui/SettingsComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import FullScreenDialog from '../ui/FullScreenDialog'
@@ -194,7 +194,7 @@ export default {
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
     'user-select': UserSelect,
     'user-avatar': UserAvatar,
-    'incident-settings': IncidentSettings
+    'settings': Settings
   },
   data () {
     return {

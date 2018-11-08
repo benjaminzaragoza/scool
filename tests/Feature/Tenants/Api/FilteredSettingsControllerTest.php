@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api;
 
+use App\Models\Setting;
 use App\Models\User;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,7 +34,6 @@ class FilteredSettingsControllerTest extends BaseTenantTest{
     /** @test */
     public function can_list_settings_for_an_specific_module()
     {
-        $this->withoutExceptionHandling();
         create_setting('incidents_setting1','VALUE1','ROLE1');
         create_setting('incidents_setting2','VALUE2','ROLE2');
         create_setting('incidents_setting3','VALUE3','ROLE3');
@@ -54,6 +54,31 @@ class FilteredSettingsControllerTest extends BaseTenantTest{
         $this->assertEquals('incidents_setting3',$result[2]->key);
         $this->assertEquals('VALUE3',$result[2]->value);
         $this->assertEquals('ROLE3',$result[2]->role);
+    }
+
+    /** @test */
+    public function can_update_all_module_settings()
+    {
+        $this->withoutExceptionHandling();
+        create_setting('incidents_setting1','VALUE1','ROLE1');
+        create_setting('incidents_setting2','VALUE2','ROLE2');
+        create_setting('incidents_setting3','VALUE3','ROLE3');
+
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+        $response = $this->json('PUT','/api/v1/settings/filter/incidents',[
+            'settings' => [
+                'incidents_setting1' => 'NEWVALUE1',
+                'incidents_setting2' => 'NEWVALUE2',
+                'incidents_setting3' => 'NEWVALUE3',
+            ]
+        ]);
+
+        $response->assertSuccessful();
+
+        $this->assertEquals(Setting::get('incidents_setting1'),'NEWVALUE1');
+        $this->assertEquals(Setting::get('incidents_setting2'),'NEWVALUE2');
+        $this->assertEquals(Setting::get('incidents_setting3'),'NEWVALUE3');
     }
 
 }
