@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api;
+namespace App\Http\Controllers\Tenant\Api\Incidents;
 
 use App\Http\Requests\Incidents\CloseIncident;
 use App\Http\Requests\Incidents\OpenIncident;
-use App\Mail\IncidentClosed;
-use App\Mail\IncidentOpened;
+use App\Mail\Incidents\IncidentClosed;
+use App\Mail\Incidents\IncidentOpened;
 use App\Models\Incident;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;

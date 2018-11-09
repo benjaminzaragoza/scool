@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api;
+namespace Tests\Feature\Tenants\Api\Incidents;
 
 use App\Models\Incident;
 use App\Models\User;
@@ -11,11 +11,11 @@ use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
 
 /**
- * Class IncidentsDescriptionController.
+ * Class IncidentsSubjectControllerTest.
  *
  * @package Tests\Feature\Tenants\Api
  */
-class IncidentsDescriptionController extends BaseTenantTest {
+class IncidentsSubjectControllerTest extends BaseTenantTest {
 
     use RefreshDatabase;
 
@@ -36,9 +36,8 @@ class IncidentsDescriptionController extends BaseTenantTest {
     /**
      * @test
      */
-    public function manager_can_update_incident_description()
+    public function manager_can_update_incident_subject()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);
@@ -52,22 +51,44 @@ class IncidentsDescriptionController extends BaseTenantTest {
             'subject' => 'No funciona PC12 Aula 45',
             'description' => 'bla bla bla'
         ]);
-        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/description',[
-            'description' => 'JOR JOR JOR'
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
+            'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertEquals($result->subject,$result->subject);
+        $this->assertEquals($incident->description,$result->description);
         $this->assertEquals($result->id,$incident->id);
 
         $incident = $incident->fresh();
-        $this->assertEquals($incident->description,'JOR JOR JOR');
+        $this->assertEquals($incident->subject,'No funciona PC10 Aula 25');
     }
 
     /**
      * @test
      */
-    public function user_can_update_owned_incident_description()
+    public function manager_can_update_incident_subject_validation()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Carles Puigdemont'
+        ]);
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+
+        $this->actingAs($user,'api');
+
+        $incident = Incident::create([
+            'subject' => 'No funciona PC12 Aula 45',
+            'description' => 'bla bla bla'
+        ]);
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[]);
+        $response->assertStatus(422);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_update_owned_incident_subject()
     {
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
@@ -80,22 +101,22 @@ class IncidentsDescriptionController extends BaseTenantTest {
             'description' => 'bla bla bla'
         ])->assignUser($user);
 
-        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/description',[
-            'description' => 'JOR JOR JOR'
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
+            'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertEquals($result->subject,$result->subject);
+        $this->assertEquals($result->description,$result->description);
         $this->assertEquals($result->id,$incident->id);
 
         $incident = $incident->fresh();
-        $this->assertEquals($incident->description,'JOR JOR JOR');
+        $this->assertEquals($incident->subject,'No funciona PC10 Aula 25');
     }
 
     /**
      * @test
      */
-    public function user_cannot_update_not_owned_incident_description()
+    public function user_cannot_update_not_owned_incident_subject()
     {
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
@@ -111,8 +132,8 @@ class IncidentsDescriptionController extends BaseTenantTest {
             'description' => 'bla bla bla'
         ])->assignUser($otherUser);
 
-        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/description',[
-            'description' => 'JOR JOR JOR'
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
+            'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertStatus(403);
     }
@@ -120,29 +141,7 @@ class IncidentsDescriptionController extends BaseTenantTest {
     /**
      * @test
      */
-    public function manager_can_update_incident_description_validation()
-    {
-        $user = factory(User::class)->create([
-            'name' => 'Carles Puigdemont'
-        ]);
-        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $user->assignRole($role);
-
-        $this->actingAs($user,'api');
-
-        $incident = Incident::create([
-            'subject' => 'No funciona PC12 Aula 45',
-            'description' => 'bla bla bla'
-        ]);
-        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/description',[]);
-        $response->assertStatus(422);
-    }
-
-    /**
-     * @test
-     */
-    public function regular_user_cannot_update_incident_description()
+    public function regular_user_cannot_update_incident_subject()
     {
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
@@ -153,7 +152,13 @@ class IncidentsDescriptionController extends BaseTenantTest {
             'subject' => 'No funciona PC12 Aula 45',
             'description' => 'bla bla bla'
         ]);
-        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/description',[]);
+
+        $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
+            'subject' => 'No funciona PC10 Aula 25'
+        ]);
         $response->assertStatus(403);
     }
+
+
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api;
+namespace Tests\Feature\Tenants\Api\Settings;
 
 use App\Models\Setting;
 use App\Models\User;

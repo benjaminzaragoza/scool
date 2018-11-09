@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api;
+namespace App\Http\Controllers\Tenant\Api\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api;
+namespace App\Http\Controllers\Tenant\Api\Incidents;
 
 use App\Http\Requests\Incidents\DeleteIncident;
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Http\Requests\Incidents\StoreIncident;
-use App\Mail\IncidentCreated;
-use App\Mail\IncidentDeleted;
+use App\Mail\Incidents\IncidentCreated;
+use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Incident;
 use App\Models\Setting;
 use Illuminate\Http\Request;

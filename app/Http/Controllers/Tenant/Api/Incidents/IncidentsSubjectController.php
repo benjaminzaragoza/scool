@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api;
+namespace App\Http\Controllers\Tenant\Api\Incidents;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Incidents\UpdateSubjectIncident;

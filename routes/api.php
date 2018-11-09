@@ -148,33 +148,33 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/email/welcome/{user}', 'Auth\Tenant\ForgotPasswordController@welcome');
 
             // INCIDENTS
-            Route::get('/incidents', 'Tenant\Api\IncidentsController@index');
-            Route::post('/incidents', 'Tenant\Api\IncidentsController@store');
-            Route::get('/incidents/{incident}', 'Tenant\Api\IncidentsController@show');
-            Route::delete('/incidents/{incident}', 'Tenant\Api\IncidentsController@destroy');
+            Route::get('/incidents', 'Tenant\Api\Incidents\IncidentsController@index');
+            Route::post('/incidents', 'Tenant\Api\Incidents\IncidentsController@store');
+            Route::get('/incidents/{incident}', 'Tenant\Api\Incidents\IncidentsController@show');
+            Route::delete('/incidents/{incident}', 'Tenant\Api\Incidents\IncidentsController@destroy');
 
             //Closed incidents
-            Route::post('/closed_incidents/{incident}', 'Tenant\Api\IncidentsClosedController@store');
-            Route::delete('/closed_incidents/{incident}', 'Tenant\Api\IncidentsClosedController@destroy');
+            Route::post('/closed_incidents/{incident}', 'Tenant\Api\Incidents\IncidentsClosedController@store');
+            Route::delete('/closed_incidents/{incident}', 'Tenant\Api\Incidents\IncidentsClosedController@destroy');
 
             //Incidents individual fields
-            Route::put('/incidents/{incident}/subject','Tenant\Api\IncidentsSubjectController@update');
-            Route::put('/incidents/{incident}/description','Tenant\Api\IncidentsDescriptionController@update');
+            Route::put('/incidents/{incident}/subject','Tenant\Api\Incidents\IncidentsSubjectController@update');
+            Route::put('/incidents/{incident}/description','Tenant\Api\Incidents\IncidentsDescriptionController@update');
 
             // Incident Replies
-            Route::get('/incidents/{incident}/replies','Tenant\Api\IncidentRepliesController@index');
-            Route::post('/incidents/{incident}/replies','Tenant\Api\IncidentRepliesController@store');
-            Route::put('/incidents/{incident}/replies/{reply}','Tenant\Api\IncidentRepliesController@update');
-            Route::delete('/incidents/{incident}/replies/{reply}','Tenant\Api\IncidentRepliesController@destroy');
+            Route::get('/incidents/{incident}/replies','Tenant\Api\Incidents\IncidentRepliesController@index');
+            Route::post('/incidents/{incident}/replies','Tenant\Api\Incidents\IncidentRepliesController@store');
+            Route::put('/incidents/{incident}/replies/{reply}','Tenant\Api\Incidents\IncidentRepliesController@update');
+            Route::delete('/incidents/{incident}/replies/{reply}','Tenant\Api\Incidents\IncidentRepliesController@destroy');
 
             //BodyReplies
-            Route::put('/replies/{reply}/body','Tenant\Api\RepliesBodyController@update');
+            Route::put('/replies/{reply}/body','Tenant\Api\Incidents\RepliesBodyController@update');
 
             //Settings
-            Route::put('/settings/{setting}','Tenant\Api\SettingsController@update');
+            Route::put('/settings/{setting}','Tenant\Api\Settings\SettingsController@update');
 
-            Route::get('/settings/filter/{module}','Tenant\Api\FilteredSettingsController@index');
-            Route::put('/settings/filter/{module}','Tenant\Api\FilteredSettingsController@update');
+            Route::get('/settings/filter/{module}','Tenant\Api\Settings\FilteredSettingsController@index');
+            Route::put('/settings/filter/{module}','Tenant\Api\Settings\FilteredSettingsController@update');
 
         });
 

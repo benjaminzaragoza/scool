@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Incidents;
 
 use App\Models\Incident;
 use Illuminate\Bus\Queueable;

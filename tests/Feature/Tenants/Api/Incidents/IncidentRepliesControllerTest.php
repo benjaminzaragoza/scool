@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api;
+namespace Tests\Feature\Tenants\Api\Incidents;
 
 use App\Models\Incident;
 use App\Models\User;

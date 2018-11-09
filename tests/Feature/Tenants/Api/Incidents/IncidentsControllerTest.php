@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api;
+namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Mail\IncidentCreated;
-use App\Mail\IncidentDeleted;
+use App\Mail\Incidents\IncidentCreated;
+use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Incident;
 use App\Models\User;
 use Config;

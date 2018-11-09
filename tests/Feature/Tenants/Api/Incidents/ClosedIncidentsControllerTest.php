@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api;
+namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Mail\IncidentClosed;
-use App\Mail\IncidentOpened;
+use App\Mail\Incidents\IncidentClosed;
+use App\Mail\Incidents\IncidentOpened;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
@@ -41,6 +41,7 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
      */
     public function user_can_close_owned_incidents()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);
