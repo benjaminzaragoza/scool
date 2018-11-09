@@ -4,7 +4,6 @@ namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
 use App\Models\IncidentTag;
-use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

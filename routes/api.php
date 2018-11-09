@@ -147,6 +147,11 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Re(send) welcome user email
             Route::get('/email/welcome/{user}', 'Auth\Tenant\ForgotPasswordController@welcome');
 
+            // IncidentTags
+            Route::get('/incidents/tags','Tenant\Api\Incidents\IncidentTagsController@index');
+            Route::get('/incidents/tags/{tag}','Tenant\Api\Incidents\IncidentTagsController@show');
+            Route::post('/incidents/tags','Tenant\Api\Incidents\IncidentTagsController@store');
+
             // INCIDENTS
             Route::get('/incidents', 'Tenant\Api\Incidents\IncidentsController@index');
             Route::post('/incidents', 'Tenant\Api\Incidents\IncidentsController@store');
@@ -166,10 +171,6 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/incidents/{incident}/replies','Tenant\Api\Incidents\IncidentRepliesController@store');
             Route::put('/incidents/{incident}/replies/{reply}','Tenant\Api\Incidents\IncidentRepliesController@update');
             Route::delete('/incidents/{incident}/replies/{reply}','Tenant\Api\Incidents\IncidentRepliesController@destroy');
-
-            // IncidentTags
-            Route::get('/incidents/tags','Tenant\Api\Incidents\IncidentTagsController@index');
-            Route::get('/incidents/tags/{tag}','Tenant\Api\Incidents\IncidentTagsController@show');
 
             //BodyReplies
             Route::put('/replies/{reply}/body','Tenant\Api\Incidents\RepliesBodyController@update');

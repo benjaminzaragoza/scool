@@ -16,8 +16,8 @@ class CreateTenantIncidentTagsTable extends Migration
         Schema::create('incident_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('value')->unique();
-            $table->text('description');
-            $table->string('color');
+            $table->text('description')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }
