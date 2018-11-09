@@ -9,11 +9,11 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class IncidentTest.
+ * Class IncidentTagTest.
  *
  * @package Tests\Unit\Tenants
  */
-class IncidentTest extends TestCase
+class IncidentTagTest extends TestCase
 {
     use RefreshDatabase;
 
