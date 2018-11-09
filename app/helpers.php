@@ -924,6 +924,26 @@ if (!function_exists('initialize_gates')) {
         Gate::define('setting.update', function ($user,$setting) {
             return $user->hasRole(Setting::getRole($setting->key));
         });
+
+        Gate::define('tag.show', function ($user) {
+            return $user->hasAnyRole(['IncidentsManager','Incidents']);
+        });
+
+        Gate::define('tag.list', function ($user) {
+            return $user->hasAnyRole(['IncidentsManager','Incidents']);
+        });
+
+        Gate::define('tag.store', function ($user) {
+            return $user->hasRole('IncidentsManager');
+        });
+
+        Gate::define('tag.update', function ($user) {
+            return $user->hasRole('IncidentsManager');
+        });
+
+        Gate::define('tag.destroy', function ($user) {
+            return $user->hasRole('IncidentsManager');
+        });
     }
 }
 

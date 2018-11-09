@@ -151,6 +151,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/incidents/tags','Tenant\Api\Incidents\IncidentTagsController@index');
             Route::get('/incidents/tags/{tag}','Tenant\Api\Incidents\IncidentTagsController@show');
             Route::post('/incidents/tags','Tenant\Api\Incidents\IncidentTagsController@store');
+            Route::put('/incidents/tags/{tag}','Tenant\Api\Incidents\IncidentTagsController@update');
+            Route::delete('/incidents/tags/{tag}','Tenant\Api\Incidents\IncidentTagsController@destroy');
 
             // INCIDENTS
             Route::get('/incidents', 'Tenant\Api\Incidents\IncidentsController@index');

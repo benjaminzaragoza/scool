@@ -19,7 +19,7 @@ class StoreIncidentTag extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('incident.store',$this->incident);
+        return Auth::user()->can('tag.store',$this->incident);
     }
 
     /**

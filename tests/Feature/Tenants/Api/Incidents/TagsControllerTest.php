@@ -38,6 +38,7 @@ class TagsControllerTest extends BaseTenantTest{
      */
     public function can_show_incident_tags()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);
@@ -147,8 +148,9 @@ class TagsControllerTest extends BaseTenantTest{
      */
     public function can_store_incident_tag()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
-        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
         Config::set('auth.providers.users.model', User::class);
         $user->assignRole($role);
         $this->actingAs($user,'api');
@@ -182,10 +184,92 @@ class TagsControllerTest extends BaseTenantTest{
         ]);
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function incident_user_cannot_store_incident_tag()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        Config::set('auth.providers.users.model', User::class);
+        $this->actingAs($user,'api');
+
+        $response = $this->json('POST','/api/v1/incidents/tags',$tag = [
+            'value' => 'wontfix',
+            'description' => 'No es vol resoldre la incidència',
+            'color' => '#342334'
+        ]);
+        $response->assertStatus(403);
+    }
+
     /**
      * @test
      */
     public function store_incident_tag_validation()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        $this->actingAs($user,'api');
+
+        $response = $this->json('POST','/api/v1/incidents/tags',[]);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function can_update_incident_tag()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        $this->actingAs($user,'api');
+
+        $tag= IncidentTag::create([
+            'value' => 'wontfix',
+            'description' => 'No és vol o no es pot resoldre',
+            'color' => '#456578'
+        ]);
+
+        $response = $this->json('PUT','/api/v1/incidents/tags/' . $tag->id, [
+            'value' => 'newwontfix',
+            'description' => 'description',
+            'color' => '#111111'
+        ]);
+        $response->assertSuccessful();
+
+        $result = json_decode($response->getContent());
+        $tag = $tag->refresh();
+        $this->assertEquals($tag->id, $result->id);
+        $this->assertEquals($tag->value, $result->value);
+        $this->assertEquals($tag->description, $result->description);
+        $this->assertEquals($tag->color, $result->color);
+    }
+
+    /** @test */
+    public function regular_user_cannot_update_incident_tag()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+
+        $tag= IncidentTag::create([
+            'value' => 'wontfix',
+            'description' => 'No és vol o no es pot resoldre',
+            'color' => '#456578'
+        ]);
+
+        $response = $this->json('PUT','/api/v1/incidents/tags/' . $tag->id, [
+            'value' => 'newwontfix',
+            'description' => 'description',
+            'color' => '#111111'
+        ]);
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function incidents_user_cannot_update_incident_tag()
     {
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'Incidents']);
@@ -193,7 +277,43 @@ class TagsControllerTest extends BaseTenantTest{
         $user->assignRole($role);
         $this->actingAs($user,'api');
 
-        $response = $this->json('POST','/api/v1/incidents/tags',[]);
-        $response->assertStatus(422);
+        $tag= IncidentTag::create([
+            'value' => 'wontfix',
+            'description' => 'No és vol o no es pot resoldre',
+            'color' => '#456578'
+        ]);
+
+        $response = $this->json('PUT','/api/v1/incidents/tags/' . $tag->id, [
+            'value' => 'newwontfix',
+            'description' => 'description',
+            'color' => '#111111'
+        ]);
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function can_destroy_incident_tag()
+    {
+        $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        $this->actingAs($user,'api');
+
+        $tag= IncidentTag::create([
+            'value' => 'wontfix',
+            'description' => 'No és vol o no es pot resoldre',
+            'color' => '#456578'
+        ]);
+
+        $response = $this->json('DELETE','/api/v1/incidents/tags/' . $tag->id);
+        $response->assertSuccessful();
+
+        $result = json_decode($response->getContent());
+        $this->assertNull(IncidentTag::find($tag->id));
+        $this->assertEquals($tag->id, $result->id);
+        $this->assertEquals($tag->value, $result->value);
+        $this->assertEquals($tag->description, $result->description);
+        $this->assertEquals($tag->color, $result->color);
     }
 }

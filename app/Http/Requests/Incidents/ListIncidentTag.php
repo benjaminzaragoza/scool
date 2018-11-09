@@ -19,7 +19,7 @@ class ListIncidentTag extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('incident.list',$this->incident);
+        return Auth::user()->can('tag.list',$this->incident);
     }
 
     /**

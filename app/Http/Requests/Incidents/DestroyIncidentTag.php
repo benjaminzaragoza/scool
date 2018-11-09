@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ShowIncidentTag.
+ * ClasDestroyIeIncidentTag.
  *
  * @package App\Http\Requests
  */
-class ShowIncidentTag extends FormRequest
+class DestroyIncidentTag extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class ShowIncidentTag extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('tag.show',$this->incident);
+        return Auth::user()->can('tag.destroy');
     }
 
     /**
