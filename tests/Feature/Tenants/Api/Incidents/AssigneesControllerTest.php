@@ -132,7 +132,7 @@ class AssigneesControllerTest extends BaseTenantTest{
     }
 
     /** @test */
-    public function refular_user_cannot_desassignee_incident_to_user()
+    public function regular_user_cannot_desassignee_incident_to_user()
     {
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
