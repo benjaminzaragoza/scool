@@ -188,19 +188,19 @@ class IncidentTest extends TestCase
 
         $incident= $incident->fresh();
         $mappedIncident = $incident->map();
-        $this->assertCount(3, $mappedIncident['comments']);
-        $this->assertEquals('Si us plau podeu aportar més info',$mappedIncident['comments'][0]['body']);
-        $this->assertEquals(2,$mappedIncident['comments'][0]['user_id']);
-        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][0]['user']->name);
-        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][0]['user']->email);
-        $this->assertEquals('En concret no funciona bla bla bla',$mappedIncident['comments'][1]['body']);
-        $this->assertEquals(3,$mappedIncident['comments'][1]['user']->id);
-        $this->assertEquals('Carles Puigdemont',$mappedIncident['comments'][1]['user']->name);
-        $this->assertEquals('krls@republicacatalana.cat',$mappedIncident['comments'][1]['user']->email);
-        $this->assertEquals('Ok! Solucionat',$mappedIncident['comments'][2]['body']);
-        $this->assertEquals(2,$mappedIncident['comments'][2]['user_id']);
-        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][2]['user']->name);
-        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][2]['user']->email);
+        $this->assertCount(3, $mappedIncident['tags']);
+        $this->assertEquals('Tag1',$mappedIncident['tags'][0]['value']);
+        $this->assertEquals('Tag 1 bla bla bla',$mappedIncident['tags'][0]['description']);
+        $this->assertEquals('#453423',$mappedIncident['tags'][0]['color']);
+
+        $this->assertEquals('Tag2',$mappedIncident['tags'][1]['value']);
+        $this->assertEquals('Tag 2 bla bla bla',$mappedIncident['tags'][1]['description']);
+        $this->assertEquals('#223423',$mappedIncident['tags'][1]['color']);
+
+        $this->assertEquals('Tag3',$mappedIncident['tags'][2]['value']);
+        $this->assertEquals('Tag 3 bla bla bla',$mappedIncident['tags'][2]['description']);
+        $this->assertEquals('#333423',$mappedIncident['tags'][2]['color']);
+
     }
 
     /**

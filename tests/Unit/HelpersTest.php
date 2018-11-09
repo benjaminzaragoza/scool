@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Models\Incident;
+use App\Models\Reply;
+use App\Models\User;
 use File;
 use Storage;
 use Tests\TestCase;

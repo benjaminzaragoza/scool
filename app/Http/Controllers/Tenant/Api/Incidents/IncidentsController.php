@@ -10,7 +10,6 @@ use App\Mail\Incidents\IncidentCreated;
 use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Incident;
 use App\Models\Setting;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Mail;
 

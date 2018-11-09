@@ -75,17 +75,4 @@ class Reply extends Model
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
         ];
     }
-
-    /**
-     * Map collection.
-     *
-     * @param $replies
-     * @return mixed
-     */
-    public static function mapCollection($replies)
-    {
-        return $replies->map(function($reply) {
-            return $reply->map();
-        });
-    }
 }
