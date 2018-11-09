@@ -26,7 +26,6 @@ Idees:
 - [X] Per defecte mostrar les incidències obertes
   - [X] IncidentManagers: mostrar totes les incidències obertes
   - [X] Usuaris normals: mostrar també totes les incidències obertes
-  - [ ] Usuaris normals: Accés directe només veure les meves incidències
 - [X] Mostrar només les incidències creades per mi. El usuari logat sempre és el primer al desplegable de creadors
 - [X] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
 - [ ] Mostrar per assignees. El usuari logat sempre és el primer al desplegable de assignees
@@ -42,17 +41,17 @@ Idees:
 - [X] Establir com un setting configurable el email dels gestors d'incidències
 - [ ] Per correu -> TODO
   - Creador de la incidència:
-     - [ ] Notificació/correu s'ha creat correctament la incidència
-     - [ ] Rebre notificació cada cop és modifica la incidència
-     - [ ] Rebre correu cada cop s'afegeix un comentari a la incidència
+     - [X] Notificació/correu s'ha creat correctament la incidència
+     - [X] Rebre notificació cada cop és modifica la incidència
+     - [X] Rebre correu cada cop s'afegeix un comentari a la incidència
      - [ ] Mencions?
   - Correu gestors incidències: (maninfo@iesebre.com)
     - [X] Settings: permetre indicar quin és el correu
     - [X] Settings table: key, value, keys poden tenir un prefix per evitar conflictes de noms
-    - [ ] Enviar email al crear una nova incidència
-    - [ ] Enviar email quan s'actualitza una incidència
-    - [ ] Enviar email cada cop hi ha un comentari nou 
-    - [ ] Enviar email quan es tanca una incidència    
+    - [X] Enviar email al crear una nova incidència
+    - [X] Enviar email quan s'actualitza una incidència
+    - [X] Enviar email cada cop hi ha un comentari nou 
+    - [X] Enviar email quan es tanca una incidència    
 - [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador)
 - [ ] Com Github tenir un botó que permeti unsubscribe to notifications
 - [ ] Telegram?
