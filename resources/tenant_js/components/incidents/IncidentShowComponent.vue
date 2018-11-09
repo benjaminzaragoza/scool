@@ -17,6 +17,7 @@
                     <v-icon left dark>lock_open</v-icon>
                     Oberta
                 </v-btn>
+                {{ incident.id }}
             </span>
             <v-toolbar-title>
                 <inline-text-field-edit-dialog :object="incident" field="subject" label="Títol" @save="refresh"></inline-text-field-edit-dialog>

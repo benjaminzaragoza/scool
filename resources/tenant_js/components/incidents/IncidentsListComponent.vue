@@ -237,6 +237,12 @@ export default {
       default: function () {
         return undefined
       }
+    },
+    incident: {
+      type: Object,
+      default: function () {
+        return undefined
+      }
     }
   },
   computed: {
@@ -324,6 +330,10 @@ export default {
     if (this.incidents === undefined) this.fetch()
     else this.$store.commit(mutations.SET_INCIDENTS, this.incidents)
     this.filters = Object.keys(filters)
+    if (this.incident) {
+      this.showDialog = this.incident.id
+      this.filter = 'all'
+    }
   }
 }
 </script>

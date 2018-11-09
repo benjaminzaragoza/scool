@@ -6,9 +6,13 @@ use App\Http\Requests\Incidents\DeleteIncident;
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Http\Requests\Incidents\StoreIncident;
+use App\Mail\IncidentCreated;
+use App\Mail\IncidentDeleted;
 use App\Models\Incident;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Mail;
 
 /**
  * Class IncidentsController.
@@ -36,7 +40,9 @@ class IncidentsController extends Controller
      */
     public function store(StoreIncident $request)
     {
-        return Incident::create($request->only('subject','description'))->assignUser($request->user())->map();
+        $incident = Incident::create($request->only('subject','description'))->assignUser($request->user());
+        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCreated($incident));
+        return $incident->load(['user'])->map();
     }
 
     /**
@@ -52,18 +58,6 @@ class IncidentsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param DeleteIncident $request
@@ -75,6 +69,8 @@ class IncidentsController extends Controller
     public function destroy(DeleteIncident $request, $tenant, Incident $incident)
     {
         $incident->delete();
+        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))
+            ->queue(new IncidentDeleted($incident->only(['id','user_id','subject','description'])));
         return $incident;
     }
 }

@@ -1,3 +1,4 @@
+
 # Settings
 
 Config és realitza amb el sistema habitual de fitxers de configuració i variables entorn amb valors per defecte.
@@ -7,7 +8,9 @@ Com l'accés a base de dades es farà a cada petició utilitzarem Cache
 Cada cop es modifiquin les settings cal fer un flush de la cache
 
 SettingsServiceProvider:
-- IncidentsServiceProvider: establir els valors de settings de incidencies
+- [X] IncidentsServiceProvider: establir els valors de settings de incidencies
+- [X] Sistema de settings amb Cache
+- [X] Component settings per a mòduls 
 
 # Incidents
 
@@ -31,7 +34,12 @@ Idees:
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
 - [ ] Mostrar per labels/tags
 
+**Tancament incidències**
+- [ ] Camp closed_by per saber qui ha tancat la incidència
+- [ ] Camp solved_by per saber qui l'ha resolt?
+
 **Notificacions/comunicació**
+- [X] Establir com un setting configurable el email dels gestors d'incidències
 - [ ] Per correu -> TODO
   - Creador de la incidència:
      - [ ] Notificació/correu s'ha creat correctament la incidència
@@ -39,8 +47,12 @@ Idees:
      - [ ] Rebre correu cada cop s'afegeix un comentari a la incidència
      - [ ] Mencions?
   - Correu gestors incidències: (maninfo@iesebre.com)
-    - Settings: permetre indicar quin és el correu
-    - Settings table: key, value, keys poden tenir un prefix per evitar conflictes de noms    
+    - [X] Settings: permetre indicar quin és el correu
+    - [X] Settings table: key, value, keys poden tenir un prefix per evitar conflictes de noms
+    - [ ] Enviar email al crear una nova incidència
+    - [ ] Enviar email quan s'actualitza una incidència
+    - [ ] Enviar email cada cop hi ha un comentari nou 
+    - [ ] Enviar email quan es tanca una incidència    
 - [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador)
 - [ ] Com Github tenir un botó que permeti unsubscribe to notifications
 - [ ] Telegram?

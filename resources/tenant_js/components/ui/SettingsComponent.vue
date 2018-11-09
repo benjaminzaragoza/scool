@@ -18,13 +18,9 @@
                     <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
                     <v-flex md12 v-for="(setting, key)  in settings" :key="setting.key">
                         <v-text-field
-                                :loading="loading"
-                                ref="subject_field"
                                 v-model="settings[key].value"
-                                name="managerEmail"
                                 :label="setting.label"
                                 :hint="setting.hint"
-                                autofocus
                         ></v-text-field>
                     </v-flex>
                 </v-layout>
@@ -58,6 +54,7 @@ export default {
       this.saving = true
       window.axios.put('/api/v1/settings/filter/incidents', { settings: this.settings }).then(response => {
         this.saving = false
+        this.$snackbar.showMessage('Configuració modificada correctament')
         this.$emit('close')
       }).catch(error => {
         this.$snackbar.showError(error)

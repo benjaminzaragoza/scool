@@ -2,10 +2,13 @@
 
 namespace Tests\Feature\Tenants\Api;
 
+use App\Mail\IncidentCreated;
+use App\Mail\IncidentDeleted;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mail;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
@@ -98,6 +101,7 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function can_store_incidents()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardo@jeans.com'
@@ -107,13 +111,19 @@ class IncidentsControllerTest extends BaseTenantTest {
         $user->assignRole($role);
         $this->actingAs($user,'api');
 
+        Mail::fake();
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+
         $response =  $this->json('POST','/api/v1/incidents',$incident = [
             'subject' => 'Ordinador Aula 36 no funciona',
             'description' => "El ordinador de l'aula 36 bla bla la"
         ]);
         $response->assertSuccessful();
-
         $createdIncident = json_decode($response->getContent());
+
+        Mail::assertQueued(IncidentCreated::class, function ($mail) use ($createdIncident, $user) {
+            return $mail->incident->id === $createdIncident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
 
         $this->assertEquals($createdIncident->subject,'Ordinador Aula 36 no funciona');
         $this->assertEquals($createdIncident->description,"El ordinador de l'aula 36 bla bla la");
@@ -217,6 +227,7 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function manager_can_delete_incidents()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);
@@ -234,7 +245,13 @@ class IncidentsControllerTest extends BaseTenantTest {
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
+        Mail::fake();
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id);
+        Mail::assertQueued(IncidentDeleted::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
         $response->assertSuccessful();
         $incident = $incident->fresh();
         $this->assertNull($incident);

@@ -1,8 +1,11 @@
 @extends('tenants.layouts.app')
 
 @section('content')
-    {{--{{ $incidents }}--}}
-    <incidents :incidents="{{ $incidents }}"></incidents>
+    @if ($incident ?? null)
+        <incidents :incidents="{{ $incidents }}" :incident="{{ $incident }}"></incidents>
+    @else
+        <incidents :incidents="{{ $incidents }}"></incidents>
+    @endif
 @endsection
 
 

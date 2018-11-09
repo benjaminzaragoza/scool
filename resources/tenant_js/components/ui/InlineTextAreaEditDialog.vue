@@ -5,7 +5,7 @@
             lazy
             @save="save"
             large
-    > <span v-if="marked" :class="{ limit: limit }" :title="value" v-html="markedValue"></span>
+    > <span v-if="marked" :class="{ limit: limit }" :title="markedValue" v-html="markedValue"></span>
       <span v-else :class="{ limit: limit }" :title="value" v-text="value"></span>
         <v-textarea
                 v-focus
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     markedValue () {
-      if (this.value) return marked(this.value, { sanitize: true })
+      if (this.value) return marked(this.value, { sanitize: true, breaks: false })
       return ''
     }
   },

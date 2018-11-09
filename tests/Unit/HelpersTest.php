@@ -245,4 +245,15 @@ class HelpersTest extends TestCase
         }
     }
 
+    /**
+     * @test
+     */
+    public function ellipsis()
+    {
+        $this->assertequals(ellipsis('Prova subject'),'Prova subject');
+        $this->assertequals(ellipsis(
+            'Prova subject molt llarg més de 50 caràcters sadsdadasasdsdasda'),
+            'Prova subject molt llarg més de 50 caràcters sad...');
+    }
+
 }

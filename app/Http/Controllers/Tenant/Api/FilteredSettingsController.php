@@ -41,12 +41,9 @@ class FilteredSettingsController extends Controller
         foreach ($request->settings as $settingKey => $settingValue) {
             if (!starts_with($settingValue['key'],$module)) continue;
             if ($setting = Setting::where('key',$settingValue['key'])->first()) {
-                dump($settingValue['value']);
                 $setting->value = $settingValue['value'];
                 $setting->save();
                 Cache::forget('setting_' . $settingValue['key']);
-            } else {
-                dd('CACA');
             }
         }
     }

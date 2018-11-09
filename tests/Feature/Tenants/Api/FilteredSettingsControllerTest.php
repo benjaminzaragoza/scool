@@ -68,9 +68,21 @@ class FilteredSettingsControllerTest extends BaseTenantTest{
         $this->actingAs($user,'api');
         $response = $this->json('PUT','/api/v1/settings/filter/incidents',[
             'settings' => [
-                'incidents_setting1' => 'NEWVALUE1',
-                'incidents_setting2' => 'NEWVALUE2',
-                'incidents_setting3' => 'NEWVALUE3',
+                [
+                    'id' => 1,
+                    'key' => 'incidents_setting1',
+                    'value' => 'NEWVALUE1',
+                ],
+                [
+                    'id' => 2,
+                    'key' => 'incidents_setting2',
+                    'value' => 'NEWVALUE2',
+                ],
+                [
+                    'id' => 3,
+                    'key' => 'incidents_setting3',
+                    'value' => 'NEWVALUE3',
+                ]
             ]
         ]);
 

@@ -71,5 +71,27 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertRedirect('/login');
     }
 
+    /**
+     * @test
+     */
+    public function can_show_incident()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        $this->actingAs($user,'api');
+        $incident= Incident::create([
+            'subject' => "No funciona res a l'aula 45",
+            'description' => 'Bla bla bla'
+        ])->assignUser($otherUser);
 
+        $response = $this->get('/incidents/' . $incident->id);
+        $response->assertSuccessful();
+        $response->assertViewIs('tenants.incidents.index');
+        $response->assertViewHas('incidents');
+        $response->assertViewHas('incident');
+    }
 }
