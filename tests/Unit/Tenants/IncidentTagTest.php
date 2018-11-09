@@ -40,7 +40,6 @@ class IncidentTagTest extends TestCase
         ]);
 
         $mappedTag = $tag->map();
-        dump($mappedTag);
         $this->assertEquals(1,$mappedTag['id']);
         $this->assertEquals('wontfix',$mappedTag['value']);
         $this->assertEquals('No és vol o no es pot resoldre',$mappedTag['description']);
