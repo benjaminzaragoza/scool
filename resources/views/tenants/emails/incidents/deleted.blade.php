@@ -1,5 +1,5 @@
 @php
-    $mappedIncident = $incident->load(['user','comments'])->map();
+    $mappedIncident = $incident->load(['user','comments','comments.user'])->map();
     $incidentState = $mappedIncident['closed_at'] ? 'Tancada' : 'Oberta';
     $incidentDate = $mappedIncident['closed_at'] ? $mappedIncident['formatted_closed_at_diff'] : '';
 @endphp
@@ -15,6 +15,16 @@
 # Descripció
 
 {{ $incident->description }}
+
+@if (count($incident->comments) > 0)
+# Comentaris
+@foreach ($incident->comments as $comment)
+**{{ $comment->user->name }}** - {{ $comment->formatted_created_at_diff }}
+@component('mail::panel')
+{{ $comment->body }}
+@endcomponent
+@endforeach
+@endif
 
 Atentament,<br>
 Manteniment d'informàtica {{ config('app.name') }}

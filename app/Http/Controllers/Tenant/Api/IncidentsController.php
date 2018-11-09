@@ -70,7 +70,7 @@ class IncidentsController extends Controller
     {
         $incident->delete();
         Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))
-            ->queue(new IncidentDeleted($incident->only(['id','user_id','subject','description'])));
+            ->queue(new IncidentDeleted($incident->only(['id','user_id','subject','description','created_at','updated_at'])));
         return $incident;
     }
 }

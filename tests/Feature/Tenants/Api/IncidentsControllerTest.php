@@ -255,6 +255,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertSuccessful();
         $incident = $incident->fresh();
         $this->assertNull($incident);
+
     }
 
 }

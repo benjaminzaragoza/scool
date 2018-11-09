@@ -25,7 +25,9 @@ class IncidentDeleted extends Mailable
     public function __construct(array $incident)
     {
         $this->incident = Incident::make($incident);
-        $this->incident->assignUser($incident['user_id']);
+        $this->incident->user_id = ((int) $incident['user_id']);
+        $this->incident->created_at = ( $incident['created_at']);
+        $this->incident->updated_at = ( $incident['updated_at']);
     }
 
     /**

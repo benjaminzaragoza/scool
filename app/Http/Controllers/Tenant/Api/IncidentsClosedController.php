@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Tenant\Api;
 
 use App\Http\Requests\Incidents\CloseIncident;
 use App\Http\Requests\Incidents\OpenIncident;
+use App\Mail\IncidentClosed;
+use App\Mail\IncidentOpened;
 use App\Models\Incident;
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
+use Mail;
 
 /**
  * Class ClosedIncidentsController.
@@ -24,7 +28,9 @@ class IncidentsClosedController extends Controller
      */
     public function store(CloseIncident $request, $tenant, Incident $incident)
     {
-        return $incident->close()->map();
+        $incident = $incident->close();
+        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentClosed($incident));
+        return $incident->map();
     }
 
     /**
@@ -37,6 +43,8 @@ class IncidentsClosedController extends Controller
      */
     public function destroy(OpenIncident $request, $tenant, Incident $incident)
     {
-        return $incident->open()->map();
+        $incident = $incident->open();
+        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentOpened($incident));
+        return $incident->map();
     }
 }
