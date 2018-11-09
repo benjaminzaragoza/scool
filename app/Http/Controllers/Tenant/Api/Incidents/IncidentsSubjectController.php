@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Tenant\Api\Incidents;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Incidents\UpdateSubjectIncident;
+use App\Mail\Incidents\IncidentSubjectModified;
 use App\Models\Incident;
+use App\Models\Setting;
+use Mail;
 
 /**
  * Class IncidentsSubjectController.
@@ -25,6 +28,7 @@ class IncidentsSubjectController extends Controller
     {
         $incident->subject = $request->subject;
         $incident->save();
+        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentSubjectModified($incident));
         return $incident->map();
     }
 }

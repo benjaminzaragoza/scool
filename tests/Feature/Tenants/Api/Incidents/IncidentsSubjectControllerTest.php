@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Mail\Incidents\IncidentSubjectModified;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mail;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
@@ -51,10 +53,17 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
             'subject' => 'No funciona PC12 Aula 45',
             'description' => 'bla bla bla'
         ]);
+
+        Mail::fake();
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+
         $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
             'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertSuccessful();
+        Mail::assertQueued(IncidentSubjectModified::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
         $result = json_decode($response->getContent());
         $this->assertEquals($incident->description,$result->description);
         $this->assertEquals($result->id,$incident->id);
@@ -101,10 +110,16 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
             'description' => 'bla bla bla'
         ])->assignUser($user);
 
+        Mail::fake();
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+
         $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
             'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertSuccessful();
+        Mail::assertQueued(IncidentSubjectModified::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
         $result = json_decode($response->getContent());
         $this->assertEquals($result->description,$result->description);
         $this->assertEquals($result->id,$incident->id);
@@ -158,7 +173,4 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
         ]);
         $response->assertStatus(403);
     }
-
-
-
 }
