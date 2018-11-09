@@ -12,8 +12,8 @@ export default {
     }
   },
   props: {
-    incident: {
-      type: Object,
+    tags: {
+      type: Array,
       required: true
     }
   },

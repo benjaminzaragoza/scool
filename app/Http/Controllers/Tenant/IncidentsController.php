@@ -6,6 +6,7 @@ use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Models\Incident;
 use App\Models\Setting;
+use App\Models\User;
 
 /**
  * Class IncidentsController.
@@ -23,6 +24,10 @@ class IncidentsController extends Controller{
     public function index(ListIncidents $request)
     {
         $incidents = Incident::getIncidents();
+        $assignee1 = factory(User::class)->create();
+        $assignee2 = factory(User::class)->create();
+        Incident::first()->addAssignee($assignee1);
+        Incident::first()->addAssignee($assignee2);
         return view('tenants.incidents.index',compact('incidents'));
     }
 

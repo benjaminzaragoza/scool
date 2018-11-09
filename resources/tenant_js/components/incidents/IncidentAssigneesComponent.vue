@@ -5,15 +5,15 @@
 <script>
 
 export default {
-  name: 'IncidentTags',
+  name: 'IncidentAssignees',
   data () {
     return {
       loading: false
     }
   },
   props: {
-    incident: {
-      type: Object,
+    assignees: {
+      type: Array,
       required: true
     }
   },

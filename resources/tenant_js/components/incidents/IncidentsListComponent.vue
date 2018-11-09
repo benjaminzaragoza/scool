@@ -124,12 +124,12 @@
                         </td>
                         <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
                         <td class="text-xs-left">
-                            Tags: {{incident.tags}}
-                            <incident-tags></incident-tags>
+                            {{incident.tags}}
+                            <incident-tags :tags="incident.tags"></incident-tags>
                         </td>
                         <td class="text-xs-left">
                             Assignees: {{incident.assignees}}
-                            <incident-assignees></incident-assignees>
+                            <incident-assignees :assignees="incident.assignees"></incident-assignees>
                         </td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>

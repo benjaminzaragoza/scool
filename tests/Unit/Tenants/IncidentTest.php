@@ -201,6 +201,18 @@ class IncidentTest extends TestCase
         $this->assertEquals('Tag 3 bla bla bla',$mappedIncident['tags'][2]['description']);
         $this->assertEquals('#333423',$mappedIncident['tags'][2]['color']);
 
+        // Assigneees
+        $assignee1 = factory(User::class)->create();
+        $assignee2 = factory(User::class)->create();
+        $incident->addAssignee($assignee1);
+        $incident->addAssignee($assignee2);
+
+        $incident= $incident->fresh();
+        $mappedIncident = $incident->map();
+        $this->assertCount(2, $mappedIncident['assignees']);
+        $this->assertEquals($assignee1->id,$mappedIncident['assignees'][0]['id']);
+        $this->assertEquals($assignee2->id,$mappedIncident['assignees'][1]['id']);
+
     }
 
     /**
