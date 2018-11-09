@@ -6,9 +6,12 @@ use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
 use App\Http\Requests\Incidents\StoreIncidentReplies;
 use App\Http\Requests\Incidents\UpdateIncidentReplies;
+use App\Mail\Incidents\IncidentCommentAdded;
 use App\Models\Incident;
 use App\Models\Reply;
+use App\Models\Setting;
 use Auth;
+use Mail;
 
 /**
  * Class IncidentRepliesController.
@@ -41,6 +44,7 @@ class IncidentRepliesController
             'user_id' => Auth::user()->id
         ]);
         $incident->addReply($reply);
+        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCommentAdded($incident));
         return $reply->map();
     }
 
