@@ -16,7 +16,7 @@ trait ApiURI
      */
     public function getApiURIAttribute()
     {
-        return strtolower(str_plural(class_basename($this)));
+        return strtolower(snake_case(str_plural(class_basename($this))));
     }
 
 }

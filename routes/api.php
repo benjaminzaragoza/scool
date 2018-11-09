@@ -167,6 +167,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/incidents/{incident}/replies/{reply}','Tenant\Api\Incidents\IncidentRepliesController@update');
             Route::delete('/incidents/{incident}/replies/{reply}','Tenant\Api\Incidents\IncidentRepliesController@destroy');
 
+            // IncidentTags
+            Route::get('/incidents/tags','Tenant\Api\Incidents\IncidentTagsController@index');
+            Route::get('/incidents/tags/{tag}','Tenant\Api\Incidents\IncidentTagsController@show');
+
             //BodyReplies
             Route::put('/replies/{reply}/body','Tenant\Api\Incidents\RepliesBodyController@update');
 
