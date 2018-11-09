@@ -944,6 +944,14 @@ if (!function_exists('initialize_gates')) {
         Gate::define('tag.destroy', function ($user) {
             return $user->hasRole('IncidentsManager');
         });
+
+        Gate::define('assignee.store', function ($user) {
+            return $user->hasRole('IncidentsManager');
+        });
+
+        Gate::define('assignee.destroy', function ($user) {
+            return $user->hasRole('IncidentsManager');
+        });
     }
 }
 

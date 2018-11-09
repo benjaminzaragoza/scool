@@ -14,6 +14,9 @@ SettingsServiceProvider:
 
 # Incidents
 
+BUGs:
+- [ ] No funciona el autocomplete als filtres (creadors i assignees)
+
 Idees:
 - Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
 

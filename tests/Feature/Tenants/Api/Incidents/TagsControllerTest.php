@@ -38,7 +38,6 @@ class TagsControllerTest extends BaseTenantTest{
      */
     public function can_show_incident_tags()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);
@@ -148,7 +147,6 @@ class TagsControllerTest extends BaseTenantTest{
      */
     public function can_store_incident_tag()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
         Config::set('auth.providers.users.model', User::class);

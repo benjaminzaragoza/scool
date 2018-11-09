@@ -186,4 +186,22 @@ class Incident extends Model
     {
         $this->addReply($reply);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function assignees()
+    {
+        return $this->belongsToMany(User::class,'assignees');
+    }
+
+    /**
+     * Add assignee.
+     *
+     * @param $assignee
+     */
+    public function addAssignee($assignee)
+    {
+        $this->assignees()->save($assignee);
+    }
 }

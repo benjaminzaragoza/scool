@@ -122,6 +122,12 @@
                         <td class="text-xs-left">
                             <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
+                        <td class="text-xs-left">
+                            TODO 1
+                        </td>
+                        <td class="text-xs-left">
+                            TODO 2
+                        </td>
                         <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
@@ -284,6 +290,8 @@ export default {
       headers.push({ text: 'Títol', value: 'subject' })
       headers.push({ text: 'Description', value: 'description' })
       if (this.filter !== 'open') headers.push({ text: 'Tancada', value: 'closed_at_timestamp' })
+      headers.push({ text: 'Etiquetes', value: 'todo' })
+      headers.push({ text: 'Assignada', value: 'todo' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       // user_email is added as value to allow searching by email!
