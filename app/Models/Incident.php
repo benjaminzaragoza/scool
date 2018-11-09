@@ -204,4 +204,22 @@ class Incident extends Model
     {
         $this->assignees()->save($assignee);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(IncidentTag::class,'tagged_incidents')->withTimestamps();
+    }
+
+    /**
+     * Add tag.
+     *
+     * @param $assignee
+     */
+    public function addTag($tag)
+    {
+        $this->tags()->save($tag);
+    }
 }

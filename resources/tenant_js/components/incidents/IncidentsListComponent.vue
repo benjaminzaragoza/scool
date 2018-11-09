@@ -122,13 +122,15 @@
                         <td class="text-xs-left">
                             <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
-                            TODO 1
-                        </td>
-                        <td class="text-xs-left">
-                            TODO 2
-                        </td>
                         <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
+                        <td class="text-xs-left">
+                            Tags: {{incident.tags}}
+                            <incident-tags></incident-tags>
+                        </td>
+                        <td class="text-xs-left">
+                            Assignees: {{incident.assignees}}
+                            <incident-assignees></incident-assignees>
+                        </td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
@@ -166,6 +168,8 @@ import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowComponent from './IncidentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
+import IncidentTagsComponent from './IncidentTagsComponent'
+import IncidentAssigneesComponent from './IncidentAssigneesComponent'
 import Settings from '../ui/SettingsComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
@@ -200,7 +204,9 @@ export default {
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
     'user-select': UserSelect,
     'user-avatar': UserAvatar,
-    'settings': Settings
+    'settings': Settings,
+    'incident-tags': IncidentTagsComponent,
+    'incident-assignees': IncidentAssigneesComponent
   },
   data () {
     return {

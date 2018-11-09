@@ -20,6 +20,12 @@ class CreateTenantIncidentTagsTable extends Migration
             $table->string('color')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('tagged_incidents', function (Blueprint $table) {
+            $table->unsignedInteger('incident_id');
+            $table->unsignedInteger('incident_tag_id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -30,5 +36,6 @@ class CreateTenantIncidentTagsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('incident_tags');
+        Schema::dropIfExists('tagged_incidents');
     }
 }

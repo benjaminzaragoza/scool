@@ -4,6 +4,7 @@ namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
 use App\Models\Incident;
+use App\Models\IncidentTag;
 use App\Models\Reply;
 use App\Models\User;
 use Carbon\Carbon;
@@ -99,6 +100,7 @@ class IncidentTest extends TestCase
         $this->assertTrue($mappedIncident['user']->is($user));
         $this->assertEquals('No funciona pc2 aula 15',$mappedIncident['subject']);
         $this->assertEquals('bla bla bla',$mappedIncident['description']);
+
         $this->assertNotNull($mappedIncident['created_at']);
         $this->assertNotNull($mappedIncident['updated_at']);
         $this->assertNotNull($mappedIncident['created_at_timestamp']);
@@ -163,6 +165,42 @@ class IncidentTest extends TestCase
         $this->assertNotNull($mappedIncident['closed_at']);
         $this->assertNotNull($mappedIncident['formatted_closed_at']);
         $this->assertNotNull($mappedIncident['closed_at_timestamp']);
+
+        // TAGS
+        $tag1 = IncidentTag::create([
+            'value' => 'Tag1',
+            'description' => 'Tag 1 bla bla bla',
+            'color' => '#453423'
+        ]);
+        $tag2 = IncidentTag::create([
+            'value' => 'Tag2',
+            'description' => 'Tag 2 bla bla bla',
+            'color' => '#223423'
+        ]);
+        $tag3 = IncidentTag::create([
+            'value' => 'Tag3',
+            'description' => 'Tag 3 bla bla bla',
+            'color' => '#333423'
+        ]);
+        $incident->addTag($tag1);
+        $incident->addTag($tag2);
+        $incident->addTag($tag3);
+
+        $incident= $incident->fresh();
+        $mappedIncident = $incident->map();
+        $this->assertCount(3, $mappedIncident['comments']);
+        $this->assertEquals('Si us plau podeu aportar més info',$mappedIncident['comments'][0]['body']);
+        $this->assertEquals(2,$mappedIncident['comments'][0]['user_id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][0]['user']->name);
+        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][0]['user']->email);
+        $this->assertEquals('En concret no funciona bla bla bla',$mappedIncident['comments'][1]['body']);
+        $this->assertEquals(3,$mappedIncident['comments'][1]['user']->id);
+        $this->assertEquals('Carles Puigdemont',$mappedIncident['comments'][1]['user']->name);
+        $this->assertEquals('krls@republicacatalana.cat',$mappedIncident['comments'][1]['user']->email);
+        $this->assertEquals('Ok! Solucionat',$mappedIncident['comments'][2]['body']);
+        $this->assertEquals(2,$mappedIncident['comments'][2]['user_id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][2]['user']->name);
+        $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][2]['user']->email);
     }
 
     /**
@@ -277,6 +315,27 @@ class IncidentTest extends TestCase
         $this->assertCount(1,$incident->replies);
         $this->assertTrue($incident->replies->first()->is($reply));
         $this->assertEquals('Si us plau podeu detallar una mica més el problema?', $incident->replies->first()->body);
+    }
+
+    /**
+     * @test
+     */
+    public function addTag()
+    {
+        $incident = Incident::create([
+            'subject' => 'No funciona pc2 aula 15',
+            'description' => 'bla bla bla',
+        ]);
+        $tag = IncidentTag::create([
+            'value' => 'Tag1',
+            'description' => 'Tag 1 bla bla bla',
+            'color' => '#453423'
+        ]);
+        $this->assertCount(0,$incident->tags);
+        $incident->addTag($tag);
+        $incident = $incident->fresh();
+        $this->assertCount(1,$incident->tags);
+        $this->assertTrue($incident->tags[0]->is($tag));
     }
 
     /**
