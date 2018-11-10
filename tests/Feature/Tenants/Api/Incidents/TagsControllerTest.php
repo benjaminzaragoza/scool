@@ -228,7 +228,8 @@ class TagsControllerTest extends BaseTenantTest{
         $tag= IncidentTag::create([
             'value' => 'wontfix',
             'description' => 'No és vol o no es pot resoldre',
-            'color' => '#456578'
+            'color' => '#456578',
+            'icon' => 'home'
         ]);
 
         $response = $this->json('PUT','/api/v1/incidents/tags/' . $tag->id, [

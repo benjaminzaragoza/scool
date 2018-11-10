@@ -48,6 +48,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertViewIs('tenants.incidents.index');
         $response->assertViewHas('incidents');
         $response->assertViewHas('incident_users');
+        $response->assertViewHas('tags');
     }
 
     /**
@@ -93,5 +94,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertViewIs('tenants.incidents.index');
         $response->assertViewHas('incidents');
         $response->assertViewHas('incident');
+        $response->assertViewHas('incident_users');
+        $response->assertViewHas('tags');
     }
 }

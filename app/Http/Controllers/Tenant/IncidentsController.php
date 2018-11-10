@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Models\Incident;
+use App\Models\IncidentTag;
 use App\Models\Setting;
 use App\Models\User;
 
@@ -25,7 +26,8 @@ class IncidentsController extends Controller{
     {
         $incidents = Incident::getIncidents();
         $incident_users = Incident::usersWithIncidentsRoles();
-        return view('tenants.incidents.index',compact('incidents','incident_users'));
+        $tags = IncidentTag::all();
+        return view('tenants.incidents.index',compact('incidents','incident_users','tags'));
     }
 
     /**
@@ -38,6 +40,7 @@ class IncidentsController extends Controller{
     {
         $incidents = Incident::getIncidents();
         $incident_users = Incident::usersWithIncidentsRoles();
-        return view('tenants.incidents.index',compact(['incidents','incident','incident_users']));
+        $tags = IncidentTag::all();
+        return view('tenants.incidents.index',compact(['incidents','incident','incident_users','tags']));
     }
 }

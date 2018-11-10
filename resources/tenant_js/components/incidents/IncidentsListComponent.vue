@@ -68,16 +68,42 @@
                                                :users="filteredAssignees"
                                                v-model="assignee"
                                        ></user-select>
+                                       <!--<v-autocomplete-->
+                                               <!--v-model="selectedTags"-->
+                                               <!--:items="dataTags"-->
+                                               <!--attach-->
+                                               <!--chips-->
+                                               <!--label="Etiquetes"-->
+                                               <!--multiple-->
+                                       <!--&gt;</v-autocomplete>-->
                                    </v-flex>
                                    <v-flex xs4>
-                                       <v-select
+                                       <v-autocomplete
                                                v-model="selectedTags"
-                                               :items="tags"
+                                               :items="dataTags"
                                                attach
                                                chips
                                                label="Etiquetes"
                                                multiple
-                                       ></v-select>
+                                       >
+                                            <template slot="selection" slot-scope="data">
+                                                <v-chip
+                                                        label
+                                                        @input="data.parent.selectItem(data.item)"
+                                                        :selected="data.selected"
+                                                        class="chip--select-multi"
+                                                        :color="data.item.color"
+                                                        text-color="white"
+                                                        :key="JSON.stringify(data.item)"
+                                                ><v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
+                                            </template>
+                                            <template slot="item" slot-scope="data">
+                                                <v-checkbox v-model="data.tile.props.value"></v-checkbox>
+                                                <v-chip label :title="data.item.description" :color="data.item.color" text-color="white">
+                                                    <v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}
+                                                </v-chip>
+                                            </template>
+                                       </v-autocomplete>
                                    </v-flex>
                                </v-layout>
                           </v-flex>
@@ -220,7 +246,7 @@ export default {
       },
       filter: 'open',
       selectedTags: [],
-      tags: ['Tag1', 'Tag2', 'Tag3'],
+      dataTags: this.tags,
       creator: null,
       assignee: null,
       assignees: this.incidentUsers
@@ -240,6 +266,12 @@ export default {
       }
     },
     incidentUsers: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+    tags: {
       type: Array,
       default: function () {
         return []
@@ -305,23 +337,6 @@ export default {
     }
   },
   methods: {
-    // moveLoggedUserToFirstPosition2 (users) {
-    //   console.log('users')
-    //   console.log(users)
-    //   console.log('window.user.id')
-    //   console.log(window.user.id)
-    //   let loggedUser = users.find(user => {
-    //     console.log('user:')
-    //     console.log(user)
-    //     console.log('A window.user.id:')
-    //     console.log(window.user.id)
-    //     return user.id === window.user.id
-    //   })
-    //   console.log(loggedUser)
-    //   users.splice(users.indexOf(loggedUser), 1)
-    //   users.unshift(loggedUser)
-    //   return users
-    // },
     moveLoggedUserToFirstPosition (users) {
       let loggedUser = users.find(user => {
         return user.id === window.user.id
