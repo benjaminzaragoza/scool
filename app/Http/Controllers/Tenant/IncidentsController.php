@@ -37,6 +37,7 @@ class IncidentsController extends Controller{
     public function show(ShowIncident $request, $tenant, Incident $incident)
     {
         $incidents = Incident::getIncidents();
-        return view('tenants.incidents.index',compact(['incidents','incident']));
+        $incident_users = Incident::userWithRoleIncidents();
+        return view('tenants.incidents.index',compact(['incidents','incident','incident_users']));
     }
 }

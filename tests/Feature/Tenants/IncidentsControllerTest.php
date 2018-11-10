@@ -78,7 +78,6 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function can_show_incident()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $otherUser = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'Incidents']);
