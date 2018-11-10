@@ -16,6 +16,9 @@ class IncidentTag extends Model
 
     protected $guarded = [];
 
+    /**
+     * @return array
+     */
     public function map()
     {
         return [
@@ -23,6 +26,7 @@ class IncidentTag extends Model
             'value' => $this->value,
             'description' => $this->description,
             'color' => $this->color,
+            'icon' => $this->icon,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_at_timestamp' => $this->created_at_timestamp,

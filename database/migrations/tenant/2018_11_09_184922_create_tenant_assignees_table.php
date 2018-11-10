@@ -21,6 +21,7 @@ class CreateTenantAssigneesTable extends Migration
             $table->unsignedInteger('incident_id');
             $table->unsignedInteger('user_id');
             $table->timestamps();
+            $table->unique(['incident_id', 'user_id']);
         });
     }
 

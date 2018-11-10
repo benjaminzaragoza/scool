@@ -10,10 +10,12 @@
                         <v-list-tile-title>Llençol de places amb titulars</v-list-tile-title>
                     </v-list-tile>
                     <v-list-tile href="/jobs/sheet_active_users" target="_blank">
-                        <v-list-tile-title>TODO 1</v-list-tile-title>
+                        <v-list-tile-title>TODO 1 Estadística 1</v-list-tile-title>
+                        <!-- TODO-->
                     </v-list-tile>
                     <v-list-tile href="/jobs/sheet_substitutes" target="_blank">
-                        <v-list-tile-title>TODO 2</v-list-tile-title>
+                        <v-list-tile-title>TODO 2 Estadística 2</v-list-tile-title>
+                        <!-- TODO-->
                     </v-list-tile>
                 </v-list>
             </v-menu>
@@ -124,12 +126,10 @@
                         </td>
                         <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
                         <td class="text-xs-left">
-                            {{incident.tags}}
-                            <incident-tags :tags="incident.tags"></incident-tags>
+                            <incident-tags @refresh="refresh" :tags="incident.tags"></incident-tags>
                         </td>
                         <td class="text-xs-left">
-                            Assignees: {{incident.assignees}}
-                            <incident-assignees :assignees="incident.assignees"></incident-assignees>
+                            <incident-assignees @refresh="refresh" :assignees="incident.assignees" :incident="incident" :incident-users="incidentUsers"></incident-assignees>
                         </td>
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
@@ -223,24 +223,7 @@ export default {
       tags: ['Tag1', 'Tag2', 'Tag3'],
       creator: null,
       assignee: null,
-      assignees: [{
-        id: 1,
-        hashid: 'MX',
-        name: 'Sergi Tur',
-        email: 'sergiturbadenas@gmail.com'
-      },
-      {
-        id: 2,
-        hashid: 'RX',
-        name: 'Dolors Sanjuan',
-        email: 'dolors@iesebre.com'
-      },
-      {
-        id: 3,
-        hashid: 'MX',
-        name: 'Pepa Parda',
-        email: 'pepaparda@gmail.com'
-      }]
+      assignees: this.incidentUsers
     }
   },
   props: {
@@ -254,6 +237,12 @@ export default {
       type: Object,
       default: function () {
         return undefined
+      }
+    },
+    incidentUsers: {
+      type: Array,
+      default: function () {
+        return []
       }
     }
   },
@@ -284,6 +273,12 @@ export default {
     filteredIncidents: function () {
       let filteredByState = filters[this.filter](this.dataIncidents)
       if (this.creator) return filteredByState.filter(incident => { return incident.user_id === this.creator })
+      if (this.assignee) {
+        return filteredByState.filter(incident => {
+          return incident.assignees.map(assignee => assignee['id']).includes(this.assignee)
+        })
+      }
+      // const assigneesIds = this.assignees.map(assignee => assignee['id'])
       return filteredByState
     },
     headers () {
@@ -296,8 +291,8 @@ export default {
       headers.push({ text: 'Títol', value: 'subject' })
       headers.push({ text: 'Description', value: 'description' })
       if (this.filter !== 'open') headers.push({ text: 'Tancada', value: 'closed_at_timestamp' })
-      headers.push({ text: 'Etiquetes', value: 'todo' })
-      headers.push({ text: 'Assignada', value: 'todo' })
+      headers.push({ text: 'Etiquetes', value: 'tags' })
+      headers.push({ text: 'Assignada', value: 'assignees' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       // user_email is added as value to allow searching by email!
@@ -322,9 +317,6 @@ export default {
     },
     showAll () {
       this.filter = 'all'
-    },
-    settings () {
-      console.log('TODO settings')
     },
     refresh () {
       this.fetch()

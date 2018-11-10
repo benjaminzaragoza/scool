@@ -8,6 +8,8 @@ use App\Models\IncidentTag;
 use App\Models\Reply;
 use App\Models\User;
 use Carbon\Carbon;
+use Config;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -365,5 +367,20 @@ class IncidentTest extends TestCase
         $incident = $incident->fresh();
         $this->assertCount(1,$incident->assignees);
         $this->assertTrue($incident->assignees[0]->is($assignee));
+    }
+
+    /** @test */
+    public function usersWithRoleIncidents()
+    {
+        $this->assertCount(0, Incident::userWithRoleIncidents());
+        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        Config::set('auth.providers.users.model', User::class);
+        $user1 = factory(User::class)->create();
+        $user1->assignRole($role);
+        $user2 = factory(User::class)->create();
+        $user2->assignRole($role);
+        $user3 = factory(User::class)->create();
+        $user3->assignRole($role);
+        $this->assertCount(3, $incidentUsers = Incident::userWithRoleIncidents());
     }
 }

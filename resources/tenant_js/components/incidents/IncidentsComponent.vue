@@ -6,7 +6,7 @@
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex xs12>
-                    <incidents-list :incidents="incidents" :incident="incident"></incidents-list>
+                    <incidents-list :incidents="incidents" :incident="incident" :incident-users="incidentUsers"></incidents-list>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -32,6 +32,12 @@ export default {
       type: Object,
       default: function () {
         return undefined
+      }
+    },
+    incidentUsers: {
+      type: Array,
+      default: function () {
+        return []
       }
     }
   }

@@ -36,13 +36,16 @@ class IncidentTagTest extends TestCase
         $tag= IncidentTag::create([
             'value' => 'wontfix',
             'description' => 'No és vol o no es pot resoldre',
-            'color' => '#456578'
+            'color' => '#456578',
+            'icon' => 'label'
         ]);
 
         $mappedTag = $tag->map();
         $this->assertEquals(1,$mappedTag['id']);
         $this->assertEquals('wontfix',$mappedTag['value']);
         $this->assertEquals('No és vol o no es pot resoldre',$mappedTag['description']);
+        $this->assertEquals('#456578',$mappedTag['color']);
+        $this->assertEquals('label',$mappedTag['icon']);
         $this->assertNotNull($mappedTag['created_at']);
         $this->assertNotNull($mappedTag['updated_at']);
         $this->assertNotNull($mappedTag['created_at_timestamp']);

@@ -24,11 +24,8 @@ class IncidentsController extends Controller{
     public function index(ListIncidents $request)
     {
         $incidents = Incident::getIncidents();
-        $assignee1 = factory(User::class)->create();
-        $assignee2 = factory(User::class)->create();
-        Incident::first()->addAssignee($assignee1);
-        Incident::first()->addAssignee($assignee2);
-        return view('tenants.incidents.index',compact('incidents'));
+        $incident_users = Incident::userWithRoleIncidents();
+        return view('tenants.incidents.index',compact('incidents','incident_users'));
     }
 
     /**

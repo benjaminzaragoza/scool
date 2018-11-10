@@ -7,6 +7,7 @@ use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 /**
  * Class Incident.
@@ -223,5 +224,17 @@ class Incident extends Model
     public function addTag($tag)
     {
         $this->tags()->save($tag);
+    }
+
+    /**
+     * Get users with role incident
+     */
+    public static function userWithRoleIncidents()
+    {
+        try {
+            return User::role('Incidents')->get();
+        } catch (RoleDoesNotExist $e) {
+            return collect([]);
+        }
     }
 }
