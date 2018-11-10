@@ -24,7 +24,7 @@ class IncidentsController extends Controller{
     public function index(ListIncidents $request)
     {
         $incidents = Incident::getIncidents();
-        $incident_users = Incident::userWithRoleIncidents();
+        $incident_users = Incident::usersWithIncidentsRoles();
         return view('tenants.incidents.index',compact('incidents','incident_users'));
     }
 
@@ -37,7 +37,7 @@ class IncidentsController extends Controller{
     public function show(ShowIncident $request, $tenant, Incident $incident)
     {
         $incidents = Incident::getIncidents();
-        $incident_users = Incident::userWithRoleIncidents();
+        $incident_users = Incident::usersWithIncidentsRoles();
         return view('tenants.incidents.index',compact(['incidents','incident','incident_users']));
     }
 }

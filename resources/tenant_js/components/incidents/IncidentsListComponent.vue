@@ -65,7 +65,7 @@
                                    <v-flex xs4>
                                        <user-select
                                                label="Assignada a:"
-                                               :users="assignees"
+                                               :users="filteredAssignees"
                                                v-model="assignee"
                                        ></user-select>
                                    </v-flex>
@@ -247,6 +247,10 @@ export default {
     }
   },
   computed: {
+    filteredAssignees () {
+      if (window.user && window.user.id) return this.moveLoggedUserToFirstPosition(this.assignees)
+      return this.assignees
+    },
     creators () {
       let creators = this.dataIncidents ? this.dataIncidents.map(incident => {
         return {
@@ -301,12 +305,31 @@ export default {
     }
   },
   methods: {
+    // moveLoggedUserToFirstPosition2 (users) {
+    //   console.log('users')
+    //   console.log(users)
+    //   console.log('window.user.id')
+    //   console.log(window.user.id)
+    //   let loggedUser = users.find(user => {
+    //     console.log('user:')
+    //     console.log(user)
+    //     console.log('A window.user.id:')
+    //     console.log(window.user.id)
+    //     return user.id === window.user.id
+    //   })
+    //   console.log(loggedUser)
+    //   users.splice(users.indexOf(loggedUser), 1)
+    //   users.unshift(loggedUser)
+    //   return users
+    // },
     moveLoggedUserToFirstPosition (users) {
-      let loggedUser = users.find(creator => {
-        return creator.id === window.user.id
+      let loggedUser = users.find(user => {
+        return user.id === window.user.id
       })
-      users.splice(users.indexOf(loggedUser), 1)
-      users.unshift(loggedUser)
+      if (loggedUser) {
+        users.splice(users.indexOf(loggedUser), 1)
+        users.unshift(loggedUser)
+      }
       return users
     },
     showClosedIncidents () {

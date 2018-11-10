@@ -14,11 +14,19 @@ SettingsServiceProvider:
 
 # Incidents
 
-BUGs:
+BUGS:
 - [ ] No funciona el autocomplete als filtres (creadors i assignees)
 
 Idees:
 - Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
+
+# ROLS
+
+A settings o similar:
+- [ ] Gestionar la llista usuaris que tinfran el rol Incidents
+- [ ] En principi tots els professors
+- [ ] Però també hi ha altres com becaris o altres tercers possibles ()
+- [ ] Gestionar els managers d'incidències (Rol Incidents Manager)
 
 **Filtres**:
 
@@ -31,16 +39,34 @@ Idees:
   - [X] Usuaris normals: mostrar també totes les incidències obertes
 - [X] Mostrar només les incidències creades per mi. El usuari logat sempre és el primer al desplegable de creadors
 - [X] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
-- [ ] Mostrar per assignees. El usuari logat sempre és el primer al desplegable de assignees
+- [X] Mostrar per assignees. 
+  - [ ] El usuari logat sempre és el primer al desplegable de assignees
 - [ ] Assignades a mi. 
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
 - [ ] Mostrar per labels/tags
+
+**Assignacions**
+- [X] Es poden assignar/dessasignar incidències a múltiples usuaris amb el rol Incidents (usuaris d'incidències)
+- [X] S'envia correu electrònic
+- [ ] Mostrar els assignees a la vista show d'una incidència concreta
+- [ ] Mostrar els assignees als emails 
+- [X] Es pot filtrar incidències per assignacions
+- [ ] Settings: poder indicar les persones a les que és més habitual assignar incidències
+  - Sortiran les primeres a la llista de possibles assignees
+- [X] Només poden assignar incidències els usuaris amb permissos (ara Rol IncidentsManager)
+
+**Etiquetes**
+- [ ] Mostrar les etiquetes a la vista show d'una incidència concreta
+- [ ] Mostrar les etiquetes als emails 
+- [ ] Es pot filtrar incidències per etiquetes
+- [X] Només poden assignar etiquetes els usuaris amb permissos (ara Rol IncidentsManager)
 
 **Tancament incidències**
 - [ ] Camp closed_by per saber qui ha tancat la incidència
 - [ ] Camp solved_by per saber qui l'ha resolt?
 
 **Notificacions/comunicació**
+- [X]
 - [X] Establir com un setting configurable el email dels gestors d'incidències
 - [ ] Per correu -> TODO
   - Creador de la incidència:

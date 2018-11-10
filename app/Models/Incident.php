@@ -227,7 +227,7 @@ class Incident extends Model
     }
 
     /**
-     * Get users with role incident
+     * Get users with role Incidents
      */
     public static function userWithRoleIncidents()
     {
@@ -237,4 +237,30 @@ class Incident extends Model
             return collect([]);
         }
     }
+
+    /**
+     * Get users with role incident
+     */
+    public static function userWithRoleIncidentsManager()
+    {
+        try {
+            return User::role('IncidentsManager')->get();
+        } catch (RoleDoesNotExist $e) {
+            return collect([]);
+        }
+    }
+
+    /**
+     * Get users with role incident
+     */
+    public static function usersWithIncidentsRoles()
+    {
+        try {
+            return User::role(['IncidentsManager','Incidents'])->get();
+        } catch (RoleDoesNotExist $e) {
+            return collect([]);
+        }
+    }
+
+
 }

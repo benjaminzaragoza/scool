@@ -383,4 +383,38 @@ class IncidentTest extends TestCase
         $user3->assignRole($role);
         $this->assertCount(3, $incidentUsers = Incident::userWithRoleIncidents());
     }
+
+    /** @test */
+    public function usersWithRoleIncidentsManager()
+    {
+        $this->assertCount(0, Incident::userWithRoleIncidentsManager());
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user1 = factory(User::class)->create();
+        $user1->assignRole($role);
+        $user2 = factory(User::class)->create();
+        $user2->assignRole($role);
+        $user3 = factory(User::class)->create();
+        $user3->assignRole($role);
+        $this->assertCount(3, $incidentUsers = Incident::userWithRoleIncidentsManager());
+    }
+
+    /** @test */
+    public function usersWithIncidentsRoles()
+    {
+        $this->assertCount(0, Incident::usersWithIncidentsRoles());
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user1 = factory(User::class)->create();
+        $user1->assignRole($role);
+        $user2 = factory(User::class)->create();
+        $user2->assignRole($role);
+        $user3 = factory(User::class)->create();
+        $user3->assignRole($role);
+        $user4 = factory(User::class)->create();
+        $role2 = Role::firstOrCreate(['name' => 'Incidents']);
+        $user4->assignRole($role2);
+        $this->assertCount(4, $incidentUsers = Incident::usersWithIncidentsRoles());
+    }
+
 }
