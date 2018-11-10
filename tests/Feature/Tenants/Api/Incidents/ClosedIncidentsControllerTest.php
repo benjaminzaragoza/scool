@@ -41,7 +41,6 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
      */
     public function user_can_close_owned_incidents()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);
@@ -146,7 +145,6 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
      */
     public function user_can_open_owned_incidents()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);

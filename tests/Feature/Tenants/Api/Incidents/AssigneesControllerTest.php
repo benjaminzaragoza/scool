@@ -94,7 +94,6 @@ class AssigneesControllerTest extends BaseTenantTest{
     /** @test */
     public function can_desassignee_incident_to_user()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
         Config::set('auth.providers.users.model', User::class);

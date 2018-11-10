@@ -57,7 +57,6 @@ class JobsSheetControllerTest extends BaseTenantTest
     /** @test */
     public function can_see_jobs_sheet_for_holders()
     {
-        $this->withoutExceptionHandling();
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();

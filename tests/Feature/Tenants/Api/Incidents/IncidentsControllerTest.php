@@ -227,7 +227,6 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function manager_can_delete_incidents()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);

@@ -38,7 +38,6 @@ class SendWelcomeEmailVerificationTest extends BaseTenantTest
     /** @test */
     public function user_manager_can_send_welcome_email()
     {
-        $this->withoutExceptionHandling();
         Notification::fake();
         $manager = create(User::class);
         $this->actingAs($manager,'api');
