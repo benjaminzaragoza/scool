@@ -40,7 +40,6 @@ class GoogleUsersWatchControllerTest extends BaseTenantTest
      */
     public function watch_google_users()
     {
-//        $this->withoutExceptionHandling();
         Queue::fake();
 
         Config::set('google.service.enable', true);

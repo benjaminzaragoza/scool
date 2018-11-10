@@ -101,7 +101,6 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function can_store_incidents()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardo@jeans.com'
@@ -220,7 +219,6 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
         $response->assertStatus(403);
     }
-
 
     /**
      * @test

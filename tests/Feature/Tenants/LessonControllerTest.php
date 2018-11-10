@@ -35,7 +35,6 @@ class LessonControllerTest extends BaseTenantTest
     /** @test */
     public function can_see_subject_lessons_management()
     {
-        $this->withoutExceptionHandling();
         initialize_subjects();
         initialize_fake_lessons();
         $manager = create(User::class);

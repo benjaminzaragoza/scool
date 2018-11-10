@@ -36,7 +36,6 @@ class UsersControllerTest extends BaseTenantTest
     /** @test */
     public function user_manager_can_see_users()
     {
-        $this->withoutExceptionHandling();
         $manager = create(User::class);
         $this->actingAs($manager,'api');
         $role = Role::firstOrCreate([

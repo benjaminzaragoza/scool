@@ -46,7 +46,6 @@ class MediaControllerTest extends BaseTenantTest
     /** @test */
     public function cand_download_media()
     {
-        $this->withoutExceptionHandling();
 
         // some test function
         Storage::fake('images');

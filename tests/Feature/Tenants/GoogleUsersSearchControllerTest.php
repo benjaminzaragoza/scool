@@ -39,7 +39,6 @@ class GoogleUsersSearchControllerTest extends BaseTenantTest
      */
     public function search_google_user()
     {
-        $this->withoutExceptionHandling();
         config_google_api();
         tune_google_client();
         $usersManager = create(User::class);

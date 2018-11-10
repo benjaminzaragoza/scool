@@ -38,7 +38,6 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function can_see_incidents()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);

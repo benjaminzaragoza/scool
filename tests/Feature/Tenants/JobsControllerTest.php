@@ -62,7 +62,6 @@ class JobsControllerTest extends BaseTenantTest
     /** @test */
     public function show_jobs_management_jobs_data()
     {
-        $this->withoutExceptionHandling();
 //        $this->markTestSkipped('TODO');
         $staffManager = create(User::class);
         $this->actingAs($staffManager);
@@ -346,7 +345,6 @@ class JobsControllerTest extends BaseTenantTest
     /** @test */
     public function update_job()
     {
-        $this->withoutExceptionHandling();
         $staffManager = create(User::class);
         $role = Role::firstOrCreate(['name' => 'StaffManager']);
         Config::set('auth.providers.users.model', User::class);

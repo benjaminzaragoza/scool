@@ -87,7 +87,6 @@ class UserTenantsControllerTest extends TestCase
     /** @test */
     public function logged_user_can_create_tenant()
     {
-        $this->withoutExceptionHandling();
         $user = create(User::class);
         $this->actingAs($user,'api');
 

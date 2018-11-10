@@ -167,7 +167,6 @@ class JobSubstitutionsControllerTest extends BaseTenantTest
 
     public function regular_user_cannot_add_substitute_to_job()
     {
-        $this->withoutExceptionHandling();
         $user = create(User::class);
         $this->actingAs($user,'api');
 

@@ -38,7 +38,6 @@ class CalculateSubjectLessonControllerTest extends BaseTenantTest
     /** @test */
     public function can_calculate_subject_lessons()
     {
-        $this->withoutExceptionHandling();
         $manager = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'LessonsManager']);
         Config::set('auth.providers.users.model', User::class);
@@ -68,7 +67,6 @@ class CalculateSubjectLessonControllerTest extends BaseTenantTest
     /** @test */
     public function regular_user_cannot_calculate_subject_lessons()
     {
-//        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
 

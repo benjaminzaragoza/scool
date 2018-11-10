@@ -184,7 +184,6 @@ class UserPhotoControllerTest extends BaseTenantTest
     /** @test */
     public function delete_user_photo()
     {
-        $this->withoutExceptionHandling();
         Storage::fake('local');
         Event::fake();
 

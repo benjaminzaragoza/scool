@@ -79,7 +79,6 @@ class GoogleGroupsControllerTest extends BaseTenantTest
      */
     public function list_groups()
     {
-        $this->withoutExceptionHandling();
         config_google_api();
         tune_google_client();
 

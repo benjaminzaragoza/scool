@@ -187,7 +187,6 @@ class UserGsuiteControllerTest extends BaseTenantTest
     {
         config_google_api();
         tune_google_client();
-        $this->withoutExceptionHandling();
         $manager = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'UsersManager']);
         Config::set('auth.providers.users.model', User::class);

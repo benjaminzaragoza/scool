@@ -36,7 +36,6 @@ class TeacherWelcomeEmailControllerTest extends BaseTenantTest
      */
     public function show_teacher_welcome_email()
     {
-        $this->withoutExceptionHandling();
         $teachersManager = create(User::class);
         $this->actingAs($teachersManager);
         $role = Role::firstOrCreate(['name' => 'TeachersManager']);
