@@ -89,6 +89,7 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
 
         $this->assertCount(0,$incident->tags);
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
+
         $response->assertStatus(403);
     }
 
@@ -101,7 +102,12 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
             'subject' => 'No funciona Aula 36 pc 1',
             'description' => 'bla bla bla'
         ]);
-        $tag = factory(User::class)->create();
+        $tag = IncidentTag::create([
+            'value' => 'etiqueta 2',
+            'description' => 'Descripció etiqueta 2',
+            'color' => 'blue',
+            'icon' => 'settings'
+        ]);
 
         $this->assertCount(0,$incident->tags);
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
@@ -111,6 +117,7 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
     /** @test */
     public function can_remove_tag_from_incident()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
         Config::set('auth.providers.users.model', User::class);
@@ -120,7 +127,12 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
             'subject' => 'No funciona Aula 36 pc 1',
             'description' => 'bla bla bla'
         ]);
-        $tag = factory(User::class)->create();
+        $tag = IncidentTag::create([
+            'value' => 'etiqueta 2',
+            'description' => 'Descripció etiqueta 2',
+            'color' => 'blue',
+            'icon' => 'settings'
+        ]);
         $incident->addTag($tag);
         $this->assertCount(1,$incident->tags);
         Mail::fake();
@@ -146,7 +158,12 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
             'subject' => 'No funciona Aula 36 pc 1',
             'description' => 'bla bla bla'
         ]);
-        $tag = factory(User::class)->create();
+        $tag = IncidentTag::create([
+            'value' => 'etiqueta 2',
+            'description' => 'Descripció etiqueta 2',
+            'color' => 'blue',
+            'icon' => 'settings'
+        ]);
         $incident->addTag($tag);
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertStatus(403);
@@ -161,7 +178,12 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
             'subject' => 'No funciona Aula 36 pc 1',
             'description' => 'bla bla bla'
         ]);
-        $tag = factory(User::class)->create();
+        $tag = IncidentTag::create([
+            'value' => 'etiqueta 2',
+            'description' => 'Descripció etiqueta 2',
+            'color' => 'blue',
+            'icon' => 'settings'
+        ]);
         $incident->addTag($tag);
         $this->assertCount(1,$incident->tags);
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Http\Requests\Incidents\DestroyIncidentTag;
+use App\Http\Requests\Incidents\StoreIncidentTag;
 use App\Mail\Incidents\IncidentTagged;
 use App\Mail\Incidents\IncidentUntagged;
 use App\Models\Setting;
@@ -25,7 +27,7 @@ class TaggedIncidentsController extends Controller
      * @param StoreIncidentAssignee $request
      * @return mixed
      */
-    public function store(StoreIncidentAssignee $request, $tenant, Incident $incident, IncidentTag $tag)
+    public function store(StoreIncidentTag $request, $tenant, Incident $incident, IncidentTag $tag)
     {
         $incident->addTag($tag);
         Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentTagged($incident));
@@ -40,7 +42,7 @@ class TaggedIncidentsController extends Controller
      * @param IncidentTag $tag
      * @return void
      */
-    public function destroy(DestroyIncidentAssignee $request, $tenant, Incident $incident, IncidentTag $tag)
+    public function destroy(DestroyIncidentTag $request, $tenant, Incident $incident, IncidentTag $tag)
     {
         $incident->tags()->detach($tag->id);
         Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentUntagged($incident));

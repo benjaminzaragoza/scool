@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * ClasDestroyIeIncidentTag.
+ * Class DestroyIncidentTag.
  *
  * @package App\Http\Requests
  */
@@ -19,7 +19,7 @@ class DestroyIncidentTag extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('tag.destroy');
+        return Auth::user()->can('tagged.incident.destroy');
     }
 
     /**
