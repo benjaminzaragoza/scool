@@ -68,14 +68,6 @@
                                                :users="filteredAssignees"
                                                v-model="assignee"
                                        ></user-select>
-                                       <!--<v-autocomplete-->
-                                               <!--v-model="selectedTags"-->
-                                               <!--:items="dataTags"-->
-                                               <!--attach-->
-                                               <!--chips-->
-                                               <!--label="Etiquetes"-->
-                                               <!--multiple-->
-                                       <!--&gt;</v-autocomplete>-->
                                    </v-flex>
                                    <v-flex xs4>
                                        <v-autocomplete
@@ -152,7 +144,7 @@
                         </td>
                         <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
                         <td class="text-xs-left">
-                            <incident-tags @refresh="refresh" :tags="incident.tags"></incident-tags>
+                            <incident-tags @refresh="refresh(false)" :incident="incident" :tags="dataTags" ></incident-tags>
                         </td>
                         <td class="text-xs-left">
                             <incident-assignees @refresh="refresh" :assignees="incident.assignees" :incident="incident" :incident-users="incidentUsers"></incident-assignees>
@@ -356,13 +348,13 @@ export default {
     showAll () {
       this.filter = 'all'
     },
-    refresh () {
-      this.fetch()
+    refresh (message = true) {
+      this.fetch(message)
     },
-    fetch () {
+    fetch (message = true) {
       this.refreshing = true
       this.$store.dispatch(actions.SET_INCIDENTS).then(response => {
-        this.$snackbar.showMessage('Incidències actualitzades correctament')
+        if (message) this.$snackbar.showMessage('Incidències actualitzades correctament')
         this.refreshing = false
       }).catch(error => {
         this.$snackbar.showError(error)

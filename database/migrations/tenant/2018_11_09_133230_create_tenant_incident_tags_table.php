@@ -26,8 +26,10 @@ class CreateTenantIncidentTagsTable extends Migration
         });
 
         Schema::create('tagged_incidents', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('incident_id');
             $table->unsignedInteger('incident_tag_id');
+            $table->unique(['incident_id', 'incident_tag_id']);
             $table->timestamps();
         });
     }

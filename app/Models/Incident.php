@@ -195,7 +195,7 @@ class Incident extends Model
      */
     public function assignees()
     {
-        return $this->belongsToMany(User::class,'assignees');
+        return $this->belongsToMany(User::class,'assignees')->withTimestamps();
     }
 
     /**
@@ -219,7 +219,7 @@ class Incident extends Model
     /**
      * Add tag.
      *
-     * @param $assignee
+     * @param $tag
      */
     public function addTag($tag)
     {
