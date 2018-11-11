@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class StoreIncidentTag.
+ * Class DestroyTaggedIncident.
  *
  * @package App\Http\Requests
  */
-class StoreIncidentTag extends FormRequest
+class DestroyTaggedIncident extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class StoreIncidentTag extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('tag.store',$this->incident);
+        return Auth::user()->can('tagged.incident.destroy',$this->incident);
     }
 
     /**
@@ -29,8 +29,6 @@ class StoreIncidentTag extends FormRequest
      */
     public function rules()
     {
-        return [
-            'value' => 'required'
-        ];
+        return [];
     }
 }
