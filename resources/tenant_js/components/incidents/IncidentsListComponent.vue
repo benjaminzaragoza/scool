@@ -7,14 +7,14 @@
                 </v-btn>
                 <v-list>
                     <v-list-tile href="/jobs/sheet_holders" target="_blank">
-                        <v-list-tile-title>Llençol de places amb titulars</v-list-tile-title>
+                        <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
                     </v-list-tile>
                     <v-list-tile href="/jobs/sheet_active_users" target="_blank">
-                        <v-list-tile-title>TODO 1 Estadística 1</v-list-tile-title>
+                        <v-list-tile-title>TODO 1 Exportar a CSV/Excel</v-list-tile-title>
                         <!-- TODO-->
                     </v-list-tile>
                     <v-list-tile href="/jobs/sheet_substitutes" target="_blank">
-                        <v-list-tile-title>TODO 2 Estadística 2</v-list-tile-title>
+                        <v-list-tile-title>TODO 2 Mostrar historial incidències (registre de canvis)</v-list-tile-title>
                         <!-- TODO-->
                     </v-list-tile>
                 </v-list>
@@ -77,6 +77,7 @@
                                                chips
                                                label="Etiquetes"
                                                multiple
+                                               item-value="id"
                                        >
                                             <template slot="selection" slot-scope="data">
                                                 <v-chip
@@ -301,13 +302,19 @@ export default {
     },
     filteredIncidents: function () {
       let filteredByState = filters[this.filter](this.dataIncidents)
-      if (this.creator) return filteredByState.filter(incident => { return incident.user_id === this.creator })
+      if (this.creator) filteredByState = filteredByState.filter(incident => { return incident.user_id === this.creator })
       if (this.assignee) {
-        return filteredByState.filter(incident => {
+        filteredByState = filteredByState.filter(incident => {
           return incident.assignees.map(assignee => assignee['id']).includes(this.assignee)
         })
       }
-      // const assigneesIds = this.assignees.map(assignee => assignee['id'])
+      if (this.selectedTags.length > 0) {
+        filteredByState = filteredByState.filter(incident => {
+          console.log('incident.tags.map(tag => tag[\'id\'])')
+          console.log(incident.tags.map(tag => tag['id']))
+          return incident.tags.some(tag => this.selectedTags.includes(tag.id))
+        })
+      }
       return filteredByState
     },
     headers () {

@@ -110,6 +110,7 @@ RESPONSIVE:
 HISTORIAL:
 - [ ] Historial: especialment de les accions tipus esborrar incidència o comentaris
 - [ ] https://vuetifyjs.com/en/components/timelines
+- [ ] Fer com Github i mostrar als comentaris no només els comentaris sinó la evolució de incidència (tancada, oberta, assignada a, etc)
 
 Ideas taken from Github
 - [X] Textareas: http://miaolz123.github.io/vue-markdown/
