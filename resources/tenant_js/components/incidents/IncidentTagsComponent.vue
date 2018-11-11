@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-chip label :color="tag.color" text-color="white" v-for="(tag,key) in incident.tags" :key="tag.id" close v-model="close[key]">
+        <v-chip small label :color="tag.color" text-color="white" v-for="(tag,key) in incident.tags" :key="tag.id" close v-model="close[key]">
             <v-icon left v-text="tag.icon"></v-icon>{{ tag.value }}
         </v-chip>
         <v-btn v-role="'IncidentsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
@@ -30,8 +30,8 @@
                     ><v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
                 </template>
                 <template slot="item" slot-scope="data">
-                    <v-chip label :title="data.item.description" :color="data.item.color" text-color="white">
-                        <v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}
+                    <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
+                        <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
                     </v-chip>
                 </template>
            </v-autocomplete>

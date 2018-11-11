@@ -20,10 +20,17 @@ BUGS:
 Idees:
 - Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
 
+# Wizard config incidències:
+
+Un stepper amb els passos:
+1) Activar o no mòdul incidències
+2) Decidir els usuaris -> assignació roles Incidents i IncidentsManager
+3) Altres settings (email de managers, persones a les que es poden assignar incidències, etc)
+
 # ROLS
 
 A settings o similar:
-- [ ] Gestionar la llista usuaris que tinfran el rol Incidents
+- [ ] Gestionar la llista usuaris que tindran el rol Incidents
 - [ ] En principi tots els professors
 - [ ] Però també hi ha altres com becaris o altres tercers possibles ()
 - [ ] Gestionar els managers d'incidències (Rol Incidents Manager)
@@ -40,8 +47,9 @@ A settings o similar:
 - [X] Mostrar només les incidències creades per mi. El usuari logat sempre és el primer al desplegable de creadors
 - [X] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
 - [X] Mostrar per assignees. 
-  - [ ] El usuari logat sempre és el primer al desplegable de assignees
-- [ ] Assignades a mi. 
+  - [X] El usuari logat sempre és el primer al desplegable de assignees
+- [X] Assignades a mi. Via:
+   - [X] El usuari logat sempre és el primer al desplegable de assignees
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
 - [ ] Mostrar per labels/tags
 
@@ -52,14 +60,17 @@ A settings o similar:
 - [ ] Mostrar els assignees als emails 
 - [X] Es pot filtrar incidències per assignacions
 - [ ] Settings: poder indicar les persones a les que és més habitual assignar incidències
-  - Sortiran les primeres a la llista de possibles assignees
+  - [ ] Sortiran les primeres a la llista de possibles assignees
 - [X] Només poden assignar incidències els usuaris amb permissos (ara Rol IncidentsManager)
 
 **Etiquetes**
-- [ ] Mostrar les etiquetes a la vista show d'una incidència concreta
+- [X] Mostrar les etiquetes a la vista show d'una incidència concreta
+- [X] Es poden assignar i dessasignar etiquetes a les incidències
 - [ ] Mostrar les etiquetes als emails 
 - [ ] Es pot filtrar incidències per etiquetes
 - [X] Només poden assignar etiquetes els usuaris amb permissos (ara Rol IncidentsManager)
+- [X] API Crud etiquetes
+- [ ] Interfície web crdu per a crear etiquetes
 
 **Tancament incidències**
 - [ ] Camp closed_by per saber qui ha tancat la incidència
@@ -81,7 +92,7 @@ A settings o similar:
     - [X] Enviar email quan s'actualitza una incidència
     - [X] Enviar email cada cop hi ha un comentari nou 
     - [X] Enviar email quan es tanca una incidència    
-- [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador)
+- [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador) -> Service Workers
 - [ ] Com Github tenir un botó que permeti unsubscribe to notifications
 - [ ] Telegram?
 
@@ -108,10 +119,10 @@ Ideas taken from Github
 - [X] Suportar markdown als camps tipus textarea:
   - [ ] Altres extres interessants: @mencions Links HTTP, etc
   - [ ] Poder fer referència+link a un altre incident/issue amb #numissue
-- [ ] Labels/Tags: els managers poden crear etiquetes per classificar les incidències (un crud d'etiquetes és necessari per posar etiquetes es vulguin)
-  - [ ] Labels/Tags: tenen nom, descripció i color (es pot fer un preview en directe quan es crea/edita un label)
+- [X] Labels/Tags: els managers poden crear etiquetes per classificar les incidències (un crud d'etiquetes és necessari per posar etiquetes es vulguin)
+  - [X] Labels/Tags: tenen nom, descripció, icona i color (es pot fer un preview en directe quan es crea/edita un label)
 - [ ] Apartat participants: gent que participa de la discusió/comentaris
-- [ ] Assignar incidències a usuaris (Assignees)  
+- [X] Assignar incidències a usuaris (Assignees)  
 
 Estadístiques:
 - [ ] Temps mig tancament incidències (Auditories)

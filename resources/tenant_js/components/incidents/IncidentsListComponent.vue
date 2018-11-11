@@ -80,6 +80,7 @@
                                        >
                                             <template slot="selection" slot-scope="data">
                                                 <v-chip
+                                                        small
                                                         label
                                                         @input="data.parent.selectItem(data.item)"
                                                         :selected="data.selected"
@@ -87,12 +88,12 @@
                                                         :color="data.item.color"
                                                         text-color="white"
                                                         :key="JSON.stringify(data.item)"
-                                                ><v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
+                                                ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
                                             </template>
                                             <template slot="item" slot-scope="data">
                                                 <v-checkbox v-model="data.tile.props.value"></v-checkbox>
-                                                <v-chip label :title="data.item.description" :color="data.item.color" text-color="white">
-                                                    <v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}
+                                                <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
+                                                    <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
                                                 </v-chip>
                                             </template>
                                        </v-autocomplete>
