@@ -73,8 +73,13 @@ A settings o similar:
 - [ ] Interfície web CRUD per a crear etiquetes integrada al desplegable etiquetes
 
 **Tancament incidències**
-- [ ] Camp closed_by per saber qui ha tancat la incidència
 - [ ] Camp solved_by per saber qui l'ha resolt?
+- [X] Camp closed_by per saber qui ha tancat la incidència
+- [ ] Mostrar info de tancat per a:
+  - [ ] Llista incidències (com a title del camp tancada)
+  - [ ] Al show d'una incidència
+  - [ ] Als emails
+
 
 **Notificacions/comunicació**
 - [X]
