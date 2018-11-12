@@ -76,6 +76,7 @@ class Incident extends Model
             'subject' => $this->subject,
             'description' => $this->description,
             'closed_at' => $this->closed_at,
+            'closed_by' => $this->closed_by,
             'formatted_closed_at' => $this->formatted_closed_at,
             'formatted_closed_at_diff' => $this->formatted_closed_at_diff,
             'closed_at_timestamp' => $this->closed_at_timestamp,
@@ -125,6 +126,7 @@ class Incident extends Model
     public function open()
     {
         $this->closed_at = null;
+        $this->closed_by = null;
         $this->save();
         return $this;
     }

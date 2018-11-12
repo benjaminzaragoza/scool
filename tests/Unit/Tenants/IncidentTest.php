@@ -162,12 +162,14 @@ class IncidentTest extends TestCase
         $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['comments'][2]['user']->name);
         $this->assertEquals('pepe@pardojeans.com',$mappedIncident['comments'][2]['user']->email);
 
+        Auth::login($user);
         $incident->close();
         $incident= $incident->fresh();
         $mappedIncident = $incident->map();
         $this->assertNotNull($mappedIncident['closed_at']);
         $this->assertNotNull($mappedIncident['formatted_closed_at']);
         $this->assertNotNull($mappedIncident['closed_at_timestamp']);
+        $this->assertEquals($mappedIncident['closed_by'], $user->id);
 
         // TAGS
         $tag1 = IncidentTag::create([
@@ -257,12 +259,14 @@ class IncidentTest extends TestCase
             'subject' => 'No funciona pc2 aula 15',
             'description' => 'bla bla bla',
         ])->assignUser($user);
+        Auth::login($user);
         $incident->close();
 
         $incident->open();
 
         $incident = $incident->fresh();
         $this->assertNull($incident->closed_at);
+        $this->assertNull($incident->closed_by);
     }
 
     /** @test */
