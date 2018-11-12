@@ -15,7 +15,7 @@ SettingsServiceProvider:
 # Incidents
 
 BUGS:
-- [ ] No funciona el autocomplete als filtres (creadors i assignees)
+- [X] No funciona el autocomplete als filtres (creadors i assignees)
 - [ ] Els botons afegir comentari i afegir comentari i tancar al estar en loading i disabled desapareixent en comptes 
 de mostrar el loading
 
@@ -58,8 +58,8 @@ A settings o similar:
 **Assignacions**
 - [X] Es poden assignar/dessasignar incidències a múltiples usuaris amb el rol Incidents (usuaris d'incidències)
 - [X] S'envia correu electrònic
-- [ ] Mostrar els assignees a la vista show d'una incidència concreta
-- [ ] Mostrar els assignees als emails 
+- [X] Mostrar els assignees a la vista show d'una incidència concreta
+- [X] Mostrar els assignees als emails 
 - [X] Es pot filtrar incidències per assignacions
 - [ ] Settings: poder indicar les persones a les que és més habitual assignar incidències
   - [ ] Sortiran les primeres a la llista de possibles assignees
@@ -68,7 +68,7 @@ A settings o similar:
 **Etiquetes**
 - [X] Mostrar les etiquetes a la vista show d'una incidència concreta
 - [X] Es poden assignar i dessasignar etiquetes a les incidències
-- [ ] Mostrar les etiquetes als emails 
+- [X] Mostrar les etiquetes als emails 
 - [X] Es pot filtrar incidències per etiquetes
 - [X] Només poden assignar etiquetes els usuaris amb permissos (ara Rol IncidentsManager)
 - [X] API Crud etiquetes
@@ -80,7 +80,7 @@ A settings o similar:
 - [ ] Mostrar info de tancat per a:
   - [X] Llista incidències (com a title del camp tancada)
   - [X] Al show d'una incidència
-  - [ ] Als emails
+  - [X] Als emails
 
 
 **Notificacions/comunicació**

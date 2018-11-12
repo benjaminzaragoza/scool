@@ -78,6 +78,7 @@
                                                label="Etiquetes"
                                                multiple
                                                item-value="id"
+                                               item-text="value"
                                        >
                                             <template slot="selection" slot-scope="data">
                                                 <v-chip
@@ -285,7 +286,8 @@ export default {
           id: incident.user_id,
           name: incident.user_name,
           email: incident.user_email,
-          hashid: incident.user && incident.user.hashid
+          hashid: incident.user && incident.user.hashid,
+          full_search: incident.user_id + ' ' + incident.user_name + ' ' + incident.user_email
         }
       }) : []
       if (window.user && window.user.id) {

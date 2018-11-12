@@ -4,7 +4,7 @@
             :label="label"
             :items="users"
             v-model="user"
-            item-text="name"
+            item-text="full_search"
             item-value="id"
             chips
             clearable
