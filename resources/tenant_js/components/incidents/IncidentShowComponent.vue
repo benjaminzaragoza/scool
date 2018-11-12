@@ -24,7 +24,7 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <incident-close :incident="incident" v-can:close="incident" :alt="true" class="hidden-sm-and-down"></incident-close>
+                <incident-close :incident="incident" v-can:close="incident" :alt="true" class="hidden-sm-and-down" @before="$emit('close')"></incident-close>
                 <incident-delete :incident="incident" v-role="'IncidentsManager'" :alt="true" @before="$emit('close')" class="hidden-sm-and-down"></incident-delete>
                 <v-btn dark flat @click.native="$emit('close')" class="hidden-sm-and-down">
                     Sortir
@@ -33,7 +33,7 @@
             </v-toolbar-items>
         </v-toolbar>
         <v-container text-md-center class="pb-0 pt-1">
-            <v-expansion-panel class="mb-3 mt-2" :value="prova">
+            <v-expansion-panel class="mb-3 mt-2" :value="show">
                 <v-expansion-panel-content>
                     <div slot="header" class="font-weight-medium">Dades de la incidència</div>
                     <v-layout row wrap>
@@ -115,7 +115,7 @@ import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import * as actions from '../../store/action-types'
 
 export default {
-  name: 'IncidentShowComponent',
+  name: 'IncidentShow',
   components: {
     'incident-comments': IncidentCommentsComponent,
     'user-avatar': UserAvatar,
@@ -126,7 +126,7 @@ export default {
   },
   data () {
     return {
-      prova: this.showData ? 0 : null
+      show: this.showData ? 0 : null
     }
   },
   props: {
@@ -141,7 +141,7 @@ export default {
   },
   computed: {
     state () {
-      if (this.incident.closed_at) return 'Tancada <span title="' + this.incident.formatted_closed_at + '">' + this.incident.formatted_closed_at_diff + '</span>'
+      if (this.incident.closed_at) return 'Tancada <span title="' + this.incident.formatted_closed_at + '">' + this.incident.formatted_closed_at_diff + '</span> per <span title="' + this.incident.closer.email + '">' + this.incident.closer.name + '</span>'
       return 'Oberta'
     }
   },

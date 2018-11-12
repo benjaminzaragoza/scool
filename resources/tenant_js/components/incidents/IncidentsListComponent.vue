@@ -144,7 +144,9 @@
                         <td class="text-xs-left">
                             <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
-                        <td v-if="filter!=='open'" v-html="incident.formatted_closed_at_diff" class="text-xs-left" :title="incident.formatted_closed_at"></td>
+                        <td v-if="filter!=='open'" class="text-xs-left" :title="incident.formatted_closed_at">
+                            <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per <span :title="incident.closer.email">{{ incident.closer.name}}</span>
+                        </td>
                         <td class="text-xs-left">
                             <incident-tags @refresh="refresh(false)" :incident="incident" :tags="dataTags" ></incident-tags>
                         </td>

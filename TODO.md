@@ -16,6 +16,8 @@ SettingsServiceProvider:
 
 BUGS:
 - [ ] No funciona el autocomplete als filtres (creadors i assignees)
+- [ ] Els botons afegir comentari i afegir comentari i tancar al estar en loading i disabled desapareixent en comptes 
+de mostrar el loading
 
 Idees:
 - Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
@@ -67,7 +69,7 @@ A settings o similar:
 - [X] Mostrar les etiquetes a la vista show d'una incidència concreta
 - [X] Es poden assignar i dessasignar etiquetes a les incidències
 - [ ] Mostrar les etiquetes als emails 
-- [ ] Es pot filtrar incidències per etiquetes
+- [X] Es pot filtrar incidències per etiquetes
 - [X] Només poden assignar etiquetes els usuaris amb permissos (ara Rol IncidentsManager)
 - [X] API Crud etiquetes
 - [ ] Interfície web CRUD per a crear etiquetes integrada al desplegable etiquetes
@@ -76,8 +78,8 @@ A settings o similar:
 - [ ] Camp solved_by per saber qui l'ha resolt?
 - [X] Camp closed_by per saber qui ha tancat la incidència
 - [ ] Mostrar info de tancat per a:
-  - [ ] Llista incidències (com a title del camp tancada)
-  - [ ] Al show d'una incidència
+  - [X] Llista incidències (com a title del camp tancada)
+  - [X] Al show d'una incidència
   - [ ] Als emails
 
 

@@ -77,6 +77,7 @@ class Incident extends Model
             'description' => $this->description,
             'closed_at' => $this->closed_at,
             'closed_by' => $this->closed_by,
+            'closer' => $this->closer,
             'formatted_closed_at' => $this->formatted_closed_at,
             'formatted_closed_at_diff' => $this->formatted_closed_at_diff,
             'closed_at_timestamp' => $this->closed_at_timestamp,
@@ -102,7 +103,7 @@ class Incident extends Model
      */
     public static function getIncidents()
     {
-        return (new IncidentCollection(Incident::with('user','comments','comments.user')->get()))->transform();
+        return (new IncidentCollection(Incident::with('user','comments','comments.user','closer')->get()))->transform();
     }
 
     /**
@@ -266,5 +267,11 @@ class Incident extends Model
         }
     }
 
-
+    /**
+     * Get the user that closes the incident.
+     */
+    public function closer()
+    {
+        return $this->belongsTo(User::class,'closed_by');
+    }
 }

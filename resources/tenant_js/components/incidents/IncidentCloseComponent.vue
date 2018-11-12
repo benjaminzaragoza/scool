@@ -64,6 +64,7 @@ export default {
   methods: {
     toggle () {
       this.loading = true
+      this.$emit('before')
       this.$store.dispatch(this.action, this.incident).then(response => {
         this.$snackbar.showMessage(this.actionMessage)
         this.loading = false

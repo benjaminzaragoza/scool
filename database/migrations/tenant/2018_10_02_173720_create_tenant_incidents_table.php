@@ -19,7 +19,7 @@ class CreateTenantIncidentsTable extends Migration
             $table->text('subject');
             $table->text('description');
             $table->dateTime('closed_at')->nullable();
-            $table->dateTime('closed_by')->nullable();
+            $table->unsignedInteger('closed_by')->nullable();
             $table->timestamps();
         });
     }

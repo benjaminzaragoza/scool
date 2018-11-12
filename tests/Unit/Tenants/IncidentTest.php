@@ -170,6 +170,7 @@ class IncidentTest extends TestCase
         $this->assertNotNull($mappedIncident['formatted_closed_at']);
         $this->assertNotNull($mappedIncident['closed_at_timestamp']);
         $this->assertEquals($mappedIncident['closed_by'], $user->id);
+        $this->assertTrue($mappedIncident['closer']->is($user));
 
         // TAGS
         $tag1 = IncidentTag::create([
@@ -243,6 +244,7 @@ class IncidentTest extends TestCase
         $incident = $incident->fresh();
         $this->assertNotNull($incident->closed_at);
         $this->assertEquals($incident->closed_by,$user->id);
+        $this->assertTrue($incident->closer->is($user));
     }
 
     /**
@@ -261,12 +263,14 @@ class IncidentTest extends TestCase
         ])->assignUser($user);
         Auth::login($user);
         $incident->close();
+        $this->assertTrue($incident->closer->is($user));
 
         $incident->open();
 
         $incident = $incident->fresh();
         $this->assertNull($incident->closed_at);
         $this->assertNull($incident->closed_by);
+        $this->assertNull($incident->closer);
     }
 
     /** @test */
