@@ -145,7 +145,7 @@
                             <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
                         <td v-if="filter!=='open'" class="text-xs-left" :title="incident.formatted_closed_at">
-                            <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per <span :title="incident.closer.email">{{ incident.closer.name}}</span>
+                            <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per <span :title="incident.closer && incident.closer.email">{{ incident.closer && incident.closer.name}}</span>
                         </td>
                         <td class="text-xs-left">
                             <incident-tags @refresh="refresh(false)" :incident="incident" :tags="dataTags" ></incident-tags>
@@ -165,14 +165,14 @@
                                     title="Afegir un comentari"
                                     :resource="incident"
                                     v-if="addCommentDialog === false || addCommentDialog === incident.id">
-                                <incident-show :show-data="false" :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false"></incident-show>
+                                <incident-show :show-data="false" :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
                             </fullscreen-dialog>
                             <fullscreen-dialog
                                     v-model="showDialog"
                                     title="Mostra la incidència"
                                     :resource="incident"
                                     v-if="showDialog === false || showDialog === incident.id">
-                                <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false"></incident-show>
+                                <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
                             </fullscreen-dialog>
                             <incident-close v-model="incident" v-if="$can('close',incident)" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
@@ -303,6 +303,7 @@ export default {
       return this.dataIncidents && this.dataIncidents.filter(incident => incident.closed_at !== null)
     },
     filteredIncidents: function () {
+      console.log('filteredIncidents')
       let filteredByState = filters[this.filter](this.dataIncidents)
       if (this.creator) filteredByState = filteredByState.filter(incident => { return incident.user_id === this.creator })
       if (this.assignee) {

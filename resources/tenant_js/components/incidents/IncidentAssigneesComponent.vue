@@ -5,6 +5,12 @@
                      v-if="assignee.hashid"
                      @dblclick="removeAssignee(assignee)"
         ></user-avatar>
+        <v-progress-circular
+                size="16"
+                v-if="removing"
+                indeterminate
+                color="primary"
+        ></v-progress-circular>
         <v-btn v-role="'IncidentsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
           <v-icon>add</v-icon>
         </v-btn>
@@ -120,10 +126,13 @@ export default {
         this.removing = false
       })
     },
-    removeAssignee (assignee) {
+    async removeAssignee (assignee) {
       if (!this.$hasRole('IncidentsManager')) return
-      console.log('removeAssignee')
-      console.log(assignee)
+      let res = await this.$confirm('Voleu dessasignar la incidència a aquest responsable?', { title: 'Esteu segurs?', buttonTrueText: 'Dessasignar' })
+      if (res) {
+        this.newDesassignee = assignee.id
+        this.remove()
+      }
     }
   }
 }

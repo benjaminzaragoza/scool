@@ -58,6 +58,15 @@
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
+                                <v-list-tile avatar>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            <incident-tags @refresh="refresh(false)" :incident="incident" :tags="dataTags" ></incident-tags>
+                                        </v-list-tile-title>
+                                        <v-list-tile-sub-title>Etiquetes
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
                             </v-list>
                         </v-flex>
                         <v-flex md4>
@@ -73,6 +82,15 @@
                                     <v-list-tile-content>
                                         <v-list-tile-title :title="incident.formatted_updated_at" v-text="incident.formatted_created_at_diff">Password</v-list-tile-title>
                                         <v-list-tile-sub-title>Data de modificació
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile avatar>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            <incident-assignees @refresh="refresh" :assignees="incident.assignees" :incident="incident" :incident-users="incidentUsers"></incident-assignees>
+                                        </v-list-tile-title>
+                                        <v-list-tile-sub-title>Assignada a
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
@@ -112,6 +130,8 @@ import IncidentDeleteComponent from './IncidentDeleteComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
+import IncidentTagsComponent from './IncidentTagsComponent'
+import IncidentAssigneesComponent from './IncidentAssigneesComponent'
 import * as actions from '../../store/action-types'
 
 export default {
@@ -122,11 +142,14 @@ export default {
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'incident-tags': IncidentTagsComponent,
+    'incident-assignees': IncidentAssigneesComponent
   },
   data () {
     return {
-      show: this.showData ? 0 : null
+      show: this.showData ? 0 : null,
+      dataTags: this.tags
     }
   },
   props: {
@@ -137,6 +160,16 @@ export default {
     showData: {
       type: Boolean,
       default: true
+    },
+    tags: {
+      type: Array,
+      required: true
+    },
+    incidentUsers: {
+      type: Array,
+      default: function () {
+        return []
+      }
     }
   },
   computed: {

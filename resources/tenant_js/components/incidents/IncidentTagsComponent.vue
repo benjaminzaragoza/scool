@@ -3,6 +3,12 @@
         <v-chip small label :color="tag.color" text-color="white" v-for="(tag,key) in incident.tags" :key="tag.id" close v-model="close[key]">
             <v-icon left v-text="tag.icon"></v-icon>{{ tag.value }}
         </v-chip>
+        <v-progress-circular
+                size="16"
+                v-if="removing"
+                indeterminate
+                color="primary"
+        ></v-progress-circular>
         <v-btn v-role="'IncidentsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
           <v-icon>add</v-icon>
         </v-btn>
