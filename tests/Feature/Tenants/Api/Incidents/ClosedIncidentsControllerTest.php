@@ -68,6 +68,7 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
         $this->assertEquals('Bla bla bla', $result->description);
         $incident = $incident->fresh();
         $this->assertNotNull($incident->closed_at);
+        $this->assertEquals($incident->closed_by,$user->id);
     }
 
     /**

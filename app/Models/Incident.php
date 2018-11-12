@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Resources\Tenant\IncidentCollection;
 use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -111,6 +112,7 @@ class Incident extends Model
     public function close()
     {
         $this->closed_at = Carbon::now();
+        $this->closed_by = Auth::user()->id;
         $this->save();
         return $this;
     }

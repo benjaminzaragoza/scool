@@ -7,6 +7,7 @@ use App\Models\Incident;
 use App\Models\IncidentTag;
 use App\Models\Reply;
 use App\Models\User;
+use Auth;
 use Carbon\Carbon;
 use Config;
 use Spatie\Permission\Models\Role;
@@ -226,6 +227,7 @@ class IncidentTest extends TestCase
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardo@jeans.com'
         ]);
+        Auth::login($user);
 
         $incident = Incident::create([
             'subject' => 'No funciona pc2 aula 15',
@@ -238,6 +240,7 @@ class IncidentTest extends TestCase
 
         $incident = $incident->fresh();
         $this->assertNotNull($incident->closed_at);
+        $this->assertEquals($incident->closed_by,$user->id);
     }
 
     /**
