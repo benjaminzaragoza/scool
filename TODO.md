@@ -37,6 +37,7 @@ A settings o similar:
 
 **Filtres**:
 
+- [ ] On sóc mencionat. Depèn implementar mencions (@username)
 - [X] Buscador -> Full text search field. DE MOMENT NO CAL ES POT BUSCAR PER TOT LO NECESSARI
   - [ ] Permetre buscar per estat oberta/tancada (camp full search amb tots els strings de cerca a actions )
 - [X] Mostrar el total d'incidències obertes i tancades
@@ -50,8 +51,7 @@ A settings o similar:
   - [X] El usuari logat sempre és el primer al desplegable de assignees
 - [X] Assignades a mi. Via:
    - [X] El usuari logat sempre és el primer al desplegable de assignees
-- [ ] On sóc mencionat. Depèn implementar mencions (@username)
-- [ ] Mostrar per labels/tags
+- [X] Mostrar per labels/tags
 
 **Assignacions**
 - [X] Es poden assignar/dessasignar incidències a múltiples usuaris amb el rol Incidents (usuaris d'incidències)
@@ -70,7 +70,7 @@ A settings o similar:
 - [ ] Es pot filtrar incidències per etiquetes
 - [X] Només poden assignar etiquetes els usuaris amb permissos (ara Rol IncidentsManager)
 - [X] API Crud etiquetes
-- [ ] Interfície web crdu per a crear etiquetes
+- [ ] Interfície web CRUD per a crear etiquetes integrada al desplegable etiquetes
 
 **Tancament incidències**
 - [ ] Camp closed_by per saber qui ha tancat la incidència
@@ -138,9 +138,9 @@ EXTRES:
 - [ ] Floating button afegir comentari al mostra una incidència: potser múltiples accions
 - [ ] Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
 
-# USER RESOURCE vs user map
+# USER RESOURCE vs user map (SOLUCIONAT/OBSOLET)
 
-No puc utilitzar les dos coses pq aleshores inc codi wet i no tinc Single Source of truth
+SOLUCIONAT: No puc utilitzar les dos coses pq aleshores inc codi wet i no tinc Single Source of truth
 
 Antic Fitxer resource he eliminat:
 
@@ -158,9 +158,9 @@ Problema: permissos als menus si mostrar o no mostrar les opcions
 
 Cal revisar component Pare App.vue i app.blade.php i l'ús de la funció checkRoles
 
-CURRICULUM
+# CURRICULUM
 
-== Passar faltes ==
+## Passar faltes
 
 Incidencies:
 - Tipus incidencia (Falta, Fata justificada, etc)-> escull el tipus qui posa la falta
