@@ -99,6 +99,7 @@ export default {
         this.$emit('refresh')
         this.adding = false
         this.assigneeAddDialog = false
+        this.newAssignee = null
       }).catch(error => {
         this.$snackbar.showError(error)
         this.adding = false
