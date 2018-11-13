@@ -8260,7 +8260,7 @@ if (! function_exists('initialize_incident_tags')) {
         IncidentTag::create([
             'value' => 'Manteniment centre',
             'description' => 'Persianes, florescents, electricitat, etc...',
-            'color' => 'amber lighten-2',
+            'color' => 'amber',
         ]);
 
         IncidentTag::create([
