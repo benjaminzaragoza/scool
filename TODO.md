@@ -1,3 +1,7 @@
+# Explotació
+
+- [ ] No va https://iesebre.scool.cat/ (sembla utilitza base de dades bàsica i no pas tenant) en canvi https://iesebre.scool.cat/home i altres si
+
 
 # Settings
 
