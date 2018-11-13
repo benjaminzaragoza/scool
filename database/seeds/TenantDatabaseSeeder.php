@@ -48,5 +48,7 @@ class TenantDatabaseSeeder extends Seeder
 
         initialize_settings();
 
+        initialize_incidents_module();
+
     }
 }

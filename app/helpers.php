@@ -10,6 +10,7 @@ use App\Models\Force;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Incident;
+use App\Models\IncidentTag;
 use App\Models\Law;
 use App\Models\Lesson;
 use App\Models\Location;
@@ -8245,6 +8246,44 @@ if (! function_exists('map_collection')) {
         });
     }
 }
+
+if (! function_exists('initialize_incidents_module')) {
+    function initialize_incidents_module()
+    {
+        initialize_incident_tags();
+    }
+}
+
+if (! function_exists('initialize_incident_tags')) {
+    function initialize_incident_tags()
+    {
+        IncidentTag::create([
+            'value' => 'Manteniment centre',
+            'description' => 'Persianes, florescents, electricitat, etc...',
+            'color' => 'amber lighten-2',
+        ]);
+
+        IncidentTag::create([
+            'value' => 'Maninfo',
+            'description' => 'Manteniment Informàtica: problemes maquinari, programari, connexió a internet, aplicacions pròpies',
+            'color' => 'teal lighten-1',
+        ]);
+
+        IncidentTag::create([
+            'value' => 'Dep. Informàtica',
+            'description' => 'Incidències aules i departament informàtica',
+            'color' => 'cyan lighten-1',
+        ]);
+
+        IncidentTag::create([
+            'value' => 'Moodle i web del centre',
+            'description' => 'Gestió de Moodle i web del centre',
+            'color' => 'pink lighten-1',
+        ]);
+    }
+}
+
+
 
 
 

@@ -305,7 +305,6 @@ export default {
       return this.dataIncidents && this.dataIncidents.filter(incident => incident.closed_at !== null)
     },
     filteredIncidents: function () {
-      console.log('filteredIncidents')
       let filteredByState = filters[this.filter](this.dataIncidents)
       if (this.creator) filteredByState = filteredByState.filter(incident => { return incident.user_id === this.creator })
       if (this.assignee) {
@@ -315,8 +314,6 @@ export default {
       }
       if (this.selectedTags.length > 0) {
         filteredByState = filteredByState.filter(incident => {
-          console.log('incident.tags.map(tag => tag[\'id\'])')
-          console.log(incident.tags.map(tag => tag['id']))
           return incident.tags.some(tag => this.selectedTags.includes(tag.id))
         })
       }
