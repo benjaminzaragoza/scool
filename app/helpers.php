@@ -1278,7 +1278,7 @@ if (!function_exists('initialize_teachers_ppas')) {
             ]));
         $dolors->assignRole('Incidents');
 
-        User::createIfNotExists([
+        $juliacurto = User::createIfNotExists([
             'name' => 'Julià Curto De la Vega',
             'email' => 'jcurto@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
@@ -1300,6 +1300,7 @@ if (!function_exists('initialize_teachers_ppas')) {
                 'code' => '008',
                 'department_id' => Department::findByCode('PPAS')->id
             ]));
+        $juliacurto->assignRole('Incidents');
 
         // Principi de curs
         // Sílvia Armengol Bosch (nº 4). Anglès. DNI: 47829022Q. DNI: 47829022Q.Fa la baixa d'Isabel Jordà:
@@ -2515,7 +2516,7 @@ if (!function_exists('initialize_teachers_serveis')) {
                 'department_id' => Department::findByCode('SERVEIS')->id
             ]));
 
-        User::createIfNotExists([
+        $angelsgarrido = User::createIfNotExists([
             'name' => 'Àngels Garrido Borja',
             'email' => 'mgarrido2@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
@@ -2538,6 +2539,7 @@ if (!function_exists('initialize_teachers_serveis')) {
                 'code' => '089',
                 'department_id' => Department::findByCode('SERVEIS')->id
             ]));
+        $angelsgarrido->assignRole('Incidents');
 
         User::createIfNotExists([
             'name' => 'Alicia Gamundi Vilà',
@@ -2856,7 +2858,7 @@ if (!function_exists('initialize_teachers_administracio')) {
                 'department_id' => Department::findByCode('ADMINISTRACIÓ')->id
             ]));
 
-        User::createIfNotExists([
+        $araceliesteller = User::createIfNotExists([
             'name' => 'Araceli Esteller Hierro',
             'email' => 'aesteller@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
@@ -2879,6 +2881,7 @@ if (!function_exists('initialize_teachers_administracio')) {
                 'code' => '022',
                 'department_id' => Department::findByCode('ADMINISTRACIÓ')->id
             ]));
+        $araceliesteller->assignRole('Incidents');
 
         User::createIfNotExists([
             'name' => 'Mavi Santamaria Andreu',
@@ -2981,9 +2984,9 @@ if (!function_exists('initialize_teachers_comerc')) {
                 'department_id' => Department::findByCode('COMERÇ')->id
             ]));
 
-        User::createIfNotExists([
+        $juandedios = User::createIfNotExists([
             'name' => 'Juan Abad Bueno',
-            'email' => 'juandediosabad@iesebre.com',
+            'email' => 'juanabad@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
         ])->addRole(Role::findByName('Teacher'))
@@ -3004,7 +3007,7 @@ if (!function_exists('initialize_teachers_comerc')) {
                 'code' => '107',
                 'department_id' => Department::findByCode('COMERÇ')->id
             ]));
-
+        $juandedios->assignRole('Incidents');
         User::createIfNotExists([
             'name' => 'Just Pérez Santiago',
             'email' => 'justperez@iesebre.com',
@@ -3207,7 +3210,7 @@ if (!function_exists('initialize_teachers_informatica')) {
                 'department_id' => Department::findByCode('INFORMÀTICA')->id
             ]));
 
-        User::createIfNotExists([
+        $jordivaras = User::createIfNotExists([
             'name' => 'Jordi Varas Aliau',
             'email' => 'jvaras@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
@@ -3230,6 +3233,7 @@ if (!function_exists('initialize_teachers_informatica')) {
                 'code' => '039',
                 'department_id' => Department::findByCode('INFORMÀTICA')->id
             ]));
+        $jordivaras->assignRole('Incidents');
 
         User::createIfNotExists([
             'name' => 'Sergi Tur Badenas',
@@ -3255,7 +3259,7 @@ if (!function_exists('initialize_teachers_informatica')) {
                 'department_id' => Department::findByCode('INFORMÀTICA')->id
             ]))->assignRole('Incidents');
 
-        User::createIfNotExists([
+        $jaumeramos = User::createIfNotExists([
             'name' => 'Jaume Ramos Prades',
             'email' => 'jaumeramos@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
@@ -3278,6 +3282,7 @@ if (!function_exists('initialize_teachers_informatica')) {
                 'code' => '041',
                 'department_id' => Department::findByCode('INFORMÀTICA')->id
             ]));
+        $jaumeramos->assignRole('Incidents');
 
         User::createIfNotExists([
             'name' => 'Quique Lorente Fuertes',
