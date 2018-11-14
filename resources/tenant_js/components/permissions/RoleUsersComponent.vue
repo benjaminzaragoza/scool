@@ -8,7 +8,7 @@
                 v-model="search"
                 class="mb-3"
         ></v-text-field>
-         <v-data-iterator
+        <v-data-iterator
                 :items="users"
                 :rows-per-page-items="rowsPerPageItems"
                 :pagination.sync="pagination"
@@ -58,6 +58,12 @@
         >
             <v-icon>add</v-icon>
         </v-btn>
+        <v-dialog v-model="addDialog" persistent max-width="600px">
+            <v-card>
+                <v-card-title>TITLE</v-card-title>
+                <v-card-text>TEXT</v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -78,7 +84,8 @@ export default {
       users: [],
       search: '',
       removing: false,
-      dataRoleUsers: []
+      dataRoleUsers: [],
+      addDialog: false
     }
   },
   props: {
@@ -88,6 +95,9 @@ export default {
     }
   },
   methods: {
+    showAddDialog () {
+      this.addDialog = true
+    },
     add () {
       console.log('ADD TODO')
     },
@@ -111,7 +121,7 @@ export default {
       })
     },
     fetchRoleUsers () {
-      window.axios.get('/api/v1/role').then(response => {
+      window.axios.get('/api/v1/role/Incidents/users').then(response => {
         this.users = response.data
         this.$emit('loaded')
       }).catch(error => {

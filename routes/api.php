@@ -15,6 +15,7 @@ use Spatie\Permission\Models\Role;
 |
 */
 
+// Allow Route Model Binding using role id or name
 Route::bind('role', function($value, $route)
 {
     if (is_integer(intval($value)) && intval($value) > 0) return Role::findOrFail($value);
@@ -86,6 +87,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // UserRoles
             Route::post('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@store');
             Route::delete('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@destroy');
+
+            //RoleUsers
+            Route::get('/role/{role}/users','Tenant\Api\Roles\RoleUsersController@index');
 
             //RoleByName
             Route::get('/role/name/{name}','Tenant\Api\Roles\RoleNameController@show');
