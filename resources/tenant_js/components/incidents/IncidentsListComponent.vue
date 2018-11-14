@@ -23,13 +23,14 @@
             <v-spacer></v-spacer>
 
             <fullscreen-dialog
+                    v-role="'IncidentsManager'"
                     :flat="false"
                     class="white--text"
                     icon="settings"
                     v-model="settingsDialog"
                     color="blue darken-3"
                     title="Canviar la configuració de les incidències">
-                        <settings module="incidents" title="Configuració del mòdul d'incidències" @close="settingsDialog = false"></settings>
+                        <incident-settings module="incidents" @close="settingsDialog = false"></incident-settings>
             </fullscreen-dialog>
 
             <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
@@ -193,7 +194,7 @@ import IncidentShowComponent from './IncidentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import IncidentTagsComponent from './IncidentTagsComponent'
 import IncidentAssigneesComponent from './IncidentAssigneesComponent'
-import Settings from '../ui/SettingsComponent'
+import IncidentSettings from './IncidentSettingsComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import FullScreenDialog from '../ui/FullScreenDialog'
@@ -227,7 +228,7 @@ export default {
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
     'user-select': UserSelect,
     'user-avatar': UserAvatar,
-    'settings': Settings,
+    'incident-settings': IncidentSettings,
     'incident-tags': IncidentTagsComponent,
     'incident-assignees': IncidentAssigneesComponent
   },
