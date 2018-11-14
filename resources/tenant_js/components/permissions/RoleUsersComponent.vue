@@ -9,7 +9,7 @@
                 class="mb-3"
         ></v-text-field>
         <v-data-iterator
-                :items="users"
+                :items="dataRoleUsers"
                 :rows-per-page-items="rowsPerPageItems"
                 :pagination.sync="pagination"
                 content-tag="v-layout"
@@ -47,7 +47,7 @@
         </user-card>
       </v-flex>
     </v-data-iterator>
-        <v-btn  @click="add"
+        <v-btn  @click="showAddDialog"
                 title="Afegir usuari"
                 absolute
                 dark
@@ -60,8 +60,26 @@
         </v-btn>
         <v-dialog v-model="addDialog" persistent max-width="600px">
             <v-card>
-                <v-card-title>TITLE</v-card-title>
-                <v-card-text>TEXT</v-card-text>
+                <v-toolbar dark color="primary">
+                    <v-btn icon dark @click.native="addDialog = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Indiqueu l'usuari a afegir</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                    <user-select
+                            label="Usuari a afegir"
+                            :users="dataUsers"
+                            v-model="newUser"
+                            :item-value="null"
+                    ></user-select>
+                    <v-btn flat @click.native="addDialog = false">
+                        <v-icon >close</v-icon> Cancel·lar
+                    </v-btn>
+                    <v-btn @click.native="add" :loading="adding" :disabled="adding">
+                        <v-icon>add</v-icon> Afegir
+                    </v-btn>
+                </v-card-text>
             </v-card>
         </v-dialog>
     </div>
@@ -69,11 +87,13 @@
 
 <script>
 import UserCard from '../users/UserCardComponent'
+import UserSelect from '../users/UsersSelectComponent'
 
 export default {
   name: 'RoleUsers',
   components: {
-    'user-card': UserCard
+    'user-card': UserCard,
+    'user-select': UserSelect
   },
   data () {
     return {
@@ -81,17 +101,27 @@ export default {
       pagination: {
         rowsPerPage: 12
       },
-      users: [],
+      dataUsers: [],
       search: '',
       removing: false,
+      adding: false,
       dataRoleUsers: [],
-      addDialog: false
+      addDialog: false,
+      newUser: null
     }
   },
   props: {
     role: {
       type: String,
       required: true
+    },
+    roleUsers: {
+      type: Array,
+      default: null
+    },
+    users: {
+      type: Array,
+      default: null
     }
   },
   methods: {
@@ -99,13 +129,23 @@ export default {
       this.addDialog = true
     },
     add () {
-      console.log('ADD TODO')
+      this.adding = true
+      window.axios.post('/api/v1/user/' + this.newUser.id + '/role/Incidents', {}).then(() => {
+        this.adding = false
+        this.dataRoleUsers.push(this.newUser)
+        this.$snackbar.showMessage("S'ha afegit correctament el rol a l'usuari")
+        this.addDialog = false
+        this.newUser = null
+      }).catch(error => {
+        this.adding = false
+        this.$snackbar.showError(error)
+      })
     },
     remove (user) {
       this.removing = true
       window.axios.delete('/api/v1/user/' + user.id + '/role/Incidents').then(() => {
         this.removing = false
-        this.users.splice(this.users.indexOf(user), 1)
+        this.dataRoleUsers.splice(this.dataRoleUsers.indexOf(user), 1)
         this.$snackbar.showMessage("S'ha tret correctament el rol a l'usuari")
       }).catch(error => {
         this.removing = false
@@ -114,7 +154,7 @@ export default {
     },
     fetchUsers () {
       window.axios.get('/api/v1/users').then(response => {
-        this.users = response.data
+        this.dataUsers = response.data
         this.$emit('loaded')
       }).catch(error => {
         this.$snackbar.showError(error)
@@ -122,7 +162,7 @@ export default {
     },
     fetchRoleUsers () {
       window.axios.get('/api/v1/role/Incidents/users').then(response => {
-        this.users = response.data
+        this.dataRoleUsers = response.data
         this.$emit('loaded')
       }).catch(error => {
         this.$snackbar.showError(error)
@@ -131,7 +171,12 @@ export default {
   },
   created () {
     if (!this.roleUsers) this.fetchRoleUsers()
-    else this.dataRoleUsers = this.roleUsers
+    else {
+      this.dataRoleUsers = this.roleUsers
+      this.$emit('loaded')
+    }
+    if (!this.users) this.fetchUsers()
+    else this.dataUsers = this.users
   }
 }
 </script>
