@@ -14,7 +14,7 @@
           </v-card-title>
         </v-flex>
       </v-layout>
-      <slot name="actions"></slot>
+      <slot name="actions" :user="user"></slot>
     </v-card>
   </div>
 </template>

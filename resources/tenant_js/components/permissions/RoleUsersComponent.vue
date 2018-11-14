@@ -26,9 +26,10 @@
               lg2
       >
         <user-card :user="user">
-            <template slot="actions">
+            <template slot="actions" slot-scope="{ user }"
+            >
                 <v-btn
-                        @click="remove"
+                        @click="remove(user)"
                         title="Eliminar usuari"
                         small
                         dark
@@ -37,6 +38,8 @@
                         bottom
                         right
                         color="red lighten-1"
+                        :loading="removing"
+                        :disabled="removing"
                 >
                     <v-icon>remove</v-icon>
                 </v-btn>
@@ -73,7 +76,8 @@ export default {
         rowsPerPage: 12
       },
       users: [],
-      search: ''
+      search: '',
+      removing: false
     }
   },
   props: {
@@ -86,8 +90,21 @@ export default {
     add () {
       console.log('ADD TODO')
     },
-    remove () {
-      console.log('REMOVE TODO')
+    async remove (user) {
+      this.removing = true
+      let role = await this.getRoleIdByName('Incidents')
+      window.axios.delete('/api/v1/user/' + user.id + '/role/' + role.id).then(() => {
+        this.removing = false
+        this.users.splice(this.users.indexOf(user), 1)
+        this.$snackbar.showMessage("S'ha tret correctament el rol a l'usuari")
+      }).catch(error => {
+        this.removing = false
+        this.$snackbar.showError(error)
+      })
+    },
+    async getRoleIdByName (roleName) {
+      let role = await window.axios.get('/api/v1/role/name/' + roleName)
+      return role.data.id
     },
     fetchUsers () {
       window.axios.get('/api/v1/users').then(response => {
