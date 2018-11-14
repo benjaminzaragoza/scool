@@ -21,10 +21,12 @@
             </v-stepper-step>
 
             <v-stepper-content step="1">
-              <v-card color="grey lighten-5" class="mb-5" height="200px">
-                  <v-form>
-                      <v-switch :label="activate ? 'Actiu' : 'Inactiu'" v-model="activate"></v-switch>
-                  </v-form>
+              <v-card color="grey lighten-5" class="mb-5" height="100px">
+                  <v-card-text>
+                      <v-form>
+                          <v-switch :label="activate ? 'Actiu' : 'Inactiu'" v-model="activate"></v-switch>
+                      </v-form>
+                  </v-card-text>
               </v-card>
               <v-btn color="primary" @click="step = 2">Continuar</v-btn>
               <v-btn flat @click.native="$emit('close')"><v-icon right dark class="mr-1">exit_to_app</v-icon>Sortir</v-btn>

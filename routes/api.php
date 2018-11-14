@@ -72,6 +72,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // TODO: UMMMMM
 //            Route::get('/users/available', 'Tenant\UsersAvailableController@index');
 
+            // Roles
+            Route::post('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@store');
+            Route::delete('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@destroy');
+
             //Pending teachers
             Route::get('/pending_teachers', 'Tenant\PendingTeachersController@index');
             Route::delete('/pending_teacher/{teacher}', 'Tenant\PendingTeachersController@destroy');

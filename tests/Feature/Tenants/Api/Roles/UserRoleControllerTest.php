@@ -2,12 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Address;
-use App\Models\Employee;
-use App\Models\Identifier;
-use App\Models\Job;
-use App\Models\Location;
-use App\Models\Person;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -49,9 +43,11 @@ class UserRoleControllerTest extends BaseTenantTest
         $roleToAdd = Role::firstOrCreate(['name' => 'ProvaRol']);
         $this->assertFalse($user->hasRole($roleToAdd));
 
+        $this->actingAs($manager,'api');
+
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/' . $roleToAdd->id);
         $response->assertSuccessful();
-
+        $user = $user->fresh();
         $this->assertTrue($user->hasRole($roleToAdd));
     }
 
@@ -65,11 +61,12 @@ class UserRoleControllerTest extends BaseTenantTest
         $this->actingAs($manager,'api');
 
         $user = factory(User::class)->create();
-        $roleToAdd = Role::firstOrCreate(['name' => 'ProvaRol']);
+        $roleToAdd = Role::firstOrCreate(['name' => 'ProvaRol', 'guard_name' => 'web']);
         $this->assertFalse($user->hasRole($roleToAdd));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/' . $roleToAdd->id);
         $response->assertSuccessful();
+        $user = $user->fresh();
         $this->assertTrue($user->hasRole($roleToAdd));
     }
 
@@ -83,11 +80,12 @@ class UserRoleControllerTest extends BaseTenantTest
         $this->actingAs($manager,'api');
 
         $user = factory(User::class)->create();
-        $roleToAdd = Role::firstOrCreate(['name' => 'Incidents']);
+        $roleToAdd = Role::firstOrCreate(['name' => 'Incidents', 'guard_name' => 'web']);
         $this->assertFalse($user->hasRole($roleToAdd));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/' . $roleToAdd->id);
         $response->assertSuccessful();
+        $user = $user->fresh();
         $this->assertTrue($user->hasRole($roleToAdd));
     }
 
