@@ -14,18 +14,7 @@
           </v-card-title>
         </v-flex>
       </v-layout>
-      <v-btn
-              title="Afegir usuari"
-              small
-              dark
-              fab
-              absolute
-              bottom
-              right
-              color="red lighten-3"
-      >
-        <v-icon>remove</v-icon>
-      </v-btn>
+      <slot name="actions"></slot>
     </v-card>
   </div>
 </template>

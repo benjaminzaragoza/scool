@@ -14,6 +14,7 @@
             </v-toolbar-items>
         </v-toolbar>
         <v-stepper v-model="step" vertical>
+            <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
             <v-stepper-step :complete="step > 1" step="1">
               Activació del mòdul
               <small>En aquest apartat podeu activar o desactiva el mòdul d'incidències</small>
@@ -21,7 +22,9 @@
 
             <v-stepper-content step="1">
               <v-card color="grey lighten-5" class="mb-5" height="200px">
-                  TODO  Pas 1
+                  <v-form>
+                      <v-switch :label="activate ? 'Actiu' : 'Inactiu'" v-model="activate"></v-switch>
+                  </v-form>
               </v-card>
               <v-btn color="primary" @click="step = 2">Continuar</v-btn>
               <v-btn flat @click.native="$emit('close')"><v-icon right dark class="mr-1">exit_to_app</v-icon>Sortir</v-btn>
@@ -31,7 +34,7 @@
 
             <v-stepper-content step="2">
               <v-card color="grey lighten-5" class="mb-5">
-                  <incident-users></incident-users>
+                  <incident-users @loaded="loading = false" ></incident-users>
               </v-card>
               <v-btn color="primary" @click="step = 3">Continuar</v-btn>
               <v-btn flat @click="step = 1">Anterior</v-btn>
@@ -62,7 +65,9 @@ export default {
   },
   data () {
     return {
-      step: 1
+      step: 1,
+      activate: true,
+      loading: true
     }
   },
   props: {

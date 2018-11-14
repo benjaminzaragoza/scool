@@ -25,10 +25,26 @@
               md4
               lg2
       >
-        <user-card :user="user"></user-card>
+        <user-card :user="user">
+            <template slot="actions">
+                <v-btn
+                        @click="remove"
+                        title="Eliminar usuari"
+                        small
+                        dark
+                        fab
+                        absolute
+                        bottom
+                        right
+                        color="red lighten-1"
+                >
+                    <v-icon>remove</v-icon>
+                </v-btn>
+            </template>
+        </user-card>
       </v-flex>
     </v-data-iterator>
-        <v-btn
+        <v-btn  @click="add"
                 title="Afegir usuari"
                 absolute
                 dark
@@ -52,9 +68,9 @@ export default {
   },
   data () {
     return {
-      rowsPerPageItems: [4, 8, 12],
+      rowsPerPageItems: [12, 24, 36, 48, 60, 72, 84, 96, { 'text': 'Tots', 'value': -1 }],
       pagination: {
-        rowsPerPage: 8
+        rowsPerPage: 12
       },
       users: [],
       search: ''
@@ -67,54 +83,19 @@ export default {
     }
   },
   methods: {
+    add () {
+      console.log('ADD TODO')
+    },
+    remove () {
+      console.log('REMOVE TODO')
+    },
     fetchUsers () {
-      this.users = [
-        {
-          name: 'Sergi Tur Badenas',
-          email: 'sergiturbadenas@gmail.com',
-          hashid: 'Og1'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        },
-        {
-          name: 'Dolors Sanjuan blablan',
-          email: 'dolors@gmail.com',
-          hashid: 'RX'
-        }
-      ]
+      window.axios.get('/api/v1/users').then(response => {
+        this.users = response.data
+        this.$emit('loaded')
+      }).catch(error => {
+        this.$snackbar.showError(error)
+      })
     }
   },
   created () {
