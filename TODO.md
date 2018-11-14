@@ -19,6 +19,7 @@ SettingsServiceProvider:
 # Incidents
 
 BUGS:
+- [ ] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar
 - [ ] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)
 - [ ] Al eliminar una etiqueta assignada (al ser la primera crec ) s'esborren totes (o potser també la segona). nivell base da des ok, al fer f5 torna a estat tot bé
 - [X] No funciona el autocomplete als filtres (creadors i assignees)

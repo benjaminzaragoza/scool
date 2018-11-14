@@ -77,8 +77,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@destroy');
 
             //RoleByName
-//            Route::get('/role/name/{role}','Tenant\Api\Roles\UserRoleController@store');
-            Route::get('/role/name','Tenant\Api\Roles\RoleName@store');
+            Route::get('/role/name/{name}','Tenant\Api\Roles\RoleNameController@show');
+//            Route::get('/role/name','Tenant\Api\Roles\RoleName@store');
 
             //Pending teachers
             Route::get('/pending_teachers', 'Tenant\PendingTeachersController@index');
