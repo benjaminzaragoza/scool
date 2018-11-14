@@ -19,14 +19,35 @@ SettingsServiceProvider:
 # Incidents
 
 BUGS:
+- [ ] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)
+- [ ] Al eliminar una etiqueta assignada (al ser la primera crec ) s'esborren totes (o potser també la segona). nivell base da des ok, al fer f5 torna a estat tot bé
 - [X] No funciona el autocomplete als filtres (creadors i assignees)
 - [ ] Els botons afegir comentari i afegir comentari i tancar al estar en loading i disabled desapareixent en comptes 
 de mostrar el loading
 
-Idees:
+## Idees
+
 - Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
 
 # Wizard config incidències:
+
+Rols i flux de treball:
+
+1) Superadmin activa mòdul incidències (es mostri al menú)
+2) Superadmin assigna com a mínim un gestor d'incidències (Rol IncidentsManager)
+3) IncidentsManager executa el wizard (es pot executar tant cops com calgui) de configuració Incidències
+
+Wizard Settings:
+1) Mòdul actiu (pots desactivar mòdul temporalment pel que sigui?)
+2) Assignar usuaris a incidències (assignar Rol Incidents)
+4) Altres settings (email de managers, persones a les que es poden assignar incidències, etc)
+
+Usuaris explotació Sergi Tur:
+- 1) Superadmin: sergitur@iesebre.com
+- 2) Professor: stur@iesebre.com
+
+- [ ] Els usuaris no siguin managers incidències no han de poder canviar settings
+- [ ] Els usuaris no siguin managers incidències no han de poder veure settings????
 
 Un stepper amb els passos:
 1) Activar o no mòdul incidències

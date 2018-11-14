@@ -1,32 +1,21 @@
 <template>
-    <v-card>
-        <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="$emit('close')">
-                <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title v-html="title"></v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click.native="save" class="hidden-sm-and-down" :loading="saving" :disabled="saving">
-                    <v-icon right dark class="mr-2">save</v-icon> Guardar
-                </v-btn>
-            </v-toolbar-items>
-        </v-toolbar>
-        <form>
-            <v-container fluid grid-list-md text-xs-center>
-                <v-layout row wrap>
-                    <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
-                    <v-flex md12 v-for="(setting, key)  in settings" :key="setting.key">
-                        <v-text-field
-                                v-model="settings[key].value"
-                                :label="setting.label"
-                                :hint="setting.hint"
-                        ></v-text-field>
-                    </v-flex>
-                </v-layout>
-            </v-container>
-        </form>
-    </v-card>
+    <form>
+        <v-container fluid grid-list-md text-xs-center>
+            <v-layout row wrap>
+                <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
+                <v-flex md12 v-for="(setting, key)  in settings" :key="setting.key">
+                    <v-text-field
+                            v-model="settings[key].value"
+                            :label="setting.label"
+                            :hint="setting.hint"
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <v-btn color="primary" @click.native="save" class="hidden-sm-and-down" :loading="saving" :disabled="saving">
+            <v-icon right dark class="mr-2">save</v-icon> Guardar
+        </v-btn>
+    </form>
 </template>
 
 <script>
