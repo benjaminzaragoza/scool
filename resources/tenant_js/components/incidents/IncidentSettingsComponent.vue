@@ -36,7 +36,7 @@
 
             <v-stepper-content step="2">
               <v-card color="grey lighten-5" class="mb-5">
-                  <incident-users @loaded="loading = false" ></incident-users>
+                  <incident-users @loaded="loading = false" :incident-users="incidentUsers" ></incident-users>
               </v-card>
               <v-btn color="primary" @click="step = 3">Continuar</v-btn>
               <v-btn flat @click="step = 1">Anterior</v-btn>
@@ -76,6 +76,10 @@ export default {
     title: {
       type: String,
       default: "Configuració mòdul d'incidències"
+    },
+    incidentUsers: {
+      type: Array,
+      required: true
     }
   }
 }

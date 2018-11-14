@@ -30,7 +30,7 @@
                     v-model="settingsDialog"
                     color="blue darken-3"
                     title="Canviar la configuració de les incidències">
-                        <incident-settings module="incidents" @close="settingsDialog = false"></incident-settings>
+                        <incident-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers"></incident-settings>
             </fullscreen-dialog>
 
             <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">

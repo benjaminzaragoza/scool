@@ -77,7 +77,8 @@ export default {
       },
       users: [],
       search: '',
-      removing: false
+      removing: false,
+      dataRoleUsers: []
     }
   },
   props: {
@@ -90,10 +91,9 @@ export default {
     add () {
       console.log('ADD TODO')
     },
-    async remove (user) {
+    remove (user) {
       this.removing = true
-      let role = await this.getRoleIdByName('Incidents')
-      window.axios.delete('/api/v1/user/' + user.id + '/role/' + role.id).then(() => {
+      window.axios.delete('/api/v1/user/' + user.id + '/role/Incidents').then(() => {
         this.removing = false
         this.users.splice(this.users.indexOf(user), 1)
         this.$snackbar.showMessage("S'ha tret correctament el rol a l'usuari")
@@ -102,12 +102,16 @@ export default {
         this.$snackbar.showError(error)
       })
     },
-    async getRoleIdByName (roleName) {
-      let role = await window.axios.get('/api/v1/role/name/' + roleName)
-      return role.data.id
-    },
     fetchUsers () {
       window.axios.get('/api/v1/users').then(response => {
+        this.users = response.data
+        this.$emit('loaded')
+      }).catch(error => {
+        this.$snackbar.showError(error)
+      })
+    },
+    fetchRoleUsers () {
+      window.axios.get('/api/v1/role').then(response => {
         this.users = response.data
         this.$emit('loaded')
       }).catch(error => {
@@ -116,7 +120,8 @@ export default {
     }
   },
   created () {
-    this.fetchUsers()
+    if (!this.roleUsers) this.fetchRoleUsers()
+    else this.dataRoleUsers = this.roleUsers
   }
 }
 </script>

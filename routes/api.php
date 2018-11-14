@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,15 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::bind('role', function($value, $route)
+{
+    if (is_integer(intval($value)) && intval($value) > 0) return Role::findOrFail($value);
+    if (is_string($value)) {
+        return Role::where('name',$value)->firstOrFail();
+    }
+    throw new RoleDoesNotExist(var_export($value,true));
+});
 
 Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {
