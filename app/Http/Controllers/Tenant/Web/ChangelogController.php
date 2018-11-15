@@ -7,6 +7,7 @@ use App\Http\Requests\Incidents\ListChangelog;
 use App\Models\Log;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 /**
  * Class ChangelogController.
@@ -23,37 +24,24 @@ class ChangelogController extends Controller
      */
     public function index(ListChangelog $request)
     {
-        // TODO
-//        $log1 = Log::create([
-//            'text' => 'Ha creat la incidència TODO_LINK_INCIDENCIA',
-//            'time' => Carbon::now(),
-//            'action_type' => 'update',
-//            'module_type' => 'Incidents',
-//            'user_id' => 4,
-//            'icon' => 'home',
-//            'color' => 'teal'
-//        ]);
-//        $log2 = Log::create([
-//            'text' => 'Ha modificat la incidència TODO_LINK_INCIDENCIA',
-//            'time' => Carbon::now(),
-//            'action_type' => 'update',
-//            'module_type' => 'Incidents',
-//            'user_id' => 1,
-//            'icon' => 'home',
-//            'color' => 'teal'
-//        ]);
-//        $log3 = Log::create([
-//            'text' => 'Ha modificat la incidència TODO_LINK_INCIDENCIA',
-//            'time' => Carbon::now(),
-//            'action_type' => 'update',
-//            'module_type' => 'Incidents',
-//            'user_id' => 2,
-//            'icon' => 'home',
-//            'color' => 'teal'
-//        ]);
-
         $logs = map_collection(Log::with('user')->get());
         $users = User::all();
         return view('tenants.changelog.index', compact('logs','users'));
+    }
+
+    /**
+     * TODO -> ELIMINAR
+     */
+    public function add(Request $request)
+    {
+        Log::create([
+            'text' => 'MISSATGE NOu',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'Incidents',
+            'user_id' => 4,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
     }
 }

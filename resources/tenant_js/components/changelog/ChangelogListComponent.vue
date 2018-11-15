@@ -14,6 +14,10 @@
             <v-toolbar-title class="white--text title">Registre de canvis</v-toolbar-title>
             <v-spacer></v-spacer>
 
+            <v-btn flat class="white--text" @click="realTime=!realTime" >
+                <span class="mr-1">Temps real</span> <v-icon v-if="realTime">check_box</v-icon><v-icon v-else>check_box_outline_blank</v-icon>
+            </v-btn>
+
             <fullscreen-dialog
                     :flat="false"
                     class="white--text"
@@ -33,7 +37,7 @@
                 <v-timeline dense clipped>
                     <v-slide-x-transition group>
                         <v-timeline-item
-                        v-for="log in logs"
+                        v-for="log in dataLogs"
                         :key="log.id"
                         class="mb-3"
                         :color="log.color"
@@ -83,7 +87,8 @@ export default {
     return {
       settingsDialog: false,
       refreshing: false,
-      dataLogs: this.logs
+      dataLogs: this.logs,
+      realTime: true
     }
   },
   props: {
@@ -97,18 +102,19 @@ export default {
     }
   },
   methods: {
-    refresh (message = true) {
-      this.fetch(message)
+    refresh () {
+      this.fetch()
     },
-    fetch (message = true) {
+    fetch () {
       this.refreshing = true
-      // this.$store.dispatch(actions.SET_INCIDENTS).then(response => {
-      //   if (message) this.$snackbar.showMessage('Incidències actualitzades correctament')
-      //   this.refreshing = false
-      // }).catch(error => {
-      //   this.$snackbar.showError(error)
-      //   this.refreshing = false
-      // })
+      window.axios.get('/api/v1/changelog').then(response => {
+        this.$snackbar.showMessage('Registre de canvis actualitzat correctament')
+        this.dataLogs = response.data
+        this.refreshing = false
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.refreshing = false
+      })
     }
   }
 }
