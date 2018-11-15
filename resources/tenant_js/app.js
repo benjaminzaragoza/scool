@@ -96,6 +96,9 @@ window.Vue.component('incidents', require('./components/incidents/IncidentsCompo
 window.Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'))
 window.Vue.component('incident-add', require('./components/incidents/IncidentAddComponent.vue'))
 
+// Changelog
+window.Vue.component('changelog', require('./components/changelog/ChangelogComponent.vue'))
+
 // UI
 window.Vue.component('floating-add', require('./components/ui/FloatingAddComponent'))
 

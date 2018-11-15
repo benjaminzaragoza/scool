@@ -42,7 +42,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);
         $user->assignRole($role);
-        $this->actingAs($user,'api');
+        $this->actingAs($user);
         $response = $this->get('/incidents');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.incidents.index');

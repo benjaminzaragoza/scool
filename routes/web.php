@@ -131,6 +131,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/settings','Tenant\SettingsController@index');
 
+            //Changelog
+            Route::get('/changelog','Tenant\Web\ChangelogController@index');
+
         });
     });
 

@@ -1,7 +1,57 @@
+# ChangeLog Module
+
+- [ ] Crear entrada de menú i la corresponent entrada a la taula de base de dades
+- [ ] Crear fitxer de settings (config/changelog.php) del mòdul
+
+Settings:
+- [ ] TODO? Duració dels registres i neteja
+
+Backup/Neteja
+- [] Permetre netejar registres vells i fer backup dels registres
+
+Performance:
+- [ ] Control d'esdeveniment en segon terme (activar i utilitzar queues)
+
+Idees:
+- Base de dades o memòria ràpida tipus Redis?
+
+Vista:
+- [ ] Utilitzar timeline vuetify
+- [ ] Mostrar data en que ha succeït el esdeveniment/canvi
+- [ ] Mostrar missatge del esdeveniment/canvi
+- [ ] Tipus de registre de canvi: creació/actualització/eliminació
+- [ ] Mostrar usuari (avatar i nom usuari amb email al title -hover)
+- [ ] Esdeveniments no associats a cap usuari? -> No donar error pq usuari pot ser opcional
+- [ ] Color de l'esdeveniment (nullable)
+- [ ] Icona (nullable)
+- [ ] Mòdul de l'esdeveniment -> opcional (nullable a base de daes)
+- [ ] Objecte registrable -> Copia persistent de l'estat de l'objecte en aquell moment (camp Json, guardar map() de l'objecte)
+- [ ] Botó refresh per forçar refresh del registre
+- [ ] Real Time Logging -> Refresh automàtic (utilitzant Laravel echo i esdeveniments push)
+  - [ ] Switch que permeti activar/desactivar refresh automàtic
+- [ ] Filtres:
+  - [ ] Filtrar per usuari
+  - [ ] Filtrar per mòdul
+- [ ] Search: tipus datatables buscar qualsevol registre
+- [ ] Dos vistes? 
+  - (últims canvis o rang de dates) amb timeline
+  - Datatables?
+- Es pot utilitzar Data Iterator amb el registre de canvis?
+  
+Testos:
+WEB:
+- [ ] ChangeLogControllerTest:
+  - [] Mostra la vista que correspon amb les dades que pertoquen
+  - [] TODO Limitar nombre de dades de la vista
+    
+API:
+- [ ] ChangeLogControllerTest
+  - [ ] Operacions CRUD
+  
 # Explotació
 
 - [ ] No va https://iesebre.scool.cat/ (sembla utilitza base de dades bàsica i no pas tenant) en canvi https://iesebre.scool.cat/home i altres si
-
+- [ ] Script actualització explotació branca production (STOP npm run hot before)
 
 # Settings
 
@@ -25,6 +75,13 @@ BUGS:
 - [X] No funciona el autocomplete als filtres (creadors i assignees)
 - [ ] Els botons afegir comentari i afegir comentari i tancar al estar en loading i disabled desapareixent en comptes 
 de mostrar el loading
+
+## Comentaris
+
+Canviar la interfície a la nova timeline de vuetify (vegeu exemple advanced):
+
+- https://vuetifyjs.com/en/components/timelines
+- https://github.com/vuetifyjs/vuetifyjs.com/tree/master/src/examples/timelines/advanced.vue
 
 ## Idees
 

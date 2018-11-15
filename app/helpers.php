@@ -972,6 +972,12 @@ if (!function_exists('initialize_gates')) {
                 ($user->hasRole('IncidentsManager') && $role->name === 'Incidents');
         });
 
+        // Changelog
+        Gate::define('changelog.list', function ($user) {
+            // TODO
+            return true;
+        });
+
     }
 }
 
@@ -1058,6 +1064,11 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Usuaris de ldap',
             'href' => '/ldap_users',
             'role' => 'UsersManager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Registre de canvis',
+            'href' => '/changelog'
         ]);
     }
 }

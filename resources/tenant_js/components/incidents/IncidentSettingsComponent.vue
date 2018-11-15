@@ -17,7 +17,7 @@
             <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
             <v-stepper-step :complete="step > 1" step="1">
               Activació del mòdul
-              <small>En aquest apartat podeu activar o desactiva el mòdul d'incidències</small>
+              <small>En aquest apartat podeu activar o desactivar el mòdul d'incidències</small>
             </v-stepper-step>
 
             <v-stepper-content step="1">
