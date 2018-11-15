@@ -83,104 +83,17 @@ export default {
     return {
       settingsDialog: false,
       refreshing: false,
-      logs: [
-        {
-          id: 1,
-          text: "Ha creat la incidència <a target='_blank' href='/incidents/1'>No funciona res a l'aula 23</a>",
-          action: {
-            name: 'store',
-            text: 'Creació',
-            icon: 'add'
-          },
-          time: '11:45:34 23/10/2018',
-          human_time: '1 minut abans dasasd asd sad',
-          timestamp: 123123312,
-          module: {
-            name: 'Incidents',
-            text: 'Incidències',
-            icon: 'build'
-          },
-          user: {
-            id: 1,
-            name: 'Sergi Tur Badenas',
-            email: 'sergiturbadenas@gmail.com',
-            hashid: 'Og1'
-          },
-          icon: 'home',
-          color: 'teal'
-        },
-        {
-          id: 2,
-          text: "Ha modificat la incidència <a target='_blank' href='incidents/1'>No funciona res a l'aula 23</a>",
-          action: {
-            name: 'update',
-            text: 'Edició',
-            icon: 'edit'
-          },
-          time: '11:45:34 23/10/2018',
-          human_time: '1 minut abans',
-          timestamp: 123123312,
-          module: {
-            name: 'Incidents',
-            text: 'Incidències',
-            icon: 'build'
-          },
-          user: {
-            id: 1,
-            name: 'Jordi Varas',
-            email: 'sergiturbadenas@gmail.com',
-            hashid: 'ARy'
-          },
-          icon: 'home'
-        },
-        {
-          id: 3,
-          text: "Ha eliminat la incidència <a target='_blank' href='incidents/1'>No funciona res a l'aula 23</a>",
-          action: {
-            name: 'destroy',
-            text: 'Eliminació',
-            icon: 'remove'
-          },
-          time: '11:45:34 23/10/2018',
-          human_time: '1 minut abans',
-          timestamp: 123123312,
-          module: {
-            name: 'Incidents',
-            text: 'Incidències',
-            icon: 'build'
-          },
-          user: {
-            id: 1,
-            name: 'Sergi Tur Badenas',
-            email: 'sergiturbadenas@gmail.com'
-          },
-          color: 'teal'
-        },
-        {
-          id: 4,
-          text: 'hey lorem ipsum facto asdawe asd asd asd asd asd asd aseasdfas das dasd asd asd asd asd asd asd asd asd asd asd asd sad asd ',
-          action: {
-            name: 'update',
-            text: 'Edició',
-            icon: 'edit'
-          },
-          time: '11:45:34 23/10/2018',
-          human_time: '1 minut abans',
-          timestamp: 123123312,
-          module: {
-            name: 'Incidents',
-            text: 'Incidències',
-            icon: 'build'
-          },
-          user: {
-            id: 1,
-            name: 'Sergi Tur Badenas',
-            email: 'sergiturbadenas@gmail.com'
-          },
-          icon: 'home',
-          color: 'teal'
-        }
-      ]
+      dataLogs: this.logs
+    }
+  },
+  props: {
+    logs: {
+      type: Array,
+      required: true
+    },
+    users: {
+      type: Array,
+      required: true
     }
   },
   methods: {
