@@ -214,6 +214,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/settings/filter/{module}','Tenant\Api\Settings\FilteredSettingsController@index');
             Route::put('/settings/filter/{module}','Tenant\Api\Settings\FilteredSettingsController@update');
 
+            //Changelog
+            Route::get('/changelog','Tenant\Api\Changelog\ChangelogController@index');
         });
 
         Route::group(['prefix' => 'v1'], function () {

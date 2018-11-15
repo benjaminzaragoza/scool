@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CreateTenantLogsTable
+ */
 class CreateTenantLogsTable extends Migration
 {
     /**
@@ -15,6 +18,13 @@ class CreateTenantLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('text');
+            $table->datetime('time');
+            $table->string('action_type');
+            $table->string('module_type');
+            $table->unsignedInteger('user_id');
+            $table->string('icon');
+            $table->string('color');
             $table->timestamps();
         });
     }
