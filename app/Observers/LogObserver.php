@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App;
 use App\Events\LogCreated;
 use App\Models\Log;
 use Log as LaravelLog;
@@ -20,6 +21,7 @@ class LogObserver
      */
     public function created(Log $log)
     {
+        if (App::environment('testing')) return;
         event(new LogCreated($log));
     }
 }

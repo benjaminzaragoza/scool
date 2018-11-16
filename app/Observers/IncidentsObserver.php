@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App;
 use App\Models\Incident;
 use App\Models\Log;
 use Auth;
@@ -20,6 +21,7 @@ class IncidentsObserver
      */
     public function created(Incident $incident)
     {
+        if (App::environment('testing')) return;
         Log::create([
             'text' => "Ha creat la incidència $incident->subject",
             'time' => $incident->created_at,
