@@ -2,62 +2,24 @@
 
 namespace App\Observers;
 
-use App\Log;
+use App\Events\LogCreated;
+use App\Models\Log;
+use Log as LaravelLog;
 
+/**
+ * Class LogObserver
+ * @package App\Observers
+ */
 class LogObserver
 {
     /**
      * Handle the log "created" event.
      *
-     * @param  \App\Log  $log
+     * @param  \App\Models\Log  $log
      * @return void
      */
     public function created(Log $log)
     {
-        //
-    }
-
-    /**
-     * Handle the log "updated" event.
-     *
-     * @param  \App\Log  $log
-     * @return void
-     */
-    public function updated(Log $log)
-    {
-        //
-    }
-
-    /**
-     * Handle the log "deleted" event.
-     *
-     * @param  \App\Log  $log
-     * @return void
-     */
-    public function deleted(Log $log)
-    {
-        //
-    }
-
-    /**
-     * Handle the log "restored" event.
-     *
-     * @param  \App\Log  $log
-     * @return void
-     */
-    public function restored(Log $log)
-    {
-        //
-    }
-
-    /**
-     * Handle the log "force deleted" event.
-     *
-     * @param  \App\Log  $log
-     * @return void
-     */
-    public function forceDeleted(Log $log)
-    {
-        //
+        event(new LogCreated($log));
     }
 }

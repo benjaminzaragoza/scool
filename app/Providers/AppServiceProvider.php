@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Log;
+use App\Observers\LogObserver;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
-use PulkitJalan\Google\Client;
 
 /**
  * Class AppServiceProvider.
@@ -20,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Log::observe(LogObserver::class);
     }
 
     /**

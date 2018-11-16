@@ -14,6 +14,8 @@ class Log extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['timestamp','formatted_time','human_time','action','module'];
+
     /**
      * The attributes that should be mutated to dates.
      *

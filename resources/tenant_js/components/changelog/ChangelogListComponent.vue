@@ -116,6 +116,14 @@ export default {
         this.refreshing = false
       })
     }
+  },
+  created () {
+    window.Echo.private('App.Log')
+      .listen('LogCreated', (e) => {
+        console.log('EVENT RECEIVED!!!!!')
+        console.log(e.log)
+        this.dataLogs.push(e.log)
+      })
   }
 }
 </script>
