@@ -50,6 +50,11 @@ class Log extends Model
             'module' => $this->module,
             'icon' => $this->icon,
             'color' => $this->color,
+            'loggable_id' => $this->loggable_id,
+            'loggable_type' => $this->loggable_type,
+            'loggable' => $this->loggable,
+            'persistedLoggable' => $this->persistedLoggable,
+
         ];
     }
 

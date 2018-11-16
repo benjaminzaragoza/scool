@@ -2,7 +2,7 @@
     <form>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
-            <v-flex md12>
+            <v-flex xs12>
                 <v-text-field
                         ref="subject_field"
                         v-focus
@@ -16,7 +16,7 @@
                         autofocus
                 ></v-text-field>
             </v-flex>
-            <v-flex md12>
+            <v-flex xs12>
                 <v-tabs :v-model="1" slider-color="teal">
                     <v-tab :key="1" ripple> Descripció </v-tab>
                     <v-tab :key="2" ripple> Previsualitació</v-tab>

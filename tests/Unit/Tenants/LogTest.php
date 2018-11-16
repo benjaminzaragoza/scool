@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
+use App\Models\Incident;
 use App\Models\Log;
 use App\Models\User;
 use Carbon\Carbon;
@@ -40,20 +41,28 @@ class LogTest extends TestCase
             'email' => 'pepepardo@jeans.com'
         ]);
 
+        $incident = Incident::create([
+            'subject' => 'No funciona PC aula 5',
+            'description' => 'bla bla bla'
+        ]);
+
         $log = Log::create([
-            'text' => 'Ha creat la incidència TODO_LINK_INCIDENCIA',
+            'text' => "Ha creat la incidència $incident->subject",
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
             'user_id' => $user->id,
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
+            'persistedLoggable' => $incident->toJson(),
             'icon' => 'home',
             'color' => 'teal'
         ]);
 
         $mappedLog = $log->map();
 
-        $this->assertEquals(1,$mappedLog['id']);
-        $this->assertEquals('Ha creat la incidència TODO_LINK_INCIDENCIA',$mappedLog['text']);
+        $this->assertEquals($log->id,$mappedLog['id']);
+        $this->assertEquals('Ha creat la incidència No funciona PC aula 5',$mappedLog['text']);
         $this->assertNotNull($mappedLog['time']);
         $this->assertNotNull($mappedLog['human_time']);
         $this->assertNotNull($mappedLog['timestamp']);
@@ -65,6 +74,11 @@ class LogTest extends TestCase
         $this->assertEquals('Incidents',$mappedLog['module']->name);
         $this->assertEquals('Incidències',$mappedLog['module']->text);
         $this->assertEquals('build',$mappedLog['module']->icon);
+        $this->assertEquals($user->id,$mappedLog['user_id']);
+        $this->assertEquals($incident->id,$mappedLog['loggable_id']);
+        $this->assertTrue($mappedLog['loggable']->is($incident));
+        $this->assertEquals($incident->toJson(),$mappedLog['persistedLoggable']);
+        $this->assertEquals($user->id,$mappedLog['user_id']);
         $this->assertTrue($mappedLog['user']->is($user));
         $this->assertEquals('home',$mappedLog['icon']);
         $this->assertEquals('teal',$mappedLog['color']);

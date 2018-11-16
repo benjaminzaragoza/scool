@@ -22,7 +22,7 @@ class CreateTenantLogsTable extends Migration
             $table->datetime('time');
             $table->string('action_type');
             $table->string('module_type');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->nullableMorphs('loggable');
             $table->json('persistedLoggable')->nullable();
             $table->string('icon');
