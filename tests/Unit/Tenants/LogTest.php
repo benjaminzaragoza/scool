@@ -3,22 +3,17 @@
 namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
-use App\Models\Incident;
-use App\Models\IncidentTag;
-use App\Models\Log;
-use App\Models\Reply;
 use App\Models\User;
-use Auth;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class IncidentTest.
+ * Class LogTest.
  *
  * @package Tests\Unit\Tenants
  */
-class IncidentTest extends TestCase
+class LogTest extends TestCase
 {
     use RefreshDatabase;
 
