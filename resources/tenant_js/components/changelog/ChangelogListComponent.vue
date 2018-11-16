@@ -55,7 +55,13 @@
                               <v-flex xs1 text-xs-left align-self-center>
                                 <span :title="log.time">{{ log.human_time }}</span>
                             </v-flex>
-                            <v-flex xs7 v-html="log.text" text-xs-left align-self-center></v-flex>
+                            <v-flex xs5 v-html="log.text" text-xs-left align-self-center></v-flex>
+                            <v-flex xs1 text-xs-left align-self-center>
+                                <v-icon>{{log.loggable}}</v-icon>
+                            </v-flex>
+                            <v-flex xs1 text-xs-left align-self-center>
+                                <v-icon>{{log.persistedLoggable}}</v-icon>
+                            </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
                                 <v-icon :title="'Mòdul ' + log.module.text">{{ log.module.icon }}</v-icon>
                             </v-flex>

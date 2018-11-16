@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tenants;
 
 use App\Console\Kernel;
+use App\Models\Log;
 use App\Models\User;
 use Carbon\Carbon;
 use Tests\TestCase;

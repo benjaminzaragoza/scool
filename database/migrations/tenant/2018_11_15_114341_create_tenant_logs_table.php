@@ -24,7 +24,7 @@ class CreateTenantLogsTable extends Migration
             $table->string('module_type');
             $table->unsignedInteger('user_id');
             $table->nullableMorphs('loggable');
-            $table->json('persistedObject')->nullable();
+            $table->json('persistedLoggable')->nullable();
             $table->string('icon');
             $table->string('color');
             $table->timestamps();

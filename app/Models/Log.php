@@ -16,7 +16,7 @@ class Log extends Model
 
     protected $appends = ['timestamp','formatted_time','human_time','action','module'];
 
-    protected $with = ['user'];
+    protected $with = ['user','loggable'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -180,5 +180,13 @@ class Log extends Model
             case 'Incidents':
                 return 'build';
         }
+    }
+
+    /**
+     * Get the logged model.
+     */
+    public function loggable()
+    {
+        return $this->morphTo();
     }
 }
