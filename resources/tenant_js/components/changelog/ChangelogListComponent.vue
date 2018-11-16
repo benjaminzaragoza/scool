@@ -37,7 +37,7 @@
                 <v-timeline dense clipped>
                     <v-slide-x-transition group>
                         <v-timeline-item
-                        v-for="log in dataLogs"
+                        v-for="log in timeline"
                         :key="log.id"
                         class="mb-3"
                         :color="log.color"
@@ -101,6 +101,16 @@ export default {
       required: true
     }
   },
+  computed: {
+    timeline () {
+      return this.dataLogs.slice().reverse()
+    }
+  },
+  watch: {
+    realTime (newValue) {
+      newValue ? this.activeRealTime() : this.disableRealTime()
+    }
+  },
   methods: {
     refresh () {
       this.fetch()
@@ -115,15 +125,19 @@ export default {
         this.$snackbar.showError(error)
         this.refreshing = false
       })
+    },
+    activeRealTime () {
+      window.Echo.private('App.Log')
+        .listen('LogCreated', (e) => {
+          this.dataLogs.push(e.log)
+        })
+    },
+    disableRealTime () {
+      window.Echo.leave('App.Log')
     }
   },
   created () {
-    window.Echo.private('App.Log')
-      .listen('LogCreated', (e) => {
-        console.log('EVENT RECEIVED!!!!!')
-        console.log(e.log)
-        this.dataLogs.push(e.log)
-      })
+    if (this.realTime) this.activeRealTime()
   }
 }
 </script>

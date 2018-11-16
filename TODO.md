@@ -1,6 +1,6 @@
 # ChangeLog Module
 
-- [ ] Crear entrada de menú i la corresponent entrada a la taula de base de dades
+- [X] Crear entrada de menú i la corresponent entrada a la taula de base de dades
 - [ ] Crear fitxer de settings (config/changelog.php) del mòdul
 
 Settings:
@@ -16,19 +16,19 @@ Idees:
 - Base de dades o memòria ràpida tipus Redis?
 
 Vista:
-- [ ] Utilitzar timeline vuetify
-- [ ] Mostrar data en que ha succeït el esdeveniment/canvi
-- [ ] Mostrar missatge del esdeveniment/canvi
-- [ ] Tipus de registre de canvi: creació/actualització/eliminació
-- [ ] Mostrar usuari (avatar i nom usuari amb email al title -hover)
+- [X] Utilitzar timeline vuetify
+- [X] Mostrar data en que ha succeït el esdeveniment/canvi (tant human com data i temps normals)
+- [X] Mostrar missatge del esdeveniment/canvi
+- [X] Tipus de registre de canvi: creació/actualització/eliminació
+- [X] Mostrar usuari (avatar i nom usuari amb email al title -hover)
 - [ ] Esdeveniments no associats a cap usuari? -> No donar error pq usuari pot ser opcional
-- [ ] Color de l'esdeveniment (nullable)
-- [ ] Icona (nullable)
-- [ ] Mòdul de l'esdeveniment -> opcional (nullable a base de daes)
+- [X] Color de l'esdeveniment (nullable)
+- [X] Icona (nullable)
+- [X] Mòdul de l'esdeveniment -> opcional (nullable a base de daes)
 - [ ] Objecte registrable -> Copia persistent de l'estat de l'objecte en aquell moment (camp Json, guardar map() de l'objecte)
-- [ ] Botó refresh per forçar refresh del registre
-- [ ] Real Time Logging -> Refresh automàtic (utilitzant Laravel echo i esdeveniments push)
-  - [ ] Switch que permeti activar/desactivar refresh automàtic
+- [X] Botó refresh per forçar refresh del registre
+- [X] Real Time Logging -> Refresh automàtic (utilitzant Laravel echo i esdeveniments push)
+  - [X] Switch que permeti activar/desactivar refresh automàtic
 - [ ] Filtres:
   - [ ] Filtrar per usuari
   - [ ] Filtrar per mòdul
@@ -40,13 +40,19 @@ Vista:
   
 Testos:
 WEB:
-- [ ] ChangeLogControllerTest:
-  - [] Mostra la vista que correspon amb les dades que pertoquen
+- [X] ChangeLogControllerTest:
+  - [X] Mostra la vista que correspon amb les dades que pertoquen
   - [] TODO Limitar nombre de dades de la vista
     
 API:
-- [ ] ChangeLogControllerTest
-  - [ ] Operacions CRUD
+- [X] ChangeLogControllerTest
+  - [ ] Operacions CRUD:
+    - [X] List
+    - [X] Afegir via API -> No té sentit? sempre anirà associat a un handler/listener d'un esdeveniment
+    - [X] Esborrar/Editar -> No tenen sentit!
+
+**IMPORTANT**    
+- [ ] JA TENIA MÒDUL????    
   
 # Explotació
 
