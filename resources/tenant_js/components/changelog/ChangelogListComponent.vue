@@ -34,17 +34,38 @@
         </v-toolbar>
         <v-card>
               <v-container fluid>
+                  <v-text-field
+                          append-icon="search"
+                          label="Buscar"
+                          single-line
+                          hide-details
+                          v-model="search"
+                          class="mb-2"
+                  ></v-text-field>
                 <v-timeline dense clipped>
-                    <v-slide-x-transition group>
-                        <v-timeline-item
-                        v-for="log in timeline"
-                        :key="log.id"
-                        class="mb-3"
-                        :color="log.color"
-                        :icon="log.icon"
-                        small
+                    <!--<v-slide-x-transition group> // TODO NO VA!! -->
+                        <v-data-iterator
+                                :search="search"
+                                :items="timeline"
+                                :rows-per-page-items="rowsPerPageItems"
+                                :pagination.sync="pagination"
+                                no-results-text="No s'ha trobat cap registre coincident"
+                                no-data-text="No hi han dades disponibles"
+                                rows-per-page-text="Registres per pàgina"
+                                row
+                                wrap
+
                         >
-                          <v-layout justify-space-between>
+                     <v-timeline-item
+                             slot="item"
+                             slot-scope="{ item: log}"
+                             :key="log.id"
+                             class="mb-3"
+                             :color="log.color"
+                             :icon="log.icon"
+                             small
+                     >
+                        <v-layout justify-space-between>
                             <v-flex xs2 text-xs-left align-self-center>
                                 <user-avatar class="mr-2" :hash-id="log.user.hashid"
                                              :alt="log.user.name"
@@ -57,10 +78,10 @@
                             </v-flex>
                             <v-flex xs5 v-html="log.text" text-xs-left align-self-center></v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
-                                <v-icon>{{log.loggable}}</v-icon>
+                                <json-dialog-component name="Actual" title="Objecte actual" :json="log.loggable"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
-                                <v-icon>{{log.persistedLoggable}}</v-icon>
+                                <json-dialog-component name="Històric" title="Objecte en el moment de la modificació"  :json="JSON.parse(log.persistedLoggable)"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
                                 <v-icon :title="'Mòdul ' + log.module.text">{{ log.module.icon }}</v-icon>
@@ -68,9 +89,10 @@
                             <v-flex xs1 text-xs-left align-self-center>
                                 <v-icon :title="'Acció: ' + log.action.text">{{ log.action.icon }}</v-icon>
                             </v-flex>
-                          </v-layout>
-                        </v-timeline-item>
-                    </v-slide-x-transition>
+                        </v-layout>
+                    </v-timeline-item>
+                 </v-data-iterator>
+                     <!--</v-slide-x-transition>-->
                 </v-timeline>
               </v-container>
         </v-card>
@@ -79,6 +101,7 @@
 
 <script>
 import FullScreenDialog from '../ui/FullScreenDialog'
+import JsonDialogComponent from '../ui/JsonDialogComponent'
 import ChangelogSettings from './ChangelogSettingsComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
 
@@ -86,15 +109,21 @@ export default {
   name: 'ChangelogList',
   components: {
     'fullscreen-dialog': FullScreenDialog,
+    'json-dialog-component': JsonDialogComponent,
     'changelog-settings': ChangelogSettings,
     'user-avatar': UserAvatar
   },
   data () {
     return {
+      search: '',
       settingsDialog: false,
       refreshing: false,
       dataLogs: this.logs,
-      realTime: true
+      realTime: true,
+      rowsPerPageItems: [ 10, 25, 50, 100, 500, 1000, { 'text': 'Tots', 'value': -1 } ],
+      pagination: {
+        rowsPerPage: 10
+      }
     }
   },
   props: {

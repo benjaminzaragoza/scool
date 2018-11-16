@@ -133,9 +133,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             //Changelog
             Route::get('/changelog','Tenant\Web\ChangelogController@index');
-
-            // TODO ELIMINAR -> NOMES PROVES
-            route::get('/changelog/add','Tenant\Web\ChangelogController@add');
         });
     });
 

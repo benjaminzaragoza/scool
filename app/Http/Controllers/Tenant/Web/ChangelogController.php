@@ -28,20 +28,4 @@ class ChangelogController extends Controller
         $users = User::all();
         return view('tenants.changelog.index', compact('logs','users'));
     }
-
-    /**
-     * TODO -> ELIMINAR
-     */
-    public function add(Request $request)
-    {
-        Log::create([
-            'text' => 'MISSATGE NOu',
-            'time' => Carbon::now(),
-            'action_type' => 'update',
-            'module_type' => 'Incidents',
-            'user_id' => 4,
-            'icon' => 'home',
-            'color' => 'teal'
-        ]);
-    }
 }

@@ -17,12 +17,13 @@ import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import './bootstrap'
+import TreeView from 'vue-json-tree-view'
 
 window.Vue = Vue
-
 window.Vue.use(snackbar)
 window.Vue.use(permissions)
 window.Vue.use(confirm)
+window.Vue.use(TreeView)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

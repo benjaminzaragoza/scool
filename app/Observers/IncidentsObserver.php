@@ -6,6 +6,7 @@ use App;
 use App\Models\Incident;
 use App\Models\Log;
 use Auth;
+use Carbon\Carbon;
 
 /**
  * Class IncidentsObserver
@@ -30,7 +31,7 @@ class IncidentsObserver
             'user_id' => optional(Auth::user())->id,
             'loggable_id' => $incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => $incident->toJson(),
+            'persistedLoggable' => json_encode($incident->map()),
             'icon' => 'add',
             'color' => 'success'
         ]);
@@ -39,23 +40,47 @@ class IncidentsObserver
     /**
      * Handle the incident "updated" event.
      *
-     * @param  \App\Incident  $incident
+     * @param  \App\Models\Incident  $incident
      * @return void
      */
     public function updated(Incident $incident)
     {
-        //
+        if (App::environment('testing')) return;
+        Log::create([
+            'text' => "Ha modificat la incidència $incident->subject",
+            'time' => $incident->updated_at,
+            'action_type' => 'update',
+            'module_type' => 'Incidents',
+            'user_id' => optional(Auth::user())->id,
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
+            'persistedLoggable' => json_encode($incident->map()),
+            'icon' => 'edit',
+            'color' => 'teal'
+        ]);
     }
 
     /**
      * Handle the incident "deleted" event.
      *
-     * @param  \App\Incident  $incident
+     * @param  \App\Models\Incident  $incident
      * @return void
      */
     public function deleted(Incident $incident)
     {
-        //
+        if (App::environment('testing')) return;
+        Log::create([
+            'text' => "Ha eliminat la incidència $incident->subject",
+            'time' => Carbon::now(),
+            'action_type' => 'destroy',
+            'module_type' => 'Incidents',
+            'user_id' => optional(Auth::user())->id,
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
+            'persistedLoggable' => json_encode($incident->map()),
+            'icon' => 'remove',
+            'color' => 'error'
+        ]);
     }
 
     /**
