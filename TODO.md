@@ -1,22 +1,22 @@
 # Login and Register
 
 - [ ] Esdeveniments del mòdul UsersManager
-  - [ ] Esdeveniment s'ha logat un usuari
-  - [ ] Esdeveniment un usuari s'ha equivocat al logar-se
-  - [ ] Esdeveniment un usuari s'ha quedat bloquejat al superar el nombre màxim intents
-  - [ ] Esdeveniment s'ha registrat un usuari
-  - [ ] Un usuari ha demanat canviar la paraula de pas
-  - [ ] Un usuari ha canviat la paraula de pas
+  - [X] Esdeveniment s'ha logat un usuari
+  - [X] Esdeveniment un usuari s'ha equivocat al logar-se
+  - [X] NO CAL Esdeveniment un usuari s'ha quedat bloquejat al superar el nombre màxim intents
+  - [X] Esdeveniment s'ha registrat un usuari
+  - [ ] Un usuari ha demanat canviar la paraula de pas -> NO HI HA ESDEVENIMENT!
+  - [X] Un usuari ha canviat la paraula de pas
   - [ ] Impersonate: un admin s'ha impersonat com a i quan surt també
-
+  - [ ] Un usuari ha estat verificat 
 Esdeveniments (Illuminate\Auth\Events):
  - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni)
  - [X] Authenticated | [X] Login són el mateix només un per evitar doble log
  - [X] Failed
- - [ ] Lockout
- - [ ] Logout
- - [ ] PasswordReset
- - [ ] Registered
+ - [X] Lockout -> NO CAL!!!!
+ - [X] Logout
+ - [X] PasswordReset
+ - [X] Registered
  - [ ] Verified 
   
 # Menu

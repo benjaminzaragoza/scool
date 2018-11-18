@@ -9,7 +9,9 @@ use App\Events\TenantCreated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
 use App\Listeners\Authentication\LogLogedOutUser;
 use App\Listeners\Authentication\LogLoginUser;
+use App\Listeners\Authentication\LogPasswordResetUser;
 use App\Listeners\Authentication\LogRegisteredUser;
+use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
@@ -20,7 +22,9 @@ use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -51,12 +55,22 @@ class EventServiceProvider extends ServiceProvider
         Failed::class => [
             LogAttemptLoginUser::class
         ],
+        PasswordReset::class => [
+            LogPasswordResetUser::class
+        ],
+        Verified::class => [
+            LogVerifiedUser::class
+        ],
+        // TENANTS
+
         TenantCreated::class => [
             CreateTenantDatabase::class,
         ],
         TeacherPhotosZipUploaded::class => [
             UnzipTeacherPhotos::class
         ],
+
+        // GOOGLE
         GoogleUserNotificationReceived::class => [
             SendGoogleUserNotificationReceivedEmail::class,
             SyncGoogleUsers::class

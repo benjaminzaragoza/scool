@@ -130,6 +130,8 @@ class Log extends Model
                 return 'Sortir';
             case 'enter':
                 return 'Entrar';
+            case 'error':
+                return 'Error';
         }
     }
 
@@ -151,6 +153,8 @@ class Log extends Model
                 return 'exit_to_app';
             case 'enter':
                 return 'input';
+            case 'error':
+                return 'error';
         }
     }
 
