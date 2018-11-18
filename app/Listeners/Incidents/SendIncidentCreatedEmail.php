@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Listeners\Authentication;
+namespace App\Listeners\Incidents;
 
-use App;
-use App\Models\Log;
-use App\Models\User;
-use Auth;
-use Carbon\Carbon;
+use App\Mail\Incidents\IncidentCreated;
+use App\Models\Setting;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Schema;
+use Mail;
 
 /**
- * Class LogPasswordResetUser.
- * @package App\Listeners\Authentication
+ * Class SendIncidentCreatedEmail.
+ *
+ * @package App\Listeners\Incidents
  */
-class LogPasswordResetUser
+class SendIncidentCreatedEmail
 {
     /**
      * Create the event listener.
@@ -35,8 +33,6 @@ class LogPasswordResetUser
      */
     public function handle($event)
     {
-        if (App::environment('testing')) return;
-        if (!Schema::hasTable('logs')) return;
-        AuthenticationLogger::passwordReset($event);
+        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCreated($event->incident));
     }
 }

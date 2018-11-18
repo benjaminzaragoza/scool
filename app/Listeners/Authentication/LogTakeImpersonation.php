@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Authentication;
 
+use App;
 use App\Models\Log;
 use App\Models\User;
 use Carbon\Carbon;
@@ -34,19 +35,10 @@ class LogTakeImpersonation
      */
     public function handle($event)
     {
-        if (!Schema::hasTable('logs')) return;
-        Log::create([
-            'text' => "L'usuari/a admin <strong>" . $event->impersonator->name . ' - ' . $event->impersonator->email . "</strong> s'esta fent passar per <strong>" . $event->impersonated->name . ' - ' . $event->impersonated->email . '</strong>',
-            'time' => Carbon::now(),
-            'action_type' => 'update',
-            'user_id' => $event->impersonator->id,
-            'module_type' => 'UsersManagment',
-            'loggable_id' => $event->impersonator->id,
-            'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->impersonator,'map') ? json_encode($event->impersonator->map()) : $event->impersonator->toJson(),
-            'icon' => 'edit',
-            'color' => 'teal',
-        ]);
+        if (App::environment('testing')) return;
 
+        if (!Schema::hasTable('logs')) return;
+
+        AuthenticationLogger::takeImpersonation($event);
     }
 }

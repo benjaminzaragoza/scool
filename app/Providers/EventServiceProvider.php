@@ -16,6 +16,8 @@ use App\Listeners\Authentication\LogRegisteredUser;
 use App\Listeners\Authentication\LogTakeImpersonation;
 use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
+use App\Listeners\Incidents\LogIncidentStored;
+use App\Listeners\Incidents\SendIncidentCreatedEmail;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
@@ -77,7 +79,7 @@ class EventServiceProvider extends ServiceProvider
         // Incidents
         IncidentStored::class => [
             LogIncidentStored::class,
-            LogIncidentStored::class,
+            SendIncidentCreatedEmail::class
         ],
 
         // TENANTS

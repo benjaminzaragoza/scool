@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Authentication;
 
+use App;
 use App\Models\Log;
 use App\Models\User;
 use Auth;
@@ -34,20 +35,10 @@ class LogLogedOutUser
      */
     public function handle($event)
     {
+        if (App::environment('testing')) return;
+
         if (!Schema::hasTable('logs')) return;
 
-        Log::create([
-            'text' => "L'usuari/a <strong>" . $event->user->name . '</strong> ha sortit del sistema',
-            'time' => Carbon::now(),
-            'action_type' => 'exit',
-            'user_id' => $event->user->id,
-            'module_type' => 'UsersManagment',
-            'loggable_id' => $event->user->id,
-            'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
-            'icon' => 'exit_to_app',
-            'color' => 'purple',
-        ]);
-
+        AuthenticationLogger::logout($event);
     }
 }

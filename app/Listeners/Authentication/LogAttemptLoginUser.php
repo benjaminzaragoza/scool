@@ -2,10 +2,7 @@
 
 namespace App\Listeners\Authentication;
 
-use App\Models\Log;
-use App\Models\User;
-use Auth;
-use Carbon\Carbon;
+use App;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Schema;
@@ -34,15 +31,8 @@ class LogAttemptLoginUser
      */
     public function handle($event)
     {
+        if (App::environment('testing')) return;
         if (!Schema::hasTable('logs')) return;
-        Log::create([
-            'text' => "Intent de login incorrecte amb l'usuari <strong>" . $event->credentials['email'] . "</strong>",
-            'time' => Carbon::now(),
-            'action_type' => 'error',
-            'module_type' => 'UsersManagment',
-            'icon' => 'error',
-            'color' => 'error',
-        ]);
-
+        AuthenticationLogger::incorrectAttempt($event);
     }
 }

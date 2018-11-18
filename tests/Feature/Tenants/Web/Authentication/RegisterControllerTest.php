@@ -63,31 +63,4 @@ class RegisterControllerTest extends BaseTenantTest
         $this->assertNotNull(Auth::user());
         $this->assertTrue(Hash::check($user['password'],Auth::user()->password));
     }
-
-    /** @test */
-    public function a_log_is_created_when_a_user_is_registered()
-    {
-        // Execution
-        $this->assertNull(Log::latest()->first());
-        Config::set('auth.providers.users.model', User::class);
-        Log::truncate();
-        $this->post('/register', $user = [
-            'name' => 'Pepe Pardo Jeans',
-            'email' => 'pepepardo@jeans.com',
-            'password' => 'secret',
-            'password_confirmation' => 'secret'
-        ]);
-        $this->assertNotNull(Log::latest()->first());
-        $log = Log::first();
-        $this->assertEquals($log->text,'Usuari/a <strong>Pepe Pardo Jeans</strong> registrat amb l\'email <strong> pepepardo@jeans.com</strong>');
-        $this->assertNotNull($log->time);
-        $this->assertEquals($log->user_id,1);
-        $this->assertEquals($log->action_type,'store');
-        $this->assertEquals($log->module_type,'UsersManagment');
-        $this->assertEquals($log->loggable_id,1);
-        $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
-        $this->assertEquals($log->icon,'input');
-        $this->assertEquals($log->color,'success');
-    }
 }

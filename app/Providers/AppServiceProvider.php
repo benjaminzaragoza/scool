@@ -24,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Log::observe(LogObserver::class);
-        Incident::observe(IncidentsObserver::class);
+        // TODO ELIMINAR
+//        Incident::observe(IncidentsObserver::class);
     }
 
     /**

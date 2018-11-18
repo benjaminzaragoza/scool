@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Authentication;
 
+use App;
 use App\Models\Log;
 use App\Models\User;
 use Auth;
@@ -34,20 +35,8 @@ class LogLoginUser
      */
     public function handle($event)
     {
+        if (App::environment('testing')) return;
         if (!Schema::hasTable('logs')) return;
-
-        Log::create([
-            'text' => "L'usuari/a <strong>" . $event->user->name . '</strong> ha entrat al sistema',
-            'time' => Carbon::now(),
-            'action_type' => 'enter',
-            'user_id' => $event->user->id,
-            'module_type' => 'UsersManagment',
-            'loggable_id' => $event->user->id,
-            'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
-            'icon' => 'input',
-            'color' => 'teal',
-        ]);
-
+        AuthenticationLogger::login($event);
     }
 }

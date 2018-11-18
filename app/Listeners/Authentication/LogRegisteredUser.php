@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Authentication;
 
+use App;
 use App\Models\Log;
 use App\Models\User;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,19 +33,8 @@ class LogRegisteredUser
      */
     public function handle($event)
     {
+        if (App::environment('testing')) return;
         if (!Schema::hasTable('logs')) return;
-
-        Log::create([
-            'text' => 'Usuari/a <strong>' . $event->user->name . "</strong> registrat amb l'email <strong> " . $event->user->email . '</strong>',
-            'time' => $event->user->created_at,
-            'user_id' => $event->user->id,
-            'action_type' => 'store',
-            'module_type' => 'UsersManagment',
-            'loggable_id' => $event->user->id,
-            'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
-            'icon' => 'input',
-            'color' => 'success',
-        ]);
+        AuthenticationLogger::registered($event);
     }
 }
