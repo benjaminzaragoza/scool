@@ -115,12 +115,24 @@ class LoginControllerTest extends BaseTenantTest
             'email' => 'prova@gmail.com'
         ]);
         $this->assertNull(Auth::user());
+        Log::truncate();
         $response = $this->post('/login',[
             'email' => 'prova@gmail.com',
             'password' => 'asdjaskdlasdasd0798asdjh'
         ]);
         $response->assertStatus(422);
         $this->assertNull(Auth::user());
+        $log = Log::first();
+        $this->assertEquals($log->text,"Intent de login incorrecte amb l'usuari <strong>prova@gmail.com</strong>");
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, null);
+        $this->assertEquals($log->action_type,'error');
+        $this->assertEquals($log->module_type,'UsersManagment');
+        $this->assertEquals($log->loggable_id,null);
+        $this->assertEquals($log->loggable_type,null);
+        $this->assertNull($log->persistedLoggable);
+        $this->assertEquals($log->icon,'error');
+        $this->assertEquals($log->color,'error');
     }
 
     /**

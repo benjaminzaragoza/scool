@@ -6,6 +6,7 @@ use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Events\GoogleUserNotificationReceived;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
+use App\Listeners\Authentication\LogAttemptLoginUser;
 use App\Listeners\Authentication\LogLogedOutUser;
 use App\Listeners\Authentication\LogLoginUser;
 use App\Listeners\Authentication\LogRegisteredUser;
@@ -15,6 +16,7 @@ use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
 use App\Listeners\SyncGoogleUsers;
 use App\Listeners\UnzipTeacherPhotos;
+use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
@@ -44,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [
             LogSuccessfulLogin::class,
             LogLoginUser::class
+        ],
+        Attempting::class => [
+            LogAttemptLoginUser::class
         ],
         TenantCreated::class => [
             CreateTenantDatabase::class,
