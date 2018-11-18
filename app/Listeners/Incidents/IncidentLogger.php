@@ -21,7 +21,7 @@ class IncidentLogger
     public static function stored($event)
     {
         Log::create([
-            'text' => "Ha creat la incidència $event->incident->subject",
+            'text' => 'Ha creat la incidència ' . $event->incident->subject,
             'time' => $event->incident->created_at,
             'action_type' => 'store',
             'module_type' => 'Incidents',
