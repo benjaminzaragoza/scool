@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Adldap\Models\User;
+use App\Models\User;
 use App\Models\Log;
 use Config;
 use Event;
@@ -38,6 +38,8 @@ class RegisterControllerTest extends BaseTenantTest
     /** @test */
     public function can_register_a_user()
     {
+        $this->withoutExceptionHandling();
+        Config::set('auth.providers.users.model', User::class);
         $this->assertNull(Auth::user());
 
         Event::fake();
@@ -65,7 +67,6 @@ class RegisterControllerTest extends BaseTenantTest
     /** @test */
     public function a_log_is_created_when_a_user_is_registered()
     {
-        $this->withoutExceptionHandling();
         // Execution
         $this->assertNull(Log::latest()->first());
         Config::set('auth.providers.users.model', User::class);

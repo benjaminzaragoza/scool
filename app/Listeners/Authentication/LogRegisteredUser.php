@@ -40,7 +40,7 @@ class LogRegisteredUser
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
             'persistedLoggable' => json_encode($event->user->map()),
-            'icon' => 'add',
+            'icon' => 'input',
             'color' => 'success',
         ]);
     }
