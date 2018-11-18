@@ -34,7 +34,6 @@ class LogVerifiedUser
     public function handle($event)
     {
         if (!Schema::hasTable('logs')) return;
-
         Log::create([
             'text' => "L'usuari/a <strong>" . $event->user->name . "</strong> ha verificat l'email <strong>" . $event->user->email . '</strong>',
             'time' => Carbon::now(),
