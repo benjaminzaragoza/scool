@@ -66,7 +66,7 @@ class LoginControllerTest extends BaseTenantTest
         ]);
 
         $this->assertNull(Auth::user());
-
+        Log::truncate();
         $response = $this->post('/login',[
             'email' => 'prova@gmail.com', //$user->email
             'password' => 'secret' // password per defecte de les factories Laravel
@@ -76,7 +76,7 @@ class LoginControllerTest extends BaseTenantTest
         $this->assertNotNull(Auth::user());
         $this->assertEquals('prova@gmail.com',Auth::user()->email);
         $this->assertTrue(Auth::user()->is($user));
-        $log = Log::latest()->first();
+        $log = Log::first();
         $this->assertEquals($log->text,"L'usuari/a <strong>Pepa Parda Jeans</strong> ha entrat al sistema");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,$user->id);
@@ -175,7 +175,7 @@ class LoginControllerTest extends BaseTenantTest
         $this->assertNotNull(Auth::user());
         $this->assertTrue(Auth::user()->is($user));
         $this->post('/logout');
-        $log = Log::latest()->first();
+        $log = Log::first();
         $this->assertEquals($log->text,"L'usuari/a <strong>Pepa Parda Jeans</strong> ha sortit del sistema");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,$user->id);

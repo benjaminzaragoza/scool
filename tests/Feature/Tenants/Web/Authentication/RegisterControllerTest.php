@@ -70,7 +70,7 @@ class RegisterControllerTest extends BaseTenantTest
         // Execution
         $this->assertNull(Log::latest()->first());
         Config::set('auth.providers.users.model', User::class);
-
+        Log::truncate();
         $this->post('/register', $user = [
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardo@jeans.com',
@@ -78,8 +78,7 @@ class RegisterControllerTest extends BaseTenantTest
             'password_confirmation' => 'secret'
         ]);
         $this->assertNotNull(Log::latest()->first());
-        dd(count(Log::all()));
-        $log = Log::latest()->first();
+        $log = Log::first();
         $this->assertEquals($log->text,'Usuari/a <strong>Pepe Pardo Jeans</strong> registrat amb l\'email <strong> pepepardo@jeans.com</strong>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
