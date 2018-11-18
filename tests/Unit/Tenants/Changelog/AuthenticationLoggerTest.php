@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Tenants;
+namespace Tests\Unit\Tenants\Changelog;
 
 use App\Models\User;
 use App\Console\Kernel;

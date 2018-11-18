@@ -112,7 +112,6 @@ class IncidentsControllerTest extends BaseTenantTest {
         $user->assignRole($role);
         $this->actingAs($user,'api');
 
-        Mail::fake();
         Event::fake();
 
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
@@ -124,9 +123,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertSuccessful();
         $createdIncident = json_decode($response->getContent());
 
-        Mail::assertQueued(IncidentCreated::class, function ($mail) use ($createdIncident, $user) {
-            return $mail->incident->id === $createdIncident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
-        });
+
         Event::assertDispatched(IncidentStored::class,function ($event){
             return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
         });

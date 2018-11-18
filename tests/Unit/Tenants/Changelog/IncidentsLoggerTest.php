@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Tenants;
+namespace Tests\Unit\Tenants\Changelog;
 
 use App\Console\Kernel;
 use App\Listeners\Incidents\IncidentLogger;
