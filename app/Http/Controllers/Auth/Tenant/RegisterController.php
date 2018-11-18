@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Tenant;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Hash;
 use Illuminate\Support\Facades\Validator;

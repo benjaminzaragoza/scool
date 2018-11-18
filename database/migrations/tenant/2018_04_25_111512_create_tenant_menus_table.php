@@ -22,9 +22,9 @@ class CreateTenantMenusTable extends Migration
             $table->string('heading')->nullable();
             $table->string('text')->nullable();
             $table->string('href')->nullable();
+            $table->string('target')->nullable();
             $table->string('role')->nullable();
             $table->string('permission')->nullable();
-            $table->boolean('new')->nullable();
             $table->timestamps();
         });
     }

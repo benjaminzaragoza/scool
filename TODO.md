@@ -1,4 +1,52 @@
+# Login and Register
+
+- [ ] Esdeveniments del mòdul UsersManager
+  - [ ] Esdeveniment s'ha logat un usuari
+  - [ ] Esdeveniment un usuari s'ha equivocat al logar-se
+  - [ ] Esdeveniment un usuari s'ha quedat bloquejat al superar el nombre màxim intents
+  - [ ] Esdeveniment s'ha registrat un usuari
+  - [ ] Un usuari ha demanat canviar la paraula de pas
+  - [ ] Un usuari ha canviat la paraula de pas
+  - [ ] Impersonate: un admin s'ha impersonat com a i quan surt també
+
+Esdeveniments (Illuminate\Auth\Events):
+ - [ ] Attempting
+ - [ ] Authenticated
+ - [ ] Failed
+ - [ ] Lockout
+ - [ ] Login
+ - [ ] Logout
+ - [ ] PasswordReset
+ - [ ] Registered
+ - [ ] Verified 
+  
+# Menu
+
+- [X] TODO -> fer links les entrades de menú amb href i no calgui fer clic!
+
 # ChangeLog Module
+
+## Revisionable vs Custom solution
+
+https://github.com/VentureCraft/revisionable
+
+A la home hi ha una "antiga" solució pendent de ser esborrada:
+- AuditLogComponent: datatable mostra les dades
+- HomeController: 
+    
+```
+    protected function auditLogs() {
+                          return collect(RevisionResource::collection(
+                              Revision::orderBy('created_at', 'desc')->with(['user','revisionable'])->get()));
+                      }
+```
+
+TODO:
+- Tinc doncs una versió ja feta amb un objecte REvision basat https://github.com/VentureCraft/revisionable/tree/master/src/Venturecraft/Revisionable
+- Tinc docs taules changelog i revisions
+- [ ] ELIMINAR UNA DE LES DOS VERSIONS UN COP FET EL MERGE
+
+## Tasques pendents mòdul changelog
 
 - [X] Crear entrada de menú i la corresponent entrada a la taula de base de dades
 - [ ] Crear fitxer de settings (config/changelog.php) del mòdul
@@ -73,6 +121,9 @@ SettingsServiceProvider:
 - [X] Component settings per a mòduls 
 
 # Incidents
+
+Changelog:
+- [ ]
 
 BUGS:
 - [ ] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar

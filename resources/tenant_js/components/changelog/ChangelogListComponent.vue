@@ -67,11 +67,12 @@
                      >
                         <v-layout justify-space-between>
                             <v-flex xs2 text-xs-left align-self-center>
-                                <user-avatar class="mr-2" :hash-id="log.user.hashid"
-                                             :alt="log.user.name"
-                                             v-if="log.user.hashid"
-                                ></user-avatar>
-                                <span :title="log.user.email">{{log.user.name}}</span>
+                                <template v-if="log.user">
+                                    <user-avatar class="mr-2" :hash-id="log.user.hashid"
+                                                 :alt="log.user.name"
+                                    ></user-avatar>
+                                    <span :title="log.user.email">{{log.user.name}}</span>
+                                </template>
                             </v-flex>
                               <v-flex xs1 text-xs-left align-self-center>
                                 <span :title="log.time">{{ log.human_time }}</span>

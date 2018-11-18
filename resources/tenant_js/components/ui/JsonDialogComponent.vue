@@ -39,7 +39,6 @@ export default {
   },
   props: {
     json: {
-      type: String,
       required: true
     },
     objectName: {

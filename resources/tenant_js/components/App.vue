@@ -57,15 +57,6 @@ export default {
       }
       return true
     },
-    menuItemSelected (item) {
-      if (item.href) {
-        if (item.new) {
-          window.open(item.href)
-        } else {
-          window.location.href = item.href
-        }
-      }
-    },
     changePassword () {
       this.changingPassword = true
       this.$store.dispatch(actions.REMEMBER_PASSWORD, this.user.email).then(() => {

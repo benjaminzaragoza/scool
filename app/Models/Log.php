@@ -126,6 +126,10 @@ class Log extends Model
                 return 'Edició';
             case 'destroy':
                 return 'Eliminació';
+            case 'exit':
+                return 'Sortir';
+            case 'enter':
+                return 'Entrar';
         }
     }
 
@@ -143,6 +147,10 @@ class Log extends Model
                 return 'edit';
             case 'destroy':
                 return 'delete';
+            case 'exit':
+                return 'exit_to_app';
+            case 'enter':
+                return 'input';
         }
     }
 
@@ -171,6 +179,8 @@ class Log extends Model
         switch ($module) {
             case 'Incidents':
                 return 'Incidències';
+            case 'UsersManagment':
+                return "Gestió d'usuaris";
         }
     }
 
@@ -184,6 +194,8 @@ class Log extends Model
         switch ($module) {
             case 'Incidents':
                 return 'build';
+            case 'UsersManagment':
+                return 'group';
         }
     }
 
