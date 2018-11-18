@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Events\GoogleUserNotificationReceived;
+use App\Events\Incidents\IncidentStored;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
@@ -20,7 +21,6 @@ use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
 use App\Listeners\SyncGoogleUsers;
 use App\Listeners\UnzipTeacherPhotos;
-use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -66,13 +66,18 @@ class EventServiceProvider extends ServiceProvider
             LogVerifiedUser::class
         ],
 
-
         // Impersonate
         TakeImpersonation::class => [
             LogTakeImpersonation::class
         ],
         LeaveImpersonation::class => [
             LogLeaveImpersonation::class
+        ],
+
+        // Incidents
+        IncidentStored::class => [
+            LogIncidentStored::class,
+            LogIncidentStored::class,
         ],
 
         // TENANTS

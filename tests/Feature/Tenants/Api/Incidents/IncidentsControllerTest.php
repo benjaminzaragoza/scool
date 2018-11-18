@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentStored;
 use App\Mail\Incidents\IncidentCreated;
 use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;
 use Spatie\Permission\Models\Role;
@@ -111,6 +113,8 @@ class IncidentsControllerTest extends BaseTenantTest {
         $this->actingAs($user,'api');
 
         Mail::fake();
+        Event::fake();
+
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
 
         $response =  $this->json('POST','/api/v1/incidents',$incident = [
@@ -122,6 +126,9 @@ class IncidentsControllerTest extends BaseTenantTest {
 
         Mail::assertQueued(IncidentCreated::class, function ($mail) use ($createdIncident, $user) {
             return $mail->incident->id === $createdIncident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+        Event::assertDispatched(IncidentStored::class,function ($event){
+            return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
         });
 
         $this->assertEquals($createdIncident->subject,'Ordinador Aula 36 no funciona');

@@ -9,6 +9,8 @@ use Auth;
 use Carbon\Carbon;
 
 /**
+ *
+ * TODO ELIMINAR
  * Class IncidentsObserver
  * @package App\Observers
  */

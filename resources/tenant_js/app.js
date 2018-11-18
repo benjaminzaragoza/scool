@@ -16,6 +16,7 @@ import confirm from './plugins/confirm/index.js'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VueTimeago from 'vue-timeago'
 import './bootstrap'
 import TreeView from 'vue-json-tree-view'
 
@@ -24,6 +25,12 @@ window.Vue.use(snackbar)
 window.Vue.use(permissions)
 window.Vue.use(confirm)
 window.Vue.use(TreeView)
+window.Vue.use(VueTimeago, {
+  locale: 'ca', // Default locale
+  locales: {
+    'ca': require('date-fns/locale/ca')
+  }
+})
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

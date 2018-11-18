@@ -1,25 +1,27 @@
-# Login and Register
+# Users management
+
+## Login and Register Events
 
 - [ ] Esdeveniments del mòdul UsersManager
+  - [ ] Un usuari ha demanat canviar la paraula de pas -> NO HI HA ESDEVENIMENT!
   - [X] Esdeveniment s'ha logat un usuari
   - [X] Esdeveniment un usuari s'ha equivocat al logar-se
   - [X] NO CAL Esdeveniment un usuari s'ha quedat bloquejat al superar el nombre màxim intents
   - [X] Esdeveniment s'ha registrat un usuari
-  - [ ] Un usuari ha demanat canviar la paraula de pas -> NO HI HA ESDEVENIMENT!
   - [X] Un usuari ha canviat la paraula de pas
-  - [ ] Impersonate: un admin s'ha impersonat com a i quan surt també
+  - [X] Impersonate: un admin s'ha impersonat com a i quan surt també
   - [X] Un usuari ha estat verificat (correu electrònic)
 Esdeveniments (Illuminate\Auth\Events):
- - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni)
- - [X] Authenticated | [X] Login són el mateix només un per evitar doble log
- - [X] Failed
+ - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni):
+   - [X] Failed
+ - [X] Authenticated | [X] Login són el mateix només un per evitar doble log 
  - [X] Lockout -> NO CAL!!!!
  - [X] Logout
  - [X] PasswordReset
  - [X] Registered
  - [X] Verified 
- - [ ] TakeImpersonation is fired when an impersonation is taken.
- - [ ] LeaveImpersonation is fired when an impersonation is leaved.
+ - [X] TakeImpersonation is fired when an impersonation is taken.
+ - [X] LeaveImpersonation is fired when an impersonation is leaved.
   
 # Menu
 
@@ -53,7 +55,8 @@ TODO:
 - [ ] Crear fitxer de settings (config/changelog.php) del mòdul
 
 TEMPS REAL:
-- [ ] La vista quan té activat tremps real hauria d'anar actualitzant (amb Javascript) els valors 1 segons abans o similars
+- [X] La vista quan té activat tremps real hauria d'anar actualitzant (amb Javascript) els valors 1 segons abans o similars.
+- [X] Utilitzar vue time ago de Egoist!
 
 Settings:
 - [ ] TODO? Duració dels registres i neteja
@@ -88,7 +91,8 @@ Vista:
 - [ ] Dos vistes? 
   - (últims canvis o rang de dates) amb timeline
   - Datatables?
-- Es pot utilitzar Data Iterator amb el registre de canvis?
+- [X] Utilitzar Data Iterator amb el registre de canvis?
+  - [ ] Aconseguir fer funcionar l'animació que funciona sense data iterator però no amb data-iterator: v-slide-x-transition group
   
 Testos:
 WEB:
@@ -126,9 +130,29 @@ SettingsServiceProvider:
 
 # Incidents
 
-Changelog:
-- [ ]
+Changelog d'una incidència a la vista Show:
+- [ ] Barrejar els comentaris i les accions com far Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
+- [ ] Utilitzar vista vuetify timeline per mostrar tant els comentaris com l'historial
 
+Changelog:
+- [ ] S'ha creat una nova incidència
+- [ ] S'ha modificat el títol d'una incidència
+- [ ] S'ha modificat la descripció d'una incidència
+- [ ] Comentaris
+  - [ ] S'ha afegit un comentari a una incidència
+  - [ ] S'ha modificat un comentari a una incidència
+  - [ ] S'ha esborrat un comentari
+- [ ] Etiquetes:
+  - [ ] S'ha assignat una etiqueta a una incidència
+  - [ ] S'ha tret una etiqueta a una incidència
+- [ ] Assigness:
+  - [ ] S'ha assignat un usuari a una incidència
+  - [ ] S'ha tret una assignat d'una incidència
+- [ ] S'ha visualitzat una incidència?
+- [ ] S'ha obert una incidència  
+- [ ] S'ha tancat una incidència
+- [ ] S'ha eliminat una incidència
+  
 BUGS:
 - [ ] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar
 - [ ] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)

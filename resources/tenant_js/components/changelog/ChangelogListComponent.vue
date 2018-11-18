@@ -73,9 +73,11 @@
                                     ></user-avatar>
                                     <span :title="log.user.email">{{log.user.name}}</span>
                                 </template>
+                                <template v-else>Cap usuari</template>
                             </v-flex>
                               <v-flex xs1 text-xs-left align-self-center>
-                                <span :title="log.time">{{ log.human_time }}</span>
+                                <timeago v-if="realTime" :title="log.formatted_time" :datetime="typeof log.time === 'object' ? log.time.date : log.time" :auto-update="1" :converterOptions="{ includeSeconds: true }"></timeago>
+                                <span :title="log.formatted_time" v-else>{{ log.human_time }}</span>
                             </v-flex>
                             <v-flex xs5 v-html="log.text" text-xs-left align-self-center></v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
