@@ -56,7 +56,7 @@ class LoginControllerTest extends BaseTenantTest
     /**
      * @test
      */
-    public function log_login_a_user()
+    public function log_login_user()
     {
         Config::set('auth.providers.users.model', User::class);
 

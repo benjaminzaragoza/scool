@@ -32,7 +32,7 @@ class LogRegisteredUser
      */
     public function handle($event)
     {
-        if (!Schema::hasTable('mytable')) return;
+        if (!Schema::hasTable('logs')) return;
 
         Log::create([
             'text' => 'Usuari/a <strong>' . $event->user->name . "</strong> registrat amb l'email <strong> " . $event->user->email . '</strong>',

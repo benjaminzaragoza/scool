@@ -34,7 +34,7 @@ class LogLogedOutUser
      */
     public function handle($event)
     {
-        if (!Schema::hasTable('mytable')) return;
+        if (!Schema::hasTable('logs')) return;
 
         Log::create([
             'text' => "L'usuari/a <strong>" . $event->user->name . '</strong> ha sortit del sistema',
