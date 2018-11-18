@@ -8,6 +8,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Schema;
 
 /**
  * Class LogLoggedOutUser.
@@ -33,6 +34,8 @@ class LogLogedOutUser
      */
     public function handle($event)
     {
+        if (!Schema::hasTable('mytable')) return;
+
         Log::create([
             'text' => "L'usuari/a <strong>" . $event->user->name . '</strong> ha sortit del sistema',
             'time' => Carbon::now(),
@@ -41,7 +44,7 @@ class LogLogedOutUser
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => json_encode(Auth::user()->map()),
+            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
             'icon' => 'exit_to_app',
             'color' => 'purple',
         ]);
