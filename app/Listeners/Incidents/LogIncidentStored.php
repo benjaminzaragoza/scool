@@ -33,17 +33,6 @@ class LogIncidentStored
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        Log::create([
-            'text' => "Ha creat la incidència $event->incident->subject",
-            'time' => $event->incident->created_at,
-            'action_type' => 'store',
-            'module_type' => 'Incidents',
-            'user_id' => $event->incident->user->id,
-            'loggable_id' => $event->incident->id,
-            'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->incident->map()),
-            'icon' => 'add',
-            'color' => 'success'
-        ]);
+        IncidentLogger::stored($event);
     }
 }
