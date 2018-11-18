@@ -17,6 +17,7 @@ use App\Listeners\SendGoogleUserNotificationReceivedEmail;
 use App\Listeners\SyncGoogleUsers;
 use App\Listeners\UnzipTeacherPhotos;
 use Illuminate\Auth\Events\Attempting;
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
@@ -47,7 +48,7 @@ class EventServiceProvider extends ServiceProvider
             LogSuccessfulLogin::class,
             LogLoginUser::class
         ],
-        Attempting::class => [
+        Failed::class => [
             LogAttemptLoginUser::class
         ],
         TenantCreated::class => [

@@ -10,11 +10,10 @@
   - [ ] Impersonate: un admin s'ha impersonat com a i quan surt també
 
 Esdeveniments (Illuminate\Auth\Events):
- - [ ] Attempting
- - [ ] Authenticated
- - [ ] Failed
+ - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni)
+ - [X] Authenticated | [X] Login són el mateix només un per evitar doble log
+ - [X] Failed
  - [ ] Lockout
- - [ ] Login
  - [ ] Logout
  - [ ] PasswordReset
  - [ ] Registered
@@ -50,6 +49,9 @@ TODO:
 
 - [X] Crear entrada de menú i la corresponent entrada a la taula de base de dades
 - [ ] Crear fitxer de settings (config/changelog.php) del mòdul
+
+TEMPS REAL:
+- [ ] La vista quan té activat tremps real hauria d'anar actualitzant (amb Javascript) els valors 1 segons abans o similars
 
 Settings:
 - [ ] TODO? Duració dels registres i neteja
