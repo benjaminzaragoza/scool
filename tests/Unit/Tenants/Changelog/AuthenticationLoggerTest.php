@@ -5,7 +5,6 @@ namespace Tests\Unit\Tenants;
 use App\Models\User;
 use App\Console\Kernel;
 use App\Listeners\Authentication\AuthenticationLogger;
-use App\Models\Family;
 use App\Models\Log;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
