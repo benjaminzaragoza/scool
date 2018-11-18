@@ -8,7 +8,7 @@
   - [ ] Un usuari ha demanat canviar la paraula de pas -> NO HI HA ESDEVENIMENT!
   - [X] Un usuari ha canviat la paraula de pas
   - [ ] Impersonate: un admin s'ha impersonat com a i quan surt també
-  - [ ] Un usuari ha estat verificat 
+  - [X] Un usuari ha estat verificat (correu electrònic)
 Esdeveniments (Illuminate\Auth\Events):
  - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni)
  - [X] Authenticated | [X] Login són el mateix només un per evitar doble log
@@ -17,7 +17,9 @@ Esdeveniments (Illuminate\Auth\Events):
  - [X] Logout
  - [X] PasswordReset
  - [X] Registered
- - [ ] Verified 
+ - [X] Verified 
+ - [ ] TakeImpersonation is fired when an impersonation is taken.
+ - [ ] LeaveImpersonation is fired when an impersonation is leaved.
   
 # Menu
 

@@ -7,10 +7,12 @@ use App\Events\GoogleUserNotificationReceived;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
+use App\Listeners\Authentication\LogLeaveImpersonation;
 use App\Listeners\Authentication\LogLogedOutUser;
 use App\Listeners\Authentication\LogLoginUser;
 use App\Listeners\Authentication\LogPasswordResetUser;
 use App\Listeners\Authentication\LogRegisteredUser;
+use App\Listeners\Authentication\LogTakeImpersonation;
 use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
 use App\Listeners\LogSuccessfulLogin;
@@ -27,6 +29,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Lab404\Impersonate\Events\LeaveImpersonation;
+use Lab404\Impersonate\Events\TakeImpersonation;
 
 /**
  * Class EventServiceProvider
@@ -61,6 +65,16 @@ class EventServiceProvider extends ServiceProvider
         Verified::class => [
             LogVerifiedUser::class
         ],
+
+
+        // Impersonate
+        TakeImpersonation::class => [
+            LogTakeImpersonation::class
+        ],
+        LeaveImpersonation::class => [
+            LogLeaveImpersonation::class
+        ],
+
         // TENANTS
 
         TenantCreated::class => [
