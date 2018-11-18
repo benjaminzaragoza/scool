@@ -78,6 +78,7 @@ class RegisterControllerTest extends BaseTenantTest
             'password_confirmation' => 'secret'
         ]);
         $this->assertNotNull(Log::latest()->first());
+        dd(count(Log::all()));
         $log = Log::latest()->first();
         $this->assertEquals($log->text,'Usuari/a <strong>Pepe Pardo Jeans</strong> registrat amb l\'email <strong> pepepardo@jeans.com</strong>');
         $this->assertNotNull($log->time);

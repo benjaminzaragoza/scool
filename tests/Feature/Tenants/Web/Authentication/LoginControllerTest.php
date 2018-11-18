@@ -171,7 +171,7 @@ class LoginControllerTest extends BaseTenantTest
             'email' => 'prova@gmail.com'
         ]);
         Auth::login($user);
-
+        Log::truncate();
         $this->assertNotNull(Auth::user());
         $this->assertTrue(Auth::user()->is($user));
         $this->post('/logout');
@@ -184,7 +184,7 @@ class LoginControllerTest extends BaseTenantTest
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
         $this->assertNotNull($log->persistedLoggable);
-        $this->assertEquals($log->icon,'input');
+        $this->assertEquals($log->icon,'exit_to_app');
         $this->assertEquals($log->color,'purple');
     }
 }
