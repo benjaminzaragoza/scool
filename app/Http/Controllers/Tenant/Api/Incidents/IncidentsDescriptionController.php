@@ -20,13 +20,14 @@ class IncidentsDescriptionController extends Controller
      * @param UpdateDescriptionIncident $request
      * @param $tenant
      * @param Incident $incident
-     * @return Incident
+     * @return array
      */
     public function update(UpdateDescriptionIncident $request, $tenant,Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident->description = $request->description;
         $incident->save();
-        event(new IncidentDescriptionUpdated($incident));
+        event(new IncidentDescriptionUpdated($incident,$oldIncident));
         return $incident->map();
     }
 }

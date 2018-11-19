@@ -21,13 +21,17 @@ class IncidentDescriptionUpdated
 
     public $incident;
 
+    public $oldIncident;
+
     /**
      * IncidentDescriptionUpdated constructor.
-     * @param $incident
+     * @param Incident $incident
+     * @param Incident $oldIncident
      */
-    public function __construct(Incident $incident)
+    public function __construct(Incident $incident,Incident $oldIncident)
     {
         $this->incident = $incident;
+        $this->oldIncident = $oldIncident;
     }
 
 

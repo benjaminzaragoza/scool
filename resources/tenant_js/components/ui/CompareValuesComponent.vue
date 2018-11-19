@@ -23,7 +23,10 @@
               </v-toolbar-items>
           </v-toolbar>
           <v-card-text>
-              <tree-view :data="json" :options="{  rootObjectKey: 'root' }"></tree-view>
+              Valor nou:
+              <p>{{ log.new_value }}</p>
+              Valor àntic:
+              <p>{{ log.old_value }}</p>
           </v-card-text>
       </v-card>
 
@@ -32,14 +35,14 @@
 
 <script>
 export default {
-  name: 'JsonDialogComponent',
+  name: 'CompareValues',
   data () {
     return {
       dialog: false
     }
   },
   props: {
-    json: {
+    log: {
       required: true
     },
     objectName: {

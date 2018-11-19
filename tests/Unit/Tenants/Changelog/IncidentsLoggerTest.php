@@ -182,13 +182,16 @@ class IncidentsLoggerTest extends TestCase
             'description' => 'Bla bla bla',
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
-
+        $oldIncident = clone($incident);
+        $incident->description = 'JORL JORL horl';
+        $incident->save();
         $event = (Object) [
-            'incident' => $incident
+            'incident' => $incident,
+            'oldIncident' => $oldIncident,
         ];
         IncidentLogger::descriptionUpdated($event);
         $log = Log::first();
-        $this->assertEquals($log->text,'Ha modificat la descripció de la incidència No funciona res aula 20');
+        $this->assertEquals($log->text,'Ha modificat la descripció de la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
         $this->assertEquals($log->action_type,'delete');
@@ -196,6 +199,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertNotNull($log->persistedLoggable);
+        $this->assertEquals($log->old_value, 'Bla bla bla');
+        $this->assertEquals($log->new_value,'JORL JORL horl');
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
     }
@@ -208,9 +213,12 @@ class IncidentsLoggerTest extends TestCase
             'description' => 'Bla bla bla',
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
-
+        $oldIncident = $incident;
+        $incident->subject = 'No funciona res aula 21';
+        $incident->save();
         $event = (Object) [
-            'incident' => $incident
+            'incident' => $incident,
+            'oldIncident' => $oldIncident
         ];
         IncidentLogger::subjectUpdated($event);
         $log = Log::first();

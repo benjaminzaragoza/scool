@@ -55,6 +55,8 @@ class LogTest extends TestCase
             'loggable_id' => $incident->id,
             'loggable_type' => Incident::class,
             'persistedLoggable' => $incident->toJson(),
+            'new_value' => 'valor nou',
+            'old_value' => 'valor àntic',
             'icon' => 'home',
             'color' => 'teal'
         ]);
@@ -78,6 +80,8 @@ class LogTest extends TestCase
         $this->assertEquals($incident->id,$mappedLog['loggable_id']);
         $this->assertTrue($mappedLog['loggable']->is($incident));
         $this->assertEquals($incident->toJson(),$mappedLog['persistedLoggable']);
+        $this->assertEquals($log->old_value,$mappedLog['old_value']);
+        $this->assertEquals($log->new_value,$mappedLog['new_value']);
         $this->assertEquals($user->id,$mappedLog['user_id']);
         $this->assertTrue($mappedLog['user']->is($user));
         $this->assertEquals('home',$mappedLog['icon']);

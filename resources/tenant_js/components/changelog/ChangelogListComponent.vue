@@ -79,12 +79,15 @@
                                 <timeago v-if="realTime" :title="log.formatted_time" :datetime="typeof log.time === 'object' ? log.time.date : log.time" :auto-update="1" :converterOptions="{ includeSeconds: true }"></timeago>
                                 <span :title="log.formatted_time" v-else>{{ log.human_time }}</span>
                             </v-flex>
-                            <v-flex xs5 v-html="log.text" text-xs-left align-self-center></v-flex>
+                            <v-flex xs4 v-html="log.text" text-xs-left align-self-center></v-flex>
+                            <v-flex xs1 text-xs-left align-self-center>
+                                <compare-values name="Compara" title="Compara valor àntic i valor nou" :log="log"></compare-values>
+                            </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
                                 <json-dialog-component name="Actual" title="Objecte actual" :json="log.loggable"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
-                                <json-dialog-component name="Històric" title="Objecte en el moment de la modificació"  :json="JSON.parse(log.persistedLoggable)"></json-dialog-component>
+                                <json-dialog-component name="Àntic" title="Objecte en el moment de la modificació"  :json="JSON.parse(log.persistedLoggable)"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
                                 <v-btn icon :href="log.module.href" :target="log.module.target">
@@ -107,6 +110,7 @@
 <script>
 import FullScreenDialog from '../ui/FullScreenDialog'
 import JsonDialogComponent from '../ui/JsonDialogComponent'
+import CompareValuesComponent from '../ui/CompareValuesComponent'
 import ChangelogSettings from './ChangelogSettingsComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
 
@@ -115,6 +119,7 @@ export default {
   components: {
     'fullscreen-dialog': FullScreenDialog,
     'json-dialog-component': JsonDialogComponent,
+    'compare-values': CompareValuesComponent,
     'changelog-settings': ChangelogSettings,
     'user-avatar': UserAvatar
   },

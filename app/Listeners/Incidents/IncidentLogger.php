@@ -117,4 +117,27 @@ class IncidentLogger
             'color' => 'error'
         ]);
     }
+
+    /**
+     * Deleted.
+     *
+     * @param $event
+     */
+    public static function descriptionUpdated($event)
+    {
+        Log::create([
+            'text' => 'Ha modificat la descripció de la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'delete',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'persistedLoggable' => json_encode($event->oldIncident->map()),
+            'old_value' => $event->oldIncident->description,
+            'new_value' => $event->incident->description,
+            'icon' => 'remove',
+            'color' => 'error'
+        ]);
+    }
 }
