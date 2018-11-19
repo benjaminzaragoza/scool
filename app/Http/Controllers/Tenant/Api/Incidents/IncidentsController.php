@@ -41,7 +41,6 @@ class IncidentsController extends Controller
     public function store(StoreIncident $request)
     {
         $incident = Incident::create($request->only('subject','description'))->assignUser($request->user());
-//        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCreated($incident));
         event(new IncidentStored($incident));
         return $incident->load(['user'])->map();
     }

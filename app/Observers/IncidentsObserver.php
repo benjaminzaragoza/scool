@@ -16,28 +16,28 @@ use Carbon\Carbon;
  */
 class IncidentsObserver
 {
-    /**
-     * Handle the incident "created" event.
-     *
-     * @param Incident $incident
-     * @return void
-     */
-    public function created(Incident $incident)
-    {
-        if (App::environment('testing')) return;
-        Log::create([
-            'text' => "Ha creat la incidència $incident->subject",
-            'time' => $incident->created_at,
-            'action_type' => 'store',
-            'module_type' => 'Incidents',
-            'user_id' => optional(Auth::user())->id,
-            'loggable_id' => $incident->id,
-            'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($incident->map()),
-            'icon' => 'add',
-            'color' => 'success'
-        ]);
-    }
+//    /**
+//     * Handle the incident "created" event.
+//     *
+//     * @param Incident $incident
+//     * @return void
+//     */
+//    public function created(Incident $incident)
+//    {
+//        if (App::environment('testing')) return;
+//        Log::create([
+//            'text' => "Ha creat la incidència $incident->subject",
+//            'time' => $incident->created_at,
+//            'action_type' => 'store',
+//            'module_type' => 'Incidents',
+//            'user_id' => optional(Auth::user())->id,
+//            'loggable_id' => $incident->id,
+//            'loggable_type' => Incident::class,
+//            'persistedLoggable' => json_encode($incident->map()),
+//            'icon' => 'add',
+//            'color' => 'success'
+//        ]);
+//    }
 
     /**
      * Handle the incident "updated" event.

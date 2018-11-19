@@ -7,6 +7,7 @@ use App\Listeners\Incidents\IncidentLogger;
 use App\Models\Incident;
 use App\Models\Log;
 use App\Models\User;
+use Auth;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -57,6 +58,35 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertNotNull($log->persistedLoggable);
         $this->assertEquals($log->icon,'add');
+        $this->assertEquals($log->color,'success');
+    }
+
+    /** @test */
+    public function closed()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        Auth::login($user);
+        $incident->close();
+
+        IncidentLogger::closed($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha tancat la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'store');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNotNull($log->persistedLoggable);
+        $this->assertEquals($log->icon,'lock');
         $this->assertEquals($log->color,'success');
     }
 }

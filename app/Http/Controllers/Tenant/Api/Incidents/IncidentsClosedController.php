@@ -29,7 +29,8 @@ class IncidentsClosedController extends Controller
     public function store(CloseIncident $request, $tenant, Incident $incident)
     {
         $incident = $incident->close();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentClosed($incident));
+//        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentClosed($incident));
+        event(new IncidentClosed($incident));
         return $incident->map();
     }
 

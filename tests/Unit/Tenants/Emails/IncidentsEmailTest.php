@@ -2,10 +2,13 @@
 
 namespace Tests\Unit\Tenants\Emails;
 
+use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
+use App\Mail\Incidents\IncidentClosed;
 use App\Mail\Incidents\IncidentCreated;
 use App\Models\Incident;
 use App\Models\User;
+use Auth;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;
@@ -51,6 +54,31 @@ class IncidentsEmailTest extends BaseTenantTest
         Mail::fake();
         $listener->handle($event);
         Mail::assertQueued(IncidentCreated::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function sendIncidentClosedEmail()
+    {
+        $listener = new SendIncidentClosedEmail();
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $user= factory(User::class)->create();
+        $incident->assignUser($user);
+        Auth::login($user);
+        $incident->close();
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Mail::fake();
+        $listener->handle($event);
+        Mail::assertQueued(IncidentClosed::class, function ($mail) use ($incident, $user) {
             return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
         });
     }

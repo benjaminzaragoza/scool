@@ -114,7 +114,7 @@ class Incident extends Model
     public function close()
     {
         $this->closed_at = Carbon::now();
-        $this->closed_by = Auth::user()->id;
+        $this->closed_by = optional(Auth::user())->id;
         $this->save();
         return $this;
     }
