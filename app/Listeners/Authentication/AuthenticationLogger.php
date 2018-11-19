@@ -38,7 +38,7 @@ class AuthenticationLogger
     public static function logout($event)
     {
         Log::create([
-            'text' => "L'usuari/a <strong>" . $event->user->name . '</strong> ha sortit del sistema',
+            'text' => "L'usuari/a " . $event->user->link() . ' ha sortit del sistema',
             'time' => Carbon::now(),
             'action_type' => 'exit',
             'user_id' => $event->user->id,
@@ -59,7 +59,7 @@ class AuthenticationLogger
     public static function leaveImpersonation($event)
     {
         Log::create([
-            'text' => "L'usuari/a admin <strong>" . $event->impersonator->name . ' - ' . $event->impersonator->email . "</strong> ha deixat de fer-se passar per <strong>" . $event->impersonated->name . ' - ' . $event->impersonated->email . '</strong>',
+            'text' => "L'usuari/a admin " . $event->impersonator->link() . ' - ' . $event->impersonator->email . " ha deixat de fer-se passar per " . $event->impersonated->link() . ' - ' . $event->impersonated->email,
             'time' => Carbon::now(),
             'action_type' => 'update',
             'user_id' => $event->impersonator->id,
@@ -80,7 +80,7 @@ class AuthenticationLogger
     public static function takeImpersonation($event)
     {
         Log::create([
-            'text' => "L'usuari/a admin <strong>" . $event->impersonator->name . ' - ' . $event->impersonator->email . "</strong> s'esta fent passar per <strong>" . $event->impersonated->name . ' - ' . $event->impersonated->email . '</strong>',
+            'text' => "L'usuari/a admin " . $event->impersonator->link() . '  - ' . $event->impersonator->email . " s'esta fent passar per " . $event->impersonated->link() . ' - ' . $event->impersonated->email,
             'time' => Carbon::now(),
             'action_type' => 'update',
             'user_id' => $event->impersonator->id,
@@ -122,7 +122,7 @@ class AuthenticationLogger
     public static function passwordReset($event)
     {
         Log::create([
-            'text' => "L'usuari/a <strong>" . $event->user->name . '</strong> ha modificat la paraula de pas',
+            'text' => "L'usuari/a " . $event->user->link() . ' ha modificat la paraula de pas',
             'time' => Carbon::now(),
             'action_type' => 'update',
             'user_id' => $event->user->id,
@@ -143,7 +143,7 @@ class AuthenticationLogger
     public static function registered($event)
     {
         Log::create([
-            'text' => 'Usuari/a <strong>' . $event->user->name . "</strong> registrat amb l'email <strong> " . $event->user->email . '</strong>',
+            'text' => 'Usuari/a ' . $event->user->link() . " registrat amb l'email <strong> " . $event->user->email . '</strong>',
             'time' => $event->user->created_at,
             'user_id' => $event->user->id,
             'action_type' => 'store',
@@ -164,7 +164,7 @@ class AuthenticationLogger
     public static function verifiedUser($event)
     {
         Log::create([
-            'text' => "L'usuari/a <strong>" . $event->user->name . "</strong> ha verificat l'email <strong>" . $event->user->email . '</strong>',
+            'text' => "L'usuari/a " . $event->user->link() . " ha verificat l'email <strong>" . $event->user->email . '</strong>',
             'time' => Carbon::now(),
             'action_type' => 'update',
             'user_id' => $event->user->id,

@@ -66,7 +66,7 @@ class AuthenticationLoggerTest extends TestCase
         ];
         AuthenticationLogger::logout($event);
         $log = Log::first();
-        $this->assertEquals($log->text,"L'usuari/a <strong>Pepa Parda Jeans</strong> ha sortit del sistema");
+        $this->assertEquals($log->text,"L'usuari/a <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> ha sortit del sistema");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,$event->user->id);
         $this->assertEquals($log->action_type,'exit');
@@ -97,7 +97,7 @@ class AuthenticationLoggerTest extends TestCase
         AuthenticationLogger::leaveImpersonation($event);
         $log = Log::first();
 
-        $this->assertEquals($log->text,"L'usuari/a admin <strong>Pepa Parda Jeans - pepaparda@jeans.com</strong> ha deixat de fer-se passar per <strong>Pepa Pig - pepapig@gmail.com</strong>");
+        $this->assertEquals($log->text,"L'usuari/a admin <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> - pepaparda@jeans.com ha deixat de fer-se passar per <a target=\"_blank\" href=\"/users/2\">Pepa Pig</a> - pepapig@gmail.com");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'update');
@@ -128,7 +128,7 @@ class AuthenticationLoggerTest extends TestCase
         AuthenticationLogger::takeImpersonation($event);
         $log = Log::first();
 
-        $this->assertEquals($log->text,"L'usuari/a admin <strong>Pepa Parda Jeans - prova@gmail.com</strong> s'esta fent passar per <strong>Pepa Pig - pepapig@gmail.com</strong>");
+        $this->assertEquals($log->text,"L'usuari/a admin <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a>  - prova@gmail.com s'esta fent passar per <a target=\"_blank\" href=\"/users/2\">Pepa Pig</a> - pepapig@gmail.com");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'update');
@@ -181,7 +181,7 @@ class AuthenticationLoggerTest extends TestCase
         ];
         AuthenticationLogger::passwordReset($event);
         $log = Log::first();
-        $this->assertEquals($log->text,"L'usuari/a <strong>Pepa Parda Jeans</strong> ha modificat la paraula de pas");
+        $this->assertEquals($log->text,"L'usuari/a <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> ha modificat la paraula de pas");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'update');
@@ -208,7 +208,7 @@ class AuthenticationLoggerTest extends TestCase
         AuthenticationLogger::registered($event);
 
         $log = Log::first();
-        $this->assertEquals($log->text,'Usuari/a <strong>Pepe Pardo Jeans</strong> registrat amb l\'email <strong> pepepardo@jeans.com</strong>');
+        $this->assertEquals($log->text,'Usuari/a <a target="_blank" href="/users/1">Pepe Pardo Jeans</a> registrat amb l\'email <strong> pepepardo@jeans.com</strong>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'store');
@@ -234,7 +234,7 @@ class AuthenticationLoggerTest extends TestCase
         ];
         AuthenticationLogger::verifiedUser($event);
         $log = Log::first();
-        $this->assertEquals($log->text,"L'usuari/a <strong>Pepa Parda Jeans</strong> ha verificat l'email <strong>prova@gmail.com</strong>");
+        $this->assertEquals($log->text,"L'usuari/a <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> ha verificat l'email <strong>prova@gmail.com</strong>");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'update');
