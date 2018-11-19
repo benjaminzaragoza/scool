@@ -154,7 +154,7 @@ class AuthenticationLoggerTest extends TestCase
         ];
         AuthenticationLogger::login($event);
         $log = Log::first();
-        $this->assertEquals($log->text,"L'usuari/a <strong>Pepa Parda Jeans</strong> ha entrat al sistema");
+        $this->assertEquals($log->text,"L'usuari/a <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> (prova@gmail.com) ha entrat al sistema");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'enter');

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\Tenant\UserCollection;
+use App\Models\Traits\ApiURI;
 use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
 use Auth;
@@ -34,7 +35,7 @@ use Storage;
  */
 class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
 {
-    use Notifiable, HasApiTokens, HasRoles, FormattedDates, Impersonate, HasMediaTrait, MustVerifyEmail;
+    use Notifiable, HasApiTokens, HasRoles, FormattedDates, Impersonate, HasMediaTrait, MustVerifyEmail, ApiURI;
 
     const DEFAULT_PHOTO = 'default.png';
     const PHOTOS_PATH = 'user_photos';
@@ -720,5 +721,15 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         return Cache::rememberForever('user_all_permissions', function () {
             return $this->getAllPermissions();
         });
+    }
+
+    /**
+     * Link.
+     *
+     * @return string
+     */
+    public function link()
+    {
+        return '<a target="_blank" href="/' . $this->apiURI . '/' . $this->id . '">' . $this->name . '</a>';
     }
 }

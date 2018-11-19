@@ -35,7 +35,7 @@ use App\Listeners\Incidents\SendIncidentDeletedEmail;
 use App\Listeners\Incidents\SendIncidentDescriptionUpdateEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
 use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
-use App\Listeners\LogSuccessfulLogin;
+use App\Listeners\SetLastLoginInfo;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
 use App\Listeners\SyncGoogleUsers;
@@ -72,7 +72,7 @@ class EventServiceProvider extends ServiceProvider
             LogLogedOutUser::class
         ],
         Login::class => [
-            LogSuccessfulLogin::class,
+            SetLastLoginInfo::class,
             LogLoginUser::class
         ],
         Failed::class => [
