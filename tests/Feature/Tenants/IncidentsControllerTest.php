@@ -91,8 +91,8 @@ class IncidentsControllerTest extends BaseTenantTest {
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
-        $response = $this->get('/incidents/' . $incident->id);
         Event::fake();
+        $response = $this->get('/incidents/' . $incident->id);
         $response->assertSuccessful();
         Event::assertDispatched(IncidentShowed::class,function ($event) use ($incident){
             return $event->incident->is($incident);
