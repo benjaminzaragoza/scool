@@ -274,4 +274,11 @@ class Incident extends Model
     {
         return $this->belongsTo(User::class,'closed_by');
     }
+
+    /**
+     * @return string
+     */
+    public function link() {
+        return '<a target="_blank" href="/' . $this->apiURI . '/' . $this->id . '">' . $this->subject . '</a>';
+    }
 }

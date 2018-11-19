@@ -87,7 +87,9 @@
                                 <json-dialog-component name="Històric" title="Objecte en el moment de la modificació"  :json="JSON.parse(log.persistedLoggable)"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
-                                <v-icon :title="'Mòdul ' + log.module.text">{{ log.module.icon }}</v-icon>
+                                <v-btn icon :href="log.module.href" :target="log.module.target">
+                                    <v-icon :title="'Mòdul ' + log.module.text">{{ log.module.icon }}</v-icon>
+                                </v-btn>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
                                 <v-icon :title="'Acció: ' + log.action.text">{{ log.action.icon }}</v-icon>

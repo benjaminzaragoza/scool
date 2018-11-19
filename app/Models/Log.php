@@ -168,8 +168,42 @@ class Log extends Model
         return (Object) [
             'name' => $this->module_type,
             'text' => self::moduleText($this->module_type),
-            'icon' => self::moduleIcon($this->module_type)
+            'icon' => self::moduleIcon($this->module_type),
+            'href' => self::moduleHref($this->module_type),
+            'target' => self::moduleTarget($this->module_type)
+
         ];
+    }
+
+    /**
+     * moduleHref.
+     *
+     * @param $module
+     * @return string
+     */
+    public static function moduleHref($module)
+    {
+        switch ($module) {
+            case 'Incidents':
+                return '/incidents';
+            case 'UsersManagment':
+                return '/users';
+            default:
+                return '';
+        }
+    }
+    /**
+     * moduleTarget.
+     *
+     * @param $module
+     * @return string
+     */
+    public static function moduleTarget($module)
+    {
+        switch ($module) {
+            default:
+                return '_blank';
+        }
     }
 
     /**
