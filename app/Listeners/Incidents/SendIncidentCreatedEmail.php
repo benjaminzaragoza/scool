@@ -4,8 +4,6 @@ namespace App\Listeners\Incidents;
 
 use App\Mail\Incidents\IncidentCreated;
 use App\Models\Setting;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
 /**

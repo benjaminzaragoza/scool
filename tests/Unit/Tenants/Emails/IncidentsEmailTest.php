@@ -4,9 +4,11 @@ namespace Tests\Unit\Tenants\Emails;
 
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
+use App\Listeners\Incidents\SendIncidentDeletedEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
 use App\Mail\Incidents\IncidentClosed;
 use App\Mail\Incidents\IncidentCreated;
+use App\Mail\Incidents\IncidentDeleted;
 use App\Mail\Incidents\IncidentOpened;
 use App\Models\Incident;
 use App\Models\User;
@@ -114,7 +116,7 @@ class IncidentsEmailTest extends BaseTenantTest
     /**
      * @test
      */
-    public function sendIncidentDeletecEmail()
+    public function sendIncidentDeletedEmail()
     {
         $listener = new SendIncidentDeletedEmail();
         $incident = Incident::create([

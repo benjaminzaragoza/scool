@@ -250,13 +250,11 @@ class IncidentsControllerTest extends BaseTenantTest {
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
 
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id);
-        Mail::assertQueued(IncidentDeleted::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
-        });
+
         $response->assertSuccessful();
         $incident = $incident->fresh();
         $this->assertNull($incident);

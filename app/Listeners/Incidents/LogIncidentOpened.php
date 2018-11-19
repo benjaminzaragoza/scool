@@ -3,10 +3,6 @@
 namespace App\Listeners\Incidents;
 
 use App;
-use App\Models\Incident;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Log;
 
 /**
  * Class LogIncidentOpened

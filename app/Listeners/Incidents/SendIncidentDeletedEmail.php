@@ -2,12 +2,8 @@
 
 namespace App\Listeners\Incidents;
 
-use App\Mail\Incidents\IncidentClosed;
-use App\Mail\Incidents\IncidentCreated;
-use App\Mail\Incidents\IncidentOpened;
+use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Setting;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
 /**
@@ -35,5 +31,7 @@ class SendIncidentDeletedEmail
      */
     public function handle($event)
     {
+        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))
+            ->queue(new IncidentDeleted($event->incident->only(['id','user_id','subject','description','created_at','updated_at'])));
     }
 }
