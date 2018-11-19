@@ -45,7 +45,6 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
             'icon' => 'exit_to_app',
             'color' => 'purple',
         ]);
@@ -66,7 +65,6 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->impersonator->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->impersonator,'map') ? json_encode($event->impersonator->map()) : $event->impersonator->toJson(),
             'icon' => 'edit',
             'color' => 'teal',
         ]);
@@ -87,7 +85,6 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->impersonator->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->impersonator,'map') ? json_encode($event->impersonator->map()) : $event->impersonator->toJson(),
             'icon' => 'edit',
             'color' => 'teal',
         ]);
@@ -108,7 +105,6 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
             'icon' => 'input',
             'color' => 'teal',
         ]);
@@ -129,7 +125,6 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
             'icon' => 'edit',
             'color' => 'teal',
         ]);
@@ -150,7 +145,8 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
+            'old_loggable' => null,
+            'new_loggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
             'icon' => 'input',
             'color' => 'success',
         ]);
@@ -171,7 +167,6 @@ class AuthenticationLogger
             'module_type' => 'UsersManagment',
             'loggable_id' => $event->user->id,
             'loggable_type' => User::class,
-            'persistedLoggable' => method_exists($event->user,'map') ? json_encode($event->user->map()) : $event->user->toJson(),
             'icon' => 'edit',
             'color' => 'teal',
         ]);

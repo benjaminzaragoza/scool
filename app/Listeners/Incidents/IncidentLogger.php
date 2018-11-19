@@ -28,7 +28,8 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->incident->map()),
+            'old_loggable' => null,
+            'new_loggable' => json_encode($event->incident->map()),
             'icon' => 'add',
             'color' => 'success'
         ]);
@@ -49,7 +50,8 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->incident->map()),
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
             'icon' => 'lock',
             'color' => 'success'
         ]);
@@ -70,7 +72,8 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->incident->map()),
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
             'icon' => 'lock_open',
             'color' => 'purple'
         ]);
@@ -91,7 +94,8 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->incident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
+            'old_loggable' => json_encode($event->incident->map()),
             'icon' => 'visibility',
             'color' => 'primary'
         ]);
@@ -112,7 +116,8 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->incident->map()),
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => null,
             'icon' => 'remove',
             'color' => 'error'
         ]);
@@ -133,7 +138,7 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => json_encode($event->oldIncident->map()),
+            'old_loggable' => json_encode($event->oldIncident->map()),
             'old_value' => $event->oldIncident->description,
             'new_value' => $event->incident->description,
             'icon' => 'remove',
