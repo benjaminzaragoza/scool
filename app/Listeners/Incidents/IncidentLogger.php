@@ -105,7 +105,7 @@ class IncidentLogger
     public static function deleted($event)
     {
         Log::create([
-            'text' => 'Ha eliminat la incidència ' . $event->incident->link(),
+            'text' => 'Ha eliminat la incidència ' . $event->incident->subject,
             'time' => Carbon::now(),
             'action_type' => 'delete',
             'module_type' => 'Incidents',

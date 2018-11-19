@@ -53,6 +53,7 @@ class IncidentsController extends Controller
      */
     public function show(ShowIncident $request, $tenant,Incident $incident)
     {
+        event(new IncidentShowed($incident));
         return $incident->map();
     }
 

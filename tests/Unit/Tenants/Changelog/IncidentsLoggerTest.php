@@ -162,7 +162,7 @@ class IncidentsLoggerTest extends TestCase
         $incident->delete();
         IncidentLogger::deleted($event);
         $log = Log::first();
-        $this->assertEquals($log->text,'Ha eliminat la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertEquals($log->text,'Ha eliminat la incidència No funciona res aula 20');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
         $this->assertEquals($log->action_type,'delete');

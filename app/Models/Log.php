@@ -136,6 +136,10 @@ class Log extends Model
                 return 'Obrir';
             case 'close':
                 return 'Tancar';
+            case 'delete':
+                return 'Eliminar';
+            case 'show':
+                return 'Mostrar';
         }
     }
 
@@ -163,6 +167,10 @@ class Log extends Model
                 return 'lock_opened';
             case 'close':
                 return 'lock';
+            case 'delete':
+                return 'remove';
+            case 'show':
+                return 'visibility';
         }
     }
 

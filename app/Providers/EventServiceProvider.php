@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Events\GoogleUserNotificationReceived;
 use App\Events\Incidents\IncidentClosed;
+use App\Events\Incidents\IncidentDeleted;
 use App\Events\Incidents\IncidentOpened;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
@@ -20,11 +21,13 @@ use App\Listeners\Authentication\LogTakeImpersonation;
 use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
 use App\Listeners\Incidents\LogIncidentClosed;
+use App\Listeners\Incidents\LogIncidentDeleted;
 use App\Listeners\Incidents\LogIncidentOpened;
 use App\Listeners\Incidents\LogIncidentShowed;
 use App\Listeners\Incidents\LogIncidentStored;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
+use App\Listeners\Incidents\SendIncidentDeletedEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
@@ -102,6 +105,11 @@ class EventServiceProvider extends ServiceProvider
 
         IncidentShowed::class => [
             LogIncidentShowed::class
+        ],
+
+        IncidentDeleted::class => [
+            LogIncidentDeleted::class,
+            SendIncidentDeletedEmail::class
         ],
 
         // TENANTS

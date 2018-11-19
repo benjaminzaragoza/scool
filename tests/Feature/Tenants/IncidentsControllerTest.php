@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Events\Incidents\IncidentShowed;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
@@ -90,7 +92,11 @@ class IncidentsControllerTest extends BaseTenantTest {
         ])->assignUser($otherUser);
 
         $response = $this->get('/incidents/' . $incident->id);
+        Event::fake();
         $response->assertSuccessful();
+        Event::assertDispatched(IncidentShowed::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
+        });
         $response->assertViewIs('tenants.incidents.index');
         $response->assertViewHas('incidents');
         $response->assertViewHas('incident');
