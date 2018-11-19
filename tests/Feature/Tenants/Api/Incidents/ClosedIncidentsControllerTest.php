@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Mail\Incidents\IncidentClosed;
-use App\Mail\Incidents\IncidentOpened;
+use App\Events\Incidents\IncidentClosed;
+use App\Events\Incidents\IncidentOpened;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
@@ -114,12 +114,12 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('POST','/api/v1/closed_incidents/' . $incident->id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentClosed::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentClosed::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
         });
 
         $result = json_decode($response->getContent());
@@ -155,12 +155,12 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
             'description' => 'Bla bla bla'
         ])->assignUser($user);
 
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('DELETE','/api/v1/closed_incidents/' . $incident->id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentOpened::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentOpened::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
         });
 
         $result = json_decode($response->getContent());
@@ -216,12 +216,12 @@ class ClosedIncidentsControllerTest extends BaseTenantTest{
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('DELETE','/api/v1/closed_incidents/' . $incident->id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentOpened::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentOpened::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
         });
         $result = json_decode($response->getContent());
         $this->assertEquals($incident->id, $result->id);
