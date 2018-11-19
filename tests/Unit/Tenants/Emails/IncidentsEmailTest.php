@@ -5,11 +5,15 @@ namespace Tests\Unit\Tenants\Emails;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
 use App\Listeners\Incidents\SendIncidentDeletedEmail;
+use App\Listeners\Incidents\SendIncidentDescriptionUpdateEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
+use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
 use App\Mail\Incidents\IncidentClosed;
 use App\Mail\Incidents\IncidentCreated;
 use App\Mail\Incidents\IncidentDeleted;
+use App\Mail\Incidents\IncidentDescriptionModified;
 use App\Mail\Incidents\IncidentOpened;
+use App\Mail\Incidents\IncidentSubjectModified;
 use App\Models\Incident;
 use App\Models\User;
 use Auth;
@@ -138,5 +142,50 @@ class IncidentsEmailTest extends BaseTenantTest
         });
     }
 
+    /**
+     * @test
+     */
+    public function sendIncidentDescriptionUpdatedEmail()
+    {
+        $listener = new SendIncidentDescriptionUpdateEmail();
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $user= factory(User::class)->create();
+        Auth::login($user);
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Mail::fake();
+        $listener->handle($event);
+        Mail::assertQueued(IncidentDescriptionModified::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->is($incident) && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function sendIncidentSubjectUpdatedEmail()
+    {
+        $listener = new SendIncidentSubjectUpdateEmail();
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $user= factory(User::class)->create();
+        $incident->assignUser($user);
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Mail::fake();
+        $listener->handle($event);
+        Mail::assertQueued(IncidentSubjectModified::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->is($incident) && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+    }
 
 }

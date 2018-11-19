@@ -28,7 +28,6 @@ class IncidentsSubjectController extends Controller
     {
         $incident->subject = $request->subject;
         $incident->save();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentSubjectModified($incident));
         return $incident->map();
     }
 }

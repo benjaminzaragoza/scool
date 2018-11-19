@@ -28,7 +28,6 @@ class IncidentsDescriptionController extends Controller
     {
         $incident->description = $request->description;
         $incident->save();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentDescriptionModified($incident));
         return $incident->map();
     }
 }

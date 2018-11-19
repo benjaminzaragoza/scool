@@ -148,10 +148,10 @@ Changelog:
 - [ ] Assigness:
   - [ ] S'ha assignat un usuari a una incidència
   - [ ] S'ha tret una assignat d'una incidència
-- [ ] S'ha visualitzat una incidència?
+- [X] S'ha visualitzat una incidència? Funciona parcialment, només quan se visita directament des de un link no si se visita des de la llista datatables
 - [X] S'ha obert una incidència  
 - [X] S'ha tancat una incidència
-- [ ] S'ha eliminat una incidència
+- [X] S'ha eliminat una incidència
   
 BUGS:
 - [ ] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar

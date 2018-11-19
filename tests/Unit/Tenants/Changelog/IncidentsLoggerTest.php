@@ -173,4 +173,59 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
     }
+
+    /** @test */
+    public function descriptionUpdated()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        IncidentLogger::descriptionUpdated($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha modificat la descripció de la incidència No funciona res aula 20');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'delete');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNotNull($log->persistedLoggable);
+        $this->assertEquals($log->icon,'remove');
+        $this->assertEquals($log->color,'error');
+    }
+
+    /** @test */
+    public function subjectUpdated()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        IncidentLogger::subjectUpdated($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha modificat el títol de la incidència No funciona res aula 20');
+
+        // TODO old value i new Value!!!
+
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'delete');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNotNull($log->persistedLoggable);
+        $this->assertEquals($log->icon,'remove');
+        $this->assertEquals($log->color,'error');
+    }
 }
