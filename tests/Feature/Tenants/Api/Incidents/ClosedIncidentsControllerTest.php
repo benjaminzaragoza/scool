@@ -8,7 +8,6 @@ use App\Models\Incident;
 use App\Models\User;
 use Config;
 use Event;
-use Mail;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;

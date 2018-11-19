@@ -31,7 +31,6 @@ class IncidentOpened
         $this->incident = $incident;
     }
 
-
     /**
      * Get the channels the event should broadcast on.
      *
