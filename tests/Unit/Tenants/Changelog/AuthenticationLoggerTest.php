@@ -49,7 +49,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,null);
         $this->assertEquals($log->loggable_type,null);
-        $this->assertNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'error');
         $this->assertEquals($log->color,'error');
     }
@@ -73,7 +73,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'exit_to_app');
         $this->assertEquals($log->color,'purple');
     }
@@ -104,7 +104,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'edit');
         $this->assertEquals($log->color,'teal');
     }
@@ -135,7 +135,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'edit');
         $this->assertEquals($log->color,'teal');
     }
@@ -162,7 +162,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'input');
         $this->assertEquals($log->color,'teal');
     }
@@ -188,7 +188,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'edit');
         $this->assertEquals($log->color,'teal');
     }
@@ -215,7 +215,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->new_loggable);
         $this->assertEquals($log->icon,'input');
         $this->assertEquals($log->color,'success');
     }
@@ -241,7 +241,7 @@ class AuthenticationLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'UsersManagment');
         $this->assertEquals($log->loggable_id,1);
         $this->assertEquals($log->loggable_type,'App\Models\User');
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'edit');
         $this->assertEquals($log->color,'teal');
 

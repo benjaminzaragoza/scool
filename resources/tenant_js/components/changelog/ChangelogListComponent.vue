@@ -87,7 +87,7 @@
                                 <json-dialog-component name="Actual" title="Objecte actual" :json="log.loggable"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
-                                <json-dialog-component name="Àntic" title="Objecte en el moment de la modificació"  :json="JSON.parse(log.persistedLoggable)"></json-dialog-component>
+                                <json-dialog-component name="Àntic" title="Objecte en el moment de la modificació"  :json="JSON.parse(log.old_loggable)"></json-dialog-component>
                             </v-flex>
                             <v-flex xs1 text-xs-left align-self-center>
                                 <v-btn icon :href="log.module.href" :target="log.module.target">

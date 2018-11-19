@@ -56,7 +56,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNull($log->old_loggable);
+        $this->assertNotNull($log->new_loggable);
         $this->assertEquals($log->icon,'add');
         $this->assertEquals($log->color,'success');
     }
@@ -85,7 +86,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->old_loggable);
         $this->assertEquals($log->icon,'lock');
         $this->assertEquals($log->color,'success');
     }
@@ -114,7 +115,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->old_loggable);
         $this->assertEquals($log->icon,'lock_open');
         $this->assertEquals($log->color,'purple');
     }
@@ -141,7 +142,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->old_loggable);
         $this->assertEquals($log->icon,'visibility');
         $this->assertEquals($log->color,'primary');
     }
@@ -169,7 +170,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->old_loggable);
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
     }
@@ -198,7 +199,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->old_loggable);
         $this->assertEquals($log->old_value, 'Bla bla bla');
         $this->assertEquals($log->new_value,'JORL JORL horl');
         $this->assertEquals($log->icon,'remove');
@@ -232,7 +233,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->persistedLoggable);
+        $this->assertNotNull($log->old_loggable);
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
     }
