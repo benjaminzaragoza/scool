@@ -153,7 +153,7 @@ class IncidentsEmailTest extends BaseTenantTest
             'description' => 'Bla bla bla'
         ]);
         $user= factory(User::class)->create();
-        Auth::login($user);
+        $incident->assignuser($user);
         $event = (Object) [
             'incident' => $incident
         ];

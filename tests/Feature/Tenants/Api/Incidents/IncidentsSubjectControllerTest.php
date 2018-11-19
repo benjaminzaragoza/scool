@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentSubjectUpdated;
 use App\Mail\Incidents\IncidentSubjectModified;
 use App\Models\Incident;
 use App\Models\User;
@@ -62,7 +63,9 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
             'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertSuccessful();
-
+        Event::assertDispatched(IncidentSubjectUpdated::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
+        });
         $result = json_decode($response->getContent());
         $this->assertEquals($incident->description,$result->description);
         $this->assertEquals($result->id,$incident->id);
