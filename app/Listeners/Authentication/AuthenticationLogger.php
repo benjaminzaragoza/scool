@@ -101,7 +101,7 @@ class AuthenticationLogger
     public static function login($event)
     {
         Log::create([
-            'text' => "L'usuari/a " . $event->user->link() . ' (' . $event->user->email . ') ha entrat al sistema',
+            'text' => "L'usuari/a " . $event->user->link() . ' (' . $event->user->email . ') ha entrat al sistema des de la IP: ' . $event->user->last_login_ip,
             'time' => Carbon::now(),
             'action_type' => 'enter',
             'user_id' => $event->user->id,

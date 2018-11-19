@@ -149,12 +149,13 @@ class AuthenticationLoggerTest extends TestCase
             'user' => factory(User::class)->create([
                 'id' => 1,
                 'name' => 'Pepa Parda Jeans',
-                'email' => 'prova@gmail.com'
+                'email' => 'prova@gmail.com',
+                'last_login_ip' => '147.26.35.38'
             ])
         ];
         AuthenticationLogger::login($event);
         $log = Log::first();
-        $this->assertEquals($log->text,"L'usuari/a <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> (prova@gmail.com) ha entrat al sistema");
+        $this->assertEquals($log->text,"L'usuari/a <a target=\"_blank\" href=\"/users/1\">Pepa Parda Jeans</a> (prova@gmail.com) ha entrat al sistema des de la IP: 147.26.35.38");
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id,1);
         $this->assertEquals($log->action_type,'enter');
