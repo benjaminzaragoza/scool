@@ -26,7 +26,8 @@ class CreateTenantLogsTable extends Migration
             $table->string('old_value')->nullable();
             $table->string('new_value')->nullable();
             $table->nullableMorphs('loggable');
-            $table->json('persistedLoggable')->nullable();
+            $table->json('old_loggable')->nullable();
+            $table->json('new_loggable')->nullable();
             $table->string('icon');
             $table->string('color');
             $table->timestamps();

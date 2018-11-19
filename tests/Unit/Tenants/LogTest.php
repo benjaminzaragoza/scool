@@ -45,7 +45,9 @@ class LogTest extends TestCase
             'subject' => 'No funciona PC aula 5',
             'description' => 'bla bla bla'
         ]);
-
+        $oldIncident = clone($incident);
+        $incident->subject = 'No funciona PC1 Aula 6';
+        $incident->save();
         $log = Log::create([
             'text' => "Ha creat la incidència $incident->subject",
             'time' => Carbon::now(),
@@ -54,7 +56,8 @@ class LogTest extends TestCase
             'user_id' => $user->id,
             'loggable_id' => $incident->id,
             'loggable_type' => Incident::class,
-            'persistedLoggable' => $incident->toJson(),
+            'new_loggable' => $incident->toJson(),
+            'old_loggable' => $oldIncident->toJson(),
             'new_value' => 'valor nou',
             'old_value' => 'valor àntic',
             'icon' => 'home',
@@ -64,7 +67,7 @@ class LogTest extends TestCase
         $mappedLog = $log->map();
 
         $this->assertEquals($log->id,$mappedLog['id']);
-        $this->assertEquals('Ha creat la incidència No funciona PC aula 5',$mappedLog['text']);
+        $this->assertEquals('Ha creat la incidència No funciona PC1 Aula 6',$mappedLog['text']);
         $this->assertNotNull($mappedLog['time']);
         $this->assertNotNull($mappedLog['human_time']);
         $this->assertNotNull($mappedLog['timestamp']);
@@ -79,7 +82,8 @@ class LogTest extends TestCase
         $this->assertEquals($user->id,$mappedLog['user_id']);
         $this->assertEquals($incident->id,$mappedLog['loggable_id']);
         $this->assertTrue($mappedLog['loggable']->is($incident));
-        $this->assertEquals($incident->toJson(),$mappedLog['persistedLoggable']);
+        $this->assertEquals($oldIncident->toJson(),$mappedLog['old_loggable']);
+        $this->assertEquals($incident->toJson(),$mappedLog['new_loggable']);
         $this->assertEquals($log->old_value,$mappedLog['old_value']);
         $this->assertEquals($log->new_value,$mappedLog['new_value']);
         $this->assertEquals($user->id,$mappedLog['user_id']);

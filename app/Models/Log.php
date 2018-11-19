@@ -53,7 +53,8 @@ class Log extends Model
             'loggable_id' => $this->loggable_id,
             'loggable_type' => $this->loggable_type,
             'loggable' => $this->loggable,
-            'persistedLoggable' => $this->persistedLoggable,
+            'new_loggable' => $this->new_loggable,
+            'old_loggable' => $this->old_loggable,
             'old_value' => $this->old_value,
             'new_value' => $this->new_value,
         ];
