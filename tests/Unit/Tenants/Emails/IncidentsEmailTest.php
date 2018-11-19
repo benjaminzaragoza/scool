@@ -16,7 +16,7 @@ use Tests\BaseTenantTest;
  *
  * @package Tests\Unit
  */
-class SendIncidentCreatedEmailTest extends BaseTenantTest
+class IncidentsEmailTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
