@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Events\Incidents\IncidentDeleted;
+use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Http\Requests\Incidents\DeleteIncident;
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Http\Requests\Incidents\StoreIncident;
-use App\Mail\Incidents\IncidentCreated;
-use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Incident;
-use App\Models\Setting;
 use App\Http\Controllers\Controller;
-use Mail;
 
 /**
  * Class IncidentsController.
@@ -49,8 +47,9 @@ class IncidentsController extends Controller
      * Display the specified resource.
      *
      * @param ShowIncident $request
+     * @param $tenant
      * @param Incident $incident
-     * @return Incident
+     * @return array
      */
     public function show(ShowIncident $request, $tenant,Incident $incident)
     {
@@ -69,8 +68,7 @@ class IncidentsController extends Controller
     public function destroy(DeleteIncident $request, $tenant, Incident $incident)
     {
         $incident->delete();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))
-            ->queue(new IncidentDeleted($incident->only(['id','user_id','subject','description','created_at','updated_at'])));
+        event(new IncidentDeleted($incident));
         return $incident;
     }
 }

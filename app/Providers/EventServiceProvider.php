@@ -6,6 +6,7 @@ use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Events\GoogleUserNotificationReceived;
 use App\Events\Incidents\IncidentClosed;
 use App\Events\Incidents\IncidentOpened;
+use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
@@ -20,6 +21,7 @@ use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
 use App\Listeners\Incidents\LogIncidentClosed;
 use App\Listeners\Incidents\LogIncidentOpened;
+use App\Listeners\Incidents\LogIncidentShowed;
 use App\Listeners\Incidents\LogIncidentStored;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
@@ -96,6 +98,10 @@ class EventServiceProvider extends ServiceProvider
         IncidentOpened::class => [
             LogIncidentOpened::class,
             SendIncidentOpenedEmail::class
+        ],
+
+        IncidentShowed::class => [
+            LogIncidentShowed::class
         ],
 
         // TENANTS

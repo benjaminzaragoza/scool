@@ -81,7 +81,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->text,'Ha tancat la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
-        $this->assertEquals($log->action_type,'update');
+        $this->assertEquals($log->action_type,'close');
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
@@ -110,12 +110,67 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->text,'Ha reobert la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
-        $this->assertEquals($log->action_type,'update');
+        $this->assertEquals($log->action_type,'open');
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertNotNull($log->persistedLoggable);
         $this->assertEquals($log->icon,'lock_open');
         $this->assertEquals($log->color,'purple');
+    }
+
+    /** @test */
+    public function showed()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        Auth::login($user);
+        IncidentLogger::showed($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha visitat la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'show');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNotNull($log->persistedLoggable);
+        $this->assertEquals($log->icon,'visibility');
+        $this->assertEquals($log->color,'primary');
+    }
+
+    /** @test */
+    public function deleted()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        Auth::login($user);
+        $incident->delete();
+        IncidentLogger::deleted($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha eliminat la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'delete');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNotNull($log->persistedLoggable);
+        $this->assertEquals($log->icon,'remove');
+        $this->assertEquals($log->color,'error');
     }
 }

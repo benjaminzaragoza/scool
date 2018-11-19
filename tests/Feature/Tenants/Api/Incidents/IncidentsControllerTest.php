@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Mail\Incidents\IncidentCreated;
 use App\Mail\Incidents\IncidentDeleted;
@@ -123,7 +124,6 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertSuccessful();
         $createdIncident = json_decode($response->getContent());
 
-
         Event::assertDispatched(IncidentStored::class,function ($event){
             return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
         });
@@ -196,8 +196,12 @@ class IncidentsControllerTest extends BaseTenantTest {
             'email' => 'krls@republicatalana.cat'
         ]);
         $incident->assignUser($incidentUser);
+        Event::fake();
         $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
         $response->assertSuccessful();
+        Event::assertDispatched(IncidentShowed::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
+        });
         $result = json_decode($response->getContent());
         $this->assertEquals($incidentUser->id,$result->user_id);
         $this->assertEquals('Carles Puigdemont',$result->user_name);

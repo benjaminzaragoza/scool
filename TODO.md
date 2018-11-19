@@ -135,7 +135,7 @@ Changelog d'una incidència a la vista Show:
 - [ ] Utilitzar vista vuetify timeline per mostrar tant els comentaris com l'historial
 
 Changelog:
-- [ ] S'ha creat una nova incidència
+- [X] S'ha creat una nova incidència
 - [ ] S'ha modificat el títol d'una incidència
 - [ ] S'ha modificat la descripció d'una incidència
 - [ ] Comentaris
@@ -149,8 +149,8 @@ Changelog:
   - [ ] S'ha assignat un usuari a una incidència
   - [ ] S'ha tret una assignat d'una incidència
 - [ ] S'ha visualitzat una incidència?
-- [ ] S'ha obert una incidència  
-- [ ] S'ha tancat una incidència
+- [X] S'ha obert una incidència  
+- [X] S'ha tancat una incidència
 - [ ] S'ha eliminat una incidència
   
 BUGS:

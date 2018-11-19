@@ -35,7 +35,7 @@ class IncidentLogger
     }
 
     /**
-     * Stored.
+     * Closed.
      *
      * @param $event
      */
@@ -44,7 +44,7 @@ class IncidentLogger
         Log::create([
             'text' => 'Ha tancat la incidència ' . $event->incident->link(),
             'time' => $event->incident->updated_at,
-            'action_type' => 'update',
+            'action_type' => 'close',
             'module_type' => 'Incidents',
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
@@ -56,7 +56,7 @@ class IncidentLogger
     }
 
     /**
-     * Stored.
+     * Opened.
      *
      * @param $event
      */
@@ -65,7 +65,7 @@ class IncidentLogger
         Log::create([
             'text' => 'Ha reobert la incidència ' . $event->incident->link(),
             'time' => $event->incident->updated_at,
-            'action_type' => 'update',
+            'action_type' => 'open',
             'module_type' => 'Incidents',
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
@@ -73,6 +73,48 @@ class IncidentLogger
             'persistedLoggable' => json_encode($event->incident->map()),
             'icon' => 'lock_open',
             'color' => 'purple'
+        ]);
+    }
+
+    /**
+     * Showed.
+     *
+     * @param $event
+     */
+    public static function showed($event)
+    {
+        Log::create([
+            'text' => 'Ha visitat la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'show',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'persistedLoggable' => json_encode($event->incident->map()),
+            'icon' => 'visibility',
+            'color' => 'primary'
+        ]);
+    }
+
+    /**
+     * Deleted.
+     *
+     * @param $event
+     */
+    public static function deleted($event)
+    {
+        Log::create([
+            'text' => 'Ha eliminat la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'delete',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'persistedLoggable' => json_encode($event->incident->map()),
+            'icon' => 'remove',
+            'color' => 'error'
         ]);
     }
 }

@@ -107,7 +107,32 @@ class IncidentsEmailTest extends BaseTenantTest
         Mail::fake();
         $listener->handle($event);
         Mail::assertQueued(IncidentOpened::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+            return $mail->incident->is($incident) && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function sendIncidentDeletecEmail()
+    {
+        $listener = new SendIncidentDeletedEmail();
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $user= factory(User::class)->create();
+        $incident->assignUser($user);
+        Auth::login($user);
+        $incident->delete();
+        $event = (Object) [
+            'incident' => $incident
+        ];
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Mail::fake();
+        $listener->handle($event);
+        Mail::assertQueued(IncidentDeleted::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->is($incident) && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
         });
     }
 

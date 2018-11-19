@@ -132,6 +132,10 @@ class Log extends Model
                 return 'Entrar';
             case 'error':
                 return 'Error';
+            case 'open':
+                return 'Obrir';
+            case 'close':
+                return 'Tancar';
         }
     }
 
@@ -155,6 +159,10 @@ class Log extends Model
                 return 'input';
             case 'error':
                 return 'error';
+            case 'open':
+                return 'lock_opened';
+            case 'close':
+                return 'lock';
         }
     }
 
@@ -171,7 +179,6 @@ class Log extends Model
             'icon' => self::moduleIcon($this->module_type),
             'href' => self::moduleHref($this->module_type),
             'target' => self::moduleTarget($this->module_type)
-
         ];
     }
 
