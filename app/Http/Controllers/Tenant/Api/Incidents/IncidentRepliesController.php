@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Events\Incidents\IncidentReplyAdded;
 use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
 use App\Http\Requests\Incidents\StoreIncidentReplies;
@@ -32,6 +33,8 @@ class IncidentRepliesController
     }
 
     /**
+     * Store.
+     *
      * @param StoreIncidentReplies $request
      * @param $tenant
      * @param Incident $incident
@@ -44,7 +47,9 @@ class IncidentRepliesController
             'user_id' => Auth::user()->id
         ]);
         $incident->addReply($reply);
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCommentAdded($incident));
+
+        event(new IncidentReplyAdded($incident,$reply));
+
         return $reply->map();
     }
 

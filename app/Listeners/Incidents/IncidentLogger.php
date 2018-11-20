@@ -174,4 +174,75 @@ class IncidentLogger
             'color' => 'primary'
         ]);
     }
+
+    /**
+     * replyAdded.
+     *
+     * @param $event
+     */
+    public static function replyAdded($event)
+    {
+        Log::create([
+            'text' => 'Ha afegit un comentari a la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'comment',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
+            'old_value' => null,
+            'new_value' => $event->reply->body,
+            'icon' => 'comment',
+            'color' => 'primary'
+        ]);
+    }
+
+    /**
+     * replyUpdated.
+     *
+     * @param $event
+     */
+    public static function replyUpdated($event)
+    {
+        Log::create([
+            'text' => 'Ha actualitzat un comentari a la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'comment',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
+            'old_value' => $event->oldReply->body,
+            'new_value' => $event->reply->body,
+            'icon' => 'comment',
+            'color' => 'primary'
+        ]);
+    }
+
+    /**
+     * replyRemoved.
+     *
+     * @param $event
+     */
+    public static function replyRemoved($event)
+    {
+        Log::create([
+            'text' => 'Ha esborrat un comentari a la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'comment',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
+            'old_value' => $event->oldReply->body,
+            'icon' => 'comment',
+            'color' => 'primary'
+        ]);
+    }
 }

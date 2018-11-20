@@ -142,6 +142,8 @@ class Log extends Model
                 return 'Eliminar';
             case 'show':
                 return 'Mostrar';
+            case 'comment':
+                return 'Comentari';
         }
     }
 
@@ -173,6 +175,8 @@ class Log extends Model
                 return 'remove';
             case 'show':
                 return 'visibility';
+            case 'comment':
+                return 'comment';
         }
     }
 

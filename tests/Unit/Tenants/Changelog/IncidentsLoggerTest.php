@@ -6,6 +6,7 @@ use App\Console\Kernel;
 use App\Listeners\Incidents\IncidentLogger;
 use App\Models\Incident;
 use App\Models\Log;
+use App\Models\Reply;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
@@ -252,6 +253,121 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->old_value, 'No funciona res aula 20');
         $this->assertEquals($log->new_value, 'No funciona res aula 21');
         $this->assertEquals($log->icon,'edit');
+        $this->assertEquals($log->color,'primary');
+    }
+
+    /** @test */
+    public function replyAdded()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+        $oldIncident = clone($incident);
+        $reply = Reply::create([
+            'body' => 'Ja hem resolt la incidència',
+            'user_id' => $user->id
+        ]);
+        $incident->addReply($reply);
+        $event = (Object) [
+            'incident' => $incident,
+            'oldIncident' => $oldIncident,
+            'reply' => $reply
+        ];
+        IncidentLogger::replyAdded($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha afegit un comentari a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'comment');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_value, '');
+        $this->assertEquals($log->new_value, 'Ja hem resolt la incidència');
+        $this->assertEquals($log->icon,'comment');
+        $this->assertEquals($log->color,'primary');
+    }
+
+    /** @test */
+    public function replyUpdated()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+        $oldIncident = clone($incident);
+        $reply = Reply::create([
+            'body' => 'Ja hem resolt la incidència',
+            'user_id' => $user->id
+        ]);
+        $incident->addReply($reply);
+        $oldReply = clone($reply);
+        $reply->body = 'Perdo no hem resolt encara la incidència';
+
+        $event = (Object) [
+            'incident' => $incident,
+            'oldIncident' => $oldIncident,
+            'oldReply' => $oldReply,
+            'reply' => $reply
+        ];
+        IncidentLogger::replyUpdated($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha actualitzat un comentari a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'comment');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_value, 'Ja hem resolt la incidència');
+        $this->assertEquals($log->new_value, 'Perdo no hem resolt encara la incidència');
+        $this->assertEquals($log->icon,'comment');
+        $this->assertEquals($log->color,'primary');
+    }
+
+    /** @test */
+    public function replyRemoved()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([]));
+        $oldIncident = clone($incident);
+        $reply = Reply::create([
+            'body' => 'Ja hem resolt la incidència',
+            'user_id' => $user->id
+        ]);
+        $incident->addReply($reply);
+        $oldReply = clone($reply);
+        $reply->delete();
+
+        $event = (Object) [
+            'incident' => $incident,
+            'oldIncident' => $oldIncident,
+            'oldReply' => $oldReply
+        ];
+        IncidentLogger::replyRemoved($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'Ha esborrat un comentari a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'comment');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_value, 'Ja hem resolt la incidència');
+        $this->assertEquals($log->new_value, '');
+        $this->assertEquals($log->icon,'comment');
         $this->assertEquals($log->color,'primary');
     }
 }

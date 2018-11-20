@@ -8,6 +8,9 @@ use App\Events\Incidents\IncidentClosed;
 use App\Events\Incidents\IncidentDeleted;
 use App\Events\Incidents\IncidentDescriptionUpdated;
 use App\Events\Incidents\IncidentOpened;
+use App\Events\Incidents\IncidentReplyAdded;
+use App\Events\Incidents\IncidentReplyRemoved;
+use App\Events\Incidents\IncidentReplyUpdated;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
@@ -26,6 +29,9 @@ use App\Listeners\Incidents\LogIncidentClosed;
 use App\Listeners\Incidents\LogIncidentDeleted;
 use App\Listeners\Incidents\LogIncidentDescriptionUpdated;
 use App\Listeners\Incidents\LogIncidentOpened;
+use App\Listeners\Incidents\LogIncidentReplyAdded;
+use App\Listeners\Incidents\LogIncidentReplyRemoved;
+use App\Listeners\Incidents\LogIncidentReplyUpdated;
 use App\Listeners\Incidents\LogIncidentShowed;
 use App\Listeners\Incidents\LogIncidentStored;
 use App\Listeners\Incidents\LogIncidentSubjectUpdated;
@@ -34,6 +40,7 @@ use App\Listeners\Incidents\SendIncidentCreatedEmail;
 use App\Listeners\Incidents\SendIncidentDeletedEmail;
 use App\Listeners\Incidents\SendIncidentDescriptionUpdateEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
+use App\Listeners\Incidents\SendIncidentReplyAddedEmail;
 use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
 use App\Listeners\SetLastLoginInfo;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
@@ -126,6 +133,19 @@ class EventServiceProvider extends ServiceProvider
         IncidentSubjectUpdated::class => [
             LogIncidentSubjectUpdated::class,
             SendIncidentSubjectUpdateEmail::class
+        ],
+
+        IncidentReplyAdded::class => [
+            LogIncidentReplyAdded::class,
+            SendIncidentReplyAddedEmail::class
+        ],
+
+        IncidentReplyUpdated::class => [
+            LogIncidentReplyUpdated::class
+        ],
+
+        IncidentReplyRemoved::class => [
+            LogIncidentReplyRemoved::class
         ],
 
         // TENANTS

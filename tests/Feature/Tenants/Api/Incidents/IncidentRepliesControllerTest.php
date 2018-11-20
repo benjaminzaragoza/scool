@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentReplyAdded;
 use App\Mail\Incidents\IncidentCommentAdded;
 use App\Models\Incident;
 use App\Models\User;
 use App\Models\Reply;
 use Config;
+use Event;
 use Mail;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
@@ -154,14 +156,14 @@ class IncidentRepliesControllerTest extends BaseTenantTest
         $incident = $this->createIncident();
         $user = $this->createUserWithRoleIncidents();
         $this->actingAs($user,'api');
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/replies',[
             'body' => 'Ja us hem resolt la incidència.'
         ]);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentCommentAdded::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentReplyAdded::class,function ($event) use ($incident){
+            return $event->incident->is($incident) && $event->reply->body === 'Ja us hem resolt la incidència.';
         });
         $result = json_decode($response->getContent());
         $this->assertEquals('Ja us hem resolt la incidència.', $result->body);
