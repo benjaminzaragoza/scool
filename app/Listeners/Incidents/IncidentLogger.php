@@ -137,7 +137,7 @@ class IncidentLogger
         Log::create([
             'text' => 'Ha modificat la descripció de la incidència ' . $event->incident->link(),
             'time' => Carbon::now(),
-            'action_type' => 'delete',
+            'action_type' => 'update',
             'module_type' => 'Incidents',
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
@@ -146,8 +146,8 @@ class IncidentLogger
             'new_loggable' => json_encode($event->incident->map()),
             'old_value' => $event->oldIncident->description,
             'new_value' => $event->incident->description,
-            'icon' => 'remove',
-            'color' => 'error'
+            'icon' => 'edit',
+            'color' => 'primary'
         ]);
     }
 

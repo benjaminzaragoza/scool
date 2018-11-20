@@ -138,10 +138,10 @@ Changelog:
 - [X] S'ha creat una nova incidència
 - [X] S'ha modificat el títol d'una incidència
 - [X] S'ha modificat la descripció d'una incidència
-- [ ] Comentaris
-  - [ ] S'ha afegit un comentari a una incidència
-  - [ ] S'ha modificat un comentari a una incidència
-  - [ ] S'ha esborrat un comentari
+- [X] Comentaris
+  - [X] S'ha afegit un comentari a una incidència
+  - [X] S'ha modificat un comentari a una incidència
+  - [X] S'ha esborrat un comentari
 - [ ] Etiquetes:
   - [ ] S'ha assignat una etiqueta a una incidència
   - [ ] S'ha tret una etiqueta a una incidència
