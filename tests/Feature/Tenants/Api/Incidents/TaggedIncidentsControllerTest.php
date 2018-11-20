@@ -61,7 +61,7 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertSuccessful();
         Event::assertDispatched(IncidentTagAdded::class,function ($event) use ($incident){
-            return $event->incident->is($incident) && $event->oldReply->body === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
+            return $event->incident->is($incident) && $event->tag->value === 'etiqueta 2';
         });
         $incident = $incident->fresh();
         $this->assertCount(1,$incident->tags);
@@ -140,7 +140,7 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertSuccessful();
         Event::assertDispatched(IncidentTagRemoved::class,function ($event) use ($incident){
-            return $event->incident->is($incident) && $event->oldReply->body === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
+            return $event->incident->is($incident) && $event->oldTag->value === 'etiqueta 2';
         });
         $incident = $incident->fresh();
         $this->assertCount(0,$incident->tags);

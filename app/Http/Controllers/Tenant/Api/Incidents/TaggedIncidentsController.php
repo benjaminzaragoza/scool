@@ -28,7 +28,7 @@ class TaggedIncidentsController extends Controller
     public function store(StoreTaggedIncident $request, $tenant, Incident $incident, IncidentTag $tag)
     {
         $incident->addTag($tag);
-        event(new IncidentTagAdded($incident));
+        event(new IncidentTagAdded($incident,$tag));
     }
 
     /**
@@ -43,7 +43,7 @@ class TaggedIncidentsController extends Controller
     public function destroy(DestroyTaggedIncident $request, $tenant, Incident $incident, IncidentTag $tag)
     {
         $incident->tags()->detach($tag->id);
-        event(new IncidentTagRemoved($incident));
+        event(new IncidentTagRemoved($incident,$tag));
 
     }
 }
