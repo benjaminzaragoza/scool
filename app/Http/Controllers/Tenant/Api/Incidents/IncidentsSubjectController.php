@@ -24,9 +24,10 @@ class IncidentsSubjectController extends Controller
      */
     public function update(UpdateSubjectIncident $request, $tenant,Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident->subject = $request->subject;
         $incident->save();
-        event(new IncidentSubjectUpdated($incident));
+        event(new IncidentSubjectUpdated($oldIncident));
         return $incident->map();
     }
 }

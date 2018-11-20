@@ -22,13 +22,17 @@ class IncidentOpened
 
     public $incident;
 
+    public $oldIncident;
+
     /**
      * IncidentOpened constructor.
      * @param $incident
+     * @param $oldIncident
      */
-    public function __construct(Incident $incident)
+    public function __construct($incident, $oldIncident)
     {
         $this->incident = $incident;
+        $this->oldIncident = $oldIncident;
     }
 
     /**

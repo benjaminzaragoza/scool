@@ -22,15 +22,19 @@ class IncidentClosed
 
     public $incident;
 
+    public $oldIncident;
+
     /**
      * IncidentClosed constructor.
+     *
      * @param $incident
+     * @param $oldIncident
      */
-    public function __construct(Incident $incident)
+    public function __construct($incident, $oldIncident)
     {
         $this->incident = $incident;
+        $this->oldIncident = $oldIncident;
     }
-
 
     /**
      * Get the channels the event should broadcast on.

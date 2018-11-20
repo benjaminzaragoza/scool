@@ -12,7 +12,8 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 /**
- * Class IncidentSubjectUpdated
+ * Class IncidentSubjectUpdated.
+ *
  * @package App\Events\Incidents
  */
 class IncidentSubjectUpdated
@@ -21,13 +22,18 @@ class IncidentSubjectUpdated
 
     public $incident;
 
+    public $oldIncident;
+
     /**
      * IncidentSubjectUpdated constructor.
+     *
      * @param $incident
+     * @param $oldIncident
      */
-    public function __construct(Incident $incident)
+    public function __construct($incident, $oldIncident)
     {
         $this->incident = $incident;
+        $this->oldIncident = $oldIncident;
     }
 
 

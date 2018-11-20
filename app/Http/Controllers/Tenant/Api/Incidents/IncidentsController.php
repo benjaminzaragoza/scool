@@ -68,8 +68,9 @@ class IncidentsController extends Controller
      */
     public function destroy(DeleteIncident $request, $tenant, Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident->delete();
-        event(new IncidentDeleted($incident));
+        event(new IncidentDeleted($oldIncident));
         return $incident;
     }
 }

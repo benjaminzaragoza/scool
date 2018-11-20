@@ -19,17 +19,17 @@ class IncidentDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $incident;
+    public $oldIncident;
 
     /**
      * IncidentDeleted constructor.
-     * @param $incident
+     *
+     * @param $oldIncident
      */
-    public function __construct(Incident $incident)
+    public function __construct($oldIncident)
     {
-        $this->incident = $incident;
+        $this->oldIncident = $oldIncident;
     }
-
 
     /**
      * Get the channels the event should broadcast on.

@@ -109,12 +109,12 @@ class IncidentLogger
     public static function deleted($event)
     {
         Log::create([
-            'text' => 'Ha eliminat la incidència ' . $event->incident->subject,
+            'text' => 'Ha eliminat la incidència ' . $event->oldIncident->subject,
             'time' => Carbon::now(),
             'action_type' => 'delete',
             'module_type' => 'Incidents',
-            'user_id' => $event->incident->user->id,
-            'loggable_id' => $event->incident->id,
+            'user_id' => $event->oldIncident->user->id,
+            'loggable_id' => $event->oldIncident->id,
             'loggable_type' => Incident::class,
             'old_loggable' => json_encode($event->oldIncident->map()),
             'new_loggable' => null,
@@ -124,7 +124,7 @@ class IncidentLogger
     }
 
     /**
-     * Deleted.
+     * descriptionUpdated.
      *
      * @param $event
      */
@@ -139,6 +139,31 @@ class IncidentLogger
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
             'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
+            'old_value' => $event->oldIncident->description,
+            'new_value' => $event->incident->description,
+            'icon' => 'remove',
+            'color' => 'error'
+        ]);
+    }
+
+    /**
+     * subjectUpdated.
+     *
+     * @param $event
+     */
+    public static function subjectUpdated($event)
+    {
+        Log::create([
+            'text' => 'Ha modificat el títol de la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'delete',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => json_encode($event->oldIncident->map()),
+            'new_loggable' => json_encode($event->incident->map()),
             'old_value' => $event->oldIncident->description,
             'new_value' => $event->incident->description,
             'icon' => 'remove',

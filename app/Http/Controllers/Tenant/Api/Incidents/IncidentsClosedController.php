@@ -26,8 +26,9 @@ class IncidentsClosedController extends Controller
      */
     public function store(CloseIncident $request, $tenant, Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident = $incident->close();
-        event(new IncidentClosed($incident));
+        event(new IncidentClosed($incident, $oldIncident));
         return $incident->map();
     }
 
@@ -41,8 +42,9 @@ class IncidentsClosedController extends Controller
      */
     public function destroy(OpenIncident $request, $tenant, Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident = $incident->open();
-        event(new IncidentOpened($incident));
+        event(new IncidentOpened($incident, $oldIncident));
         return $incident->map();
     }
 }

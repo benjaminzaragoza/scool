@@ -57,7 +57,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertNull($log->old_loggable);
-        $this->assertNotNull($log->new_loggable);
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
         $this->assertEquals($log->icon,'add');
         $this->assertEquals($log->color,'success');
     }
@@ -71,11 +71,14 @@ class IncidentsLoggerTest extends TestCase
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
 
-        $event = (Object) [
-            'incident' => $incident
-        ];
         Auth::login($user);
+        $oldIncident = clone($incident);
         $incident->close();
+
+        $event = (Object) [
+            'incident' => $incident,
+            'oldIncident' => $oldIncident
+        ];
 
         IncidentLogger::closed($event);
         $log = Log::first();
@@ -86,7 +89,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->old_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
         $this->assertEquals($log->icon,'lock');
         $this->assertEquals($log->color,'success');
     }
@@ -100,12 +104,16 @@ class IncidentsLoggerTest extends TestCase
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
 
-        $event = (Object) [
-            'incident' => $incident
-        ];
         Auth::login($user);
         $incident->close();
+        $oldIncident = clone($incident);
         $incident->open();
+
+        $event = (Object) [
+            'incident' => $incident,
+            'oldIncident' => $oldIncident
+        ];
+
         IncidentLogger::opened($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha reobert la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -115,7 +123,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->old_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
         $this->assertEquals($log->icon,'lock_open');
         $this->assertEquals($log->color,'purple');
     }
@@ -142,7 +151,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->old_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
         $this->assertEquals($log->icon,'visibility');
         $this->assertEquals($log->color,'primary');
     }
@@ -155,9 +165,10 @@ class IncidentsLoggerTest extends TestCase
             'description' => 'Bla bla bla',
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
-
+        $oldIncident = clone($incident);
+        $incident->close();
         $event = (Object) [
-            'incident' => $incident
+            'oldIncident' => $oldIncident
         ];
         Auth::login($user);
         $incident->delete();
@@ -170,7 +181,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->old_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
     }
@@ -199,7 +211,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->old_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
         $this->assertEquals($log->old_value, 'Bla bla bla');
         $this->assertEquals($log->new_value,'JORL JORL horl');
         $this->assertEquals($log->icon,'remove');
@@ -223,7 +236,7 @@ class IncidentsLoggerTest extends TestCase
         ];
         IncidentLogger::subjectUpdated($event);
         $log = Log::first();
-        $this->assertEquals($log->text,'Ha modificat el títol de la incidència No funciona res aula 20');
+        $this->assertEquals($log->text,'Ha modificat el títol de la incidència <a target="_blank" href="/incidents/1">No funciona res aula 21</a>');
 
         // TODO old value i new Value!!!
 
@@ -233,7 +246,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertNotNull($log->old_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
     }
