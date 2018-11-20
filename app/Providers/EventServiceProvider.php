@@ -149,7 +149,6 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // TENANTS
-
         TenantCreated::class => [
             CreateTenantDatabase::class,
         ],

@@ -23,17 +23,20 @@ class IncidentReplyUpdated
 
     public $reply;
 
+    public $oldReply;
+
     /**
      * IncidentReplyUpdated constructor.
      * @param $incident
      * @param $reply
+     * @param $oldReply
      */
-    public function __construct($incident, $reply)
+    public function __construct($incident, $reply, $oldReply)
     {
         $this->incident = $incident;
         $this->reply = $reply;
+        $this->oldReply = $oldReply;
     }
-
 
     /**
      * Get the channels the event should broadcast on.

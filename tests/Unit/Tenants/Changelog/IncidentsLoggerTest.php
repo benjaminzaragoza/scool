@@ -3,6 +3,16 @@
 namespace Tests\Unit\Tenants\Changelog;
 
 use App\Console\Kernel;
+use App\Events\Incidents\IncidentClosed;
+use App\Events\Incidents\IncidentDeleted;
+use App\Events\Incidents\IncidentDescriptionUpdated;
+use App\Events\Incidents\IncidentOpened;
+use App\Events\Incidents\IncidentReplyAdded;
+use App\Events\Incidents\IncidentReplyRemoved;
+use App\Events\Incidents\IncidentReplyUpdated;
+use App\Events\Incidents\IncidentShowed;
+use App\Events\Incidents\IncidentStored;
+use App\Events\Incidents\IncidentSubjectUpdated;
 use App\Listeners\Incidents\IncidentLogger;
 use App\Models\Incident;
 use App\Models\Log;
@@ -45,9 +55,7 @@ class IncidentsLoggerTest extends TestCase
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
 
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $event = new IncidentStored($incident);
         IncidentLogger::stored($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha creat la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -76,10 +84,7 @@ class IncidentsLoggerTest extends TestCase
         $oldIncident = clone($incident);
         $incident->close();
 
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident
-        ];
+        $event = new IncidentClosed($incident,$oldIncident);
 
         IncidentLogger::closed($event);
         $log = Log::first();
@@ -112,10 +117,7 @@ class IncidentsLoggerTest extends TestCase
         $oldIncident = clone($incident);
         $incident->open();
 
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident
-        ];
+        $event = new IncidentOpened($incident,$oldIncident);
 
         IncidentLogger::opened($event);
         $log = Log::first();
@@ -143,9 +145,7 @@ class IncidentsLoggerTest extends TestCase
         ]);
         $incident->assignUser($user = factory(User::class)->create([]));
 
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $event = new IncidentShowed($incident);
         Auth::login($user);
         IncidentLogger::showed($event);
         $log = Log::first();
@@ -172,9 +172,7 @@ class IncidentsLoggerTest extends TestCase
         $incident->assignUser($user = factory(User::class)->create([]));
         $oldIncident = clone($incident);
         $incident->close();
-        $event = (Object) [
-            'oldIncident' => $oldIncident
-        ];
+        $event = new IncidentDeleted($oldIncident);
         Auth::login($user);
         $incident->delete();
         IncidentLogger::deleted($event);
@@ -203,10 +201,7 @@ class IncidentsLoggerTest extends TestCase
         $oldIncident = clone($incident);
         $incident->description = 'JORL JORL horl';
         $incident->save();
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident,
-        ];
+        $event = new IncidentDescriptionUpdated($incident,$oldIncident);
         IncidentLogger::descriptionUpdated($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha modificat la descripció de la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -235,10 +230,7 @@ class IncidentsLoggerTest extends TestCase
         $oldIncident = clone($incident);
         $incident->subject = 'No funciona res aula 21';
         $incident->save();
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident
-        ];
+        $event = new IncidentSubjectUpdated($incident,$oldIncident);
         IncidentLogger::subjectUpdated($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha modificat el títol de la incidència <a target="_blank" href="/incidents/1">No funciona res aula 21</a>');
@@ -270,11 +262,7 @@ class IncidentsLoggerTest extends TestCase
             'user_id' => $user->id
         ]);
         $incident->addReply($reply);
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident,
-            'reply' => $reply
-        ];
+        $event = new IncidentReplyAdded($incident,$reply);
         IncidentLogger::replyAdded($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha afegit un comentari a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -284,8 +272,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertNull($log->old_loggable);
+        $this->assertEquals($log->new_loggable, json_encode($reply->map()));
         $this->assertEquals($log->old_value, '');
         $this->assertEquals($log->new_value, 'Ja hem resolt la incidència');
         $this->assertEquals($log->icon,'comment');
@@ -309,12 +297,7 @@ class IncidentsLoggerTest extends TestCase
         $oldReply = clone($reply);
         $reply->body = 'Perdo no hem resolt encara la incidència';
 
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident,
-            'oldReply' => $oldReply,
-            'reply' => $reply
-        ];
+        $event = new IncidentReplyUpdated($incident,$reply,$oldReply);
         IncidentLogger::replyUpdated($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha actualitzat un comentari a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -324,8 +307,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($oldReply->map()));
+        $this->assertEquals($log->new_loggable, json_encode($reply->map()));
         $this->assertEquals($log->old_value, 'Ja hem resolt la incidència');
         $this->assertEquals($log->new_value, 'Perdo no hem resolt encara la incidència');
         $this->assertEquals($log->icon,'comment');
@@ -349,11 +332,7 @@ class IncidentsLoggerTest extends TestCase
         $oldReply = clone($reply);
         $reply->delete();
 
-        $event = (Object) [
-            'incident' => $incident,
-            'oldIncident' => $oldIncident,
-            'oldReply' => $oldReply
-        ];
+        $event = new IncidentReplyRemoved($incident,$oldReply);
         IncidentLogger::replyRemoved($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha esborrat un comentari a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -363,10 +342,10 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertNull($log->new_loggable);
+        $this->assertEquals($log->old_loggable, json_encode($oldReply->map()));
         $this->assertEquals($log->old_value, 'Ja hem resolt la incidència');
-        $this->assertEquals($log->new_value, '');
+        $this->assertNull($log->new_value);
         $this->assertEquals($log->icon,'comment');
         $this->assertEquals($log->color,'primary');
     }
