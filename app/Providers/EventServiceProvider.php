@@ -14,6 +14,8 @@ use App\Events\Incidents\IncidentReplyUpdated;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
+use App\Events\Incidents\IncidentTagAdded;
+use App\Events\Incidents\IncidentTagRemoved;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
@@ -35,6 +37,8 @@ use App\Listeners\Incidents\LogIncidentReplyUpdated;
 use App\Listeners\Incidents\LogIncidentShowed;
 use App\Listeners\Incidents\LogIncidentStored;
 use App\Listeners\Incidents\LogIncidentSubjectUpdated;
+use App\Listeners\Incidents\LogIncidentTagAdded;
+use App\Listeners\Incidents\LogIncidentTagRemoved;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
 use App\Listeners\Incidents\SendIncidentDeletedEmail;
@@ -42,6 +46,8 @@ use App\Listeners\Incidents\SendIncidentDescriptionUpdateEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
 use App\Listeners\Incidents\SendIncidentReplyAddedEmail;
 use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
+use App\Listeners\Incidents\SendIncidentTagAddedEmail;
+use App\Listeners\Incidents\SendIncidentTagRemovedEmail;
 use App\Listeners\SetLastLoginInfo;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
@@ -138,6 +144,16 @@ class EventServiceProvider extends ServiceProvider
         IncidentReplyAdded::class => [
             LogIncidentReplyAdded::class,
             SendIncidentReplyAddedEmail::class
+        ],
+
+        IncidentTagAdded::class => [
+            LogIncidentTagAdded::class,
+            SendIncidentTagAddedEmail::class
+        ],
+
+        IncidentTagRemoved::class => [
+            LogIncidentTagRemoved::class,
+            SendIncidentTagRemovedEmail::class
         ],
 
         IncidentReplyUpdated::class => [

@@ -9,6 +9,8 @@ use App\Listeners\Incidents\SendIncidentDescriptionUpdateEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
 use App\Listeners\Incidents\SendIncidentReplyAddedEmail;
 use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
+use App\Listeners\Incidents\SendIncidentTagAddedEmail;
+use App\Listeners\Incidents\SendIncidentTagRemovedEmail;
 use App\Mail\Incidents\IncidentClosed;
 use App\Mail\Incidents\IncidentCommentAdded;
 use App\Mail\Incidents\IncidentCreated;
@@ -16,6 +18,8 @@ use App\Mail\Incidents\IncidentDeleted;
 use App\Mail\Incidents\IncidentDescriptionModified;
 use App\Mail\Incidents\IncidentOpened;
 use App\Mail\Incidents\IncidentSubjectModified;
+use App\Mail\Incidents\IncidentTagged;
+use App\Mail\Incidents\IncidentUntagged;
 use App\Models\Incident;
 use App\Models\Reply;
 use App\Models\User;
@@ -217,6 +221,64 @@ class IncidentsEmailTest extends BaseTenantTest
         Mail::fake();
         $listener->handle($event);
         Mail::assertQueued(IncidentCommentAdded::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function sendIncidentTagAddedEmail()
+    {
+        $listener = new sendIncidentTagAddedEmail();
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $user= factory(User::class)->create();
+        $incident->assignUser($user);
+        $reply = Reply::create([
+            'body' => 'Ja està tot arreglat',
+            'user_id' => $user->id
+        ]);
+        $incident->addReply($reply);
+        $event = (Object) [
+            'incident' => $incident,
+            'reply' => $reply
+        ];
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Mail::fake();
+        $listener->handle($event);
+        Mail::assertQueued(IncidentTagged::class, function ($mail) use ($incident, $user) {
+            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function sendIncidentTagRemovedEmail()
+    {
+        $listener = new sendIncidentTagRemovedEmail();
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 20',
+            'description' => 'Bla bla bla'
+        ]);
+        $user= factory(User::class)->create();
+        $incident->assignUser($user);
+        $reply = Reply::create([
+            'body' => 'Ja està tot arreglat',
+            'user_id' => $user->id
+        ]);
+        $incident->addReply($reply);
+        $event = (Object) [
+            'incident' => $incident,
+            'reply' => $reply
+        ];
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Mail::fake();
+        $listener->handle($event);
+        Mail::assertQueued(IncidentUntagged::class, function ($mail) use ($incident, $user) {
             return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
         });
     }

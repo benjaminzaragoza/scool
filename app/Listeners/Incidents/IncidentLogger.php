@@ -243,4 +243,48 @@ class IncidentLogger
             'color' => 'primary'
         ]);
     }
+
+    /**
+     * replyRemoved.
+     *
+     * @param $event
+     */
+    public static function tagAdded($event)
+    {
+        Log::create([
+            'text' => 'Ha afegit la etiqueta ' . $event->tag->value . ' a la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'tag',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'new_loggable' => json_encode($event->tag->map()),
+            'new_value' => $event->tag->value,
+            'icon' => 'tag',
+            'color' => 'primary'
+        ]);
+    }
+
+    /**
+     * replyRemoved.
+     *
+     * @param $event
+     */
+    public static function tagRemoved($event)
+    {
+        Log::create([
+            'text' => 'Ha eliminat la etiqueta ' . $event->oldTag->value . ' a la incidència ' . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'tag',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => json_encode($event->oldTag->map()),
+            'old_value' => $event->oldTag->value,
+            'icon' => 'tag',
+            'color' => 'primary'
+        ]);
+    }
 }

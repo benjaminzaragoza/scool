@@ -2,16 +2,13 @@
 
 namespace App\Listeners\Incidents;
 
-use App\Mail\Incidents\IncidentCommentAdded;
-use App\Models\Setting;
-use Mail;
+use App;
 
 /**
- * Class SendIncidentReplyAddedEmail.
- *
+ * Class LogIncidentTagRemoved
  * @package App\Listeners\Incidents
  */
-class SendIncidentReplyAddedEmail
+class LogIncidentTagRemoved
 {
     /**
      * Create the event listener.
@@ -20,7 +17,7 @@ class SendIncidentReplyAddedEmail
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -31,6 +28,7 @@ class SendIncidentReplyAddedEmail
      */
     public function handle($event)
     {
-        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCommentAdded($event->incident));
+        if (App::environment('testing')) return;
+        IncidentLogger::tagRemoved($event);
     }
 }

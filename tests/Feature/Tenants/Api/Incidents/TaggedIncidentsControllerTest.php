@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Mail\Incidents\IncidentTagged;
-use App\Mail\Incidents\IncidentUntagged;
+use App\Events\Incidents\IncidentTagAdded;
+use App\Events\Incidents\IncidentTagRemoved;
 use App\Models\Incident;
 use App\Models\IncidentTag;
 use App\Models\User;
 use Config;
-use Mail;
+use Event;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,12 +56,12 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
             'icon' => 'settings'
         ]);
         $this->assertCount(0,$incident->tags);
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentTagged::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentTagAdded::class,function ($event) use ($incident){
+            return $event->incident->is($incident) && $event->oldReply->body === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
         });
         $incident = $incident->fresh();
         $this->assertCount(1,$incident->tags);
@@ -135,12 +135,12 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
         ]);
         $incident->addTag($tag);
         $this->assertCount(1,$incident->tags);
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentUntagged::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentTagRemoved::class,function ($event) use ($incident){
+            return $event->incident->is($incident) && $event->oldReply->body === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
         });
         $incident = $incident->fresh();
         $this->assertCount(0,$incident->tags);
