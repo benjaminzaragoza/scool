@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
 use App\Events\Incidents\IncidentReplyAdded;
+use App\Events\Incidents\IncidentReplyRemoved;
 use App\Events\Incidents\IncidentReplyUpdated;
 use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
@@ -67,7 +68,7 @@ class IncidentRepliesController
         $oldReply = clone($reply);
         $reply->body = $request->body;
         $reply->save();
-        event(new IncidentReplyUpdated($reply, $oldReply));
+        event(new IncidentReplyUpdated($incident,$reply, $oldReply));
         return $reply;
     }
 
@@ -81,7 +82,9 @@ class IncidentRepliesController
      */
     public function destroy(DestroyIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
     {
+        $oldReply = clone($reply);
         $reply->delete();
+        event(new IncidentReplyRemoved($incident,$oldReply));
         return $reply;
     }
 }
