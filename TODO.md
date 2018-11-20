@@ -136,8 +136,8 @@ Changelog d'una incidència a la vista Show:
 
 Changelog:
 - [X] S'ha creat una nova incidència
-- [ ] S'ha modificat el títol d'una incidència
-- [ ] S'ha modificat la descripció d'una incidència
+- [X] S'ha modificat el títol d'una incidència
+- [X] S'ha modificat la descripció d'una incidència
 - [ ] Comentaris
   - [ ] S'ha afegit un comentari a una incidència
   - [ ] S'ha modificat un comentari a una incidència

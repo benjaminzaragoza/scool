@@ -27,7 +27,7 @@ class IncidentsSubjectController extends Controller
         $oldIncident = clone($incident);
         $incident->subject = $request->subject;
         $incident->save();
-        event(new IncidentSubjectUpdated($oldIncident));
+        event(new IncidentSubjectUpdated($incident, $oldIncident));
         return $incident->map();
     }
 }
