@@ -52,6 +52,8 @@ class IncidentLogger
             'loggable_type' => Incident::class,
             'old_loggable' => json_encode($event->oldIncident->map()),
             'new_loggable' => json_encode($event->incident->map()),
+            'new_value' => 'Tancada',
+            'old_value' => 'Oberta',
             'icon' => 'lock',
             'color' => 'success'
         ]);
@@ -74,6 +76,8 @@ class IncidentLogger
             'loggable_type' => Incident::class,
             'old_loggable' => json_encode($event->oldIncident->map()),
             'new_loggable' => json_encode($event->incident->map()),
+            'old_value' => 'Tancada',
+            'new_value' => 'Oberta',
             'icon' => 'lock_open',
             'color' => 'purple'
         ]);

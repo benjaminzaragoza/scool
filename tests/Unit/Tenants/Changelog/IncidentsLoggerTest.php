@@ -91,6 +91,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
         $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_value, 'Oberta');
+        $this->assertEquals($log->new_value, 'Tancada');
         $this->assertEquals($log->icon,'lock');
         $this->assertEquals($log->color,'success');
     }
@@ -125,6 +127,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
         $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->new_value, 'Oberta');
+        $this->assertEquals($log->old_value, 'Tancada');
         $this->assertEquals($log->icon,'lock_open');
         $this->assertEquals($log->color,'purple');
     }

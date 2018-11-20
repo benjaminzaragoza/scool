@@ -130,9 +130,10 @@ class IncidentsEmailTest extends BaseTenantTest
         $user= factory(User::class)->create();
         $incident->assignUser($user);
         Auth::login($user);
+        $oldIncident = clone($incident);
         $incident->delete();
         $event = (Object) [
-            'incident' => $incident
+            'oldIncident' => $oldIncident
         ];
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
