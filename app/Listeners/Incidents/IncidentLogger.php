@@ -157,17 +157,17 @@ class IncidentLogger
         Log::create([
             'text' => 'Ha modificat el títol de la incidència ' . $event->incident->link(),
             'time' => Carbon::now(),
-            'action_type' => 'delete',
+            'action_type' => 'update',
             'module_type' => 'Incidents',
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
             'old_loggable' => json_encode($event->oldIncident->map()),
             'new_loggable' => json_encode($event->incident->map()),
-            'old_value' => $event->oldIncident->description,
-            'new_value' => $event->incident->description,
-            'icon' => 'remove',
-            'color' => 'error'
+            'old_value' => $event->oldIncident->subject,
+            'new_value' => $event->incident->subject,
+            'icon' => 'edit',
+            'color' => 'primary'
         ]);
     }
 }
