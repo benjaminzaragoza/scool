@@ -309,7 +309,7 @@ class IncidentLogger
         ]);
     }
 
-    public static function incidentDessasigned($event)
+    public static function incidentDesassigned($event)
     {
         Log::create([
             'text' => "S'ha desassignat l'usuari " . $event->user->link() . " a la incidència " . $event->incident->link(),
