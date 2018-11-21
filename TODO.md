@@ -145,15 +145,16 @@ Changelog:
 - [X] Etiquetes:
   - [X] S'ha assignat una etiqueta a una incidència
   - [X] S'ha tret una etiqueta a una incidència
-- [ ] Assigness:
-  - [ ] S'ha assignat un usuari a una incidència
-  - [ ] S'ha tret una assignat d'una incidència
+- [X] Assigness:
+  - [X] S'ha assignat un usuari a una incidència
+  - [X] S'ha tret una assignat d'una incidència
 - [X] S'ha visualitzat una incidència? Funciona parcialment, només quan se visita directament des de un link no si se visita des de la llista datatables
 - [X] S'ha obert una incidència  
 - [X] S'ha tancat una incidència
 - [X] S'ha eliminat una incidència
   
 BUGS:
+- [ ] Al visitar: https://iesebre.scool.test/incidents/1 The data content of this event exceeds the allowed maximum (10240 bytes). See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
 - [ ] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar
 - [ ] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)
 - [ ] Al eliminar una etiqueta assignada (al ser la primera crec ) s'esborren totes (o potser també la segona). nivell base da des ok, al fer f5 torna a estat tot bé
