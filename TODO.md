@@ -142,9 +142,9 @@ Changelog:
   - [X] S'ha afegit un comentari a una incidència
   - [X] S'ha modificat un comentari a una incidència
   - [X] S'ha esborrat un comentari
-- [ ] Etiquetes:
-  - [ ] S'ha assignat una etiqueta a una incidència
-  - [ ] S'ha tret una etiqueta a una incidència
+- [X] Etiquetes:
+  - [X] S'ha assignat una etiqueta a una incidència
+  - [X] S'ha tret una etiqueta a una incidència
 - [ ] Assigness:
   - [ ] S'ha assignat un usuari a una incidència
   - [ ] S'ha tret una assignat d'una incidència

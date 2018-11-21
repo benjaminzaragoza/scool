@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\GoogleInvalidUserNotificationReceived;
 use App\Events\GoogleUserNotificationReceived;
+use App\Events\Incidents\IncidentAssigned;
 use App\Events\Incidents\IncidentClosed;
 use App\Events\Incidents\IncidentDeleted;
+use App\Events\Incidents\IncidentDesassigned;
 use App\Events\Incidents\IncidentDescriptionUpdated;
 use App\Events\Incidents\IncidentOpened;
 use App\Events\Incidents\IncidentReplyAdded;
@@ -27,8 +29,10 @@ use App\Listeners\Authentication\LogRegisteredUser;
 use App\Listeners\Authentication\LogTakeImpersonation;
 use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
+use App\Listeners\Incidents\LogIncidentAssigned;
 use App\Listeners\Incidents\LogIncidentClosed;
 use App\Listeners\Incidents\LogIncidentDeleted;
+use App\Listeners\Incidents\LogIncidentDesassigned;
 use App\Listeners\Incidents\LogIncidentDescriptionUpdated;
 use App\Listeners\Incidents\LogIncidentOpened;
 use App\Listeners\Incidents\LogIncidentReplyAdded;
@@ -39,9 +43,11 @@ use App\Listeners\Incidents\LogIncidentStored;
 use App\Listeners\Incidents\LogIncidentSubjectUpdated;
 use App\Listeners\Incidents\LogIncidentTagAdded;
 use App\Listeners\Incidents\LogIncidentTagRemoved;
+use App\Listeners\Incidents\SendIncidentAssignedEmail;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
 use App\Listeners\Incidents\SendIncidentDeletedEmail;
+use App\Listeners\Incidents\SendIncidentDesassignedEmail;
 use App\Listeners\Incidents\SendIncidentDescriptionUpdateEmail;
 use App\Listeners\Incidents\SendIncidentOpenedEmail;
 use App\Listeners\Incidents\SendIncidentReplyAddedEmail;
@@ -162,6 +168,16 @@ class EventServiceProvider extends ServiceProvider
 
         IncidentReplyRemoved::class => [
             LogIncidentReplyRemoved::class
+        ],
+
+        IncidentAssigned::class => [
+            LogIncidentAssigned::class,
+            SendIncidentAssignedEmail::class
+        ],
+
+        IncidentDesassigned::class => [
+            LogIncidentDesassigned::class,
+            SendIncidentDesassignedEmail::class
         ],
 
         // TENANTS

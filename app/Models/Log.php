@@ -144,6 +144,8 @@ class Log extends Model
                 return 'Mostrar';
             case 'comment':
                 return 'Comentari';
+            case 'tag':
+                return 'Etiqueta';
         }
     }
 
@@ -177,6 +179,8 @@ class Log extends Model
                 return 'visibility';
             case 'comment':
                 return 'comment';
+            case 'tag':
+                return 'tag';
         }
     }
 

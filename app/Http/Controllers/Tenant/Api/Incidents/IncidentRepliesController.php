@@ -9,12 +9,9 @@ use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
 use App\Http\Requests\Incidents\StoreIncidentReplies;
 use App\Http\Requests\Incidents\UpdateIncidentReplies;
-use App\Mail\Incidents\IncidentCommentAdded;
 use App\Models\Incident;
 use App\Models\Reply;
-use App\Models\Setting;
 use Auth;
-use Mail;
 
 /**
  * Class IncidentRepliesController.

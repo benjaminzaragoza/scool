@@ -3,8 +3,10 @@
 namespace Tests\Unit\Tenants\Changelog;
 
 use App\Console\Kernel;
+use App\Events\Incidents\IncidentAssigned;
 use App\Events\Incidents\IncidentClosed;
 use App\Events\Incidents\IncidentDeleted;
+use App\Events\Incidents\IncidentDesassigned;
 use App\Events\Incidents\IncidentDescriptionUpdated;
 use App\Events\Incidents\IncidentOpened;
 use App\Events\Incidents\IncidentReplyAdded;
@@ -22,7 +24,6 @@ use App\Models\Log;
 use App\Models\Reply;
 use App\Models\User;
 use Auth;
-use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -366,7 +367,7 @@ class IncidentsLoggerTest extends TestCase
         $event = new IncidentTagAdded($incident, $tag);
         IncidentLogger::tagAdded($event);
         $log = Log::first();
-        $this->assertEquals($log->text,'Ha afegit la etiqueta wontfix a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertEquals($log->text,'Ha afegit la etiqueta <strong>wontfix</strong> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
         $this->assertEquals($log->action_type,'tag');
@@ -395,7 +396,7 @@ class IncidentsLoggerTest extends TestCase
         $event = new IncidentTagRemoved($incident, $oldTag);
         IncidentLogger::tagRemoved($event);
         $log = Log::first();
-        $this->assertEquals($log->text,'Ha eliminat la etiqueta wontfix a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertEquals($log->text,'Ha eliminat la etiqueta <strong>wontfix</strong> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
         $this->assertEquals($log->action_type,'tag');
@@ -408,5 +409,61 @@ class IncidentsLoggerTest extends TestCase
         $this->assertNull($log->new_value);
         $this->assertEquals($log->icon,'tag');
         $this->assertEquals($log->color,'primary');
+    }
+
+    /** @test */
+    public function incidentAssigned()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]));
+        $event = new IncidentAssigned($incident,$user);
+        IncidentLogger::incidentAssigned($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'S\'ha assignat l\'usuari <a target="_blank" href="/users/1">Pepe Pardo Jeans</a> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'add');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNull($log->old_loggable);
+        $this->assertEquals($log->new_loggable, json_encode($user->map()));
+        $this->assertEquals($log->new_value, 'Pepe Pardo Jeans');
+        $this->assertNull($log->old_value);
+        $this->assertEquals($log->icon,'add');
+        $this->assertEquals($log->color,'success');
+    }
+
+    /** @test */
+    public function incidentDesassigned()
+    {
+        $incident= Incident::create([
+            'subject' => 'No funciona res aula 20',
+            'description' => 'Bla bla bla',
+        ]);
+        $incident->assignUser($user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]));
+        $event = new IncidentDesassigned($incident, $user);
+        IncidentLogger::incidentDessasigned($event);
+        $log = Log::first();
+        $this->assertEquals($log->text,'S\'ha desassignat l\'usuari <a target="_blank" href="/users/1">Pepe Pardo Jeans</a> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
+        $this->assertNotNull($log->time);
+        $this->assertEquals($log->user_id, $user->id);
+        $this->assertEquals($log->action_type,'add');
+        $this->assertEquals($log->module_type,'Incidents');
+        $this->assertEquals($log->loggable_id,$incident->id);
+        $this->assertEquals($log->loggable_type,Incident::class);
+        $this->assertNull($log->old_loggable);
+        $this->assertEquals($log->new_loggable, json_encode($user->map()));
+        $this->assertEquals($log->new_value, 'Pepe Pardo Jeans');
+        $this->assertNull($log->old_value);
+        $this->assertEquals($log->icon,'add');
+        $this->assertEquals($log->color,'success');
     }
 }

@@ -252,7 +252,7 @@ class IncidentLogger
     public static function tagAdded($event)
     {
         Log::create([
-            'text' => 'Ha afegit la etiqueta ' . $event->tag->value . ' a la incidència ' . $event->incident->link(),
+            'text' => 'Ha afegit la etiqueta <strong>' . $event->tag->value . '</strong> a la incidència ' . $event->incident->link(),
             'time' => Carbon::now(),
             'action_type' => 'tag',
             'module_type' => 'Incidents',
@@ -274,7 +274,7 @@ class IncidentLogger
     public static function tagRemoved($event)
     {
         Log::create([
-            'text' => 'Ha eliminat la etiqueta ' . $event->oldTag->value . ' a la incidència ' . $event->incident->link(),
+            'text' => 'Ha eliminat la etiqueta <strong>' . $event->oldTag->value . '</strong> a la incidència ' . $event->incident->link(),
             'time' => Carbon::now(),
             'action_type' => 'tag',
             'module_type' => 'Incidents',
@@ -285,6 +285,44 @@ class IncidentLogger
             'old_value' => $event->oldTag->value,
             'icon' => 'tag',
             'color' => 'primary'
+        ]);
+    }
+
+    /**
+     * incidentAssigned.
+     * @param $event
+     */
+    public static function incidentAssigned($event)
+    {
+        Log::create([
+            'text' => "S'ha assignat l'usuari " . $event->user->link() . " a la incidència " . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'add',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'new_loggable' => json_encode($event->user->map()),
+            'new_value' => $event->user->name,
+            'icon' => 'add',
+            'color' => 'success'
+        ]);
+    }
+
+    public static function incidentDessasigned($event)
+    {
+        Log::create([
+            'text' => "S'ha desassignat l'usuari " . $event->user->link() . " a la incidència " . $event->incident->link(),
+            'time' => Carbon::now(),
+            'action_type' => 'add',
+            'module_type' => 'Incidents',
+            'user_id' => $event->incident->user->id,
+            'loggable_id' => $event->incident->id,
+            'loggable_type' => Incident::class,
+            'new_loggable' => json_encode($event->user->map()),
+            'new_value' => $event->user->name,
+            'icon' => 'add',
+            'color' => 'success'
         ]);
     }
 }
