@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListChangelog.
+ * Class ListUserChangelog.
  *
  * @package App\Http\Requests
  */
-class ListChangelog extends FormRequest
+class ListUserChangelog extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class ListChangelog extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('changelog.list');
+        return Auth::user()->can('logs.user.list');
     }
 
     /**

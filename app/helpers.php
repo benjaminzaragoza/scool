@@ -981,13 +981,17 @@ if (!function_exists('initialize_gates')) {
             return true;
         });
 
+        // CHANGELOG
         Gate::define('logs.module.list', function ($user, Module $module) {
             return $user->hasRole(studly_case($module->name . 'Manager'));
         });
 
-        // CHANGELOG
         Gate::define('logs.index', function ($user) {
             return $user->hasRole('ChangelogManager');
+        });
+
+        Gate::define('logs.user.list', function ($user) {
+            return true;
         });
     }
 }

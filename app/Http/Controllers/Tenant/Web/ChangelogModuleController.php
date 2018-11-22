@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\Incidents\ListChangelog;
-use App\Http\Requests\Incidents\ListModuleChangelog;
+use App\Http\Requests\Changelog\ListModuleChangelog;
 use App\Models\Log;
 use App\Models\Module;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 /**
  * Class ChangelogModuleController.

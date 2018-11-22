@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Incidents;
+namespace App\Http\Requests\Changelog;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListModuleChangelog
+ * Class ListModuleChangelog.
+ *
  * @package App\Http\Requests
  */
 class ListModuleChangelog extends FormRequest

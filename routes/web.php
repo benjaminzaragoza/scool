@@ -144,6 +144,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             //Changelog
             Route::get('/changelog','Tenant\Web\ChangelogController@index');
             Route::get('/changelog/module/{module}','Tenant\Web\ChangelogModuleController@index');
+            Route::get('/changelog/user/{user}','Tenant\Web\ChangelogUserController@index');
         });
     });
 

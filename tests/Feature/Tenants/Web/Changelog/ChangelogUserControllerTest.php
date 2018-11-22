@@ -36,20 +36,15 @@ class ChangelogUserControllerTest extends BaseTenantTest
     /** @test */
     public function show_changelog_for_an_specific_user()
     {
+        $this->withoutExceptionHandling();
         $logs = sample_logs();
 
-        Module::firstOrCreate([
-            'name' => 'incidents',
-        ]);
         $user = factory(User::class)->create();
-        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $user->assignRole($role);
         $this->actingAs($user);
-        $response = $this->get('/changelog/module/incidents');
+        $response = $this->get('/changelog/user/' . $user->id);
         $response->assertSuccessful();
 
-        $response->assertViewIs('tenants.changelog.modules.index');
+        $response->assertViewIs('tenants.changelog.users.index');
         $response->assertViewHas('logs', function ($returnedLogs) use ($logs) {
             return
                 $returnedLogs[0]['user']->name === $logs[0]['user']->name &&
@@ -64,39 +59,34 @@ class ChangelogUserControllerTest extends BaseTenantTest
                 count($returnedLogs) === 3;
         });
         $response->assertViewHas('users');
-        $response->assertViewHas('module', function ($module) {
-            return $module->name === 'incidents';
+        $response->assertViewHas('user', function ($returnedUser) use ($user) {
+            return $returnedUser->is($user);
         });
     }
 
     /** @test */
-    public function cannot_show_changelog_for_an_unexisting_module()
+    public function cannot_changelog_for_an_specific_user()
     {
         $user = factory(User::class)->create();
         $this->actingAs($user);
-        $response = $this->get('/changelog/module/nonexistingmodule');
+        $response = $this->get('/changelog/user/nonexistinguser');
         $response->assertStatus(404);
     }
 
     /** @test */
-    public function guest_cannot_show_changelog()
+    public function guest_changelog_for_an_specific_user()
     {
-        Module::firstOrCreate([
-            'name' => 'incidents',
-        ]);
-        $response = $this->get('/changelog/module/incidents');
+        $user = factory(User::class)->create();
+        $response = $this->get('/changelog/user/' . $user->id);
         $response->assertRedirect('/login');
     }
 
     /** @test */
-    public function regular_user_cannot_show_changelog()
+    public function regular_user_changelog_for_an_specific_user()
     {
-        Module::firstOrCreate([
-            'name' => 'incidents',
-        ]);
         $user = factory(User::class)->create();
         $this->actingAs($user);
-        $response = $this->get('/changelog/module/incidents');
+        $response = $this->get('/changelog/user/' . $user->id);
         $response->assertStatus(403);
     }
 }

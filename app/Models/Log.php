@@ -281,4 +281,17 @@ class Log extends Model
     {
         return $query->where('module_type', ucfirst($module));
     }
+
+    /**
+     * User scope.
+     *
+     * @param $query
+     * @param $module
+     * @return mixed
+     */
+    public function scopeFromUser($query, $user)
+    {
+        $user = is_object($user) ? $user->id : $user;
+        return $query->where('user_id', $user);
+    }
 }

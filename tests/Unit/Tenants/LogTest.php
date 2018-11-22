@@ -105,4 +105,20 @@ class LogTest extends TestCase
         sample_logs();
         $this->assertCount(3,Log::module('incidents')->get());
     }
+
+    /**
+     * @test
+     */
+    public function scopeUser()
+    {
+        $user = factory(User::class)->create();
+        $this->assertCount(0,Log::fromUser($user)->get());
+        $this->assertCount(0,Log::fromUser($user->id)->get());
+        sample_logs();
+        $this->assertCount(0,Log::fromUser($user)->get());
+        $this->assertCount(0,Log::fromUser($user->id)->get());
+        $user2 = User::findOrFail(2);
+        $this->assertCount(1,Log::fromUser($user2)->get());
+        $this->assertCount(1,Log::fromUser($user2->id)->get());
+    }
 }
