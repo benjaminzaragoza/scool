@@ -992,6 +992,10 @@ if (!function_exists('initialize_modules')) {
         Module::firstOrCreate([
             'name' => 'incidents',
         ]);
+
+        Module::firstOrCreate([
+            'name' => 'users',
+        ]);
     }
 }
 
