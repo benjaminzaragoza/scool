@@ -11,11 +11,11 @@ use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 
 /**
- * Class ChangelogModuleControllerTest.
+ * Class ChangelogUserControllerTest.
  *
  * @package Tests\Feature
  */
-class ChangelogModuleControllerTest extends BaseTenantTest
+class ChangelogUserControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
@@ -34,7 +34,7 @@ class ChangelogModuleControllerTest extends BaseTenantTest
     }
 
     /** @test */
-    public function show_changelog_for_an_specific_module()
+    public function show_changelog_for_an_specific_user()
     {
         $logs = sample_logs();
 

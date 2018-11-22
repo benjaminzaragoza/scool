@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Web\Api;
 
-use App\Models\Log;
 use App\Models\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
