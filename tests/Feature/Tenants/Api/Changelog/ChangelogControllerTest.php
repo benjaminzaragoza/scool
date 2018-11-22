@@ -45,6 +45,7 @@ class ChangelogControllerTest extends BaseTenantTest {
      */
     public function can_list_logs()
     {
+        $this->withoutExceptionHandling();
         $logs = sample_logs();
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');

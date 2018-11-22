@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Changelog;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\Incidents\ListChangelog;
-use App\Http\Requests\Incidents\ListModuleChangelog;
+use App\Http\Requests\Changelog\ListModuleChangelog;
 use App\Models\Log;
 use App\Models\Module;
 
