@@ -19,7 +19,7 @@ class ListUserChangelog extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('logs.user.list');
+        return Auth::user()->can('logs.user.list',$this->user);
     }
 
     /**

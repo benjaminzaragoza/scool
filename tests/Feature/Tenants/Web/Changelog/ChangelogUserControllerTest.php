@@ -39,7 +39,7 @@ class ChangelogUserControllerTest extends BaseTenantTest
         $this->withoutExceptionHandling();
         $logs = sample_logs();
 
-        $user = factory(User::class)->create();
+        $user = User::findOrFail(1);
         $this->actingAs($user);
         $response = $this->get('/changelog/user/' . $user->id);
         $response->assertSuccessful();
@@ -52,11 +52,7 @@ class ChangelogUserControllerTest extends BaseTenantTest
                 $returnedLogs[0]['action_type'] === 'update' &&
                 $returnedLogs[0]['text'] === "Ha creat la incidència TODO_LINK_INCIDENCIA" &&
                 $returnedLogs[0]['icon'] === 'home' &&
-                $returnedLogs[1]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
-                $returnedLogs[1]['action_type'] === 'update' &&
-                $returnedLogs[2]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
-                $returnedLogs[2]['action_type'] === 'update' &&
-                count($returnedLogs) === 3;
+                count($returnedLogs) === 1;
         });
         $response->assertViewHas('users');
         $response->assertViewHas('user', function ($returnedUser) use ($user) {
@@ -79,14 +75,5 @@ class ChangelogUserControllerTest extends BaseTenantTest
         $user = factory(User::class)->create();
         $response = $this->get('/changelog/user/' . $user->id);
         $response->assertRedirect('/login');
-    }
-
-    /** @test */
-    public function regular_user_changelog_for_an_specific_user()
-    {
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-        $response = $this->get('/changelog/user/' . $user->id);
-        $response->assertStatus(403);
     }
 }
