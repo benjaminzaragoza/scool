@@ -11,6 +11,7 @@
 |
 */
 
+use App\Models\Module;
 use App\Models\User;
 
 Route::bind('hashuser', function($value, $route)
@@ -19,6 +20,15 @@ Route::bind('hashuser', function($value, $route)
     $id = $hashids->decode($value)[0];
 
     return User::findOrFail($id);
+});
+
+// Allow Route Model Binding using module id or name
+Route::bind('module', function($value, $route)
+{
+    if (is_integer(intval($value)) && intval($value) > 0) return Module::findOrFail($value);
+    if (is_string($value)) {
+        return Module::where('name',$value)->firstOrFail();
+    }
 });
 
 //dump(config('app.domain'));
@@ -133,6 +143,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             //Changelog
             Route::get('/changelog','Tenant\Web\ChangelogController@index');
+            Route::get('/changelog/module/{module}','Tenant\Web\ChangelogModuleController@index');
         });
     });
 

@@ -2,18 +2,20 @@
 
 namespace Tests\Feature\Web\Api;
 
-use App\Models\Log;
+use App\Models\Module;
 use App\Models\User;
+use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 
 /**
- * Class ChangelogControllerTest.
+ * Class ChangelogModuleControllerTest.
  *
  * @package Tests\Feature
  */
-class ChangelogControllerTest extends BaseTenantTest
+class ChangelogModuleControllerTest extends BaseTenantTest
 {
     use RefreshDatabase;
 
@@ -32,13 +34,21 @@ class ChangelogControllerTest extends BaseTenantTest
     }
 
     /** @test */
-    public function show_changelog()
+    public function show_changelog_for_an_specific_module()
     {
         $logs = sample_logs();
+
+        Module::firstOrCreate([
+            'name' => 'incidents',
+        ]);
         $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
         $this->actingAs($user);
-        $response = $this->get('/changelog');
+        $response = $this->get('/changelog/module/incidents');
         $response->assertSuccessful();
+
         $response->assertViewIs('tenants.changelog.index');
         $response->assertViewHas('logs', function ($returnedLogs) use ($logs) {
             return
@@ -51,8 +61,39 @@ class ChangelogControllerTest extends BaseTenantTest
                 $returnedLogs[1]['action_type'] === 'update' &&
                 $returnedLogs[2]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
                 $returnedLogs[2]['action_type'] === 'update' &&
-                $returnedLogs[3]['text'] === "BLA BLA BLA";
+                count($returnedLogs) === 3;
         });
         $response->assertViewHas('users');
+    }
+
+    /** @test */
+    public function cannot_show_changelog_for_an_unexisting_module()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $response = $this->get('/changelog/module/nonexistingmodule');
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function guest_cannot_show_changelog()
+    {
+        Module::firstOrCreate([
+            'name' => 'incidents',
+        ]);
+        $response = $this->get('/changelog/module/incidents');
+        $response->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function regular_user_cannot_show_changelog()
+    {
+        Module::firstOrCreate([
+            'name' => 'incidents',
+        ]);
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $response = $this->get('/changelog/module/incidents');
+        $response->assertStatus(403);
     }
 }

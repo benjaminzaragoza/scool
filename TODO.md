@@ -1,7 +1,12 @@
 # DOCS
 
-- Crear un projecte amb els docs en format markdown que sigui copia de Laravel docs
+- [X] Crear un projecte amb els docs en format markdown que sigui copia de Laravel docs
+- [X] Crear un projecte amb la web que mostra els docs tipus laravel.com
 - A cada mòdul posar una icona help que porti a la documentació
+  - [X] Mòdul incidències
+- [ ] Adaptar tota la web de documentació de Laravel a scool.cat
+- [ ] Documentació Mòdul incidències
+  - [ ] El fitxer que hi ha ara és routing de Laravel -> posar docs propis  
 
 # Users management
 
@@ -92,6 +97,8 @@ Vista:
 - [ ] Filtres:
   - [ ] Filtrar per usuari
   - [ ] Filtrar per mòdul
+  - [ ] Poder accedir al mòdul Registre de Canvis directament a un apartat/filtre -> Per exemples canvis només d'un mòdul
+  - [ ] Authorizació i filtres: controlar a que pot i que no pot accedir els usuaris
 - [ ] Search: tipus datatables buscar qualsevol registre
 - [ ] Dos vistes? 
   - (últims canvis o rang de dates) amb timeline

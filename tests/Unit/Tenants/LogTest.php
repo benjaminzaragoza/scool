@@ -91,4 +91,18 @@ class LogTest extends TestCase
         $this->assertEquals('home',$mappedLog['icon']);
         $this->assertEquals('teal',$mappedLog['color']);
     }
+
+    /**
+     * @test
+     */
+    public function scopeModule()
+    {
+        $this->assertCount(0,Log::module('Incidents')->get());
+        sample_logs();
+        $this->assertCount(3,Log::module('Incidents')->get());
+        Log::truncate();
+        $this->assertCount(0,Log::module('incidents')->get());
+        sample_logs();
+        $this->assertCount(3,Log::module('incidents')->get());
+    }
 }

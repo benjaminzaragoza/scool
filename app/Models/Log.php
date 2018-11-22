@@ -269,4 +269,16 @@ class Log extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Module scope.
+     *
+     * @param $query
+     * @param $module
+     * @return mixed
+     */
+    public function scopeModule($query, $module)
+    {
+        return $query->where('module_type', ucfirst($module));
+    }
 }

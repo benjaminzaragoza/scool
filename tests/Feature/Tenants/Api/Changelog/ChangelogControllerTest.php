@@ -45,38 +45,9 @@ class ChangelogControllerTest extends BaseTenantTest {
      */
     public function can_list_logs()
     {
+        $logs = sample_logs();
         $user = factory(User::class)->create();
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
         $this->actingAs($user,'api');
-        $log1 = Log::create([
-            'text' => 'Ha creat la incidència TODO_LINK_INCIDENCIA',
-            'time' => Carbon::now(),
-            'action_type' => 'update',
-            'module_type' => 'Incidents',
-            'user_id' => $user1->id,
-            'icon' => 'home',
-            'color' => 'teal'
-        ]);
-        $log2 = Log::create([
-            'text' => 'Ha modificat la incidència TODO_LINK_INCIDENCIA',
-            'time' => Carbon::now(),
-            'action_type' => 'update',
-            'module_type' => 'Incidents',
-            'user_id' => $user2->id,
-            'icon' => 'home',
-            'color' => 'teal'
-        ]);
-        $log3 = Log::create([
-            'text' => 'Ha modificat la incidència TODO_LINK_INCIDENCIA',
-            'time' => Carbon::now(),
-            'action_type' => 'update',
-            'module_type' => 'Incidents',
-            'user_id' => $user2->id,
-            'icon' => 'home',
-            'color' => 'teal'
-        ]);
-        $logs = [$log1,$log2,$log3];
         $response =  $this->json('GET','/api/v1/changelog');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
