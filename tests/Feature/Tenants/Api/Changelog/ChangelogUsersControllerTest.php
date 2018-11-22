@@ -81,16 +81,4 @@ class ChangelogUserControllerTest extends BaseTenantTest {
         $response->assertStatus(401);
     }
 
-    /**
-     * @test
-     */
-    public function regular_user_cannot_list_logs_for_an_specific_user()
-    {
-        $user = factory(User::class)->create();
-        $this->actingAs($user,'api');
-
-        $response =  $this->json('GET','/api/v1/changelog/user/' . $user->id);
-        $response->assertStatus(403);
-    }
-
 }
