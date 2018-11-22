@@ -20,10 +20,10 @@
 <v-app id="app" v-cloak>
     <snackbar></snackbar>
     <v-navigation-drawer
-            fixed
-            clipped
-            app
             v-model="drawer"
+            fixed
+            app
+            clipped
     >
         <v-list dense>
             <template v-for="(item, i) in items">
@@ -97,8 +97,8 @@
         </div>
     </v-toolbar>
     <v-navigation-drawer
-            fixed
             v-model="drawerRight"
+            fixed
             right
             clipped
             app
