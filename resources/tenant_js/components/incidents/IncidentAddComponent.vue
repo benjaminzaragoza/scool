@@ -43,20 +43,31 @@
             </v-flex>
         </v-layout>
         </v-container>
-        <v-btn @click="add(false)"
-           id="add_incident_button"
-           color="teal"
-           class="white--text"
-           :loading="adding"
-           :disabled="adding"
-        >Afegir</v-btn>
-        <v-btn @click="add(true)"
-           id="add_and_close_incident_button"
-           color="primary"
-           class="white--text"
-           :loading="adding"
-           :disabled="adding"
-        >Afegir i tancar</v-btn>
+        <template v-if="$hasRole('IncidentsManager')">
+            <v-btn @click="add(false)"
+                   id="add_incident_button"
+                   color="teal"
+                   class="white--text"
+                   :loading="adding"
+                   :disabled="adding"
+            >Afegir</v-btn>
+            <v-btn @click="add(true)"
+                   id="add_and_close_incident_button"
+                   color="primary"
+                   class="white--text"
+                   :loading="adding"
+                   :disabled="adding"
+            >Afegir i tancar</v-btn>
+        </template>
+        <template v-else>
+            <v-btn @click="add(true)"
+                   id="add_and_close_incident_button"
+                   color="primary"
+                   class="white--text"
+                   :loading="adding"
+                   :disabled="adding"
+            >Afegir</v-btn>
+        </template>
         <v-btn @click="close()"
                id="close_button"
                color="error"
