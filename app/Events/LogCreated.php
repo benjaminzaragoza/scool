@@ -41,11 +41,12 @@ class LogCreated implements ShouldBroadcast
     {
         $channels = collect([]);
         $channels->push(new PrivateChannel('App.Log'));
-        // TODO ALSO BROADCAST ON CHANNEL BY MODULE in MODULE ASSOCIATED TO ENTRY LOG
-        // 'App.Log.ModuleName' -> 'App.Log.Incidents'
-
-        // TODO ALSO BROADCAST ON CHANNEL BY USER in user ASSOCIATED TO ENTRY LOG
-        // 'App.Log.user.id' -> 'App.Log.user.1'
+        if ($this->log->module_type) {
+            $channels->push(new PrivateChannel('App.Log.Module.' . studly_case($this->log->module_type)));
+        }
+        if ($this->log->user_id) {
+            $channels->push(new PrivateChannel('App.Log.User.' . $this->log->user_id));
+        }
         return $channels;
     }
 }
