@@ -25,7 +25,7 @@ class ChangelogUserController extends Controller
      */
     public function index(ListUserChangelog $request, $tenant, User $user)
     {
-        $logs = map_collection(Log::with('user')->fromUser(Auth::user())->get());
+        $logs = map_collection(Log::with('user')->fromUser($user)->get());
         $users = User::all();
         return view('tenants.changelog.users.index', compact('logs','users','user'));
     }
