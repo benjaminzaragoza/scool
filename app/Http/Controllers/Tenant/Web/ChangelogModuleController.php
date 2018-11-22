@@ -28,6 +28,6 @@ class ChangelogModuleController extends Controller
     {
         $logs = map_collection(Log::with('user')->module($module->name)->get());
         $users = User::all();
-        return view('tenants.changelog.index', compact('logs','users'));
+        return view('tenants.changelog.modules.index', compact('logs','users','module'));
     }
 }

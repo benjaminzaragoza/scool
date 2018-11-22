@@ -47,6 +47,6 @@ class LogCreated implements ShouldBroadcast
         if ($this->log->user_id) {
             $channels->push(new PrivateChannel('App.Log.User.' . $this->log->user_id));
         }
-        return $channels;
+        return $channels->toArray();
     }
 }

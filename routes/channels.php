@@ -19,19 +19,10 @@ Broadcast::channel('App.Log', function ($user) {
     return $user->can('logs.index');
 });
 
-Broadcast::channel('App.Log.Module.{module}', function ($user,$module) {
-    return $module;
+Broadcast::channel('App.Log.Module.{moduleName}', function ($user,$moduleName) {
+    return $user->can('logs.module.list',$moduleName);
 });
 
 Broadcast::channel('App.Log.User.{id}', function ($user,$id) {
     return (int) $user->id === (int) $id;
 });
-
-
-//if ($this->log->module_type) {
-//    $channels->push(new PrivateChannel('App.Log.Module.' . studly_case($this->log->module_type)));
-//}
-//if ($this->log->user_id) {
-//    $channels->push(new PrivateChannel('App.Log.User.' . $this->log->user_id));
-//}
-//return $channels;

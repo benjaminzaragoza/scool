@@ -18,7 +18,7 @@ class ListModuleChangelog extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('changelog.module.list',$this->module);
+        return Auth::user()->can('logs.module.list',$this->module);
     }
 
     /**

@@ -13,9 +13,8 @@
                         <v-list-tile-title>TODO 1 Exportar a CSV/Excel</v-list-tile-title>
                         <!-- TODO-->
                     </v-list-tile>
-                    <v-list-tile href="/jobs/sheet_substitutes" target="_blank">
-                        <v-list-tile-title>TODO 2 Mostrar historial incidències (registre de canvis)</v-list-tile-title>
-                        <!-- TODO-->
+                    <v-list-tile href="/changelog/module/incidents" target="_blank">
+                        <v-list-tile-title>Mostrar historial incidències (registre de canvis)</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
             </v-menu>

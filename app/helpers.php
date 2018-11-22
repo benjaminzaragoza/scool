@@ -643,7 +643,8 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'PhotoTeachersManager',
             'LessonsManager',
             'Incidents',
-            'IncidentsManager'
+            'IncidentsManager',
+            'ChangelogManager'
         ];
 
         // Manager
@@ -980,8 +981,13 @@ if (!function_exists('initialize_gates')) {
             return true;
         });
 
-        Gate::define('changelog.module.list', function ($user, Module $module) {
+        Gate::define('logs.module.list', function ($user, Module $module) {
             return $user->hasRole(studly_case($module->name . 'Manager'));
+        });
+
+        // CHANGELOG
+        Gate::define('logs.index', function ($user) {
+            return $user->hasRole('ChangelogManager');
         });
     }
 }

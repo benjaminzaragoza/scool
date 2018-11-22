@@ -2,7 +2,7 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
-                <changelog-list :users="users" :logs="logs"></changelog-list>
+                <changelog-list :refresh-url="refreshUrl" :return-url="returnUrl" :title="title" :channel="channel" :users="users" :logs="logs"></changelog-list>
             </v-flex>
         </v-layout>
     </v-container>
@@ -23,6 +23,22 @@ export default {
     users: {
       type: Array,
       required: true
+    },
+    channel: {
+      type: String,
+      default: 'App.Log'
+    },
+    title: {
+      type: String,
+      default: 'Registre de canvis'
+    },
+    returnUrl: {
+      type: String,
+      default: null
+    },
+    refreshUrl: {
+      type: String,
+      default: '/api/v1/changelog'
     }
   }
 }

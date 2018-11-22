@@ -11,8 +11,12 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
-            <v-toolbar-title class="white--text title">Registre de canvis</v-toolbar-title>
+            <v-toolbar-title class="white--text title" v-text="title"></v-toolbar-title>
             <v-spacer></v-spacer>
+
+            <v-btn v-if="returnUrl" icon class="white--text" :href="returnUrl" title="Torna al mòdul">
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
 
             <v-btn flat class="white--text" @click="realTime=!realTime" >
                 <span class="mr-1">Temps real</span> <v-icon v-if="realTime">check_box</v-icon><v-icon v-else>check_box_outline_blank</v-icon>
@@ -147,6 +151,22 @@ export default {
     users: {
       type: Array,
       required: true
+    },
+    channel: {
+      type: String,
+      default: 'App.Log'
+    },
+    title: {
+      type: String,
+      default: 'Registre de canvis'
+    },
+    returnUrl: {
+      type: String,
+      default: null
+    },
+    refreshUrl: {
+      type: String,
+      default: '/api/v1/changelog'
     }
   },
   computed: {
@@ -165,7 +185,7 @@ export default {
     },
     fetch () {
       this.refreshing = true
-      window.axios.get('/api/v1/changelog').then(response => {
+      window.axios.get(this.refreshUrl).then(response => {
         this.$snackbar.showMessage('Registre de canvis actualitzat correctament')
         this.dataLogs = response.data
         this.refreshing = false
@@ -175,13 +195,13 @@ export default {
       })
     },
     activeRealTime () {
-      window.Echo.private('App.Log')
+      window.Echo.private(this.channel)
         .listen('LogCreated', (e) => {
           this.dataLogs.push(e.log)
         })
     },
     disableRealTime () {
-      window.Echo.leave('App.Log')
+      window.Echo.leave(this.channel)
     }
   },
   created () {

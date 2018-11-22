@@ -36,6 +36,7 @@ class ChangelogModuleControllerTest extends BaseTenantTest
     /** @test */
     public function show_changelog_for_an_specific_module()
     {
+        $this->withoutExceptionHandling();
         $logs = sample_logs();
 
         Module::firstOrCreate([
@@ -49,7 +50,7 @@ class ChangelogModuleControllerTest extends BaseTenantTest
         $response = $this->get('/changelog/module/incidents');
         $response->assertSuccessful();
 
-        $response->assertViewIs('tenants.changelog.index');
+        $response->assertViewIs('tenants.changelog.modules.index');
         $response->assertViewHas('logs', function ($returnedLogs) use ($logs) {
             return
                 $returnedLogs[0]['user']->name === $logs[0]['user']->name &&
@@ -64,6 +65,9 @@ class ChangelogModuleControllerTest extends BaseTenantTest
                 count($returnedLogs) === 3;
         });
         $response->assertViewHas('users');
+        $response->assertViewHas('module', function ($module) {
+            return $module->name === 'incidents';
+        });
     }
 
     /** @test */
