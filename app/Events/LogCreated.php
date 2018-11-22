@@ -39,6 +39,13 @@ class LogCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('App.Log');
+        $channels = collect([]);
+        $channels->push(new PrivateChannel('App.Log'));
+        // TODO ALSO BROADCAST ON CHANNEL BY MODULE in MODULE ASSOCIATED TO ENTRY LOG
+        // 'App.Log.ModuleName' -> 'App.Log.Incidents'
+
+        // TODO ALSO BROADCAST ON CHANNEL BY USER in user ASSOCIATED TO ENTRY LOG
+        // 'App.Log.user.id' -> 'App.Log.user.1'
+        return $channels;
     }
 }
