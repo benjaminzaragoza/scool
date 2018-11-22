@@ -216,6 +216,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //Changelog
             Route::get('/changelog','Tenant\Api\Changelog\ChangelogController@index');
+            Route::get('/changelog/module/{module}','Tenant\Api\Changelog\ChangelogModuleController@index');
         });
 
         Route::group(['prefix' => 'v1'], function () {
