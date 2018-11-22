@@ -2,18 +2,10 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Events\Incidents\IncidentStored;
-use App\Mail\Incidents\IncidentCreated;
-use App\Mail\Incidents\IncidentDeleted;
-use App\Models\Incident;
-use App\Models\Log;
 use App\Models\Module;
 use App\Models\User;
-use Carbon\Carbon;
 use Config;
-use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mail;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;

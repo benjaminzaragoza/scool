@@ -15,7 +15,11 @@ use App\Models\Module;
 class ChangelogModuleController extends Controller
 {
     /**
-     * @param ListChangelog $request
+     * ListModuleChangelog.
+     *
+     * @param ListModuleChangelog $request
+     * @param $tenant
+     * @param Module $module
      * @return mixed
      */
     public function index(ListModuleChangelog $request, $tenant, Module $module)
