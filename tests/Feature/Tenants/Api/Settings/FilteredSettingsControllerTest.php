@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Settings;
 
+use App\Models\Module;
 use App\Models\Setting;
 use App\Models\User;
 use Tests\BaseTenantTest;
@@ -34,6 +35,7 @@ class FilteredSettingsControllerTest extends BaseTenantTest{
     /** @test */
     public function can_list_settings_for_an_specific_module()
     {
+        $this->withoutExceptionHandling();
         create_setting('incidents_setting1','VALUE1','ROLE1');
         create_setting('incidents_setting2','VALUE2','ROLE2');
         create_setting('incidents_setting3','VALUE3','ROLE3');
@@ -41,6 +43,9 @@ class FilteredSettingsControllerTest extends BaseTenantTest{
 
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
+        Module::firstOrCreate([
+            'name' => 'incidents',
+        ]);
         $response = $this->json('GET','/api/v1/settings/filter/incidents');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());

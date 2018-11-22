@@ -51,7 +51,7 @@ class ChangelogControllerTest extends BaseTenantTest {
         $response =  $this->json('GET','/api/v1/changelog');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertCount(3,$result);
+        $this->assertCount(4,$result);
 
         $this->assertEquals($logs[0]->id,$result[0]->id);
         $this->assertEquals($logs[0]->text,$result[0]->text);

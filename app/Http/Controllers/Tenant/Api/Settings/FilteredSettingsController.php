@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Module;
 use App\Models\Setting;
 use Cache;
 use Illuminate\Http\Request;
@@ -22,10 +23,10 @@ class FilteredSettingsController extends Controller
      * @param $module
      * @return Setting[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request, $tenant, $module)
+    public function index(Request $request, $tenant, Module $module)
     {
         return Setting::all()->filter(function ($setting) use ($module) {
-            return starts_with($setting->key, $module);
+            return starts_with($setting->key, $module->name);
         });
     }
 
