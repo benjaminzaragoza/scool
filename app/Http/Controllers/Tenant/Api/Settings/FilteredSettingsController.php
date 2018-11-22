@@ -37,10 +37,10 @@ class FilteredSettingsController extends Controller
      * @param $tenant
      * @param $module
      */
-    public function update(Request $request, $tenant, $module)
+    public function update(Request $request, $tenant, Module $module)
     {
         foreach ($request->settings as $settingKey => $settingValue) {
-            if (!starts_with($settingValue['key'],$module)) continue;
+            if (!starts_with($settingValue['key'],$module->name)) continue;
             if ($setting = Setting::where('key',$settingValue['key'])->first()) {
                 $setting->value = $settingValue['value'];
                 $setting->save();

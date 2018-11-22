@@ -64,6 +64,9 @@ class FilteredSettingsControllerTest extends BaseTenantTest{
     /** @test */
     public function can_update_all_module_settings()
     {
+        Module::firstOrCreate([
+            'name' => 'incidents',
+        ]);
         create_setting('incidents_setting1','VALUE1','ROLE1');
         create_setting('incidents_setting2','VALUE2','ROLE2');
         create_setting('incidents_setting3','VALUE3','ROLE3');

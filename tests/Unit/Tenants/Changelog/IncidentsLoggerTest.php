@@ -450,7 +450,7 @@ class IncidentsLoggerTest extends TestCase
             'name' => 'Pepe Pardo Jeans'
         ]));
         $event = new IncidentDesassigned($incident, $user);
-        IncidentLogger::incidentDessasigned($event);
+        IncidentLogger::incidentDesassigned($event);
         $log = Log::first();
         $this->assertEquals($log->text,'S\'ha desassignat l\'usuari <a target="_blank" href="/users/1">Pepe Pardo Jeans</a> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
