@@ -1,3 +1,13 @@
+# BUGS
+
+- php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
+
+# Laravel Passport
+
+- [ ] Les rutes de Laravel passport (Passport:routes() a boot method AuthServiceProvider) no estan dins middleware tenant
+      NO POT PASSAR MATEIX QUE AMB BROADCAST?
+   - [ ] Request->user() null amb peticions XHR i Laravel passport?   
+
 # DOCS
 
 - [X] Crear un projecte amb els docs en format markdown que sigui copia de Laravel docs
@@ -166,8 +176,8 @@ Changelog:
 - [X] S'ha eliminat una incidència
   
 BUGS:
-- [ ] L'autenticació de broadcast no funciona amb Impersonation pq el auth user és null
-  - [ ] Sembla que tampoc va sense impersonation
+- [X] L'autenticació de broadcast no funciona amb Impersonation pq el auth user és null -> SOLVED registering Routes inside tenant at web.php routes file
+  - [X] Sembla que tampoc va sense impersonation
 - [ ] Changelog i filtres i temps real
   - [X] Ara mateix filtro correctament al mostrar incidències per mòdul però si està activat temps real el canal escolta TOTES les incidències i mostra altres mòduls
   - [X] Oco amb el botó refresh que sempre refresca tots els logs independentment dels permisos -> TODO API

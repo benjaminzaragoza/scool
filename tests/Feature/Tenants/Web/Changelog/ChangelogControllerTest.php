@@ -3,8 +3,10 @@
 namespace Tests\Feature\Web\Api;
 
 use App\Models\User;
+use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 
 /**
@@ -35,6 +37,9 @@ class ChangelogControllerTest extends BaseTenantTest
     {
         $logs = sample_logs();
         $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'ChangelogManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
         $this->actingAs($user);
         $response = $this->get('/changelog');
         $response->assertSuccessful();
@@ -54,4 +59,21 @@ class ChangelogControllerTest extends BaseTenantTest
         });
         $response->assertViewHas('users');
     }
+
+    /** @test */
+    public function guest_cannot_show_changelog()
+    {
+        $response = $this->get('/changelog');
+        $response->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function regular_user_cannot_show_changelog()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $response = $this->get('/changelog');
+        $response->assertStatus(403);
+    }
+
 }

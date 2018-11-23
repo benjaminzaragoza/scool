@@ -3,7 +3,9 @@
 namespace Tests\Feature\Tenants\Api\Incidents;
 
 use App\Models\User;
+use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
 
@@ -37,7 +39,11 @@ class ChangelogControllerTest extends BaseTenantTest {
     {
         $logs = sample_logs();
         $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'ChangelogManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
         $this->actingAs($user,'api');
+
         $response =  $this->json('GET','/api/v1/changelog');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
@@ -59,4 +65,24 @@ class ChangelogControllerTest extends BaseTenantTest {
         $this->assertEquals($logs[0]->color, $result[0]->color);
     }
 
+
+    /**
+     * @test
+     */
+    public function guest_cannot_list_logs()
+    {
+        $response =  $this->json('GET','/api/v1/changelog');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
+    public function regular_user_cannot_list_logs()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+        $response =  $this->json('GET','/api/v1/changelog');
+        $response->assertStatus(403);
+    }
 }

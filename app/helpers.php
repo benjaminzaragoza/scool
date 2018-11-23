@@ -977,8 +977,7 @@ if (!function_exists('initialize_gates')) {
 
         // Changelog
         Gate::define('changelog.list', function ($user) {
-            // TODO
-            return true;
+            return $user->hasRole('ChangelogManager');
         });
 
         // CHANGELOG
@@ -1021,7 +1020,8 @@ if (!function_exists('initialize_menus')) {
         Menu::firstOrCreate([
             'icon' => 'build',
             'text' => 'Incidències',
-            'href' => '/incidents'
+            'href' => '/incidents',
+            'role' => 'Incidents'
         ]);
 
         Menu::firstOrCreate([
@@ -1097,7 +1097,8 @@ if (!function_exists('initialize_menus')) {
 
         Menu::firstOrCreate([
             'text' => 'Registre de canvis',
-            'href' => '/changelog'
+            'href' => '/changelog',
+            'role' => 'Changelogmanager'
         ]);
     }
 }
