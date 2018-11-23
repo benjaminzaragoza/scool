@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Requests\AddUser;
 use App\Http\Requests\DeleteUser;
 use App\Http\Requests\GetUser;
+use App\Http\Requests\ListUsersManagement;
 use App\Http\Requests\ShowUsersManagement;
 use App\Http\Resources\Tenant\UserTypesCollection;
 use App\Models\User;
@@ -57,10 +58,10 @@ class UsersController extends Controller
     /**
      * Show users.
      *
-     * @param ShowUsersManagement $request
+     * @param ListUsersManagement $request
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index(ShowUsersManagement $request)
+    public function index(ListUsersManagement $request)
     {
         return User::getUsers();
     }

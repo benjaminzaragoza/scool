@@ -184,7 +184,7 @@
                                     v-if="showDialog === false || showDialog === incident.id">
                                 <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
                             </fullscreen-dialog>
-                            <incident-close v-model="incident" v-if="$can('close',incident)" @toggle="refresh"></incident-close>
+                            <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
                     </tr>
@@ -255,7 +255,7 @@ export default {
       dataTags: this.tags,
       creator: null,
       assignee: null,
-      assignees: this.incidentUsers
+      assignees: this.managerUsers
     }
   },
   props: {

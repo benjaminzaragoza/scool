@@ -46,7 +46,7 @@
 
             <v-stepper-content step="3">
               <v-card color="grey lighten-5" class="mb-5">
-                  <incident-manager-users @loaded="loading = false" :manager-users="managerUsers" ></incident-manager-users>
+                  <incident-manager-users @loaded="loading = false" :manager-users="managerUsers" :incident-users="incidentUsers" ></incident-manager-users>
               </v-card>
               <v-btn color="primary" @click="step = 4">Continuar</v-btn>
               <v-btn flat @click="step = 2">Anterior</v-btn>

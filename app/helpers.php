@@ -693,6 +693,10 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager');
         });
 
+        Gate::define('list-users', function ($user) {
+            return $user->hasRole('UsersManager') || $user->hasRole('IncidentsManager');
+        });
+
         Gate::define('create_users', function ($user) {
             return $user->hasRole('UsersManager') || $user->hasRole('TeachersManager');
         });
@@ -967,12 +971,14 @@ if (!function_exists('initialize_gates')) {
 
         Gate::define('user.role.store', function ($user,$role) {
             return $user->hasRole('RolesManager') ||
-                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents');
+                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents') ||
+                ($user->hasRole('IncidentsManager') && $role->name === 'IncidentsManager');
         });
 
         Gate::define('user.role.destroy', function ($user,$role) {
             return $user->hasRole('RolesManager')  ||
-                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents');
+                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents') ||
+                ($user->hasRole('IncidentsManager') && $role->name === 'IncidentsManager');
         });
 
         // Changelog

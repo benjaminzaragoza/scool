@@ -109,6 +109,25 @@ class UserRoleControllerTest extends BaseTenantTest
     }
 
     /** @test */
+    public function incidents_manager_can_add_role_incidents_manager_to_users()
+    {
+        $manager = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager,'api');
+
+        $user = factory(User::class)->create();
+        $roleToAdd = Role::firstOrCreate(['name' => 'IncidentsManager', 'guard_name' => 'web']);
+        $this->assertFalse($user->hasRole($roleToAdd));
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/' . $roleToAdd->id);
+        $response->assertSuccessful();
+        $user = $user->fresh();
+        $this->assertTrue($user->hasRole($roleToAdd));
+    }
+
+    /** @test */
     public function incidents_manager_cannot_add_other_roles_to_users()
     {
         $manager = factory(User::class)->create();

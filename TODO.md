@@ -1,4 +1,14 @@
+# Permisos
+
+- [X] Usuaris IncidentsManager no poden tancar incidències dels altres usuaris
+- [X] Usuaris IncidentsManager no poden afegir usuaris al mòdul Incidències pq no mostra cap usuari el desplegable pq no són
+UsersManagers
+ - [ ] Mostra la llista d'usuaris però no permet afegir rol IncidentsManager (si Incidents)
+- [ ] Usuaris IncidentsManager no poden mostrar incidències (apareix blanc el dialeg show)
+  - [X] Se soluciona tenint els dos rols IncidentsManager i Incidents
+  
 # TODOS finals abans posar explotació
+
 - [ ] Treure botó de Login amb Facebook i Register amb Facebook
 - [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
 - [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)
@@ -24,7 +34,8 @@
 
 # BUGS
 
-- php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
+- [ ] No funciona Logout amb user Sergi TUr badenas?
+- [ ]php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
 
 # Laravel Passport
 
