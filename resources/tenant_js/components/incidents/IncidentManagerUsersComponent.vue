@@ -2,7 +2,7 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex md12>
-                <role-users @loaded="$emit('loaded')" role="Incident" :role-users="incidentUsers"></role-users>
+                <role-users @loaded="$emit('loaded')" role="IncidentsManager" :role-users="managerUsers"></role-users>
             </v-flex>
         </v-layout>
     </v-container>
@@ -11,12 +11,12 @@
 <script>
 import RoleUsersComponent from '../permissions/RoleUsersComponent'
 export default {
-  name: 'IncidentUsers',
+  name: 'IncidentManagerUsers',
   components: {
     'role-users': RoleUsersComponent
   },
   props: {
-    incidentUsers: {
+    managerUsers: {
       type: Array,
       required: false
     }

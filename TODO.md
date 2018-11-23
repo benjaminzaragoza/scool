@@ -1,3 +1,27 @@
+# TODOS finals abans posar explotació
+- [ ] Treure botó de Login amb Facebook i Register amb Facebook
+- [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
+- [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)
+ - [ ] Home Superadmin: deixar el que hi ha ara
+ - [ ] Home Profes:
+    - [ ] Mostrar missatge de confirmar email si encara no l'ha confirmat! 
+    - [ ] Incidències pendents de l'usuari?
+    - [ ] Notícies: Aplicació incidències
+    - [ ] Mostrar emails enviats a l'usuari? (Telescope ho fa fer algo similar)
+    - [ ] Mostrar registre de canvis de l'usuari
+- [ ] Icona/logo del centre
+- [ ] Colors del centre
+- [ ] Avatar s'enva fora de la Toolbar
+- [ ] No mostrar icona (campana) notificacions sinó funciona o no hi ha
+- [ ] FONT: Alguns titols surten tallats alguns caràcters com la g o la p (per la part baixa)
+- [ ] Welcome Page: adaptar al centre
+- [ ] DOCS Incidències: https://docs.scool.cat/docs/1.0/incidents
+- [ ] Acabar o no mostrar TODO estadístiques
+- [ ] Acabar o no mostrar TODO exportar a Excel
+- [ ] No mostrar Teacher profile o Acabar-lo
+- [ ] Boto de sortir al costat de l'Avatar que no calgui entrar?
+- [ ] Canviar email ara es pot fer OK -> però hauria de posar el email a no confirmat
+
 # BUGS
 
 - php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
@@ -151,6 +175,16 @@ SettingsServiceProvider:
 - [X] Component settings per a mòduls 
 
 # Incidents
+
+Settings:
+- [ ] TODO fer anar lo d'activar o no el mòdul
+  - [ ] Desactiu? Dos formes-> no mostrar o mostrar un missatge que està desactivat temporalment
+- [ ] Poder afegir usuaris Manager (IncidentsManager)
+   - [ ] ES poden indicar dos rols possibles per accedir al menú en comptes de un
+   - [ ] Els IncidentsManager també tenen rol Incidents  
+
+Etiquetes:
+- [ ] CRUD etiquetes per als managers
 
 Changelog d'una incidència a la vista Show:
 - [ ] Barrejar els comentaris i les accions com far Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència

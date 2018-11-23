@@ -2,19 +2,19 @@
     <v-dialog v-model="showResetPassword" persistent max-width="500px">
         <v-card>
             <v-card-title>
-                <span class="headline">Reset password</span>
+                <span class="headline">Canviar la paraula de pas</span>
             </v-card-title>
             <v-card-text>
                 <v-form v-model="valid" ref="resetPasswordForm">
                     <v-text-field
-                            label="Email"
+                            label="Correu electrònic"
                             v-model="internalEmail"
                             :rules="emailRules"
                             required
                     ></v-text-field>
                     <v-text-field
                             name="password"
-                            label="Password"
+                            label="Paraula de pas"
                             v-model="password"
                             :rules="passwordRules"
                             hint="At least 6 characters"
@@ -24,7 +24,7 @@
                     ></v-text-field>
                     <v-text-field
                             name="passwordConfirmation"
-                            label="Password confirmation"
+                            label="Confirmació de la paraula de pas"
                             v-model="passwordConfirmation"
                             :rules="passwordRules"
                             hint="At least 6 characters"
@@ -36,7 +36,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="showResetPassword = false">Close</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="showResetPassword = false">Tancar</v-btn>
                 <v-btn
                         :loading="loading"
                         flat
@@ -45,8 +45,8 @@
                 >
                     <v-icon v-if="done">done</v-icon>
                     &nbsp;
-                    <template v-if="!done">Reset</template>
-                    <template v-else>Done</template>
+                    <template v-if="!done">Canviar</template>
+                    <template v-else>Fet</template>
                 </v-btn>
             </v-card-actions>
         </v-card>

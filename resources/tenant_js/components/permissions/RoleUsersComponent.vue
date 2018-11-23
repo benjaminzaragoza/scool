@@ -76,7 +76,7 @@
                     <v-btn flat @click.native="addDialog = false">
                         <v-icon >close</v-icon> Cancel·lar
                     </v-btn>
-                    <v-btn @click.native="add" :loading="adding" :disabled="adding">
+                    <v-btn @click.native="add" :loading="adding" :disabled="adding" color="primary">
                         <v-icon>add</v-icon> Afegir
                     </v-btn>
                 </v-card-text>
@@ -130,7 +130,7 @@ export default {
     },
     add () {
       this.adding = true
-      window.axios.post('/api/v1/user/' + this.newUser.id + '/role/Incidents', {}).then(() => {
+      window.axios.post('/api/v1/user/' + this.newUser.id + '/role/' + this.role, {}).then(() => {
         this.adding = false
         this.dataRoleUsers.push(this.newUser)
         this.$snackbar.showMessage("S'ha afegit correctament el rol a l'usuari")
@@ -143,7 +143,7 @@ export default {
     },
     remove (user) {
       this.removing = true
-      window.axios.delete('/api/v1/user/' + user.id + '/role/Incidents').then(() => {
+      window.axios.delete('/api/v1/user/' + user.id + '/role/' + this.role).then(() => {
         this.removing = false
         this.dataRoleUsers.splice(this.dataRoleUsers.indexOf(user), 1)
         this.$snackbar.showMessage("S'ha tret correctament el rol a l'usuari")
@@ -161,7 +161,7 @@ export default {
       })
     },
     fetchRoleUsers () {
-      window.axios.get('/api/v1/role/Incidents/users').then(response => {
+      window.axios.get('/api/v1/role/' + this.role + '/users').then(response => {
         this.dataRoleUsers = response.data
         this.$emit('loaded')
       }).catch(error => {

@@ -50,6 +50,7 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertViewIs('tenants.incidents.index');
         $response->assertViewHas('incidents');
         $response->assertViewHas('incident_users');
+        $response->assertViewHas('manager_users');
         $response->assertViewHas('tags');
     }
 

@@ -16,7 +16,7 @@
                     ></v-text-field>
                 </v-form>
                 <a href="/login" color="blue darken-2">
-                    Login
+                    Entrar
                 </a> &nbsp; |
                 <a href="/register" color="blue darken-2">
                     Registrar-se

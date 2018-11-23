@@ -27,8 +27,9 @@ class IncidentsController extends Controller{
     {
         $incidents = Incident::getIncidents();
         $incident_users = Incident::usersWithIncidentsRoles();
+        $manager_users = Incident::userWithRoleIncidentsManager();
         $tags = IncidentTag::all();
-        return view('tenants.incidents.index',compact('incidents','incident_users','tags'));
+        return view('tenants.incidents.index',compact('incidents','incident_users','manager_users', 'tags'));
     }
 
     /**
@@ -41,8 +42,9 @@ class IncidentsController extends Controller{
     {
         $incidents = Incident::getIncidents();
         $incident_users = Incident::usersWithIncidentsRoles();
+        $manager_users = Incident::userWithRoleIncidentsManager();
         $tags = IncidentTag::all();
         event(new IncidentShowed($incident));
-        return view('tenants.incidents.index',compact(['incidents','incident','incident_users','tags']));
+        return view('tenants.incidents.index',compact(['incidents','incident','incident_users','manager_users','tags']));
     }
 }
