@@ -166,10 +166,12 @@ Changelog:
 - [X] S'ha eliminat una incidència
   
 BUGS:
+- [ ] L'autenticació de broadcast no funciona amb Impersonation pq el auth user és null
+  - [ ] Sembla que tampoc va sense impersonation
 - [ ] Changelog i filtres i temps real
   - [X] Ara mateix filtro correctament al mostrar incidències per mòdul però si està activat temps real el canal escolta TOTES les incidències i mostra altres mòduls
   - [X] Oco amb el botó refresh que sempre refresca tots els logs independentment dels permisos -> TODO API
-  - [ ] La llista de logs d'un usuari concret no funciona temps real pq no es registra bé el canal privat (dona error 403 to i ser superadmin)
+  - [X] La llista de logs d'un usuari concret no funciona temps real pq no es registra bé el canal privat (dona error 403 to i ser superadmin)
 - [X] Treure el botó Afegir (i deixar només afegir i tancar però només amb text Afegir) per als usuaris que no siguin managers.
 - [ ] Al visitar: https://iesebre.scool.test/incidents/1 The data content of this event exceeds the allowed maximum (10240 bytes). See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
 - [X] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar

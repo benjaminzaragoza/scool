@@ -23,6 +23,6 @@ Broadcast::channel('App.Log.Module.{moduleName}', function ($user,$moduleName) {
     return $user->can('logs.module.list',$moduleName);
 });
 
-Broadcast::channel('App.Log.User.{id}', function ($user,$id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('App.Log.User.{id}', function ($loggedUser,$id) {
+    return $loggedUser->can('logs.user.list', $id);
 });

@@ -991,7 +991,8 @@ if (!function_exists('initialize_gates')) {
         });
 
         Gate::define('logs.user.list', function ($loggedUser, $user) {
-            return (int) $loggedUser->id === (int) $user->id;
+            $user = is_object($user) ? $user->id : $user;
+            return (int) $loggedUser->id === (int) $user || $loggedUser->hasRole('ChangelogManager');
         });
     }
 }

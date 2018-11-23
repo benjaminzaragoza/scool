@@ -104,12 +104,12 @@
             app
     >
         <v-card>
-            <v-container fluid grid-list-md class="grey lighten-4">
+            <v-container fluid grid-list-xs class="grey lighten-4">
                 <v-layout row wrap>
-                    <v-flex xs12>
+                    <v-flex xs5>
                         <gravatar :user="{{ Auth::user() }}" size="100px"></gravatar>
                     </v-flex>
-                    <v-flex xs12>
+                    <v-flex xs7>
                         <h3>@{{  user.name }}</h3>
                         <a href="https://en.gravatar.com/connect/">Canviar Avatar</a>
                     </v-flex>
@@ -150,12 +150,17 @@
             </v-card-actions>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn :loading="changingPassword" flat color="red" @click="changePassword">Canviar Password</v-btn>
+                <v-btn :loading="changingPassword" flat color="red" @click="changePassword" class="mb-0">Canviar Password</v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
             <v-card-actions v-show="!isEmailVerified">
                 <v-spacer></v-spacer>
                 <v-btn :loading="confirmingEmail" flat @click="confirmEmail">Confirmar email</v-btn>
+                <v-spacer></v-spacer>
+            </v-card-actions>
+            <v-card-actions v-show="!isEmailVerified">
+                <v-spacer></v-spacer>
+                <v-btn flat href="/changelog/user/{{Auth::user()->id}}" target="_blank">Registre de canvis</v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
@@ -190,7 +195,7 @@
                             @endCanImpersonate
                             @impersonating
                             {{ Auth::user()->impersonatedBy()->name }} està suplantant {{ Auth::user()->name }}
-                            <a href="impersonate/leave">Abandonar la suplantació</a>
+                            <a href="/impersonate/leave">Abandonar la suplantació</a>
                             @endImpersonating
                         </v-flex>
                     </v-layout>

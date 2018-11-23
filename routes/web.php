@@ -13,6 +13,7 @@
 
 use App\Models\Module;
 use App\Models\User;
+use Illuminate\Broadcasting\BroadcastController;
 
 Route::bind('hashuser', function($value, $route)
 {
@@ -35,6 +36,17 @@ Route::bind('module', function($value, $route)
 
 Route::domain('{tenant}.' . config('app.domain'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {
+
+//        $this->app['router']->group($attributes, function ($router) {
+//            $router->match(
+//                ['get', 'post'], '/broadcasting/auth',
+//                '\\'.BroadcastController::class.'@authenticate'
+//            );
+//        });
+        // Copied from Illuminate\Broadcasting\BroadcastManager method routes - Broadcast::routes()
+        Route::get('/broadcasting/auth', '\\'.BroadcastController::class.'@authenticate');
+        Route::post('/broadcasting/auth', '\\'.BroadcastController::class.'@authenticate');
+
 
         // Taken from Illuminate\Routing\Router
         // Authentication Routes...
