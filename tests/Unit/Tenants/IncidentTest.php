@@ -173,7 +173,12 @@ class IncidentTest extends TestCase
         $this->assertNotNull($mappedIncident['formatted_closed_at']);
         $this->assertNotNull($mappedIncident['closed_at_timestamp']);
         $this->assertEquals($mappedIncident['closed_by'], $user->id);
-        $this->assertTrue($mappedIncident['closer']->is($user));
+
+
+        $this->assertEquals($mappedIncident['closer_id'], $user->id);
+        $this->assertEquals($mappedIncident['closer_name'], $user->name);
+        $this->assertEquals($mappedIncident['closer_email'], $user->email);
+        $this->assertEquals($mappedIncident['closer_hashid'], $user->hash_id);
 
         // TAGS
         $tag1 = IncidentTag::create([
