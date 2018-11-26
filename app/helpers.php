@@ -999,6 +999,14 @@ if (!function_exists('initialize_gates')) {
             $user = is_object($user) ? $user->id : $user;
             return (int) $loggedUser->id === (int) $user || $loggedUser->hasRole('ChangelogManager');
         });
+
+        Gate::define('logs.loggable.list', function ($user, $loggable) {
+            if ($loggable->user_id) return (int) $user->id === (int) $loggable->user_id;
+            if($loggable->managerRole()) return $user->hasRole($loggable->managerRole());
+            return false;
+        });
+
+
     }
 }
 
@@ -8351,11 +8359,20 @@ if (! function_exists('sample_logs')) {
     {
         $user1 = factory(User::class)->create();
         $user2 = factory(User::class)->create();
+
+        $incident = Incident::create([
+            'subject' => 'No va res Aula 12',
+            'description' => 'Bla bla bla'
+        ]);
+        $incident->assignUser($user1);
+
         $log1 = Log::create([
             'text' => 'Ha creat la incidència TODO_LINK_INCIDENCIA',
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
             'user_id' => $user1->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8365,6 +8382,8 @@ if (! function_exists('sample_logs')) {
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
+            'loggable_id' => 1,
+            'loggable_type' => Incident::class,
             'user_id' => $user2->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8374,6 +8393,8 @@ if (! function_exists('sample_logs')) {
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
+            'loggable_id' => 1,
+            'loggable_type' => Incident::class,
             'user_id' => $user2->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8383,6 +8404,8 @@ if (! function_exists('sample_logs')) {
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'OtherModule',
+            'loggable_id' => 1,
+            'loggable_type' => User::class,
             'user_id' => $user2->id,
             'icon' => 'home',
             'color' => 'teal'

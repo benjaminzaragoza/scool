@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
-
+use App\Models\Log as Changelog;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +23,16 @@ Route::bind('role', function($value, $route)
         return Role::where('name',$value)->firstOrFail();
     }
     throw new RoleDoesNotExist(var_export($value,true));
+});
+
+Route::bind('loggable', function($value, $route)
+{
+    if (array_key_exists('loggableId',$route->parameters)) {
+        if ($loggableClass = Changelog::getLoggableByApiURI($value)) {
+            return $loggableClass::findOrFail($route->parameters['loggableId']);
+        }
+    }
+    abort(404,"No s'ha trobat cap recurs amb aquesta classe o id");
 });
 
 Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
@@ -218,6 +228,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/changelog','Tenant\Api\Changelog\ChangelogController@index');
             Route::get('/changelog/module/{module}','Tenant\Api\Changelog\ChangelogModuleController@index');
             Route::get('/changelog/user/{user}','Tenant\Api\Changelog\ChangelogUserController@index');
+            Route::get('/changelog/loggable/{loggable}/{loggableId}','Tenant\Api\Changelog\ChangelogLoggableController@index');
         });
 
         Route::group(['prefix' => 'v1'], function () {

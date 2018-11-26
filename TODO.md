@@ -1,3 +1,9 @@
+# Gestió de versions
+
+- [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
+  - [ ] Mostrar a tots els usuaris la versió
+  - [ ] MOstrar el commit de github amb link a Github i data del commit
+
 # Permisos
 
 - [X] Usuaris IncidentsManager no poden tancar incidències dels altres usuaris
@@ -9,6 +15,10 @@ UsersManagers
   
 # TODOS finals abans posar explotació
 
+- [ ] Some continuos integration
+- [ ] Activar a explotació les cuas
+  - [ ] Activar alguna eina per saber com funcionen les cues i estar alerta possibles errors
+  - [ ] https://laravel.com/docs/5.7/horizon
 - [ ] Treure botó de Login amb Facebook i Register amb Facebook
 - [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
 - [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)

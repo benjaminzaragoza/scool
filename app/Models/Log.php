@@ -294,4 +294,32 @@ class Log extends Model
         $user = is_object($user) ? $user->id : $user;
         return $query->where('user_id', $user);
     }
+
+    /**
+     * Loggable scope.
+     *
+     * @param $query
+     * @param $module
+     * @return mixed
+     */
+    public function scopeFromLoggable($query, $logabble)
+    {
+        return $query->where('loggable_id', $logabble->id)->where('loggable_type', get_class($logabble));
+    }
+
+    /**
+     * getLoggableByApiURI.
+     *
+     * @param $uri
+     * @return null|string
+     */
+    public static function getLoggableByApiURI($uri)
+    {
+        switch ($uri) {
+            case 'incidents':
+                return Incident::class;
+            default:
+                return null;
+        }
+    }
 }

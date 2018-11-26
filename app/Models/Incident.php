@@ -19,6 +19,8 @@ class Incident extends Model
 {
     use FormattedDates, ApiURI;
 
+    const MANAGER_ROLE = 'IncidentsManager';
+
     protected $guarded = ['user_id'];
 
     /**
@@ -31,6 +33,15 @@ class Incident extends Model
         'updated_at',
         'closed_at'
     ];
+
+    /**
+     * managerRole.
+     *
+     * @return string
+     */
+    public function managerRole() {
+        return self::MANAGER_ROLE;
+    }
 
     /**
      * Assign user.
@@ -259,7 +270,7 @@ class Incident extends Model
     public static function userWithRoleIncidentsManager()
     {
         try {
-            return User::role('IncidentsManager')->get();
+            return User::role(self::MANAGER_ROLE)->get();
         } catch (RoleDoesNotExist $e) {
             return collect([]);
         }
@@ -271,7 +282,7 @@ class Incident extends Model
     public static function usersWithIncidentsRoles()
     {
         try {
-            return User::role(['IncidentsManager','Incidents'])->get();
+            return User::role([self::MANAGER_ROLE,'Incidents'])->get();
         } catch (RoleDoesNotExist $e) {
             return collect([]);
         }
