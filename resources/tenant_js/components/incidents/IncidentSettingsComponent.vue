@@ -17,7 +17,7 @@
             <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
             <v-stepper-step :complete="step > 1" step="1">
               Activació del mòdul
-              <small>En aquest apartat podeu activar o desactiva el mòdul d'incidències</small>
+              <small>En aquest apartat podeu activar o desactivar el mòdul d'incidències</small>
             </v-stepper-step>
 
             <v-stepper-content step="1">
@@ -36,20 +36,30 @@
 
             <v-stepper-content step="2">
               <v-card color="grey lighten-5" class="mb-5">
-                  <incident-users @loaded="loading = false" ></incident-users>
+                  <incident-users @loaded="loading = false" :incident-users="incidentUsers" ></incident-users>
               </v-card>
               <v-btn color="primary" @click="step = 3">Continuar</v-btn>
               <v-btn flat @click="step = 1">Anterior</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step :complete="step > 3" step="3">Configuració del mòdul</v-stepper-step>
+            <v-stepper-step :complete="step > 3" step="3">Administradors</v-stepper-step>
 
             <v-stepper-content step="3">
+              <v-card color="grey lighten-5" class="mb-5">
+                  <incident-manager-users @loaded="loading = false" :manager-users="managerUsers" :incident-users="incidentUsers" ></incident-manager-users>
+              </v-card>
+              <v-btn color="primary" @click="step = 4">Continuar</v-btn>
+              <v-btn flat @click="step = 2">Anterior</v-btn>
+            </v-stepper-content>
+
+            <v-stepper-step :complete="step > 4" step="4">Configuració del mòdul</v-stepper-step>
+
+            <v-stepper-content step="4">
               <v-card color="grey lighten-5" class="mb-5" height="200px">
                  <settings module="incidents" @close="settingsDialog = false" title="Prova"></settings>
               </v-card>
               <v-btn color="primary" @click.native="$emit('close')"><v-icon right dark class="mr-1">exit_to_app</v-icon> Finalitzar</v-btn>
-              <v-btn flat @click="step = 2">Anterior</v-btn>
+              <v-btn flat @click="step = 3">Anterior</v-btn>
             </v-stepper-content>
         </v-stepper>
     </span>
@@ -58,12 +68,14 @@
 <script>
 import SettingsComponent from '../ui/SettingsComponent'
 import IncidentUsersComponent from './IncidentUsersComponent'
+import IncidentManagerUsersComponent from './IncidentManagerUsersComponent'
 
 export default {
   name: 'IncidentSettings',
   components: {
     'settings': SettingsComponent,
-    'incident-users': IncidentUsersComponent
+    'incident-users': IncidentUsersComponent,
+    'incident-manager-users': IncidentManagerUsersComponent
   },
   data () {
     return {
@@ -76,6 +88,14 @@ export default {
     title: {
       type: String,
       default: "Configuració mòdul d'incidències"
+    },
+    incidentUsers: {
+      type: Array,
+      required: true
+    },
+    managerUsers: {
+      type: Array,
+      required: true
     }
   }
 }

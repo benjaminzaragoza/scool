@@ -32,10 +32,6 @@ $assignees= implode(collect($mappedIncident['assignees'])->pluck('name')->toArra
 - **Etiquetes**: {{ $tags }}
 - **Assignada a**: {{ $assignees }}
 
-@component('mail::button', ['url' => config('app.url') . '/'. $mappedIncident['api_uri'] . '/' . $incident->id])
-Vegeu la incidència
-@endcomponent
-
 # Descripció
 
 {{ $incident->description }}

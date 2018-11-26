@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Events\Incidents\IncidentReplyAdded;
+use App\Events\Incidents\IncidentReplyRemoved;
+use App\Events\Incidents\IncidentReplyUpdated;
 use App\Http\Requests\Incidents\DestroyIncidentReplies;
 use App\Http\Requests\Incidents\ListIncidentReplies;
 use App\Http\Requests\Incidents\StoreIncidentReplies;
 use App\Http\Requests\Incidents\UpdateIncidentReplies;
-use App\Mail\Incidents\IncidentCommentAdded;
 use App\Models\Incident;
 use App\Models\Reply;
-use App\Models\Setting;
 use Auth;
-use Mail;
 
 /**
  * Class IncidentRepliesController.
@@ -32,6 +32,8 @@ class IncidentRepliesController
     }
 
     /**
+     * Store.
+     *
      * @param StoreIncidentReplies $request
      * @param $tenant
      * @param Incident $incident
@@ -44,7 +46,9 @@ class IncidentRepliesController
             'user_id' => Auth::user()->id
         ]);
         $incident->addReply($reply);
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCommentAdded($incident));
+
+        event(new IncidentReplyAdded($incident,$reply));
+
         return $reply->map();
     }
 
@@ -58,8 +62,10 @@ class IncidentRepliesController
      */
     public function update(UpdateIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
     {
+        $oldReply = clone($reply);
         $reply->body = $request->body;
         $reply->save();
+        event(new IncidentReplyUpdated($incident,$reply, $oldReply));
         return $reply;
     }
 
@@ -73,7 +79,9 @@ class IncidentRepliesController
      */
     public function destroy(DestroyIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
     {
+        $oldReply = clone($reply);
         $reply->delete();
+        event(new IncidentReplyRemoved($incident,$oldReply));
         return $reply;
     }
 }

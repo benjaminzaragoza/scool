@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Events\Incidents\IncidentShowed;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
@@ -42,12 +44,13 @@ class IncidentsControllerTest extends BaseTenantTest {
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);
         $user->assignRole($role);
-        $this->actingAs($user,'api');
+        $this->actingAs($user);
         $response = $this->get('/incidents');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.incidents.index');
         $response->assertViewHas('incidents');
         $response->assertViewHas('incident_users');
+        $response->assertViewHas('manager_users');
         $response->assertViewHas('tags');
     }
 
@@ -89,8 +92,12 @@ class IncidentsControllerTest extends BaseTenantTest {
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
+        Event::fake();
         $response = $this->get('/incidents/' . $incident->id);
         $response->assertSuccessful();
+        Event::assertDispatched(IncidentShowed::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
+        });
         $response->assertViewIs('tenants.incidents.index');
         $response->assertViewHas('incidents');
         $response->assertViewHas('incident');

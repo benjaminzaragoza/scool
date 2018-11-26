@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Mail\Incidents\IncidentAssigned;
-use App\Mail\Incidents\IncidentDesassigned;
+use App\Events\Incidents\IncidentAssigned;
+use App\Events\Incidents\IncidentDesassigned;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
-use Mail;
+use Event;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -50,12 +50,12 @@ class AssigneesControllerTest extends BaseTenantTest{
         ]);
         $assignee = factory(User::class)->create();
         $this->assertCount(0,$incident->assignees);
-        Mail::fake();
-        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Event::fake();
+
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/assignees/' . $assignee-> id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentAssigned::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentAssigned::class,function ($event) use ($incident, $assignee){
+            return $event->incident->is($incident) && $event->user->is($assignee);
         });
         $incident = $incident->fresh();
         $this->assertCount(1,$incident->assignees);
@@ -112,12 +112,11 @@ class AssigneesControllerTest extends BaseTenantTest{
         $assignee = factory(User::class)->create();
         $incident->addAssignee($assignee);
         $this->assertCount(1,$incident->assignees);
-        Mail::fake();
-        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Event::fake();
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/assignees/' . $assignee-> id);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentDesassigned::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentDesassigned::class,function ($event) use ($incident, $assignee){
+            return $event->incident->is($incident) && $event->user->is($assignee);
         });
         $incident = $incident->fresh();
         $this->assertCount(0,$incident->assignees);

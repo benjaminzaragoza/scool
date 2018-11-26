@@ -92,9 +92,19 @@ class Incident extends Model
             'api_uri' => $this->api_uri,
             'comments' => map_collection($this->comments),
             'tags' => map_collection($this->tags),
-            'assignees' => map_collection($this->assignees)
+            'assignees' => map_collection($this->assignees),
+            'changelog' => map_collection($this->changelog)
         ];
     }
+
+    /**
+     * Get all changes associated to loggable Incident (changelog).
+     */
+    public function changelog()
+    {
+        return $this->morphMany(Log::class, 'loggable');
+    }
+
 
     /**
      * Get incidents.
@@ -114,7 +124,7 @@ class Incident extends Model
     public function close()
     {
         $this->closed_at = Carbon::now();
-        $this->closed_by = Auth::user()->id;
+        $this->closed_by = optional(Auth::user())->id;
         $this->save();
         return $this;
     }
@@ -273,5 +283,12 @@ class Incident extends Model
     public function closer()
     {
         return $this->belongsTo(User::class,'closed_by');
+    }
+
+    /**
+     * @return string
+     */
+    public function link() {
+        return '<a target="_blank" href="/' . $this->apiURI . '/' . $this->id . '">' . $this->subject . '</a>';
     }
 }

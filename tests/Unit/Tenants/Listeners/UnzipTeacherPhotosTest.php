@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Tenants\Listeners;
 
 use App\Events\TeacherPhotosZipUploaded;
 use File;

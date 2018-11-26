@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,16 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Allow Route Model Binding using role id or name
+Route::bind('role', function($value, $route)
+{
+    if (is_integer(intval($value)) && intval($value) > 0) return Role::findOrFail($value);
+    if (is_string($value)) {
+        return Role::where('name',$value)->firstOrFail();
+    }
+    throw new RoleDoesNotExist(var_export($value,true));
+});
 
 Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {
@@ -76,9 +88,12 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@store');
             Route::delete('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@destroy');
 
+            //RoleUsers
+            Route::get('/role/{role}/users','Tenant\Api\Roles\RoleUsersController@index');
+
             //RoleByName
-//            Route::get('/role/name/{role}','Tenant\Api\Roles\UserRoleController@store');
-            Route::get('/role/name','Tenant\Api\Roles\RoleName@store');
+            Route::get('/role/name/{name}','Tenant\Api\Roles\RoleNameController@show');
+//            Route::get('/role/name','Tenant\Api\Roles\RoleName@store');
 
             //Pending teachers
             Route::get('/pending_teachers', 'Tenant\PendingTeachersController@index');
@@ -199,6 +214,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/settings/filter/{module}','Tenant\Api\Settings\FilteredSettingsController@index');
             Route::put('/settings/filter/{module}','Tenant\Api\Settings\FilteredSettingsController@update');
 
+            //Changelog
+            Route::get('/changelog','Tenant\Api\Changelog\ChangelogController@index');
+            Route::get('/changelog/module/{module}','Tenant\Api\Changelog\ChangelogModuleController@index');
+            Route::get('/changelog/user/{user}','Tenant\Api\Changelog\ChangelogUserController@index');
         });
 
         Route::group(['prefix' => 'v1'], function () {

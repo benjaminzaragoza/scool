@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
-use App\Mail\Incidents\IncidentAssigned;
-use App\Mail\Incidents\IncidentDesassigned;
-use App\Models\Setting;
+use App\Events\Incidents\IncidentAssigned;
+use App\Events\Incidents\IncidentDesassigned;
 use App\Models\User;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Incidents\DestroyIncidentAssignee;
 use App\Http\Requests\Incidents\StoreIncidentAssignee;
 use App\Models\Incident;
-use Mail;
 
 /**
  * Class IncidentAssigneesController.
@@ -28,7 +26,7 @@ class IncidentAssigneesController extends Controller
     public function store(StoreIncidentAssignee $request, $tenant, Incident $incident, User $user)
     {
         $incident->addAssignee($user);
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentAssigned($incident));
+        event(new IncidentAssigned($incident,$user));
     }
 
     /**
@@ -43,6 +41,6 @@ class IncidentAssigneesController extends Controller
     public function destroy(DestroyIncidentAssignee $request, $tenant, Incident $incident, User $user)
     {
         $incident->assignees()->detach($user->id);
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentDesassigned($incident));
+        event(new IncidentDesassigned($incident, $user));
     }
 }

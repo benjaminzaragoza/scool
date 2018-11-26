@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-chip small label :color="tag.color" text-color="white" v-for="(tag,key) in incident.tags" :key="tag.id" close v-model="close[key]">
+        <v-chip small label :color="tag.color" text-color="white" v-for="(tag,key) in incidentTags" :key="tag.id" close v-model="close[key]">
             <v-icon left v-text="tag.icon"></v-icon>{{ tag.value }}
         </v-chip>
         <v-progress-circular
@@ -9,7 +9,7 @@
                 indeterminate
                 color="primary"
         ></v-progress-circular>
-        <v-btn v-role="'IncidentsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
+        <v-btn v-role="'IncidentsManager'" v-if="pendingTags.length > 0" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
           <v-icon>add</v-icon>
         </v-btn>
         <v-dialog v-model="tagAddDialog" max-width="500px">
@@ -18,11 +18,11 @@
 
             <v-autocomplete
                     v-model="newTag"
-                    :items="pendingTagsToAssign"
+                    :items="pendingTags"
                     attach
                     chips
                     label="Etiquetes"
-                    item-value="id"
+                    :return-object="true"
             >
                 <template slot="selection" slot-scope="data">
                     <v-chip
@@ -60,12 +60,13 @@ export default {
   data () {
     return {
       removing: false,
-      tagToRemove: null,
       newTag: null,
       adding: false,
       tagAddDialog: false,
       tagRemoveDialog: false,
-      close: []
+      close: [],
+      pendingTags: [],
+      incidentTags: []
     }
   },
   props: {
@@ -78,43 +79,48 @@ export default {
       required: true
     }
   },
-  computed: {
-    pendingTagsToAssign () {
-      const tagsIds = this.incident.tags.map(tag => tag['id'])
-      return this.tags.filter(tag => {
-        return !tagsIds.includes(tag.id)
-      })
-    }
-  },
   watch: {
+    incident: {
+      handler: function (newIncident) {
+        this.sync(newIncident.tags)
+      },
+      deep: true
+    },
     close (close) {
-      let tagObjToRemove = this.incident.tags[close.indexOf(false)]
+      let tagObjToRemove = this.incidentTags[close.indexOf(false)]
       if (tagObjToRemove && this.$hasRole('IncidentsManager')) {
-        this.tagToRemove = tagObjToRemove.id
-        this.remove()
+        this.remove(tagObjToRemove)
       }
     }
   },
   methods: {
+    pendingTagsToAssign () {
+      const tagsIds = this.incidentTags.map(tag => tag['id'])
+      return this.tags.filter(tag => {
+        return !tagsIds.includes(tag.id)
+      })
+    },
     add () {
       this.adding = true
-      window.axios.post('/api/v1/incidents/' + this.incident.id + '/tags/' + this.newTag, {}).then(() => {
+      window.axios.post('/api/v1/incidents/' + this.incident.id + '/tags/' + this.newTag.id, {}).then(() => {
         this.$emit('refresh')
         this.adding = false
         this.tagAddDialog = false
         this.newTag = null
+        this.pendingTags.splice(this.pendingTags.indexOf(this.newTag), 1)
       }).catch(error => {
         this.$snackbar.showError(error)
         this.adding = false
       })
     },
-    remove () {
+    remove (tag) {
       this.removing = true
-      const url = '/api/v1/incidents/' + this.incident.id + '/tags/' + this.tagToRemove
+      const url = '/api/v1/incidents/' + this.incident.id + '/tags/' + tag.id
       window.axios.delete(url).then(() => {
         this.$emit('refresh')
         this.removing = false
         this.tagRemoveDialog = false
+        this.pendingTags.push(tag)
       }).catch(error => {
         this.$snackbar.showError(error)
         this.removing = false
@@ -125,12 +131,21 @@ export default {
     },
     showRemoveDialog () {
       this.tagRemoveDialog = true
+    },
+    syncClose () {
+      this.close = []
+      this.incidentTags.forEach(tag => {
+        this.close.push(true)
+      })
+    },
+    sync (tags) {
+      this.incidentTags = this.incident.tags
+      this.syncClose()
+      this.pendingTags = this.pendingTagsToAssign()
     }
   },
   created () {
-    this.incident.tags.forEach(tag => {
-      this.close.push(true)
-    })
+    this.sync(this.incident.tags)
   }
 }
 </script>

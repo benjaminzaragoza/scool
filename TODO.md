@@ -1,7 +1,175 @@
+# Permisos
+
+- [X] Usuaris IncidentsManager no poden tancar incidències dels altres usuaris
+- [X] Usuaris IncidentsManager no poden afegir usuaris al mòdul Incidències pq no mostra cap usuari el desplegable pq no són
+UsersManagers
+ - [X] Mostra la llista d'usuaris però no permet afegir rol IncidentsManager (si Incidents)
+- [ ] Usuaris IncidentsManager no poden mostrar incidències (apareix blanc el dialeg show)
+  - [X] Se soluciona tenint els dos rols IncidentsManager i Incidents
+  
+# TODOS finals abans posar explotació
+
+- [ ] Treure botó de Login amb Facebook i Register amb Facebook
+- [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
+- [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)
+ - [ ] Home Superadmin: deixar el que hi ha ara
+ - [ ] Home Profes:
+    - [ ] Mostrar missatge de confirmar email si encara no l'ha confirmat! 
+    - [ ] Incidències pendents de l'usuari?
+    - [ ] Notícies: Aplicació incidències
+    - [ ] Mostrar emails enviats a l'usuari? (Telescope ho fa fer algo similar)
+    - [ ] Mostrar registre de canvis de l'usuari
+- [ ] Icona/logo del centre
+- [ ] Colors del centre
+- [ ] Avatar s'enva fora de la Toolbar
+- [ ] No mostrar icona (campana) notificacions sinó funciona o no hi ha
+- [ ] FONT: Alguns titols surten tallats alguns caràcters com la g o la p (per la part baixa)
+- [ ] Welcome Page: adaptar al centre
+- [ ] DOCS Incidències: https://docs.scool.cat/docs/1.0/incidents
+- [ ] Acabar o no mostrar TODO estadístiques
+- [ ] Acabar o no mostrar TODO exportar a Excel
+- [ ] No mostrar Teacher profile o Acabar-lo
+- [ ] Boto de sortir al costat de l'Avatar que no calgui entrar?
+- [ ] Canviar email ara es pot fer OK -> però hauria de posar el email a no confirmat
+
+# BUGS
+
+- [ ] No funciona Logout amb user Sergi TUr badenas?
+  - [ ] Realment crec que el que passa és que a vegades no mostra correctament la URL /
+- [ ] php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
+
+# Laravel Passport
+
+- [ ] Les rutes de Laravel passport (Passport:routes() a boot method AuthServiceProvider) no estan dins middleware tenant
+      NO POT PASSAR MATEIX QUE AMB BROADCAST?
+   - [ ] Request->user() null amb peticions XHR i Laravel passport?   
+
+# DOCS
+
+- [X] Crear un projecte amb els docs en format markdown que sigui copia de Laravel docs
+- [X] Crear un projecte amb la web que mostra els docs tipus laravel.com
+- A cada mòdul posar una icona help que porti a la documentació
+  - [X] Mòdul incidències
+- [ ] Adaptar tota la web de documentació de Laravel a scool.cat
+- [ ] Documentació Mòdul incidències
+  - [ ] El fitxer que hi ha ara és routing de Laravel -> posar docs propis  
+
+# Users management
+
+## Login and Register Events
+
+- [ ] Esdeveniments del mòdul UsersManager
+  - [ ] Un usuari ha demanat canviar la paraula de pas -> NO HI HA ESDEVENIMENT!
+  - [X] Esdeveniment s'ha logat un usuari
+  - [X] Esdeveniment un usuari s'ha equivocat al logar-se
+  - [X] NO CAL Esdeveniment un usuari s'ha quedat bloquejat al superar el nombre màxim intents
+  - [X] Esdeveniment s'ha registrat un usuari
+  - [X] Un usuari ha canviat la paraula de pas
+  - [X] Impersonate: un admin s'ha impersonat com a i quan surt també
+  - [X] Un usuari ha estat verificat (correu electrònic)
+Esdeveniments (Illuminate\Auth\Events):
+ - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni):
+   - [X] Failed
+ - [X] Authenticated | [X] Login són el mateix només un per evitar doble log 
+ - [X] Lockout -> NO CAL!!!!
+ - [X] Logout
+ - [X] PasswordReset
+ - [X] Registered
+ - [X] Verified 
+ - [X] TakeImpersonation is fired when an impersonation is taken.
+ - [X] LeaveImpersonation is fired when an impersonation is leaved.
+  
+# Menu
+
+- [X] TODO -> fer links les entrades de menú amb href i no calgui fer clic!
+
+# ChangeLog Module
+
+## Revisionable vs Custom solution
+
+https://github.com/VentureCraft/revisionable
+
+A la home hi ha una "antiga" solució pendent de ser esborrada:
+- AuditLogComponent: datatable mostra les dades
+- HomeController: 
+    
+```
+    protected function auditLogs() {
+                          return collect(RevisionResource::collection(
+                              Revision::orderBy('created_at', 'desc')->with(['user','revisionable'])->get()));
+                      }
+```
+
+TODO:
+- Tinc doncs una versió ja feta amb un objecte REvision basat https://github.com/VentureCraft/revisionable/tree/master/src/Venturecraft/Revisionable
+- Tinc docs taules changelog i revisions
+- [ ] ELIMINAR UNA DE LES DOS VERSIONS UN COP FET EL MERGE
+
+## Tasques pendents mòdul changelog
+
+- [X] Crear entrada de menú i la corresponent entrada a la taula de base de dades
+- [ ] Crear fitxer de settings (config/changelog.php) del mòdul
+
+TEMPS REAL:
+- [X] La vista quan té activat tremps real hauria d'anar actualitzant (amb Javascript) els valors 1 segons abans o similars.
+- [X] Utilitzar vue time ago de Egoist!
+
+Settings:
+- [ ] TODO? Duració dels registres i neteja
+
+Backup/Neteja
+- [] Permetre netejar registres vells i fer backup dels registres
+
+Performance:
+- [ ] Control d'esdeveniment en segon terme (activar i utilitzar queues)
+
+Idees:
+- [ ] Base de dades o memòria ràpida tipus Redis?
+
+Vista:
+- [X] Utilitzar timeline vuetify
+- [X] Mostrar data en que ha succeït el esdeveniment/canvi (tant human com data i temps normals)
+- [X] Mostrar missatge del esdeveniment/canvi
+- [X] Tipus de registre de canvi: creació/actualització/eliminació
+- [X] Mostrar usuari (avatar i nom usuari amb email al title -hover)
+- [ ] Esdeveniments no associats a cap usuari? -> No donar error pq usuari pot ser opcional
+- [X] Color de l'esdeveniment (nullable)
+- [X] Icona (nullable)
+- [X] Mòdul de l'esdeveniment -> opcional (nullable a base de daes)
+- [ ] Objecte registrable -> Copia persistent de l'estat de l'objecte en aquell moment (camp Json, guardar map() de l'objecte)
+- [X] Botó refresh per forçar refresh del registre
+- [X] Real Time Logging -> Refresh automàtic (utilitzant Laravel echo i esdeveniments push)
+  - [X] Switch que permeti activar/desactivar refresh automàtic
+- [ ] Filtres (només quan es crida el component com ChangelogManager o superadmin):
+  - [ ] Filtrar per usuari
+  - [ ] Filtrar per mòdul
+  - [X] Poder accedir al mòdul Registre de Canvis directament a un apartat/filtre -> Per exemples canvis només d'un mòdul
+  - [X] Authorizació i filtres: controlar a que pot i que no pot accedir els usuaris
+- [X] Search: tipus datatables buscar qualsevol registre
+
+- [X] Utilitzar Data Iterator amb el registre de canvis?
+  - [ ] Aconseguir fer funcionar l'animació que funciona sense data iterator però no amb data-iterator: v-slide-x-transition group
+  
+Testos:
+WEB:
+- [X] ChangeLogControllerTest:
+  - [X] Mostra la vista que correspon amb les dades que pertoquen
+  - [] TODO Limitar nombre de dades de la vista
+    
+API:
+- [X] ChangeLogControllerTest
+  - [X] Operacions CRUD:
+    - [X] List
+    - [X] Afegir via API -> No té sentit? sempre anirà associat a un handler/listener d'un esdeveniment
+    - [X] Esborrar/Editar -> No tenen sentit!
+
+**IMPORTANT**    
+- [ ] JA TENIA MÒDUL????    
+  
 # Explotació
 
 - [ ] No va https://iesebre.scool.cat/ (sembla utilitza base de dades bàsica i no pas tenant) en canvi https://iesebre.scool.cat/home i altres si
-
+- [ ] Script actualització explotació branca production (STOP npm run hot before)
 
 # Settings
 
@@ -18,12 +186,91 @@ SettingsServiceProvider:
 
 # Incidents
 
+Changelog:
+- [ ] Filtra extra: Registre de canvis per a un objecte (igual que per User o per a mòdul amb URL propia)
+- [ ] Afegir un botó a cada incidència que permeti veure el changelog -> Hi ha un changelog a cada incident i per tant es pot fer amb Dialog
+sense necessitar d'executar nova URL ni fer cap petició extra XHR
+
+PUSHER ALGUNS OBJECTES TENEN MASsa INFO I DONEN PROBLEMES:
+- [ ]The data content of this event exceeds the allowed maximum (10240 bytes).
+  - [ ] Repassar objectes a map com per exemple user quan hi ha camps com user_name, user_email. Ocupen MOLT ESPAI!
+  - [ ] Camps description -> Enviar un resum 
+- See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
+
+
+Estadístiques:
+- [ ] Temps mig tancament incidències (Auditories)
+- [ ] Totals per tipus (obert tancat)
+- [ ] Totals per usuaris
+- [ ] Total per departament
+- [ ] Gràfiques/quesitos
+- [ ] Exportació de dades incidències a CSV
+- [ ] Marges temporals: lliure marge però predefinits (any natural- any acadèmic)
+
+EXTRES:
+- [ ] Floating button afegir comentari al mostra una incidència: potser múltiples accions
+- [ ] Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
+
+Settings:
+- [ ] TODO fer anar lo d'activar o no el mòdul
+  - [ ] Desactiu? Dos formes-> no mostrar o mostrar un missatge que està desactivat temporalment
+- [X] Poder afegir usuaris Manager (IncidentsManager)
+   - [X] ES poden indicar dos rols possibles per accedir al menú en comptes de un. Solucionat mostrant només els usuaris amb Rol Incidents
+   al desplegable per afegir usuaris IncidentsManager. Cal doncs abans donar rol Incidents per ser IncidentsManager
+   - [X] Els IncidentsManager també tenen rol Incidents  
+
+Etiquetes:
+- [ ] CRUD etiquetes per als managers
+
+Changelog d'una incidència a la vista Show:
+- [ ] Barrejar els comentaris i les accions com fa Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
+- [ ] Utilitzar vista vuetify timeline per mostrar tant els comentaris com l'historial
+- [ ] Comentaris i registre de canvis en temps real a la vista show
+
+Changelog:
+- [X] S'ha creat una nova incidència
+- [X] S'ha modificat el títol d'una incidència
+- [X] S'ha modificat la descripció d'una incidència
+- [X] Comentaris
+  - [X] S'ha afegit un comentari a una incidència
+  - [X] S'ha modificat un comentari a una incidència
+  - [X] S'ha esborrat un comentari
+- [X] Etiquetes:
+  - [X] S'ha assignat una etiqueta a una incidència
+  - [X] S'ha tret una etiqueta a una incidència
+- [X] Assigness:
+  - [X] S'ha assignat un usuari a una incidència
+  - [X] S'ha tret una assignat d'una incidència
+- [X] S'ha visualitzat una incidència? Funciona parcialment, només quan se visita directament des de un link no si se visita des de la llista datatables
+- [X] S'ha obert una incidència  
+- [X] S'ha tancat una incidència
+- [X] S'ha eliminat una incidència
+  
 BUGS:
-- [ ] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)
-- [ ] Al eliminar una etiqueta assignada (al ser la primera crec ) s'esborren totes (o potser també la segona). nivell base da des ok, al fer f5 torna a estat tot bé
+- [ ] OCO changelog a Incidents és una relació que pot provocar Bucle
+- [X] L'autenticació de broadcast no funciona amb Impersonation pq el auth user és null -> SOLVED registering Routes inside tenant at web.php routes file
+  - [X] Sembla que tampoc va sense impersonation
+- [X] Changelog i filtres i temps real
+  - [X] Ara mateix filtro correctament al mostrar incidències per mòdul però si està activat temps real el canal escolta TOTES les incidències i mostra altres mòduls
+  - [X] Oco amb el botó refresh que sempre refresca tots els logs independentment dels permisos -> TODO API
+  - [X] La llista de logs d'un usuari concret no funciona temps real pq no es registra bé el canal privat (dona error 403 to i ser superadmin)
+- [X] Treure el botó Afegir (i deixar només afegir i tancar però només amb text Afegir) per als usuaris que no siguin managers.
+- [ ] Al visitar: https://iesebre.scool.test/incidents/1 The data content of this event exceeds the allowed maximum (10240 bytes). See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
+- [X] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar
+- [X] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)
+- [X] Al eliminar una etiqueta assignada (al ser la primera crec ) s'esborren totes (o potser també la segona). nivell base da des ok, al fer f5 torna a estat tot bé
+  - [X] El refresh no actualitza les etiquetes però F5 sí
 - [X] No funciona el autocomplete als filtres (creadors i assignees)
 - [ ] Els botons afegir comentari i afegir comentari i tancar al estar en loading i disabled desapareixent en comptes 
 de mostrar el loading
+
+## Comentaris
+
+- [ ] Canviar la interfície a la nova timeline de vuetify (vegeu exemple advanced):
+- [ ] Afegir l'historial i no només els comentaris (registres de canvis per al modle/incidència concret)
+
+- https://vuetifyjs.com/en/components/timelines
+- https://github.com/vuetifyjs/vuetifyjs.com/tree/master/src/examples/timelines/advanced.vue
 
 ## Idees
 
@@ -46,8 +293,8 @@ Usuaris explotació Sergi Tur:
 - 1) Superadmin: sergitur@iesebre.com
 - 2) Professor: stur@iesebre.com
 
-- [ ] Els usuaris no siguin managers incidències no han de poder canviar settings
-- [ ] Els usuaris no siguin managers incidències no han de poder veure settings????
+- [X] Els usuaris no siguin managers incidències no han de poder canviar settings
+- [X] Els usuaris no siguin managers incidències no han de poder veure settings????
 
 Un stepper amb els passos:
 1) Activar o no mòdul incidències
@@ -57,10 +304,10 @@ Un stepper amb els passos:
 # ROLS
 
 A settings o similar:
-- [ ] Gestionar la llista usuaris que tindran el rol Incidents
+- [X] Gestionar la llista usuaris que tindran el rol Incidents
 - [ ] En principi tots els professors
 - [ ] Però també hi ha altres com becaris o altres tercers possibles ()
-- [ ] Gestionar els managers d'incidències (Rol Incidents Manager)
+- [X] Gestionar els managers d'incidències (Rol Incidents Manager)
 
 **Filtres**:
 
@@ -140,9 +387,8 @@ RESPONSIVE:
 - [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
 HISTORIAL:
-- [ ] Historial: especialment de les accions tipus esborrar incidència o comentaris
-- [ ] https://vuetifyjs.com/en/components/timelines
-- [ ] Fer com Github i mostrar als comentaris no només els comentaris sinó la evolució de incidència (tancada, oberta, assignada a, etc)
+- [X] Historial: especialment de les accions tipus esborrar incidència o comentaris
+- [X] https://vuetifyjs.com/en/components/timelines
 
 Ideas taken from Github
 - [X] Textareas: http://miaolz123.github.io/vue-markdown/
@@ -156,19 +402,6 @@ Ideas taken from Github
   - [X] Labels/Tags: tenen nom, descripció, icona i color (es pot fer un preview en directe quan es crea/edita un label)
 - [ ] Apartat participants: gent que participa de la discusió/comentaris
 - [X] Assignar incidències a usuaris (Assignees)  
-
-Estadístiques:
-- [ ] Temps mig tancament incidències (Auditories)
-- [ ] Totals per tipus (obert tancat)
-- [ ] Totals per usuaris
-- [ ] Total per departament
-- [ ] Gràfiques/quesitos
-- [ ] Exportació de dades incidències a CSV
-- [ ] Marges temporals: lliure marge però predefinits (any natural- any acadèmic)
-
-EXTRES:
-- [ ] Floating button afegir comentari al mostra una incidència: potser múltiples accions
-- [ ] Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
 
 # USER RESOURCE vs user map (SOLUCIONAT/OBSOLET)
 

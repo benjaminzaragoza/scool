@@ -74,6 +74,47 @@ class UsersControllerTest extends BaseTenantTest
         $this->assertCount(3,json_decode($response->getContent()));
     }
 
+
+    /** @test */
+    public function incidents_manager_can_see_users()
+    {
+        $manager = create(User::class);
+        $this->actingAs($manager,'api');
+        $role = Role::firstOrCreate([
+            'name' => 'IncidentsManager',
+            'guard_name' => 'web'
+        ]);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+
+        $user2 = create(User::class);
+        $user3 = create(User::class);
+
+        $response = $this->json('GET','/api/v1/users');
+
+        $response->assertSuccessful();
+        $this->assertCount(3,json_decode($response->getContent()));
+
+        $response->assertJsonStructure([[
+            'id',
+            'name',
+            'email',
+            'created_at',
+            'updated_at',
+            'formatted_created_at',
+            'formatted_updated_at',
+            'admin',
+        ]]);
+
+        foreach ( [$manager, $user2, $user3] as $user) {
+            $response->assertJsonFragment([
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email
+            ]);
+        }
+        $this->assertCount(3,json_decode($response->getContent()));
+    }
     /** @test */
     public function user_manager_can_add_users()
     {

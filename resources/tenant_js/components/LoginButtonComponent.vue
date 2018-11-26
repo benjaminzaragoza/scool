@@ -4,18 +4,18 @@
             v-model="showLogin"
             persistent max-width="500px"
             :fullscreen="$vuetify.breakpoint.xsOnly">
-        <v-btn color="primary" dark slot="activator">Login</v-btn>
+        <v-btn color="primary" dark slot="activator">Entrar</v-btn>
 
         <v-card>
             <v-card-title>
-                <span class="headline">Login</span>
+                <span class="headline">Entrar</span>
             </v-card-title>
             <v-card-text>
                 <v-form ref="loginForm" v-model="valid">
                     <v-text-field
                             id="login_email"
                             name="email"
-                            label="E-mail"
+                            label="Correu electrònic"
                             v-model="email"
                             :rules="emailRules"
                             :error="errors['email'] && true"

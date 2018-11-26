@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Events\Incidents\IncidentSubjectUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Incidents\UpdateSubjectIncident;
-use App\Mail\Incidents\IncidentSubjectModified;
 use App\Models\Incident;
-use App\Models\Setting;
-use Mail;
 
 /**
  * Class IncidentsSubjectController.
@@ -26,9 +24,10 @@ class IncidentsSubjectController extends Controller
      */
     public function update(UpdateSubjectIncident $request, $tenant,Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident->subject = $request->subject;
         $incident->save();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentSubjectModified($incident));
+        event(new IncidentSubjectUpdated($incident, $oldIncident));
         return $incident->map();
     }
 }

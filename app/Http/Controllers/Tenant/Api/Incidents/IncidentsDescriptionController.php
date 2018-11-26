@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Events\Incidents\IncidentDescriptionUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Incidents\UpdateDescriptionIncident;
-use App\Mail\Incidents\IncidentDescriptionModified;
 use App\Models\Incident;
-use App\Models\Setting;
-use Mail;
 
 /**
  * Class IncidentsNameController.
@@ -22,13 +20,14 @@ class IncidentsDescriptionController extends Controller
      * @param UpdateDescriptionIncident $request
      * @param $tenant
      * @param Incident $incident
-     * @return Incident
+     * @return array
      */
     public function update(UpdateDescriptionIncident $request, $tenant,Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident->description = $request->description;
         $incident->save();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentDescriptionModified($incident));
+        event(new IncidentDescriptionUpdated($incident,$oldIncident));
         return $incident->map();
     }
 }

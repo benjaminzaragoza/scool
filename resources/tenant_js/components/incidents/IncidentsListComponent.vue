@@ -13,14 +13,17 @@
                         <v-list-tile-title>TODO 1 Exportar a CSV/Excel</v-list-tile-title>
                         <!-- TODO-->
                     </v-list-tile>
-                    <v-list-tile href="/jobs/sheet_substitutes" target="_blank">
-                        <v-list-tile-title>TODO 2 Mostrar historial incidències (registre de canvis)</v-list-tile-title>
-                        <!-- TODO-->
+                    <v-list-tile href="/changelog/module/incidents" target="_blank">
+                        <v-list-tile-title>Mostrar historial incidències (registre de canvis)</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
             </v-menu>
             <v-toolbar-title class="white--text title">Incidències</v-toolbar-title>
             <v-spacer></v-spacer>
+
+            <v-btn id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/incidents" target="_blank">
+                <v-icon>help</v-icon>
+            </v-btn>
 
             <fullscreen-dialog
                     v-role="'IncidentsManager'"
@@ -30,7 +33,7 @@
                     v-model="settingsDialog"
                     color="blue darken-3"
                     title="Canviar la configuració de les incidències">
-                        <incident-settings module="incidents" @close="settingsDialog = false"></incident-settings>
+                        <incident-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></incident-settings>
             </fullscreen-dialog>
 
             <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
@@ -44,13 +47,13 @@
                   <v-flex xs9 style="align-self: flex-end;">
                       <v-layout>
                           <v-flex xs3 class="text-sm-left" style="align-self: center;">
-                                <span @click="showOpenIncidents" :class="{ bolder: filter === 'open', 'no-wrap': true }">
+                                <span @click="showOpenIncidents" :class="{ bolder: filter === 'open', 'no-wrap': true, 'pointer': true }">
                                     <v-icon color="error" title="Obertes">lock_open</v-icon> Obertes: {{openIncidents ? openIncidents.length : 0}}
                                 </span>
-                                <span @click="showClosedIncidents" :class="{ bolder: filter === 'closed', 'no-wrap': true }">
+                                <span @click="showClosedIncidents" :class="{ bolder: filter === 'closed', 'no-wrap': true, 'pointer': true  }">
                                   <v-icon color="success" title="Tancades">lock</v-icon> Tancades: {{closedIncidents ? closedIncidents.length : 0}}
                                 </span>
-                                <span @click="showAll" :class="{ bolder: filter === 'all', 'no-wrap': true }">
+                                <span @click="showAll" :class="{ bolder: filter === 'all', 'no-wrap': true, 'pointer': true  }">
                                   <v-icon color="primary" title="Total">info</v-icon> Total: {{dataIncidents ? dataIncidents.length : 0}}
                                 </span>
                           </v-flex>
@@ -147,7 +150,12 @@
                             <inline-text-area-edit-dialog v-model="incident" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>
                         </td>
                         <td v-if="filter!=='open'" class="text-xs-left" :title="incident.formatted_closed_at">
-                            <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per <span :title="incident.closer && incident.closer.email">{{ incident.closer && incident.closer.name}}</span>
+                            <template v-if="incident.formatted_closed_at">
+                                <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per <span :title="incident.closer && incident.closer.email">{{ incident.closer && incident.closer.name}}</span>
+                            </template>
+                            <template v-else>
+                                No
+                            </template>
                         </td>
                         <td class="text-xs-left">
                             <incident-tags @refresh="refresh(false)" :incident="incident" :tags="dataTags" ></incident-tags>
@@ -176,7 +184,7 @@
                                     v-if="showDialog === false || showDialog === incident.id">
                                 <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
                             </fullscreen-dialog>
-                            <incident-close v-model="incident" v-if="$can('close',incident)" @toggle="refresh"></incident-close>
+                            <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
                     </tr>
@@ -247,7 +255,7 @@ export default {
       dataTags: this.tags,
       creator: null,
       assignee: null,
-      assignees: this.incidentUsers
+      assignees: this.managerUsers
     }
   },
   props: {
@@ -264,6 +272,12 @@ export default {
       }
     },
     incidentUsers: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+    managerUsers: {
       type: Array,
       default: function () {
         return []
@@ -339,6 +353,16 @@ export default {
       return headers
     }
   },
+  // TODO ESBORRAR
+  // watch: {
+  //   incidents: {
+  //     handler: function (newIncidents) {
+  //       console.log('###############AAAAAAAAAAAAAAAAAAAA')
+  //       console.log(newIncidents)
+  //     },
+  //     deep: true
+  //   }
+  // },
   methods: {
     moveLoggedUserToFirstPosition (users) {
       let loggedUser = users.find(user => {
@@ -386,6 +410,9 @@ export default {
 </script>
 
 <style scoped>
+    .pointer {
+        cursor: pointer;
+    }
     .bolder {
         font-weight: bold;
     }

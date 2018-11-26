@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentSubjectUpdated;
 use App\Mail\Incidents\IncidentSubjectModified;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;
 use Spatie\Permission\Models\Role;
@@ -40,6 +42,7 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
      */
     public function manager_can_update_incident_subject()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);
@@ -54,15 +57,15 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
             'description' => 'bla bla bla'
         ]);
 
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
 
         $response = $this->json('PUT','/api/v1/incidents/' . $incident->id . '/subject',[
             'subject' => 'No funciona PC10 Aula 25'
         ]);
         $response->assertSuccessful();
-        Mail::assertQueued(IncidentSubjectModified::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentSubjectUpdated::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
         });
         $result = json_decode($response->getContent());
         $this->assertEquals($incident->description,$result->description);

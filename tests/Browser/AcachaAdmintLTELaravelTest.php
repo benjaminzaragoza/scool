@@ -87,6 +87,7 @@ class AcachaAdmintLTELaravelTest extends DuskTestCase
      * Test Login.
      *
      * @return void
+     * @throws \Throwable
      */
     public function testLogin()
     {

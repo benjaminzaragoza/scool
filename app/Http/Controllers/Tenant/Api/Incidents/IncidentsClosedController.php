@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Tenant\Api\Incidents;
 
+use App\Events\Incidents\IncidentClosed;
+use App\Events\Incidents\IncidentOpened;
 use App\Http\Requests\Incidents\CloseIncident;
 use App\Http\Requests\Incidents\OpenIncident;
-use App\Mail\Incidents\IncidentClosed;
-use App\Mail\Incidents\IncidentOpened;
 use App\Models\Incident;
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
-use Mail;
 
 /**
  * Class ClosedIncidentsController.
@@ -24,12 +22,13 @@ class IncidentsClosedController extends Controller
      * @param CloseIncident $request
      * @param $tenant
      * @param Incident $incident
-     * @return Incident
+     * @return array
      */
     public function store(CloseIncident $request, $tenant, Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident = $incident->close();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentClosed($incident));
+        event(new IncidentClosed($incident, $oldIncident));
         return $incident->map();
     }
 
@@ -39,12 +38,13 @@ class IncidentsClosedController extends Controller
      * @param OpenIncident $request
      * @param $tenant
      * @param Incident $incident
-     * @return Incident
+     * @return array
      */
     public function destroy(OpenIncident $request, $tenant, Incident $incident)
     {
+        $oldIncident = clone($incident);
         $incident = $incident->open();
-        Mail::to($request->user())->cc(Setting::get('incidents_manager_email'))->queue(new IncidentOpened($incident));
+        event(new IncidentOpened($incident, $oldIncident));
         return $incident->map();
     }
 }

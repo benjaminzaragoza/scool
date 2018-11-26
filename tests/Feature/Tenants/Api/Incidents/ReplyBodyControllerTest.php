@@ -2,9 +2,12 @@
 
 namespace Tests\Feature\Tenants\Api;
 
+use App\Events\Incidents\IncidentReplyUpdated;
+use App\Models\Incident;
 use App\Models\Reply;
 use App\Models\User;
 use Config;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
@@ -43,7 +46,10 @@ class ReplyBodyControllerTest extends BaseTenantTest {
         $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
         Config::set('auth.providers.users.model', User::class);
         $user->assignRole($role);
-
+        $incident = Incident::create([
+            'subject' => 'No funciona res Aula 2',
+            'description' => 'Bla bla bla'
+        ]);
         $this->actingAs($user,'api');
 
         $replyUser = factory(User::class)->create([
@@ -53,10 +59,15 @@ class ReplyBodyControllerTest extends BaseTenantTest {
             'body' => 'Ja ho hem solucionat tot',
             'user_id' => $replyUser->id
         ]);
+        $incident->addReply($reply);
+        Event::fake();
         $response = $this->json('PUT','/api/v1/replies/' . $reply->id . '/body',[
             'body' => 'Perdo no hem solucionat res'
         ]);
         $response->assertSuccessful();
+        Event::assertDispatched(IncidentReplyUpdated::class,function ($event) use ($incident){
+            return $event->incident->is($incident) && $event->oldReply->body === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
+        });
         $result = json_decode($response->getContent());
         $reply = $reply->fresh();
         $this->assertEquals($result->body,$reply->body);

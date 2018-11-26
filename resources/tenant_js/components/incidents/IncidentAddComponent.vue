@@ -2,7 +2,7 @@
     <form>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
-            <v-flex md12>
+            <v-flex xs12>
                 <v-text-field
                         ref="subject_field"
                         v-focus
@@ -16,7 +16,7 @@
                         autofocus
                 ></v-text-field>
             </v-flex>
-            <v-flex md12>
+            <v-flex xs12>
                 <v-tabs :v-model="1" slider-color="teal">
                     <v-tab :key="1" ripple> Descripció </v-tab>
                     <v-tab :key="2" ripple> Previsualitació</v-tab>
@@ -43,20 +43,31 @@
             </v-flex>
         </v-layout>
         </v-container>
-        <v-btn @click="add(false)"
-           id="add_incident_button"
-           color="teal"
-           class="white--text"
-           :loading="adding"
-           :disabled="adding"
-        >Afegir</v-btn>
-        <v-btn @click="add(true)"
-           id="add_and_close_incident_button"
-           color="primary"
-           class="white--text"
-           :loading="adding"
-           :disabled="adding"
-        >Afegir i tancar</v-btn>
+        <template v-if="$hasRole('IncidentsManager')">
+            <v-btn @click="add(false)"
+                   id="add_incident_button"
+                   color="teal"
+                   class="white--text"
+                   :loading="adding"
+                   :disabled="adding"
+            >Afegir</v-btn>
+            <v-btn @click="add(true)"
+                   id="add_and_close_incident_button"
+                   color="primary"
+                   class="white--text"
+                   :loading="adding"
+                   :disabled="adding"
+            >Afegir i tancar</v-btn>
+        </template>
+        <template v-else>
+            <v-btn @click="add(true)"
+                   id="add_and_close_incident_button"
+                   color="primary"
+                   class="white--text"
+                   :loading="adding"
+                   :disabled="adding"
+            >Afegir</v-btn>
+        </template>
         <v-btn @click="close()"
                id="close_button"
                color="error"

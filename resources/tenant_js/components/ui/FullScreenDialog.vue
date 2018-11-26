@@ -8,9 +8,7 @@
             <v-icon v-else v-text="icon"></v-icon>
         </v-btn>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
-                  @keydown.esc.stop.prevent="toggle">
-            <slot></slot>
-        </v-dialog>
+            @keydown.esc.stop.prevent="toggle"><slot></slot></v-dialog>
     </span>
 </template>
 

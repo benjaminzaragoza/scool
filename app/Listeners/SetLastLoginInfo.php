@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogSuccessfulLogin
+class SetLastLoginInfo
 {
     /**
      * Create the event listener.

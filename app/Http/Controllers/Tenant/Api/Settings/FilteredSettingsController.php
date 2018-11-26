@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Module;
 use App\Models\Setting;
 use Cache;
 use Illuminate\Http\Request;
@@ -22,10 +23,10 @@ class FilteredSettingsController extends Controller
      * @param $module
      * @return Setting[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request, $tenant, $module)
+    public function index(Request $request, $tenant, Module $module)
     {
         return Setting::all()->filter(function ($setting) use ($module) {
-            return starts_with($setting->key, $module);
+            return starts_with($setting->key, $module->name);
         });
     }
 
@@ -36,10 +37,10 @@ class FilteredSettingsController extends Controller
      * @param $tenant
      * @param $module
      */
-    public function update(Request $request, $tenant, $module)
+    public function update(Request $request, $tenant, Module $module)
     {
         foreach ($request->settings as $settingKey => $settingValue) {
-            if (!starts_with($settingValue['key'],$module)) continue;
+            if (!starts_with($settingValue['key'],$module->name)) continue;
             if ($setting = Setting::where('key',$settingValue['key'])->first()) {
                 $setting->value = $settingValue['value'];
                 $setting->save();

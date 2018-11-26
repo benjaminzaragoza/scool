@@ -19,6 +19,7 @@ class TenantDatabaseSeeder extends Seeder
         $this->call(LocationsTableSeeder::class);
 
         initialize_menus();
+        initialize_modules();
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         create_tenant_admin_user();

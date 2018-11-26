@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Config;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
@@ -206,6 +208,7 @@ class AcachaAdminLTELaravelTest extends TestCase
      */
     public function testLogin()
     {
+        $this->withoutExceptionHandling();
         $user = factory(\App\User::class)->create(['password' => Hash::make('passw0RD')]);
 
         $response = $this->json('POST', '/login', [

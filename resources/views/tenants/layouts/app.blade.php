@@ -20,10 +20,10 @@
 <v-app id="app" v-cloak>
     <snackbar></snackbar>
     <v-navigation-drawer
-            fixed
-            clipped
-            app
             v-model="drawer"
+            fixed
+            app
+            clipped
     >
         <v-list dense>
             <template v-for="(item, i) in items">
@@ -41,7 +41,7 @@
                         </v-flex>
                     </v-layout>
                     <v-list-group v-else-if="item.children" v-model="item.model" no-action>
-                        <v-list-tile slot="item" @click="menuItemSelected(item)">
+                        <v-list-tile slot="item" :href="item.href" :target="item.target">
                             <v-list-tile-action>
                                 <v-icon>@{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
                             </v-list-tile-action>
@@ -52,7 +52,8 @@
                         <v-list-tile
                                 v-for="(child, i) in item.children"
                                 :key="i"
-                                @click="menuItemSelected(child)"
+                                :href="item.href"
+                                :target="item.target"
                         >
                             <v-list-tile-action v-if="child.icon">
                                 <v-icon>@{{ child.icon }}</v-icon>
@@ -62,7 +63,7 @@
                             </v-list-tile-content>
                         </v-list-tile>
                     </v-list-group>
-                    <v-list-tile v-else @click="menuItemSelected(item)">
+                    <v-list-tile v-else :href="item.href" :target="item.target">
                         <v-list-tile-action>
                             <v-icon>@{{ item.icon }}</v-icon>
                         </v-list-tile-action>
@@ -96,19 +97,19 @@
         </div>
     </v-toolbar>
     <v-navigation-drawer
-            fixed
             v-model="drawerRight"
+            fixed
             right
             clipped
             app
     >
         <v-card>
-            <v-container fluid grid-list-md class="grey lighten-4">
+            <v-container fluid grid-list-xs class="grey lighten-4">
                 <v-layout row wrap>
-                    <v-flex xs12>
+                    <v-flex xs5>
                         <gravatar :user="{{ Auth::user() }}" size="100px"></gravatar>
                     </v-flex>
-                    <v-flex xs12>
+                    <v-flex xs7>
                         <h3>@{{  user.name }}</h3>
                         <a href="https://en.gravatar.com/connect/">Canviar Avatar</a>
                     </v-flex>
@@ -149,12 +150,17 @@
             </v-card-actions>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn :loading="changingPassword" flat color="red" @click="changePassword">Canviar Password</v-btn>
+                <v-btn :loading="changingPassword" flat color="red" @click="changePassword" class="mb-0">Canviar Password</v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
             <v-card-actions v-show="!isEmailVerified">
                 <v-spacer></v-spacer>
                 <v-btn :loading="confirmingEmail" flat @click="confirmEmail">Confirmar email</v-btn>
+                <v-spacer></v-spacer>
+            </v-card-actions>
+            <v-card-actions v-show="!isEmailVerified">
+                <v-spacer></v-spacer>
+                <v-btn flat href="/changelog/user/{{Auth::user()->id}}" target="_blank">Registre de canvis</v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
@@ -189,7 +195,7 @@
                             @endCanImpersonate
                             @impersonating
                             {{ Auth::user()->impersonatedBy()->name }} està suplantant {{ Auth::user()->name }}
-                            <a href="impersonate/leave">Abandonar la suplantació</a>
+                            <a href="/impersonate/leave">Abandonar la suplantació</a>
                             @endImpersonating
                         </v-flex>
                     </v-layout>

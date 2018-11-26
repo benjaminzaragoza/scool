@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.11 on 2018-10-27 09:46:14.
+ * Generated for Laravel 5.7.11 on 2018-11-15 18:08:27.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14621,6 +14621,112 @@ namespace Acacha\AdminLTETemplateLaravel\Facades {
  
 }
 
+namespace Adldap\Laravel\Facades { 
+
+    /**
+     * Class Adldap
+     *
+     * @package Adldap\Laravel\Facades
+     * @mixin \Adldap\Connections\Provider
+     */ 
+    class Adldap {
+        
+        /**
+         * Add a provider by the specified name.
+         *
+         * @param mixed $configuration
+         * @param string $name
+         * @param \Adldap\ConnectionInterface $connection
+         * @return $this 
+         * @throws \InvalidArgumentException When an invalid type is given as the configuration argument.
+         * @static 
+         */ 
+        public static function addProvider($config = array(), $name = 'default', $connection = null)
+        {
+            return \Adldap\Adldap::addProvider($config, $name, $connection);
+        }
+        
+        /**
+         * Returns all of the connection providers.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getProviders()
+        {
+            return \Adldap\Adldap::getProviders();
+        }
+        
+        /**
+         * Retrieves a Provider using it's specified name.
+         *
+         * @param string $name
+         * @throws AdldapException When the specified provider does not exist.
+         * @return \Adldap\ProviderInterface 
+         * @static 
+         */ 
+        public static function getProvider($name)
+        {
+            return \Adldap\Adldap::getProvider($name);
+        }
+        
+        /**
+         * Sets the default provider.
+         *
+         * @param string $name
+         * @throws AdldapException When the specified provider does not exist.
+         * @static 
+         */ 
+        public static function setDefaultProvider($name = 'default')
+        {
+            return \Adldap\Adldap::setDefaultProvider($name);
+        }
+        
+        /**
+         * Retrieves the first default provider.
+         *
+         * @throws AdldapException When no default provider exists.
+         * @return \Adldap\ProviderInterface 
+         * @static 
+         */ 
+        public static function getDefaultProvider()
+        {
+            return \Adldap\Adldap::getDefaultProvider();
+        }
+        
+        /**
+         * Removes a provider by the specified name.
+         *
+         * @param string $name
+         * @return $this 
+         * @static 
+         */ 
+        public static function removeProvider($name)
+        {
+            return \Adldap\Adldap::removeProvider($name);
+        }
+        
+        /**
+         * Connects to the specified provider.
+         * 
+         * If no username and password is given, then the providers
+         * configured admin credentials are used.
+         *
+         * @param string|null $name
+         * @param string|null $username
+         * @param string|null $password
+         * @return \Adldap\ProviderInterface 
+         * @static 
+         */ 
+        public static function connect($name = null, $username = null, $password = null)
+        {
+            return \Adldap\Adldap::connect($name, $username, $password);
+        }
+         
+    }
+ 
+}
+
 namespace Chumper\Zipper\Facades { 
 
     /**
@@ -17506,6 +17612,8 @@ namespace  {
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
 
     class AdminLTE extends \Acacha\AdminLTETemplateLaravel\Facades\AdminLTE {}
+
+    class Adldap extends \Adldap\Laravel\Facades\Adldap {}
 
     class Zipper extends \Chumper\Zipper\Facades\Zipper {}
 

@@ -38,10 +38,12 @@ class UserRoleNameControllerTest extends BaseTenantTest
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
         $role = Role::firstOrCreate(['name' => 'Incidents']);
-        dump('/api/v1/role/name/' . $role->name);
         $response = $this->json('GET','/api/v1/role/name/' . $role->name );
         $response->assertSuccessful();
-        dd($response->getContent());
+        $result = json_decode($response->getContent());
+        $this->assertEquals($role->id, $result->id);
+        $this->assertEquals($role->name, $result->name);
+        $this->assertEquals($role->guard_name, $result->guard_name);
     }
 
 }

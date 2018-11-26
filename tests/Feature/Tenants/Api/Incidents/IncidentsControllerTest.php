@@ -2,11 +2,14 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentShowed;
+use App\Events\Incidents\IncidentStored;
 use App\Mail\Incidents\IncidentCreated;
 use App\Mail\Incidents\IncidentDeleted;
 use App\Models\Incident;
 use App\Models\User;
 use Config;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;
 use Spatie\Permission\Models\Role;
@@ -110,7 +113,8 @@ class IncidentsControllerTest extends BaseTenantTest {
         $user->assignRole($role);
         $this->actingAs($user,'api');
 
-        Mail::fake();
+        Event::fake();
+
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
 
         $response =  $this->json('POST','/api/v1/incidents',$incident = [
@@ -120,8 +124,8 @@ class IncidentsControllerTest extends BaseTenantTest {
         $response->assertSuccessful();
         $createdIncident = json_decode($response->getContent());
 
-        Mail::assertQueued(IncidentCreated::class, function ($mail) use ($createdIncident, $user) {
-            return $mail->incident->id === $createdIncident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
+        Event::assertDispatched(IncidentStored::class,function ($event){
+            return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
         });
 
         $this->assertEquals($createdIncident->subject,'Ordinador Aula 36 no funciona');
@@ -192,8 +196,12 @@ class IncidentsControllerTest extends BaseTenantTest {
             'email' => 'krls@republicatalana.cat'
         ]);
         $incident->assignUser($incidentUser);
+        Event::fake();
         $response =  $this->json('GET','/api/v1/incidents/' . $incident->id);
         $response->assertSuccessful();
+        Event::assertDispatched(IncidentShowed::class,function ($event) use ($incident){
+            return $event->incident->is($incident);
+        });
         $result = json_decode($response->getContent());
         $this->assertEquals($incidentUser->id,$result->user_id);
         $this->assertEquals('Carles Puigdemont',$result->user_name);
@@ -242,13 +250,11 @@ class IncidentsControllerTest extends BaseTenantTest {
             'description' => 'Bla bla bla'
         ])->assignUser($otherUser);
 
-        Mail::fake();
+        Event::fake();
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
 
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id);
-        Mail::assertQueued(IncidentDeleted::class, function ($mail) use ($incident, $user) {
-            return $mail->incident->id === $incident->id && $mail->hasTo($user->email) && $mail->hasCc('incidencies@iesebre.com');
-        });
+
         $response->assertSuccessful();
         $incident = $incident->fresh();
         $this->assertNull($incident);

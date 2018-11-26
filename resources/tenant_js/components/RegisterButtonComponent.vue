@@ -4,21 +4,21 @@
             v-if="show"
             v-model="showRegister"
             persistent>
-        <v-btn slot="activator">Register</v-btn>
+        <v-btn slot="activator">Registrar-se</v-btn>
         <v-card>
             <v-card-title>
-                <span class="headline">User registration</span>
+                <span class="headline">Registrar un nou usuari</span>
             </v-card-title>
             <v-card-text>
                 <v-form ref="registrationForm" v-model="valid">
                     <v-text-field
-                            label="User name"
+                            label="Nom d'usuari"
                             v-model="name"
                             :rules="nameRules"
                             required
                     ></v-text-field>
                     <v-text-field
-                            label="Email"
+                            label="Correu electrònic"
                             v-model="email"
                             :rules="emailRules"
                             :error="errors['email']"
@@ -27,7 +27,7 @@
                     ></v-text-field>
                     <v-text-field
                             name="password"
-                            label="Password"
+                            label="Paraula de pas"
                             v-model="password"
                             :rules="passwordRules"
                             hint="At least 6 characters"
@@ -40,7 +40,7 @@
                     ></v-text-field>
                     <v-text-field
                             name="password_confirmation"
-                            label="Password confirmation"
+                            label="Confirmació de la paraula de pas"
                             v-model="passwordConfirmation"
                             :rules="passwordRules"
                             hint="At least 6 characters"
@@ -60,16 +60,16 @@
                                 l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
                                 v99.803H182.409z"/>
                             </svg>
-                    <span class="ml-1">Register with Facebook</span>
+                    <span class="ml-1">Registra-se amb Facebook</span>
                 </v-btn>
                 <a href="/login" color="blue darken-2">
-                    I already have an user
+                    Ja tinc un usuari
                 </a>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click.native="showRegister = false">Close</v-btn>
-                <v-btn :loading="registerLoading" color="blue darken-1" class="white--text" @click.native="register">Register</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
+                <v-btn :loading="registerLoading" color="blue darken-1" class="white--text" @click.native="register">Registrar-se</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -93,17 +93,17 @@ export default {
       internalAction: this.action,
       name: '',
       nameRules: [
-        (v) => !!v || 'User name is mandatory'
+        (v) => !!v || "El nom de l'usuari és obligatori"
       ],
       email: '',
       emailRules: [
         (v) => !!v || 'Mail is mandatory',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email have to be valid'
+        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El camp email ha de ser un camp vàlid'
       ],
       password: '',
       passwordRules: [
-        (v) => !!v || 'Password is mandatory',
-        (v) => v.length >= 6 || 'Password at least have to be 6 characters'
+        (v) => !!v || 'La paraula de pas és obligatòria',
+        (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
       ],
       passwordConfirmation: '',
       valid: false,

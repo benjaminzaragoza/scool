@@ -15,6 +15,7 @@ use App\Models\Law;
 use App\Models\Lesson;
 use App\Models\Location;
 use App\Models\Menu;
+use App\Models\Module;
 use App\Models\PendingTeacher;
 use App\Models\Person;
 use App\Models\Position;
@@ -29,6 +30,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use App\Models\UserType;
 use App\Models\WeekLesson;
+use App\Models\Log;
 use App\Repositories\PersonRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\UserRepository;
@@ -641,7 +643,8 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'PhotoTeachersManager',
             'LessonsManager',
             'Incidents',
-            'IncidentsManager'
+            'IncidentsManager',
+            'ChangelogManager'
         ];
 
         // Manager
@@ -688,6 +691,10 @@ if (!function_exists('initialize_gates')) {
 
         Gate::define('show-users', function ($user) {
             return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('list-users', function ($user) {
+            return $user->hasRole('UsersManager') || $user->hasRole('IncidentsManager');
         });
 
         Gate::define('create_users', function ($user) {
@@ -964,14 +971,47 @@ if (!function_exists('initialize_gates')) {
 
         Gate::define('user.role.store', function ($user,$role) {
             return $user->hasRole('RolesManager') ||
-                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents');
+                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents') ||
+                ($user->hasRole('IncidentsManager') && $role->name === 'IncidentsManager');
         });
 
         Gate::define('user.role.destroy', function ($user,$role) {
             return $user->hasRole('RolesManager')  ||
-                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents');
+                ($user->hasRole('IncidentsManager') && $role->name === 'Incidents') ||
+                ($user->hasRole('IncidentsManager') && $role->name === 'IncidentsManager');
         });
 
+        // Changelog
+        Gate::define('changelog.list', function ($user) {
+            return $user->hasRole('ChangelogManager');
+        });
+
+        // CHANGELOG
+        Gate::define('logs.module.list', function ($user, Module $module) {
+            return $user->hasRole(studly_case($module->name . 'Manager'));
+        });
+
+        Gate::define('logs.index', function ($user) {
+            return $user->hasRole('ChangelogManager');
+        });
+
+        Gate::define('logs.user.list', function ($loggedUser, $user) {
+            $user = is_object($user) ? $user->id : $user;
+            return (int) $loggedUser->id === (int) $user || $loggedUser->hasRole('ChangelogManager');
+        });
+    }
+}
+
+if (!function_exists('initialize_modules')) {
+    function initialize_modules()
+    {
+        Module::firstOrCreate([
+            'name' => 'incidents',
+        ]);
+
+        Module::firstOrCreate([
+            'name' => 'users',
+        ]);
     }
 }
 
@@ -986,7 +1026,8 @@ if (!function_exists('initialize_menus')) {
         Menu::firstOrCreate([
             'icon' => 'build',
             'text' => 'Incidències',
-            'href' => '/incidents'
+            'href' => '/incidents',
+            'role' => 'Incidents'
         ]);
 
         Menu::firstOrCreate([
@@ -1058,6 +1099,12 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Usuaris de ldap',
             'href' => '/ldap_users',
             'role' => 'UsersManager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Registre de canvis',
+            'href' => '/changelog',
+            'role' => 'Changelogmanager'
         ]);
     }
 }
@@ -8299,7 +8346,50 @@ if (! function_exists('initialize_incident_tags')) {
     }
 }
 
-
+if (! function_exists('sample_logs')) {
+    function sample_logs()
+    {
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $log1 = Log::create([
+            'text' => 'Ha creat la incidència TODO_LINK_INCIDENCIA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'Incidents',
+            'user_id' => $user1->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        $log2 = Log::create([
+            'text' => 'Ha modificat la incidència TODO_LINK_INCIDENCIA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'Incidents',
+            'user_id' => $user2->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        $log3 = Log::create([
+            'text' => 'Ha modificat la incidència TODO_LINK_INCIDENCIA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'Incidents',
+            'user_id' => $user2->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        $log4 = Log::create([
+            'text' => 'BLA BLA BLA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'OtherModule',
+            'user_id' => $user2->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        return [$log1,$log2,$log3,$log4];
+    }
+}
 
 
 
