@@ -91,10 +91,9 @@ class ChangelogLoggableControllerTest extends BaseTenantTest {
         $this->assertNotNull($result[0]->timestamp);
         $this->assertEquals($logs[0]->action_type, $result[0]->action_type);
         $this->assertEquals($logs[0]->user_id, $result[0]->user_id);
-        $this->assertEquals($logs[0]->user->id, $result[0]->user->id);
-        $this->assertEquals($logs[0]->user->name, $result[0]->user->name);
-        $this->assertEquals($logs[0]->user->email, $result[0]->user->email);
-        $this->assertEquals($logs[0]->user->hashid, $result[0]->user->hashid);
+        $this->assertEquals($logs[0]->user->name, $result[0]->user_name);
+        $this->assertEquals($logs[0]->user->email, $result[0]->user_email);
+        $this->assertEquals($logs[0]->user->hashid, $result[0]->user_hashid);
         $this->assertEquals($logs[0]->icon, $result[0]->icon);
         $this->assertEquals($logs[0]->color, $result[0]->color);
     }
@@ -123,10 +122,9 @@ class ChangelogLoggableControllerTest extends BaseTenantTest {
         $this->assertNotNull($result[0]->timestamp);
         $this->assertEquals($logs[0]->action_type, $result[0]->action_type);
         $this->assertEquals($logs[0]->user_id, $result[0]->user_id);
-        $this->assertEquals($logs[0]->user->id, $result[0]->user->id);
-        $this->assertEquals($logs[0]->user->name, $result[0]->user->name);
-        $this->assertEquals($logs[0]->user->email, $result[0]->user->email);
-        $this->assertEquals($logs[0]->user->hashid, $result[0]->user->hashid);
+        $this->assertEquals($logs[0]->user->name, $result[0]->user_name);
+        $this->assertEquals($logs[0]->user->email, $result[0]->user_email);
+        $this->assertEquals($logs[0]->user->hashid, $result[0]->user_hashid);
         $this->assertEquals($logs[0]->icon, $result[0]->icon);
         $this->assertEquals($logs[0]->color, $result[0]->color);
     }
