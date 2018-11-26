@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Incident;
 use App\Models\Log;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -39,6 +40,8 @@ class LogCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        dump('MAP:');
+        dd($this->log->map());
         $channels = collect([]);
         $channels->push(new PrivateChannel('App.Log'));
         if ($this->log->module_type) {
@@ -47,6 +50,19 @@ class LogCreated implements ShouldBroadcast
         if ($this->log->user_id) {
             $channels->push(new PrivateChannel('App.Log.User.' . $this->log->user_id));
         }
+        if ($this->log->loggable_type === Incident::class) {
+            $channels->push(new PrivateChannel('App.Log.Loggable.Incidents.' . $this->log->loggable_id));
+        }
         return $channels->toArray();
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return $this->log->map();
     }
 }

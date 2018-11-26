@@ -1,7 +1,7 @@
 @extends('tenants.layouts.app')
 
 @php
-$channel = 'App.Log.Loggable.' . studly_case($loggable->id);
+$channel = 'App.Log.Loggable.Incidents.' . $loggable->id;
 $title = "Registre de canvis";
 $refreshUrl = '/api/v1/changelog/loggable/' . $loggable->api_uri . '/' . $loggable->id;
 @endphp

@@ -88,7 +88,8 @@ class LogTest extends TestCase
         $this->assertEquals($log->old_value,$mappedLog['old_value']);
         $this->assertEquals($log->new_value,$mappedLog['new_value']);
         $this->assertEquals($user->id,$mappedLog['user_id']);
-        $this->assertTrue($mappedLog['user']->is($user));
+
+
         $this->assertEquals('home',$mappedLog['icon']);
         $this->assertEquals('teal',$mappedLog['color']);
     }

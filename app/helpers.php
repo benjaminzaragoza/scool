@@ -1001,13 +1001,16 @@ if (!function_exists('initialize_gates')) {
         });
 
         Gate::define('logs.loggable.list', function ($user, $loggable) {
-            $pass = false;
-            if ($loggable->user_id) $pass = $user->id === (int) $loggable->user_id;
-            if($loggable->managerRole()) $pass = $user->hasRole($loggable->managerRole());
-            if($loggable->api_uri) {
-                if ($loggable->api_uri === 'incidents') $pass = $user->hasRole('Incidents');
+            if ($user->id === (int) $loggable->user_id) return true;
+            if($loggable->managerRole()){
+                if ($user->hasRole($loggable->managerRole())) return true;
             }
-            return $pass;
+            if($loggable->api_uri) {
+                if ($loggable->api_uri === 'incidents') {
+                    if($user->hasRole('Incidents')) return true;
+                }
+            }
+            return false;
         });
 
 

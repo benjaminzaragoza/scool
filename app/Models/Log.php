@@ -39,7 +39,6 @@ class Log extends Model
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'user' => $this->user,
             'text' => $this->text,
             'time' => $this->time,
             'human_time' => $this->human_time,
