@@ -76,9 +76,9 @@ class Incident extends Model
      *
      * @return array
      */
-    public function map()
+    public function map($changelog=true)
     {
-        return [
+        $incidentMapped= [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
@@ -104,8 +104,11 @@ class Incident extends Model
             'comments' => map_collection($this->comments),
             'tags' => map_collection($this->tags),
             'assignees' => map_collection($this->assignees),
-            'changelog' => map_collection($this->changelog)
         ];
+        if ($changelog) {
+            $incidentMapped['changelog'] = map_collection($this->changelog);
+        }
+        return $incidentMapped;
     }
 
     /**

@@ -82,7 +82,9 @@ class LogTest extends TestCase
         $this->assertEquals('build',$mappedLog['module']->icon);
         $this->assertEquals($user->id,$mappedLog['user_id']);
         $this->assertEquals($incident->id,$mappedLog['loggable_id']);
+
         $this->assertTrue($mappedLog['loggable']->is($incident));
+
         $this->assertEquals($oldIncident->toJson(),$mappedLog['old_loggable']);
         $this->assertEquals($incident->toJson(),$mappedLog['new_loggable']);
         $this->assertEquals($log->old_value,$mappedLog['old_value']);
@@ -91,7 +93,6 @@ class LogTest extends TestCase
         $this->assertEquals($user->name,$mappedLog['user_name']);
         $this->assertEquals($user->email,$mappedLog['user_email']);
         $this->assertEquals($user->hashid,$mappedLog['user_hashid']);
-
 
         $this->assertEquals('home',$mappedLog['icon']);
         $this->assertEquals('teal',$mappedLog['color']);

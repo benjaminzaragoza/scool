@@ -55,7 +55,7 @@ class Log extends Model
             'color' => $this->color,
             'loggable_id' => $this->loggable_id,
             'loggable_type' => $this->loggable_type,
-            'loggable' => $this->loggable,
+            'loggable' => $this->loggable->map(false),
             'new_loggable' => $this->new_loggable,
             'old_loggable' => $this->old_loggable,
             'old_value' => $this->old_value,
@@ -302,12 +302,12 @@ class Log extends Model
      * Loggable scope.
      *
      * @param $query
-     * @param $module
+     * @param $loggable
      * @return mixed
      */
-    public function scopeFromLoggable($query, $logabble)
+    public function scopeFromLoggable($query, $loggable)
     {
-        return $query->where('loggable_id', $logabble->id)->where('loggable_type', get_class($logabble));
+        return $query->where('loggable_id', $loggable->id)->where('loggable_type', get_class($loggable));
     }
 
     /**
