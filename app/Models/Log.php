@@ -39,6 +39,9 @@ class Log extends Model
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'user_name' => optional($this->user)->name,
+            'user_email' => optional($this->user)->email,
+            'user_hashid' => optional($this->user)->hash_id,
             'text' => $this->text,
             'time' => $this->time,
             'human_time' => $this->human_time,

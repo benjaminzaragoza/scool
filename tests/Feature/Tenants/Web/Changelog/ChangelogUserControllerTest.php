@@ -43,7 +43,7 @@ class ChangelogUserControllerTest extends BaseTenantTest
         $response->assertViewIs('tenants.changelog.users.index');
         $response->assertViewHas('logs', function ($returnedLogs) use ($logs) {
             return
-                $returnedLogs[0]['user']->name === $logs[0]['user']->name &&
+                $returnedLogs[0]['user_name'] === $logs[0]['user']->name &&
                 $returnedLogs[0]['color'] === 'teal' &&
                 $returnedLogs[0]['action_type'] === 'update' &&
                 $returnedLogs[0]['text'] === "Ha creat la incidència TODO_LINK_INCIDENCIA" &&
