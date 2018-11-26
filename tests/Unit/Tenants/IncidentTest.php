@@ -102,7 +102,8 @@ class IncidentTest extends TestCase
         $this->assertEquals($user->id,$mappedIncident['user_id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['user_name']);
         $this->assertEquals('pepepardo@jeans.com',$mappedIncident['user_email']);
-        $this->assertTrue($mappedIncident['user']->is($user));
+        $this->assertEquals('MX',$mappedIncident['user_hashid']);
+
         $this->assertEquals('No funciona pc2 aula 15',$mappedIncident['subject']);
         $this->assertEquals('bla bla bla',$mappedIncident['description']);
 

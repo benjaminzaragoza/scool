@@ -41,7 +41,7 @@ class LogCreated implements ShouldBroadcast
     public function broadcastOn()
     {
         dump('MAP:');
-        dd($this->log->map());
+        dump($this->log->map(false));
         $channels = collect([]);
         $channels->push(new PrivateChannel('App.Log'));
         if ($this->log->module_type) {

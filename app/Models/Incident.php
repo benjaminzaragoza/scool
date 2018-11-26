@@ -83,7 +83,7 @@ class Incident extends Model
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
             'user_email' => optional($this->user)->email,
-            'user' => $this->user,
+            'user_hashid' => optional($this->user)->hashid,
             'subject' => $this->subject,
             'description' => $this->description,
             'closed_at' => $this->closed_at,
