@@ -70,6 +70,7 @@ class LogTest extends TestCase
         $this->assertEquals('Ha creat la incidència No funciona PC1 Aula 6',$mappedLog['text']);
         $this->assertNotNull($mappedLog['time']);
         $this->assertNotNull($mappedLog['human_time']);
+        $this->assertNotNull($mappedLog['formatted_time']);
         $this->assertNotNull($mappedLog['timestamp']);
         $this->assertEquals('update',$mappedLog['action_type']);
         $this->assertEquals('update',$mappedLog['action']->name);

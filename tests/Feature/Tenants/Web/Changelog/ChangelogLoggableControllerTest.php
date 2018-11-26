@@ -72,6 +72,37 @@ class ChangelogLoggableControllerTest extends BaseTenantTest
         $user->assignRole($role);
         $this->actingAs($user);
         $incident = Incident::first();
+        $incident->assignUser(User::first());
+        $response = $this->get('/changelog/loggable/incidents/' . $incident->id);
+        $response->assertSuccessful();
+
+        $response->assertViewIs('tenants.changelog.loggable.index');
+        $response->assertViewHas('logs', function ($returnedLogs) use ($logs) {
+            return
+                $returnedLogs[0]['user']->name === $logs[0]['user']->name &&
+                $returnedLogs[0]['color'] === 'teal' &&
+                $returnedLogs[0]['action_type'] === 'update' &&
+                $returnedLogs[0]['text'] === "Ha creat la incidència TODO_LINK_INCIDENCIA" &&
+                $returnedLogs[0]['icon'] === 'home' &&
+                count($returnedLogs) === 3;
+        });
+        $response->assertViewHas('users');
+        $response->assertViewHas('loggable', function ($returnedLoggable) use ($incident) {
+            return $returnedLoggable->is($incident);
+        });
+    }
+
+    /** @test */
+    public function incident_users_can_show_changelog_for_an_specific_loggable()
+    {
+        $logs = sample_logs();
+
+        $user = factory(User::class)->create();
+        $role = Role::firstOrCreate(['name' => 'Incidents']);
+        Config::set('auth.providers.users.model', User::class);
+        $user->assignRole($role);
+        $this->actingAs($user);
+        $incident = Incident::first();
         $incident->assignUser($user);
         $response = $this->get('/changelog/loggable/incidents/' . $incident->id);
         $response->assertSuccessful();

@@ -427,7 +427,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->text,'S\'ha assignat l\'usuari <a target="_blank" href="/users/1">Pepe Pardo Jeans</a> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
         $this->assertNotNull($log->time);
         $this->assertEquals($log->user_id, $user->id);
-        $this->assertEquals($log->action_type,'add');
+        $this->assertEquals($log->action_type,'store');
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);

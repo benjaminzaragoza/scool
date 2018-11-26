@@ -44,6 +44,7 @@ UsersManagers
 
 # BUGS
 
+- [ ] Cal crear el canal App.Logs.Loggable.id i arreglar temps real dels logs per a un item
 - [ ] No funciona Logout amb user Sergi TUr badenas?
   - [ ] Realment crec que el que passa és que a vegades no mostra correctament la URL /
 - [ ] php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?

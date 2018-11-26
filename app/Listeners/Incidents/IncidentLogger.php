@@ -297,7 +297,7 @@ class IncidentLogger
         Log::create([
             'text' => "S'ha assignat l'usuari " . $event->user->link() . " a la incidència " . $event->incident->link(),
             'time' => Carbon::now(),
-            'action_type' => 'add',
+            'action_type' => 'store',
             'module_type' => 'Incidents',
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,

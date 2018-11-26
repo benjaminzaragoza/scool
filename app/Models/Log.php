@@ -43,6 +43,7 @@ class Log extends Model
             'text' => $this->text,
             'time' => $this->time,
             'human_time' => $this->human_time,
+            'formatted_time' => $this->formatted_time,
             'timestamp' => $this->timestamp,
             'action_type' => $this->action_type,
             'action' => $this->action,

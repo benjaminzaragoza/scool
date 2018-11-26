@@ -166,6 +166,7 @@
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
+                            <changelog-loggable :loggable="incident"></changelog-loggable>
                             <fullscreen-dialog
                                     :badge="incident.comments && incident.comments.length"
                                     badge-color="teal"
@@ -208,6 +209,7 @@ import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import FullScreenDialog from '../ui/FullScreenDialog'
 import UserSelect from '../users/UsersSelectComponent.vue'
 import UserAvatar from '../ui/UserAvatarComponent'
+import ChangelogLoggable from '../changelog/ChangelogLoggable'
 
 var filters = {
   all: function (incidents) {
@@ -238,7 +240,8 @@ export default {
     'user-avatar': UserAvatar,
     'incident-settings': IncidentSettings,
     'incident-tags': IncidentTagsComponent,
-    'incident-assignees': IncidentAssigneesComponent
+    'incident-assignees': IncidentAssigneesComponent,
+    'changelog-loggable': ChangelogLoggable
   },
   data () {
     return {
