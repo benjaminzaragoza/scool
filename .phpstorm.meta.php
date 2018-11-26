@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-11-15 18:08:38.
+    * Generated on 2018-11-26 09:31:07.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -47,6 +47,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -208,6 +209,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -369,6 +371,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -530,6 +533,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -691,6 +695,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -852,6 +857,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -1013,6 +1019,7 @@ namespace PHPSTORM_META {
         'Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator' => \Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\FileSizeOptimizedWidthCalculator::class,
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
+        'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Lab404\Impersonate\Guard\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
