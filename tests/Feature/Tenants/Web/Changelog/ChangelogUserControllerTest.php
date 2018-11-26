@@ -2,12 +2,9 @@
 
 namespace Tests\Feature\Web\Api;
 
-use App\Models\Module;
 use App\Models\User;
-use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 
 /**
@@ -36,7 +33,6 @@ class ChangelogUserControllerTest extends BaseTenantTest
     /** @test */
     public function show_changelog_for_an_specific_user()
     {
-        $this->withoutExceptionHandling();
         $logs = sample_logs();
 
         $user = User::findOrFail(1);
