@@ -61,6 +61,6 @@ class LogCreated implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return $this->log->map();
+        return ['log' => $this->log->map()];
     }
 }
