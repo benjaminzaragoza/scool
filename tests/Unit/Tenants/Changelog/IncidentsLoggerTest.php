@@ -70,7 +70,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
         $this->assertNull($log->old_loggable);
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map(false)));
         $this->assertEquals($log->icon,'add');
         $this->assertEquals($log->color,'success');
     }
@@ -99,8 +99,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map(false)));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map(false)));
         $this->assertEquals($log->old_value, 'Oberta');
         $this->assertEquals($log->new_value, 'Tancada');
         $this->assertEquals($log->icon,'lock');
@@ -132,8 +132,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map(false)));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map(false)));
         $this->assertEquals($log->new_value, 'Oberta');
         $this->assertEquals($log->old_value, 'Tancada');
         $this->assertEquals($log->icon,'lock_open');
@@ -160,8 +160,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($incident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($incident->map(false)));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map(false)));
         $this->assertEquals($log->icon,'visibility');
         $this->assertEquals($log->color,'primary');
     }
@@ -188,7 +188,7 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map(false)));
         $this->assertNull($log->new_loggable);
         $this->assertEquals($log->icon,'remove');
         $this->assertEquals($log->color,'error');
@@ -215,8 +215,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map(false)));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map(false)));
         $this->assertEquals($log->old_value, 'Bla bla bla');
         $this->assertEquals($log->new_value,'JORL JORL horl');
         $this->assertEquals($log->icon,'edit');
@@ -244,8 +244,8 @@ class IncidentsLoggerTest extends TestCase
         $this->assertEquals($log->module_type,'Incidents');
         $this->assertEquals($log->loggable_id,$incident->id);
         $this->assertEquals($log->loggable_type,Incident::class);
-        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map()));
-        $this->assertEquals($log->new_loggable, json_encode($incident->map()));
+        $this->assertEquals($log->old_loggable, json_encode($oldIncident->map(false)));
+        $this->assertEquals($log->new_loggable, json_encode($incident->map(false)));
         $this->assertEquals($log->old_value, 'No funciona res aula 20');
         $this->assertEquals($log->new_value, 'No funciona res aula 21');
         $this->assertEquals($log->icon,'edit');

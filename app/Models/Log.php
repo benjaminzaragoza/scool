@@ -55,7 +55,7 @@ class Log extends Model
             'color' => $this->color,
             'loggable_id' => $this->loggable_id,
             'loggable_type' => $this->loggable_type,
-            'loggable' => $this->loggable->map(false),
+            'loggable' => optional($this->loggable)->map(false),
             'new_loggable' => $this->new_loggable,
             'old_loggable' => $this->old_loggable,
             'old_value' => $this->old_value,
