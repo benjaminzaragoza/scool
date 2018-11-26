@@ -20,6 +20,24 @@
             </v-flex>
             <v-flex md12>
                 <v-list two-line
+                        :id="'incident_' + incident.id + '_changelog'"
+                        subheader
+                        v-if="incident.changelog && incident.changelog.length > 0">
+                        <span :id="'incident_' + incident.id + '_changelog_' + log.id" avatar v-for="log in incident.changelog" :key="log.id">
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-sub-title>{{log.text}}</v-list-tile-sub-title>
+                                    <v-list-tile-title class="height-auto-24-pre-wrap">
+                                        {{ log.time }}
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                            <v-divider></v-divider>
+                        </span>
+                </v-list>
+            </v-flex>
+            <v-flex md12>
+                <v-list two-line
                         :id="'incident_' + incident.id + '_comments'"
                         subheader
                         v-if="incident.comments && incident.comments.length > 0">

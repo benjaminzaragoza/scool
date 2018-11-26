@@ -5,6 +5,7 @@ namespace Tests\Unit\Tenants;
 use App\Console\Kernel;
 use App\Models\Incident;
 use App\Models\IncidentTag;
+use App\Models\Log;
 use App\Models\Reply;
 use App\Models\User;
 use Auth;
@@ -96,6 +97,7 @@ class IncidentTest extends TestCase
 
         $mappedIncident = $incident->map();
 
+        $this->assertCount(0,$mappedIncident['changelog']);
         $this->assertEquals(1,$mappedIncident['id']);
         $this->assertEquals($user->id,$mappedIncident['user_id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedIncident['user_name']);
@@ -219,6 +221,41 @@ class IncidentTest extends TestCase
         $this->assertEquals($assignee1->id,$mappedIncident['assignees'][0]['id']);
         $this->assertEquals($assignee2->id,$mappedIncident['assignees'][1]['id']);
 
+        // Changelog
+        $log1 = Log::create([
+            'text' => 'Ha creat la incidència ' . $incident->link(),
+            'time' => $incident->created_at,
+            'action_type' => 'store',
+            'module_type' => 'Incidents',
+            'user_id' => $incident->user->id,
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => null,
+            'new_loggable' => json_encode($incident->map()),
+            'icon' => 'add',
+            'color' => 'success'
+        ]);
+        $log2 = Log::create([
+            'text' => 'Ha tancat la incidència ' . $incident->link(),
+            'time' => $incident->updated_at,
+            'action_type' => 'close',
+            'module_type' => 'Incidents',
+            'user_id' => $incident->user->id,
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
+            'old_loggable' => json_encode($incident->map()),
+            'new_loggable' => json_encode($incident->map()),
+            'new_value' => 'Tancada',
+            'old_value' => 'Oberta',
+            'icon' => 'lock',
+            'color' => 'success'
+        ]);
+        $incident= $incident->fresh();
+        $mappedIncident = $incident->map();
+        $this->assertNotNull($mappedIncident['changelog']);
+        $this->assertCount(2,$mappedIncident['changelog']);
+        $this->assertEquals($mappedIncident['changelog'][0]['id'], $log1->id);
+        $this->assertEquals($mappedIncident['changelog'][1]['id'], $log2->id);
     }
 
     /**

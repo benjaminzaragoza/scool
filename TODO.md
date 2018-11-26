@@ -3,7 +3,7 @@
 - [X] Usuaris IncidentsManager no poden tancar incidències dels altres usuaris
 - [X] Usuaris IncidentsManager no poden afegir usuaris al mòdul Incidències pq no mostra cap usuari el desplegable pq no són
 UsersManagers
- - [ ] Mostra la llista d'usuaris però no permet afegir rol IncidentsManager (si Incidents)
+ - [X] Mostra la llista d'usuaris però no permet afegir rol IncidentsManager (si Incidents)
 - [ ] Usuaris IncidentsManager no poden mostrar incidències (apareix blanc el dialeg show)
   - [X] Se soluciona tenint els dos rols IncidentsManager i Incidents
   
@@ -35,7 +35,8 @@ UsersManagers
 # BUGS
 
 - [ ] No funciona Logout amb user Sergi TUr badenas?
-- [ ]php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
+  - [ ] Realment crec que el que passa és que a vegades no mostra correctament la URL /
+- [ ] php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
 
 # Laravel Passport
 
@@ -123,7 +124,7 @@ Performance:
 - [ ] Control d'esdeveniment en segon terme (activar i utilitzar queues)
 
 Idees:
-- Base de dades o memòria ràpida tipus Redis?
+- [ ] Base de dades o memòria ràpida tipus Redis?
 
 Vista:
 - [X] Utilitzar timeline vuetify
@@ -139,15 +140,13 @@ Vista:
 - [X] Botó refresh per forçar refresh del registre
 - [X] Real Time Logging -> Refresh automàtic (utilitzant Laravel echo i esdeveniments push)
   - [X] Switch que permeti activar/desactivar refresh automàtic
-- [ ] Filtres:
+- [ ] Filtres (només quan es crida el component com ChangelogManager o superadmin):
   - [ ] Filtrar per usuari
   - [ ] Filtrar per mòdul
-  - [ ] Poder accedir al mòdul Registre de Canvis directament a un apartat/filtre -> Per exemples canvis només d'un mòdul
-  - [ ] Authorizació i filtres: controlar a que pot i que no pot accedir els usuaris
-- [ ] Search: tipus datatables buscar qualsevol registre
-- [ ] Dos vistes? 
-  - (últims canvis o rang de dates) amb timeline
-  - Datatables?
+  - [X] Poder accedir al mòdul Registre de Canvis directament a un apartat/filtre -> Per exemples canvis només d'un mòdul
+  - [X] Authorizació i filtres: controlar a que pot i que no pot accedir els usuaris
+- [X] Search: tipus datatables buscar qualsevol registre
+
 - [X] Utilitzar Data Iterator amb el registre de canvis?
   - [ ] Aconseguir fer funcionar l'animació que funciona sense data iterator però no amb data-iterator: v-slide-x-transition group
   
@@ -159,7 +158,7 @@ WEB:
     
 API:
 - [X] ChangeLogControllerTest
-  - [ ] Operacions CRUD:
+  - [X] Operacions CRUD:
     - [X] List
     - [X] Afegir via API -> No té sentit? sempre anirà associat a un handler/listener d'un esdeveniment
     - [X] Esborrar/Editar -> No tenen sentit!
@@ -187,19 +186,46 @@ SettingsServiceProvider:
 
 # Incidents
 
+Changelog:
+- [ ] Filtra extra: Registre de canvis per a un objecte (igual que per User o per a mòdul amb URL propia)
+- [ ] Afegir un botó a cada incidència que permeti veure el changelog -> Hi ha un changelog a cada incident i per tant es pot fer amb Dialog
+sense necessitar d'executar nova URL ni fer cap petició extra XHR
+
+PUSHER ALGUNS OBJECTES TENEN MASsa INFO I DONEN PROBLEMES:
+- [ ]The data content of this event exceeds the allowed maximum (10240 bytes).
+  - [ ] Repassar objectes a map com per exemple user quan hi ha camps com user_name, user_email. Ocupen MOLT ESPAI!
+  - [ ] Camps description -> Enviar un resum 
+- See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
+
+
+Estadístiques:
+- [ ] Temps mig tancament incidències (Auditories)
+- [ ] Totals per tipus (obert tancat)
+- [ ] Totals per usuaris
+- [ ] Total per departament
+- [ ] Gràfiques/quesitos
+- [ ] Exportació de dades incidències a CSV
+- [ ] Marges temporals: lliure marge però predefinits (any natural- any acadèmic)
+
+EXTRES:
+- [ ] Floating button afegir comentari al mostra una incidència: potser múltiples accions
+- [ ] Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
+
 Settings:
 - [ ] TODO fer anar lo d'activar o no el mòdul
   - [ ] Desactiu? Dos formes-> no mostrar o mostrar un missatge que està desactivat temporalment
-- [ ] Poder afegir usuaris Manager (IncidentsManager)
-   - [ ] ES poden indicar dos rols possibles per accedir al menú en comptes de un
-   - [ ] Els IncidentsManager també tenen rol Incidents  
+- [X] Poder afegir usuaris Manager (IncidentsManager)
+   - [X] ES poden indicar dos rols possibles per accedir al menú en comptes de un. Solucionat mostrant només els usuaris amb Rol Incidents
+   al desplegable per afegir usuaris IncidentsManager. Cal doncs abans donar rol Incidents per ser IncidentsManager
+   - [X] Els IncidentsManager també tenen rol Incidents  
 
 Etiquetes:
 - [ ] CRUD etiquetes per als managers
 
 Changelog d'una incidència a la vista Show:
-- [ ] Barrejar els comentaris i les accions com far Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
+- [ ] Barrejar els comentaris i les accions com fa Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
 - [ ] Utilitzar vista vuetify timeline per mostrar tant els comentaris com l'historial
+- [ ] Comentaris i registre de canvis en temps real a la vista show
 
 Changelog:
 - [X] S'ha creat una nova incidència
@@ -221,9 +247,10 @@ Changelog:
 - [X] S'ha eliminat una incidència
   
 BUGS:
+- [ ] OCO changelog a Incidents és una relació que pot provocar Bucle
 - [X] L'autenticació de broadcast no funciona amb Impersonation pq el auth user és null -> SOLVED registering Routes inside tenant at web.php routes file
   - [X] Sembla que tampoc va sense impersonation
-- [ ] Changelog i filtres i temps real
+- [X] Changelog i filtres i temps real
   - [X] Ara mateix filtro correctament al mostrar incidències per mòdul però si està activat temps real el canal escolta TOTES les incidències i mostra altres mòduls
   - [X] Oco amb el botó refresh que sempre refresca tots els logs independentment dels permisos -> TODO API
   - [X] La llista de logs d'un usuari concret no funciona temps real pq no es registra bé el canal privat (dona error 403 to i ser superadmin)
@@ -266,8 +293,8 @@ Usuaris explotació Sergi Tur:
 - 1) Superadmin: sergitur@iesebre.com
 - 2) Professor: stur@iesebre.com
 
-- [ ] Els usuaris no siguin managers incidències no han de poder canviar settings
-- [ ] Els usuaris no siguin managers incidències no han de poder veure settings????
+- [X] Els usuaris no siguin managers incidències no han de poder canviar settings
+- [X] Els usuaris no siguin managers incidències no han de poder veure settings????
 
 Un stepper amb els passos:
 1) Activar o no mòdul incidències
@@ -277,10 +304,10 @@ Un stepper amb els passos:
 # ROLS
 
 A settings o similar:
-- [ ] Gestionar la llista usuaris que tindran el rol Incidents
+- [X] Gestionar la llista usuaris que tindran el rol Incidents
 - [ ] En principi tots els professors
 - [ ] Però també hi ha altres com becaris o altres tercers possibles ()
-- [ ] Gestionar els managers d'incidències (Rol Incidents Manager)
+- [X] Gestionar els managers d'incidències (Rol Incidents Manager)
 
 **Filtres**:
 
@@ -360,9 +387,8 @@ RESPONSIVE:
 - [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
 HISTORIAL:
-- [ ] Historial: especialment de les accions tipus esborrar incidència o comentaris
-- [ ] https://vuetifyjs.com/en/components/timelines
-- [ ] Fer com Github i mostrar als comentaris no només els comentaris sinó la evolució de incidència (tancada, oberta, assignada a, etc)
+- [X] Historial: especialment de les accions tipus esborrar incidència o comentaris
+- [X] https://vuetifyjs.com/en/components/timelines
 
 Ideas taken from Github
 - [X] Textareas: http://miaolz123.github.io/vue-markdown/
@@ -376,19 +402,6 @@ Ideas taken from Github
   - [X] Labels/Tags: tenen nom, descripció, icona i color (es pot fer un preview en directe quan es crea/edita un label)
 - [ ] Apartat participants: gent que participa de la discusió/comentaris
 - [X] Assignar incidències a usuaris (Assignees)  
-
-Estadístiques:
-- [ ] Temps mig tancament incidències (Auditories)
-- [ ] Totals per tipus (obert tancat)
-- [ ] Totals per usuaris
-- [ ] Total per departament
-- [ ] Gràfiques/quesitos
-- [ ] Exportació de dades incidències a CSV
-- [ ] Marges temporals: lliure marge però predefinits (any natural- any acadèmic)
-
-EXTRES:
-- [ ] Floating button afegir comentari al mostra una incidència: potser múltiples accions
-- [ ] Afegir botó normal Afegir Incidència (a part del flotant) a la llista d'incidències
 
 # USER RESOURCE vs user map (SOLUCIONAT/OBSOLET)
 

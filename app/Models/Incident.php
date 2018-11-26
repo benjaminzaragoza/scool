@@ -92,9 +92,19 @@ class Incident extends Model
             'api_uri' => $this->api_uri,
             'comments' => map_collection($this->comments),
             'tags' => map_collection($this->tags),
-            'assignees' => map_collection($this->assignees)
+            'assignees' => map_collection($this->assignees),
+            'changelog' => map_collection($this->changelog)
         ];
     }
+
+    /**
+     * Get all changes associated to loggable Incident (changelog).
+     */
+    public function changelog()
+    {
+        return $this->morphMany(Log::class, 'loggable');
+    }
+
 
     /**
      * Get incidents.
