@@ -1,3 +1,9 @@
+# Moodle
+
+- https://stackoverflow.com/questions/47688746/create-user-in-moodle-through-web-services-php
+- He creat rol scool: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=9
+- https://www.iesebre.com/moodle/admin/settings.php?section=webservicesoverview
+
 # Gestió de versions
 
 - [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
@@ -44,7 +50,7 @@ UsersManagers
 
 # BUGS
 
-- [ ] Cal crear el canal App.Logs.Loggable.id i arreglar temps real dels logs per a un item
+- [X] Cal crear el canal App.Logs.Loggable.id i arreglar temps real dels logs per a un item
 - [ ] No funciona Logout amb user Sergi TUr badenas?
   - [ ] Realment crec que el que passa és que a vegades no mostra correctament la URL /
 - [ ] php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
@@ -323,6 +329,7 @@ A settings o similar:
 **Filtres**:
 
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
+  - https://laracasts.com/series/whatcha-working-on/episodes/33 
 - [X] Buscador -> Full text search field. DE MOMENT NO CAL ES POT BUSCAR PER TOT LO NECESSARI
   - [ ] Permetre buscar per estat oberta/tancada (camp full search amb tots els strings de cerca a actions )
 - [X] Mostrar el total d'incidències obertes i tancades
