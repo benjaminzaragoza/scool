@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Broadcasting\BroadcastController;
@@ -128,6 +129,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/users', 'Tenant\UsersController@show');
 
+            Route::get('/moodle', '\\'.MoodleController::class.'@index');
+
             Route::get('/jobs', 'Tenant\JobsController@show');
 
             Route::get('/teachers', 'Tenant\TeachersController@show');
@@ -158,6 +161,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/changelog/module/{module}','Tenant\Web\ChangelogModuleController@index');
             Route::get('/changelog/user/{user}','Tenant\Web\ChangelogUserController@index');
             Route::get('/changelog/loggable/{loggable}/{loggableId}','Tenant\Web\ChangelogLoggableController@index');
+
+
         });
     });
 

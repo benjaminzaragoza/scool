@@ -14,11 +14,19 @@ const disappear = (el, modifiers) => {
 
 const haveRole = (role) => {
   if (role == null) return true
+  let roles = []
+  if (role.includes(',')) {
+    roles = role.split(',')
+  } else {
+    roles = [role]
+  }
   if (window.user && window.user.isSuperAdmin) return true
   const userRoles = window.user && window.user.roles
   if (userRoles) {
-    if (userRoles.indexOf(role) === -1) return false
-    else return true
+    roles.each(role => {
+      if (userRoles.indexOf(role.trim()) !== -1) return true
+    })
+    return false
   }
   return false
 }

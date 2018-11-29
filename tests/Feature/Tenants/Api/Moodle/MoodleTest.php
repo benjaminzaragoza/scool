@@ -32,7 +32,11 @@ class MoodleTest extends BaseTenantTest{
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test1()
     {
         $token = env('MOODLE_TOKEN');
@@ -44,10 +48,14 @@ class MoodleTest extends BaseTenantTest{
         $client = new RestClient($connection);
         $courseService = new Course($client);
         $courses = $courseService->getAll();
-        dd($courses);
+//        dd($courses);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test_list_all_users()
     {
         // NOTWORKING
@@ -76,7 +84,11 @@ class MoodleTest extends BaseTenantTest{
 //        dump($result);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test_list_all_enrolled_users()
     {
         // NOTWORKING
@@ -96,7 +108,11 @@ class MoodleTest extends BaseTenantTest{
         dump((string)($res->getBody()));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test_list_enrolled_users()
     {
         $token = env('MOODLE_TOKEN');
@@ -124,7 +140,11 @@ class MoodleTest extends BaseTenantTest{
         dump((string)($res->getBody()));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test_list_users()
     {
         $token = env('MOODLE_TOKEN');
@@ -152,7 +172,11 @@ class MoodleTest extends BaseTenantTest{
         dump((string)($res->getBody()));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test_list_users_obsolet()
     {
         $token = env('MOODLE_TOKEN');
@@ -180,7 +204,11 @@ class MoodleTest extends BaseTenantTest{
         dump((string)($res->getBody()));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
     public function moodle_test_create_users()
     {
 //        dump(env('MOODLE_TOKEN'));

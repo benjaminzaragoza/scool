@@ -99,6 +99,9 @@ window.Vue.component('google-user-add', require('./components/google/users/Googl
 window.Vue.component('ldap-users', require('./components/ldap/users/LdapUsersComponent.vue'))
 window.Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddComponent.vue'))
 
+// Moodle users
+window.Vue.component('moodle-users', require('./components/moodle/users/MoodleUsersComponent.vue'))
+
 // Incidents
 window.Vue.component('incidents', require('./components/incidents/IncidentsComponent.vue'))
 window.Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'))

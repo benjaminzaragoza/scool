@@ -611,8 +611,34 @@ if (!function_exists('formatted_logged_user')) {
     }
 }
 
-if (!function_exists('initialize_tenant_roles_and_permissions')) {
-    function initialize_tenant_roles_and_permissions()
+if (!function_exists('moodle_manager_permissions')) {
+    function moodle_manager_permissions()
+    {
+        return [
+            'moodle.index',
+            'moodle.show',
+            'moodle.store',
+            'moodle.update',
+            'moodle.destroy',
+        ];
+    }
+}
+
+if (!function_exists('users_manager_permissions')) {
+    function users_manager_permissions()
+    {
+        return [
+            'moodle.index',
+            'moodle.show',
+            'moodle.store',
+            'moodle.update',
+            'moodle.destroy',
+        ];
+    }
+}
+
+if (!function_exists('scool_permissions')) {
+    function scool_permissions()
     {
         $permissions = [
             'incident.list',
@@ -625,11 +651,15 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'reply.update'
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-        }
+        $permissions = array_merge($permissions,moodle_manager_permissions());
+        return $permissions;
+    }
+}
 
-        $roles = [
+if (!function_exists('scool_roles')) {
+    function scool_roles()
+    {
+        return [
             'Student',
             'Teacher',
             'Janitor',
@@ -644,16 +674,69 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'LessonsManager',
             'Incidents',
             'IncidentsManager',
-            'ChangelogManager'
+            'ChangelogManager',
+            'MoodleManager'
         ];
 
-        // Manager
-        // - Rol assignat a l'usuari principal (de fet és superadmin) però també es pot assignar a altres
-        // - Menú administració:
-        // - Gestió de mòduls
+    }
+}
+
+if (!function_exists('scool_roles_permissions')) {
+    function scool_roles_permissions()
+    {
+        return [
+            'MoodleManager' => moodle_manager_permissions(),
+            'UsersManager' => users_manager_permissions()
+        ];
+
+    }
+}
+
+if (!function_exists('initialize_tenant_roles_and_permissions')) {
+    function initialize_tenant_roles_and_permissions()
+    {
+        $permissions = scool_permissions();
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        $roles = scool_roles();
 
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
+        }
+
+        $rolePermissions = scool_roles_permissions();
+        foreach ($rolePermissions as $role => $rolePermission) {
+            $role = Role::findByName($role);
+            foreach ($rolePermission as $permission) {
+                $role->givePermissionTo($permission);
+            }
+        }
+    }
+}
+
+if (!function_exists('initialize_users_manager_role')) {
+    function initialize_users_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        $permissions = users_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_moodle_manager_role')) {
+    function initialize_moodle_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'MoodleManager']);
+        $permissions = moodle_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
         }
     }
 }
@@ -1066,6 +1149,12 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Usuaris',
             'href' => '/users',
             'role' => 'UsersManager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Moodle',
+            'href' => '/moodle',
+            'role' => 'MoodleManager,UsersManager'
         ]);
 
         Menu::firstOrCreate([
