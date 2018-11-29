@@ -1,0 +1,241 @@
+<template>
+    <span>
+        <v-toolbar color="blue darken-3">
+            <v-menu bottom>
+                <v-btn slot="activator" icon dark>
+                    <v-icon>more_vert</v-icon>
+                </v-btn>
+                <v-list>
+                    <v-list-tile href="/changelog/module/moodle" target="_blank">
+                        <v-list-tile-title>Mostrar historial incidències (registre de canvis)</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-toolbar-title class="white--text title">Usuaris de moodle</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/moodle" target="_blank">
+                <v-icon>help</v-icon>
+            </v-btn>
+
+            <fullscreen-dialog
+                    v-role="'MoodleManager,UserManager'"
+                    :flat="false"
+                    class="white--text"
+                    icon="settings"
+                    v-model="settingsDialog"
+                    color="blue darken-3"
+                    title="Canviar la configuració moodle">
+                        <moodle-settings module="moodle" @close="settingsDialog = false"></moodle-settings>
+            </fullscreen-dialog>
+
+            <v-btn id="moodle_users_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                <v-icon>refresh</v-icon>
+            </v-btn>
+        </v-toolbar>
+
+        <v-card>
+            <v-card-title>
+                <v-layout>
+                  <v-flex xs9 style="align-self: flex-end;">
+                      TODO FILTERS
+                      <!--<v-layout>-->
+                          <!--<v-flex xs3 class="text-sm-left" style="align-self: center;">-->
+                                <!--<span @click="showOpenIncidents" :class="{ bolder: filter === 'open', 'no-wrap': true, 'pointer': true }">-->
+                                    <!--<v-icon color="error" title="Obertes">lock_open</v-icon> Obertes: {{openIncidents ? openIncidents.length : 0}}-->
+                                <!--</span>-->
+                                <!--<span @click="showClosedIncidents" :class="{ bolder: filter === 'closed', 'no-wrap': true, 'pointer': true  }">-->
+                                  <!--<v-icon color="success" title="Tancades">lock</v-icon> Tancades: {{closedIncidents ? closedIncidents.length : 0}}-->
+                                <!--</span>-->
+                                <!--<span @click="showAll" :class="{ bolder: filter === 'all', 'no-wrap': true, 'pointer': true  }">-->
+                                  <!--<v-icon color="primary" title="Total">info</v-icon> Total: {{dataIncidents ? dataIncidents.length : 0}}-->
+                                <!--</span>-->
+                          <!--</v-flex>-->
+                          <!--<v-flex xs9>-->
+                               <!--<v-layout>-->
+                                   <!--<v-flex xs4>-->
+                                       <!--<user-select-->
+                                               <!--label="Creada per:"-->
+                                               <!--:users="creators"-->
+                                               <!--v-model="creator"-->
+                                       <!--&gt;</user-select>-->
+                                   <!--</v-flex>-->
+                                   <!--<v-flex xs4>-->
+                                       <!--<user-select-->
+                                               <!--label="Assignada a:"-->
+                                               <!--:users="filteredAssignees"-->
+                                               <!--v-model="assignee"-->
+                                       <!--&gt;</user-select>-->
+                                   <!--</v-flex>-->
+                                   <!--<v-flex xs4>-->
+                                       <!--<v-autocomplete-->
+                                               <!--v-model="selectedTags"-->
+                                               <!--:items="dataTags"-->
+                                               <!--attach-->
+                                               <!--chips-->
+                                               <!--label="Etiquetes"-->
+                                               <!--multiple-->
+                                               <!--item-value="id"-->
+                                               <!--item-text="value"-->
+                                       <!--&gt;-->
+                                            <!--<template slot="selection" slot-scope="data">-->
+                                                <!--<v-chip-->
+                                                        <!--small-->
+                                                        <!--label-->
+                                                        <!--@input="data.parent.selectItem(data.item)"-->
+                                                        <!--:selected="data.selected"-->
+                                                        <!--class="chip&#45;&#45;select-multi"-->
+                                                        <!--:color="data.item.color"-->
+                                                        <!--text-color="white"-->
+                                                        <!--:key="JSON.stringify(data.item)"-->
+                                                <!--&gt;<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>-->
+                                            <!--</template>-->
+                                            <!--<template slot="item" slot-scope="data">-->
+                                                <!--<v-checkbox v-model="data.tile.props.value"></v-checkbox>-->
+                                                <!--<v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">-->
+                                                    <!--<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}-->
+                                                <!--</v-chip>-->
+                                            <!--</template>-->
+                                       <!--</v-autocomplete>-->
+                                   <!--</v-flex>-->
+                               <!--</v-layout>-->
+                          <!--</v-flex>-->
+                      <!--</v-layout>-->
+                  </v-flex>
+                  <v-flex xs3>
+                      <v-text-field
+                              append-icon="search"
+                              label="Buscar"
+                              single-line
+                              hide-details
+                              v-model="search"
+                      ></v-text-field>
+                  </v-flex>
+                </v-layout>
+            </v-card-title>
+            <v-data-table
+                    class="px-0 mb-2 hidden-sm-and-down"
+                    :headers="headers"
+                    :items="filteredUsers"
+                    :search="search"
+                    item-key="id"
+                    no-results-text="No s'ha trobat cap registre coincident"
+                    no-data-text="No hi han dades disponibles"
+                    rows-per-page-text="Usuaris per pàgina"
+                    :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
+                    :pagination.sync="pagination"
+                    :loading="refreshing"
+            >
+                <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                <template slot="items" slot-scope="{item: user}">
+                    <tr :id="'user_row_' + user.id">
+                        <td class="text-xs-left" v-text="user.id"></td>
+                        <td class="text-xs-left" v-text="user.idnumber"></td>
+                        <td class="text-xs-left">
+                            <v-avatar color="primary">
+                              <img :src="user.profileimageurlsmall" alt="avatar">
+                            </v-avatar>
+                        </td>
+                        <td class="text-xs-left">
+                            <span :title="user.description" v-text="user.username"></span>
+                        </td>
+                        <td class="text-xs-left" v-text="user.email"></td>
+                        <td class="text-xs-left" v-text="user.fullname"></td>
+                        <td class="text-xs-left" v-text="user.auth"></td>
+                        <td class="text-xs-left" v-text="user.lang"></td>
+                        <td class="text-xs-left" v-text="user.confirmed"></td>
+                        <td class="text-xs-left">
+                            <timeago v-if="user.lastaccess !== 0" :auto-update="60" :datetime="new Date(user.lastaccess*1000)"></timeago>
+                            <span v-else>Mai</span>
+                        </td>
+                        <td class="text-xs-left">
+                            <json-dialog-component icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="user"></json-dialog-component>
+                            <v-btn icon title="Perfil de l'usuari a Moodle" flat color="primary" class="ma-0" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + user.id" target="_blank">
+                                <v-icon>person</v-icon>
+                            </v-btn>
+                            <v-btn icon title="Edita l'usuari a Moodle" flat color="success" class="ma-0" :href="'https://www.iesebre.com/moodle/user/editadvanced.php?id=' + user.id + '&course=1&returnto=profile'" target="_blank">
+                                <v-icon>edit</v-icon>
+                            </v-btn>
+                            <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)">
+                                <v-icon>remove</v-icon>
+                            </v-btn>
+                        </td>
+                    </tr>
+                </template>
+            </v-data-table>
+        </v-card>
+    </span>
+</template>
+
+<script>
+
+import MoodleSettings from './MoodleSettingsComponent'
+import JsonDialogComponent from '../../ui/JsonDialogComponent'
+
+var filters = {
+  all: function (incidents) {
+    return incidents
+  }
+}
+
+export default {
+  name: 'MoodleUsersList',
+  components: {
+    'moodle-settings': MoodleSettings,
+    'json-dialog-component': JsonDialogComponent,
+  },
+  data () {
+    return {
+      search: '',
+      refreshing: false,
+      filter: 'all',
+      dataUsers: this.users,
+      settingsDialog: false,
+      pagination: {
+        rowsPerPage: 25
+      }
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    filteredUsers: function () {
+      return filters[this.filter](this.dataUsers)
+    },
+    headers () {
+      let headers = []
+      headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
+      headers.push({ text: 'Id number', align: 'left', value: 'idnumber', width: '1%' })
+      headers.push({ text: 'Avatar', align: 'left', value: 'profileimageurlsmall' })
+      headers.push({ text: 'Nom usuari', align: 'left', value: 'username' })
+      headers.push({ text: 'Correu electrònic', align: 'left', value: 'email' })
+      headers.push({ text: 'Fullname', align: 'left', value: 'fullname' })
+      headers.push({ text: 'Auth', align: 'left', value: 'auth' })
+      headers.push({ text: 'Idioma', align: 'left', value: 'lang' })
+      headers.push({ text: 'Confirmat', align: 'left', value: 'confirmed' })
+      headers.push({ text: 'Últim accés', align: 'left', value: 'lastaccess' })
+      headers.push({ text: 'Accions', value: 'user_email', sortable: false })
+      return headers
+    }
+  },
+  methods: {
+    refresh () {
+      window.axios.get('/api/v1/moodle/users').then(response => {
+        this.$snackbar.showMessage('Usuaris actualitzats correctament')
+        this.refreshing = false
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.refreshing = false
+      })
+    },
+    remove (user) {
+      console.log('TODO remove user: ')
+      console.log(user.id)
+    }
+  }
+}
+</script>

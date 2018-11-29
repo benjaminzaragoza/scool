@@ -1,8 +1,33 @@
 # Moodle
 
+Controladors web
+- [X] Controlador web i Test
+- [X] Tots els permisos i rols comprovats als tests i creats a helpers.php
+- [X] Afegida opció de menú a la taula menus
+- [ ] Afegir mòdul
+- [ ] Tots els testos marcats com group moodle i slow per no executar-los sempre
+Controlador API:
+- [ ] Refresh/index
+- [ ] Remove/index
+
 - https://stackoverflow.com/questions/47688746/create-user-in-moodle-through-web-services-php
 - He creat rol scool: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=9
 - https://www.iesebre.com/moodle/admin/settings.php?section=webservicesoverview
+- [ ] Treure de Javascript les URLs hardcoded a iesebre.com agafar-les del fitxer de config de config/moodle.php
+
+Desactivar edició del perfil a Moodle:
+- [ ] https://docs.moodle.org/35/en/Roles_FAQ#How_can_I_prevent_a_user_from_changing_their_own_password.3F
+  - [ ] ES pot fer a partir dels permisos s'ha de treure el permis: moodle/user:editownprofile
+  - [ ] El canvi del password ja està desactivat al posar una URL a ebre-escool...
+  - [ ] Rol usuari autenticat: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=7
+    - [ ] Treure permis: https://docs.moodle.org/2x/ca/Capabilities/moodle/user:editownprofile
+Llista usuaris Moodle:
+- [ ] Quins usuaris de Moodle estan sincronitzats/existeixen a scool com a users
+  - [ ] Camp email per sincronitzar
+  - [ ] Altres camps possibles? idnumber
+  - [ ] Al menu opcional de tres punts es podria afegir un apartat per mostrar alertes/inconsistències:
+    - [ ] Usuaris que tenen un idnumber però després no coincideixen els dades del Moodle i el usuari local amb id =idnumber
+  - [ ] De fet podria apareixer una icona campana o similar en roig indicant quan hi han alertes
 
 # Gestió de versions
 

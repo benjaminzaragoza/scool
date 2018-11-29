@@ -14,7 +14,7 @@ use Illuminate\Contracts\Console\Kernel;
  *
  * @package Tests\Feature\Tenants\Api
  */
-class MoodleTest extends BaseTenantTest{
+class BasicObsoletMoodleTest extends BaseTenantTest{
 
     use RefreshDatabase;
 

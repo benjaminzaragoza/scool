@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
@@ -83,6 +84,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/users', 'Tenant\UsersController@store');
             Route::delete('/users/{user}', 'Tenant\UsersController@destroy');
             Route::get('/users/{user}', 'Tenant\UsersController@get');
+
+            // Moodle Users
+            Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');
 
             //GET USER BY EMAIL
             Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');

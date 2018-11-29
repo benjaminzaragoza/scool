@@ -360,16 +360,6 @@ export default {
       return headers
     }
   },
-  // TODO ESBORRAR
-  // watch: {
-  //   incidents: {
-  //     handler: function (newIncidents) {
-  //       console.log('###############AAAAAAAAAAAAAAAAAAAA')
-  //       console.log(newIncidents)
-  //     },
-  //     deep: true
-  //   }
-  // },
   methods: {
     moveLoggedUserToFirstPosition (users) {
       let loggedUser = users.find(user => {
