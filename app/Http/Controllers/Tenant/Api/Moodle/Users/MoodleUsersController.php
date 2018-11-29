@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Moodle\Users\MoodleUserDestroy;
 use App\Http\Requests\Moodle\Users\MoodleUserIndex;
 use App\Moodle\Entities\MoodleUser;
 
@@ -38,11 +39,8 @@ class MoodleUsersController extends Controller
 //    }
 //
 //
-//    public function destroy(DeleteIncident $request, $tenant, Incident $incident)
-//    {
-////        $oldIncident = clone($incident);
-////        $incident->delete();
-////        event(new IncidentDeleted($oldIncident));
-////        return $incident;
-//    }
+    public function destroy(MoodleUserDestroy $request, $tenant, $moodleuser)
+    {
+        return MoodleUser::destroy($moodleuser);
+    }
 }

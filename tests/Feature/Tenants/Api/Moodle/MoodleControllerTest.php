@@ -3,9 +3,7 @@
 namespace Tests\Feature\Tenants\Api\Incidents;
 
 use App\Models\User;
-use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
 use Tests\Feature\Tenants\Traits\CanLogin;
@@ -71,5 +69,35 @@ class MoodleControllerTest extends BaseTenantTest {
         $response->assertStatus(401);
     }
 
+    /**
+     * @test
+     */
+    public function superadmin_can_destroy_moodle_users()
+    {
+        $this->loginAsSuperAdmin('api');
+        $id = create_sample_moodle_user();
+        $response =  $this->json('DELETE','/api/v1/moodle/users/' . $id);
+        $response->assertSuccessful();
+    }
+
+    /**
+     * @test
+     */
+    public function regular_user_cannot_destroy_moodle_users()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+        $response =  $this->json('DELETE','/api/v1/moodle/users/1');
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function guest_user_cannot_destroy_moodle_users()
+    {
+        $response =  $this->json('DELETE','/api/v1/moodle/users/1');
+        $response->assertStatus(401);
+    }
 
 }

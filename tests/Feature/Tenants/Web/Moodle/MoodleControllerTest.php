@@ -36,10 +36,21 @@ class MoodleControllerTest extends BaseTenantTest
     public function superadmin_can_show_moodle()
     {
         $this->loginAsSuperAdmin();
+        Cache::shouldReceive('rememberForever')
+            ->once()
+            ->with('scool_moodle_users',\Closure::class)
+            ->andReturn(collect([]));
+
+        Cache::shouldReceive('rememberForever')
+            ->with('user_all_permissions',\Closure::class)
+            ->andReturn(collect([]));
+
         $response = $this->get('/moodle');
+        $response->assertSuccessful();
         $response->assertViewIs('tenants.moodle.index');
+
         $response->assertViewHas('users',function($users) {
-            return is_array($users);
+            return $users instanceof \Illuminate\Support\Collection;
         });
     }
 
@@ -69,11 +80,22 @@ class MoodleControllerTest extends BaseTenantTest
     public function moodle_users_manager_can_show_moodle()
     {
         $user = $this->loginAsMoodleManager();
+        $this->loginAsUsersManager();
+        Cache::shouldReceive('rememberForever')
+            ->once()
+            ->with('scool_moodle_users',\Closure::class)
+            ->andReturn(collect([]));
+
+        Cache::shouldReceive('rememberForever')
+            ->with('user_all_permissions',\Closure::class)
+            ->andReturn(collect([]));
+
         $response = $this->get('/moodle');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.moodle.index');
+
         $response->assertViewHas('users',function($users) {
-            return is_array($users);
+            return $users instanceof \Illuminate\Support\Collection;
         });
     }
 

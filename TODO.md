@@ -7,7 +7,7 @@ Controladors web
 - [ ] Afegir mòdul
 - [ ] Tots els testos marcats com group moodle i slow per no executar-los sempre
 Controlador API:
-- [ ] Refresh/index
+- [X] Refresh/index
 - [ ] Remove/index
 
 - https://stackoverflow.com/questions/47688746/create-user-in-moodle-through-web-services-php

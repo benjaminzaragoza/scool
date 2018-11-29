@@ -31,6 +31,7 @@ use App\Models\User;
 use App\Models\UserType;
 use App\Models\WeekLesson;
 use App\Models\Log;
+use App\Moodle\Entities\MoodleUser;
 use App\Repositories\PersonRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\UserRepository;
@@ -8509,6 +8510,24 @@ if (! function_exists('sample_logs')) {
         return [$log1,$log2,$log3,$log4];
     }
 }
+
+if (! function_exists('create_sample_moodle_user')) {
+    function create_sample_moodle_user() {
+        $user = [
+            'username' => 'usuariesborrar',
+            'firstname' => 'usuari',
+            'lastname' => 'esborrar',
+            'email' => 'usuariesborrar@gmail.com',
+            'password' => '123456'
+        ];
+        try {
+            return MoodleUser::store($user);
+        } catch(\Exception $e) {
+            return MoodleUser::get('usuariesborrar@gmail.com');
+        }
+    }
+}
+
 
 
 
