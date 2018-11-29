@@ -11,6 +11,17 @@ Controlador API:
 - [X] Remove
 - [ ] Add/store
 
+Usernames:
+- [ ] Càlcul centralitzat del username?
+- [ ] On guardar el username -> base de dades camp únic?
+- [ ] no preguntar mai al usuari -> calcular
+- [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manerta)
+- [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
+- [ ] Moodle -> usuaris com emails
+  - [ ] https://www.iesebre.com/moodle/admin/settings.php?section=sitepolicies
+  - [ ] Permet caràcters estesos en els noms d'usuari
+
+
 MOODLE password recovery:
 - Usuaris ldap -> no tenen password el busquen a Ldap però també estan a la base de dades (amb passwrd buit)
 - El webservice només deixa posar password a partir de text en clar no podem sincronitzar hashes

@@ -179,36 +179,51 @@ export default {
         this.add()
       }
     },
-    lastname (user) {
+    lastName (user) {
       if (user.sn1) {
         let sn2 = user.sn2 ? ' ' + user.sn2 : ''
         return user.sn1 + sn2
       } else {
-        return user.name.split(' ')
+        return user.name.split(' ').shift().join(' ')
       }
     },
     givenName (user) {
       if (user.givenName) return user.givenName
-      return user.name.split(' ').shift().join(' ')
+      return user.name.split(' ')[0]
+    },
+    username (user) {
+      if (user.username) return user.username
+      if (user.corporativeEmail) return user.corporativeEmail.split('@')[0]
     },
     add () {
       this.adding = true
-      window.axios.post('/api/v1/moodle/users', {
-        user: {
-          'username': 'usuariesborrar18',
-          'firstname': this.givenName(this.user),
-          'lastname': this.last_name(this.user),
-          'email': this.user.email,
-          'createpassword': true,
-          'idnumber': this.user.id
-        }
-      }).then((response) => {
-        this.adding = false
-        this.$snackbar.showMessage('Usuari afegit correctament a Moodle')
-      }).catch((error) => {
-        this.$snackbar.showError(error)
-        this.adding = false
-      })
+      console.log('username:')
+      console.log(this.username(this.user))
+      let prova = {
+        'username': this.username(this.user),
+        'firstname': this.givenName(this.user),
+        'lastname': this.lastName(this.user),
+        'email': this.user.email,
+        'createpassword': true,
+        'idnumber': this.user.id
+      }
+      console.log(prova)
+      // window.axios.post('/api/v1/moodle/users', {
+      //   user: {
+      //     'username': this.username(this.user),
+      //     'firstname': this.givenName(this.user),
+      //     'lastname': this.last_name(this.user),
+      //     'email': this.user.email,
+      //     'createpassword': true,
+      //     'idnumber': this.user.id
+      //   }
+      // }).then((response) => {
+      //   this.adding = false
+      //   this.$snackbar.showMessage('Usuari afegit correctament a Moodle')
+      // }).catch((error) => {
+      //   this.$snackbar.showError(error)
+      //   this.adding = false
+      // })
     },
     close () {
       this.$emit('close')
@@ -218,7 +233,6 @@ export default {
       window.axios.post('/api/v1/moodle/users/check', {
         'user': user
       }).then((response) => {
-        console.log(response.data)
         if (response.data.status === 'Error') {
           this.checkResult = false
           this.checkResultErrorMessage = response.data.message
