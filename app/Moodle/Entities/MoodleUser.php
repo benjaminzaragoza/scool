@@ -55,6 +55,18 @@ class MoodleUser
     }
 
     /**
+     * getByIdNumber.
+     *
+     * @param $user
+     * @return null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function getByIdNumber($idNumber) {
+        $results = self::all([['key' => 'idnumber', 'value' => $idNumber]]);
+        return empty($results) ? null : $results;
+    }
+
+    /**
      * Get.
      *
      * @param $user

@@ -10,11 +10,11 @@ use Illuminate\Contracts\Console\Kernel;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class MoodleControllerTest.
+ * Class MoodleUsersControllerTest.
  *
  * @package Tests\Feature\Tenants\Api
  */
-class MoodleControllerTest extends BaseTenantTest {
+class MoodleUsersControllerTest extends BaseTenantTest {
 
     use RefreshDatabase, CanLogin;
 

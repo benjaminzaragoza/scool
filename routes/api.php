@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -88,6 +89,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Moodle Users
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');
             Route::delete('/moodle/users/{moodleuser}', '\\'. MoodleUsersController::class .'@destroy');
+
+            //Moodle users check
+            Route::post('/moodle/users/check', '\\'. MoodleUsersCheckController::class .'@store');
 
             //GET USER BY EMAIL
             Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');

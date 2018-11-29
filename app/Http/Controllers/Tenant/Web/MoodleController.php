@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Web;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Changelog\ListChangelog;
 use App\Http\Requests\Moodle\MoodleIndex;
+use App\Models\User;
 use App\Moodle\Entities\MoodleUser;
 use Cache;
 
@@ -27,6 +28,8 @@ class MoodleController extends Controller
             return collect(MoodleUser::all());
         });
 
-        return view('tenants.moodle.index', compact('users'));
+        $localUsers = map_collection(User::all());
+
+        return view('tenants.moodle.index', compact('users','localUsers'));
     }
 }

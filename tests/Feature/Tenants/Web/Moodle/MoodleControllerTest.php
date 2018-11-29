@@ -35,7 +35,6 @@ class MoodleControllerTest extends BaseTenantTest
     /** @test */
     public function superadmin_can_show_moodle()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin();
         Cache::shouldReceive('rememberForever')
             ->once()
@@ -59,6 +58,10 @@ class MoodleControllerTest extends BaseTenantTest
         $response->assertViewIs('tenants.moodle.index');
 
         $response->assertViewHas('users',function($users) {
+            return $users instanceof \Illuminate\Support\Collection;
+        });
+
+        $response->assertViewHas('localUsers',function($users) {
             return $users instanceof \Illuminate\Support\Collection;
         });
     }
