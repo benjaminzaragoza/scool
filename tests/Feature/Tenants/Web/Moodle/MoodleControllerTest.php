@@ -35,6 +35,7 @@ class MoodleControllerTest extends BaseTenantTest
     /** @test */
     public function superadmin_can_show_moodle()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin();
         Cache::shouldReceive('rememberForever')
             ->once()
@@ -43,6 +44,14 @@ class MoodleControllerTest extends BaseTenantTest
 
         Cache::shouldReceive('rememberForever')
             ->with('user_all_permissions',\Closure::class)
+            ->andReturn(collect([]));
+
+        Cache::shouldReceive('rememberForever')
+            ->with('roleNames',\Closure::class)
+            ->andReturn(collect([]));
+
+        Cache::shouldReceive('rememberForever')
+            ->with('permissionNames',\Closure::class)
             ->andReturn(collect([]));
 
         $response = $this->get('/moodle');
