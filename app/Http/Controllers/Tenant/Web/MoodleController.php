@@ -24,11 +24,9 @@ class MoodleController extends Controller
     public function index(MoodleIndex $request)
     {
         $users = Cache::rememberForever('scool_moodle_users', function () {
-            return MoodleUser::all();
+            return collect(MoodleUser::all());
         });
 
-        $view = view('tenants.moodle.index', compact('users'));
-//        ($view);
-        return $view;
+        return view('tenants.moodle.index', compact('users'));
     }
 }
