@@ -22,7 +22,9 @@
                     <v-flex xs12>
                         <template v-if="checkResult !== null">
                             <v-alert v-if="checkResult=== true" :value="true" type="success">S'ha comprovat que l'usuari seleccionat no té cap usuari a Moodle. Podeu procedir a crear el compte</v-alert>
-                            <v-alert v-if="checkResult=== false" :value="true" type="error">L'usuari seleccionat té possibles problemes alhora de crear un usuari a Moodle: {{ checkResultErrorMessage }}</v-alert>
+                            <template v-if="checkResult=== false">
+                                <v-alert v-for="message in checkResultErrorMessage" :value="true" type="error">L'usuari seleccionat té possibles problemes alhora de crear un usuari a Moodle: {{ message }}</v-alert>
+                            </template>
                             <v-list two-line>
                               <template v-for="errorUser in checkResultErrorUsers">
                                 <v-list-tile
@@ -35,7 +37,7 @@
                                     <img :src="errorUser.profileimageurlsmall">
                                   </v-list-tile-avatar>
                                   <v-list-tile-content>
-                                    <v-list-tile-title v-text="errorUser.fullname"></v-list-tile-title>
+                                    <v-list-tile-title>{{ errorUser.fullname }} - (uidnumber: {{ errorUser.idnumber }})</v-list-tile-title>
                                     <v-list-tile-sub-title v-text="errorUser.email"></v-list-tile-sub-title>
                                   </v-list-tile-content>
                                 </v-list-tile>
@@ -157,10 +159,12 @@ export default {
   watch: {
     user (newuser) {
       if (newuser) {
-        console.log('New user ' + JSON.stringify(newuser) + ' selected')
+        this.checkResult = null
+        this.checkResultErrorUsers = []
         this.checkMoodleUser(newuser)
       } else {
         this.checkResult = null
+        this.checkResultErrorUsers = []
       }
     }
   },

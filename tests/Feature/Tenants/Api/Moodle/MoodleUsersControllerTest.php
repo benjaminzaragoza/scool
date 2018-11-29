@@ -73,6 +73,69 @@ class MoodleUsersControllerTest extends BaseTenantTest {
     /**
      * @test
      */
+    public function superadmin_can_create_moodle_users()
+    {
+        $this->withoutExceptionHandling();
+        $this->loginAsSuperAdmin('api');
+        $moddleUser = MoodleUser::get('usuariesborrar18@gmail.com');
+        if ($moddleUser) MoodleUser::destroy($moddleUser->id);
+        $params = [
+            'user' => [
+                'username' => 'usuariesborrar18',
+                'firstname' => 'usuari',
+                'lastname' => 'esborrar',
+                'email' => 'usuariesborrar18@gmail.com',
+                'password' => '123456'
+           ]
+        ];
+        $response =  $this->json('POST','/api/v1/moodle/users', $params);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $moddleUser = MoodleUser::get('usuariesborrar18@gmail.com');
+        $this->assertNotNull($moddleUser);
+        $this->assertEquals($result->username,'usuariesborrar18');
+        if ($moddleUser) MoodleUser::destroy($moddleUser->id);
+    }
+
+    /**
+     * @test
+     */
+    public function regular_user_cannot_create_moodle_users()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+        $user = [
+            'username' => 'usuariesborrar18',
+            'firstname' => 'usuari',
+            'lastname' => 'esborrar',
+            'email' => 'usuariesborrar18@gmail.com',
+            'password' => '123456'
+        ];
+        $response =  $this->json('POST','/api/v1/moodle/users', $user);
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function guest_user_cannot_create_moodle_users()
+    {
+        $user = [
+            'username' => 'usuariesborrar18',
+            'firstname' => 'usuari',
+            'lastname' => 'esborrar',
+            'email' => 'usuariesborrar18@gmail.com',
+            'password' => '123456'
+        ];
+        $response =  $this->json('POST','/api/v1/moodle/users', $user);
+        $response->assertStatus(401);
+    }
+
+
+
+    /**
+     * @test
+     */
     public function superadmin_can_destroy_moodle_users()
     {
         $this->loginAsSuperAdmin('api');

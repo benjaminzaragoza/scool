@@ -35,7 +35,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
     /**
      * @test
      */
-    public function superadmin_can_check_moodle_users()
+    public function superadmin_can_check_moodle_users_existing_uid()
     {
         $this->loginAsSuperAdmin('api');
         $user = create_sample_moodle_user();
@@ -49,9 +49,74 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
         ]);
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        dump($result);
         $this->assertEquals($result->status,'Error');
-        $this->assertEquals($result->message,"S'han trobat usuari/s amb idnumber coincident");
+        $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
+        $this->assertCount(1,$result->users);
+    }
+
+    /**
+     * @test
+     */
+    public function superadmin_can_check_moodle_users_existing_email()
+    {
+        $this->loginAsSuperAdmin('api');
+        $user = create_sample_moodle_user();
+        $response =  $this->json('POST','/api/v1/moodle/users/check', [
+            'user' => [
+                'id' => 9934945,
+                'corporativeEmail' => 'prova@iesebre.com',
+                'email' => 'maria_94_sr@hotmail.com',
+                'name' => 'Pepe Pardo Jeans'
+            ]
+        ]);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($result->status,'Error');
+        $this->assertEquals($result->message[0],"S'han trobat usuari/s amb email coincident");
+        $this->assertCount(1,$result->users);
+    }
+
+    /**
+     * @test
+     */
+    public function moodle_manager_can_check_moodle_users_existing_uid()
+    {
+        $this->loginAsMoodleManager('api');
+        $user = create_sample_moodle_user();
+        $response =  $this->json('POST','/api/v1/moodle/users/check', [
+            'user' => [
+                'id' => 1,
+                'corporativeEmail' => 'prova@iesebre.com',
+                'email' => 'emailpersonal@prova.com',
+                'name' => 'Pepe Pardo Jeans'
+            ]
+        ]);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($result->status,'Error');
+        $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
+        $this->assertCount(1,$result->users);
+    }
+
+    /**
+     * @test
+     */
+    public function users_manager_can_check_moodle_users_existing_uid()
+    {
+        $this->loginAsUsersManager('api');
+        $user = create_sample_moodle_user();
+        $response =  $this->json('POST','/api/v1/moodle/users/check', [
+            'user' => [
+                'id' => 1,
+                'corporativeEmail' => 'prova@iesebre.com',
+                'email' => 'emailpersonal@prova.com',
+                'name' => 'Pepe Pardo Jeans'
+            ]
+        ]);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($result->status,'Error');
+        $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
         $this->assertCount(1,$result->users);
     }
 

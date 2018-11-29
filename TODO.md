@@ -8,8 +8,15 @@ Controladors web
 - [ ] Tots els testos marcats com group moodle i slow per no executar-los sempre
 Controlador API:
 - [X] Refresh/index
-- [ ] Remove/index
+- [X] Remove
+- [ ] Add/store
 
+MOODLE password recovery:
+- Usuaris ldap -> no tenen password el busquen a Ldap però també estan a la base de dades (amb passwrd buit)
+- El webservice només deixa posar password a partir de text en clar no podem sincronitzar hashes
+- Webservice si té una opció per crear la paraula de pass i enviar per email
+
+Altres:
 - https://stackoverflow.com/questions/47688746/create-user-in-moodle-through-web-services-php
 - He creat rol scool: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=9
 - https://www.iesebre.com/moodle/admin/settings.php?section=webservicesoverview

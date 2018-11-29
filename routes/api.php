@@ -88,6 +88,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // Moodle Users
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');
+            Route::post('/moodle/users', '\\'. MoodleUsersController::class .'@store');
             Route::delete('/moodle/users/{moodleuser}', '\\'. MoodleUsersController::class .'@destroy');
 
             //Moodle users check

@@ -617,10 +617,10 @@ if (!function_exists('moodle_manager_permissions')) {
     {
         return [
             'moodle.index',
-            'moodle.show',
-            'moodle.store',
-            'moodle.update',
-            'moodle.destroy',
+            'moodle.user.index',
+            'moodle.user.show',
+            'moodle.user.store',
+            'moodle.user.destroy'
         ];
     }
 }
@@ -630,10 +630,10 @@ if (!function_exists('users_manager_permissions')) {
     {
         return [
             'moodle.index',
-            'moodle.show',
-            'moodle.store',
-            'moodle.update',
-            'moodle.destroy',
+            'moodle.user.index',
+            'moodle.user.show',
+            'moodle.user.store',
+            'moodle.user.destroy'
         ];
     }
 }

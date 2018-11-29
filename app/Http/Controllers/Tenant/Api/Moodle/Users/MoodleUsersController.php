@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserDestroy;
 use App\Http\Requests\Moodle\Users\MoodleUserIndex;
+use App\Http\Requests\Moodle\Users\MoodleUserStore;
 use App\Moodle\Entities\MoodleUser;
 use Cache;
 
@@ -25,6 +26,19 @@ class MoodleUsersController extends Controller
     public function index(MoodleUserIndex $request)
     {
         return MoodleUser::all();
+    }
+
+    /**
+     * Store.
+     *
+     * @param MoodleUserStore $request
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function store(MoodleUserStore $request)
+    {
+        $result = MoodleUser::store($request->user);
+        return get_object_vars($result);
     }
 
     /**
