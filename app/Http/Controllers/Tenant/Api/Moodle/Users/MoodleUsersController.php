@@ -19,28 +19,23 @@ class MoodleUsersController extends Controller
      *
      * @param MoodleUserIndex $request
      * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function index(MoodleUserIndex $request)
     {
         return MoodleUser::all();
     }
 
-//    public function store(StoreIncident $request)
-//    {
-////        $incident = Incident::create($request->only('subject','description'))->assignUser($request->user());
-////        event(new IncidentStored($incident));
-////        return $incident->load(['user'])->map();
-//    }
-//
-//    public function show(ShowIncident $request, $tenant,Incident $incident)
-//    {
-////        event(new IncidentShowed($incident));
-////        return $incident->map();
-//    }
-//
-//
+    /**
+     * Destroy.
+     *
+     * @param MoodleUserDestroy $request
+     * @param $tenant
+     * @param $moodleuser
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function destroy(MoodleUserDestroy $request, $tenant, $moodleuser)
     {
-        return MoodleUser::destroy($moodleuser);
+        MoodleUser::destroy($moodleuser);
     }
 }

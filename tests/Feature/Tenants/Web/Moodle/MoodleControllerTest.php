@@ -88,7 +88,7 @@ class MoodleControllerTest extends BaseTenantTest
     /** @test */
     public function moodle_users_manager_can_show_moodle()
     {
-        $user = $this->loginAsMoodleManager();
+        $this->loginAsMoodleManager();
         $this->loginAsUsersManager();
         Cache::shouldReceive('rememberForever')
             ->once()

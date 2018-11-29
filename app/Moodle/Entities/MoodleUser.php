@@ -77,7 +77,7 @@ class MoodleUser
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function destroy($user) {
-        $user = is_integer($user) ? $user : self::get($user)->id;
+        $user = is_integer(intval($user)) ? $user : self::get($user)->id;
         $functionname = 'core_user_delete_users';
         $serverurl = config('moodle.url') . config('moodle.uri') .  '?wstoken=' . config('moodle.token') . '&wsfunction='.$functionname . '&moodlewsrestformat=json';
         $client = new Client();
