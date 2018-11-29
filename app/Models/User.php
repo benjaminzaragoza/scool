@@ -6,9 +6,7 @@ use App\Http\Resources\Tenant\UserCollection;
 use App\Models\Traits\ApiURI;
 use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
-use Auth;
 use Cache;
-use Gate;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 

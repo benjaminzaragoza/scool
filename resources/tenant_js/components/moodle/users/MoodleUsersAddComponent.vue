@@ -23,7 +23,7 @@
                         <template v-if="checkResult !== null">
                             <v-alert v-if="checkResult=== true" :value="true" type="success">S'ha comprovat que l'usuari seleccionat no té cap usuari a Moodle. Podeu procedir a crear el compte</v-alert>
                             <template v-if="checkResult=== false">
-                                <v-alert v-for="message in checkResultErrorMessage" :value="true" type="error">L'usuari seleccionat té possibles problemes alhora de crear un usuari a Moodle: {{ message }}</v-alert>
+                                <v-alert v-for="message in checkResultErrorMessage" :value="true" type="error" :key="JSON.stringify(message)">L'usuari seleccionat té possibles problemes alhora de crear un usuari a Moodle: {{ message }}</v-alert>
                             </template>
                             <v-list two-line>
                               <template v-for="errorUser in checkResultErrorUsers">
@@ -146,7 +146,7 @@ export default {
       user: null,
       checking: false,
       checkResult: null,
-      checkResultErrorMessage: '',
+      checkResultErrorMessage: [],
       checkResultErrorUsers: []
     }
   },
@@ -179,9 +179,30 @@ export default {
         this.add()
       }
     },
+    lastname (user) {
+      if (user.sn1) {
+        let sn2 = user.sn2 ? ' ' + user.sn2 : ''
+        return user.sn1 + sn2
+      } else {
+        return user.name.split(' ')
+      }
+    },
+    givenName (user) {
+      if (user.givenName) return user.givenName
+      return user.name.split(' ').shift().join(' ')
+    },
     add () {
       this.adding = true
-      window.axios.post('/api/v1/moodle/users').then((response) => {
+      window.axios.post('/api/v1/moodle/users', {
+        user: {
+          'username': 'usuariesborrar18',
+          'firstname': this.givenName(this.user),
+          'lastname': this.last_name(this.user),
+          'email': this.user.email,
+          'createpassword': true,
+          'idnumber': this.user.id
+        }
+      }).then((response) => {
         this.adding = false
         this.$snackbar.showMessage('Usuari afegit correctament a Moodle')
       }).catch((error) => {
