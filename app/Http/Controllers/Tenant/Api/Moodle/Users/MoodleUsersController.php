@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserDestroy;
 use App\Http\Requests\Moodle\Users\MoodleUserIndex;
 use App\Moodle\Entities\MoodleUser;
+use Cache;
 
 /**
  * Class MoodleUsersController.
@@ -37,5 +38,6 @@ class MoodleUsersController extends Controller
     public function destroy(MoodleUserDestroy $request, $tenant, $moodleuser)
     {
         MoodleUser::destroy($moodleuser);
+        Cache::forget('scool_moodle_users');
     }
 }

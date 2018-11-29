@@ -156,7 +156,7 @@
                             <v-btn icon title="Edita l'usuari a Moodle" flat color="success" class="ma-0" :href="'https://www.iesebre.com/moodle/user/editadvanced.php?id=' + user.id + '&course=1&returnto=profile'" target="_blank">
                                 <v-icon>edit</v-icon>
                             </v-btn>
-                            <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)">
+                            <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)" :disabled="removing === user.id" :loading="removing  === user.id">
                                 <v-icon>remove</v-icon>
                             </v-btn>
                         </td>
@@ -188,6 +188,7 @@ export default {
     return {
       search: '',
       refreshing: false,
+      removing: false,
       filter: 'all',
       dataUsers: this.users,
       settingsDialog: false,
@@ -224,7 +225,9 @@ export default {
   },
   methods: {
     refresh () {
+      this.refreshing = true
       window.axios.get('/api/v1/moodle/users').then(response => {
+        this.dataUsers = response.data
         this.$snackbar.showMessage('Usuaris actualitzats correctament')
         this.refreshing = false
       }).catch(error => {
@@ -233,8 +236,15 @@ export default {
       })
     },
     remove (user) {
-      console.log('TODO remove user: ')
-      console.log(user.id)
+      this.removing = user.id
+      window.axios.delete('/api/v1/moodle/users/' + user.id).then(() => {
+        this.dataUsers.splice(this.dataUsers.indexOf(user), 1)
+        this.$snackbar.showMessage('Usuari esborrat correctament')
+        this.removing = null
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.removing = null
+      })
     }
   }
 }
