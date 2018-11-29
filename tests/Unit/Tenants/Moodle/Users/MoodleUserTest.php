@@ -53,4 +53,17 @@ class MoodleUserTest extends TestCase
         $this->assertEquals($user->username, 'admin');
         $this->assertEquals($user->email, 'maninfo@iesebre.com');
     }
+
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
+    public function canDestroy()
+    {
+        $user = create_sample_moodle_user();
+        MoodleUser::destroy($user->id);
+        $result = MoodleUser::get($user->username);
+        $this->assertNull($result);
+    }
 }

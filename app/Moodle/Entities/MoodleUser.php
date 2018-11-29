@@ -42,8 +42,25 @@ class MoodleUser
 
     public static function get($user) {
         if (filter_var($user, FILTER_VALIDATE_EMAIL)) {
-            return self::all([['key' => 'email', 'value' => $user]])[0];
+            $results = self::all([['key' => 'email', 'value' => $user]]);
+            return empty($results) ? null : $results[0];
         }
-        return self::all([['key' => 'username', 'value' => $user]])[0];
+        $results = self::all([['key' => 'username', 'value' => $user]]);
+        return empty($results) ? null : $results[0];
+    }
+
+    public static function destroy($user) {
+        $user = is_integer($user) ? $user : self::get($user)->id;
+        $functionname = 'core_user_delete_users';
+        $serverurl = config('moodle.url') . config('moodle.uri') .  '?wstoken=' . config('moodle.token') . '&wsfunction='.$functionname . '&moodlewsrestformat=json';
+        $client = new Client();
+        $params = [
+            'userids' => [ $user ]
+        ];
+        $res = $client->request('POST', $serverurl, [
+            'form_params' => $params
+        ]);
+        $result = (string) $res->getBody();
+        if (str_contains($result,'"exception"')) throw new \Exception($result);
     }
 }

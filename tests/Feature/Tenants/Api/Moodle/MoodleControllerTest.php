@@ -74,9 +74,12 @@ class MoodleControllerTest extends BaseTenantTest {
      */
     public function superadmin_can_destroy_moodle_users()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
-        $id = create_sample_moodle_user();
-        $response =  $this->json('DELETE','/api/v1/moodle/users/' . $id);
+        $user = create_sample_moodle_user();
+        dump($user);
+        dump($user->id);
+        $response =  $this->json('DELETE','/api/v1/moodle/users/' . $user->id);
         $response->assertSuccessful();
     }
 
