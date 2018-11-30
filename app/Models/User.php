@@ -236,6 +236,21 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * Lastname.
+     *
+     * @return null|string
+     */
+    public function lastname()
+    {
+        if ($this->person) {
+            $lastname = $this->person->sn1;
+            if ($this->person->sn2) $lastname = $lastname . ' ' . $this->person->sn2;
+            return $lastname;
+        }
+        return null;
+    }
+
+    /**
      * Assign full name.
      *
      * @param $fullname
@@ -247,6 +262,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             $this->person->givenName = $fullname['givenName'];
             $this->person->sn1 = $fullname['sn1'];
             $this->person->sn2 = $fullname['sn2'];
+            $this->person->save();
         } else {
             $person = Person::create($fullname);
             $person->user_id = $this->id;
@@ -640,6 +656,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'givenName' => optional($this->person)->givenName,
             'sn1' => optional($this->person)->sn1,
             'sn2' => optional($this->person)->sn2,
+            'lastname' => $this->lastname(),
             'email' => $this->email,
             'hash_id' => $this->hash_id,
             'photo' => $this->photo,

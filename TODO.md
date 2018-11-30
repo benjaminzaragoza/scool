@@ -1,5 +1,8 @@
 # Moodle
 
+Bugs:
+- [X] Reduir les 506 queries amb Eager Loading
+
 Controladors web
 - [X] Controlador web i Test
 - [X] Tots els permisos i rols comprovats als tests i creats a helpers.php
