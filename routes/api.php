@@ -79,7 +79,11 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/user_person', 'Tenant\UserPersonController@store');
             Route::delete('/user_person/{user}', 'Tenant\UserPersonController@destroy');
 
-            // USERS
+            // Persons
+            Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
+
+
+                // USERS
             Route::put('/user', 'Tenant\LoggedUserController@update');
             Route::get('/users', 'Tenant\UsersController@index');
             Route::post('/users', 'Tenant\UsersController@store');
