@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api\Roles;
+namespace App\Http\Controllers\Tenant\Api\Person;
 
 use App\Http\Controllers\Tenant\Controller;
+use App\Http\Requests\People\PeopleStore;
 use App\Http\Requests\People\PeopleUpdate;
 use App\Models\Person;
-use Spatie\Permission\Models\Role;
 
 /**
  * Class PeopleController
@@ -14,9 +14,16 @@ use Spatie\Permission\Models\Role;
  */
 class PeopleController extends Controller
 {
-    public function update(PeopleUpdate $request, $tenant, Person $person)
+
+    /**
+     * Store.
+     *
+     * @param PeopleStore $request
+     * @return mixed
+     */
+    public function store(PeopleStore $request)
     {
-        Person::update($request->only([
+        $person = Person::create($request->only([
             'givenName',
             'sn1',
             'sn2',
@@ -33,8 +40,43 @@ class PeopleController extends Controller
             'other_emails',
             'notes',
         ]));
-        // TODO ASSIGN USER
-//        $table->unsignedInteger('user_id')->nullable();
-
+        if ($request->user_id) {
+            $person->user_id = $request->user_id;
+            $person->save();
+        }
+        return $person;
+    }
+    /**
+     * Update.
+     *
+     * @param PeopleUpdate $request
+     * @param $tenant
+     * @param Person $person
+     * @return Person
+     */
+    public function update(PeopleUpdate $request, $tenant, Person $person)
+    {
+        $person->update($request->only([
+            'givenName',
+            'sn1',
+            'sn2',
+            'identifier_id',
+            'birthdate',
+            'birthplace_id',
+            'gender',
+            'civil_status',
+            'phone',
+            'other_phones',
+            'mobile',
+            'other_mobiles',
+            'email',
+            'other_emails',
+            'notes',
+        ]));
+        if ($request->user_id) {
+            $person->user_id = $request->user_id;
+            $person->save();
+        }
+        return $person;
     }
 }

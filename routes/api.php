@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
+use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
@@ -80,6 +81,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/user_person/{user}', 'Tenant\UserPersonController@destroy');
 
             // Persons
+            Route::post('/people', '\\'. PeopleController::class .'@store');
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
 
 

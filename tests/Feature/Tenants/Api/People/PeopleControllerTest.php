@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class PeopleControllerTest.
@@ -17,7 +18,7 @@ use Tests\BaseTenantTest;
  */
 class PeopleControllerTest extends BaseTenantTest
 {
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -33,18 +34,112 @@ class PeopleControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
+    /** @test */
+    public function superadmin_can_store_people()
+    {
+        $this->loginAsSuperAdmin('api');
+
+        $person = [
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertSuccessful();
+        $person = Person::first();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+    }
 
     /** @test */
-    public function user_manager_can_update_people()
+    public function superadmin_can_store_people_validation()
     {
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsSuperAdmin('api');
+
+        $person = [];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function user_manager_can_store_people()
+    {
+        $this->loginAsUsersManager('api');
+
+        $person = [
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertSuccessful();
+        $person = Person::first();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+    }
+
+    /** @test */
+    public function people_manager_can_store_people()
+    {
+        $this->loginAsPeopleManager('api');
+
+        $person = [
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertSuccessful();
+        $person = Person::first();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+    }
+
+    /** @test */
+    public function regular_user_cannot_store_people()
+    {
+        $this->login('api');
+        $person = [
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function guest_user_cannot_store_people()
+    {
+        $person = [
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function superadmin_can_update_people()
+    {
+        $this->loginAsSuperAdmin('api');
+
         $person = Person::create([
             'givenName' => 'Pepa',
             'sn1' => 'Parda',
@@ -59,13 +154,98 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $person = $person->fresh();
         $result = json_decode($response->getContent());
-        dump($result);
         $this->assertEquals($person->givenName,'Pepe');
         $this->assertEquals($person->sn1,'Pardo');
         $this->assertEquals($person->sn2,'Jeans');
         $this->assertEquals($result->givenName,'Pepe');
         $this->assertEquals($result->sn1,'Pardo');
         $this->assertEquals($result->sn2,'Jeans');
+    }
+
+    /** @test */
+    public function superadmin_can_update_people_validation()
+    {
+        $this->loginAsSuperAdmin('api');
+
+        $person = Person::create([
+            'givenName' => 'Pepa',
+            'sn1' => 'Parda',
+            'sn2' => 'Jeana'
+        ]);
+        $response = $this->json('PUT','/api/v1/people/' . $person->id,[]);
+
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function users_manager_can_update_people()
+    {
+        $this->loginAsUsersManager('api');
+
+        $person = Person::create([
+            'givenName' => 'Pepa',
+            'sn1' => 'Parda',
+            'sn2' => 'Jeana'
+        ]);
+        $response = $this->json('PUT','/api/v1/people/' . $person->id,[
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
+
+        $response->assertSuccessful();
+        $person = $person->fresh();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+    }
+
+    /** @test */
+    public function people_manager_can_update_people()
+    {
+        $this->loginAsPeopleManager('api');
+
+        $person = Person::create([
+            'givenName' => 'Pepa',
+            'sn1' => 'Parda',
+            'sn2' => 'Jeana'
+        ]);
+        $response = $this->json('PUT','/api/v1/people/' . $person->id,[
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
+
+        $response->assertSuccessful();
+        $person = $person->fresh();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+    }
+
+    /** @test */
+    public function regular_user_cannot_update_people()
+    {
+        $this->login('api');
+        $person = Person::create([
+            'givenName' => 'Pepa',
+            'sn1' => 'Parda',
+            'sn2' => 'Jeana'
+        ]);
+        $response = $this->json('PUT','/api/v1/people/' . $person->id,[
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
+        $response->assertStatus(403);
     }
 
     /** @test */
@@ -81,8 +261,7 @@ class PeopleControllerTest extends BaseTenantTest
             'sn1' => 'Pardo',
             'sn2' => 'Jeans'
         ]);
-
-        $response->assertRedirect('/login');
+        $response->assertStatus(401);
     }
 
 }

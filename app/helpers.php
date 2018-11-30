@@ -633,7 +633,19 @@ if (!function_exists('users_manager_permissions')) {
             'moodle.user.index',
             'moodle.user.show',
             'moodle.user.store',
-            'moodle.user.destroy'
+            'moodle.user.destroy',
+            'people.update',
+            'people.store'
+        ];
+    }
+}
+
+if (!function_exists('people_manager_permissions')) {
+    function people_manager_permissions()
+    {
+        return [
+            'people.store',
+            'people.update'
         ];
     }
 }
@@ -653,6 +665,7 @@ if (!function_exists('scool_permissions')) {
         ];
 
         $permissions = array_merge($permissions,moodle_manager_permissions());
+        $permissions = array_merge($permissions,people_manager_permissions());
         return $permissions;
     }
 }
@@ -676,7 +689,8 @@ if (!function_exists('scool_roles')) {
             'Incidents',
             'IncidentsManager',
             'ChangelogManager',
-            'MoodleManager'
+            'MoodleManager',
+            'PeopleManager'
         ];
 
     }
@@ -687,7 +701,8 @@ if (!function_exists('scool_roles_permissions')) {
     {
         return [
             'MoodleManager' => moodle_manager_permissions(),
-            'UsersManager' => users_manager_permissions()
+            'UsersManager' => users_manager_permissions(),
+            'PeopleManager' => people_manager_permissions()
         ];
 
     }
@@ -723,6 +738,18 @@ if (!function_exists('initialize_users_manager_role')) {
     {
         $role = Role::firstOrCreate(['name' => 'UsersManager']);
         $permissions = users_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_people_manager_role')) {
+    function initialize_people_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'PeopleManager']);
+        $permissions = people_manager_permissions();
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
             $role->givePermissionTo($permission);
