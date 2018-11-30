@@ -653,6 +653,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'id' => $this->id,
             'name' => $this->name,
             'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
+            'person_id' => optional($this->person)->id,
             'givenName' => optional($this->person)->givenName,
             'sn1' => optional($this->person)->sn1,
             'sn2' => optional($this->person)->sn2,

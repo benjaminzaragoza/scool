@@ -834,7 +834,7 @@ class UserTest extends TestCase
             'google_email' => 'pepepardo@iesebre.com',
         ]);
 
-        Person::create([
+        $person = Person::create([
             'user_id' => $user->id,
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -847,6 +847,7 @@ class UserTest extends TestCase
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe',$mappedUser['givenName']);
         $this->assertFalse($mappedUser['isSuperAdmin']);
+        $this->assertEquals($person->id,$mappedUser['person_id']);
         $this->assertEquals('Pardo',$mappedUser['sn1']);
         $this->assertEquals('Jeans',$mappedUser['sn2']);
         $this->assertEquals('Pardo Jeans',$mappedUser['lastname']);

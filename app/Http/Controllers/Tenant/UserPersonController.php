@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\Http\Requests\AddUser;
 use App\Http\Requests\UserPerson\UserPersonDestroy;
 use App\Http\Requests\UserPerson\UserPersonStore;
 use App\Models\Person;
@@ -20,7 +19,7 @@ class UserPersonController extends Controller
     /**
      * Store user on database.
      *
-     * @param AddUser $request
+     * @param UserPersonStore $request
      * @return mixed
      */
     public function store(UserPersonStore $request)
