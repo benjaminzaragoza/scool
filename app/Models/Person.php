@@ -17,8 +17,7 @@ class Person extends Model implements HasMedia
 {
     use HasMediaTrait, FormattedDates;
 
-
-    protected $guarded = [];
+    protected $guarded = ['user_id'];
 
     protected $appends = [
         'name',
