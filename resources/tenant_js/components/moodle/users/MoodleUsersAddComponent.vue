@@ -49,7 +49,6 @@
                         <template v-if="checkResult !== null">
 
                             <v-dialog v-model="showUsernameFieldHelpDialog" width="700">
-                              <v-btn  slot="activator" color="red lighten-2" dark>Click Me</v-btn>
                                <v-card>
                                 <v-card-title
                                         class="headline grey lighten-2"
@@ -77,10 +76,6 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-
-                                                                <!--@click:prepend="this.showUsernameFieldHelpDialog = true"-->
-
-
                             <v-text-field
                                     prepend-icon="help"
                                     @click:prepend="activeUsernameFieldHelpDialog"
@@ -89,18 +84,35 @@
                                     name="username"
                                     label="Nom d'usuari"
                             ></v-text-field>
-                            <v-text-field
+                            <v-text-field v-if="user.givenName"
                                     readonly
                                     v-model="name"
                                     name="name"
                                     label="Nom"
                             ></v-text-field>
-                            <v-text-field
+                             <v-text-field v-else
+                                     v-model="name"
+                                     name="name"
+                                     label="Nom"
+                             ></v-text-field>
+                            <v-text-field v-if="user.lastname"
                                     readonly
                                     v-model="lastname"
                                     name="lastname"
                                     label="Cognoms"
                             ></v-text-field>
+                            <template v-else>
+                                <v-text-field
+                                        v-model="sn1"
+                                        name="sn1"
+                                        label="1r cognom"
+                                ></v-text-field>
+                                <v-text-field
+                                        v-model="sn2"
+                                        name="sn2"
+                                        label="2n cognom"
+                                ></v-text-field>
+                            </template>
                             <v-text-field
                                     readonly
                                     v-model="email"
@@ -114,10 +126,15 @@
                                     label="Identificador local(idnumber)"
                             ></v-text-field>
                             <v-checkbox
-                                    readonly
                                     label="Crear password de Moodle i enviar per correu electrònic"
                                     v-model="createpassword"
                             ></v-checkbox>
+                            <v-text-field v-if="!createpassword"
+                                    v-model="password"
+                                    type="password"
+                                    name="password"
+                                    label="Paraula de pas"
+                            ></v-text-field>
                         </template>
                     </v-flex>
                 </v-layout>
@@ -127,7 +144,7 @@
                        color="primary"
                        class="white--text"
                        :loading="adding"
-                       :disabled="adding">Afegir</v-btn>
+                       :disabled="adding || invalid">Afegir</v-btn>
             <v-btn @click="close()"
                    id="close_button"
                    color="error"
@@ -216,9 +233,23 @@ export default {
       username: '',
       name: '',
       lastname: '',
+      sn1: '',
+      sn2: '',
       email: '',
       idnumber: '',
-      createpassword: true
+      createpassword: true,
+      password: ''
+    }
+  },
+  computed: {
+    invalid () {
+      if (!this.username) return true
+      if (!this.email) return true
+      if (!this.name) return true
+      if (!this.lastname) return true
+      if (!this.idnumber) return true
+      if (this.createpassword === false && !this.password) return true
+      return false
     }
   },
   props: {
@@ -228,6 +259,24 @@ export default {
     }
   },
   watch: {
+    sn1 (newSn1) {
+      this.lastname = ''
+      if (newSn1) this.lastname = newSn1.trim()
+      if (this.sn2) {
+        if (newSn1) this.lastname = this.lastname + ' ' + this.sn2.trim()
+        else this.lastname = this.sn2.trim()
+      }
+      if (this.lastname) this.lastname.trim()
+    },
+    sn2 (newSn2) {
+      this.lastname = ''
+      if (this.sn1) this.lastname = this.sn1.trim()
+      if (newSn2) {
+        if (this.sn1) this.lastname = this.lastname + ' ' + newSn2.trim()
+        else this.lastname = newSn2.trim()
+      }
+      if (this.lastname) this.lastname.trim()
+    },
     user (newuser) {
       if (newuser) {
         this.checkResult = null
@@ -261,47 +310,34 @@ export default {
         this.add()
       }
     },
-    // lastName (user) {
-    //   if (user.sn1) {
-    //     let sn2 = user.sn2 ? ' ' + user.sn2 : ''
-    //     return user.sn1 + sn2
-    //   } else {
-    //     return user.name.split(' ').shift().join(' ')
-    //   }
-    // },
-    // givenName (user) {
-    //   if (user.givenName) return user.givenName
-    //   return user.name.split(' ')[0]
-    // },
-    add () {
+    async updatePerson () {
+      // TODO update sn1 and sn2 person info
+    },
+    async add () {
       this.adding = true
-      console.log('username:')
-      console.log(this.username(this.user))
-      let formParams = {
+      let user = {
         'username': this.username,
         'firstname': this.name,
         'lastname': this.lastname,
         'email': this.email,
-        'createpassword': true,
         'idnumber': this.idnumber
       }
-      console.log(formParams)
-      // window.axios.post('/api/v1/moodle/users', {
-      //   user: {
-      //     'username': this.username(this.user),
-      //     'firstname': this.givenName(this.user),
-      //     'lastname': this.last_name(this.user),
-      //     'email': this.user.email,
-      //     'createpassword': true,
-      //     'idnumber': this.user.id
-      //   }
-      // }).then((response) => {
-      //   this.adding = false
-      //   this.$snackbar.showMessage('Usuari afegit correctament a Moodle')
-      // }).catch((error) => {
-      //   this.$snackbar.showError(error)
-      //   this.adding = false
-      // })
+      if (this.createpassword) user['createpassword'] = true
+      else user['password'] = this.password
+      console.log('user:')
+      console.log(user.lastname)
+      if (!user.lastname) await this.updatePerson()
+      window.axios.post('/api/v1/moodle/users', {
+        user: user
+      }).then((response) => {
+        this.adding = false
+        this.$snackbar.showMessage('Usuari afegit correctament a Moodle')
+        this.$emit('close')
+        this.$emit('created', response.data)
+      }).catch((error) => {
+        this.$snackbar.showError(error)
+        this.adding = false
+      })
     },
     close () {
       this.$emit('close')
