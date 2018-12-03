@@ -5,10 +5,10 @@
                 v-model="existingUser"
         ></v-switch>
         <template v-if="existingUser">
-            <moodle-user-add-form :existing-user="existingUser" :local-users="localUsers"></moodle-user-add-form>
+            <moodle-user-add-form @close="$emit('close')" @created="created" :existing-user="existingUser" :local-users="localUsers"></moodle-user-add-form>
         </template>
         <template v-else>
-            <moodle-user-add-form :existing-user="existingUser" :local-users="localUsers"></moodle-user-add-form>
+            <moodle-user-add-form @close="$emit('close')" @created="created" :existing-user="existingUser" :local-users="localUsers"></moodle-user-add-form>
         </template>
     </span>
 </template>
@@ -29,6 +29,11 @@ export default {
     localUsers: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    created (user) {
+      this.$emit('created', user)
     }
   }
 }

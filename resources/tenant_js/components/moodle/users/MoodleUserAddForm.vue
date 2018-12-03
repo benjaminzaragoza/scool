@@ -73,13 +73,17 @@
                         <v-text-field
                                 prepend-icon="help"
                                 @click:prepend="activeUsernameFieldHelpDialog"
-                                readonly
+                                :readonly="readOnly"
                                 v-model="username"
                                 name="username"
                                 label="Nom d'usuari"
+                                hint="Us recomanem utilitzar com a nom d'usuari el correu electrònic personal de la persona"
+                                :error-messages="usernameErrors"
+                                @input="$v.username.$touch()"
+                                @blur="$v.username.$touch()"
                         ></v-text-field>
                         <v-text-field v-if="user && user.givenName"
-                                      readonly
+                                      :readonly="readOnly"
                                       v-model="name"
                                       name="name"
                                       label="Nom"
@@ -88,9 +92,12 @@
                                       v-model="name"
                                       name="name"
                                       label="Nom"
+                                      :error-messages="nameErrors"
+                                      @input="$v.name.$touch()"
+                                      @blur="$v.name.$touch()"
                         ></v-text-field>
                         <v-text-field v-if="user && user.lastname"
-                                      readonly
+                                      :readonly="readOnly"
                                       v-model="lastname"
                                       name="lastname"
                                       label="Cognoms"
@@ -108,13 +115,16 @@
                             ></v-text-field>
                         </template>
                         <v-text-field
-                                readonly
+                                :readonly="readOnly"
                                 v-model="email"
                                 name="email"
                                 label="Correu electrònic"
+                                :error-messages="emailErrors"
+                                @input="$v.email.$touch()"
+                                @blur="$v.email.$touch()"
                         ></v-text-field>
-                        <v-text-field
-                                readonly
+                        <v-text-field v-if="existingUser"
+                                :readonly="readOnly"
                                 v-model="idnumber"
                                 name="idnumber"
                                 label="Identificador local(idnumber)"
@@ -152,11 +162,20 @@
 
 import UserSelect from '../../users/UsersSelectComponent'
 import MoodleUserAddForm from './MoodleUserAddForm'
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
+
 export default {
   name: 'MoodleUserAddForm',
+  mixins: [validationMixin],
   components: {
     'user-select': UserSelect,
     'moodle-user-add-form': MoodleUserAddForm
+  },
+  validations: {
+    username: { required },
+    name: { required },
+    email: { required, email }
   },
   data () {
     return {
@@ -177,18 +196,37 @@ export default {
       email: '',
       idnumber: '',
       createpassword: true,
-      password: ''
+      password: '',
+      readOnly: !!this.existingUser
     }
   },
   computed: {
     invalid () {
       if (!this.username) return true
       if (!this.email) return true
-      if (!this.name) return true
       if (!this.lastname) return true
-      if (!this.idnumber) return true
+      if (!this.idnumber && this.existingUser) return true
       if (this.createpassword === false && !this.password) return true
       return false
+    },
+    usernameErrors () {
+      const errors = []
+      if (!this.$v.username.$dirty) return errors
+      !this.$v.username.required && errors.push("És obligatori indicar un nom d'usuari.")
+      return errors
+    },
+    nameErrors () {
+      const errors = []
+      if (!this.$v.name.$dirty) return errors
+      !this.$v.name.required && errors.push('És obligatori indicar un nom.')
+      return errors
+    },
+    emailErrors () {
+      const emailErrors = []
+      if (!this.$v.email.$dirty) return emailErrors
+      !this.$v.email.email && emailErrors.push('El correu electrònic ha de ser vàlid')
+      !this.$v.email.required && emailErrors.push('El correu electrònic és obligatori.')
+      return emailErrors
     }
   },
   props: {
@@ -203,6 +241,7 @@ export default {
   },
   watch: {
     existingUser (existingUser) {
+      this.readOnly = !!this.existingUser
       if (!existingUser) this.reset()
     },
     sn1 (newSn1) {
@@ -258,7 +297,7 @@ export default {
       this.idnumber = user.id
     },
     async confirmAdd () {
-      if (!this.checkResult) {
+      if (!this.checkResult && this.existingUser) {
         let res = await this.$confirm("L'usuari sembla que ja existeix a Moodle i li duplicarieu les dades. Segur que voleu afegir l'usuari?", { title: 'Esteu segurs?', buttonTrueText: 'Afegir' })
         if (res) {
           this.add()
