@@ -510,9 +510,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         if ($this->person) {
             $address->person_id = $this->person->id;
         } else {
-            $person = Person::create([
-                'user_id' => $this->id
-            ]);
+            $person = Person::create();
+            $person->assignUser($this->id);
             $address->person_id = $person->id;
         }
         $address->save();
