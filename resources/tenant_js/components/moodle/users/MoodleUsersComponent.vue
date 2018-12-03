@@ -1,12 +1,12 @@
 <template>
     <span id="moodle_component">
         <floating-add v-model="dialog" title="Nou usuari de Moodle">
-            <moodle-users-add @close="dialog = false" :local-users="localUsers"></moodle-users-add>
+            <moodle-users-add @created="add" @close="dialog = false" :local-users="localUsers"></moodle-users-add>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex xs12>
-                    <moodle-users-list :users="users"></moodle-users-list>
+                    <moodle-users-list :users="dataUsers"></moodle-users-list>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -24,7 +24,8 @@ export default {
   },
   data () {
     return {
-      dialog: false
+      dialog: false,
+      dataUsers: this.users
     }
   },
   props: {
@@ -35,6 +36,18 @@ export default {
     localUsers: {
       type: Array,
       required: true
+    }
+  },
+  watch: {
+    users (users) {
+      this.dataUsers = users
+    }
+  },
+  methods: {
+    add (user) {
+      console.log('log TODO ADD!!!')
+      console.log(user)
+      this.dataUsers.push(user)
     }
   }
 }

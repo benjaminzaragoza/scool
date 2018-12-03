@@ -167,12 +167,6 @@ export default {
     }
   },
   computed: {
-    clear () {
-      this.givenName = ''
-      this.sn1 = ''
-      this.sn2 = ''
-      this.email = ''
-    },
     name () {
       return (this.givenName.trim() + ' ' + this.sn1.trim() + ' ' + this.sn2.trim()).trim()
     },
@@ -200,6 +194,12 @@ export default {
     }
   },
   methods: {
+    clear () {
+      this.givenName = ''
+      this.sn1 = ''
+      this.sn2 = ''
+      this.email = ''
+    },
     remove () {
       this.removing = true
       if (this.user) {

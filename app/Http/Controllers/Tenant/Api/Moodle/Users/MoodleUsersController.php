@@ -38,7 +38,8 @@ class MoodleUsersController extends Controller
     public function store(MoodleUserStore $request)
     {
         $result = MoodleUser::store($request->user);
-        return get_object_vars($result);
+        Cache::forget('scool_moodle_users');
+        return MoodleUser::get($result->username);
     }
 
     /**
