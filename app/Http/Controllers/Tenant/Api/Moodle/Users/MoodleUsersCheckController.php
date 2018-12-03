@@ -37,6 +37,8 @@ class MoodleUsersCheckController extends Controller
             $message[]="S'han trobat usuari/s amb email coincident";
             $users[] = $foundUsersEmail;
         }
+
+        $users = collect($users)->unique()->toArray();
         return [
             'status' => $error ? 'Error' : 'Success',
             'message' => $message,

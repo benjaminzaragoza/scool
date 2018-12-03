@@ -60,7 +60,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
     public function superadmin_can_check_moodle_users_existing_email()
     {
         $this->loginAsSuperAdmin('api');
-        $user = create_sample_moodle_user();
+        create_sample_moodle_user();
         $response =  $this->json('POST','/api/v1/moodle/users/check', [
             'user' => [
                 'id' => 9934945,
@@ -82,7 +82,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
     public function moodle_manager_can_check_moodle_users_existing_uid()
     {
         $this->loginAsMoodleManager('api');
-        $user = create_sample_moodle_user();
+        create_sample_moodle_user();
         $response =  $this->json('POST','/api/v1/moodle/users/check', [
             'user' => [
                 'id' => 1,
