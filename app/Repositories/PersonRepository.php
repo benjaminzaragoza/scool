@@ -19,8 +19,7 @@ class PersonRepository
      */
     public function store($person)
     {
-        return Person::create([
-            'user_id' => $person->user_id ?? null,
+        $personElo = Person::create([
             'identifier_id' => $person->identifier_id,
             'givenName' => $person->givenName ?? null,
             'sn1' => $person->sn1 ?? null,
@@ -37,5 +36,9 @@ class PersonRepository
             'other_emails' => $person->other_emails ?? null,
             'notes' => $person->notes ?? null
         ]);
+
+        if ($person->user_id) $personElo->assignUser($person->user_id);
+
+        return $personElo;
     }
 }

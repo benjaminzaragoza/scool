@@ -136,4 +136,16 @@ class Person extends Model implements HasMedia
             'hash_id' => optional($this->user)->hash_id,
         ];
     }
+
+    /**
+     * Assign User.
+     *
+     * @param $user
+     */
+    public function assignUser($user)
+    {
+        $user = is_object($user) ? $user->id : $user;
+        $this->user_id = $user;
+        $this->save();
+    }
 }

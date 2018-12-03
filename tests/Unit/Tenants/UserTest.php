@@ -835,11 +835,12 @@ class UserTest extends TestCase
         ]);
 
         $person = Person::create([
-            'user_id' => $user->id,
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
         ]);
+        $person->user_id = $user->id;
+        $person->save();
 
         $mappedUser = $user->map();
 

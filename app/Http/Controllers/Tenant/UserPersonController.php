@@ -31,13 +31,13 @@ class UserPersonController extends Controller
             'user_type_id' => $request->user_type_id,
             'password' => sha1(str_random())
         ]);
-        Person::create([
-            'user_id' => $user->id,
+        $person = Person::create([
             'givenName' => format_name($request->givenName),
             'mobile' => $request->mobile,
             'sn1' => format_name($request->sn1),
             'sn2' => format_name($request->sn2),
         ]);
+        $person->assignUser($user->id);
 
         if($request->role) {
             $user->assignRole(Role::findByName($request->role,'web'));
