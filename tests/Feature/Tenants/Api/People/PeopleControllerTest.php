@@ -38,11 +38,12 @@ class PeopleControllerTest extends BaseTenantTest
     public function superadmin_can_store_people()
     {
         $this->loginAsSuperAdmin('api');
-
+        $user = factory(User::class)->create();
         $person = [
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
-            'sn2' => 'Jeans'
+            'sn2' => 'Jeans',
+            'user_id' => $user->id
         ];
         $response = $this->json('POST','/api/v1/people/',$person);
         $response->assertSuccessful();
@@ -51,9 +52,36 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($person->givenName,'Pepe');
         $this->assertEquals($person->sn1,'Pardo');
         $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($person->user_id,$user->id);
         $this->assertEquals($result->givenName,'Pepe');
         $this->assertEquals($result->sn1,'Pardo');
         $this->assertEquals($result->sn2,'Jeans');
+        $this->assertEquals($result->user_id,$user->id);
+    }
+
+    /** @test */
+    public function superadmin_can_store_people_ucfirst()
+    {
+        $this->loginAsSuperAdmin('api');
+        $user = factory(User::class)->create();
+        $person = [
+            'givenName' => 'pepe',
+            'sn1' => 'pardo',
+            'sn2' => 'jeans',
+            'user_id' => $user->id
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertSuccessful();
+        $person = Person::first();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($person->user_id,$user->id);
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+        $this->assertEquals($result->user_id,$user->id);
     }
 
     /** @test */
@@ -71,10 +99,12 @@ class PeopleControllerTest extends BaseTenantTest
     {
         $this->loginAsUsersManager('api');
 
+        $user = factory(User::class)->create();
         $person = [
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
-            'sn2' => 'Jeans'
+            'sn2' => 'Jeans',
+            'user_id' => $user->id
         ];
         $response = $this->json('POST','/api/v1/people/',$person);
         $response->assertSuccessful();
@@ -83,9 +113,11 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($person->givenName,'Pepe');
         $this->assertEquals($person->sn1,'Pardo');
         $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($person->user_id,$user->id);
         $this->assertEquals($result->givenName,'Pepe');
         $this->assertEquals($result->sn1,'Pardo');
         $this->assertEquals($result->sn2,'Jeans');
+        $this->assertEquals($result->user_id,$user->id);
     }
 
     /** @test */
@@ -93,10 +125,12 @@ class PeopleControllerTest extends BaseTenantTest
     {
         $this->loginAsPeopleManager('api');
 
+        $user = factory(User::class)->create();
         $person = [
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
-            'sn2' => 'Jeans'
+            'sn2' => 'Jeans',
+            'user_id' => $user->id
         ];
         $response = $this->json('POST','/api/v1/people/',$person);
         $response->assertSuccessful();
@@ -105,9 +139,37 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($person->givenName,'Pepe');
         $this->assertEquals($person->sn1,'Pardo');
         $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($person->user_id,$user->id);
         $this->assertEquals($result->givenName,'Pepe');
         $this->assertEquals($result->sn1,'Pardo');
         $this->assertEquals($result->sn2,'Jeans');
+        $this->assertEquals($result->user_id,$user->id);
+    }
+
+    /** @test */
+    public function moodle_manager_can_store_people()
+    {
+        $this->loginAsMoodleManager('api');
+
+        $user = factory(User::class)->create();
+        $person = [
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'user_id' => $user->id
+        ];
+        $response = $this->json('POST','/api/v1/people/',$person);
+        $response->assertSuccessful();
+        $person = Person::first();
+        $result = json_decode($response->getContent());
+        $this->assertEquals($person->givenName,'Pepe');
+        $this->assertEquals($person->sn1,'Pardo');
+        $this->assertEquals($person->sn2,'Jeans');
+        $this->assertEquals($person->user_id,$user->id);
+        $this->assertEquals($result->givenName,'Pepe');
+        $this->assertEquals($result->sn1,'Pardo');
+        $this->assertEquals($result->sn2,'Jeans');
+        $this->assertEquals($result->user_id,$user->id);
     }
 
     /** @test */

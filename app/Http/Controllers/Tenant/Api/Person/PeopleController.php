@@ -23,7 +23,7 @@ class PeopleController extends Controller
      */
     public function store(PeopleStore $request)
     {
-        $person = Person::create($request->only([
+        $data = $request->only([
             'givenName',
             'sn1',
             'sn2',
@@ -39,13 +39,18 @@ class PeopleController extends Controller
             'email',
             'other_emails',
             'notes',
-        ]));
+        ]);
+        if ($data['givenName']) $data['givenName'] =ucfirst($data['givenName']);
+        if ($data['sn1']) $data['sn1'] =ucfirst($data['sn1']);
+        if ($data['sn2']) $data['sn2'] =ucfirst($data['sn2']);
+        $person = Person::create($data);
         if ($request->user_id) {
             $person->user_id = $request->user_id;
             $person->save();
         }
         return $person;
     }
+
     /**
      * Update.
      *

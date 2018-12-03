@@ -620,7 +620,8 @@ if (!function_exists('moodle_manager_permissions')) {
             'moodle.user.index',
             'moodle.user.show',
             'moodle.user.store',
-            'moodle.user.destroy'
+            'moodle.user.destroy',
+            'people.store'
         ];
     }
 }

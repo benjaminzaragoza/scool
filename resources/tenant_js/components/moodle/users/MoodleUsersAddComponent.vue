@@ -311,7 +311,16 @@ export default {
       }
     },
     async updatePerson () {
-      // TODO update sn1 and sn2 person info
+      try {
+        await window.axios.post('/api/v1/people', {
+          givenName: this.name,
+          sn1: this.sn1,
+          sn2: this.sn2,
+          user_id: this.idnumber
+        })
+      } catch (error) {
+        this.$snackbar.showError(error)
+      }
     },
     async add () {
       this.adding = true
@@ -324,9 +333,7 @@ export default {
       }
       if (this.createpassword) user['createpassword'] = true
       else user['password'] = this.password
-      console.log('user:')
-      console.log(user.lastname)
-      if (!user.lastname) await this.updatePerson()
+      if (user.lastname) await this.updatePerson()
       window.axios.post('/api/v1/moodle/users', {
         user: user
       }).then((response) => {
