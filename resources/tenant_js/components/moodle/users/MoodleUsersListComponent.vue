@@ -137,22 +137,74 @@
                                             class="mr-2" :hash-id="localUsers[user.idnumber].hash_id"
                                             :alt="localUsers[user.idnumber].name"
                                     ></user-avatar>
+                                    <span :title="localUsers[user.idnumber].name +  ' - ' + user.idnumber">{{ localUsers[user.idnumber].email }}</span>
+
+                                    <template v-if="findLocalUserByEmail(user.email)">
+                                        <template v-if="localUsers[user.idnumber].email !== user.email">
+                                            <v-btn @click="changeLocalUser()"
+                                                   icon color="error" title="No coincideixen el usuari local i l'usuari de Moodle. Feu clic per arreglar-ho">
+                                                <v-icon>error</v-icon>
+                                            </v-btn>
+                                        </template>
+                                    </template>
+                                    <template v-else>
+                                        <v-btn @click="changeLocalUser()"
+                                           icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
+                                            <v-icon>add</v-icon>
+                                        </v-btn>
+                                    </template>
                                 </template>
                                 <template v-else>
-                                    TODO sincronitzar
+                                    <v-btn @click="changeLocalUser()"
+                                       icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
+                                        <v-icon>add</v-icon>
+                                    </v-btn>
+                                    {{ user.idnumber }}
                                 </template>
-                                {{ user.idnumber }}
                             </template>
-                            <template v-else>Cap</template>
+                            <template v-else>
+                                    Cap
+                                    <v-btn @click="changeLocalUser()"
+                                        icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
+                                        <v-icon>add</v-icon>
+                                    </v-btn>
+                            </template>
+
                         <td class="text-xs-left">
                             <v-avatar color="primary" :title="user.fullname">
                               <img :src="user.profileimageurlsmall" alt="avatar">
                             </v-avatar>
-                            <span :title="user.description" v-text="user.username"></span>
+                            <a :title="user.description" v-text="user.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + user.id" target="_blank"></a>
                         </td>
-                        <td class="text-xs-left" v-text="user.email"></td>
-                        <td class="text-xs-left" v-text="user.firstname"></td>
-                        <td class="text-xs-left" v-text="user.lastname"></td>
+                        <td class="text-xs-left">
+                            <a target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + user.email">{{ user.email }}</a>
+                        </td>
+                        <td class="text-xs-left">
+                            <template v-if="localUsers[user.idnumber]">
+                                {{ user.firstname }}
+                                <template v-if="user.firstname !== localUsers[user.idnumber].givenName">
+                                    <v-btn icon color="success" title="El nom de l'usuari no concorda. Feu clic per canviar-lo">
+                                        <v-icon>sync</v-icon>
+                                    </v-btn>
+                                </template>
+                            </template>
+                            <template v-else>
+                                {{ user.firstname }}
+                            </template>
+                        </td>
+                        <td class="text-xs-left">
+                            <template v-if="localUsers[user.idnumber]">
+                                {{ user.lastname }}
+                                <template v-if="user.lastname !== localUsers[user.idnumber].lastname">
+                                    <v-btn icon color="success" title="Els cognoms de l'usuari no concorden. Feu clic per canviar-los">
+                                        <v-icon>sync</v-icon>
+                                    </v-btn>
+                                </template>
+                            </template>
+                            <template v-else>
+                                {{ user.lastname }}
+                            </template>
+                        </td>
                         <td class="text-xs-left" v-text="user.auth"></td>
                         <td class="text-xs-left" v-text="user.lang"></td>
                         <td class="text-xs-left">{{ user.confirmed ? 'Sí' : 'No' }}</td>
@@ -161,16 +213,17 @@
                             <timeago v-if="user.lastaccess !== 0" :auto-update="60" :datetime="new Date(user.lastaccess*1000)"></timeago>
                             <span v-else>Mai</span>
                         </td>
+                        <td v-text="isUserInSync(user)"></td>
                         <td class="text-xs-left">
                             <json-dialog-component icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="user"></json-dialog-component>
-                            <v-btn icon title="Perfil de l'usuari a Moodle" flat color="primary" class="ma-0" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + user.id" target="_blank">
-                                <v-icon>person</v-icon>
-                            </v-btn>
                             <v-btn icon title="Edita l'usuari a Moodle" flat color="success" class="ma-0" :href="'https://www.iesebre.com/moodle/user/editadvanced.php?id=' + user.id + '&course=1&returnto=profile'" target="_blank">
                                 <v-icon>edit</v-icon>
                             </v-btn>
                             <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)" :disabled="removing === user.id" :loading="removing  === user.id">
                                 <v-icon>remove</v-icon>
+                            </v-btn>
+                            <v-btn icon title="Canviar paraula de pas" flat color="teal">
+                                <v-icon>vpn_key</v-icon>
                             </v-btn>
                         </td>
                     </tr>
@@ -246,11 +299,25 @@ export default {
       headers.push({ text: 'Confirmat', align: 'left', value: 'confirmed' })
       headers.push({ text: 'Suspès', align: 'left', value: 'suspended' })
       headers.push({ text: 'Últim accés', align: 'left', value: 'lastaccess' })
+      headers.push({ text: 'Sincronitzat', align: 'left', sortable: false })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })
       return headers
     }
   },
   methods: {
+    isUserInSync (user) {
+      const localUser = this.localUsers[user.idnumber]
+      if (localUser && localUser.email === user.email && localUser.lastname === user.lastname && localUser.givenName === user.firstname) return 'Sí'
+      return 'No'
+    },
+    findLocalUserByEmail (email) {
+      return Object.values(this.localUsers).find((user) => {
+        return user.email === email
+      })
+    },
+    changeLocalUser () {
+      console.log('TODO change local user')
+    },
     refresh () {
       this.refreshing = true
       window.axios.get('/api/v1/moodle/users').then(response => {

@@ -1,5 +1,5 @@
 Usernames:
-- [X] A moodle utilitzar correu elctrònic
+- [X] A moodle utilitzar correu electrònic com a nom usuari.
 - [ ] Càlcul centralitzat del username?
 - [ ] On guardar el username -> base de dades camp únic?
 - [ ] no preguntar mai al usuari -> calcular
@@ -24,11 +24,12 @@ Controladors web
 - [X] Tots els permisos i rols comprovats als tests i creats a helpers.php
 - [X] Afegida opció de menú a la taula menus
 - [ ] Afegir mòdul
-- [ ] Tots els testos marcats com group moodle i slow per no executar-los sempre
+- [X] Tots els testos marcats com group moodle i slow per no executar-los sempre
 Controlador API:
 - [X] Refresh/index
 - [X] Remove
-- [ ] Add/store
+- [X] Add/store
+- [ ] Edit
 
 TODO operacions pendents de mirar a la API:
 - https://www.iesebre.com/moodle/admin/webservice/documentation.php
@@ -39,19 +40,27 @@ TODO operacions pendents de mirar a la API:
 - core_user_agree_site_policy?
 - core_user_update_picture
 
-LLista usuaris Moodle:
-- Al mostrar el uidnumber que sigui un link a la fitxa (show) d'usuari local
-- Mostrar el avatar local per poder comparar amb el avatar de Moodle si hi ha uidnumber
-- Mostrar també dades locals: givenName, sn1 i sn2 
+Llista usuaris Moodle:
+FILTRES:
+- [ ]Usuaris sincronitzats/Usuaris desincronitzats
+Altres:
+- [ ] Últim accés tingui un title que mostri la data exacte d'últim accés
+- [ ] Importar usuari de Moodle a Local:
+  - [ ] Crear usuari utilitzant correu de Moodle i fullname com a name
+  - [ ] Crear person a partir de firstname i lastname (autopartir en sn1 i sn2). Altres dades?
+- [ ] Al mostrar el uidnumber que sigui un link a la fitxa (show) d'usuari local
+- [X] Mostrar el avatar local per poder comparar amb el avatar de Moodle si hi ha uidnumber
+- [] Mostrar també dades locals de la persona: givenName, sn1 i sn2 
 - Accions pendents:
   - [ ] Tornar a enviar email paraula de pas (generar nova)
   - [ ] Editar. core_user_update_users
-  - [ ] Sincronitzar -> Quan l'usauri té uidnumber però les dades locals o coincideixen amb les remotes de Moodle
-  - [ ] Invalidar compte
+  - [ ] Invalidar/suspendre compte. Actualment és el que fa la syunc ldap si troba l'usuari a Moodle però no a Ldap
+  - [ ] Confirmar compte
   - [ ] Sincronitzar avatars (core_user_update_picture)
 - [ ] Correu electrònic sigui un link a Gmail per enviar un email des de Gmail
-- [ ] No utilitzar noms en anglès als headers  
-- [ ] Juntar camps avatar i username en un sol camp
+- [X] No utilitzar noms en anglès als headers  
+- [X] Juntar camps avatar i username en un sol camp
+
 Checks:
 - [ ] Buscar usuaris desincronitzats
 - [ ] Buscar usuaris de Moodle sens idnumber pèro que coincideix email/username i sincronitzar  
