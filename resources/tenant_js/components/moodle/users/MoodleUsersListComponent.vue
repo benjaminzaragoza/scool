@@ -130,20 +130,33 @@
                 <template slot="items" slot-scope="{item: user}">
                     <tr :id="'user_row_' + user.id">
                         <td class="text-xs-left" v-text="user.id"></td>
-                        <td class="text-xs-left" v-text="user.idnumber"></td>
                         <td class="text-xs-left">
-                            <v-avatar color="primary">
+                            <template v-if="user.idnumber">
+                                <template v-if="localUsers[user.idnumber]">
+                                    <user-avatar
+                                            class="mr-2" :hash-id="localUsers[user.idnumber].hash_id"
+                                            :alt="localUsers[user.idnumber].name"
+                                    ></user-avatar>
+                                </template>
+                                <template v-else>
+                                    TODO sincronitzar
+                                </template>
+                                {{ user.idnumber }}
+                            </template>
+                            <template v-else>Cap</template>
+                        <td class="text-xs-left">
+                            <v-avatar color="primary" :title="user.fullname">
                               <img :src="user.profileimageurlsmall" alt="avatar">
                             </v-avatar>
-                        </td>
-                        <td class="text-xs-left">
                             <span :title="user.description" v-text="user.username"></span>
                         </td>
                         <td class="text-xs-left" v-text="user.email"></td>
-                        <td class="text-xs-left" v-text="user.fullname"></td>
+                        <td class="text-xs-left" v-text="user.firstname"></td>
+                        <td class="text-xs-left" v-text="user.lastname"></td>
                         <td class="text-xs-left" v-text="user.auth"></td>
                         <td class="text-xs-left" v-text="user.lang"></td>
-                        <td class="text-xs-left" v-text="user.confirmed"></td>
+                        <td class="text-xs-left">{{ user.confirmed ? 'Sí' : 'No' }}</td>
+                        <td class="text-xs-left">{{ user.suspended ? 'Sí' : 'No' }}</td>
                         <td class="text-xs-left">
                             <timeago v-if="user.lastaccess !== 0" :auto-update="60" :datetime="new Date(user.lastaccess*1000)"></timeago>
                             <span v-else>Mai</span>
@@ -171,6 +184,8 @@
 
 import MoodleSettings from './MoodleSettingsComponent'
 import JsonDialogComponent from '../../ui/JsonDialogComponent'
+import FullScreenDialog from '../../ui/FullScreenDialog'
+import UserAvatar from '../../ui/UserAvatarComponent'
 
 var filters = {
   all: function (incidents) {
@@ -183,6 +198,8 @@ export default {
   components: {
     'moodle-settings': MoodleSettings,
     'json-dialog-component': JsonDialogComponent,
+    'fullscreen-dialog': FullScreenDialog,
+    'user-avatar': UserAvatar
   },
   data () {
     return {
@@ -201,6 +218,15 @@ export default {
     users: {
       type: Array,
       required: true
+    },
+    localUsers: {
+      type: Object,
+      required: true
+    }
+  },
+  watch: {
+    users (users) {
+      this.dataUsers = users
     }
   },
   computed: {
@@ -210,14 +236,15 @@ export default {
     headers () {
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
-      headers.push({ text: 'Id number', align: 'left', value: 'idnumber', width: '1%' })
-      headers.push({ text: 'Avatar', align: 'left', value: 'profileimageurlsmall' })
-      headers.push({ text: 'Nom usuari', align: 'left', value: 'username' })
+      headers.push({ text: 'Usuari local', align: 'left', value: 'idnumber', width: '1%' })
+      headers.push({ text: 'Usuari', align: 'left', value: 'username' })
       headers.push({ text: 'Correu electrònic', align: 'left', value: 'email' })
-      headers.push({ text: 'Fullname', align: 'left', value: 'fullname' })
+      headers.push({ text: 'Nom', align: 'left', value: 'firstname' })
+      headers.push({ text: 'Cognoms', align: 'left', value: 'lastname' })
       headers.push({ text: 'Auth', align: 'left', value: 'auth' })
       headers.push({ text: 'Idioma', align: 'left', value: 'lang' })
       headers.push({ text: 'Confirmat', align: 'left', value: 'confirmed' })
+      headers.push({ text: 'Suspès', align: 'left', value: 'suspended' })
       headers.push({ text: 'Últim accés', align: 'left', value: 'lastaccess' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })
       return headers
@@ -235,16 +262,19 @@ export default {
         this.refreshing = false
       })
     },
-    remove (user) {
-      this.removing = user.id
-      window.axios.delete('/api/v1/moodle/users/' + user.id).then(() => {
-        this.dataUsers.splice(this.dataUsers.indexOf(user), 1)
-        this.$snackbar.showMessage('Usuari esborrat correctament')
-        this.removing = null
-      }).catch(error => {
-        this.$snackbar.showError(error)
-        this.removing = null
-      })
+    async remove (user) {
+      let res = await this.$confirm('Els usuaris esborrar no es poden recuperar.', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      if (res) {
+        this.removing = user.id
+        window.axios.delete('/api/v1/moodle/users/' + user.id).then(() => {
+          this.dataUsers.splice(this.dataUsers.indexOf(user), 1)
+          this.$snackbar.showMessage('Usuari esborrat correctament')
+          this.removing = null
+        }).catch(error => {
+          this.$snackbar.showError(error)
+          this.removing = null
+        })
+      }
     }
   }
 }

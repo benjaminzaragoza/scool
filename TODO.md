@@ -1,7 +1,23 @@
+Usernames:
+- [X] A moodle utilitzar correu elctrònic
+- [ ] Càlcul centralitzat del username?
+- [ ] On guardar el username -> base de dades camp únic?
+- [ ] no preguntar mai al usuari -> calcular
+- [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manerta)
+- [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
+- [ ] Moodle -> usuaris com emails
+  - [ ] https://www.iesebre.com/moodle/admin/settings.php?section=sitepolicies
+  - [ ] Permet caràcters estesos en els noms d'usuari
+
+
 # Moodle
 
 Bugs:
 - [X] Reduir les 506 queries amb Eager Loading
+
+Seguretat:
+- [ ] No es pot eliminar usuari guest ni usuari admin
+- [ ] Config amb una llista altres usuaris no es poden esborrar (config/moodle.php)
 
 Controladors web
 - [X] Controlador web i Test
@@ -14,16 +30,40 @@ Controlador API:
 - [X] Remove
 - [ ] Add/store
 
-Usernames:
-- [ ] Càlcul centralitzat del username?
-- [ ] On guardar el username -> base de dades camp únic?
-- [ ] no preguntar mai al usuari -> calcular
-- [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manerta)
-- [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
-- [ ] Moodle -> usuaris com emails
-  - [ ] https://www.iesebre.com/moodle/admin/settings.php?section=sitepolicies
-  - [ ] Permet caràcters estesos en els noms d'usuari
+TODO operacions pendents de mirar a la API:
+- https://www.iesebre.com/moodle/admin/webservice/documentation.php
+- auth_email_get_signup_settings
+- auth_email_signup_user
+- core_auth_confirm_user
+- core_user_add_user_device: Push Notifications???
+- core_user_agree_site_policy?
+- core_user_update_picture
 
+LLista usuaris Moodle:
+- Al mostrar el uidnumber que sigui un link a la fitxa (show) d'usuari local
+- Mostrar el avatar local per poder comparar amb el avatar de Moodle si hi ha uidnumber
+- Mostrar també dades locals: givenName, sn1 i sn2 
+- Accions pendents:
+  - [ ] Tornar a enviar email paraula de pas (generar nova)
+  - [ ] Editar. core_user_update_users
+  - [ ] Sincronitzar -> Quan l'usauri té uidnumber però les dades locals o coincideixen amb les remotes de Moodle
+  - [ ] Invalidar compte
+  - [ ] Sincronitzar avatars (core_user_update_picture)
+- [ ] Correu electrònic sigui un link a Gmail per enviar un email des de Gmail
+- [ ] No utilitzar noms en anglès als headers  
+- [ ] Juntar camps avatar i username en un sol camp
+Checks:
+- [ ] Buscar usuaris desincronitzats
+- [ ] Buscar usuaris de Moodle sens idnumber pèro que coincideix email/username i sincronitzar  
+- [ ] Usuaris amb idnumber però sense id local corresponent
+Edit:
+- [ ] Link edita el perfil a MOodle: https://www.iesebre.com/moodle/user/editadvanced.php?id=5820&course=1&returnto=profile
+- [ ] Canviar username?
+- [ ] Canviar email (només si no hi ha uidnumber)
+- [ ] Sincronitzar email (si hi ha uidnumber i no coincideixen)
+- [ ] Canviar nom (només si no hi ha uidnumber)  
+- [ ] Sincornitzar nom (només si hi ha uidnumber i no coincideixen)  
+ 
 
 MOODLE password recovery:
 - Usuaris ldap -> no tenen password el busquen a Ldap però també estan a la base de dades (amb passwrd buit)

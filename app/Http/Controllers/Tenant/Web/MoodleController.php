@@ -29,7 +29,9 @@ class MoodleController extends Controller
         });
 
         $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
-
+        $localUsers  = $localUsers->mapWithKeys(function ($user) {
+            return [$user['id'] => $user];
+        });
         return view('tenants.moodle.index', compact('users','localUsers'));
     }
 }
