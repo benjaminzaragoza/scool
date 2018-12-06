@@ -1,3 +1,31 @@
+# Mòdul professorat
+
+## List/datatables
+
+### Comptes d'usuari:
+
+Moodle:
+Casos
+- El professor no té compte de Moodle
+  - [ ] Mostrar botó afegir 
+- El professor té compte de Moodle
+ - [ ] Mostrar links:
+   - [ ] Perfil de l'usuari a Moodle
+   - [ ] Modificació/Edit a Moodle
+   - [ ] Mostrar info de l'usuari a moodle -> Moodle SHOW -> dia
+- Hi ha algún problema de sincronització:
+ - Coincideixen uidnumbers però no les dades: email|username i Nom i lastname
+ - No hi ha cap usuari de Moodle amb el uidnumber corresponent però sí que hi ha un usuari amb username   
+ - [ ] Mostrar alerta/botó i permetre sincronitzar
+
+ 
+ 
+Google Apps:
+- [ ]
+
+Ldap:
+- [ ]
+
 # Mòdul usuaris
 
 ## Usernames

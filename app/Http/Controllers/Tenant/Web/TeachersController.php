@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Tenant\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyTeacher;
 use App\Http\Requests\ListTeachers;
 use App\Http\Requests\ShowTeachersManagment;
@@ -21,7 +22,7 @@ use App\Models\User;
 
 /**
  * Class TeachersController.
- * 
+ *
  * @package App\Http\Controllers\Tenant
  */
 class TeachersController extends Controller

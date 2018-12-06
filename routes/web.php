@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Tenant\Web\MoodleController;
+use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Broadcasting\BroadcastController;
@@ -133,7 +134,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/jobs', 'Tenant\JobsController@show');
 
-            Route::get('/teachers', 'Tenant\TeachersController@show');
+//            Route::get('/teachers', 'Tenant\TeachersController@show');  TODO ELIMINAR
+            Route::get('/teachers', '\\' . TeachersController::class . '@show');
+
 
             Route::get('/teachers_photos', 'Tenant\TeachersPhotosController@show');
 
