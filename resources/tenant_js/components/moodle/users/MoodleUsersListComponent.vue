@@ -222,7 +222,7 @@
                             <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)" :disabled="removing === user.id" :loading="removing  === user.id">
                                 <v-icon>remove</v-icon>
                             </v-btn>
-                            <moodle-user-change-password></moodle-user-change-password>
+                            <moodle-user-change-password :user="user"></moodle-user-change-password>
                         </td>
                     </tr>
                 </template>

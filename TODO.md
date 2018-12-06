@@ -1,38 +1,69 @@
-Usernames:
-- [X] A moodle utilitzar correu electrònic com a nom usuari.
+# Mòdul usuaris
+
+## Usernames
+
+- [X] A moodle utilitzar correu electrònic com a nom usuari (no cal càlcul usernames)
+  - [X] Moodle -> usuaris com emails
+    - [X] https://www.iesebre.com/moodle/admin/settings.php?section=sitepolicies
+    - [X] Permet caràcters estesos en els noms d'usuari
 - [ ] Càlcul centralitzat del username?
 - [ ] On guardar el username -> base de dades camp únic?
 - [ ] no preguntar mai al usuari -> calcular
-- [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manerta)
+- [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manera)
 - [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
-- [ ] Moodle -> usuaris com emails
-  - [ ] https://www.iesebre.com/moodle/admin/settings.php?section=sitepolicies
-  - [ ] Permet caràcters estesos en els noms d'usuari
-
 
 # Moodle
+
+Millores:
+- [ ] Al crear un usuari de Moodle no mostrar els usuaris locals que ja tenen un usuari de Moodle al desplegable
+- [ ] Tipus d'usuari:
+  - [ ] El pas i secretaries i pares i altres no tenen/ no necessiten usuari de Moodle
+- [ ] Treure de Javascript les URLs hardcoded a iesebre.com agafar-les del fitxer de config de config/moodle.php
+  
+Edit:
+- [ ] Opcions relacionades amb la edició i sincronització amb usuari local
+- [ ] Canviar username?
+- [ ] Canviar email (només si no hi ha uidnumber)
+- [ ] Sincronitzar email (si hi ha uidnumber i no coincideixen)
+- [ ] Canviar nom (només si no hi ha uidnumber)  
+- [ ] Sincronitzar nom (només si hi ha uidnumber i no coincideixen)  
+
+Importar:
+- [ ] Importar usuari de Moodle a usuari local
+
+Exportar:
+- [ ] Usuaris Locals a usuari de Moodle
+  - [X] Al crear un nou usuari o podem fer a partir d'un usuari local
+  - [ ] Mostrar llista usuaris locals no tenen usuari de Moodle
+
+Avatar:
+- [ ] Sincronitzacións i actualitzacions del Avatar
+  - [ ] Al crear un usuari de Moodle des de l'usuari local
+  - [ ] Des de la llista sincronitzar/Actualitzar  
+  
+Seguretat:
+- [ ] No es pot eliminar usuari guest ni usuari admin
+- [ ] Config amb una llista altres usuaris no es poden esborrar (config/moodle.php)
 
 Change password:
 Case 1) Usuari de Moodle té compte local scool
 - [ ] Mostrar diàleg per canviar password:
   - [ ] Switch amb dues opcions escollir password o establir automàticament
   - [ ] Camp user password si s'indica establir la paraula de pas
-Case 2) Usuari de Moodle no té compte local scoll
+Case 2) Usuari de Moodle no té compte local scool
 - [ ] Igual que l'anterior però no es canvia password local
   - [ ] s'utilitza el mail per enviar el email a l'usuari amb la nova paraula de pas
 
 Bugs:
 - [X] Reduir les 506 queries amb Eager Loading
 
-Seguretat:
-- [ ] No es pot eliminar usuari guest ni usuari admin
-- [ ] Config amb una llista altres usuaris no es poden esborrar (config/moodle.php)
+Mòdul:
+- [ ] Afegir mòdul a la base de dades
 
 Controladors web
 - [X] Controlador web i Test
 - [X] Tots els permisos i rols comprovats als tests i creats a helpers.php
 - [X] Afegida opció de menú a la taula menus
-- [ ] Afegir mòdul
 - [X] Tots els testos marcats com group moodle i slow per no executar-los sempre
 Controlador API:
 - [X] Refresh/index
@@ -41,7 +72,8 @@ Controlador API:
 - [ ] Edit
 
 TODO operacions pendents de mirar a la API:
-- https://www.iesebre.com/moodle/admin/webservice/documentation.php
+
+https://www.iesebre.com/moodle/admin/webservice/documentation.php
 - auth_email_get_signup_settings
 - auth_email_signup_user
 - core_auth_confirm_user
@@ -50,6 +82,7 @@ TODO operacions pendents de mirar a la API:
 - core_user_update_picture
 
 Llista usuaris Moodle:
+
 FILTRES:
 - [ ]Usuaris sincronitzats/Usuaris desincronitzats
 Altres:
@@ -66,21 +99,14 @@ Altres:
   - [ ] Invalidar/suspendre compte. Actualment és el que fa la syunc ldap si troba l'usuari a Moodle però no a Ldap
   - [ ] Confirmar compte
   - [ ] Sincronitzar avatars (core_user_update_picture)
-- [ ] Correu electrònic sigui un link a Gmail per enviar un email des de Gmail
+- [X] Correu electrònic sigui un link a Gmail per enviar un email des de Gmail
 - [X] No utilitzar noms en anglès als headers  
 - [X] Juntar camps avatar i username en un sol camp
-
+- [X] Link edita el perfil a MOodle: https://www.iesebre.com/moodle/user/editadvanced.php?id=5820&course=1&returnto=profile
 Checks:
 - [ ] Buscar usuaris desincronitzats
 - [ ] Buscar usuaris de Moodle sens idnumber pèro que coincideix email/username i sincronitzar  
 - [ ] Usuaris amb idnumber però sense id local corresponent
-Edit:
-- [ ] Link edita el perfil a MOodle: https://www.iesebre.com/moodle/user/editadvanced.php?id=5820&course=1&returnto=profile
-- [ ] Canviar username?
-- [ ] Canviar email (només si no hi ha uidnumber)
-- [ ] Sincronitzar email (si hi ha uidnumber i no coincideixen)
-- [ ] Canviar nom (només si no hi ha uidnumber)  
-- [ ] Sincornitzar nom (només si hi ha uidnumber i no coincideixen)  
  
 
 MOODLE password recovery:
@@ -92,7 +118,6 @@ Altres:
 - https://stackoverflow.com/questions/47688746/create-user-in-moodle-through-web-services-php
 - He creat rol scool: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=9
 - https://www.iesebre.com/moodle/admin/settings.php?section=webservicesoverview
-- [ ] Treure de Javascript les URLs hardcoded a iesebre.com agafar-les del fitxer de config de config/moodle.php
 
 Desactivar edició del perfil a Moodle:
 - [ ] https://docs.moodle.org/35/en/Roles_FAQ#How_can_I_prevent_a_user_from_changing_their_own_password.3F
