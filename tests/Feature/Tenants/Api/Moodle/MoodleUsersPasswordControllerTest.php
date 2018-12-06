@@ -79,7 +79,7 @@ class MoodleUsersPasswordControllerTest extends BaseTenantTest {
         $this->loginAsMoodleManager('api');
         $moodleuser = create_sample_moodle_user();
         $response =  $this->json('PUT','/api/v1/moodle/users/' . $moodleuser->id . '/password', [
-            'topsecret'
+            'password' => 'topsecret'
         ]);
         $response->assertSuccessful();
     }
