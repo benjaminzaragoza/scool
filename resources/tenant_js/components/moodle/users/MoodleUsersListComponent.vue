@@ -222,9 +222,7 @@
                             <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)" :disabled="removing === user.id" :loading="removing  === user.id">
                                 <v-icon>remove</v-icon>
                             </v-btn>
-                            <v-btn icon title="Canviar paraula de pas" flat color="teal">
-                                <v-icon>vpn_key</v-icon>
-                            </v-btn>
+                            <moodle-user-change-password></moodle-user-change-password>
                         </td>
                     </tr>
                 </template>
@@ -239,6 +237,7 @@ import MoodleSettings from './MoodleSettingsComponent'
 import JsonDialogComponent from '../../ui/JsonDialogComponent'
 import FullScreenDialog from '../../ui/FullScreenDialog'
 import UserAvatar from '../../ui/UserAvatarComponent'
+import MoodleUserChangePassword from './MoodleUserChangePassword'
 
 var filters = {
   all: function (incidents) {
@@ -252,7 +251,8 @@ export default {
     'moodle-settings': MoodleSettings,
     'json-dialog-component': JsonDialogComponent,
     'fullscreen-dialog': FullScreenDialog,
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
+    'moodle-user-change-password': MoodleUserChangePassword
   },
   data () {
     return {

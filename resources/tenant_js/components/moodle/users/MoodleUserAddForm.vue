@@ -138,6 +138,9 @@
                                       type="password"
                                       name="password"
                                       label="Paraula de pas"
+                                      :error-messages="passwordErrors"
+                                      @input="$v.password.$touch()"
+                                      @blur="$v.password.$touch()"
                         ></v-text-field>
                     </template>
                 </v-flex>
@@ -175,7 +178,8 @@ export default {
   validations: {
     username: { required },
     name: { required },
-    email: { required, email }
+    email: { required, email },
+    password: { required }
   },
   data () {
     return {
@@ -227,6 +231,12 @@ export default {
       !this.$v.email.email && emailErrors.push('El correu electrònic ha de ser vàlid')
       !this.$v.email.required && emailErrors.push('El correu electrònic és obligatori.')
       return emailErrors
+    },
+    passwordErrors () {
+      const passwordErrors = []
+      if (!this.$v.password.$dirty) return passwordErrors
+      !this.$v.password.required && passwordErrors.push('La paraula de pas és obligatòria.')
+      return passwordErrors
     }
   },
   props: {

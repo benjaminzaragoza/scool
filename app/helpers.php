@@ -621,7 +621,8 @@ if (!function_exists('moodle_manager_permissions')) {
             'moodle.user.show',
             'moodle.user.store',
             'moodle.user.destroy',
-            'people.store'
+            'people.store',
+            'moodle.user.password.update'
         ];
     }
 }
@@ -636,7 +637,8 @@ if (!function_exists('users_manager_permissions')) {
             'moodle.user.store',
             'moodle.user.destroy',
             'people.update',
-            'people.store'
+            'people.store',
+            'moodle.user.password.update'
         ];
     }
 }

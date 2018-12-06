@@ -12,6 +12,15 @@ Usernames:
 
 # Moodle
 
+Change password:
+Case 1) Usuari de Moodle té compte local scool
+- [ ] Mostrar diàleg per canviar password:
+  - [ ] Switch amb dues opcions escollir password o establir automàticament
+  - [ ] Camp user password si s'indica establir la paraula de pas
+Case 2) Usuari de Moodle no té compte local scoll
+- [ ] Igual que l'anterior però no es canvia password local
+  - [ ] s'utilitza el mail per enviar el email a l'usuari amb la nova paraula de pas
+
 Bugs:
 - [X] Reduir les 506 queries amb Eager Loading
 

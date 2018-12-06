@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
+use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -96,6 +97,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');
             Route::post('/moodle/users', '\\'. MoodleUsersController::class .'@store');
             Route::delete('/moodle/users/{moodleuser}', '\\'. MoodleUsersController::class .'@destroy');
+
+            // Moodle Password
+            Route::put('/moodle/users/{moodleuser}/password', '\\'. MoodleUsersPasswordController::class .'@update');
+
 
             //Moodle users check
             Route::post('/moodle/users/check', '\\'. MoodleUsersCheckController::class .'@store');
