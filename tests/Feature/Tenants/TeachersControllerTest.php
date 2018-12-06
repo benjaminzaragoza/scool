@@ -100,6 +100,7 @@ class TeachersControllerTest extends BaseTenantTest
     /** @test */
     public function list_teachers()
     {
+        $this->withoutExceptionHandling();
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();

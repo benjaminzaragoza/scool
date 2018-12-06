@@ -1,5 +1,10 @@
 # Mòdul professorat
 
+## Add
+
+Moodle:
+- [ ] Afegir compte de Moodle
+
 ## List/datatables
 
 ### Comptes d'usuari:
@@ -18,7 +23,12 @@ Casos
  - No hi ha cap usuari de Moodle amb el uidnumber corresponent però sí que hi ha un usuari amb username   
  - [ ] Mostrar alerta/botó i permetre sincronitzar
 
- 
+TeachersController i TeachersControllerTest:
+-  Afegir més info sobre els teachers relacionada amb Moodle:
+  - [ ] moodle_id -> El id de Moodle del teacher (si el té)
+  - [ ] moodle_id = null sí no en té
+  - [ ] moodle -> Objecte amb la info de l'usuari de Moodle
+- [ ] Que passa si no hi ha mòdul Moodle activat???
  
 Google Apps:
 - [ ]

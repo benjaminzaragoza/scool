@@ -4,6 +4,7 @@ use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
+use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
@@ -59,9 +60,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/proposeFreeUserName/{name}/{sn1}', 'Tenant\ProposeFreeUsernameController@index');
 
             // Teachers
-            Route::get('/teachers', 'Tenant\TeachersController@index');
-            Route::post('/teachers', 'Tenant\TeachersController@store');
+            Route::get('/teachers', '\\' . TeachersController::class . '@index');
+            Route::post('/teachers', '\\' . TeachersController::class . '@store');
             Route::delete('/teachers/{teacher}', 'Tenant\TeachersController@destroy');
+            Route::delete('/teachers/{teacher}', '\\' . TeachersController::class . '@destroy');
 
             // Finish teacher add
             Route::post('/teacher/finish_add', 'Tenant\TeacherFinishAddController@store');

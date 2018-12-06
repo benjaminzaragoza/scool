@@ -134,7 +134,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/jobs', 'Tenant\JobsController@show');
 
-//            Route::get('/teachers', 'Tenant\TeachersController@show');  TODO ELIMINAR
             Route::get('/teachers', '\\' . TeachersController::class . '@show');
 
 
