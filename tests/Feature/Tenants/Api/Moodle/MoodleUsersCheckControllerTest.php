@@ -102,6 +102,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
      */
     public function users_manager_can_check_moodle_users_existing_uid()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsUsersManager('api');
         create_sample_moodle_user();
         $response =  $this->json('POST','/api/v1/moodle/users/check', [
