@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserCheckStore;
-use App\Moodle\Entities\MoodleUser;
+use App\Moodle\MoodleUser;
 
 /**
  * Class MoodleUsersCheckController.

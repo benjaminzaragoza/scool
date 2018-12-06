@@ -3,7 +3,7 @@
 namespace Tests\Feature\Tenants\Api\Incidents;
 
 use App\Models\User;
-use App\Moodle\Entities\MoodleUser;
+use App\Models\MoodleUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;

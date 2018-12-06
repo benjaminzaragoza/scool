@@ -3,7 +3,6 @@
 namespace Tests\Feature\Tenants\Api\Incidents;
 
 use App\Models\User;
-use App\Moodle\Entities\MoodleUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
@@ -38,7 +37,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
     public function superadmin_can_check_moodle_users_existing_uid()
     {
         $this->loginAsSuperAdmin('api');
-        $user = create_sample_moodle_user();
+        create_sample_moodle_user();
         $response =  $this->json('POST','/api/v1/moodle/users/check', [
             'user' => [
                 'id' => 1,
@@ -104,7 +103,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
     public function users_manager_can_check_moodle_users_existing_uid()
     {
         $this->loginAsUsersManager('api');
-        $user = create_sample_moodle_user();
+        create_sample_moodle_user();
         $response =  $this->json('POST','/api/v1/moodle/users/check', [
             'user' => [
                 'id' => 1,

@@ -6,7 +6,7 @@ use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Changelog\ListChangelog;
 use App\Http\Requests\Moodle\MoodleIndex;
 use App\Models\User;
-use App\Moodle\Entities\MoodleUser;
+use App\Models\MoodleUser;
 use Cache;
 
 /**

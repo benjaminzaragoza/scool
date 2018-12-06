@@ -31,7 +31,7 @@ use App\Models\User;
 use App\Models\UserType;
 use App\Models\WeekLesson;
 use App\Models\Log;
-use App\Moodle\Entities\MoodleUser;
+use App\Models\MoodleUser;
 use App\Repositories\PersonRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\UserRepository;

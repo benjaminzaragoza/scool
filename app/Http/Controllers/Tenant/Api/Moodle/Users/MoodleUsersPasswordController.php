@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserPasswordUpdate;
-use App\Moodle\Entities\MoodleUser;
+use App\Models\MoodleUser;
 
 /**
  * Class MoodleUsersPasswordController.
@@ -20,7 +20,7 @@ class MoodleUsersPasswordController extends Controller
      * @param $tenant
      * @param $moodleuser
      * @return mixed
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function update(MoodleUserPasswordUpdate $request, $tenant, $moodleuser)
     {

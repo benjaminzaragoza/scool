@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserDestroy;
 use App\Http\Requests\Moodle\Users\MoodleUserIndex;
 use App\Http\Requests\Moodle\Users\MoodleUserStore;
-use App\Moodle\Entities\MoodleUser;
+use App\Models\MoodleUser;
 use Cache;
 
 /**

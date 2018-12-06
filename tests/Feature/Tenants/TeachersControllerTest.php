@@ -97,10 +97,13 @@ class TeachersControllerTest extends BaseTenantTest
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     */
     public function list_teachers()
     {
-        $this->withoutExceptionHandling();
+        // TODO -> OPTIMITZE!
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();

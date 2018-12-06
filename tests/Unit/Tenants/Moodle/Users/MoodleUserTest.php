@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Tenants;
 
-use App\Moodle\Entities\MoodleUser;
+use App\Models\MoodleUser;
 use Tests\TestCase;
 
 /**

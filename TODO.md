@@ -10,6 +10,10 @@ Moodle:
 ### Comptes d'usuari:
 
 Moodle:
+
+- [ ] MoodleUser de entity canviar tots els usos a MoodleUser a App\Modelss
+- [ ] Carpeta app/Moodle crec no cal!
+
 Casos
 - El professor no té compte de Moodle
   - [ ] Mostrar botó afegir 
@@ -28,7 +32,12 @@ TeachersController i TeachersControllerTest:
   - [ ] moodle_id -> El id de Moodle del teacher (si el té)
   - [ ] moodle_id = null sí no en té
   - [ ] moodle -> Objecte amb la info de l'usuari de Moodle
+  - [ ] Testos:
+     - [ ] Funció check_teacher ha de comprovar camps moodle_id
 - [ ] Que passa si no hi ha mòdul Moodle activat???
+
+HELPERS I SEEDERS
+- [ ] Creació de professors associar usuari de Moodle. Taula external_users camp moodle_id
  
 Google Apps:
 - [ ]
@@ -51,6 +60,11 @@ Ldap:
 - [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
 
 # Moodle
+
+Migració:
+- [ ] Caldria canviar tots els usuaris actuals de moodle (sense modificar el id) a que utilitzin com a username compte de correu
+  - [ ] Quina compte de correu? La institucional
+  - [ ] TODO
 
 Millores:
 - [ ] Al crear un usuari de Moodle no mostrar els usuaris locals que ja tenen un usuari de Moodle al desplegable
