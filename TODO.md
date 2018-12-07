@@ -7,7 +7,6 @@
 
 PAQUETS CANVIATS:
 
-  - Installing symfony/contracts (v1.0.2): Loading from cache
   - Updating symfony/console (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/finder (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
@@ -16,7 +15,6 @@ PAQUETS CANVIATS:
   - Updating symfony/http-kernel (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/process (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/var-dumper (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/translation (v4.1.7 => v4.2.1): Loading from cache
 
 Crec estic afectat per aquesta issue:
 
