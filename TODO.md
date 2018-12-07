@@ -1,3 +1,12 @@
+# Bugs
+
+- [ ] No funcionen les routes api als testos però si les routes web??
+  - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a compoer.lock.ok
+
+# Laravel Telescope i Laravel horizon
+
+- [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i fallta tot
+
 # Mòdul professorat
 
 ## Add
