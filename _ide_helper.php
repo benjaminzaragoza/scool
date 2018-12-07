@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.14 on 2018-11-26 09:30:57.
+ * Generated for Laravel 5.7.16 on 2018-12-07 09:24:48.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -9264,7 +9264,7 @@ namespace Illuminate\Support\Facades {
          * Checks whether the method is cacheable or not.
          *
          * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
-         * @return bool 
+         * @return bool True for GET and HEAD, false otherwise
          * @static 
          */ 
         public static function isMethodCacheable()
@@ -10809,7 +10809,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently dispatched route instance.
          *
-         * @return \Illuminate\Routing\Route 
+         * @return \Illuminate\Routing\Route|null 
          * @static 
          */ 
         public static function current()
@@ -10909,6 +10909,17 @@ namespace Illuminate\Support\Facades {
         public static function auth($options = array())
         {
             \Illuminate\Routing\Router::auth($options);
+        }
+        
+        /**
+         * Register the typical reset password routes for an application.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function resetPassword()
+        {
+            \Illuminate\Routing\Router::resetPassword();
         }
         
         /**
@@ -11315,6 +11326,7 @@ namespace Illuminate\Support\Facades {
      * @method static bool exists(string|array $key)
      * @method static bool has(string|array $key)
      * @method static mixed get(string $key, $default = null)
+     * @method static mixed pull(string $key, $default = null)
      * @method static void put(string|array $key, $value = null)
      * @method static string token()
      * @method static mixed remove(string $key)
@@ -12785,13 +12797,13 @@ namespace Illuminate\Support\Facades {
         /**
          * Force the scheme for URLs.
          *
-         * @param string $schema
+         * @param string $scheme
          * @return void 
          * @static 
          */ 
-        public static function forceScheme($schema)
+        public static function forceScheme($scheme)
         {
-            \Illuminate\Routing\UrlGenerator::forceScheme($schema);
+            \Illuminate\Routing\UrlGenerator::forceScheme($scheme);
         }
         
         /**
@@ -14756,7 +14768,7 @@ namespace Adldap\Laravel\Facades {
          * @throws \InvalidArgumentException When an invalid type is given as the configuration argument.
          * @static 
          */ 
-        public static function addProvider($config = array(), $name = 'default', $connection = null)
+        public static function addProvider($config, $name = 'default', $connection = null)
         {
             return \Adldap\Adldap::addProvider($config, $name, $connection);
         }
@@ -14773,7 +14785,7 @@ namespace Adldap\Laravel\Facades {
         }
         
         /**
-         * Retrieves a Provider using it's specified name.
+         * Retrieves a Provider using its specified name.
          *
          * @param string $name
          * @throws AdldapException When the specified provider does not exist.
@@ -15275,6 +15287,18 @@ namespace Intervention\Image\Facades {
         {
             return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
         }
+         
+    }
+ 
+}
+
+namespace Laravel\Horizon { 
+
+    /**
+     * 
+     *
+     */ 
+    class Horizon {
          
     }
  
@@ -17764,6 +17788,8 @@ namespace  {
     class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}
 
     class Image extends \Intervention\Image\Facades\Image {}
+
+    class Horizon extends \Laravel\Horizon\Horizon {}
 
     class Google extends \PulkitJalan\Google\Facades\Google {}
 
