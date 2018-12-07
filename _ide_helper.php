@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.16 on 2018-12-07 11:45:26.
+ * Generated for Laravel 5.7.16 on 2018-12-07 12:19:31.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -9264,7 +9264,7 @@ namespace Illuminate\Support\Facades {
          * Checks whether the method is cacheable or not.
          *
          * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
-         * @return bool True for GET and HEAD, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isMethodCacheable()
@@ -14768,7 +14768,7 @@ namespace Adldap\Laravel\Facades {
          * @throws \InvalidArgumentException When an invalid type is given as the configuration argument.
          * @static 
          */ 
-        public static function addProvider($config, $name = 'default', $connection = null)
+        public static function addProvider($config = array(), $name = 'default', $connection = null)
         {
             return \Adldap\Adldap::addProvider($config, $name, $connection);
         }
@@ -14785,7 +14785,7 @@ namespace Adldap\Laravel\Facades {
         }
         
         /**
-         * Retrieves a Provider using its specified name.
+         * Retrieves a Provider using it's specified name.
          *
          * @param string $name
          * @throws AdldapException When the specified provider does not exist.
