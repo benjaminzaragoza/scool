@@ -71,11 +71,11 @@
                      >
                         <v-layout justify-space-between>
                             <v-flex xs2 text-xs-left align-self-center>
-                                <template v-if="log.user">
-                                    <user-avatar class="mr-2" :hash-id="log.user.hashid"
-                                                 :alt="log.user.name"
+                                <template v-if="log.user_name">
+                                    <user-avatar class="mr-2" :hash-id="log.user_hashid"
+                                                 :alt="log.user_name"
                                     ></user-avatar>
-                                    <span :title="log.user.email">{{log.user.name}}</span>
+                                    <span :title="log.user_email">{{log.user_name}}</span>
                                 </template>
                                 <template v-else>Cap usuari</template>
                             </v-flex>

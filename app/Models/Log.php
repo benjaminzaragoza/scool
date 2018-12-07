@@ -39,10 +39,13 @@ class Log extends Model
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'user' => $this->user,
+            'user_name' => optional($this->user)->name,
+            'user_email' => optional($this->user)->email,
+            'user_hashid' => optional($this->user)->hash_id,
             'text' => $this->text,
             'time' => $this->time,
             'human_time' => $this->human_time,
+            'formatted_time' => $this->formatted_time,
             'timestamp' => $this->timestamp,
             'action_type' => $this->action_type,
             'action' => $this->action,
@@ -52,7 +55,7 @@ class Log extends Model
             'color' => $this->color,
             'loggable_id' => $this->loggable_id,
             'loggable_type' => $this->loggable_type,
-            'loggable' => $this->loggable,
+            'loggable' => optional($this->loggable)->map(false),
             'new_loggable' => $this->new_loggable,
             'old_loggable' => $this->old_loggable,
             'old_value' => $this->old_value,
@@ -293,5 +296,33 @@ class Log extends Model
     {
         $user = is_object($user) ? $user->id : $user;
         return $query->where('user_id', $user);
+    }
+
+    /**
+     * Loggable scope.
+     *
+     * @param $query
+     * @param $loggable
+     * @return mixed
+     */
+    public function scopeFromLoggable($query, $loggable)
+    {
+        return $query->where('loggable_id', $loggable->id)->where('loggable_type', get_class($loggable));
+    }
+
+    /**
+     * getLoggableByApiURI.
+     *
+     * @param $uri
+     * @return null|string
+     */
+    public static function getLoggableByApiURI($uri)
+    {
+        switch ($uri) {
+            case 'incidents':
+                return Incident::class;
+            default:
+                return null;
+        }
     }
 }

@@ -31,6 +31,7 @@ use App\Models\User;
 use App\Models\UserType;
 use App\Models\WeekLesson;
 use App\Models\Log;
+use App\Models\MoodleUser;
 use App\Repositories\PersonRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\UserRepository;
@@ -611,8 +612,49 @@ if (!function_exists('formatted_logged_user')) {
     }
 }
 
-if (!function_exists('initialize_tenant_roles_and_permissions')) {
-    function initialize_tenant_roles_and_permissions()
+if (!function_exists('moodle_manager_permissions')) {
+    function moodle_manager_permissions()
+    {
+        return [
+            'moodle.index',
+            'moodle.user.index',
+            'moodle.user.show',
+            'moodle.user.store',
+            'moodle.user.destroy',
+            'people.store',
+            'moodle.user.password.update'
+        ];
+    }
+}
+
+if (!function_exists('users_manager_permissions')) {
+    function users_manager_permissions()
+    {
+        return [
+            'moodle.index',
+            'moodle.user.index',
+            'moodle.user.show',
+            'moodle.user.store',
+            'moodle.user.destroy',
+            'people.update',
+            'people.store',
+            'moodle.user.password.update'
+        ];
+    }
+}
+
+if (!function_exists('people_manager_permissions')) {
+    function people_manager_permissions()
+    {
+        return [
+            'people.store',
+            'people.update'
+        ];
+    }
+}
+
+if (!function_exists('scool_permissions')) {
+    function scool_permissions()
     {
         $permissions = [
             'incident.list',
@@ -625,11 +667,16 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'reply.update'
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-        }
+        $permissions = array_merge($permissions,moodle_manager_permissions());
+        $permissions = array_merge($permissions,people_manager_permissions());
+        return $permissions;
+    }
+}
 
-        $roles = [
+if (!function_exists('scool_roles')) {
+    function scool_roles()
+    {
+        return [
             'Student',
             'Teacher',
             'Janitor',
@@ -644,16 +691,83 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
             'LessonsManager',
             'Incidents',
             'IncidentsManager',
-            'ChangelogManager'
+            'ChangelogManager',
+            'MoodleManager',
+            'PeopleManager'
         ];
 
-        // Manager
-        // - Rol assignat a l'usuari principal (de fet és superadmin) però també es pot assignar a altres
-        // - Menú administració:
-        // - Gestió de mòduls
+    }
+}
+
+if (!function_exists('scool_roles_permissions')) {
+    function scool_roles_permissions()
+    {
+        return [
+            'MoodleManager' => moodle_manager_permissions(),
+            'UsersManager' => users_manager_permissions(),
+            'PeopleManager' => people_manager_permissions()
+        ];
+
+    }
+}
+
+if (!function_exists('initialize_tenant_roles_and_permissions')) {
+    function initialize_tenant_roles_and_permissions()
+    {
+        $permissions = scool_permissions();
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        $roles = scool_roles();
 
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
+        }
+
+        $rolePermissions = scool_roles_permissions();
+        foreach ($rolePermissions as $role => $rolePermission) {
+            $role = Role::findByName($role);
+            foreach ($rolePermission as $permission) {
+                $role->givePermissionTo($permission);
+            }
+        }
+    }
+}
+
+if (!function_exists('initialize_users_manager_role')) {
+    function initialize_users_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        $permissions = users_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_people_manager_role')) {
+    function initialize_people_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'PeopleManager']);
+        $permissions = people_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_moodle_manager_role')) {
+    function initialize_moodle_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'MoodleManager']);
+        $permissions = moodle_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
         }
     }
 }
@@ -999,6 +1113,21 @@ if (!function_exists('initialize_gates')) {
             $user = is_object($user) ? $user->id : $user;
             return (int) $loggedUser->id === (int) $user || $loggedUser->hasRole('ChangelogManager');
         });
+
+        Gate::define('logs.loggable.list', function ($user, $loggable) {
+            if ($user->id === (int) $loggable->user_id) return true;
+            if($loggable->managerRole()){
+                if ($user->hasRole($loggable->managerRole())) return true;
+            }
+            if($loggable->api_uri) {
+                if ($loggable->api_uri === 'incidents') {
+                    if($user->hasRole('Incidents')) return true;
+                }
+            }
+            return false;
+        });
+
+
     }
 }
 
@@ -1051,6 +1180,12 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Usuaris',
             'href' => '/users',
             'role' => 'UsersManager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Moodle',
+            'href' => '/moodle',
+            'role' => 'MoodleManager,UsersManager'
         ]);
 
         Menu::firstOrCreate([
@@ -8351,11 +8486,20 @@ if (! function_exists('sample_logs')) {
     {
         $user1 = factory(User::class)->create();
         $user2 = factory(User::class)->create();
+
+        $incident = Incident::create([
+            'subject' => 'No va res Aula 12',
+            'description' => 'Bla bla bla'
+        ]);
+        $incident->assignUser($user1);
+
         $log1 = Log::create([
             'text' => 'Ha creat la incidència TODO_LINK_INCIDENCIA',
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
+            'loggable_id' => $incident->id,
+            'loggable_type' => Incident::class,
             'user_id' => $user1->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8365,6 +8509,8 @@ if (! function_exists('sample_logs')) {
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
+            'loggable_id' => 1,
+            'loggable_type' => Incident::class,
             'user_id' => $user2->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8374,6 +8520,8 @@ if (! function_exists('sample_logs')) {
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'Incidents',
+            'loggable_id' => 1,
+            'loggable_type' => Incident::class,
             'user_id' => $user2->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8383,6 +8531,8 @@ if (! function_exists('sample_logs')) {
             'time' => Carbon::now(),
             'action_type' => 'update',
             'module_type' => 'OtherModule',
+            'loggable_id' => 1,
+            'loggable_type' => User::class,
             'user_id' => $user2->id,
             'icon' => 'home',
             'color' => 'teal'
@@ -8390,6 +8540,24 @@ if (! function_exists('sample_logs')) {
         return [$log1,$log2,$log3,$log4];
     }
 }
+
+if (! function_exists('create_sample_moodle_user')) {
+    function create_sample_moodle_user() {
+        $user = [
+            'username' => 'usuariesborrar',
+            'firstname' => 'usuari',
+            'lastname' => 'esborrar',
+            'email' => 'usuariesborrar@gmail.com',
+            'password' => '123456'
+        ];
+        try {
+            return MoodleUser::store($user);
+        } catch(\Exception $e) {
+            return MoodleUser::get('usuariesborrar@gmail.com');
+        }
+    }
+}
+
 
 
 

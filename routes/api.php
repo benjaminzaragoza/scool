@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
+use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
+use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
+use App\Http\Controllers\Tenant\Api\Person\PeopleController;
+use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
-
+use App\Models\Log as Changelog;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +28,16 @@ Route::bind('role', function($value, $route)
         return Role::where('name',$value)->firstOrFail();
     }
     throw new RoleDoesNotExist(var_export($value,true));
+});
+
+Route::bind('loggable', function($value, $route)
+{
+    if (array_key_exists('loggableId',$route->parameters)) {
+        if ($loggableClass = Changelog::getLoggableByApiURI($value)) {
+            return $loggableClass::findOrFail($route->parameters['loggableId']);
+        }
+    }
+    abort(404,"No s'ha trobat cap recurs amb aquesta classe o id");
 });
 
 Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
@@ -45,9 +60,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/proposeFreeUserName/{name}/{sn1}', 'Tenant\ProposeFreeUsernameController@index');
 
             // Teachers
-            Route::get('/teachers', 'Tenant\TeachersController@index');
-            Route::post('/teachers', 'Tenant\TeachersController@store');
+            Route::get('/teachers', '\\' . TeachersController::class . '@index');
+            Route::post('/teachers', '\\' . TeachersController::class . '@store');
             Route::delete('/teachers/{teacher}', 'Tenant\TeachersController@destroy');
+            Route::delete('/teachers/{teacher}', '\\' . TeachersController::class . '@destroy');
 
             // Finish teacher add
             Route::post('/teacher/finish_add', 'Tenant\TeacherFinishAddController@store');
@@ -67,12 +83,29 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/user_person', 'Tenant\UserPersonController@store');
             Route::delete('/user_person/{user}', 'Tenant\UserPersonController@destroy');
 
-            // USERS
+            // Persons
+            Route::post('/people', '\\'. PeopleController::class .'@store');
+            Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
+
+
+                // USERS
             Route::put('/user', 'Tenant\LoggedUserController@update');
             Route::get('/users', 'Tenant\UsersController@index');
             Route::post('/users', 'Tenant\UsersController@store');
             Route::delete('/users/{user}', 'Tenant\UsersController@destroy');
             Route::get('/users/{user}', 'Tenant\UsersController@get');
+
+            // Moodle Users
+            Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');
+            Route::post('/moodle/users', '\\'. MoodleUsersController::class .'@store');
+            Route::delete('/moodle/users/{moodleuser}', '\\'. MoodleUsersController::class .'@destroy');
+
+            // Moodle Password
+            Route::put('/moodle/users/{moodleuser}/password', '\\'. MoodleUsersPasswordController::class .'@update');
+
+
+            //Moodle users check
+            Route::post('/moodle/users/check', '\\'. MoodleUsersCheckController::class .'@store');
 
             //GET USER BY EMAIL
             Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');
@@ -218,6 +251,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/changelog','Tenant\Api\Changelog\ChangelogController@index');
             Route::get('/changelog/module/{module}','Tenant\Api\Changelog\ChangelogModuleController@index');
             Route::get('/changelog/user/{user}','Tenant\Api\Changelog\ChangelogUserController@index');
+            Route::get('/changelog/loggable/{loggable}/{loggableId}','Tenant\Api\Changelog\ChangelogLoggableController@index');
         });
 
         Route::group(['prefix' => 'v1'], function () {

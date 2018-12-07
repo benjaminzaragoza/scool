@@ -7,7 +7,7 @@ $incidentClosedInfo = $mappedIncident['formatted_closed_at_diff'];
 }
 $incidentClosedByInfo = '';
 if ($mappedIncident['closed_at']) {
-$incidentClosedByInfo = $mappedIncident['closer']['name'];
+$incidentClosedByInfo = $mappedIncident['closer_name'];
 }
 $tags= 'Cap etiqueta assignada';
 if (count($mappedIncident['tags']) > 0) {
@@ -25,7 +25,7 @@ $assignees= implode(collect($mappedIncident['assignees'])->pluck('name')->toArra
 - **Títol**: {{ $incident->subject }}
 - **Creada per**: {{ $mappedIncident['user_name'] }} ( {{ $mappedIncident['user_email'] }} )
 - **Data creació**: <span title="{{ $mappedIncident['formatted_created_at'] }}">{{ $mappedIncident['formatted_created_at_diff'] }}</span>
-- **Estat**: {{ $incidentState }} @if ($mappedIncident['closed_at'])<span title="{{ $mappedIncident['formatted_closed_at'] }}">{{ $incidentClosedInfo }} per <span title="{{ $mappedIncident['closer']['email'] }}">{{ $incidentClosedByInfo }}</span>@endif
+- **Estat**: {{ $incidentState }} @if ($mappedIncident['closed_at'])<span title="{{ $mappedIncident['formatted_closed_at'] }}">{{ $incidentClosedInfo }} per <span title="{{ $mappedIncident['closer_email'] }}">{{ $incidentClosedByInfo }}</span>@endif
 
 - **Última modificació**: <span title="{{ $mappedIncident['formatted_closed_at'] }}">{{ $mappedIncident['formatted_updated_at_diff'] }}</span>
 - **Etiquetes**: {{ $tags }}

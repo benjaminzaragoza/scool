@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Tenant\Api\Roles;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\Roles\UserRoleDestroy;
-use App\Http\Requests\Roles\UserRoleStore;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 

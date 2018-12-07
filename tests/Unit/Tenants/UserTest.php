@@ -258,6 +258,27 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function lastname()
+    {
+        $user = factory(User::class)->create();
+        $this->assertNull($user->lastname());
+        $user->assignFullName([
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => '',
+        ]);
+        $user = $user->fresh();
+        $this->assertEquals($user->lastname(),'Pardo');
+        $user->assignFullName([
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+        ]);
+        $user = $user->fresh();
+        $this->assertEquals($user->lastname(),'Pardo Jeans');
+    }
+
+    /** @test */
     public function can_assign_fullname()
     {
         $user = factory(User::class)->create();
@@ -813,12 +834,13 @@ class UserTest extends TestCase
             'google_email' => 'pepepardo@iesebre.com',
         ]);
 
-        Person::create([
-            'user_id' => $user->id,
+        $person = Person::create([
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
         ]);
+        $person->user_id = $user->id;
+        $person->save();
 
         $mappedUser = $user->map();
 
@@ -826,8 +848,10 @@ class UserTest extends TestCase
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe',$mappedUser['givenName']);
         $this->assertFalse($mappedUser['isSuperAdmin']);
+        $this->assertEquals($person->id,$mappedUser['person_id']);
         $this->assertEquals('Pardo',$mappedUser['sn1']);
         $this->assertEquals('Jeans',$mappedUser['sn2']);
+        $this->assertEquals('Pardo Jeans',$mappedUser['lastname']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
         $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);

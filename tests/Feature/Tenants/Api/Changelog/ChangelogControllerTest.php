@@ -47,6 +47,7 @@ class ChangelogControllerTest extends BaseTenantTest {
         $response =  $this->json('GET','/api/v1/changelog');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
+//        dump($result);
         $this->assertCount(4,$result);
 
         $this->assertEquals($logs[0]->id,$result[0]->id);
@@ -57,10 +58,9 @@ class ChangelogControllerTest extends BaseTenantTest {
         $this->assertEquals($logs[0]->action_type, $result[0]->action_type);
         $this->assertEquals($logs[0]->module, $result[0]->module);
         $this->assertEquals($logs[0]->user_id, $result[0]->user_id);
-        $this->assertEquals($logs[0]->user->id, $result[0]->user->id);
-        $this->assertEquals($logs[0]->user->name, $result[0]->user->name);
-        $this->assertEquals($logs[0]->user->email, $result[0]->user->email);
-        $this->assertEquals($logs[0]->user->hashid, $result[0]->user->hashid);
+        $this->assertEquals($logs[0]->user->name, $result[0]->user_name);
+        $this->assertEquals($logs[0]->user->email, $result[0]->user_email);
+        $this->assertEquals($logs[0]->user->hashid, $result[0]->user_hashid);
         $this->assertEquals($logs[0]->icon, $result[0]->icon);
         $this->assertEquals($logs[0]->color, $result[0]->color);
     }
