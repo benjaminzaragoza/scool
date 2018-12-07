@@ -23,7 +23,6 @@ Updating doctrine/dbal (v2.8.0 => v2.9.0): Loading from cache
   - Updating symfony/translation (v4.1.7 => v4.2.1): Loading from cache
   - Installing ralouphie/getallheaders (2.0.5): Loading from cache
   - Updating guzzlehttp/psr7 (1.4.2 => 1.5.2): Loading from cache
-  - Updating phpunit/phpunit (7.4.4 => 7.5.0): Loading from cache
   - Updating tightenco/collect (v5.7.13 => v5.7.15): Loading from cache
   - Updating adldap2/adldap2 (v9.1.3 => v9.1.4): Loading from cache
   - Updating symfony/filesystem (v4.1.7 => v4.2.1): Loading from cache

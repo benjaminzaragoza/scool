@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.16 on 2018-12-07 12:28:19.
+ * Generated for Laravel 5.7.16 on 2018-12-07 12:59:54.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14768,7 +14768,7 @@ namespace Adldap\Laravel\Facades {
          * @throws \InvalidArgumentException When an invalid type is given as the configuration argument.
          * @static 
          */ 
-        public static function addProvider($config = array(), $name = 'default', $connection = null)
+        public static function addProvider($config, $name = 'default', $connection = null)
         {
             return \Adldap\Adldap::addProvider($config, $name, $connection);
         }
@@ -14785,7 +14785,7 @@ namespace Adldap\Laravel\Facades {
         }
         
         /**
-         * Retrieves a Provider using it's specified name.
+         * Retrieves a Provider using its specified name.
          *
          * @param string $name
          * @throws AdldapException When the specified provider does not exist.
