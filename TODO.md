@@ -12,6 +12,16 @@ Crec estic afectat per aquesta issue:
 
 - [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i falla tot
 
+## Laravel Telescope
+
+Que cal borrar al fer la desinstal·lació:
+- config/app.php treure el service provider
+- Dont discover a composer.json: "laravel/telescope"
+- composer remove laravel/telescope
+- /public/vendor/telescope
+- /config/telescope.php
+
+
 # Mòdul professorat
 
 ## Add

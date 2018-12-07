@@ -20,7 +20,6 @@
         "laravel-notification-channels/webpush": "^3.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
-        "laravel/telescope": "^1.0",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1",
         "pulkitjalan/google-apiclient": "^3.1",
@@ -60,7 +59,8 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel/dusk"
+                "laravel/dusk",
+                "laravel/telescope"
             ]
         }
     },
