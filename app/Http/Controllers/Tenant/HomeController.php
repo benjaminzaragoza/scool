@@ -8,11 +8,13 @@ use App\Models\JobType;
 use App\Models\Setting;
 use App\Models\Specialty;
 use App\Revisionable\Revision;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Resources\Tenant\Revision as RevisionResource;
 
 /**
- * Class HomeController
+ * Class HomeController.
+ *
  * @package App\Http\Controllers
  */
 class HomeController extends Controller
