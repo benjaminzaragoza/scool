@@ -19,7 +19,6 @@ PAQUETS CANVIATS:
   - Updating symfony/var-dumper (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/translation (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/css-selector (v4.1.7 => v4.2.1): Loading from cache
-  - Updating egulias/email-validator (2.1.6 => 2.1.7): Loading from cache
   - Installing ralouphie/getallheaders (2.0.5): Loading from cache
   - Updating guzzlehttp/psr7 (1.4.2 => 1.5.2): Loading from cache
   - Updating symfony/filesystem (v4.1.7 => v4.2.1): Loading from cache
