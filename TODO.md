@@ -7,34 +7,27 @@
 
 PAQUETS CANVIATS:
 
-Updating doctrine/dbal (v2.8.0 => v2.9.0): Loading from cache
-  - Updating symfony/css-selector (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/var-dumper (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/routing (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/process (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
   - Installing symfony/contracts (v1.0.2): Loading from cache
+  - Updating symfony/console (v4.1.7 => v4.2.1): Loading from cache
+  - Updating symfony/finder (v4.1.7 => v4.2.1): Loading from cache
+  - Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/event-dispatcher (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/debug (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/http-kernel (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/finder (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/console (v4.1.7 => v4.2.1): Loading from cache
-  - Updating egulias/email-validator (2.1.6 => 2.1.7): Loading from cache
+  - Updating symfony/process (v4.1.7 => v4.2.1): Loading from cache
+  - Updating symfony/routing (v4.1.7 => v4.2.1): Loading from cache
+  - Updating symfony/var-dumper (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/translation (v4.1.7 => v4.2.1): Loading from cache
+  - Updating symfony/css-selector (v4.1.7 => v4.2.1): Loading from cache
+  - Updating egulias/email-validator (2.1.6 => 2.1.7): Loading from cache
   - Installing ralouphie/getallheaders (2.0.5): Loading from cache
   - Updating guzzlehttp/psr7 (1.4.2 => 1.5.2): Loading from cache
-  - Updating tightenco/collect (v5.7.13 => v5.7.15): Loading from cache
-  - Updating adldap2/adldap2 (v9.1.3 => v9.1.4): Loading from cache
   - Updating symfony/filesystem (v4.1.7 => v4.2.1): Loading from cache
-  - Updating composer/xdebug-handler (1.3.0 => 1.3.1): Loading from cache
-  - Updating composer/composer (1.7.3 => 1.8.0): Loading from cache
   - Updating fgrosse/phpasn1 (2.0.1 => v2.1.1): Loading from cache
   - Updating mdanter/ecc (v0.5.0 => v0.5.2): Loading from cache
   - Updating league/event (2.1.2 => 2.2.0): Loading from cache
   - Updating paragonie/sodium_compat (v1.7.0 => v1.8.0): Loading from cache
-  - Updating google/apiclient-services (v0.74 => v0.76): Loading from cache
-  - Removing adldap2/adldap2-laravel (dev-master 9c4e0f0)
-  - Installing adldap2/adldap2-laravel (dev-master 8d6a47f): Loading from cache
+
 
   
 # Laravel Telescope i Laravel horizon
