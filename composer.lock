@@ -3028,27 +3028,27 @@
         },
         {
             "name": "mdanter/ecc",
-            "version": "v0.5.0",
+            "version": "v0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpecc/phpecc.git",
-                "reference": "ed5c6d496f5310de1b7071b8375fafa3559a1344"
+                "reference": "b95f25cc1bacc83a9f0ccd375900b7cfd343029e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpecc/phpecc/zipball/ed5c6d496f5310de1b7071b8375fafa3559a1344",
-                "reference": "ed5c6d496f5310de1b7071b8375fafa3559a1344",
+                "url": "https://api.github.com/repos/phpecc/phpecc/zipball/b95f25cc1bacc83a9f0ccd375900b7cfd343029e",
+                "reference": "b95f25cc1bacc83a9f0ccd375900b7cfd343029e",
                 "shasum": ""
             },
             "require": {
                 "ext-gmp": "*",
-                "fgrosse/phpasn1": "v2.0.x",
-                "php": ">=7.0"
+                "fgrosse/phpasn1": "^2.0",
+                "php": "^7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0",
-                "squizlabs/php_codesniffer": "~2",
-                "symfony/yaml": "~2.6|~3.0"
+                "squizlabs/php_codesniffer": "^2.0",
+                "symfony/yaml": "^2.6|^3.0"
             },
             "type": "library",
             "autoload": {
@@ -3096,7 +3096,7 @@
                 "secp256k1",
                 "secp256r1"
             ],
-            "time": "2017-10-09T16:05:37+00:00"
+            "time": "2018-12-03T18:17:01+00:00"
         },
         {
             "name": "minishlink/web-push",
