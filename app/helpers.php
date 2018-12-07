@@ -4634,6 +4634,7 @@ if (!function_exists('initialize_user_types')) {
 if (!function_exists('configure_tenant')) {
     function configure_tenant($tenant)
     {
+
         Config::set('app.name', $tenant->name);
         //TODO Add shortname to tenants table
         Config::set('app.shortname', $tenant->name);
@@ -8424,12 +8425,20 @@ if (! function_exists('initialize_settings')) {
 }
 
 if (! function_exists('tenant_from_url')) {
-    function tenant_from_url()
+    function tenant_from_url($url)
     {
-        if (!ends_with($currentUrl = url()->current(), config('app.domain','scool.test'))) return null;
-        $host = parse_url($currentUrl)['host'];
-        if ($host === config('app.domain','scool.test')) return null;
-        return explode('.', $host)[0];
+        $host = parse_url($url)['host'];
+        $domain = config('app.domain','scool.test');
+        if (!ends_with($host, $domain)) return null;
+        if ($host === $domain) return null;
+        return (explode('.' . $domain, $host)[0]);
+    }
+}
+
+if (! function_exists('tenant_from_current_url')) {
+    function tenant_from_current_url()
+    {
+        return tenant_from_url(url()->current());
     }
 }
 

@@ -39,6 +39,15 @@ Route::bind('module', function($value, $route)
 Route::domain('{tenant}.' . config('app.domain'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {
 
+        Route::get('/', function () {
+            return view('tenants.welcome');
+        });
+
+        Route::get('/welcome', function () {
+            return view('tenants.welcome');
+        });
+
+
 //        $this->app['router']->group($attributes, function ($router) {
 //            $router->match(
 //                ['get', 'post'], '/broadcasting/auth',
@@ -70,10 +79,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('email/verify', 'Auth\Tenant\VerificationController@show')->name('verification.notice');
         Route::get('email/verify/{id}', 'Auth\Tenant\VerificationController@verify')->name('verification.verify');
         Route::get('email/resend', 'Auth\Tenant\VerificationController@resend')->name('verification.resend');
-
-        Route::get('/', function () {
-            return view('tenants.welcome');
-        });
 
         // Gsuite users push notifications -> Registered with Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
         Route::post('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');

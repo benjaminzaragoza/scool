@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Specialty;
 use App\Revisionable\Revision;
 use Auth;
+use Config;
 use Illuminate\Http\Request;
 use App\Http\Resources\Tenant\Revision as RevisionResource;
 
@@ -36,6 +37,8 @@ class HomeController extends Controller
      */
     public function show(Request $request)
     {
+//        dd($request->user);
+//        dd(Config::get('auth.providers.users.model'));
         $teacherTotals = collect([
             'Total',
             'Reals'

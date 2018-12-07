@@ -259,4 +259,26 @@ class HelpersTest extends TestCase
             'Prova subject molt llarg més de 50 caràcters sad...');
     }
 
+    /**
+     * @test
+     */
+    public function tenant_from_url()
+    {
+        $urls = [
+            ['url' => 'http://google.com', 'tenant' => null],
+            ['url' => 'http://iesebre.scool.cat', 'tenant' => null],
+            ['url' => 'http://iesebre.scool.test', 'tenant' => 'iesebre'],
+            ['url' => 'http://iesebre.scool.test', 'tenant' => 'iesebre'],
+            ['url' => 'http://iesebre.scool.test/prova', 'tenant' => 'iesebre'],
+            ['url' => 'http://othertenant.scool.test', 'tenant' => 'othertenant'],
+            ['url' => 'http://othertenant.asdsad.scool.test', 'tenant' => 'othertenant.asdsad']
+        ];
+
+        foreach ($urls as $url) {
+            $result = tenant_from_url($url['url']);
+            $this->assertEquals($result,$url['tenant']);
+        }
+
+    }
+
 }

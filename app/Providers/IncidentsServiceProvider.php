@@ -34,11 +34,18 @@ class IncidentsServiceProvider extends ServiceProvider
 
     }
 
+    /**
+     *
+     * @param Request $request
+     */
     protected function setIncidentsManagerEmail(Request $request)
     {
-        $tenant = tenant_from_url();
+        $tenant = tenant_from_current_url();
+        dump($tenant);
         if (! is_null($tenant)) {
+            dump('prova2');
             if ($tenant = get_tenant($tenant)) {
+                dd(1);
                 $tenant->connect();
                 $tenant->configure();
             }
