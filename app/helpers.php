@@ -457,6 +457,7 @@ if (! function_exists('tenant_seed')) {
 function create_mysql_full_database($name, $user , $password = null, $host = null)
 {
     create_mysql_database($name);
+
     $password = create_mysql_user($user, $password, $host);
     mysql_grant_privileges($user, $name, $host);
 
@@ -499,19 +500,23 @@ function delete_mysql_full_database($name, $user, $host = null)
  *
  */
 function set_mysql_admin_connection() {
+
     DB::purge('mysql');
 
-    Config::set('database.connections.mysql.host', env('MYSQL_ADMIN_HOST'));
-    Config::set('database.connections.mysql.port', env('MYSQL_ADMIN_PORT'));
+    Config::set('database.connections.mysql.host', config('database.mysql_admin_host'));
+    Config::set('database.connections.mysql.port', config('database.mysql_admin_port'));
     Config::set('database.connections.mysql.database', null);
-    Config::set('database.connections.mysql.username', env('MYSQL_ADMIN_USERNAME'));
-    Config::set('database.connections.mysql.password', env('MYSQL_ADMIN_PASSWORD'));
+    Config::set('database.connections.mysql.username', config('database.mysql_admin_username'));
+    Config::set('database.connections.mysql.password', config('database.mysql_admin_password'));
 
     // Rearrange the connection data
     DB::reconnect('mysql');
 
     // Ping the database. This will throw an exception in case the database does not exists.
     Schema::connection('mysql')->getConnection()->reconnect();
+
+
+
 }
 
 /**
