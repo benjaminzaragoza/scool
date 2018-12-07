@@ -14,8 +14,6 @@ Crec estic afectat per aquesta issue:
 
 # Laravel Horizon
 
-- [ ] 404 error on tenant URLS?
-
 Uninstall:
 - Remove HorizonSErviceProvider de config/app.php
 - Remove boostrap/cache/packages file
