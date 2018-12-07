@@ -9,7 +9,8 @@ const disappear = (el, modifiers) => {
     el.firstElementChild.disabled = true
     return true
   }
-  el.innerHTML = ''
+  // el.innerHTML = ''
+  el.remove()
 }
 
 const haveRole = (role) => {
@@ -23,10 +24,9 @@ const haveRole = (role) => {
   if (window.user && window.user.isSuperAdmin) return true
   const userRoles = window.user && window.user.roles
   if (userRoles) {
-    roles.each(role => {
-      if (userRoles.indexOf(role.trim()) !== -1) return true
+    return roles.some(role => {
+      return userRoles.indexOf(role.trim()) !== -1
     })
-    return false
   }
   return false
 }

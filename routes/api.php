@@ -87,7 +87,6 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/people', '\\'. PeopleController::class .'@store');
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
 
-
                 // USERS
             Route::put('/user', 'Tenant\LoggedUserController@update');
             Route::get('/users', 'Tenant\UsersController@index');

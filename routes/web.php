@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Tenant\HomeController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Models\Module;
@@ -38,6 +39,16 @@ Route::bind('module', function($value, $route)
 
 Route::domain('{tenant}.' . config('app.domain'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {
+
+        Route::get('/', function () {
+            return view('tenants.welcome');
+        });
+        Route::get('/welcome', function () {
+//            dd(Auth::logout());
+            dump(Config::get('auth.providers.users.model'));
+            return view('tenants.welcome');
+        });
+
 
 //        $this->app['router']->group($attributes, function ($router) {
 //            $router->match(
@@ -70,10 +81,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('email/verify', 'Auth\Tenant\VerificationController@show')->name('verification.notice');
         Route::get('email/verify/{id}', 'Auth\Tenant\VerificationController@verify')->name('verification.verify');
         Route::get('email/resend', 'Auth\Tenant\VerificationController@resend')->name('verification.resend');
-
-        Route::get('/', function () {
-            return view('tenants.welcome');
-        });
 
         // Gsuite users push notifications -> Registered with Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
         Route::post('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
@@ -126,7 +133,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/impersonate/leave',
                 '\Lab404\Impersonate\Controllers\ImpersonateController@leave')->name('impersonate.leave');
 
-            Route::get('/home', 'Tenant\HomeController@show');
+            Route::get('/home', '\\' . HomeController::class . '@show');
 
             Route::get('/users', 'Tenant\UsersController@show');
 

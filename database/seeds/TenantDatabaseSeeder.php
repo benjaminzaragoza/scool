@@ -25,6 +25,7 @@ class TenantDatabaseSeeder extends Seeder
         create_tenant_admin_user();
         create_tenant_user_without_permissions();
         create_other_tenant_admin_users();
+
         initialize_job_types();
         initialize_forces();
         initialize_families();
@@ -40,6 +41,7 @@ class TenantDatabaseSeeder extends Seeder
         inititialize_substitutes_personal_data();
         initialize_teacher_photos();
 
+
         initialize_janitors();
         initialize_administrative_assistants();
         seed_identifier_types();
@@ -50,6 +52,8 @@ class TenantDatabaseSeeder extends Seeder
         initialize_settings();
 
         initialize_incidents_module();
+
+
 
     }
 }

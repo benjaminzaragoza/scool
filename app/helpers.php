@@ -693,7 +693,8 @@ if (!function_exists('scool_roles')) {
             'IncidentsManager',
             'ChangelogManager',
             'MoodleManager',
-            'PeopleManager'
+            'PeopleManager',
+            'Superadmin'
         ];
 
     }
@@ -1240,6 +1241,12 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Registre de canvis',
             'href' => '/changelog',
             'role' => 'Changelogmanager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Laravel Horizon',
+            'href' => '/horizon',
+            'role' => 'Superadmin'
         ]);
     }
 }
@@ -4634,6 +4641,7 @@ if (!function_exists('initialize_user_types')) {
 if (!function_exists('configure_tenant')) {
     function configure_tenant($tenant)
     {
+
         Config::set('app.name', $tenant->name);
         //TODO Add shortname to tenants table
         Config::set('app.shortname', $tenant->name);
@@ -8395,13 +8403,18 @@ if (! function_exists('create_fake_incidents')) {
 if (! function_exists('create_setting')) {
     function create_setting($key, $value, $role,$label=null,$hint=null)
     {
-        $setting = new \App\Models\Setting();
-        $setting->key = $key;
-        $setting->value = $value;
-        $setting->role = $role;
-        $setting->label = $label;
-        $setting->hint = $hint;
-        $setting->save();
+        try {
+            $setting = new \App\Models\Setting();
+            $setting->key = $key;
+            $setting->value = $value;
+            $setting->role = $role;
+            $setting->label = $label;
+            $setting->hint = $hint;
+            $setting->save();
+        } catch (\Exception $e) {
+
+        }
+
     }
 }
 
@@ -8419,12 +8432,20 @@ if (! function_exists('initialize_settings')) {
 }
 
 if (! function_exists('tenant_from_url')) {
-    function tenant_from_url()
+    function tenant_from_url($url)
     {
-        if (!ends_with($currentUrl = url()->current(), config('app.domain','scool.test'))) return null;
-        $host = parse_url($currentUrl)['host'];
-        if ($host === config('app.domain','scool.test')) return null;
-        return explode('.', $host)[0];
+        $host = parse_url($url)['host'];
+        $domain = config('app.domain','scool.test');
+        if (!ends_with($host, $domain)) return null;
+        if ($host === $domain) return null;
+        return (explode('.' . $domain, $host)[0]);
+    }
+}
+
+if (! function_exists('tenant_from_current_url')) {
+    function tenant_from_current_url()
+    {
+        return tenant_from_url(url()->current());
     }
 }
 
@@ -8455,25 +8476,25 @@ if (! function_exists('initialize_incidents_module')) {
 if (! function_exists('initialize_incident_tags')) {
     function initialize_incident_tags()
     {
-        IncidentTag::create([
+        IncidentTag::firstOrCreate([
             'value' => 'Manteniment centre',
             'description' => 'Persianes, florescents, electricitat, etc...',
             'color' => 'amber',
         ]);
 
-        IncidentTag::create([
+        IncidentTag::firstOrCreate([
             'value' => 'Maninfo',
             'description' => 'Manteniment Informàtica: problemes maquinari, programari, connexió a internet, aplicacions pròpies',
             'color' => 'teal lighten-1',
         ]);
 
-        IncidentTag::create([
+        IncidentTag::firstOrCreate([
             'value' => 'Dep. Informàtica',
             'description' => 'Incidències aules i departament informàtica',
             'color' => 'cyan lighten-1',
         ]);
 
-        IncidentTag::create([
+        IncidentTag::firstOrCreate([
             'value' => 'Moodle i web del centre',
             'description' => 'Gestió de Moodle i web del centre',
             'color' => 'pink lighten-1',

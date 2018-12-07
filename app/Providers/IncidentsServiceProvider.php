@@ -34,17 +34,19 @@ class IncidentsServiceProvider extends ServiceProvider
 
     }
 
+    /**
+     *
+     * @param Request $request
+     */
     protected function setIncidentsManagerEmail(Request $request)
     {
-        $tenant = tenant_from_url();
+        $tenant = tenant_from_current_url();
         if (! is_null($tenant)) {
-            if ($tenant = get_tenant($tenant)) {
-                $tenant->connect();
-                $tenant->configure();
-            }
+            apply_tenant($tenant);
             if ($email = Setting::get('incidents_manager_email')) {
                 Config::set('incidents.manager_email', $email);
             }
-        }
+            main_connect();
+         }
     }
 }

@@ -1,3 +1,37 @@
+# Bugs
+
+- [ ] No funcionen les routes api als testos però si les routes web??
+  - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a composer.lock.ok
+  - Paquet dona error: Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
+
+Crec estic afectat per aquesta issue:
+
+- https://github.com/symfony/symfony/issues/29478 
+  
+# Laravel Telescope
+
+- [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i falla tot
+
+# Laravel Horizon
+
+Uninstall:
+- Remove HorizonSErviceProvider de config/app.php
+- Remove boostrap/cache/packages file
+- composer remove laravel/horizon
+- remove config/horizon.php file
+- remove public/vendor/horizon
+- create_failed_jobs migrate
+
+## Laravel Telescope
+
+Que cal borrar al fer la desinstal·lació:
+- config/app.php treure el service provider
+- Dont discover a composer.json: "laravel/telescope"
+- composer remove laravel/telescope
+- /public/vendor/telescope
+- /config/telescope.php
+
+
 # Mòdul professorat
 
 ## Add
