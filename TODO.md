@@ -8,9 +8,20 @@ Crec estic afectat per aquesta issue:
 
 - https://github.com/symfony/symfony/issues/29478 
   
-# Laravel Telescope i Laravel horizon
+# Laravel Telescope
 
 - [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i falla tot
+
+# Laravel Horizon
+
+- [ ] 404 error on tenant URLS?
+
+Uninstall:
+- Remove HorizonSErviceProvider de config/app.php
+- Remove boostrap/cache/packages file
+- composer remove laravel/horizon
+- remove config/horizon.php file
+- remove public/vendor/horizon
 
 ## Laravel Telescope
 
