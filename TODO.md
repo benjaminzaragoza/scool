@@ -3,11 +3,11 @@
 - [ ] No funcionen les routes api als testos però si les routes web??
   - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a compoer.lock.ok
   - Updating laravel/framework (v5.7.14 => v5.7.16): Loading from cache
-  - Només executant composer update laravel/frmaework NO PROBLEM!!!
+  - Només executant composer update laravel/framework NO PROBLEM!!! No sembla doncs problema de laravel!
   
 # Laravel Telescope i Laravel horizon
 
-- [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i fallta tot
+- [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i falla tot
 
 # Mòdul professorat
 
