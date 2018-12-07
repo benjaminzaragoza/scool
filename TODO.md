@@ -1,19 +1,12 @@
 # Bugs
 
 - [ ] No funcionen les routes api als testos però si les routes web??
-  - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a compoer.lock.ok
-  - Updating laravel/framework (v5.7.14 => v5.7.16): Loading from cache
-  - Només executant composer update laravel/framework NO PROBLEM!!! No sembla doncs problema de laravel!
-
-PAQUETS CANVIATS:
-
-  
-  - Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/http-kernel (v4.1.7 => v4.2.1): Loading from cache
+  - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a composer.lock.ok
+  - Paquet dona error: Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
 
 Crec estic afectat per aquesta issue:
 
-https://github.com/symfony/symfony/issues/29478 
+- https://github.com/symfony/symfony/issues/29478 
   
 # Laravel Telescope i Laravel horizon
 
