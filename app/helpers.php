@@ -693,7 +693,8 @@ if (!function_exists('scool_roles')) {
             'IncidentsManager',
             'ChangelogManager',
             'MoodleManager',
-            'PeopleManager'
+            'PeopleManager',
+            'Superadmin'
         ];
 
     }
@@ -1240,6 +1241,12 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Registre de canvis',
             'href' => '/changelog',
             'role' => 'Changelogmanager'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Laravel Horizon',
+            'href' => '/horizon',
+            'role' => 'Superadmin'
         ]);
     }
 }

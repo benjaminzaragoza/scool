@@ -20,6 +20,7 @@ Uninstall:
 - composer remove laravel/horizon
 - remove config/horizon.php file
 - remove public/vendor/horizon
+- create_failed_jobs migrate
 
 ## Laravel Telescope
 
