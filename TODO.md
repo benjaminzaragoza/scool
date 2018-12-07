@@ -23,7 +23,6 @@ PAQUETS CANVIATS:
   - Installing ralouphie/getallheaders (2.0.5): Loading from cache
   - Updating guzzlehttp/psr7 (1.4.2 => 1.5.2): Loading from cache
   - Updating symfony/filesystem (v4.1.7 => v4.2.1): Loading from cache
-  - Updating fgrosse/phpasn1 (2.0.1 => v2.1.1): Loading from cache
   
 # Laravel Telescope i Laravel horizon
 
