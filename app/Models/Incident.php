@@ -19,6 +19,8 @@ class Incident extends Model
 {
     use FormattedDates, ApiURI;
 
+    const MANAGER_ROLE = 'IncidentsManager';
+
     protected $guarded = ['user_id'];
 
     /**
@@ -31,6 +33,15 @@ class Incident extends Model
         'updated_at',
         'closed_at'
     ];
+
+    /**
+     * managerRole.
+     *
+     * @return string
+     */
+    public function managerRole() {
+        return self::MANAGER_ROLE;
+    }
 
     /**
      * Assign user.
@@ -65,19 +76,22 @@ class Incident extends Model
      *
      * @return array
      */
-    public function map()
+    public function map($changelog=true)
     {
-        return [
+        $incidentMapped= [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
             'user_email' => optional($this->user)->email,
-            'user' => $this->user,
+            'user_hashid' => optional($this->user)->hashid,
             'subject' => $this->subject,
             'description' => $this->description,
             'closed_at' => $this->closed_at,
             'closed_by' => $this->closed_by,
-            'closer' => $this->closer,
+            'closer_id' => optional($this->closer)->id,
+            'closer_name' => optional($this->closer)->name,
+            'closer_email' => optional($this->closer)->email,
+            'closer_hashid' => optional($this->closer)->hashid,
             'formatted_closed_at' => $this->formatted_closed_at,
             'formatted_closed_at_diff' => $this->formatted_closed_at_diff,
             'closed_at_timestamp' => $this->closed_at_timestamp,
@@ -93,8 +107,11 @@ class Incident extends Model
             'comments' => map_collection($this->comments),
             'tags' => map_collection($this->tags),
             'assignees' => map_collection($this->assignees),
-            'changelog' => map_collection($this->changelog)
         ];
+        if ($changelog) {
+            $incidentMapped['changelog'] = map_collection($this->changelog);
+        }
+        return $incidentMapped;
     }
 
     /**
@@ -259,7 +276,7 @@ class Incident extends Model
     public static function userWithRoleIncidentsManager()
     {
         try {
-            return User::role('IncidentsManager')->get();
+            return User::role(self::MANAGER_ROLE)->get();
         } catch (RoleDoesNotExist $e) {
             return collect([]);
         }
@@ -271,7 +288,7 @@ class Incident extends Model
     public static function usersWithIncidentsRoles()
     {
         try {
-            return User::role(['IncidentsManager','Incidents'])->get();
+            return User::role([self::MANAGER_ROLE,'Incidents'])->get();
         } catch (RoleDoesNotExist $e) {
             return collect([]);
         }

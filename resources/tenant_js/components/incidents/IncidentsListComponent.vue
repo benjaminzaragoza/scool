@@ -137,9 +137,9 @@
                     <tr :id="'incident_row_' + incident.id">
                         <td class="text-xs-left" v-text="incident.id"></td>
                         <td class="text-xs-left" :title="incident.user_email">
-                            <user-avatar class="mr-2" :hash-id="incident.user.hashid"
-                                         :alt="incident.user.name"
-                                         v-if="incident.user.hashid"
+                            <user-avatar class="mr-2" :hash-id="incident.user_hashid"
+                                         :alt="incident.user_name"
+                                         v-if="incident.user_hashid"
                             ></user-avatar>
                             {{incident.user_name}}
                         </td>
@@ -151,7 +151,11 @@
                         </td>
                         <td v-if="filter!=='open'" class="text-xs-left" :title="incident.formatted_closed_at">
                             <template v-if="incident.formatted_closed_at">
-                                <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per <span :title="incident.closer && incident.closer.email">{{ incident.closer && incident.closer.name}}</span>
+                                <span :title="incident.formatted_closed_at">{{incident.formatted_closed_at_diff}}</span> per
+                                <user-avatar :title="incident.closer_email" class="mr-2" :hash-id="incident.user_hashid"
+                                             :alt="incident.closer_name"
+                                             v-if="incident.closer_hashid"
+                                ></user-avatar>
                             </template>
                             <template v-else>
                                 No
@@ -166,6 +170,7 @@
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
+                            <changelog-loggable :loggable="incident"></changelog-loggable>
                             <fullscreen-dialog
                                     :badge="incident.comments && incident.comments.length"
                                     badge-color="teal"
@@ -208,6 +213,7 @@ import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import FullScreenDialog from '../ui/FullScreenDialog'
 import UserSelect from '../users/UsersSelectComponent.vue'
 import UserAvatar from '../ui/UserAvatarComponent'
+import ChangelogLoggable from '../changelog/ChangelogLoggable'
 
 var filters = {
   all: function (incidents) {
@@ -238,7 +244,8 @@ export default {
     'user-avatar': UserAvatar,
     'incident-settings': IncidentSettings,
     'incident-tags': IncidentTagsComponent,
-    'incident-assignees': IncidentAssigneesComponent
+    'incident-assignees': IncidentAssigneesComponent,
+    'changelog-loggable': ChangelogLoggable
   },
   data () {
     return {
@@ -301,7 +308,7 @@ export default {
           id: incident.user_id,
           name: incident.user_name,
           email: incident.user_email,
-          hashid: incident.user && incident.user.hashid,
+          hashid: incident.user_hashid,
           full_search: incident.user_id + ' ' + incident.user_name + ' ' + incident.user_email
         }
       }) : []
@@ -353,16 +360,6 @@ export default {
       return headers
     }
   },
-  // TODO ESBORRAR
-  // watch: {
-  //   incidents: {
-  //     handler: function (newIncidents) {
-  //       console.log('###############AAAAAAAAAAAAAAAAAAAA')
-  //       console.log(newIncidents)
-  //     },
-  //     deep: true
-  //   }
-  // },
   methods: {
     moveLoggedUserToFirstPosition (users) {
       let loggedUser = users.find(user => {

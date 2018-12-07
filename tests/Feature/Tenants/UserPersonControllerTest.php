@@ -139,6 +139,7 @@ class UserPersonControllerTest extends BaseTenantTest
     /** @test */
     public function user_manager_can_delete_user_persons()
     {
+        $this->withoutExceptionHandling();
         $manager = create(User::class);
         $this->actingAs($manager,'api');
         $role = Role::firstOrCreate([
@@ -152,11 +153,11 @@ class UserPersonControllerTest extends BaseTenantTest
             'name' => 'Pepe Pardo Jeans'
         ]);
         $person = Person::create([
-            'user_id' => $user->id,
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans'
         ]);
+        $person->assignUser($user->id);
 
         $response = $this->json('DELETE','/api/v1/user_person/' . $user->id);
 

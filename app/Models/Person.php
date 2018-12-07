@@ -17,8 +17,7 @@ class Person extends Model implements HasMedia
 {
     use HasMediaTrait, FormattedDates;
 
-
-    protected $guarded = [];
+    protected $guarded = ['user_id'];
 
     protected $appends = [
         'name',
@@ -136,5 +135,17 @@ class Person extends Model implements HasMedia
             'admin' => optional($this->user)->admin,
             'hash_id' => optional($this->user)->hash_id,
         ];
+    }
+
+    /**
+     * Assign User.
+     *
+     * @param $user
+     */
+    public function assignUser($user)
+    {
+        $user = is_object($user) ? $user->id : $user;
+        $this->user_id = $user;
+        $this->save();
     }
 }

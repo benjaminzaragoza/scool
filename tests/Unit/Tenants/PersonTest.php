@@ -140,7 +140,6 @@ class PersonTest extends TestCase
         ]);
 
         $person = Person::create([
-            'user_id' => $user->id,
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
@@ -156,6 +155,9 @@ class PersonTest extends TestCase
             'other_emails' => 'pepepardojeans@gmail.com',
             'notes' => 'Bla bla bla',
         ]);
+        $person->user_id = $user->id;
+        $person->save();
+
 
         $mappedPerson = $person->map();
 
@@ -181,5 +183,36 @@ class PersonTest extends TestCase
         $this->assertEquals($mappedPerson['updated_at']->timestamp,$mappedPerson['updated_at_timestamp']);
         $this->assertEmpty($mappedPerson['admin']);
         $this->assertEquals('MX',$mappedPerson['hash_id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_assign_user()
+    {
+        $person = Person::create([
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'birthdate' => 'Jeans',
+            'birthplace_id' => 'Jeans',
+            'gender' => 'Home',
+            'civil_status' => 'Casat/da',
+            'phone' => '977504878',
+            'other_phones' => 'Casat/da',
+            'mobile' => '678514427',
+            'other_mobiles' => '678514427',
+            'email' => 'pepepardojeans@gmail.com',
+            'other_emails' => 'pepepardojeans@gmail.com',
+            'notes' => 'Bla bla bla',
+        ]);
+        $this->assertNull($person->user_id);
+
+        $user = factory(User::class)->create();
+        $person->assignUser($user);
+        $this->assertEquals($person->user_id, $user->id);
+        $user = factory(User::class)->create();
+        $person->assignUser($user->id);
+        $this->assertEquals($person->user_id, $user->id);
     }
 }

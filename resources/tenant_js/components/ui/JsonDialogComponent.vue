@@ -1,6 +1,16 @@
 <template>
   <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.xsOnly" @keydown.esc="dialog = false">
-        <v-btn
+      <v-btn v-if="icon"
+              icon
+              :title="title"
+              flat
+              slot="activator"
+              color="blue darken-2"
+              dark
+      >
+          <v-icon v-text="icon"></v-icon>
+      </v-btn>
+      <v-btn v-else
                 :title="title"
                 flat
                 slot="activator"
@@ -53,6 +63,10 @@ export default {
     name: {
       type: String,
       default: 'Objecte actual'
+    },
+    icon: {
+      type: String,
+      default: null
     }
   }
 }

@@ -4,9 +4,9 @@
             <v-btn :id="'incident_' + incident.id + '_show_close_button'" icon dark @click.native="$emit('close')">
                 <v-icon>close</v-icon>
             </v-btn>
-            <user-avatar class="mr-2" :hash-id="incident.user.hashid"
-                         :alt="incident.user.name"
-                         v-if="incident.user.hashid"
+            <user-avatar class="mr-2" :hash-id="incident.user_hashid"
+                         :alt="incident.user_name"
+                         v-if="incident.user_hashid"
             ></user-avatar>
             <span class="hidden-sm-and-down">
                 <v-btn v-if="incident.closed_at" flat>
@@ -174,7 +174,7 @@ export default {
   },
   computed: {
     state () {
-      if (this.incident.closed_at) return 'Tancada <span title="' + this.incident.formatted_closed_at + '">' + this.incident.formatted_closed_at_diff + '</span> per <span title="' + this.incident.closer.email + '">' + this.incident.closer.name + '</span>'
+      if (this.incident.closed_at) return 'Tancada <span title="' + this.incident.formatted_closed_at + '">' + this.incident.formatted_closed_at_diff + '</span> per <span title="' + this.incident.closer_email + '">' + this.incident.closer_name + '</span>'
       return 'Oberta'
     }
   },

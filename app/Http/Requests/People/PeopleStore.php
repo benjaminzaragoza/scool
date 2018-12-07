@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\People;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class DestroyUserPerson
- *
+ * Class PeopleStore
  * @package App\Http\Requests
  */
-class DestroyUserPerson extends FormRequest
+class PeopleStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +18,7 @@ class DestroyUserPerson extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('delete_users');
+        return Auth::user()->can('people.store');
     }
 
     /**
@@ -30,7 +29,8 @@ class DestroyUserPerson extends FormRequest
     public function rules()
     {
         return [
-
+            'givenName'     => 'required|max:255',
+            'sn1'    => 'required|max:255'
         ];
     }
 }

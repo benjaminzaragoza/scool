@@ -6,9 +6,7 @@ use App\Http\Resources\Tenant\UserCollection;
 use App\Models\Traits\ApiURI;
 use App\Notifications\VerifyEmail;
 use App\Notifications\WelcomeEmailNotification;
-use Auth;
 use Cache;
-use Gate;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
@@ -238,6 +236,21 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * Lastname.
+     *
+     * @return null|string
+     */
+    public function lastname()
+    {
+        if ($this->person) {
+            $lastname = $this->person->sn1;
+            if ($this->person->sn2) $lastname = $lastname . ' ' . $this->person->sn2;
+            return $lastname;
+        }
+        return null;
+    }
+
+    /**
      * Assign full name.
      *
      * @param $fullname
@@ -249,6 +262,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             $this->person->givenName = $fullname['givenName'];
             $this->person->sn1 = $fullname['sn1'];
             $this->person->sn2 = $fullname['sn2'];
+            $this->person->save();
         } else {
             $person = Person::create($fullname);
             $person->user_id = $this->id;
@@ -496,9 +510,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         if ($this->person) {
             $address->person_id = $this->person->id;
         } else {
-            $person = Person::create([
-                'user_id' => $this->id
-            ]);
+            $person = Person::create();
+            $person->assignUser($this->id);
             $address->person_id = $person->id;
         }
         $address->save();
@@ -639,9 +652,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'id' => $this->id,
             'name' => $this->name,
             'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
+            'person_id' => optional($this->person)->id,
             'givenName' => optional($this->person)->givenName,
             'sn1' => optional($this->person)->sn1,
             'sn2' => optional($this->person)->sn2,
+            'lastname' => $this->lastname(),
             'email' => $this->email,
             'hash_id' => $this->hash_id,
             'photo' => $this->photo,

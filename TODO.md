@@ -1,3 +1,196 @@
+# Mòdul professorat
+
+## Add
+
+Moodle:
+- [ ] Afegir compte de Moodle
+
+## List/datatables
+
+### Comptes d'usuari:
+
+Moodle:
+
+- [ ] MoodleUser de entity canviar tots els usos a MoodleUser a App\Modelss
+- [ ] Carpeta app/Moodle crec no cal!
+
+Casos
+- El professor no té compte de Moodle
+  - [ ] Mostrar botó afegir 
+- El professor té compte de Moodle
+ - [ ] Mostrar links:
+   - [ ] Perfil de l'usuari a Moodle
+   - [ ] Modificació/Edit a Moodle
+   - [ ] Mostrar info de l'usuari a moodle -> Moodle SHOW -> dia
+- Hi ha algún problema de sincronització:
+ - Coincideixen uidnumbers però no les dades: email|username i Nom i lastname
+ - No hi ha cap usuari de Moodle amb el uidnumber corresponent però sí que hi ha un usuari amb username   
+ - [ ] Mostrar alerta/botó i permetre sincronitzar
+
+TeachersController i TeachersControllerTest:
+-  Afegir més info sobre els teachers relacionada amb Moodle:
+  - [ ] moodle_id -> El id de Moodle del teacher (si el té)
+  - [ ] moodle_id = null sí no en té
+  - [ ] moodle -> Objecte amb la info de l'usuari de Moodle
+  - [ ] Testos:
+     - [ ] Funció check_teacher ha de comprovar camps moodle_id
+- [ ] Que passa si no hi ha mòdul Moodle activat???
+
+HELPERS I SEEDERS
+- [ ] Creació de professors associar usuari de Moodle. Taula external_users camp moodle_id
+ 
+Google Apps:
+- [ ]
+
+Ldap:
+- [ ]
+
+# Mòdul usuaris
+
+## Usernames
+
+- [X] A moodle utilitzar correu electrònic com a nom usuari (no cal càlcul usernames)
+  - [X] Moodle -> usuaris com emails
+    - [X] https://www.iesebre.com/moodle/admin/settings.php?section=sitepolicies
+    - [X] Permet caràcters estesos en els noms d'usuari
+- [ ] Càlcul centralitzat del username?
+- [ ] On guardar el username -> base de dades camp únic?
+- [ ] no preguntar mai al usuari -> calcular
+- [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manera)
+- [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
+
+# Moodle
+
+Migració:
+- [ ] Caldria canviar tots els usuaris actuals de moodle (sense modificar el id) a que utilitzin com a username compte de correu
+  - [ ] Quina compte de correu? La institucional
+  - [ ] TODO
+
+Millores:
+- [ ] Al crear un usuari de Moodle no mostrar els usuaris locals que ja tenen un usuari de Moodle al desplegable
+- [ ] Tipus d'usuari:
+  - [ ] El pas i secretaries i pares i altres no tenen/ no necessiten usuari de Moodle
+- [ ] Treure de Javascript les URLs hardcoded a iesebre.com agafar-les del fitxer de config de config/moodle.php
+  
+Edit:
+- [ ] Opcions relacionades amb la edició i sincronització amb usuari local
+- [ ] Canviar username?
+- [ ] Canviar email (només si no hi ha uidnumber)
+- [ ] Sincronitzar email (si hi ha uidnumber i no coincideixen)
+- [ ] Canviar nom (només si no hi ha uidnumber)  
+- [ ] Sincronitzar nom (només si hi ha uidnumber i no coincideixen)  
+
+Importar:
+- [ ] Importar usuari de Moodle a usuari local
+
+Exportar:
+- [ ] Usuaris Locals a usuari de Moodle
+  - [X] Al crear un nou usuari o podem fer a partir d'un usuari local
+  - [ ] Mostrar llista usuaris locals no tenen usuari de Moodle
+
+Avatar:
+- [ ] Sincronitzacións i actualitzacions del Avatar
+  - [ ] Al crear un usuari de Moodle des de l'usuari local
+  - [ ] Des de la llista sincronitzar/Actualitzar  
+  
+Seguretat:
+- [ ] No es pot eliminar usuari guest ni usuari admin
+- [ ] Config amb una llista altres usuaris no es poden esborrar (config/moodle.php)
+
+Change password:
+Case 1) Usuari de Moodle té compte local scool
+- [ ] Mostrar diàleg per canviar password:
+  - [ ] Switch amb dues opcions escollir password o establir automàticament
+  - [ ] Camp user password si s'indica establir la paraula de pas
+Case 2) Usuari de Moodle no té compte local scool
+- [ ] Igual que l'anterior però no es canvia password local
+  - [ ] s'utilitza el mail per enviar el email a l'usuari amb la nova paraula de pas
+
+Bugs:
+- [X] Reduir les 506 queries amb Eager Loading
+
+Mòdul:
+- [ ] Afegir mòdul a la base de dades
+
+Controladors web
+- [X] Controlador web i Test
+- [X] Tots els permisos i rols comprovats als tests i creats a helpers.php
+- [X] Afegida opció de menú a la taula menus
+- [X] Tots els testos marcats com group moodle i slow per no executar-los sempre
+Controlador API:
+- [X] Refresh/index
+- [X] Remove
+- [X] Add/store
+- [ ] Edit
+
+TODO operacions pendents de mirar a la API:
+
+https://www.iesebre.com/moodle/admin/webservice/documentation.php
+- auth_email_get_signup_settings
+- auth_email_signup_user
+- core_auth_confirm_user
+- core_user_add_user_device: Push Notifications???
+- core_user_agree_site_policy?
+- core_user_update_picture
+
+Llista usuaris Moodle:
+
+FILTRES:
+- [ ]Usuaris sincronitzats/Usuaris desincronitzats
+Altres:
+- [ ] Últim accés tingui un title que mostri la data exacte d'últim accés
+- [ ] Importar usuari de Moodle a Local:
+  - [ ] Crear usuari utilitzant correu de Moodle i fullname com a name
+  - [ ] Crear person a partir de firstname i lastname (autopartir en sn1 i sn2). Altres dades?
+- [ ] Al mostrar el uidnumber que sigui un link a la fitxa (show) d'usuari local
+- [X] Mostrar el avatar local per poder comparar amb el avatar de Moodle si hi ha uidnumber
+- [] Mostrar també dades locals de la persona: givenName, sn1 i sn2 
+- Accions pendents:
+  - [ ] Tornar a enviar email paraula de pas (generar nova)
+  - [ ] Editar. core_user_update_users
+  - [ ] Invalidar/suspendre compte. Actualment és el que fa la syunc ldap si troba l'usuari a Moodle però no a Ldap
+  - [ ] Confirmar compte
+  - [ ] Sincronitzar avatars (core_user_update_picture)
+- [X] Correu electrònic sigui un link a Gmail per enviar un email des de Gmail
+- [X] No utilitzar noms en anglès als headers  
+- [X] Juntar camps avatar i username en un sol camp
+- [X] Link edita el perfil a MOodle: https://www.iesebre.com/moodle/user/editadvanced.php?id=5820&course=1&returnto=profile
+Checks:
+- [ ] Buscar usuaris desincronitzats
+- [ ] Buscar usuaris de Moodle sens idnumber pèro que coincideix email/username i sincronitzar  
+- [ ] Usuaris amb idnumber però sense id local corresponent
+ 
+
+MOODLE password recovery:
+- Usuaris ldap -> no tenen password el busquen a Ldap però també estan a la base de dades (amb passwrd buit)
+- El webservice només deixa posar password a partir de text en clar no podem sincronitzar hashes
+- Webservice si té una opció per crear la paraula de pass i enviar per email
+
+Altres:
+- https://stackoverflow.com/questions/47688746/create-user-in-moodle-through-web-services-php
+- He creat rol scool: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=9
+- https://www.iesebre.com/moodle/admin/settings.php?section=webservicesoverview
+
+Desactivar edició del perfil a Moodle:
+- [ ] https://docs.moodle.org/35/en/Roles_FAQ#How_can_I_prevent_a_user_from_changing_their_own_password.3F
+  - [ ] ES pot fer a partir dels permisos s'ha de treure el permis: moodle/user:editownprofile
+  - [ ] El canvi del password ja està desactivat al posar una URL a ebre-escool...
+  - [ ] Rol usuari autenticat: https://www.iesebre.com/moodle/admin/roles/define.php?action=view&roleid=7
+    - [ ] Treure permis: https://docs.moodle.org/2x/ca/Capabilities/moodle/user:editownprofile
+Llista usuaris Moodle:
+- [ ] Quins usuaris de Moodle estan sincronitzats/existeixen a scool com a users
+  - [ ] Camp email per sincronitzar
+  - [ ] Altres camps possibles? idnumber
+  - [ ] Al menu opcional de tres punts es podria afegir un apartat per mostrar alertes/inconsistències:
+    - [ ] Usuaris que tenen un idnumber però després no coincideixen els dades del Moodle i el usuari local amb id =idnumber
+  - [ ] De fet podria apareixer una icona campana o similar en roig indicant quan hi han alertes
+
+# Gestió de versions
+
+- [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
+  - [ ] Mostrar a tots els usuaris la versió
+  - [ ] MOstrar el commit de github amb link a Github i data del commit
+
 # Permisos
 
 - [X] Usuaris IncidentsManager no poden tancar incidències dels altres usuaris
@@ -9,6 +202,10 @@ UsersManagers
   
 # TODOS finals abans posar explotació
 
+- [ ] Some continuos integration
+- [ ] Activar a explotació les cuas
+  - [ ] Activar alguna eina per saber com funcionen les cues i estar alerta possibles errors
+  - [ ] https://laravel.com/docs/5.7/horizon
 - [ ] Treure botó de Login amb Facebook i Register amb Facebook
 - [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
 - [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)
@@ -34,6 +231,7 @@ UsersManagers
 
 # BUGS
 
+- [X] Cal crear el canal App.Logs.Loggable.id i arreglar temps real dels logs per a un item
 - [ ] No funciona Logout amb user Sergi TUr badenas?
   - [ ] Realment crec que el que passa és que a vegades no mostra correctament la URL /
 - [ ] php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
@@ -312,6 +510,7 @@ A settings o similar:
 **Filtres**:
 
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
+  - https://laracasts.com/series/whatcha-working-on/episodes/33 
 - [X] Buscador -> Full text search field. DE MOMENT NO CAL ES POT BUSCAR PER TOT LO NECESSARI
   - [ ] Permetre buscar per estat oberta/tancada (camp full search amb tots els strings de cerca a actions )
 - [X] Mostrar el total d'incidències obertes i tancades
