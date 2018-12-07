@@ -15,7 +15,6 @@ PAQUETS CANVIATS:
   - Updating symfony/debug (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/http-kernel (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/process (v4.1.7 => v4.2.1): Loading from cache
-  - Updating symfony/routing (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/var-dumper (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/translation (v4.1.7 => v4.2.1): Loading from cache
   - Updating symfony/css-selector (v4.1.7 => v4.2.1): Loading from cache
