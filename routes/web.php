@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Tenant\HomeController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Models\Module;
@@ -42,8 +43,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('/', function () {
             return view('tenants.welcome');
         });
-
         Route::get('/welcome', function () {
+//            dd(Auth::logout());
+            dump(Config::get('auth.providers.users.model'));
             return view('tenants.welcome');
         });
 
@@ -131,7 +133,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/impersonate/leave',
                 '\Lab404\Impersonate\Controllers\ImpersonateController@leave')->name('impersonate.leave');
 
-            Route::get('/home', 'Tenant\HomeController@show');
+            Route::get('/home', '\\' . HomeController::class . '@show');
 
             Route::get('/users', 'Tenant\UsersController@show');
 

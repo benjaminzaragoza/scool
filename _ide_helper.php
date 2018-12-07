@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.16 on 2018-12-07 09:24:48.
+ * Generated for Laravel 5.7.16 on 2018-12-07 11:45:26.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -15292,18 +15292,6 @@ namespace Intervention\Image\Facades {
  
 }
 
-namespace Laravel\Horizon { 
-
-    /**
-     * 
-     *
-     */ 
-    class Horizon {
-         
-    }
- 
-}
-
 namespace PulkitJalan\Google\Facades { 
 
     /**
@@ -17788,8 +17776,6 @@ namespace  {
     class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}
 
     class Image extends \Intervention\Image\Facades\Image {}
-
-    class Horizon extends \Laravel\Horizon\Horizon {}
 
     class Google extends \PulkitJalan\Google\Facades\Google {}
 

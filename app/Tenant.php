@@ -104,6 +104,7 @@ class Tenant extends Model
      * Find Tenant by subdomain.
      *
      * @param $subdomain
+     * @return
      */
     public static function findBySubdomain($subdomain) {
         return self::where('subdomain',$subdomain)->firstOrFail();

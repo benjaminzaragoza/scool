@@ -37,8 +37,6 @@ class HomeController extends Controller
      */
     public function show(Request $request)
     {
-//        dd($request->user);
-//        dd(Config::get('auth.providers.users.model'));
         $teacherTotals = collect([
             'Total',
             'Reals'
