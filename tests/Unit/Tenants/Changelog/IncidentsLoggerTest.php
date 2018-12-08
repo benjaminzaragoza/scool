@@ -17,7 +17,7 @@ use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
 use App\Events\Incidents\IncidentTagAdded;
 use App\Events\Incidents\IncidentTagRemoved;
-use App\Listeners\Incidents\IncidentLogger;
+use App\Logger\Incidents\IncidentLogger;
 use App\Models\Incident;
 use App\Models\IncidentTag;
 use App\Models\Log;

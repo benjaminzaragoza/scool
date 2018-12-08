@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentDeleted
@@ -29,6 +30,6 @@ class LogIncidentDeleted
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::deleted($event);
+        LogIncidentEvent::dispatch('deleted',$event)->onQueue(tenant_from_current_url());
     }
 }

@@ -12,7 +12,7 @@ use Mail;
  *
  * @package App\Listeners\Incidents
  */
-class SendIncidentCreatedEmail implements ShouldQueue
+class SendIncidentCreatedEmail
 {
     /**
      * Create the event listener.

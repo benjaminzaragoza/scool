@@ -114,18 +114,18 @@ class EventServiceProvider extends ServiceProvider
 
         // Incidents
         IncidentStored::class => [
+            SendIncidentCreatedEmail::class,
             LogIncidentStored::class,
-            SendIncidentCreatedEmail::class
         ],
 
         IncidentClosed::class => [
+            SendIncidentClosedEmail::class,
             LogIncidentClosed::class,
-            SendIncidentClosedEmail::class
         ],
 
         IncidentOpened::class => [
+            SendIncidentOpenedEmail::class,
             LogIncidentOpened::class,
-            SendIncidentOpenedEmail::class
         ],
 
         IncidentShowed::class => [
@@ -133,33 +133,33 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         IncidentDeleted::class => [
+            SendIncidentDeletedEmail::class,
             LogIncidentDeleted::class,
-            SendIncidentDeletedEmail::class
         ],
 
         IncidentDescriptionUpdated::class => [
+            SendIncidentDescriptionUpdateEmail::class,
             LogIncidentDescriptionUpdated::class,
-            SendIncidentDescriptionUpdateEmail::class
         ],
 
         IncidentSubjectUpdated::class => [
+            SendIncidentSubjectUpdateEmail::class,
             LogIncidentSubjectUpdated::class,
-            SendIncidentSubjectUpdateEmail::class
         ],
 
         IncidentReplyAdded::class => [
+            SendIncidentReplyAddedEmail::class,
             LogIncidentReplyAdded::class,
-            SendIncidentReplyAddedEmail::class
         ],
 
         IncidentTagAdded::class => [
+            SendIncidentTagAddedEmail::class,
             LogIncidentTagAdded::class,
-            SendIncidentTagAddedEmail::class
         ],
 
         IncidentTagRemoved::class => [
+            SendIncidentTagRemovedEmail::class,
             LogIncidentTagRemoved::class,
-            SendIncidentTagRemovedEmail::class
         ],
 
         IncidentReplyUpdated::class => [
@@ -171,13 +171,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         IncidentAssigned::class => [
+            SendIncidentAssignedEmail::class,
             LogIncidentAssigned::class,
-            SendIncidentAssignedEmail::class
         ],
 
         IncidentDesassigned::class => [
+            SendIncidentDesassignedEmail::class,
             LogIncidentDesassigned::class,
-            SendIncidentDesassignedEmail::class
         ],
 
         // TENANTS

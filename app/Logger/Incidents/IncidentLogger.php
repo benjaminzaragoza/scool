@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Incidents;
+namespace App\Logger\Incidents;
 
 use App\Models\Incident;
 use App\Models\Log;

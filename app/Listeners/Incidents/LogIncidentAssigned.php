@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentAssigned
@@ -29,6 +30,6 @@ class LogIncidentAssigned
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::incidentAssigned($event);
+        LogIncidentEvent::dispatch('incidentAssigned',$event)->onQueue(tenant_from_current_url());
     }
 }

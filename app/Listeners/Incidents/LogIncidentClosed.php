@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentClosed
@@ -29,6 +30,6 @@ class LogIncidentClosed
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::closed($event);
+        LogIncidentEvent::dispatch('closed',$event)->onQueue(tenant_from_current_url());
     }
 }
