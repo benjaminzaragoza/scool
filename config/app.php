@@ -195,8 +195,6 @@ return [
         /*
          * Package Service Providers...
          */
-        App\Providers\CustomHorizonServiceProvider::class,
-
 
         /*
          * Application Service Providers...

@@ -32,6 +32,7 @@ class SendIncidentDeletedEmail
     public function handle($event)
     {
         Mail::to($event->oldIncident->user)->cc(Setting::get('incidents_manager_email'))
-            ->queue(new IncidentDeleted($event->oldIncident->only(['id','user_id','subject','description','created_at','updated_at'])));
+            ->queue((new IncidentDeleted($event->oldIncident->only(
+                ['id','user_id','subject','description','created_at','updated_at'])))->onQueue(tenant_from_current_url()));
     }
 }

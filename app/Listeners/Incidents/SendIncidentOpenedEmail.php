@@ -35,6 +35,7 @@ class SendIncidentOpenedEmail
      */
     public function handle($event)
     {
-        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))->queue(new IncidentOpened($event->incident));
+        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))
+            ->queue((new IncidentOpened($event->incident))->onQueue(tenant_from_current_url()));
     }
 }

@@ -1,5 +1,38 @@
 - [ ] Laravel ide helper i Laravel debugbar instal·lats amb llum. NO fer-ho amb llum i utilitzar el que digui la doc dels paquets 
 
+# Laravel Queues
+
+## Multitenant
+
+Solució:
+- Una queue per a cada tenant
+- Cal crear un supervisor per cada tenant:
+- Comanda artisan queu:work adaptada a tenants:
+  - php artisan queue:work:tenant {tenantname} {conection} 
+  - Exemple: php artisan queue:work:tenant iesebre redis ...
+- Fitxer /etc/supervisor/conf.d/scool_worker_iesebre.conf
+
+```
+sudo cat /etc/supervisor/conf.d/scool_worker_iesebre.conf
+[program:scool_worker_iesebre]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/sergi/Code/acacha/scool/artisan queue:work:tenant iesebre redis --queue=iesebre --sleep=3 --tries=3 --delay=3
+autostart=true
+autorestart=true
+user=sergi
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/worker_iesebre.log
+```
+
+- Cal enviar les tasques a la cua/tenant que correspongui es pot utilitzar tenant_from_current_url():
+
+```
+Mail::to($event->incident->user)
+            ->cc(Setting::get('incidents_manager_email'))
+            ->queue((new IncidentCreated($event->incident))->onQueue(tenant_from_current_url()));
+```
+
 # Bugs
 
 - [ ] 404 a totes les URL: S'ha de crear el tenant: php artisan migrate:fresh --seed

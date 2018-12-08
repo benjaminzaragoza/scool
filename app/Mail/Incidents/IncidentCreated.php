@@ -5,8 +5,8 @@ namespace App\Mail\Incidents;
 use App\Models\Incident;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Class IncidentCreated.

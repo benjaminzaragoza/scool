@@ -60,8 +60,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel/dusk",
-                "laravel/horizon"
+                "laravel/dusk"
             ]
         }
     },

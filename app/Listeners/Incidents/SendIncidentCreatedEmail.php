@@ -31,6 +31,8 @@ class SendIncidentCreatedEmail
      */
     public function handle($event)
     {
-        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))->queue((new IncidentCreated($event->incident))->onQueue(tenant_from_current_url()));
+        Mail::to($event->incident->user)
+            ->cc(Setting::get('incidents_manager_email'))
+            ->queue((new IncidentCreated($event->incident))->onQueue(tenant_from_current_url()));
     }
 }
