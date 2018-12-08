@@ -2,6 +2,27 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE
+    |--------------------------------------------------------------------------
+    |
+    | Default users in tenant and main databases.
+    |
+    */
+
+    // MAIN APP
+    'main_database' => env('MAIN_DATABASE','sqlite'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | DEFAULT USERS
+    |--------------------------------------------------------------------------
+    |
+    | Default users in tenant and main databases.
+    |
+    */
+
     // MAIN APP
     'admin_user_email' => env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'),
     'admin_user_name' => env('ADMIN_USER_NAME','Sergi Tur Badenas'),

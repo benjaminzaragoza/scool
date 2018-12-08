@@ -5,7 +5,7 @@ namespace App\Mail\Incidents;
 use App\Models\Incident;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use App\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
@@ -13,7 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
  *
  * @package App\Mail
  */
-class IncidentCreated extends Mailable
+class IncidentCreated extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

@@ -142,13 +142,7 @@ if (! function_exists('tenant_connect')) {
 if (! function_exists('main_connect')) {
     function main_connect()
     {
-        // Erase the tenant connection, thus making Laravel get the default values all over again.
-        DB::purge('tenant');
-
-        Config::set('database.default', config('database.default'));
-
-        // Ping the database. This will throw an exception in case the database does not exists.
-        Schema::connection(config('database.default'))->getConnection()->reconnect();
+        restore_connect(config('scool.main_database'));
     }
 }
 
@@ -610,7 +604,11 @@ if (!function_exists('get_tenant')) {
      * @return mixed
      */
     function get_tenant($name) {
-        return \App\Tenant::where('subdomain', $name)->firstOrFail();
+        $previousConnection = config('database.default');
+        main_connect();
+        $tenant= \App\Tenant::where('subdomain', $name)->firstOrFail();
+        restore_connect($previousConnection);
+        return $tenant;
     }
 }
 
@@ -4667,8 +4665,9 @@ if (!function_exists('configure_tenant')) {
 }
 
 if (!function_exists('apply_tenant')) {
-    function apply_tenant($name)
+    function apply_tenant($name=null)
     {
+        $name = $name !== null ? $name : tenant_from_current_url();
         if ($tenant = get_tenant($name)) {
             $tenant->connect();
             $tenant->configure();

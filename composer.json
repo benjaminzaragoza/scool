@@ -61,7 +61,7 @@
         "laravel": {
             "dont-discover": [
                 "laravel/dusk",
-                "laravel/telescope"
+                "laravel/horizon"
             ]
         }
     },

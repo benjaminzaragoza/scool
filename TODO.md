@@ -1,3 +1,5 @@
+- [ ] Laravel ide helper i Laravel debugbar instal·lats amb llum. NO fer-ho amb llum i utilitzar el que digui la doc dels paquets 
+
 # Bugs
 
 - [ ] 404 a totes les URL: S'ha de crear el tenant: php artisan migrate:fresh --seed
