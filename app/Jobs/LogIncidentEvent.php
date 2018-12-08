@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Listeners\Incidents\IncidentLogger;
+use App\Logger\Incidents\IncidentLogger;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

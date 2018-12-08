@@ -7,7 +7,7 @@
 
 # LOGGER
 
-- [ ] IncidentLogger.php No cal que estigui a Listeners No? De fet no és un listener!  
+- [X] IncidentLogger.php No cal que estigui a Listeners No? De fet no és un listener!  
 
 # Laravel Queues
 
