@@ -1,5 +1,6 @@
 # Bugs
 
+- [ ] 404 a totes les URL: S'ha de crear el tenant: php artisan migrate:fresh --seed
 - [ ] No funcionen les routes api als testos però si les routes web??
   - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a composer.lock.ok
   - Paquet dona error: Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache

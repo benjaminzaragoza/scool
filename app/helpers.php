@@ -152,6 +152,20 @@ if (! function_exists('main_connect')) {
     }
 }
 
+if (! function_exists('restore_connect')) {
+    function restore_connect($connection)
+    {
+        // Erase the tenant connection, thus making Laravel get the default values all over again.
+        DB::purge('tenant');
+
+        Config::set('database.default', $connection);
+
+        // Ping the database. This will throw an exception in case the database does not exists.
+        Schema::connection($connection)->getConnection()->reconnect();
+    }
+}
+
+
 if (! function_exists('create_admin_user_on_tenant')) {
     /**
      * @param $user
