@@ -31,6 +31,7 @@ class LogCreated implements ShouldBroadcast
     public function __construct(Log $log)
     {
         $this->log = $log;
+        $this->broadcastQueue = 'iesebre';
     }
 
     /**

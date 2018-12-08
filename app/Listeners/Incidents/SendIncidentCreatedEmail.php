@@ -4,6 +4,7 @@ namespace App\Listeners\Incidents;
 
 use App\Mail\Incidents\IncidentCreated;
 use App\Models\Setting;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
 /**
@@ -11,7 +12,7 @@ use Mail;
  *
  * @package App\Listeners\Incidents
  */
-class SendIncidentCreatedEmail
+class SendIncidentCreatedEmail implements ShouldQueue
 {
     /**
      * Create the event listener.

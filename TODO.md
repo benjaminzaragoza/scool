@@ -1,10 +1,16 @@
 - [ ] Laravel ide helper i Laravel debugbar instal·lats amb llum. NO fer-ho amb llum i utilitzar el que digui la doc dels paquets 
 
+# Eager Loading
+
+- [ ] https://iesebre.scool.test/changelog Solucionar problema de performance executa un munt de queries. Eager Loading.
+- [ ] https://iesebre.scool.test/incidents: OCO també té moltes consultes 
+
 # Laravel Queues
 
 ## Multitenant
 
 Solució:
+- IMPORTANT: Cada cop hi ha canvis al codi cal reiniciar supervisor!!!
 - Una queue per a cada tenant
 - Cal crear un supervisor per cada tenant:
 - Comanda artisan queu:work adaptada a tenants:
