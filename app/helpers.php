@@ -165,6 +165,22 @@ if (! function_exists('restore_connect')) {
     }
 }
 
+if (! function_exists('create_admin_user_on_subdomain')) {
+    /**
+     * @param $subdomain
+     */
+    function create_admin_user_on_subdomain($subdomain)
+    {
+        $tenant = Tenant::findBySubdomain($subdomain);
+        tenant_connect(
+            $tenant->hostname,
+            $tenant->username,
+            $tenant->password,
+            $tenant->database
+        );
+        create_tenant_admin_user();
+    }
+}
 
 if (! function_exists('create_admin_user_on_tenant')) {
     /**
@@ -183,16 +199,36 @@ if (! function_exists('create_admin_user_on_tenant')) {
         if(!$password) $password = str_random();
 
         $existingUser = App\Models\User::where('email',$user->email)->first();
-
         if (!$existingUser) {
             User::forceCreate([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => bcrypt($password),
+                'password' => sha1($password),
                 'admin' => true
             ]);
         }
         DB::purge('tenant');
+    }
+}
+
+
+if (! function_exists('create_tenant_admin_user')) {
+    function create_tenant_admin_user()
+    {
+        if (! App\User::where('email',config('scool.admin_user_email'))->first()) {
+            User::forceCreate([
+                'name' => config('scool.admin_user_name_on_tenant'),
+                'email' => config('scool.admin_user_email_on_tenant'),
+                'password' => is_sha1($password = config('scool.admin_username_password_on_tenant')) ? $password : sha1($password),
+                'admin' => true
+            ]);
+        }
+    }
+}
+
+if (! function_exists('is_sha1')) {
+    function is_sha1($str) {
+        return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
     }
 }
 
@@ -201,23 +237,6 @@ if (! function_exists('create_admin_user')) {
      *
      */
     function create_admin_user()
-    {
-        if (! App\User::where('email',config('scool.admin_user_email'))->first()) {
-            App\User::forceCreate([
-                'name' => config('scool.admin_user_name'),
-                'email' => config('scool.admin_user_email'),
-                'password' => bcrypt(config('scool.admin_user_password')),
-                'admin' => true
-            ]);
-        }
-    }
-}
-
-if (! function_exists('create_tenant_admin_user')) {
-    /**
-     *
-     */
-    function create_tenant_admin_user()
     {
         if (! App\User::where('email',config('scool.admin_user_email'))->first()) {
             App\User::forceCreate([
@@ -252,11 +271,11 @@ if (! function_exists('create_other_tenant_admin_users')) {
      */
     function create_other_tenant_admin_users()
     {
-        if (! App\Models\User::where('email',config('scool.admin_user_email1'))->first()) {
+        if (! App\Models\User::where('email',config('scool.admin_user_email_on_tenant1'))->first()) {
             App\Models\User::forceCreate([
-                'name' => config('scool.admin_user_name1'),
-                'email' => config('scool.admin_user_email1'),
-                'password' => config('scool.admin_user_password1'),
+                'email' => config('scool.admin_user_email_on_tenant1'),
+                'name' => config('scool.admin_user_name_on_tenant1'),
+                'password' => config('scool.admin_username_password_on_tenant1'),
                 'admin' => true
             ]);
         }
@@ -267,17 +286,23 @@ if (! function_exists('create_iesebre_tenant')) {
     function create_iesebre_tenant()
     {
         return Tenant::create([
-            'name' => "Institut de l'Ebre",
-            'subdomain' => 'iesebre',
-            'email_domain' => 'iesebre.com',
-            'hostname' => 'localhost',
-            'database' => 'iesebre',
-            'username' => 'iesebre',
-            'password' => str_random(),
-            'port' => 3306,
-            'gsuite_service_account_path' => '/gsuite_service_accounts/scool-07eed0b50a6f.json',
-            'gsuite_admin_email' => 'sergitur@iesebre.com'
+            'name' => config('iesebre.name',"Institut de l'Ebre") ,
+            'subdomain' => config('iesebre.subdomain','iesebre') ,
+            'email_domain' => config('iesebre.subdomain','email_domain') ,
+            'hostname' =>  config('iesebre.database_host','localhost'),
+            'database' => config('iesebre.database_name','iesebre'),
+            'username' => config('iesebre.database_username','iesebre'),
+            'password' => config('iesebre.database_password',str_random()),
+            'port' => config('iesebre.database_port',3306),
+            'gsuite_service_account_path' => config('iesebre.gsuite_account_path','/gsuite_service_accounts/scool-07eed0b50a6f.json'),
+            'gsuite_admin_email' => config('iesebre.gsuite_admin_email','sergitur@iesebre.com'),
         ]);
+    }
+}
+
+if (! function_exists('remove_default_tenant')) {
+    function remove_default_tenant() {
+        delete_mysql_database('iesebre');
     }
 }
 
@@ -296,36 +321,11 @@ if (! function_exists('create_default_tenant')) {
             $tenant->password,
             $tenant->hostname);
 
-        create_admin_user_on_tenant($tenant_user, $tenant, config('scool.admin_user_password'));
+        create_admin_user_on_tenant($tenant_user, $tenant, config('scool.admin_username_password_on_tenant'));
 
         DB::purge('tenant');
 
         main_connect();
-    }
-}
-
-
-if (! function_exists('create_admin_user_on_subdomain')) {
-
-    /**
-     * @param $subdomain
-     */
-    function create_admin_user_on_subdomain($subdomain)
-    {
-        $tenant = Tenant::findBySubdomain($subdomain);
-        tenant_connect(
-            $tenant->hostname,
-            $tenant->username,
-            $tenant->password,
-            $tenant->database
-        );
-
-        User::forceCreate([
-            'name' => config('scool.admin_user_name_on_tenant'),
-            'email' => config('scool.admin_user_email_on_tenant'),
-            'password' => sha1(config('scool.admin_username_password_on_tenant')),
-            'admin' => true
-        ]);
     }
 }
 

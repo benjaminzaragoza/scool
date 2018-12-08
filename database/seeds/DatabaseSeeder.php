@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         create_admin_user();
+        remove_default_tenant();
         create_default_tenant();
     }
 }
