@@ -2,6 +2,12 @@
 
 namespace Tests\Unit\Tenants\Emails;
 
+use App\Events\Incidents\IncidentDescriptionUpdated;
+use App\Events\Incidents\IncidentReplyAdded;
+use App\Events\Incidents\IncidentStored;
+use App\Events\Incidents\IncidentSubjectUpdated;
+use App\Events\Incidents\IncidentTagAdded;
+use App\Events\Incidents\IncidentTagRemoved;
 use App\Listeners\Incidents\SendIncidentAssignedEmail;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
@@ -66,9 +72,7 @@ class IncidentsEmailTest extends BaseTenantTest
         ]);
         $user= factory(User::class)->create();
         $incident->assignUser($user);
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $event = new IncidentStored($incident);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -90,10 +94,9 @@ class IncidentsEmailTest extends BaseTenantTest
         $user= factory(User::class)->create();
         $incident->assignUser($user);
         Auth::login($user);
+        $oldIncident = $incident->map();
         $incident->close();
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $event = new \App\Events\Incidents\IncidentClosed($incident,$oldIncident);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -116,10 +119,9 @@ class IncidentsEmailTest extends BaseTenantTest
         $incident->assignUser($user);
         Auth::login($user);
         $incident->close();
+        $oldIncident = $incident->map();
         $incident->open();
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $event = new \App\Events\Incidents\IncidentOpened($incident,$oldIncident);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -141,11 +143,9 @@ class IncidentsEmailTest extends BaseTenantTest
         $user= factory(User::class)->create();
         $incident->assignUser($user);
         Auth::login($user);
-        $oldIncident = clone($incident);
+        $oldIncident = $incident->map();
         $incident->delete();
-        $event = (Object) [
-            'oldIncident' => $oldIncident
-        ];
+        $event = new \App\Events\Incidents\IncidentDeleted($oldIncident);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -166,9 +166,10 @@ class IncidentsEmailTest extends BaseTenantTest
         ]);
         $user= factory(User::class)->create();
         $incident->assignuser($user);
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $oldIncident = $incident->map();
+        $incident->description = 'JORL JORL JORL';
+        $incident->save();
+        $event = new IncidentDescriptionUpdated($incident,$oldIncident);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -189,9 +190,10 @@ class IncidentsEmailTest extends BaseTenantTest
         ]);
         $user= factory(User::class)->create();
         $incident->assignUser($user);
-        $event = (Object) [
-            'incident' => $incident
-        ];
+        $oldIncident = $incident->map();
+        $incident->subject = 'No va';
+        $incident->save();
+        $event = new IncidentSubjectUpdated($incident,$oldIncident);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -217,10 +219,7 @@ class IncidentsEmailTest extends BaseTenantTest
             'user_id' => $user->id
         ]);
         $incident->addReply($reply);
-        $event = (Object) [
-            'incident' => $incident,
-            'reply' => $reply
-        ];
+        $event = new IncidentReplyAdded($incident,$reply);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -246,10 +245,7 @@ class IncidentsEmailTest extends BaseTenantTest
             'user_id' => $user->id
         ]);
         $incident->addReply($reply);
-        $event = (Object) [
-            'incident' => $incident,
-            'reply' => $reply
-        ];
+        $event = new IncidentTagAdded($incident,$reply);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -275,10 +271,7 @@ class IncidentsEmailTest extends BaseTenantTest
             'user_id' => $user->id
         ]);
         $incident->addReply($reply);
-        $event = (Object) [
-            'incident' => $incident,
-            'reply' => $reply
-        ];
+        $event = new IncidentTagRemoved($incident,$reply);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);

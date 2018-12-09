@@ -66,7 +66,7 @@ class ReplyBodyControllerTest extends BaseTenantTest {
         ]);
         $response->assertSuccessful();
         Event::assertDispatched(IncidentReplyUpdated::class,function ($event) use ($incident){
-            return $event->incident->is($incident) && $event->oldReply->body === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
+            return $event->incident->is($incident) && $event->oldReply['body'] === 'Ja ho hem solucionat tot' && $event->reply->body === 'Perdo no hem solucionat res';
         });
         $result = json_decode($response->getContent());
         $reply = $reply->fresh();

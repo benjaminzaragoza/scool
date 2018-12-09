@@ -302,23 +302,20 @@ if (! function_exists('remove_default_tenant')) {
 
 if (! function_exists('create_default_tenant')) {
     function create_default_tenant() {
-        $user = App\User::find(1);
+        main_connect();
+        $user = \App\User::find(1);
         $tenant = Tenant::where('subdomain','iesebre')->first();
         if (! $tenant) {
             $tenant = $user->addTenant($tenant = create_iesebre_tenant());
         }
         $tenant_user = $tenant->user;
-
         create_mysql_full_database(
             $tenant->database,
             $tenant->username ,
             $tenant->password,
             $tenant->hostname);
-
         create_admin_user_on_tenant($tenant_user, $tenant, config('scool.admin_username_password_on_tenant'));
-
         DB::purge('tenant');
-
         main_connect();
     }
 }
@@ -483,119 +480,105 @@ if (! function_exists('tenant_connect_migrate_seed')) {
     }
 }
 
-/**
- * @param $name
- * @param $user
- * @param null $password
- * @return null|string
- */
-function delete_mysql_full_database($name, $user, $host = null)
-{
-    delete_mysql_database($name);
-    delete_mysql_user($user, $host);
+if (! function_exists('delete_mysql_full_database')) {
+    /**
+     * @param $name
+     * @param $user
+     * @param null $password
+     * @return null|string
+     */
+    function delete_mysql_full_database($name, $user, $host = null)
+    {
+        delete_mysql_database($name);
+        delete_mysql_user($user, $host);
+    }
 }
 
-/**
- *
- */
-function set_mysql_admin_connection() {
-
-    DB::purge('mysql');
-
-    Config::set('database.connections.mysql.host', config('database.mysql_admin_host'));
-    Config::set('database.connections.mysql.port', config('database.mysql_admin_port'));
-    Config::set('database.connections.mysql.database', null);
-    Config::set('database.connections.mysql.username', config('database.mysql_admin_username'));
-    Config::set('database.connections.mysql.password', config('database.mysql_admin_password'));
-
-    // Rearrange the connection data
-    DB::reconnect('mysql');
-
-    // Ping the database. This will throw an exception in case the database does not exists.
-    Schema::connection('mysql')->getConnection()->reconnect();
-
-
-
+if (! function_exists('create_mysql_database')) {
+    /**
+     * @param $name
+     */
+    function create_mysql_database($name)
+    {
+        DB::connection('mysql_admin')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$name}`");
+    }
 }
 
-/**
- * @param $name
- */
-function create_mysql_database($name)
-{
-    set_mysql_admin_connection();
-    DB::connection('mysql')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$name}`");
+if (! function_exists('delete_mysql_database')) {
+    /**
+     * @param $name
+     */
+    function delete_mysql_database($name)
+    {
+        DB::connection('mysql_admin')->getPdo()->exec("DROP DATABASE IF EXISTS `{$name}`");
+    }
 }
 
-/**
- * @param $name
- */
-function delete_mysql_database($name)
-{
-    set_mysql_admin_connection();
-    DB::connection('mysql')->getPdo()->exec("DROP DATABASE IF EXISTS `{$name}`");
+if (! function_exists('remove_mysql_database')) {
+    /**
+     * @param $name
+     */
+    function remove_mysql_database($name)
+    {
+        delete_mysql_database($name);
+    }
 }
 
-/**
- * @param $name
- */
-function remove_mysql_database($name)
-{
-    set_mysql_admin_connection();
-    DB::connection('mysql')->getPdo()->exec("DROP DATABASE IF EXISTS `{$name}`");
+if (! function_exists('create_mysql_user')) {
+    /**
+     * @param $name
+     * @param null $password
+     * @param string $host
+     * @return null|string
+     */
+    function create_mysql_user($name, $password = null, $host = 'localhost')
+    {
+        if (!$password) $password = str_random();
+        DB::connection('mysql_admin')->getPdo()->exec(
+            "CREATE USER IF NOT EXISTS '{$name}'@'{$host}'");
+        DB::connection('mysql_admin')->getPdo()->exec(
+            "ALTER USER '{$name}'@'{$host}' IDENTIFIED BY '{$password}'");
+        return $password;
+    }
 }
 
-/**
- * @param $name
- * @param null $password
- * @param string $host
- * @return null|string
- */
-function create_mysql_user($name, $password = null, $host = 'localhost')
-{
-    set_mysql_admin_connection();
-    if(!$password) $password = str_random();
-    DB::connection('mysql')->getPdo()->exec(
-        "CREATE USER IF NOT EXISTS '{$name}'@'{$host}'");
-    DB::connection('mysql')->getPdo()->exec(
-        "ALTER USER '{$name}'@'{$host}' IDENTIFIED BY '{$password}'");
-    return $password;
+if (! function_exists('delete_mysql_user')) {
+    /**
+     * @param $name
+     * @param null $password
+     * @param string $host
+     * @return null|string
+     */
+    function delete_mysql_user($name, $host = 'localhost')
+    {
+        DB::connection('mysql_admin')->getPdo()->exec(
+            "DROP USER IF EXISTS '{$name}'@'{$host}'");
+    }
 }
 
-/**
- * @param $name
- * @param null $password
- * @param string $host
- * @return null|string
- */
-function delete_mysql_user($name, $host = 'localhost')
-{
-    set_mysql_admin_connection();
-    DB::connection('mysql')->getPdo()->exec(
-        "DROP USER IF EXISTS '{$name}'@'{$host}'");
+if (! function_exists('mysql_grant_all_privileges')) {
+    /**
+     * @param $user
+     * @param string $host
+     */
+    function mysql_grant_all_privileges($user, $host = 'localhost') {
+        DB::connection('mysql_admin')->getPdo()->exec(
+            "GRANT ALL PRIVILEGES ON *.* TO '{$user}'@'{$host}' WITH GRANT OPTION");
+        DB::connection('mysql_admin')->getPdo()->exec("FLUSH PRIVILEGES");
+    }
 }
 
-/**
- * @param $user
- * @param string $host
- */
-function mysql_grant_all_privileges($user, $host = 'localhost') {
-    set_mysql_admin_connection();
-    DB::connection('mysql')->getPdo()->exec(
-        "GRANT ALL PRIVILEGES ON *.* TO '{$user}'@'{$host}' WITH GRANT OPTION");
-    DB::connection('mysql')->getPdo()->exec("FLUSH PRIVILEGES");
-}
-
-/**
- * @param $user
- * @param $database
- * @param string $host
- */
-function mysql_grant_privileges($user, $database, $host = 'localhost') {
-    set_mysql_admin_connection();
-    DB::connection('mysql')->getPdo()->exec(
-        "GRANT ALL PRIVILEGES ON {$database}.* TO '{$user}'@'{$host}' WITH GRANT OPTION");
-    DB::connection('mysql')->getPdo()->exec("FLUSH PRIVILEGES");
+if (! function_exists('mysql_grant_privileges')) {
+    /**
+     * @param $user
+     * @param $database
+     * @param string $host
+     */
+    function mysql_grant_privileges($user, $database, $host = 'localhost') {
+        DB::connection('mysql_admin')->getPdo()->exec(
+            "GRANT ALL PRIVILEGES ON {$database}.* TO '{$user}'@'{$host}' WITH GRANT OPTION");
+        DB::connection('mysql_admin')->getPdo()->exec("FLUSH PRIVILEGES");
+    }
 }
 
 if (!function_exists('get_tenant')) {
