@@ -1,13 +1,6 @@
 <?php
 
 return [
-
-    // SCOOL CUSTOM CONFIGURATION
-    'mysql_admin_host' => env('MYSQL_ADMIN_HOST', '127.0.0.1'),
-    'mysql_admin_port' => env('MYSQL_ADMIN_PORT', '3306'),
-    'mysql_admin_username' => env('MYSQL_ADMIN_USERNAME', 'debian-sys-maint'),
-    'mysql_admin_password' => env('MYSQL_ADMIN_PASSWORD', ''),
-
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -82,6 +75,21 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
+        'mysql_admin' => [
+            'driver' => 'mysql',
+            'host' => env('MYSQL_ADMIN_HOST', '127.0.0.1'),
+            'port' => env('MYSQL_ADMIN_PORT', '3306'),
+            'database' => null,
+            'username' => env('MYSQL_ADMIN_USERNAME', 'debian-sys-maint'),
+            'password' => env('MYSQL_ADMIN_PASSWORD', ''),
+            'unix_socket' => env('MYSQL_ADMIN_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
