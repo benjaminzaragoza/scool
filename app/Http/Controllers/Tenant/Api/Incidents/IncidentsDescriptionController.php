@@ -24,7 +24,7 @@ class IncidentsDescriptionController extends Controller
      */
     public function update(UpdateDescriptionIncident $request, $tenant,Incident $incident)
     {
-        $oldIncident = clone($incident);
+        $oldIncident = $incident->map(false);
         $incident->description = $request->description;
         $incident->save();
         event(new IncidentDescriptionUpdated($incident,$oldIncident));

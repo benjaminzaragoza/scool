@@ -25,7 +25,14 @@ class ChangelogLoggableController extends Controller
      */
     public function index(ListLoggableChangelog $request, $tenant, $loggable)
     {
-        $logs = map_collection(Log::with('user')->fromLoggable($loggable)->get());
+        $logs = map_collection(Log::with(
+            'user',
+            'loggable.user',
+            'loggable.closer',
+            'loggable.comments',
+            'loggable.tags',
+            'loggable.assignees'
+        )->fromLoggable($loggable)->get());
         $users = User::all();
         return view('tenants.changelog.loggable.index', compact('logs','users','loggable'));
     }

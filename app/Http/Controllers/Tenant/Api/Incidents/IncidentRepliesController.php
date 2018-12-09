@@ -62,7 +62,7 @@ class IncidentRepliesController
      */
     public function update(UpdateIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
     {
-        $oldReply = clone($reply);
+        $oldReply = $reply->map();
         $reply->body = $request->body;
         $reply->save();
         event(new IncidentReplyUpdated($incident,$reply, $oldReply));
@@ -79,7 +79,7 @@ class IncidentRepliesController
      */
     public function destroy(DestroyIncidentReplies $request, $tenant, Incident $incident, Reply $reply)
     {
-        $oldReply = clone($reply);
+        $oldReply = $reply->map();
         $reply->delete();
         event(new IncidentReplyRemoved($incident,$oldReply));
         return $reply;

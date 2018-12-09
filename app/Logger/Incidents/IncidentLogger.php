@@ -142,9 +142,9 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'old_loggable' => json_encode($event->oldIncident->map(false)),
+            'old_loggable' => json_encode($event->oldIncident),
             'new_loggable' => json_encode($event->incident->map(false)),
-            'old_value' => $event->oldIncident->description,
+            'old_value' => $event->oldIncident['description'],
             'new_value' => $event->incident->description,
             'icon' => 'edit',
             'color' => 'primary'
@@ -166,9 +166,9 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'old_loggable' => json_encode($event->oldIncident->map(false)),
+            'old_loggable' => json_encode($event->oldIncident),
             'new_loggable' => json_encode($event->incident->map(false)),
-            'old_value' => $event->oldIncident->subject,
+            'old_value' => $event->oldIncident['subject'],
             'new_value' => $event->incident->subject,
             'icon' => 'edit',
             'color' => 'primary'
@@ -213,9 +213,9 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'old_loggable' => json_encode($event->oldReply->map()),
+            'old_loggable' => json_encode($event->oldReply),
             'new_loggable' => json_encode($event->reply->map()),
-            'old_value' => $event->oldReply->body,
+            'old_value' => $event->oldReply['body'],
             'new_value' => $event->reply->body,
             'icon' => 'comment',
             'color' => 'primary'
@@ -237,8 +237,8 @@ class IncidentLogger
             'user_id' => $event->incident->user->id,
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
-            'old_loggable' => json_encode($event->oldReply->map()),
-            'old_value' => $event->oldReply->body,
+            'old_loggable' => json_encode($event->oldReply),
+            'old_value' => $event->oldReply['body'],
             'icon' => 'comment',
             'color' => 'primary'
         ]);
@@ -303,6 +303,7 @@ class IncidentLogger
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
             'new_loggable' => json_encode($event->user->map()),
+            'old_value' => null,
             'new_value' => $event->user->name,
             'icon' => 'add',
             'color' => 'success'
@@ -320,7 +321,8 @@ class IncidentLogger
             'loggable_id' => $event->incident->id,
             'loggable_type' => Incident::class,
             'new_loggable' => json_encode($event->user->map()),
-            'new_value' => $event->user->name,
+            'old_value' => $event->user->name,
+            'new_value' => null,
             'icon' => 'add',
             'color' => 'success'
         ]);

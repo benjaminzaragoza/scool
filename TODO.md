@@ -1,4 +1,4 @@
-- [ ] Laravel ide helper i Laravel debugbar instal·lats amb llum. NO fer-ho amb llum i utilitzar el que digui la doc dels paquets 
+- [X] Laravel ide helper i Laravel debugbar instal·lats amb llum. NO fer-ho amb llum i utilitzar el que digui la doc dels paquets 
 
 # Eager Loading
 
@@ -11,9 +11,15 @@
 
 # Laravel Queues
 
-- [ ] LogIncidentEvent -> Peta amb casos en que s'esborra la incidència
- - Eliminar comentari
- - Eliminar incidència
+- [ ] LogIncidentEvent -> Peta amb casos en que s'esborra la incidència. Forma en que recupear Laravel els models esborrats quan hi ha cuas
+ - [X] Eliminar comentari
+ - [ ] Eliminar incidència 
+- [ ] Problemes amb old_value i new value a tots els events modificació. Tot i que old_value és un clone el model la forma 
+en que Laravel restaura els models (executant una consulta a la base de dades) fa que siguin el mateix objecte 
+
+Idea:
+- [ ] No utilitzar clone pels valors antics utilitzar map()
+- [X] Quan es tracti de models esborrats o que s'esborraran no passar els models als events sinó l'array map() del model
 
 ## Multitenant
 

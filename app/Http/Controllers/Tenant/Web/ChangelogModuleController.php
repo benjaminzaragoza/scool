@@ -23,7 +23,14 @@ class ChangelogModuleController extends Controller
      */
     public function index(ListModuleChangelog $request, $tenant, Module $module)
     {
-        $logs = map_collection(Log::with('user')->module($module->name)->get());
+        $logs = map_collection(Log::with(
+            'user',
+            'loggable.user',
+            'loggable.closer',
+            'loggable.comments',
+            'loggable.tags',
+            'loggable.assignees'
+        )->module($module->name)->get());
         $users = User::all();
         return view('tenants.changelog.modules.index', compact('logs','users','module'));
     }
