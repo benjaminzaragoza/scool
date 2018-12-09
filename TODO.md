@@ -2,7 +2,7 @@
 
 # Eager Loading
 
-- [ ] https://iesebre.scool.test/changelog Solucionar problema de performance executa un munt de queries. Eager Loading.
+- [X] https://iesebre.scool.test/changelog Solucionar problema de performance executa un munt de queries. Eager Loading.
 - [X] https://iesebre.scool.test/incidents: OCO també té moltes consultes
 
 # LOGGER

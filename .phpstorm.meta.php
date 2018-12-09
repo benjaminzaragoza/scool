@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-12-07 15:56:10.
+    * Generated on 2018-12-09 12:05:20.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -165,7 +165,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -341,7 +341,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -517,7 +517,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -693,7 +693,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -869,7 +869,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -1045,7 +1045,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
@@ -1221,7 +1221,7 @@ namespace PHPSTORM_META {
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
-        'queue.connection' => \Illuminate\Queue\SyncQueue::class,
+        'queue.connection' => \Laravel\Horizon\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
         'queue.listener' => \Illuminate\Queue\Listener::class,
         'queue.worker' => \Illuminate\Queue\Worker::class,
