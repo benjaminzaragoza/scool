@@ -1,4 +1,23 @@
+# Bugs
+
+- [ ] No funcionen les routes api als testos però si les routes web??
+  - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a composer.lock.ok
+  - Paquet dona error: Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
+
+Crec estic afectat per aquesta issue:
+
+- https://github.com/symfony/symfony/issues/29478 
+
+# Maximum size exceeded pusher | laravel-websockets
+
+- [ ] Torno a tenir problemes amb algunes incidències crec són tenen comentaris
+- [ ] No utilitzar pusher? https://github.com/beyondcode/laravel-websockets
+
+# Laravel ide helper i Laravel debugbar
+
 - [X] Laravel ide helper i Laravel debugbar instal·lats amb llum. NO fer-ho amb llum i utilitzar el que digui la doc dels paquets 
+- [ ] No puc executar php artisan ide-helper:models Class '\Venturecraft\Revisionable\Revision' not found
+
 
 # Eager Loading
 
@@ -11,26 +30,26 @@
 
 # Laravel Queues
 
-- [ ] LogIncidentEvent -> Peta amb casos en que s'esborra la incidència. Forma en que recupear Laravel els models esborrats quan hi ha cuas
+- [X] LogIncidentEvent -> Peta amb casos en que s'esborra la incidència. Forma en que recupear Laravel els models esborrats quan hi ha cuas
  - [X] Eliminar comentari
- - [ ] Eliminar incidència 
-- [ ] Problemes amb old_value i new value a tots els events modificació. Tot i que old_value és un clone el model la forma 
+ - [X] Eliminar incidència 
+- [X] Problemes amb old_value i new value a tots els events modificació. Tot i que old_value és un clone el model la forma 
 en que Laravel restaura els models (executant una consulta a la base de dades) fa que siguin el mateix objecte 
 
 Idea:
-- [ ] No utilitzar clone pels valors antics utilitzar map()
+- [X] No utilitzar clone pels valors antics utilitzar map()
 - [X] Quan es tracti de models esborrats o que s'esborraran no passar els models als events sinó l'array map() del model
 
 ## Multitenant
 
-Solució:
-- IMPORTANT: Cada cop hi ha canvis al codi cal reiniciar supervisor!!!
-- Una queue per a cada tenant
-- Cal crear un supervisor per cada tenant:
-- Comanda artisan queu:work adaptada a tenants:
-  - php artisan queue:work:tenant {tenantname} {conection} 
-  - Exemple: php artisan queue:work:tenant iesebre redis ...
-- Fitxer /etc/supervisor/conf.d/scool_worker_iesebre.conf
+- [X] Solució:
+  - IMPORTANT: Cada cop hi ha canvis al codi cal reiniciar supervisor!!!
+  - Una queue per a cada tenant
+  - Cal crear un supervisor per cada tenant:
+  - Comanda artisan queu:work adaptada a tenants:
+    - php artisan queue:work:tenant {tenantname} {conection} 
+    - Exemple: php artisan queue:work:tenant iesebre redis ...
+  - Fitxer /etc/supervisor/conf.d/scool_worker_iesebre.conf
 
 ```
 sudo cat /etc/supervisor/conf.d/scool_worker_iesebre.conf
@@ -45,7 +64,7 @@ redirect_stderr=true
 stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/worker_iesebre.log
 ```
 
-- Cal enviar les tasques a la cua/tenant que correspongui es pot utilitzar tenant_from_current_url():
+   - Cal enviar les tasques a la cua/tenant que correspongui es pot utilitzar tenant_from_current_url():
 
 ```
 Mail::to($event->incident->user)
@@ -55,38 +74,29 @@ Mail::to($event->incident->user)
 
 # Bugs
 
-- [ ] 404 a totes les URL: S'ha de crear el tenant: php artisan migrate:fresh --seed
-- [ ] No funcionen les routes api als testos però si les routes web??
-  - [ ] Al desfer els canvis d'un composer update s'ha arreglat. Composer.lock file que funciona guardat a composer.lock.ok
-  - Paquet dona error: Updating symfony/http-foundation (v4.1.7 => v4.2.1): Loading from cache
+- [X] 404 a totes les URL: S'ha de crear el tenant: php artisan migrate:fresh --seed
 
-Crec estic afectat per aquesta issue:
-
-- https://github.com/symfony/symfony/issues/29478 
   
 # Laravel Telescope
 
-- [ ] Un dels dos torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i falla tot
-
-# Laravel Horizon
-
-Uninstall:
-- Remove HorizonSErviceProvider de config/app.php
-- Remove boostrap/cache/packages file
-- composer remove laravel/horizon
-- remove config/horizon.php file
-- remove public/vendor/horizon
-- create_failed_jobs migrate
-
-## Laravel Telescope
-
-Que cal borrar al fer la desinstal·lació:
+- [ ] Torna a forçar usuari de sistema sigui App\User en comptes de App\Models\User i falla tot. NO ES POT INSTAL·LAR
+Notes per esborrar:
 - config/app.php treure el service provider
 - Dont discover a composer.json: "laravel/telescope"
 - composer remove laravel/telescope
 - /public/vendor/telescope
 - /config/telescope.php
 
+# Laravel Horizon
+
+- [X] Instalar
+- [X] Notes Uninstall:
+  - Remove HorizonSErviceProvider de config/app.php
+  - Remove boostrap/cache/packages file
+  - composer remove laravel/horizon
+  - remove config/horizon.php file
+  - remove public/vendor/horizon
+  - create_failed_jobs migrate
 
 # Mòdul professorat
 

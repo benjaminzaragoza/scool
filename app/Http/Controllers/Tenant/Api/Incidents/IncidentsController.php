@@ -68,7 +68,7 @@ class IncidentsController extends Controller
      */
     public function destroy(DeleteIncident $request, $tenant, Incident $incident)
     {
-        $oldIncident = clone($incident);
+        $oldIncident = $incident->map(false);
         $incident->delete();
         event(new IncidentDeleted($oldIncident));
         return $incident;

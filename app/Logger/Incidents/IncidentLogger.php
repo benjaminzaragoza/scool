@@ -113,14 +113,14 @@ class IncidentLogger
     public static function deleted($event)
     {
         Log::create([
-            'text' => 'Ha eliminat la incidència ' . $event->oldIncident->subject,
+            'text' => 'Ha eliminat la incidència ' . $event->oldIncident['subject'],
             'time' => Carbon::now(),
             'action_type' => 'delete',
             'module_type' => 'Incidents',
-            'user_id' => $event->oldIncident->user->id,
-            'loggable_id' => $event->oldIncident->id,
+            'user_id' => $event->oldIncident['user_id'],
+            'loggable_id' => $event->oldIncident['id'],
             'loggable_type' => Incident::class,
-            'old_loggable' => json_encode($event->oldIncident->map(false)),
+            'old_loggable' => json_encode($event->oldIncident),
             'new_loggable' => null,
             'icon' => 'remove',
             'color' => 'error'
