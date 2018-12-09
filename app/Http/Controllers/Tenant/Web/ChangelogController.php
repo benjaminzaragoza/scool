@@ -23,13 +23,13 @@ class ChangelogController extends Controller
     public function index(ListChangelog $request)
     {
         $logs = map_collection(Log::with(
-            'user',
-            'loggable.user',
-            'loggable.closer',
-            'loggable.comments',
-            'loggable.tags',
-            'loggable.assignees'
-        )->get());
+            'user'
+        )->get()->loadMorph(
+            'loggable', [ // could instead be named loadMixed()? loadMorphed()?
+                \App\Models\Incident::class => ['user','closer','comments','tags','assignees']
+            ]
+        ));
+
         $users = User::all();
         return view('tenants.changelog.index', compact('logs','users'));
     }
