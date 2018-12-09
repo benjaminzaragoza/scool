@@ -1,6 +1,41 @@
+# laravel-websockets
+
+- Multinenant:
+  - [ ] resources/js/bootstrap.js configuració Laravel echo: key: process.env.MIX_PUSHER_APP_KEY,
+    - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
+    - La key serà diferent per cada tenant i per a la app principal. Com?
+      - [ ] La key l'hauria de proposar php segons el domini/tenant i passar-la a Javascript
+      - [ ] La key no és un secret
+      - No podem utilitzar process.env.MIX_PUSHER_APP_KEY pq es resol en temps compilació i no pas temps execució
+      - Utilitzar tenantHeader (window.tenant) té info del tenant a Javascript
+      - window.tenant.pusher_app_key
+  - Un app_key diferent per cada tenant i per aplicació mail:
+    - scool.cat | scool.test -> Una key propia 
+    - iesebre.scool.cat | iesebre.scool.test -> Una key propia 
+    - altre.scool.cat | altre.scool.test -> Una key propia
+  - Server:
+    - [ ] Cal donar d'alta a l'array apps (config/web-socket.php) una app per cada tenant i per principal
+       - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/websockets.php
+    - [ ] Una entrada fixa per a scool.cat -> main app
+    - [ ] Mateixa config per a explotació i servidor. NO PROBLEM: el server al que s'apunta "és el mateix"
+      - Des de PHP:
+        -  https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/broadcasting.php
+        - localhost 6001
+      - Des dels navegadors:
+        - https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
+        - wsHost: window.location.hostname i wsPort: 6001,     
+    - [ ] Es pot crear un provider de apps a mida que podria agafar les dades de la taula tenants
+      - [ ] Afegir camps a la taula tenant:
+       - 'id' => env('PUSHER_APP_ID'),
+       - 'name' => env('APP_NAME'),
+       - 'key' => env('PUSHER_APP_KEY'),
+       - 'secret' => env('PUSHER_APP_SECRET'),
+       - 'enable_client_messages' => true,
+       - 'enable_statistics' => true,
+
 #Feature Requests
 
-- [ ] Una opció que permeti desactivar el enviament d'emails reals i que s'enviin a mailtrap tan a eplotació com local
+- [ ] Una opció que permeti desactivar el enviament d'emails reals i que s'enviin a mailtrap tan a explotació com local
   -  [ ] En local no enviar mai emails de veritat
 - [ ] Canviar color toolbar quan estem a explotació sigui diferent de local per tenir clar on estem treballant
  
