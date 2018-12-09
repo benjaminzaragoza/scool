@@ -1,3 +1,118 @@
+#Feature Requests
+
+- [ ] Una opció que permeti desactivar el enviament d'emails reals i que s'enviin a mailtrap tan a eplotació com local
+  -  [ ] En local no enviar mai emails de veritat
+- [ ] Canviar color toolbar quan estem a explotació sigui diferent de local per tenir clar on estem treballant
+ 
+#Errors
+
+- [ ] Configurar ok pusher a explotació!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ - [ ] Comprovar va temps real a https://iesebre.scool.cat/changelog
+- [ ] When queued emails us scool.cat url instead of iesebre.scool.cat
+- [ ] Error als esborrar una incidencia amb comentaris?:
+- [ ] Error als esborrar una incidencia amb assignees?: 
+- [ ] Error als esborrar una incidencia amb etiquetes:
+
+App\Models\Incident:2
+Failed At
+18-12-09 17:04:29
+Error
+Symfony\Component\Debug\Exception\FatalThrowableError: Call to a member function map() on array in /home/sergi/Code/acacha/scool/app/helpers.php:8473
+Stack trace:
+#0 [internal function]: {closure}(Array, 0)
+#1 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Support/Collection.php(1007): array_map(Object(Closure), Array, Array)
+#2 /home/sergi/Code/acacha/scool/app/helpers.php(8474): Illuminate\Support\Collection->map(Object(Closure))
+#3 /home/sergi/Code/acacha/scool/app/Models/Incident.php(107): map_collection(Object(Illuminate\Support\Collection))
+#4 /home/sergi/Code/acacha/scool/storage/framework/views/e0837c84ae738b24c40fd1df2f561175a24e487f.php(2): App\Models\Incident->map()
+#5 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(43): include('/home/sergi/Cod...')
+#6 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(59): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/sergi/Cod...', Array)
+#7 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/View.php(142): Illuminate\View\Engines\CompilerEngine->get('/home/sergi/Cod...', Array)
+#8 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/View.php(125): Illuminate\View\View->getContents()
+#9 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/View.php(90): Illuminate\View\View->renderContents()
+#10 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Markdown.php(61): Illuminate\View\View->render()
+#11 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(267): Illuminate\Mail\Markdown->render('tenants.emails....', Array)
+#12 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(237): Illuminate\Mail\Mailable->buildMarkdownView()
+#13 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(153): Illuminate\Mail\Mailable->buildView()
+#14 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Support/Traits/Localizable.php(19): Illuminate\Mail\Mailable->Illuminate\Mail\{closure}()
+#15 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(160): Illuminate\Mail\Mailable->withLocale(NULL, Object(Closure))
+#16 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/SendQueuedMailable.php(52): Illuminate\Mail\Mailable->send(Object(Illuminate\Mail\Mailer))
+#17 [internal function]: Illuminate\Mail\SendQueuedMailable->handle(Object(Illuminate\Mail\Mailer))
+#18 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#19 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#20 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#21 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/Container.php(572): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#22 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php(94): Illuminate\Container\Container->call(Array)
+#23 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Bus\Dispatcher->Illuminate\Bus\{closure}(Object(Illuminate\Mail\SendQueuedMailable))
+#24 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(104): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Mail\SendQueuedMailable))
+#25 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php(98): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#26 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(49): Illuminate\Bus\Dispatcher->dispatchNow(Object(Illuminate\Mail\SendQueuedMailable), false)
+#27 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Jobs/Job.php(83): Illuminate\Queue\CallQueuedHandler->call(Object(Illuminate\Queue\Jobs\RedisJob), Array)
+#28 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(327): Illuminate\Queue\Jobs\Job->fire()
+#29 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(277): Illuminate\Queue\Worker->process('redis', Object(Illuminate\Queue\Jobs\RedisJob), Object(Illuminate\Queue\WorkerOptions))
+#30 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(118): Illuminate\Queue\Worker->runJob(Object(Illuminate\Queue\Jobs\RedisJob), 'redis', Object(Illuminate\Queue\WorkerOptions))
+#31 /home/sergi/Code/acacha/scool/app/Console/Commands/WorkCommand.php(108): Illuminate\Queue\Worker->daemon('redis', 'iesebre', Object(Illuminate\Queue\WorkerOptions))
+#32 /home/sergi/Code/acacha/scool/app/Console/Commands/WorkCommand.php(92): App\Console\Commands\WorkCommand->runWorker('redis', 'iesebre')
+#33 [internal function]: App\Console\Commands\WorkCommand->handle()
+#34 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#35 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#36 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#37 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/Container.php(572): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#38 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Console/Command.php(183): Illuminate\Container\Container->call(Array)
+#39 /home/sergi/Code/acacha/scool/vendor/symfony/console/Command/Command.php(255): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#40 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Console/Command.php(170): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#41 /home/sergi/Code/acacha/scool/vendor/symfony/console/Application.php(901): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#42 /home/sergi/Code/acacha/scool/vendor/symfony/console/Application.php(262): Symfony\Component\Console\Application->doRunCommand(Object(App\Console\Commands\WorkCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#43 /home/sergi/Code/acacha/scool/vendor/symfony/console/Application.php(145): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#44 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Console/Application.php(89): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#45 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(122): Illuminate\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#46 /home/sergi/Code/acacha/scool/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#47 {main}
+Next ErrorException: Call to a member function map() on array (View: /home/sergi/Code/acacha/scool/resources/views/tenants/emails/incidents/deleted.blade.php) in /home/sergi/Code/acacha/scool/app/helpers.php:8473
+Stack trace:
+#0 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(47): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Debug\Exception\FatalThrowableError), 0)
+#1 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(59): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/sergi/Cod...', Array)
+#2 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/View.php(142): Illuminate\View\Engines\CompilerEngine->get('/home/sergi/Cod...', Array)
+#3 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/View.php(125): Illuminate\View\View->getContents()
+#4 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/View/View.php(90): Illuminate\View\View->renderContents()
+#5 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Markdown.php(61): Illuminate\View\View->render()
+#6 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(267): Illuminate\Mail\Markdown->render('tenants.emails....', Array)
+#7 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(237): Illuminate\Mail\Mailable->buildMarkdownView()
+#8 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(153): Illuminate\Mail\Mailable->buildView()
+#9 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Support/Traits/Localizable.php(19): Illuminate\Mail\Mailable->Illuminate\Mail\{closure}()
+#10 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/Mailable.php(160): Illuminate\Mail\Mailable->withLocale(NULL, Object(Closure))
+#11 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Mail/SendQueuedMailable.php(52): Illuminate\Mail\Mailable->send(Object(Illuminate\Mail\Mailer))
+#12 [internal function]: Illuminate\Mail\SendQueuedMailable->handle(Object(Illuminate\Mail\Mailer))
+#13 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#14 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#15 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#16 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/Container.php(572): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#17 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php(94): Illuminate\Container\Container->call(Array)
+#18 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Bus\Dispatcher->Illuminate\Bus\{closure}(Object(Illuminate\Mail\SendQueuedMailable))
+#19 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(104): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Mail\SendQueuedMailable))
+#20 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php(98): Illuminate\Pipeline\Pipeline->then(Object(Closure))
+#21 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(49): Illuminate\Bus\Dispatcher->dispatchNow(Object(Illuminate\Mail\SendQueuedMailable), false)
+#22 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Jobs/Job.php(83): Illuminate\Queue\CallQueuedHandler->call(Object(Illuminate\Queue\Jobs\RedisJob), Array)
+#23 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(327): Illuminate\Queue\Jobs\Job->fire()
+#24 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(277): Illuminate\Queue\Worker->process('redis', Object(Illuminate\Queue\Jobs\RedisJob), Object(Illuminate\Queue\WorkerOptions))
+#25 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(118): Illuminate\Queue\Worker->runJob(Object(Illuminate\Queue\Jobs\RedisJob), 'redis', Object(Illuminate\Queue\WorkerOptions))
+#26 /home/sergi/Code/acacha/scool/app/Console/Commands/WorkCommand.php(108): Illuminate\Queue\Worker->daemon('redis', 'iesebre', Object(Illuminate\Queue\WorkerOptions))
+#27 /home/sergi/Code/acacha/scool/app/Console/Commands/WorkCommand.php(92): App\Console\Commands\WorkCommand->runWorker('redis', 'iesebre')
+#28 [internal function]: App\Console\Commands\WorkCommand->handle()
+#29 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#30 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#31 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#32 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/Container.php(572): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#33 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Console/Command.php(183): Illuminate\Container\Container->call(Array)
+#34 /home/sergi/Code/acacha/scool/vendor/symfony/console/Command/Command.php(255): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#35 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Console/Command.php(170): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#36 /home/sergi/Code/acacha/scool/vendor/symfony/console/Application.php(901): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#37 /home/sergi/Code/acacha/scool/vendor/symfony/console/Application.php(262): Symfony\Component\Console\Application->doRunCommand(Object(App\Console\Commands\WorkCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#38 /home/sergi/Code/acacha/scool/vendor/symfony/console/Application.php(145): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#39 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Console/Application.php(89): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#40 /home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(122): Illuminate\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#41 /home/sergi/Code/acacha/scool/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#42 {main}
+
 # Bugs
 
 - [ ] No funcionen les routes api als testos però si les routes web??

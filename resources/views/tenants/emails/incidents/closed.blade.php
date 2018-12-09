@@ -32,7 +32,7 @@ if (count($mappedIncident['assignees']) > 0) {
 - **Etiquetes**: {{ $tags }}
 - **Assignada a**: {{ $assignees }}
 
-@component('mail::button', ['url' => config('app.url') . '/'. $mappedIncident['api_uri'] . '/' . $incident->id])
+@component('mail::button', ['url' => config('app.tenant_url') . '/'. $mappedIncident['api_uri'] . '/' . $incident->id])
     Vegeu la incidència
 @endcomponent
 
