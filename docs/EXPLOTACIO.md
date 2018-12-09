@@ -16,13 +16,84 @@ https://forge.laravel.com/servers
 - Usuari: sergitur@iesebre.com
 - Server scool.cat: https://forge.laravel.com/servers/231518#/websites
 
-# Laravel Horizon
+# Laravel queues
+
+# Supervisor:
+
+A la carpeta **supervisor/production** podeu trobar els exemples de configuració de Supervisor (fitxers cal posar a **/etc/supervisor/conf.d**)
+
+
+En el cas cua iesebre:
+
+Local:
+
+```
+[program:scool_worker_iesebre]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/sergi/Code/acacha/scool/artisan queue:work:tenant iesebre redis --queue=iesebre --sleep=3 --tries=3 --delay=3
+autostart=true
+autorestart=true
+user=sergi
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/worker_iesebre.log
+```
+
+
+Production:
+
+```
+[program:scool_worker_iesebre]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/forge/scool.cat/artisan queue:work:tenant iesebre redis --queue=iesebre --sleep=3 --tries=3 --delay=3
+autostart=true
+autorestart=true
+user=forge
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/forge/scool.cat/storage/logs/worker_iesebre.log
+```
+
+En el cas cua default:
+
+Local:
+
+```
+[program:scool_worker_default]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/sergi/Code/acacha/scool/artisan queue:work redis --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=sergi
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/worker.log
+```
+
+
+Production:
+
+```
+[program:scool_worker_default]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/forge/scool.cat/artisan queue:work redis --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=forge
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/forge/scool.cat/storage/logs/worker.log
+```
+
+
+## Laravel Horizon
 
 A la carpeta **supervisor/production** podeu trobar els exemples de configuració de Supervisor (fitxers cal posar a **/etc/supervisor/conf.d**)
 
 En el cas horizon:
 
 Local:
+
 ```
 $ cat scool_horizon.conf 
 [program:scool_horizon]
@@ -36,7 +107,19 @@ stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/horizon.log
 ```
 
 
-Production
+Production:
+
+```
+[program:scool_horizon]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/forge/scool.cat/artisan horizon
+autostart=true
+autorestart=true
+user=forge
+redirect_stderr=true
+stdout_logfile=/home/forge/scool.cat/storage/logs/horizon.log
+```
+
 
 # Acacha forge publish OBSOLET
 
