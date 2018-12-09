@@ -39,6 +39,7 @@ return [
 
     'connections' => [
 
+        // TODO ? per a que?
         'shared' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('shared.database.sqlite')),
@@ -60,6 +61,7 @@ return [
             'engine' => null,
         ],
 
+        // TODO -> NOT USED --> remove?
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
