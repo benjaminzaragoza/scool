@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // Every 5 hours
         $schedule->job(new WatchGoogleUsers())->cron('0 */5 * * *');
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**

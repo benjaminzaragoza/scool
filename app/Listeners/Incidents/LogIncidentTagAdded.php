@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentTagAdded
@@ -29,6 +30,6 @@ class LogIncidentTagAdded
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::tagAdded($event);
+        LogIncidentEvent::dispatch('tagAdded',$event)->onQueue(tenant_from_current_url());
     }
 }

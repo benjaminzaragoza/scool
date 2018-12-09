@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentSubjectUpdated
@@ -29,6 +30,6 @@ class LogIncidentSubjectUpdated
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::subjectUpdated($event);
+        LogIncidentEvent::dispatch('subjectUpdated',$event)->onQueue(tenant_from_current_url());
     }
 }

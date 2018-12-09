@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentDesassigned
@@ -29,6 +30,6 @@ class LogIncidentDesassigned
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::incidentDesassigned($event);
+        LogIncidentEvent::dispatch('incidentDesassigned',$event)->onQueue(tenant_from_current_url());
     }
 }

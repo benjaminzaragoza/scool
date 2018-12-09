@@ -3,6 +3,7 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentTagRemoved
@@ -29,6 +30,6 @@ class LogIncidentTagRemoved
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::tagRemoved($event);
+        LogIncidentEvent::dispatch('tagRemoved',$event)->onQueue(tenant_from_current_url());
     }
 }

@@ -42,11 +42,12 @@ class IncidentsServiceProvider extends ServiceProvider
     {
         $tenant = tenant_from_current_url();
         if (! is_null($tenant)) {
+            $previousConnection = config('database.default');
             apply_tenant($tenant);
             if ($email = Setting::get('incidents_manager_email')) {
                 Config::set('incidents.manager_email', $email);
             }
-            main_connect();
+            restore_connect($previousConnection);
          }
     }
 }

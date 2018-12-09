@@ -10,7 +10,6 @@
         "acacha/admin-lte-template-laravel": "^6.0",
         "acacha/forge-publish": "^0.1.12",
         "adldap2/adldap2-laravel": "dev-master",
-        "barryvdh/laravel-debugbar": "^3.1",
         "chumper/zipper": "^1.0",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",
@@ -30,6 +29,7 @@
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.5",
         "beyondcode/laravel-dump-server": "^1.2",
         "filp/whoops": "^2.0",
@@ -60,8 +60,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel/dusk",
-                "laravel/telescope"
+                "laravel/dusk"
             ]
         }
     },

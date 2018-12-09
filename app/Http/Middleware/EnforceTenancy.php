@@ -22,7 +22,7 @@ class EnforceTenancy
      */
     public function handle($request, Closure $next)
     {
-        if (env('APP_ENV') === 'testing') {
+        if (config('app.env') === 'testing') {
             return $next($request);
         }
         Config::set('database.default', 'tenant');

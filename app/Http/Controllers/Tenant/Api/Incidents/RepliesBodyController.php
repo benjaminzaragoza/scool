@@ -20,7 +20,7 @@ class RepliesBodyController extends Controller {
      */
     public function update(UpdateBodyReply $request, $tenant, Reply $reply)
     {
-        $oldReply = clone($reply);
+        $oldReply = $reply->map();
         $reply->body = $request->body;
         $reply->save();
         event(new IncidentReplyUpdated($reply->incident,$reply, $oldReply));

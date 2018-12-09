@@ -56,7 +56,7 @@ class MigrateTenantAll extends Command
             $this->info('Running tenant: ' . $tenant->subdomain . ' ...');
 
             $this->connectAndConfigureTenant($tenant);
-            $this->run_migration_command();
+            $this->run_command();
         }
     }
 }

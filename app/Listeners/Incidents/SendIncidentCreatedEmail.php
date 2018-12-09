@@ -4,6 +4,7 @@ namespace App\Listeners\Incidents;
 
 use App\Mail\Incidents\IncidentCreated;
 use App\Models\Setting;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
 /**
@@ -31,6 +32,8 @@ class SendIncidentCreatedEmail
      */
     public function handle($event)
     {
-        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCreated($event->incident));
+        Mail::to($event->incident->user)
+            ->cc(Setting::get('incidents_manager_email'))
+            ->queue((new IncidentCreated($event->incident))->onQueue(tenant_from_current_url()));
     }
 }

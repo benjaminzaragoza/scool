@@ -31,7 +31,7 @@ trait MigrateTenants
         Config::set('database.default', 'tenant');
     }
 
-    private function run_migration_command() {
+    private function run_command() {
         $this->call($this->command(), [
             '--database' => 'tenant',
             '--path' => 'database/migrations/tenant'

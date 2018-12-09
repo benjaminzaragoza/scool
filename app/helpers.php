@@ -142,13 +142,37 @@ if (! function_exists('tenant_connect')) {
 if (! function_exists('main_connect')) {
     function main_connect()
     {
+        restore_connect(config('scool.main_database'));
+    }
+}
+
+if (! function_exists('restore_connect')) {
+    function restore_connect($connection)
+    {
         // Erase the tenant connection, thus making Laravel get the default values all over again.
         DB::purge('tenant');
 
-        Config::set('database.default',env('DB_CONNECTION', 'mysql'));
+        Config::set('database.default', $connection);
 
         // Ping the database. This will throw an exception in case the database does not exists.
-        Schema::connection(config('database.default'))->getConnection()->reconnect();
+        Schema::connection($connection)->getConnection()->reconnect();
+    }
+}
+
+if (! function_exists('create_admin_user_on_subdomain')) {
+    /**
+     * @param $subdomain
+     */
+    function create_admin_user_on_subdomain($subdomain)
+    {
+        $tenant = Tenant::findBySubdomain($subdomain);
+        tenant_connect(
+            $tenant->hostname,
+            $tenant->username,
+            $tenant->password,
+            $tenant->database
+        );
+        create_tenant_admin_user();
     }
 }
 
@@ -169,16 +193,36 @@ if (! function_exists('create_admin_user_on_tenant')) {
         if(!$password) $password = str_random();
 
         $existingUser = App\Models\User::where('email',$user->email)->first();
-
         if (!$existingUser) {
             User::forceCreate([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => bcrypt($password),
+                'password' => sha1($password),
                 'admin' => true
             ]);
         }
         DB::purge('tenant');
+    }
+}
+
+
+if (! function_exists('create_tenant_admin_user')) {
+    function create_tenant_admin_user()
+    {
+        if (! App\User::where('email',config('scool.admin_user_email'))->first()) {
+            User::forceCreate([
+                'name' => config('scool.admin_user_name_on_tenant'),
+                'email' => config('scool.admin_user_email_on_tenant'),
+                'password' => is_sha1($password = config('scool.admin_username_password_on_tenant')) ? $password : sha1($password),
+                'admin' => true
+            ]);
+        }
+    }
+}
+
+if (! function_exists('is_sha1')) {
+    function is_sha1($str) {
+        return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
     }
 }
 
@@ -188,28 +232,11 @@ if (! function_exists('create_admin_user')) {
      */
     function create_admin_user()
     {
-        if (! App\User::where('email',env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'))->first()) {
+        if (! App\User::where('email',config('scool.admin_user_email'))->first()) {
             App\User::forceCreate([
-                'name' => env('ADMIN_USER_NAME','Sergi Tur Badenas'),
-                'email' => env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'),
-                'password' => bcrypt(env('ADMIN_USER_PASSWORD','123456')),
-                'admin' => true
-            ]);
-        }
-    }
-}
-
-if (! function_exists('create_tenant_admin_user')) {
-    /**
-     *
-     */
-    function create_tenant_admin_user()
-    {
-        if (! App\User::where('email',env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'))->first()) {
-            App\User::forceCreate([
-                'name' => env('ADMIN_USER_NAME','Sergi Tur Badenas'),
-                'email' => env('ADMIN_USER_EMAIL','sergiturbadenas@gmail.com'),
-                'password' => sha1(env('ADMIN_USER_PASSWORD_ON_TENANT','123456')),
+                'name' => config('scool.admin_user_name'),
+                'email' => config('scool.admin_user_email'),
+                'password' => bcrypt(config('scool.admin_user_password')),
                 'admin' => true
             ]);
         }
@@ -222,11 +249,11 @@ if (! function_exists('create_tenant_user_without_permissions')) {
      */
     function create_tenant_user_without_permissions()
     {
-        if (! App\Models\User::where('email',env('USER_WITHOUT_PERMISSIONS_EMAIL','pepe@pringao.com'))->first()) {
+        if (! App\Models\User::where('email',config('scool.user_without_permissions_email'))->first()) {
             App\Models\User::forceCreate([
-                'name' => env('USER_WITHOUT_PERMISSIONS_NAME','Pepe Pringao'),
-                'email' => env('USER_WITHOUT_PERMISSIONS_EMAIL','pepe@pringao.com'),
-                'password' => env('USER_WITHOUT_PERMISSIONS_PASSWORD','7c4a8d09ca3762af61e59520943dc26494f8941b') // 123456
+                'name' => config('scool.user_without_permissions_name'),
+                'email' => config('scool.user_without_permissions_email'),
+                'password' => config('scool.user_without_permissions_password') // HASHED SHA1 123456
             ]);
         }
     }
@@ -238,20 +265,11 @@ if (! function_exists('create_other_tenant_admin_users')) {
      */
     function create_other_tenant_admin_users()
     {
-        if (! App\Models\User::where('email',env('ADMIN_USER_EMAIL1','dmontero@iesebre.com'))->first()) {
+        if (! App\Models\User::where('email',config('scool.admin_user_email_on_tenant1'))->first()) {
             App\Models\User::forceCreate([
-                'name' => env('ADMIN_USER_NAME1','Dídac Montero Borràs'),
-                'email' => env('ADMIN_USER_EMAIL1','dmontero@iesebre.com'),
-                'password' => env('ADMIN_USER_PASSWORD1','7c4a8d09ca3762af61e59520943dc26494f8941b'),
-                'admin' => true
-            ]);
-        }
-
-        if (! App\Models\User::where('email',env('ADMIN_USER_EMAIL2','gsubirats@iesebre.com'))->first()) {
-            App\Models\User::forceCreate([
-                'name' => env('ADMIN_USER_NAME2','Gerard Subirats'),
-                'email' => env('ADMIN_USER_EMAIL2','gsubirats@iesebre.com'),
-                'password' => env('ADMIN_USER_PASSWORD2','7c4a8d09ca3762af61e59520943dc26494f8941b'),
+                'email' => config('scool.admin_user_email_on_tenant1'),
+                'name' => config('scool.admin_user_name_on_tenant1'),
+                'password' => config('scool.admin_username_password_on_tenant1'),
                 'admin' => true
             ]);
         }
@@ -262,17 +280,23 @@ if (! function_exists('create_iesebre_tenant')) {
     function create_iesebre_tenant()
     {
         return Tenant::create([
-            'name' => "Institut de l'Ebre",
-            'subdomain' => 'iesebre',
-            'email_domain' => 'iesebre.com',
-            'hostname' => 'localhost',
-            'database' => 'iesebre',
-            'username' => 'iesebre',
-            'password' => str_random(),
-            'port' => 3306,
-            'gsuite_service_account_path' => '/gsuite_service_accounts/scool-07eed0b50a6f.json',
-            'gsuite_admin_email' => 'sergitur@iesebre.com'
+            'name' => config('iesebre.name',"Institut de l'Ebre") ,
+            'subdomain' => config('iesebre.subdomain','iesebre') ,
+            'email_domain' => config('iesebre.subdomain','email_domain') ,
+            'hostname' =>  config('iesebre.database_host','localhost'),
+            'database' => config('iesebre.database_name','iesebre'),
+            'username' => config('iesebre.database_username','iesebre'),
+            'password' => config('iesebre.database_password',str_random()),
+            'port' => config('iesebre.database_port',3306),
+            'gsuite_service_account_path' => config('iesebre.gsuite_account_path','/gsuite_service_accounts/scool-07eed0b50a6f.json'),
+            'gsuite_admin_email' => config('iesebre.gsuite_admin_email','sergitur@iesebre.com'),
         ]);
+    }
+}
+
+if (! function_exists('remove_default_tenant')) {
+    function remove_default_tenant() {
+        delete_mysql_database('iesebre');
     }
 }
 
@@ -291,36 +315,11 @@ if (! function_exists('create_default_tenant')) {
             $tenant->password,
             $tenant->hostname);
 
-        create_admin_user_on_tenant($tenant_user, $tenant, env('ADMIN_USER_PASSWORD','123456'));
+        create_admin_user_on_tenant($tenant_user, $tenant, config('scool.admin_username_password_on_tenant'));
 
         DB::purge('tenant');
 
         main_connect();
-    }
-}
-
-
-if (! function_exists('create_admin_user_on_subdomain')) {
-
-    /**
-     * @param $subdomain
-     */
-    function create_admin_user_on_subdomain($subdomain)
-    {
-        $tenant = Tenant::findBySubdomain($subdomain);
-        tenant_connect(
-            $tenant->hostname,
-            $tenant->username,
-            $tenant->password,
-            $tenant->database
-        );
-
-        User::forceCreate([
-            'name' => env('ADMIN_USER_NAME_ON_TENANT','Sergi Tur Badenas'),
-            'email' => env('ADMIN_USER_EMAIL_ON_TENANT','sergiturbadenas@gmail.com'),
-            'password' => sha1(env('ADMIN_USER_PASSWORD_ON_TENANT','123456')),
-            'admin' => true
-        ]);
     }
 }
 
@@ -457,6 +456,7 @@ if (! function_exists('tenant_seed')) {
 function create_mysql_full_database($name, $user , $password = null, $host = null)
 {
     create_mysql_database($name);
+
     $password = create_mysql_user($user, $password, $host);
     mysql_grant_privileges($user, $name, $host);
 
@@ -499,19 +499,23 @@ function delete_mysql_full_database($name, $user, $host = null)
  *
  */
 function set_mysql_admin_connection() {
+
     DB::purge('mysql');
 
-    Config::set('database.connections.mysql.host', env('MYSQL_ADMIN_HOST'));
-    Config::set('database.connections.mysql.port', env('MYSQL_ADMIN_PORT'));
+    Config::set('database.connections.mysql.host', config('database.mysql_admin_host'));
+    Config::set('database.connections.mysql.port', config('database.mysql_admin_port'));
     Config::set('database.connections.mysql.database', null);
-    Config::set('database.connections.mysql.username', env('MYSQL_ADMIN_USERNAME'));
-    Config::set('database.connections.mysql.password', env('MYSQL_ADMIN_PASSWORD'));
+    Config::set('database.connections.mysql.username', config('database.mysql_admin_username'));
+    Config::set('database.connections.mysql.password', config('database.mysql_admin_password'));
 
     // Rearrange the connection data
     DB::reconnect('mysql');
 
     // Ping the database. This will throw an exception in case the database does not exists.
     Schema::connection('mysql')->getConnection()->reconnect();
+
+
+
 }
 
 /**
@@ -600,7 +604,11 @@ if (!function_exists('get_tenant')) {
      * @return mixed
      */
     function get_tenant($name) {
-        return \App\Tenant::where('subdomain', $name)->firstOrFail();
+        $previousConnection = config('database.default');
+        main_connect();
+        $tenant= \App\Tenant::where('subdomain', $name)->firstOrFail();
+        restore_connect($previousConnection);
+        return $tenant;
     }
 }
 
@@ -4657,8 +4665,9 @@ if (!function_exists('configure_tenant')) {
 }
 
 if (!function_exists('apply_tenant')) {
-    function apply_tenant($name)
+    function apply_tenant($name=null)
     {
+        $name = $name !== null ? $name : tenant_from_current_url();
         if ($tenant = get_tenant($name)) {
             $tenant->connect();
             $tenant->configure();

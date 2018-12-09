@@ -2,6 +2,12 @@
 
 return [
 
+    // SCOOL CUSTOM CONFIGURATION
+    'mysql_admin_host' => env('MYSQL_ADMIN_HOST', '127.0.0.1'),
+    'mysql_admin_port' => env('MYSQL_ADMIN_PORT', '3306'),
+    'mysql_admin_username' => env('MYSQL_ADMIN_USERNAME', 'debian-sys-maint'),
+    'mysql_admin_password' => env('MYSQL_ADMIN_PASSWORD', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name

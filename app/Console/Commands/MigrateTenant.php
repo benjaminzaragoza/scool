@@ -55,6 +55,6 @@ class MigrateTenant extends Command
     public function handle()
     {
         $this->configureTenant();
-        $this->run_migration_command();
+        $this->run_command();
     }
 }

@@ -3,23 +3,15 @@
 namespace App\Listeners\Incidents;
 
 use App;
+use App\Jobs\LogIncidentEvent;
 
 /**
  * Class LogIncidentStored
+ *
  * @package App\Listeners\Incidents
  */
 class LogIncidentStored
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
-
     /**
      * Handle the event.
      *
@@ -29,6 +21,6 @@ class LogIncidentStored
     public function handle($event)
     {
         if (App::environment('testing')) return;
-        IncidentLogger::stored($event);
+        LogIncidentEvent::dispatch('stored',$event)->onQueue(tenant_from_current_url());
     }
 }

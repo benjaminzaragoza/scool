@@ -26,9 +26,10 @@ class IncidentDescriptionUpdated
     /**
      * IncidentDescriptionUpdated constructor.
      * @param Incident $incident
-     * @param Incident $oldIncident
+     * @param $oldIncident
+     *
      */
-    public function __construct(Incident $incident,Incident $oldIncident)
+    public function __construct(Incident $incident,$oldIncident)
     {
         $this->incident = $incident;
         $this->oldIncident = $oldIncident;

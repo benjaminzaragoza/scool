@@ -31,6 +31,7 @@ class SendIncidentReplyAddedEmail
      */
     public function handle($event)
     {
-        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))->queue(new IncidentCommentAdded($event->incident));
+        Mail::to($event->incident->user)->cc(Setting::get('incidents_manager_email'))
+            ->queue((new IncidentCommentAdded($event->incident))->onQueue(tenant_from_current_url()));
     }
 }

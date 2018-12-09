@@ -9,11 +9,24 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Revision.
- *
+ * 
  * Base model to allow for revision history on
  * any model that extends this model
- *
+ * 
  * (c) Venture Craft <http://www.venturecraft.com.au>
+ *
+ * @property-read mixed $created_at_timestamp
+ * @property-read mixed $formatted_created_at
+ * @property-read mixed $formatted_created_at_diff
+ * @property-read mixed $formatted_updated_at
+ * @property-read mixed $formatted_updated_at_diff
+ * @property-read mixed $updated_at_timestamp
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $revisionable
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Revisionable\Revision newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Revisionable\Revision newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Revisionable\Revision query()
+ * @mixin \Eloquent
  */
 class Revision extends Eloquent
 {
