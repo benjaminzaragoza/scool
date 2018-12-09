@@ -209,7 +209,7 @@ class IncidentRepliesControllerTest extends BaseTenantTest
         Event::fake();
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/replies/' . $reply->id);
         Event::assertDispatched(IncidentReplyRemoved::class,function ($event) use ($incident){
-            return $event->incident->is($incident) && $event->oldReply->body === 'No funciona res';
+            return $event->incident->is($incident) && $event->oldReply['body'] === 'No funciona res';
         });
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
@@ -261,7 +261,7 @@ class IncidentRepliesControllerTest extends BaseTenantTest
             'body' => 'No funciona PC1 Aula 20'
         ]);
         Event::assertDispatched(IncidentReplyUpdated::class,function ($event) use ($incident){
-            return $event->incident->is($incident) && $event->oldReply->body === 'No funciona res' && $event->reply->body === 'No funciona PC1 Aula 20';
+            return $event->incident->is($incident) && $event->oldReply['body'] === 'No funciona res' && $event->reply->body === 'No funciona PC1 Aula 20';
         });
         $response->assertSuccessful();
         $result = json_decode($response->getContent());

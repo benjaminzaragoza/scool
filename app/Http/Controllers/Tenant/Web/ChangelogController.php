@@ -29,6 +29,7 @@ class ChangelogController extends Controller
                 \App\Models\Incident::class => ['user','closer','comments','tags','assignees']
             ]
         ));
+        // loadMorph allows eager load different fields/properties depending on type of polimorphic relation
 
         $users = User::all();
         return view('tenants.changelog.index', compact('logs','users'));
