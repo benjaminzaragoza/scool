@@ -16,7 +16,29 @@ https://forge.laravel.com/servers
 - Usuari: sergitur@iesebre.com
 - Server scool.cat: https://forge.laravel.com/servers/231518#/websites
 
-# Acacha forge publish
+# Laravel Horizon
+
+A la carpeta **supervisor/production** podeu trobar els exemples de configuració de Supervisor (fitxers cal posar a **/etc/supervisor/conf.d**)
+
+En el cas horizon:
+
+Local:
+```
+$ cat scool_horizon.conf 
+[program:scool_horizon]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/sergi/Code/acacha/scool/artisan horizon
+autostart=true
+autorestart=true
+user=sergi
+redirect_stderr=true
+stdout_logfile=/home/sergi/Code/acacha/scool/storage/logs/horizon.log
+```
+
+
+Production
+
+# Acacha forge publish OBSOLET
 
 Configuració:
 
@@ -46,7 +68,7 @@ crear un nou certificat tipus LetsEncrypt a domini cal posar:
 
  $ sudo apt-get install molly-guard joe
 
- # Configuracions Extres
+# Configuracions Extres
 
   $ sudo apt-get php7.2-ldap
 
@@ -82,12 +104,14 @@ Directoris que s'han de crear:
 
 Al fitxer ewnv explotació utilitzem Mailgun:
 
+```
 MAIL_DRIVER=mailgun
 MAILGUN_DOMAIN=mailgun.iesebre.com
 MAILGUN_SECRET=SECRETE_HERE
 # TODO Dinamically taken from TENANT INFO on database
 MAIL_FROM_ADDRESS=noreply@iesebre.com
 MAIL_FROM_NAME="Institut de l'Ebre"
+```
 
 # Configuració Google Apps
 
