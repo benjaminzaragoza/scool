@@ -3,13 +3,17 @@
 # Eager Loading
 
 - [ ] https://iesebre.scool.test/changelog Solucionar problema de performance executa un munt de queries. Eager Loading.
-- [ ] https://iesebre.scool.test/incidents: OCO també té moltes consultes
+- [X] https://iesebre.scool.test/incidents: OCO també té moltes consultes
 
 # LOGGER
 
 - [X] IncidentLogger.php No cal que estigui a Listeners No? De fet no és un listener!  
 
 # Laravel Queues
+
+- [ ] LogIncidentEvent -> Peta amb casos en que s'esborra la incidència
+ - Eliminar comentari
+ - Eliminar incidència
 
 ## Multitenant
 

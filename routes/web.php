@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Tenant\HomeController;
+use App\Http\Controllers\Tenant\Web\IncidentsController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Models\Module;
@@ -158,8 +159,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/lessons','Tenant\LessonsController@show');
 
-            Route::get('/incidents','Tenant\IncidentsController@index');
-            Route::get('/incidents/{incident}','Tenant\IncidentsController@show');
+            Route::get('/incidents','\\'. IncidentsController::class . '@index');
+            Route::get('/incidents/{incident}','\\'.  IncidentsController::class . '@show');
 
             Route::view('/blank','tenants.blank');
 

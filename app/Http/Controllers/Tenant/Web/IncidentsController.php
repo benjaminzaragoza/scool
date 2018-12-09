@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Tenant\Web;
 
 use App\Events\Incidents\IncidentShowed;
+use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Models\Incident;
 use App\Models\IncidentTag;
-use App\Models\Setting;
-use App\Models\User;
 
 /**
  * Class IncidentsController.

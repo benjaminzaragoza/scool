@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Resources\Tenant\IncidentCollection;
 use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
 use Auth;
@@ -130,7 +129,21 @@ class Incident extends Model
      */
     public static function getIncidents()
     {
-        return (new IncidentCollection(Incident::with('user','comments','comments.user','closer')->get()))->transform();
+        return map_collection(Incident::with(
+            'user',
+            'comments',
+            'comments.user',
+            'closer',
+            'tags',
+            'assignees',
+            'replies',
+            'changelog',
+            'changelog.loggable.user',
+            'changelog.loggable.closer',
+            'changelog.loggable.comments',
+            'changelog.loggable.tags',
+            'changelog.loggable.assignees'
+        )->get());
     }
 
     /**
@@ -276,7 +289,7 @@ class Incident extends Model
     public static function userWithRoleIncidentsManager()
     {
         try {
-            return User::role(self::MANAGER_ROLE)->get();
+            return User::role(self::MANAGER_ROLE)->with('googleUser')->get();
         } catch (RoleDoesNotExist $e) {
             return collect([]);
         }
