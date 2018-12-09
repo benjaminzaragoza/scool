@@ -8,7 +8,7 @@
 
 - [ ] Configurar ok pusher a explotació!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  - [ ] Comprovar va temps real a https://iesebre.scool.cat/changelog
-- [ ] When queued emails us scool.cat url instead of iesebre.scool.cat
+- [X] When queued emails use scool.cat url instead of iesebre.scool.cat
 - [ ] Error als esborrar una incidencia amb comentaris?:
 - [ ] Error als esborrar una incidencia amb assignees?: 
 - [ ] Error als esborrar una incidencia amb etiquetes:
