@@ -38,6 +38,63 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'encrypted' => true,
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'https',
+                //ONLY ON VALET
+                'curl_options' => [
+                    CURLOPT_SSL_VERIFYHOST => 0,
+                    CURLOPT_SSL_VERIFYPEER => 0,
+                ]
+            ],
+        ],
+
+        // VERIFY HOST IN PRODUCTION!
+        'pusher_production' => [
+            'driver' => 'pusher',
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
+            'options' => [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'encrypted' => true,
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'https',
+            ],
+        ],
+
+        // TODO -> LIKE DATABASE SET config values in runtime in tenant middlewares
+        'pusher_tenant' => [
+            'driver' => 'pusher',
+            'key' => '', // 6f627646afb1261d5b50
+            'secret' => '', // 8c606faeb8c2a6ff1771
+            'app_id' => '', // 668468,
+            'options' => [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'encrypted' => true,
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'https',
+                //ONLY ON VALET
+                'curl_options' => [
+                    CURLOPT_SSL_VERIFYHOST => 0,
+                    CURLOPT_SSL_VERIFYPEER => 0,
+                ],
+            ],
+        ],
+
+        'pusher_tenant_production' => [
+            'driver' => 'pusher',
+            'key' => '', // 6f627646afb1261d5b50
+            'secret' => '', // 8c606faeb8c2a6ff1771
+            'app_id' => '', // 668468,
+            'options' => [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'encrypted' => true,
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'https',
             ],
         ],
 

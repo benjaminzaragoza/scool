@@ -1237,7 +1237,15 @@ if (!function_exists('initialize_menus')) {
         Menu::firstOrCreate([
             'text' => 'Laravel Horizon',
             'href' => '/horizon',
-            'role' => 'Superadmin'
+            'role' => 'Superadmin',
+            'target' => '_blank'
+        ]);
+
+        Menu::firstOrCreate([
+            'text' => 'Laravel websockets',
+            'href' => '/laravel-websockets',
+            'role' => 'Superadmin',
+            'target' => '_blank'
         ]);
     }
 }

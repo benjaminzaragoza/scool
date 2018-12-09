@@ -38,9 +38,14 @@ if (tenantHeader) if (tenantHeader.content) window.tenant = JSON.parse(tenantHea
 
 window.Pusher = require('pusher-js')
 
+// TODO -> GET KEY FROM window.tenant
 window.Echo = new Echo({
   broadcaster: 'pusher',
   key: process.env.MIX_PUSHER_APP_KEY,
-  cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-  encrypted: true
+  // key: '6f627646afb1261d5b50',
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  wssPort: 6001,
+  disableStats: true,
+  encrypted: false
 })

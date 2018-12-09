@@ -10,6 +10,7 @@
         "acacha/admin-lte-template-laravel": "^6.0",
         "acacha/forge-publish": "^0.1.12",
         "adldap2/adldap2-laravel": "dev-master",
+        "beyondcode/laravel-websockets": "^1.0",
         "chumper/zipper": "^1.0",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",

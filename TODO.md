@@ -1,6 +1,41 @@
 # laravel-websockets
 
+Si s'ha de tirar endarrera fitxers a esborrar:
+- Esborarr database/migrations/2018_12_09_183944_create_websockets_statistics_entries_table.php
+- composer remove beyondcode/laravel-websockets
+- Esborrar config/websockets.php
+- Recuperar config config/broadcasting.php: Treure de options:
+
+```
++                'host' => '127.0.0.1',
++                'port' => 6001,
++                'scheme' => 'https'
+```
+- Recuperar configs Laravel echo a main app i tenant:
+ - resources/js/bootstrap.js
+ - resources/tenant_js/bootstrap.js
+Treure:
+
+```
+-  key: process.env.MIX_PUSHER_APP_KEY,
+-  cluster: process.env.MIX_PUSHER_APP_CLUSTER,
++  key: '6f627646afb1261d5b50',
++  wsHost: window.location.hostname,
++  wsPort: 6001,
++  disableStats: true,
+```
+
+```
++  wsHost: window.location.hostname,
++  wsPort: 6001,
++  disableStats: true,
++  encrypted: true
+``` 
+
 - Multinenant:
+  - [ ] Configuració ulimit https://docs.beyondco.de/laravel-websockets/1.0/faq/deploying.html 
+  - [ ] Instal·lar supervisor per fer permanent la execució: https://docs.beyondco.de/laravel-websockets/1.0/basic-usage/starting.html#keeping-the-socket-server-running-with-supervisord
+  - [ ] Instal·lar supervisor al servidor explotació
   - [ ] resources/js/bootstrap.js configuració Laravel echo: key: process.env.MIX_PUSHER_APP_KEY,
     - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
     - La key serà diferent per cada tenant i per a la app principal. Com?
