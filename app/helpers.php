@@ -8579,9 +8579,24 @@ if (! function_exists('create_sample_moodle_user')) {
     }
 }
 
+if (! function_exists('git')) {
+    function git() {
+        return Cache::remember('git_info', 5, function () {
+            return collect([
+                'branch' => git_current_branch(),
+                'commit' => '',
+                'commit_short' => ''
+            ]);
+        });
 
+    }
+}
 
-
-
+if (! function_exists('git_current_branch')) {
+    function git_current_branch() {
+        exec('git name-rev --name-only HEAD', $output);
+        return $output[0];
+    }
+}
 
 

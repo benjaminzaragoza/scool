@@ -5,6 +5,19 @@
   - [ ] MOstrar el commit de github amb link a Github i data del commit
   - [ ] git rev-parse HEAD mostra el hash de la versio
   - [ ] hash curt: git rev-parse --short HEAD
+   - git show --summary | git log -1
+   - git branch mostra les branques
+   - git remote show origin
+- [ ] Cache: cada x minuts
+- [ ] Boto de flush/refresh de la cache
+- [X] Passar la info a javascript al menu meta:     <meta name="git" content="{{ git() }}">
+- [ ] Crear helper git
+   
+On mostrar-ho:
+- Footer Welcome Page   
+- Al costat Nom app al Toolbar (només per a admins)
+- About menu
+-
 
 Que vull Mostrar:
  - Un link simple que al fer click mostri un dialeg amb més info i també un title on hover
