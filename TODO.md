@@ -1,4 +1,10 @@
-# laravel-websockets
+# Gestió de versions
+
+- [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
+  - [ ] Mostrar a tots els usuaris la versió
+  - [ ] MOstrar el commit de github amb link a Github i data del commit
+
+# Laravel websockets
 
 Si s'ha de tirar endarrera fitxers a esborrar:
 - Esborarr database/migrations/2018_12_09_183944_create_websockets_statistics_entries_table.php
@@ -469,12 +475,6 @@ Llista usuaris Moodle:
   - [ ] Al menu opcional de tres punts es podria afegir un apartat per mostrar alertes/inconsistències:
     - [ ] Usuaris que tenen un idnumber però després no coincideixen els dades del Moodle i el usuari local amb id =idnumber
   - [ ] De fet podria apareixer una icona campana o similar en roig indicant quan hi han alertes
-
-# Gestió de versions
-
-- [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
-  - [ ] Mostrar a tots els usuaris la versió
-  - [ ] MOstrar el commit de github amb link a Github i data del commit
 
 # Permisos
 
