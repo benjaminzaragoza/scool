@@ -113,6 +113,9 @@ window.Vue.component('changelog', require('./components/changelog/ChangelogCompo
 // UI
 window.Vue.component('floating-add', require('./components/ui/FloatingAddComponent'))
 
+// GIT
+window.Vue.component('git-info', require('./components/git/GitInfoComponent'))
+
 window.Vuetify = Vuetify
 
 window.Vue.use(window.Vuetify, {

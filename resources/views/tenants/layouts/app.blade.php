@@ -89,6 +89,7 @@
             <span class="hidden-xs-only">{{ config('app.shortname', 'Laravel') }}</span>
         </v-toolbar-title>
         <div class="d-flex align-center" style="margin-left: auto">
+            <span class="caption" v-role="'SuperAdmin'"><git-info></git-info></span>
             <v-btn icon>
                 <v-icon>notifications</v-icon>
             </v-btn>
