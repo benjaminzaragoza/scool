@@ -3,7 +3,19 @@
 - [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
   - [ ] Mostrar a tots els usuaris la versió
   - [ ] MOstrar el commit de github amb link a Github i data del commit
+  - [ ] git rev-parse HEAD mostra el hash de la versio
+  - [ ] hash curt: git rev-parse --short HEAD
 
+Que vull Mostrar:
+ - Un link simple que al fer click mostri un dialeg amb més info i també un title on hover
+ - Format del link: Hash curt del commit que s'està utilitzant i data del commit en format humà
+    - [ ] Exemple: versió: b44f4b6 Fa un minut 
+       - [] Title on hover: b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
+    - Diàleg:
+     - b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
+     - Sigui un link als commits del projecte
+     - Link al repositori Github (nom curt tipus acacha/scool amb link)
+     - Tags i commit ?  
 # Laravel websockets
 
 Si s'ha de tirar endarrera fitxers a esborrar:
