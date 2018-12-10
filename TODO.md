@@ -15,6 +15,8 @@
 - [X] Mostrar la branca actual
 - [X] Mostrar commit larg hash actual
 - [X] Mostrar commit curt hash actual
+- [X] Mostra missatge
+- [X] Mostrar data en diferents formats
    
 On mostrar-ho:
 - Footer Welcome Page   
