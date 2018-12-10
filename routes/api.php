@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
@@ -251,6 +252,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/changelog/module/{module}','Tenant\Api\Changelog\ChangelogModuleController@index');
             Route::get('/changelog/user/{user}','Tenant\Api\Changelog\ChangelogUserController@index');
             Route::get('/changelog/loggable/{loggable}/{loggableId}','Tenant\Api\Changelog\ChangelogLoggableController@index');
+
+            //Git info
+            Route::get('/git/info','\\' . GitController::class . '@index');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {
