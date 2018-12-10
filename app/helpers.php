@@ -8584,8 +8584,8 @@ if (! function_exists('git')) {
         return Cache::remember('git_info', 5, function () {
             return collect([
                 'branch' => git_current_branch(),
-                'commit' => '',
-                'commit_short' => ''
+                'commit' => git_current_commit(),
+                'commit_short' => git_current_commit(true)
             ]);
         });
 
@@ -8598,5 +8598,21 @@ if (! function_exists('git_current_branch')) {
         return $output[0];
     }
 }
+
+if (! function_exists('git_current_commit')) {
+    function git_current_commit($short = false) {
+        $short ? exec('git rev-parse --short HEAD', $output) : exec('git rev-parse HEAD', $output) ;
+        return $output[0];
+    }
+}
+
+if (! function_exists('git_last_commit')) {
+    function git_current_commit($short = false) {
+        $short ? exec('git rev-parse --short HEAD', $output) : exec('git rev-parse HEAD', $output) ;
+        return $output[0];
+    }
+}
+
+
 
 

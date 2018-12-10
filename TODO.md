@@ -11,7 +11,10 @@
 - [ ] Cache: cada x minuts
 - [ ] Boto de flush/refresh de la cache
 - [X] Passar la info a javascript al menu meta:     <meta name="git" content="{{ git() }}">
-- [ ] Crear helper git
+- [X] Crear helper git
+- [X] Mostrar la branca actual
+- [X] Mostrar commit larg hash actual
+- [X] Mostrar commit curt hash actual
    
 On mostrar-ho:
 - Footer Welcome Page   

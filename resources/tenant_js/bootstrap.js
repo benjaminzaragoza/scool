@@ -36,6 +36,10 @@ let tenantHeader = document.head.querySelector('meta[name="tenant"]')
 window.tenant = null
 if (tenantHeader) if (tenantHeader.content) window.tenant = JSON.parse(tenantHeader.content)
 
+let gitHeader = document.head.querySelector('meta[name="git"]')
+window.git = null
+if (gitHeader) if (gitHeader.content) window.git = JSON.parse(gitHeader.content)
+
 window.Pusher = require('pusher-js')
 
 // TODO -> GET KEY FROM window.tenant
