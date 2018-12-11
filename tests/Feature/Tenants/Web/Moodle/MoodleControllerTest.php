@@ -36,6 +36,10 @@ class MoodleControllerTest extends BaseTenantTest
     public function superadmin_can_show_moodle()
     {
         $this->loginAsSuperAdmin();
+        Cache::shouldReceive('remember')
+            ->once()
+            ->with('git_info',5,\Closure::class)
+            ->andReturn(collect([]));
         Cache::shouldReceive('rememberForever')
             ->once()
             ->with('scool_moodle_users',\Closure::class)
@@ -70,6 +74,10 @@ class MoodleControllerTest extends BaseTenantTest
     public function users_manager_can_show_moodle()
     {
         $this->loginAsUsersManager();
+        Cache::shouldReceive('remember')
+            ->once()
+            ->with('git_info',5,\Closure::class)
+            ->andReturn(collect([]));
         Cache::shouldReceive('rememberForever')
             ->once()
             ->with('scool_moodle_users',\Closure::class)
@@ -92,6 +100,10 @@ class MoodleControllerTest extends BaseTenantTest
     public function moodle_users_manager_can_show_moodle()
     {
         $this->loginAsMoodleManager();
+        Cache::shouldReceive('remember')
+            ->once()
+            ->with('git_info',5,\Closure::class)
+            ->andReturn(collect([]));
         Cache::shouldReceive('rememberForever')
             ->once()
             ->with('scool_moodle_users',\Closure::class)
