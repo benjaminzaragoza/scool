@@ -64,12 +64,11 @@ return [
             ],
         ],
 
-        // TODO -> LIKE DATABASE SET config values in runtime in tenant middlewares
         'pusher_tenant' => [
             'driver' => 'pusher',
-            'key' => '', // 6f627646afb1261d5b50
-            'secret' => '', // 8c606faeb8c2a6ff1771
-            'app_id' => '', // 668468,
+            'key' => '', // Setted dinamically in runtime dependeing on current tenant
+            'secret' => '', // Setted dinamically in runtime dependeing on current tenant
+            'app_id' => '', // Setted dinamically in runtime dependeing on current tenant
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'encrypted' => true,

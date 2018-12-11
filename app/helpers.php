@@ -75,16 +75,27 @@ if (! function_exists('scool_menu')) {
 if (! function_exists('tenant')) {
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * tenant.
+     * @return \Illuminate\Support\Collection|\Tightenco\Collect\Support\Collection
      */
     function tenant()
     {
-        return collect([
+        $tenant = [
             'name' => Config::get('app.name'),
             'subdomain' => Config::get('app.subdomain'),
             'email_domain' => Config::get('app.email_domain'),
-            'pusher_app_key' => Config::get('app.pusher_app_key')
-        ]);
+            'pusher_app_key' => env('PUSHER_APP_KEY')
+        ];
+
+        if (app()->environment() === 'local') {
+            $tenant['pusher_app_key'] = Config::get('broadcasting.connections.pusher_tenant.key');
+        }
+
+        if (app()->environment() === 'production') {
+            $tenant['pusher_app_key'] = Config::get('broadcasting.connections.pusher_tenant_production.key');
+        }
+
+        return collect($tenant);
     }
 }
 
@@ -4661,7 +4672,21 @@ if (!function_exists('configure_tenant')) {
         Config::set('hashing.driver', 'sha1');
 
         //PUSHER
-        Config::set('app.pusher_app_key', $tenant->pusher_app_key);
+        if (app()->environment() === 'local') {
+            Config::set('broadcasting.default','pusher_tenant');
+            Config::set('broadcasting.connections.pusher_tenant.key', $tenant->pusher_app_key);
+            Config::set('broadcasting.connections.pusher_tenant.secret', $tenant->pusher_app_secret);
+            Config::set('broadcasting.connections.pusher_tenant.app_id', $tenant->pusher_app_id);
+        }
+
+        if (app()->environment() === 'production') {
+            Config::set('broadcasting.default','pusher_tenant_production');
+            Config::set('broadcasting.connections.pusher_tenant_production.key', $tenant->pusher_app_key);
+            Config::set('broadcasting.connections.pusher_tenant_production.secret', $tenant->pusher_app_secret);
+            Config::set('broadcasting.connections.pusher_tenant_production.app_id', $tenant->pusher_app_id);
+        }
+
+
     }
 }
 

@@ -42,14 +42,18 @@ if (gitHeader) if (gitHeader.content) window.git = JSON.parse(gitHeader.content)
 
 window.Pusher = require('pusher-js')
 
+console.log('WINDOW TENANT:')
+console.log(window.tenant)
 if (window.tenant) {
-  window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: window.tenant && window.tenant.pusher_app_key,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    wssPort: 6001,
-    disableStats: true,
-    encrypted: false
-  })
+  if (window.tenant.pusher_app_key) {
+    window.Echo = new Echo({
+      broadcaster: 'pusher',
+      key: window.tenant.pusher_app_key,
+      wsHost: window.location.hostname,
+      wsPort: 6001,
+      wssPort: 6001,
+      disableStats: true,
+      encrypted: false
+    })
+  }
 }

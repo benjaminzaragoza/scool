@@ -45,18 +45,14 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             return view('tenants.welcome');
         });
         Route::get('/welcome', function () {
-//            dd(Auth::logout());
-            dump(Config::get('auth.providers.users.model'));
             return view('tenants.welcome');
         });
 
+        Route::get('/pusher', function () { // TODO Borrar
+            dump(config('broadcasting'));
+            dump(config('broadcasting.connections')['pusher_tenant']);
+        });
 
-//        $this->app['router']->group($attributes, function ($router) {
-//            $router->match(
-//                ['get', 'post'], '/broadcasting/auth',
-//                '\\'.BroadcastController::class.'@authenticate'
-//            );
-//        });
         // Copied from Illuminate\Broadcasting\BroadcastManager method routes - Broadcast::routes()
         Route::get('/broadcasting/auth', '\\'.BroadcastController::class.'@authenticate');
         Route::post('/broadcasting/auth', '\\'.BroadcastController::class.'@authenticate');
