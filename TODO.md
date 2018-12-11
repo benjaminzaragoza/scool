@@ -1,15 +1,26 @@
+# Monitor web del supervisor:
+
+- La idea és tenir alguna eina web que permeti veure que tot està bé a supervisor (s'està executant i executant el que toca)
+- https://github.com/mlazarov/supervisord-monitor
+- Alertes en cas deixi anar?
+
+# Crear about menu
+
+- [] About menu
+- [ ] Informació de la versió de l'aplicació
+- [ ] Altres com link als docs
+
 # Gestió de versions
 
-- [ ] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
-  - [ ] Mostrar a tots els usuaris la versió
-  - [ ] MOstrar el commit de github amb link a Github i data del commit
-  - [ ] git rev-parse HEAD mostra el hash de la versio
-  - [ ] hash curt: git rev-parse --short HEAD
+- [X] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
+  - [X] Mostrar el commit de github amb link a Github i data del commit
+  - [X] git rev-parse HEAD mostra el hash de la versio
+  - [X] hash curt: git rev-parse --short HEAD
    - git show --summary | git log -1
    - git branch mostra les branques
    - git remote show origin
-- [ ] Cache: cada x minuts
-- [ ] Boto de flush/refresh de la cache
+- [X] Cache: cada x minuts
+- [X] Boto de flush/refresh de la cache
 - [X] Passar la info a javascript al menu meta:     <meta name="git" content="{{ git() }}">
 - [X] Crear helper git
 - [X] Mostrar la branca actual
@@ -19,10 +30,8 @@
 - [X] Mostrar data en diferents formats
    
 On mostrar-ho:
-- Footer Welcome Page   
-- Al costat Nom app al Toolbar (només per a admins)
-- About menu
--
+- [ ]Footer Welcome Page   
+- [ ] Toolbar (només per a admins)
 
 Que vull Mostrar:
  - Un link simple que al fer click mostri un dialeg amb més info i també un title on hover
@@ -34,6 +43,7 @@ Que vull Mostrar:
      - Sigui un link als commits del projecte
      - Link al repositori Github (nom curt tipus acacha/scool amb link)
      - Tags i commit ?  
+     
 # Laravel websockets
 
 Si s'ha de tirar endarrera fitxers a esborrar:
