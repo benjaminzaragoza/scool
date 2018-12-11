@@ -82,7 +82,8 @@ if (! function_exists('tenant')) {
         return collect([
             'name' => Config::get('app.name'),
             'subdomain' => Config::get('app.subdomain'),
-            'email_domain' => Config::get('app.email_domain')
+            'email_domain' => Config::get('app.email_domain'),
+            'pusher_app_key' => Config::get('app.pusher_app_key')
         ]);
     }
 }
@@ -4658,6 +4659,9 @@ if (!function_exists('configure_tenant')) {
         Config::set('auth.providers.users.model', \App\Models\User::class);
         Config::set('auth.providers.users.driver', 'scool');
         Config::set('hashing.driver', 'sha1');
+
+        //PUSHER
+        Config::set('app.pusher_app_key', $tenant->pusher_app_key);
     }
 }
 
