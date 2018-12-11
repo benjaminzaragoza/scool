@@ -10,42 +10,44 @@
 - [ ] Informació de la versió de l'aplicació
 - [ ] Altres com link als docs
 
-# Gestió de versions
-
-- [X] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
-  - [X] Mostrar el commit de github amb link a Github i data del commit
-  - [X] git rev-parse HEAD mostra el hash de la versio
-  - [X] hash curt: git rev-parse --short HEAD
-   - git show --summary | git log -1
-   - git branch mostra les branques
-   - git remote show origin
-- [X] Cache: cada x minuts
-- [X] Boto de flush/refresh de la cache
-- [X] Passar la info a javascript al menu meta:     <meta name="git" content="{{ git() }}">
-- [X] Crear helper git
-- [X] Mostrar la branca actual
-- [X] Mostrar commit larg hash actual
-- [X] Mostrar commit curt hash actual
-- [X] Mostra missatge
-- [X] Mostrar data en diferents formats
-   
-On mostrar-ho:
-- [ ]Footer Welcome Page   
-- [ ] Toolbar (només per a admins)
-
-Que vull Mostrar:
- - Un link simple que al fer click mostri un dialeg amb més info i també un title on hover
- - Format del link: Hash curt del commit que s'està utilitzant i data del commit en format humà
-    - [ ] Exemple: versió: b44f4b6 Fa un minut 
-       - [] Title on hover: b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
-    - Diàleg:
-     - b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
-     - Sigui un link als commits del projecte
-     - Link al repositori Github (nom curt tipus acacha/scool amb link)
-     - Tags i commit ?  
-     
 # Laravel websockets
 
+## Implementació
+- [ ] Configuració ulimit https://docs.beyondco.de/laravel-websockets/1.0/faq/deploying.html
+- [X] Configuració SSL/HTTPS local amb Valet
+- [ ] Configuració SSL/HTTPS production a servidor Laravel Forge : Certificat Let's encrypt
+- [X] Instal·lar supervisor per fer permanent la execució: https://docs.beyondco.de/laravel-websockets/1.0/basic-usage/starting.html#keeping-the-socket-server-running-with-supervisord
+- [X] Instal·lar supervisor al servidor explotació
+- Multinenant:
+  - JAVASCRIPT|FRONTENDSIDE (LARAVEL ECHO amb pusher)
+    - MAIN APP: la configuració és estàtica (en temps de compilació)
+      - [ ] resources/js/bootstrap.js configuració Laravel echo: key: process.env.MIX_PUSHER_APP_KEY,
+      - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
+    - TENANTS
+      - La key (es pot publicar a Javascript no és un secret és un id, oco però no publicar res més) serà diferent per cada tenant i per a la app principal. Com?
+      - Disponible a través de window.tenant object:
+        - [ ] Afegir PUSHER_APP_KEY a window.tenant.pusher_app_key      
+  - SERVER SIDE (LARAVEL WEB SOCKETS substituint a pusher)
+    - Cal donar d'alta a l'array apps (config/web-socket.php) una app per cada tenant i per principal
+       - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/websockets.php
+    - [ ] Una entrada fixe per a scool.cat -> main app
+    - [ ] Mateixa config per a explotació i servidor. NO PROBLEM: el server al que s'apunta "és el mateix"
+      - Des de PHP:
+        -  https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/broadcasting.php
+        - localhost 6001
+      - Des dels navegadors:
+        - https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
+        - wsHost: window.location.hostname i wsPort: 6001,     
+    - [ ] Es pot crear un provider de apps a mida que podria agafar les dades de la taula tenants
+      - [ ] Afegir camps a la taula tenant:
+       - 'id' => env('PUSHER_APP_ID'),
+       - 'name' => env('APP_NAME'),
+       - 'key' => env('PUSHER_APP_KEY'),
+       - 'secret' => env('PUSHER_APP_SECRET'),
+       - 'enable_client_messages' => true,
+       - 'enable_statistics' => true,
+
+## Desinstal·lació 
 Si s'ha de tirar endarrera fitxers a esborrar:
 - Esborarr database/migrations/2018_12_09_183944_create_websockets_statistics_entries_table.php
 - composer remove beyondcode/laravel-websockets
@@ -77,42 +79,6 @@ Treure:
 +  disableStats: true,
 +  encrypted: true
 ``` 
-
-- Multinenant:
-  - [ ] Configuració ulimit https://docs.beyondco.de/laravel-websockets/1.0/faq/deploying.html 
-  - [ ] Instal·lar supervisor per fer permanent la execució: https://docs.beyondco.de/laravel-websockets/1.0/basic-usage/starting.html#keeping-the-socket-server-running-with-supervisord
-  - [ ] Instal·lar supervisor al servidor explotació
-  - [ ] resources/js/bootstrap.js configuració Laravel echo: key: process.env.MIX_PUSHER_APP_KEY,
-    - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
-    - La key serà diferent per cada tenant i per a la app principal. Com?
-      - [ ] La key l'hauria de proposar php segons el domini/tenant i passar-la a Javascript
-      - [ ] La key no és un secret
-      - No podem utilitzar process.env.MIX_PUSHER_APP_KEY pq es resol en temps compilació i no pas temps execució
-      - Utilitzar tenantHeader (window.tenant) té info del tenant a Javascript
-      - window.tenant.pusher_app_key
-  - Un app_key diferent per cada tenant i per aplicació mail:
-    - scool.cat | scool.test -> Una key propia 
-    - iesebre.scool.cat | iesebre.scool.test -> Una key propia 
-    - altre.scool.cat | altre.scool.test -> Una key propia
-  - Server:
-    - [ ] Cal donar d'alta a l'array apps (config/web-socket.php) una app per cada tenant i per principal
-       - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/websockets.php
-    - [ ] Una entrada fixa per a scool.cat -> main app
-    - [ ] Mateixa config per a explotació i servidor. NO PROBLEM: el server al que s'apunta "és el mateix"
-      - Des de PHP:
-        -  https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/broadcasting.php
-        - localhost 6001
-      - Des dels navegadors:
-        - https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
-        - wsHost: window.location.hostname i wsPort: 6001,     
-    - [ ] Es pot crear un provider de apps a mida que podria agafar les dades de la taula tenants
-      - [ ] Afegir camps a la taula tenant:
-       - 'id' => env('PUSHER_APP_ID'),
-       - 'name' => env('APP_NAME'),
-       - 'key' => env('PUSHER_APP_KEY'),
-       - 'secret' => env('PUSHER_APP_SECRET'),
-       - 'enable_client_messages' => true,
-       - 'enable_statistics' => true,
 
 #Feature Requests
 
@@ -1117,3 +1083,38 @@ Llençol professors
 - Opció extra que indiqui si mostrar professor titular o professor/ substituts 
 
 Càrrecs
+
+
+# Gestió de versions
+
+- [X] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
+  - [X] Mostrar el commit de github amb link a Github i data del commit
+  - [X] git rev-parse HEAD mostra el hash de la versio
+  - [X] hash curt: git rev-parse --short HEAD
+   - git show --summary | git log -1
+   - git branch mostra les branques
+   - git remote show origin
+- [X] Cache: cada x minuts
+- [X] Boto de flush/refresh de la cache
+- [X] Passar la info a javascript al menu meta:     <meta name="git" content="{{ git() }}">
+- [X] Crear helper git
+- [X] Mostrar la branca actual
+- [X] Mostrar commit larg hash actual
+- [X] Mostrar commit curt hash actual
+- [X] Mostra missatge
+- [X] Mostrar data en diferents formats
+   
+On mostrar-ho:
+- [ ]Footer Welcome Page   
+- [ ] Toolbar (només per a admins)
+
+Que vull Mostrar:
+ - Un link simple que al fer click mostri un dialeg amb més info i també un title on hover
+ - Format del link: Hash curt del commit que s'està utilitzant i data del commit en format humà
+    - [ ] Exemple: versió: b44f4b6 Fa un minut 
+       - [] Title on hover: b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
+    - Diàleg:
+     - b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
+     - Sigui un link als commits del projecte
+     - Link al repositori Github (nom curt tipus acacha/scool amb link)
+     - Tags i commit ?  
