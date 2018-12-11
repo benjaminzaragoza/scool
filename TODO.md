@@ -21,7 +21,7 @@
 - Multinenant:
   - JAVASCRIPT|FRONTENDSIDE (LARAVEL ECHO amb pusher)
     - MAIN APP: la configuració és estàtica (en temps de compilació)
-      - [ ] resources/js/bootstrap.js configuració Laravel echo: key: process.env.MIX_PUSHER_APP_KEY,
+      - [X] resources/js/bootstrap.js configuració Laravel echo: key: process.env.MIX_PUSHER_APP_KEY,
       - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
     - TENANTS
       - La key (es pot publicar a Javascript no és un secret és un id, oco però no publicar res més) serà diferent per cada tenant i per a la app principal. Com?

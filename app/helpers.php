@@ -8688,6 +8688,22 @@ if (! function_exists('git_remote_origin_url')) {
     }
 }
 
+if (! function_exists('get_pusher_apps_from_tenants')) {
+    function get_pusher_apps_from_tenants()
+    {
+        $tenants = Tenant::all();
+        return $tenants->map(function($tenant) {
+           return [
+               'id' => "$tenant->pusher_app_id",
+               'name' => $tenant->name,
+               'key' => $tenant->pusher_app_key,
+               'secret' => $tenant->pusher_app_secret,
+               'enable_client_messages' => $tenant->pusher_enable_client_messages ? true : false,
+               'enable_statistics' => $tenant->pusher_enable_client_messages ? true : false,
+           ] ;
+        })->toArray();
+    }
+}
 
 
 

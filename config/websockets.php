@@ -1,5 +1,7 @@
 <?php
 
+use App\LaravelWebSockets\ConfigAppProvider;
+
 return [
 
     /*
@@ -9,42 +11,8 @@ return [
      * Optionally you can disable client events so clients cannot send
      * messages to each other via the webSockets.
      */
-    'apps' => [
-        // scool.cat | scool.test MAIN APP
-        [
-            'id' => env('PUSHER_APP_ID'),
-            'name' => env('APP_NAME'),
-            'key' => env('PUSHER_APP_KEY'),
-            'secret' => env('PUSHER_APP_SECRET'),
-            'enable_client_messages' => false,
-            'enable_statistics' => true,
-        ],
-
-        // iesebre.scool.cat | iesebre.scool.test IESEBRE APP
-        // TODO -> GET DATA FROM TENANT AT RUNTIME
-        //        app_id = "668468"
-        //key = "6f627646afb1261d5b50"
-        //secret = "8c606faeb8c2a6ff1771"
-        //cluster = "eu"
-        [
-            'id' => 668468,
-            'name' => "Institut Ebre",
-            'key' => '6f627646afb1261d5b50',
-            'secret' => '8c606faeb8c2a6ff1771',
-            'enable_client_messages' => false,
-            'enable_statistics' => true,
-        ],
-
-        // other.scool.cat | other.scool.test OTHER TENANT APP
-//        [
-//        'id' => 668468,
-//        'name' => "Institut Ebre",
-//        'key' => '6f627646afb1261d5b50',
-//        'secret' => '8c606faeb8c2a6ff1771',
-//        'enable_client_messages' => true,
-//        'enable_statistics' => true,
-//        ],
-    ],
+    // We use custom ConfigAppProvider.
+    'apps' => [],
 
     /*
      * This class is responsible for finding the apps. The default provider
@@ -53,7 +21,7 @@ return [
      * You can create a custom provider by implementing the
      * `AppProvider` interface.
      */
-    'app_provider' => BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+    'app_provider' => ConfigAppProvider::class,
 
     /*
      * This array contains the hosts of which you want to allow incoming requests.
