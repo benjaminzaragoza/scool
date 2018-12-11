@@ -25,6 +25,12 @@ class CreateTenantsTable extends Migration
             $table->integer('port');
             $table->string('gsuite_service_account_path')->nullable();
             $table->string('gsuite_admin_email')->nullable();
+            $table->unsignedInteger('pusher_app_id')->nullable();                    // PUSHER_APP_ID
+            $table->string('pusher_app_name')->nullable();                  // APP_NAME
+            $table->string('pusher_app_key')->nullable();                   // PUSHER_APP_KEY
+            $table->string('pusher_app_secret')->nullable();                // PUSHER_APP_SECRET
+            $table->boolean('pusher_enable_client_messages')->nullable();    // false by default
+            $table->boolean('pusher_enable_statistics')->nullable();         // true
             $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

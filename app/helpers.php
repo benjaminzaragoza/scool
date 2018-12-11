@@ -290,6 +290,12 @@ if (! function_exists('create_iesebre_tenant')) {
             'port' => config('iesebre.database_port',3306),
             'gsuite_service_account_path' => config('iesebre.gsuite_account_path','/gsuite_service_accounts/scool-07eed0b50a6f.json'),
             'gsuite_admin_email' => config('iesebre.gsuite_admin_email','sergitur@iesebre.com'),
+            'pusher_app_id' => config('iesebre.pusher_app_id',668468),
+            'pusher_app_name' => config('iesebre.pusher_app_name',"Institut de l'Ebre"),
+            'pusher_app_key' => config('iesebre.pusher_app_key','6f627646afb1261d5b50'),
+            'pusher_app_secret' => config('iesebre.pusher_app_secret',''),
+            'pusher_enable_client_messages' => config('iesebre.pusher_enable_client_messages',true),
+            'pusher_enable_statistics' => config('iesebre.pusher_enable_statistics',true)
         ]);
     }
 }
