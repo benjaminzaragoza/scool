@@ -11,7 +11,7 @@ return [
      * Optionally you can disable client events so clients cannot send
      * messages to each other via the webSockets.
      */
-    // We use custom ConfigAppProvider.
+    // IMPORTANT SEE NEXT VARIABLE -> We use custom ConfigAppProvider.
     'apps' => [],
 
     /*
