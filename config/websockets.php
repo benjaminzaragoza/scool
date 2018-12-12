@@ -72,13 +72,13 @@ return [
          * certificate chain of issuers. The private key also may be contained
          * in a separate file specified by local_pk.
          */
-        'local_cert' => '/home/sergi/.valet/Certificates/scool.test.crt',
+        'local_cert' => env('WEBSOCKETS_LOCAL_CERT','/home/sergi/.valet/Certificates/scool.test.crt'),
 
         /*
          * Path to local private key file on filesystem in case of separate files for
          * certificate (local_cert) and private key.
          */
-        'local_pk' => '/home/sergi/.valet/Certificates/scool.test.key',
+        'local_pk' => env('WEBSOCKETS_LOCAL_PK','/home/sergi/.valet/Certificates/scool.test.key'),
 
         /*
          * Passphrase for your local_cert file.
