@@ -57,6 +57,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('/broadcasting/auth', '\\'.BroadcastController::class.'@authenticate');
         Route::post('/broadcasting/auth', '\\'.BroadcastController::class.'@authenticate');
 
+//        require base_path('routes/channels.php');
 
         // Taken from Illuminate\Routing\Router
         // Authentication Routes...

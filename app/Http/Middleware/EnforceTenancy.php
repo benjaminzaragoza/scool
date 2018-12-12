@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Broadcast;
 use Closure;
 use Config;
 use Log;
@@ -27,6 +28,9 @@ class EnforceTenancy
         }
         Config::set('database.default', 'tenant');
         Config::set('app.url', 'http://' . $request->tenant . '.' . config('app.domain','scool.test'));
+
+        require base_path('routes/tenant_channels.php');
+
         return $next($request);
     }
 }
