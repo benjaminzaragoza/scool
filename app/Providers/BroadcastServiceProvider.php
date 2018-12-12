@@ -17,9 +17,7 @@ class BroadcastServiceProvider extends ServiceProvider
         // IMPORTANT! TENANT APP -> Broadcast routes registered on web.php inside tenant group -> Avoid errors with Auh user null because custom User model
 //        Broadcast::routes();
 
-        // DON'T PUT HERE AUTH CHANNELS FOR TENANT. See TODO
+        // DON'T PUT HERE AUTH CHANNELS FOR TENANT. See tenant_channels.php file
         require base_path('routes/channels.php');
-
-        //
     }
 }

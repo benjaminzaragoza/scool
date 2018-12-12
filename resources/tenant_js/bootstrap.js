@@ -42,8 +42,6 @@ if (gitHeader) if (gitHeader.content) window.git = JSON.parse(gitHeader.content)
 
 window.Pusher = require('pusher-js')
 
-console.log('WINDOW TENANT:')
-console.log(window.tenant)
 if (window.tenant) {
   if (window.tenant.pusher_app_key) {
     window.Echo = new Echo({
