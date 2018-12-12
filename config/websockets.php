@@ -85,7 +85,7 @@ return [
          */
         'passphrase' => null,
 
-        'verify_peer' => false,
+        'verify_peer' => env('WEBSOCKETS_VERIFY_PEER',false),
 
     ],
 ];
