@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Tenants;
+namespace Tests\Unit\Tenants\Curriculum;
 
 use App\Models\Family;
 use App\Models\Study;
