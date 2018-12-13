@@ -20,7 +20,8 @@ un merge amb producció i pujar els canvis.
 
 ## Implementació
 - [X] Configuració ulimit https://docs.beyondco.de/laravel-websockets/1.0/faq/deploying.html
-- [X] https://iesebre.scool.cat/laravel-websockets dona 403 configurar authorization
+- [ ] https://iesebre.scool.cat/laravel-websockets dona 403 configurar authorization
+   - Pendent d'aquest PR: https://github.com/beyondcode/laravel-websockets/pull/28
 - [X] Document my solution at https://github.com/beyondcode/laravel-websockets-docs/pull/1
 - [X] Documentar la complexitat/problema amb els Broadcast::channel autoritzacions i tenant. Blog?
 - [X] provar obrir fireall Laravel port 6001 i utilitzar explotació sense Nginx proxy apuntat a port 6001 com en local
@@ -99,8 +100,8 @@ Treure:
  
 #Errors
 
-- [ ] Configurar ok pusher a explotació!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- - [ ] Comprovar va temps real a https://iesebre.scool.cat/changelog
+- [X] Configurar ok pusher a explotació!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ - [X] Comprovar va temps real a https://iesebre.scool.cat/changelog
 - [X] When queued emails use scool.cat url instead of iesebre.scool.cat
 - [ ] Error als esborrar una incidencia amb comentaris?:
 - [ ] Error als esborrar una incidencia amb assignees?: 
@@ -926,6 +927,112 @@ Cal revisar component Pare App.vue i app.blade.php i l'ús de la funció checkRo
 
 # CURRICULUM
 
+## Gestió del curriculum 
+
+Característiques principals:
+
+- El conceptes siguin el més generics possibles i adaptables a canvis i no pensar només en la FP
+- FP FIRST DEVELOPMENT (com Mobile First però sense oblidar altres dispositius/tipus estudis)
+
+ENTITATS
+
+- CENTRE: Un tenant té un centre per defecte però podria gestionar múltiples centres
+- ESTUDI: (exemples DAM, ASIX, FARMACIA, CURS PONT)
+- SUBDIVISIONS DELS ESTUDIS
+- modules -> firt level (no té pq coincidir) <- veure-les com agrupacions de UFs
+- submodules -> firt level (no té pq coincidir) <- Principal
+- Tercer nivell TODO
+- CURS: UN ESTUDI POT ESTAR DIVIDIT EN UN O MES CURSOS  
+  - CICLE: conjunt de cursos (no teni a la fp)
+- TIPUS_ESTUDI: FP, CURS PONT, ETC -> De fet és com una etiqueta que podem posar a un estudi
+  - LOE/LOGSE o la llei pot ser un altre etiqueta
+  - 1 estudi n etiquetes: LOE i FP per exemple
+- Families: agrupacions d'estudis, es com un tipus d'estudi però OCO pot tenir dades especifiques
+
+TEACHERS MODULE INTERSECCIÓ AMB CURRICULUM
+- ESPECIALITATS:
+  - Una especialitat pot estar associada a un professor però també a una UF
+- Departaments:
+  - Associat a un professor però també a un estudi
+  - Per cada estudi hi ha un departament responsable PRINCIPAL de l'ESTUDI
+  - Hi ha UFS/MÒDULS que poden tenir múltiples departaments, el principal associat a l'estudi i altres (assingatures transversals, Folm, Angles)
+  - Estudis donats per múltiples departaments això pot apareixer aviat com idea d'algun pensador
+
+Rols: Cap estudis
+- Wizard per donar d'alta el currículum d'un centre
+- Possibilitat de repartir la feina amb caps de departament i caps estudis (però sempre podrà fer-la tota)
+
+- Centre: Cada tenant un centre? Múltiples centres possibles?
+
+- ASIX
+- DAM
+
+### CURRICULUM MODULE
+
+- [ ] initialize_fake_subjects hi ha uns studies incorrectes donats d'alta tenen cap law_id. Arreglar
+- [ ] Feature Test web Controller -> CurriculumTest
+ - [X]  Permisos usuaris no logats, usuaris regulars, admin i Manager
+ - [ ] Comprovar retorna vista que toca i amb les dades que toca
+ - [ ] create_sample_studies
+- [ ] Trobar icona barret estudiant (més similar cast for education)
+  - [ ] Activar altres moduls icones Vuetify
+- [ ] Depèn del mòdul de professors: aquest mòdul crear els usuaris professors, els departaments i els càrrecs
+- [X] Donar d'alta el mòdul a la base de dades
+- [X] Entrada de menú
+- [ ] Crear Rols associats
+  - [X] Curriculum: poden accedir al mòdul (després depèn altres permissos i rols podran fer més o menys operacios)
+     - [ ] Permissos assignats al rol
+  - [X] Curriculum Manager
+     - [ ] Permissos assignats al rol
+  - [ ] Assignar a Cap estudis el rol Currículum Manager
+  - [ ] Assignar a tots els professors el rol de Currículum
+- [ ] Mostrar llista estudis del centre
+  - [ ] Filtres
+    - [ ] Per departament principal
+    - [ ] Per departament (FOl per exemple hauria de sortir a tots els estudis si se selecciona)
+- [ ] Seguretat i autorització
+  - [ ] Cap estudis (Curriculum Manager) igual que superadmin pot fer tots
+  - [ ] Cap de departament. Pot entrar i veure tot i a més modificar els estudis propis. Tenir en compte hi ha registre de canvis
+     - [ ] Limitar algunes operacions: eliminar per exemple
+     - [ ] No pot crear estudis
+  - [ ] Professor. Pot entrar i veure curriculum
+    - [ ] No pot modificar estudis
+    - [ ] No pot crear estudis    
+    - [ ] no pot eliminar
+  - Regular users: no poden entrar al mòdul  
+
+Vistes secundàries:
+- [ ] Registre de canvis: tot el mòdul! Canvis a estudis, ufs o qualsevol cosa relacionada ha d'apareixer aquí 
+- [ ] Vista UFS-SUBMODULES (mostrar-les al botó ... )
+  - [ ] Todo similar a estudis tema rols:
+    - [ ] Algunes adaptacions com que els professors puguin editar les UFs assignades 
+- [] Vista MPS-MODULES    
+### Wizard (boto add)
+0) Desplegable amb els centres: per defecte un sol centre (creat durant la creació del tenant) però podria tenir més centres
+1) [ ] Estudi que es vol modificar o que es vol crear
+  - [ ] Mostrar una llista estudis existents-> es pot seleccionar un existent i continuar o refer tot el wizard
+  - [ ] Camps formulari alta: Nom (únic), codi (únic), Familia
+    - [ ] Mòdul de professors: CRUD de departaments
+    - [ ] Departament principal associat
+    - [X] No poder assignar departaments secundaris -> És un camp computat indirecta serà a partir de les UFS assignades al mòdul
+    - Etiquetes (cap o n):
+      - [ ] Tipus estudi -> etiquetes
+      - [ ] Llei associada (3 valors, LOE, LOGSE o cap valor associat)
+    - [ ] Altres camps opcionals: Links associats / Docs associats al estudi
+2) [ ] UFS
+  - Saltem les MPS ja que són grups de UFS
+  - [ ] Mostrar llista (datatables?)ufs del study
+  - [ ] Afegir UF
+    - [ ] Camps obligàtoris: Codi, nom, nomcurt | Opcionals: descripció | order
+    - [ ] MP de la UF (obligatori): 1 a 1 i Combobox: associar un existent o afegir un de nou
+      - [ ] Etiquetes mòduls/MP: Normal, Extern (FOL), Síntesí, FCT
+    - [ ] Curs en que s'imparteix  
+    - [ ] Altres:
+      - [ ] Hores Totals
+      - [ ] Hores setmanals
+      - [ ] Start date      
+      - [ ] End date
+    - [ ] sí Extern associar departament encarregat
 ## Passar faltes
 
 Incidencies:

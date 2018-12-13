@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Api;
+namespace Tests\Feature\Web\Changelog;
 
 use App\Models\Incident;
 use App\Models\User;

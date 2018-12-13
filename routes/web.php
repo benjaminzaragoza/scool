@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Tenant\HomeController;
+use App\Http\Controllers\Tenant\Web\CurriculumController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
@@ -169,7 +170,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/changelog/user/{user}','Tenant\Web\ChangelogUserController@index');
             Route::get('/changelog/loggable/{loggable}/{loggableId}','Tenant\Web\ChangelogLoggableController@index');
 
-
+            //Curriculum
+            Route::get('/curriculum','\\' . CurriculumController::class . '@index');
         });
     });
 

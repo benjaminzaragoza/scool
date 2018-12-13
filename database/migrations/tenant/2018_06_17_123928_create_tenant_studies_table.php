@@ -20,7 +20,8 @@ class CreateTenantStudiesTable extends Migration
             $table->increments('id');
             $table->string('code')->unique();
             $table->string('name')->unique();
-            $table->integer('law_id')->unsigned();
+            $table->string('shortname')->unique();
+            $table->unsignedInteger('family_id')->nullable();
             $table->timestamps();
         });
 

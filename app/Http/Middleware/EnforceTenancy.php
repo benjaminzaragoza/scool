@@ -32,7 +32,7 @@ class EnforceTenancy
         Config::set('app.url', 'http://' . $request->tenant . '.' . config('app.domain','scool.test'));
 
         Gate::define('viewWebSocketsDashboard', function ($user = null) {
-            return in_array([
+            return app()->environment('local') || in_array([
                 'sergiturbadenas@gmail.com'
             ], optional($user)->email ? optional($user)->email  : []);
         });

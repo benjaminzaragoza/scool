@@ -36,7 +36,7 @@ use App\Repositories\PersonRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\UserRepository;
 use App\Revisionable\Revision;
-use App\Study;
+use App\Models\Study;
 use App\Tenant;
 use Carbon\Carbon;
 use PulkitJalan\Google\Client;
@@ -662,6 +662,26 @@ if (!function_exists('people_manager_permissions')) {
     }
 }
 
+if (!function_exists('curriculum_permissions')) {
+    function curriculum_permissions()
+    {
+        return [
+//            'people.store',
+//            'people.update'
+        ];
+    }
+}
+
+if (!function_exists('curriculum_manager_permissions')) {
+    function curriculum_manager_permissions()
+    {
+        return [
+//            'people.store',
+//            'people.update'
+        ];
+    }
+}
+
 if (!function_exists('scool_permissions')) {
     function scool_permissions()
     {
@@ -703,7 +723,9 @@ if (!function_exists('scool_roles')) {
             'ChangelogManager',
             'MoodleManager',
             'PeopleManager',
-            'Superadmin'
+            'Superadmin',
+            'Curriculum',
+            'CurriculumManager'
         ];
 
     }
@@ -715,7 +737,9 @@ if (!function_exists('scool_roles_permissions')) {
         return [
             'MoodleManager' => moodle_manager_permissions(),
             'UsersManager' => users_manager_permissions(),
-            'PeopleManager' => people_manager_permissions()
+            'PeopleManager' => people_manager_permissions(),
+            'Curriculum' => curriculum_permissions(),
+            'CurriculumManager' => curriculum_manager_permissions(),
         ];
 
     }
@@ -1151,6 +1175,10 @@ if (!function_exists('initialize_modules')) {
         Module::firstOrCreate([
             'name' => 'users',
         ]);
+
+        Module::firstOrCreate([
+            'name' => 'curriculum',
+        ]);
     }
 }
 
@@ -1167,6 +1195,13 @@ if (!function_exists('initialize_menus')) {
             'text' => 'Incidències',
             'href' => '/incidents',
             'role' => 'Incidents'
+        ]);
+
+        Menu::firstOrCreate([
+            'icon' => 'cast',
+            'text' => 'Curriculum',
+            'href' => '/curriculum',
+            'role' => 'Curriculum'
         ]);
 
         Menu::firstOrCreate([
@@ -8735,6 +8770,80 @@ if (! function_exists('public_env')) {
         return collect([
             'app_env' => app()->environment()
         ]);
+    }
+}
+
+
+/**
+ * ************************************* CURRICULUM ****************************************
+ */
+
+if (! function_exists('create_sample_studies')) {
+    function create_sample_studies() {
+        $dam = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
+            'code' => 'DAM'
+        ]);
+        $informatica = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF'
+        ]);
+        $dam->assignFamily($informatica);
+        $depInformatica = Department::create([
+            'name' => 'Departament Informàtica',
+            'shortname' => 'Informàtica'
+        ]);
+        $dam->assignDepartment($depInformatica);
+        $loe = StudyTag::create([
+            'name' => 'LOE',
+            'description' => 'Ley Orgànica de Educación'
+        ]);
+        $dam->assignTag($loe);
+        $fp = StudyTag::create([
+            'name' => 'FP',
+            'description' => 'Formació Professional'
+        ]);
+        $dam->assignTag($fp);
+
+        $asix = Study::create([
+            'name' => 'Administració Sistemes Informàtics i Xarxes',
+            'shortname' => 'Adm. Sistemes i Xarxes',
+            'code' => 'ASIX'
+        ]);
+        $asix->assignFamily($informatica);
+        $asix->assignDepartment($depInformatica);
+        $asix->assignTag($loe);
+        $asix->assignTag($fp);
+
+        $smx = Study::create([
+            'name' => 'Sistemes Microinformàtics i Xarxes',
+            'shortname' => 'Sistemes',
+            'code' => 'SMX'
+        ]);
+        $smx->assignFamily($informatica);
+        $smx->assignDepartment($depInformatica);
+        $smx->assignTag($loe);
+        $smx->assignTag($fp);
+
+        $smx = Study::create([
+            'name' => 'Farmaci bla bla bla',
+            'shortname' => 'Sistemes',
+            'code' => 'SMX'
+        ]);
+        $depsanitat = Department::create([
+            'name' => 'Departament Sanitat',
+            'shortname' => 'Sanitat'
+        ]);
+        $sanitat = Family::create([
+            'name' => 'Sanitat',
+        ]);
+        $smx->assignFamily($sanitat);
+        $smx->assignDepartment($depsanitat);
+        $smx->assignTag($loe);
+        $smx->assignTag($fp);
+
+
     }
 }
 

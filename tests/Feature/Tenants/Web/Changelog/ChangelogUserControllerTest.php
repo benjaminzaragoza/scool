@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Api;
+namespace Tests\Feature\Web\Changelog;
 
 use App\Models\User;
 use Illuminate\Contracts\Console\Kernel;

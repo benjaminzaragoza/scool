@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Web\Authentication;
 
 use App\Models\User;
 use App\Models\Log;
@@ -38,7 +38,6 @@ class RegisterControllerTest extends BaseTenantTest
     /** @test */
     public function can_register_a_user()
     {
-        $this->withoutExceptionHandling();
         Config::set('auth.providers.users.model', User::class);
         $this->assertNull(Auth::user());
 

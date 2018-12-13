@@ -1,6 +1,7 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Web\Authentication;
+
 use Adldap\Laravel\Events\Authenticated;
 use App\Models\Log;
 use App\Models\User;

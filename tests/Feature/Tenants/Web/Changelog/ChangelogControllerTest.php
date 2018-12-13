@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Api;
+namespace Tests\Feature\Web\Changelog;
 
 use App\Models\User;
 use Config;
@@ -35,7 +35,6 @@ class ChangelogControllerTest extends BaseTenantTest
     /** @test */
     public function show_changelog()
     {
-        $this->withoutExceptionHandling();
         $logs = sample_logs();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'ChangelogManager']);

@@ -42,4 +42,17 @@ class Family extends Revisionable
     {
         return $this->hasMany(Job::class);
     }
+
+    public function addStudy($study)
+    {
+        $this->studies()->save($study);
+    }
+
+    /**
+     * Get the studies associated to family.
+     */
+    public function studies()
+    {
+        return $this->hasMany(Study::class);
+    }
 }
