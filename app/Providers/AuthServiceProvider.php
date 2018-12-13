@@ -6,6 +6,7 @@ use App\Auth\ScoolUserProvider;
 use App\Libraries\Sha1\HashManager;
 use App\Models\User;
 use Auth;
+use Gate;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
@@ -39,6 +40,12 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::provider('scool', function ($app, array $config) {
             return new ScoolUserProvider(app(Hasher::class), User::class);
+        });
+
+        Gate::define('viewWebSocketsDashboard', function ($user = null) {
+            return in_array([
+                'sergiturbadenas@gmail.com'
+            ], $user->email);
         });
 
         initialize_gates();
