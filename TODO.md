@@ -20,14 +20,14 @@
 
 
 ## Implementació
-- [ ] Document my solution at https://github.com/beyondcode/laravel-websockets-docs/pull/1
-- [ ] https://iesebre.scool.cat/laravel-websockets dona 403 configurar authorization
-- [ ] Documentar la complexitat/problema amb els Broadcast::channel autoritzacions i tenant. Blog?
-- [ ] provar obrir fireall Laravel port 6001 i utilitzar explotació sense Nginx proxy apuntat a port 6001 com en local
-- [ ] Comprovar hnadshake de l'anterior desde lolcahost.
 - [ ] Configuració ulimit https://docs.beyondco.de/laravel-websockets/1.0/faq/deploying.html
+- [ ] https://iesebre.scool.cat/laravel-websockets dona 403 configurar authorization
+- [X] Document my solution at https://github.com/beyondcode/laravel-websockets-docs/pull/1
+- [X] Documentar la complexitat/problema amb els Broadcast::channel autoritzacions i tenant. Blog?
+- [X] provar obrir fireall Laravel port 6001 i utilitzar explotació sense Nginx proxy apuntat a port 6001 com en local
+- [X] Comprovar hnadshake de l'anterior desde lolcahost.
 - [X] Configuració SSL/HTTPS local amb Valet
-- [ ] Configuració SSL/HTTPS production a servidor Laravel Forge : Certificat Let's encrypt
+- [X] Configuració SSL/HTTPS production a servidor Laravel Forge : Certificat Let's encrypt
 - [X] Instal·lar supervisor per fer permanent la execució: https://docs.beyondco.de/laravel-websockets/1.0/basic-usage/starting.html#keeping-the-socket-server-running-with-supervisord
 - [X] Instal·lar supervisor al servidor explotació
 - Multinenant:
@@ -42,15 +42,15 @@
   - SERVER SIDE (LARAVEL WEB SOCKETS substituint a pusher)
     - Cal donar d'alta a l'array apps (config/web-socket.php) una app per cada tenant i per principal
        - Exemple fitxer: https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/websockets.php
-    - [ ] Una entrada fixe per a scool.cat -> main app
-    - [ ] Mateixa config per a explotació i servidor. NO PROBLEM: el server al que s'apunta "és el mateix"
+    - [X] Una entrada fixe per a scool.cat -> main app
+    - [X] Mateixa config per a explotació i servidor. NO PROBLEM: el server al que s'apunta "és el mateix"
       - Des de PHP:
         -  https://github.com/beyondcode/laravel-websockets-demo/blob/master/config/broadcasting.php
         - localhost 6001
       - Des dels navegadors:
         - https://github.com/beyondcode/laravel-websockets-demo/blob/master/resources/js/bootstrap.js
         - wsHost: window.location.hostname i wsPort: 6001,     
-    - [ ] Es pot crear un provider de apps a mida que podria agafar les dades de la taula tenants
+    - [X] Es pot crear un provider de apps a mida que podria agafar les dades de la taula tenants
       - [X] Afegir camps a la taula tenant:
        - 'id' => env('PUSHER_APP_ID'),
        - 'name' => env('APP_NAME'),
