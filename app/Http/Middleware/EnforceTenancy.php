@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Broadcast;
 use Closure;
 use Config;
+use Gate;
 use Log;
 
 /**
@@ -28,6 +30,12 @@ class EnforceTenancy
         }
         Config::set('database.default', 'tenant');
         Config::set('app.url', 'http://' . $request->tenant . '.' . config('app.domain','scool.test'));
+
+        Gate::define('viewWebSocketsDashboard', function ($user = null) {
+            return in_array([
+                'sergiturbadenas@gmail.com'
+            ], optional($user)->email ? optional($user)->email  : []);
+        });
 
         require base_path('routes/tenant_channels.php');
 

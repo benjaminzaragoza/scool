@@ -42,12 +42,6 @@ class AuthServiceProvider extends ServiceProvider
             return new ScoolUserProvider(app(Hasher::class), User::class);
         });
 
-        Gate::define('viewWebSocketsDashboard', function ($user = null) {
-            return in_array([
-                'sergiturbadenas@gmail.com'
-            ], $user->email);
-        });
-
         initialize_gates();
 
     }
