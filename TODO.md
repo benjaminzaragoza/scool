@@ -1,3 +1,9 @@
+# NPM RUN PRODUCTION
+
+- [ ] Agafar dades de laravel Mix pot provocar errors a explotació sino fem:: npm run prod
+- [ ] Es pot utilitzar npm run prod en local i no tenir desfase en esplotació i local?
+- [ ] Que fa prod? val la pena?
+
 # Monitor web del supervisor:
 
 - La idea és tenir alguna eina web que permeti veure que tot està bé a supervisor (s'està executant i executant el que toca)
@@ -12,7 +18,13 @@
 
 # Laravel websockets
 
+
 ## Implementació
+- [ ] Document my solution at https://github.com/beyondcode/laravel-websockets-docs/pull/1
+- [ ] https://iesebre.scool.cat/laravel-websockets dona 403 configurar authorization
+- [ ] Documentar la complexitat/problema amb els Broadcast::channel autoritzacions i tenant. Blog?
+- [ ] provar obrir fireall Laravel port 6001 i utilitzar explotació sense Nginx proxy apuntat a port 6001 com en local
+- [ ] Comprovar hnadshake de l'anterior desde lolcahost.
 - [ ] Configuració ulimit https://docs.beyondco.de/laravel-websockets/1.0/faq/deploying.html
 - [X] Configuració SSL/HTTPS local amb Valet
 - [ ] Configuració SSL/HTTPS production a servidor Laravel Forge : Certificat Let's encrypt

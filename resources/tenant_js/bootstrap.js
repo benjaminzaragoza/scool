@@ -40,18 +40,37 @@ let gitHeader = document.head.querySelector('meta[name="git"]')
 window.git = null
 if (gitHeader) if (gitHeader.content) window.git = JSON.parse(gitHeader.content)
 
+let envHeader = document.head.querySelector('meta[name="env"]')
+window.env = null
+if (envHeader) if (envHeader.content) window.env = JSON.parse(envHeader.content)
+
 window.Pusher = require('pusher-js')
 
 if (window.tenant) {
   if (window.tenant.pusher_app_key) {
-    window.Echo = new Echo({
-      broadcaster: 'pusher',
-      key: window.tenant.pusher_app_key,
-      wsHost: window.location.hostname,
-      wsPort: 6001,
-      wssPort: 6001,
-      disableStats: true,
-      encrypted: false
-    })
+    if (window.env) {
+      if (window.env.app_env) {
+        if (window.env.app_env === 'local') {
+          window.Echo = new Echo({
+            broadcaster: 'pusher',
+            key: window.tenant.pusher_app_key,
+            wsHost: window.location.hostname,
+            wsPort: process.env.MIX_PUSHER_PORT,
+            wssPort: 6001,
+            disableStats: true,
+            encrypted: false
+          })
+        }
+        if (window.env.app_env === 'production') {
+          window.Echo = new Echo({
+            broadcaster: 'pusher',
+            key: window.tenant.pusher_app_key,
+            wsHost: 'socket.scool.cat',
+            disablestats: true,
+            encrypted: true
+          })
+        }
+      }
+    }
   }
 }

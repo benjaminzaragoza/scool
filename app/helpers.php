@@ -8634,7 +8634,6 @@ if (! function_exists('git')) {
                 'origin' => git_remote_origin_url()
             ]);
         });
-
     }
 }
 
@@ -8730,7 +8729,14 @@ if (! function_exists('get_pusher_apps_from_tenants')) {
     }
 }
 
-
+if (! function_exists('public_env')) {
+    function public_env()
+    {
+        return collect([
+            'app_env' => app()->environment()
+        ]);
+    }
+}
 
 
 
