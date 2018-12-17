@@ -87,16 +87,16 @@ class StudiesControllerTest extends BaseTenantTest
     /** @test */
     public function regular_user_cannot_list_studies()
     {
-        $this->login();
-        $response = $this->get('/curriculum');
+        $this->login('api');
+        $response = $this->json('GET','/api/v1/studies');
         $response->assertStatus(403);
     }
 
     /** @test */
     public function guest_user_cannot_list_studies()
     {
-        $response = $this->get('/curriculum');
-        $response->assertRedirect('login');
+        $response = $this->json('GET','/api/v1/studies');
+        $response->assertStatus(401);
     }
 
 }
