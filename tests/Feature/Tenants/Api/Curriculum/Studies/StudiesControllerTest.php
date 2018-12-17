@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Api\Studies\Curriculum;
 
+use App\Models\Department;
+use App\Models\Family;
+use App\Models\Study;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -99,4 +102,168 @@ class StudiesControllerTest extends BaseTenantTest
         $response->assertStatus(401);
     }
 
+
+    /**
+     * @test
+     */
+    public function can_store_studies()
+    {
+        $this->loginAsSuperAdmin('api');
+
+//        Event::fake();
+//        create_setting('studies_manager_email','incidencies@iesebre.com','IncidentsManager');
+
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
+        $response =  $this->json('POST','/api/v1/studies',$study = [
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. aplicacion Multiplataforma',
+            'code' => 'DAM',
+            'department' => $department->id,
+            'family' => $family->id,
+        ]);
+        $response->assertSuccessful();
+        $createdStudy = json_decode($response->getContent());
+
+//        Event::assertDispatched(IncidentStored::class,function ($event){
+//            return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
+//        });
+        $this->assertSame($createdStudy->id,1);
+        $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
+        $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
+        $this->assertEquals($createdStudy->code,'DAM');
+        $this->assertNotNull($createdStudy->created_at);
+        $this->assertNotNull($createdStudy->created_at_timestamp);
+        $this->assertNotNull($createdStudy->formatted_created_at);
+        $this->assertNotNull($createdStudy->formatted_created_at_diff);
+        $this->assertNotNull($createdStudy->updated_at);
+        $this->assertNotNull($createdStudy->updated_at_timestamp);
+        $this->assertNotNull($createdStudy->formatted_updated_at);
+        $this->assertNotNull($createdStudy->formatted_updated_at_diff);
+
+        try {
+            $study = Study::findOrFail($createdStudy->id);
+        } catch (\Exception $e) {
+            $this->fails('Study not found at database!');
+        }
+
+        $this->assertSame($study->id,1);
+        $this->assertEquals($study->name,'Desenvolupament Aplicacions Multiplataforma');
+        $this->assertEquals($study->shortname,'Des. aplicacion Multiplataforma');
+        $this->assertEquals($study->code,'DAM');
+        $this->assertNotNull($study->created_at);
+        $this->assertNotNull($study->created_at_timestamp);
+        $this->assertNotNull($study->formatted_created_at);
+        $this->assertNotNull($study->formatted_created_at_diff);
+        $this->assertNotNull($study->updated_at);
+        $this->assertNotNull($study->updated_at_timestamp);
+        $this->assertNotNull($study->formatted_updated_at);
+        $this->assertNotNull($study->formatted_updated_at_diff);
+
+    }
+
+    /**
+     * @test
+     */
+    public function curriculum_manager_can_store_studies()
+    {
+        $this->loginAsCurriculumManager('api');
+
+//        Event::fake();
+//        create_setting('studies_manager_email','incidencies@iesebre.com','IncidentsManager');
+
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
+        $response =  $this->json('POST','/api/v1/studies',$study = [
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. aplicacion Multiplataforma',
+            'code' => 'DAM',
+            'department' => $department->id,
+            'family' => $family->id,
+        ]);
+        $response->assertSuccessful();
+        $createdStudy = json_decode($response->getContent());
+
+//        Event::assertDispatched(IncidentStored::class,function ($event){
+//            return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
+//        });
+        $this->assertSame($createdStudy->id,1);
+        $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
+        $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
+        $this->assertEquals($createdStudy->code,'DAM');
+        $this->assertNotNull($createdStudy->created_at);
+        $this->assertNotNull($createdStudy->created_at_timestamp);
+        $this->assertNotNull($createdStudy->formatted_created_at);
+        $this->assertNotNull($createdStudy->formatted_created_at_diff);
+        $this->assertNotNull($createdStudy->updated_at);
+        $this->assertNotNull($createdStudy->updated_at_timestamp);
+        $this->assertNotNull($createdStudy->formatted_updated_at);
+        $this->assertNotNull($createdStudy->formatted_updated_at_diff);
+
+        try {
+            $study = Study::findOrFail($createdStudy->id);
+        } catch (\Exception $e) {
+            $this->fails('Study not found at database!');
+        }
+
+        $this->assertSame($study->id,1);
+        $this->assertEquals($study->name,'Desenvolupament Aplicacions Multiplataforma');
+        $this->assertEquals($study->shortname,'Des. aplicacion Multiplataforma');
+        $this->assertEquals($study->code,'DAM');
+        $this->assertNotNull($study->created_at);
+        $this->assertNotNull($study->created_at_timestamp);
+        $this->assertNotNull($study->formatted_created_at);
+        $this->assertNotNull($study->formatted_created_at_diff);
+        $this->assertNotNull($study->updated_at);
+        $this->assertNotNull($study->updated_at_timestamp);
+        $this->assertNotNull($study->formatted_updated_at);
+        $this->assertNotNull($study->formatted_updated_at_diff);
+
+    }
+
+    /**
+     * @test
+     */
+    public function can_store_studies_validation()
+    {
+        $this->loginAsSuperAdmin('api');
+
+//        Event::fake();
+//        create_setting('studies_manager_email','incidencies@iesebre.com','IncidentsManager');
+
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
+        $response = $this->json('POST', '/api/v1/studies', []);
+        $response->assertStatus(422);
+    }
 }

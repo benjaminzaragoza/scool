@@ -123,7 +123,7 @@ class StudyTest extends TestCase
 
         $mappedStudy = $study->map();
 
-        $this->assertEquals(1,$mappedStudy['id']);
+        $this->assertSame(1,$mappedStudy['id']);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);

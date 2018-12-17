@@ -39,9 +39,15 @@ class StudiesController extends Controller
      */
     public function store(StudyStore $request)
     {
-//        $incident = Incident::create($request->only('subject','description'))->assignUser($request->user());
-//        event(new IncidentStored($incident));
-//        return $incident->load(['user'])->map();
+        $study = Study::create([
+            'name' => $request->name,
+            'shortname' => $request->shortname,
+            'code' => $request->code,
+            'department_id' => $request->department,
+            'family_id' => $request->family
+        ]);
+//        event(new IncidentStored($study));
+        return $study->map();
     }
 
     /**
