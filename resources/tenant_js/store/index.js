@@ -8,6 +8,7 @@ import googleUsers from './modules/google_users'
 import staff from './modules/jobs'
 import teachers from './modules/teachers'
 import incidents from './modules/incidents'
+import studies from './modules/studies'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ export default new Vuex.Store({
     staff,
     teachers,
     googleUsers,
-    incidents
+    incidents,
+    studies
   },
   strict: debug
 })

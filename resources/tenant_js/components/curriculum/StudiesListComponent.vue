@@ -1,0 +1,255 @@
+<template>
+    <span>
+        <v-toolbar color="blue darken-3">
+            <v-menu bottom>
+                <v-btn slot="activator" icon dark>
+                    <v-icon>more_vert</v-icon>
+                </v-btn>
+                <v-list>
+                    <v-list-tile href="#" target="_blank">
+                        <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-toolbar-title class="white--text title">Estudis</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn id="studies_help_button" icon class="white--text" href="http://docs.scool.cat/docs/curriculum" target="_blank">
+                <v-icon>help</v-icon>
+            </v-btn>
+
+            <fullscreen-dialog
+                    v-role="'CurriculumManager'"
+                    :flat="false"
+                    class="white--text"
+                    icon="settings"
+                    v-model="settingsDialog"
+                    color="blue darken-3"
+                    title="Canviar la configuració">
+                        <!--<studies-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></studies-settings>-->
+            </fullscreen-dialog>
+
+            <v-btn id="studies_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                <v-icon>refresh</v-icon>
+            </v-btn>
+        </v-toolbar>
+
+        <v-card>
+            <v-card-title>
+                <v-layout>
+                  <v-flex xs9 style="align-self: flex-end;">
+                      <v-layout>
+                          <v-flex xs9>
+                               <v-layout>
+                                   <v-flex xs4>
+                                       <v-autocomplete
+                                               v-model="selectedTags"
+                                               :items="dataTags"
+                                               attach
+                                               chips
+                                               label="Etiquetes"
+                                               multiple
+                                               item-value="id"
+                                               item-text="value"
+                                       >
+                                            <template slot="selection" slot-scope="data">
+                                                <v-chip
+                                                        small
+                                                        label
+                                                        @input="data.parent.selectItem(data.item)"
+                                                        :selected="data.selected"
+                                                        class="chip--select-multi"
+                                                        :color="data.item.color"
+                                                        text-color="white"
+                                                        :key="JSON.stringify(data.item)"
+                                                ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
+                                            </template>
+                                            <template slot="item" slot-scope="data">
+                                                <v-checkbox v-model="data.tile.props.value"></v-checkbox>
+                                                <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
+                                                    <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
+                                                </v-chip>
+                                            </template>
+                                       </v-autocomplete>
+                                   </v-flex>
+                               </v-layout>
+                          </v-flex>
+                      </v-layout>
+                  </v-flex>
+                  <v-flex xs3>
+                      <v-text-field
+                              append-icon="search"
+                              label="Buscar"
+                              single-line
+                              hide-details
+                              v-model="search"
+                      ></v-text-field>
+                  </v-flex>
+                </v-layout>
+            </v-card-title>
+            <v-data-table
+                    class="px-0 mb-2 hidden-sm-and-down"
+                    :headers="headers"
+                    :items="filteredStudies"
+                    :search="search"
+                    item-key="id"
+                    no-results-text="No s'ha trobat cap registre coincident"
+                    no-data-text="No hi han dades disponibles"
+                    rows-per-page-text="Estudis per pàgina"
+                    :rows-per-page-items="[5,10,25,50,100,200,{'text':'Tots','value':-1}]"
+                    :pagination.sync="pagination"
+                    :loading="refreshing"
+            >
+                <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                <template slot="items" slot-scope="{item: study}">
+                    <tr :id="'study_row_' + study.id">
+                        <td class="text-xs-left" v-text="study.id"></td>
+                        <td class="text-xs-left" :title="study.shortname" v-text="study.code"></td>
+                        <td class="text-xs-left" v-text="study.name"></td>
+                        <!--<td class="text-xs-left">-->
+                            <!--<inline-text-area-edit-dialog v-model="study" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>-->
+                        <!--</td>-->
+
+                        <td class="text-xs-left">
+                            TAGS TODO
+                            <!--<study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>-->
+                        </td>
+                        <td class="text-xs-left" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
+                        <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
+                        <td class="text-xs-left">
+                            TODO ACTIONS
+                            <!--<changelog-loggable :loggable="study"></changelog-loggable>-->
+                            <!--<fullscreen-dialog-->
+                                    <!--:badge="study.comments && study.comments.length"-->
+                                    <!--badge-color="teal"-->
+                                    <!--icon="chat_bubble_outline"-->
+                                    <!--color="teal"-->
+                                    <!--v-model="addCommentDialog"-->
+                                    <!--title="Afegir un comentari"-->
+                                    <!--:resource="study"-->
+                                    <!--v-if="addCommentDialog === false || addCommentDialog === study.id">-->
+                                <!--<study-show :show-data="false" :study="study" v-role="'Incidents'" @close="addCommentDialog = false" :tags="dataTags" :study-users="studyUsers"></study-show>-->
+                            <!--</fullscreen-dialog>-->
+                            <!--<fullscreen-dialog-->
+                                    <!--v-model="showDialog"-->
+                                    <!--title="Mostra la incidència"-->
+                                    <!--:resource="study"-->
+                                    <!--v-if="showDialog === false || showDialog === study.id">-->
+                                <!--<study-show :study="study" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :study-users="studyUsers"></study-show>-->
+                            <!--</fullscreen-dialog>-->
+                            <!--<study-close v-model="study" v-if="$can('close',study) || $hasRole('IncidentsManager')" @toggle="refresh"></study-close>-->
+                            <!--<study-delete :study="study" v-if="$hasRole('IncidentsManager')"></study-delete>-->
+                        </td>
+                    </tr>
+                </template>
+            </v-data-table>
+        </v-card>
+
+    </span>
+</template>
+
+<script>
+import FullScreenDialog from '../ui/FullScreenDialog'
+import * as actions from '../../store/action-types'
+import * as mutations from '../../store/mutation-types'
+
+var filters = {
+  all: function (studies) {
+    return studies
+  }
+  // open: function (incidents) {
+  //   return incidents ? incidents.filter(function (incident) {
+  //     return incident.closed_at === null
+  //   }) : []
+  // },
+}
+
+export default {
+  name: 'StudiesListComponent',
+  components: {
+    'fullscreen-dialog': FullScreenDialog
+  },
+  data () {
+    return {
+      refreshing: false,
+      settingsDialog: false,
+      search: '',
+      pagination: {
+        rowsPerPage: 25
+      },
+      filter: 'all',
+      selectedTags: [],
+      dataTags: this.tags
+    }
+  },
+  computed: {
+    dataStudies () {
+      return this.$store.getters.studies
+    },
+    filteredStudies () {
+      let filteredByState = filters[this.filter](this.dataStudies)
+      if (this.selectedTags.length > 0) {
+        filteredByState = filteredByState.filter(incident => {
+          return incident.tags.some(tag => this.selectedTags.includes(tag.id))
+        })
+      }
+      return filteredByState
+    },
+    headers () {
+      let headers = []
+      headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
+      headers.push({ text: 'Codi', value: 'code' })
+      headers.push({ text: 'Nom', value: 'name' })
+      headers.push({ text: 'Etiquetes', value: 'tags' })
+      headers.push({ text: 'Creada', value: 'created_at_timestamp' })
+      headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
+      headers.push({ text: 'Accions', value: 'user_email', sortable: false })
+      return headers
+    }
+  },
+  props: {
+    studies: {
+      type: Array,
+      default: function () {
+        return undefined
+      }
+    },
+    study: {
+      type: Object,
+      default: function () {
+        return undefined
+      }
+    },
+    tags: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
+  methods: {
+    refresh (message = true) {
+      this.fetch(message)
+    },
+    fetch (message = true) {
+      this.refreshing = true
+      this.$store.dispatch(actions.SET_STUDIES).then(response => {
+        if (message) this.$snackbar.showMessage('Estudis actualitzats correctament')
+        this.refreshing = false
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.refreshing = false
+      })
+    }
+  },
+  created () {
+    if (this.studies === undefined) this.fetch()
+    else this.$store.commit(mutations.SET_STUDIES, this.studies)
+    this.filters = Object.keys(filters)
+    if (this.study) {
+      this.showDialog = this.study.id
+      this.filter = 'all'
+    }
+  }
+}
+</script>

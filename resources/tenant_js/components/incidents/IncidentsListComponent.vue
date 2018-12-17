@@ -344,9 +344,6 @@ export default {
     headers () {
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
-      // if (this.showJobTypeHeader) {
-      //   headers.push({text: 'Tipus', value: 'type'})
-      // }
       headers.push({ text: 'Usuari', value: 'user_name' })
       headers.push({ text: 'Títol', value: 'subject' })
       headers.push({ text: 'Description', value: 'description' })

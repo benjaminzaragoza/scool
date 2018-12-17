@@ -123,8 +123,19 @@ class StudyTest extends TestCase
 
         $mappedStudy = $study->map();
 
+        $this->assertEquals(1,$mappedStudy['id']);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);
+
+        $this->assertNotNull($mappedStudy['created_at']);
+        $this->assertNotNull($mappedStudy['updated_at']);
+        $this->assertNotNull($mappedStudy['created_at_timestamp']);
+        $this->assertNotNull($mappedStudy['updated_at_timestamp']);
+        $this->assertNotNull($mappedStudy['formatted_created_at']);
+        $this->assertNotNull($mappedStudy['formatted_updated_at']);
+        $this->assertNotNull($mappedStudy['formatted_created_at_diff']);
+        $this->assertNotNull($mappedStudy['formatted_updated_at_diff']);
+
     }
 }
