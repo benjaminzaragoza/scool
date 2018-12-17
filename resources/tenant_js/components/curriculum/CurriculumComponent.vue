@@ -1,7 +1,7 @@
 <template>
     <span id="curriculum_component">
         <floating-add v-model="dialog" title="Nou estudi">
-            <study-add @close="dialog = false"></study-add>
+            <study-add @close="dialog = false" :departments="departments" :families="families"></study-add>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
@@ -30,6 +30,18 @@ export default {
   },
   props: {
     studies: {
+      type: Array,
+      default: function () {
+        return undefined
+      }
+    },
+    departments: {
+      type: Array,
+      default: function () {
+        return undefined
+      }
+    },
+    families: {
       type: Array,
       default: function () {
         return undefined

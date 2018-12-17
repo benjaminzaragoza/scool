@@ -13,10 +13,10 @@ export default {
       })
     })
   },
-  [ actions.ADD_INCIDENT ] (context, incident) {
+  [ actions.ADD_STUDY ] (context, incident) {
     return new Promise((resolve, reject) => {
       api.store(incident).then(response => {
-        context.commit(mutations.ADD_INCIDENT, response.data)
+        context.commit(mutations.ADD_STUDY, response.data)
         resolve(response)
       }).catch(error => {
         reject(error)

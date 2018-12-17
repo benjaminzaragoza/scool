@@ -66,6 +66,13 @@ class CurriculumControllerTest extends BaseTenantTest
                 $returnedDepartments[0]['code'] === 'INFORMÀTICA' &&
                 $returnedDepartments[0]['order'] === 1;
         });
+        $response->assertViewHas('families', function ($returnedFamilies) {
+            return
+                count($returnedFamilies) === 2 &&
+                $returnedFamilies[0]['id'] === 1 &&
+                $returnedFamilies[0]['name'] === 'Informàtica' &&
+                $returnedFamilies[0]['code'] === 'INF';
+        });
     }
 
     /** @test */

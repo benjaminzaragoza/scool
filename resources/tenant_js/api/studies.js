@@ -9,8 +9,8 @@ export default {
       'name': study.name,
       'shortname': study.shortname,
       'code': study.code,
-      'family': study.family.id,
-      'department': study.department.id
+      'family': study.family,
+      'department': study.department
     })
   }
 }

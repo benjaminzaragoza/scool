@@ -62,4 +62,23 @@ class FamilyTest extends TestCase
         $this->assertTrue($informatica->studies[0]->is($dam));
 
     }
+
+    /**
+     * @test
+     * @group curriculum
+     * @group teachers
+     */
+    public function map()
+    {
+        $informatica = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF'
+        ]);
+
+        $mappedFamily = $informatica->map();
+
+        $this->assertEquals(1,$mappedFamily['id']);
+        $this->assertEquals('Informàtica',$mappedFamily['name']);
+        $this->assertEquals('INF',$mappedFamily['code']);
+    }
 }

@@ -55,4 +55,18 @@ class Family extends Revisionable
     {
         return $this->hasMany(Study::class);
     }
+
+    /**
+     * Map.
+     *
+     * @return array
+     */
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'code' => $this->code
+        ];
+    }
 }

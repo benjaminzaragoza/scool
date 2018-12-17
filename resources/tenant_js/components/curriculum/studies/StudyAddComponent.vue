@@ -28,7 +28,6 @@
                             autofocus
                     ></v-text-field>
                 </v-flex>
-
                 <v-flex xs12>
                     <v-text-field
                             v-model="code"
@@ -42,10 +41,22 @@
                     ></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                    <department-select v-model="department"></department-select>
+                    <department-select
+                            v-model="department"
+                            :departments="departments"
+                            :error-messages="departmentErrors"
+                            @input="$v.department.$touch()"
+                            @blur="$v.department.$touch()"
+                    ></department-select>
                 </v-flex>
                 <v-flex xs12>
-                    <family-select v-model="family"></family-select>
+                    <family-select
+                            v-model="family"
+                            :families="families"
+                            :error-messages="familyErrors"
+                            @input="$v.family.$touch()"
+                            @blur="$v.family.$touch()"
+                    ></family-select>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -112,6 +123,28 @@ export default {
       if (!this.$v.code.$dirty) return errors
       !this.$v.code.required && errors.push('És obligatori indicar un codi')
       return errors
+    },
+    departmentErrors () {
+      const errors = []
+      if (!this.$v.department.$dirty) return errors
+      !this.$v.department.required && errors.push('És obligatori indicar un departament')
+      return errors
+    },
+    familyErrors () {
+      const errors = []
+      if (!this.$v.family.$dirty) return errors
+      !this.$v.family.required && errors.push('És obligatori indicar una família')
+      return errors
+    }
+  },
+  props: {
+    departments: {
+      type: Array,
+      required: true
+    },
+    families: {
+      type: Array,
+      required: true
     }
   },
   methods: {
@@ -121,9 +154,12 @@ export default {
     add (close = false) {
       if (!this.$v.$invalid) {
         this.adding = true
-        this.$store.dispatch(actions.ADD_INCIDENT, {
-          subject: this.subject,
-          description: this.description
+        this.$store.dispatch(actions.ADD_STUDY, {
+          name: this.name,
+          shortname: this.shortname,
+          code: this.code,
+          department: this.department,
+          family: this.family
         }).then(response => {
           this.$snackbar.showMessage('Estudi creat correctament')
           this.adding = false
