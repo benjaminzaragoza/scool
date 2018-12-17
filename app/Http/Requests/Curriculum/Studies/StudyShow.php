@@ -19,7 +19,7 @@ class StudyShow extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('study.show');
+        return Auth::user()->can('studies.show');
     }
 
     /**

@@ -19,7 +19,7 @@ class StudyStore extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('study.store');
+        return Auth::user()->can('studies.store');
     }
 
     /**

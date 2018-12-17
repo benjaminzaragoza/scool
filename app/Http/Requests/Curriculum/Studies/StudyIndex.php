@@ -19,7 +19,7 @@ class StudyIndex extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('study.index');
+        return Auth::user()->can('studies.index');
     }
 
     /**

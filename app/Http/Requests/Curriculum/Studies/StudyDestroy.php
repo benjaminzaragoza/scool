@@ -19,7 +19,7 @@ class StudyDestroy extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('study.destroy');
+        return Auth::user()->can('studies.destroy');
     }
 
     /**

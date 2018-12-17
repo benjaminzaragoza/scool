@@ -637,6 +637,19 @@ if (!function_exists('moodle_manager_permissions')) {
     }
 }
 
+if (!function_exists('curriculum_manager_permissions')) {
+    function curriculum_manager_permissions()
+    {
+        return [
+            'studies.index',
+            'studies.store',
+            'studies.show',
+            'studies.update',
+            'studies.destroy'
+        ];
+    }
+}
+
 if (!function_exists('users_manager_permissions')) {
     function users_manager_permissions()
     {
@@ -673,16 +686,6 @@ if (!function_exists('curriculum_permissions')) {
     }
 }
 
-if (!function_exists('curriculum_manager_permissions')) {
-    function curriculum_manager_permissions()
-    {
-        return [
-//            'people.store',
-//            'people.update'
-        ];
-    }
-}
-
 if (!function_exists('scool_permissions')) {
     function scool_permissions()
     {
@@ -699,6 +702,7 @@ if (!function_exists('scool_permissions')) {
 
         $permissions = array_merge($permissions,moodle_manager_permissions());
         $permissions = array_merge($permissions,people_manager_permissions());
+        $permissions = array_merge($permissions,curriculum_manager_permissions());
         return $permissions;
     }
 }
@@ -806,6 +810,20 @@ if (!function_exists('initialize_moodle_manager_role')) {
         }
     }
 }
+
+if (!function_exists('initialize_curriculum_manager_role')) {
+    function initialize_curriculum_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'CurriculumManager']);
+        $permissions = curriculum_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+
 
 if (!function_exists('initialize_gates')) {
     function initialize_gates()

@@ -58,6 +58,12 @@ trait CanLogin
         return $this->loginAsUsingRole($guard, 'MoodleManager');
     }
 
+    public function loginAsCurriculumManager($guard = 'web')
+    {
+        initialize_curriculum_manager_role();
+        return $this->loginAsUsingRole($guard, 'CurriculumManager');
+    }
+
     /**
      * @param null $guard
      * @return mixed
