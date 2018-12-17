@@ -12,5 +12,15 @@ export default {
         reject(error)
       })
     })
-  }
+  },
+  [ actions.ADD_INCIDENT ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.store(incident).then(response => {
+        context.commit(mutations.ADD_INCIDENT, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 }

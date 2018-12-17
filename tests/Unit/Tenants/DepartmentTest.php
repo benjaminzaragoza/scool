@@ -90,6 +90,28 @@ class DepartmentTest extends TestCase
         $informatica = $informatica->fresh();
         $this->assertCount(1,$informatica->studies);
         $this->assertTrue($informatica->studies[0]->is($dam));
+    }
 
+    /**
+     * @test
+     * @group curriculum
+     * @group teachers
+     */
+    public function map()
+    {
+        $depInformatica = Department::create([
+            'name' => 'Departament Informàtica',
+            'shortname' => 'Informàtica',
+            'code' => 'INFORMÀTICA',
+            'order' => 1
+        ]);
+
+        $mappedDepartment = $depInformatica->map();
+
+        $this->assertEquals(1,$mappedDepartment['id']);
+        $this->assertEquals('Departament Informàtica',$mappedDepartment['name']);
+        $this->assertEquals('Informàtica',$mappedDepartment['shortname']);
+        $this->assertEquals('INFORMÀTICA',$mappedDepartment['code']);
+        $this->assertSame(1,$mappedDepartment['order']);
     }
 }

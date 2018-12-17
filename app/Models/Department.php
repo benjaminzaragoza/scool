@@ -55,4 +55,15 @@ class Department extends Model
     {
         return $this->hasMany(Study::class);
     }
+
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'shortname' => $this->shortname,
+            'code' => $this->code,
+            'order' => (int) $this->order
+        ];
+    }
 }

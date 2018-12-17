@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Curriculum\CurriculumIndex;
+use App\Models\Department;
 use App\Models\Study;
 
 
@@ -24,6 +25,7 @@ class CurriculumController extends Controller
     {
 
         $studies = map_collection(Study::all());
-        return view('tenants.curriculum.index', compact('studies'));
+        $departments = map_collection(Department::all());
+        return view('tenants.curriculum.index', compact('studies','departments'));
     }
 }

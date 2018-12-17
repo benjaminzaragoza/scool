@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import StudyAddComponent from './StudyAddComponent'
-import StudiesListComponent from './StudiesListComponent'
+import StudyAddComponent from './studies/StudyAddComponent'
+import StudiesListComponent from './studies/StudiesListComponent'
 
 export default {
   name: 'Curriculum',

@@ -149,9 +149,9 @@
 </template>
 
 <script>
-import FullScreenDialog from '../ui/FullScreenDialog'
-import * as actions from '../../store/action-types'
-import * as mutations from '../../store/mutation-types'
+import FullScreenDialog from '../../ui/FullScreenDialog'
+import * as actions from '../../../store/action-types'
+import * as mutations from '../../../store/mutation-types'
 
 var filters = {
   all: function (studies) {
