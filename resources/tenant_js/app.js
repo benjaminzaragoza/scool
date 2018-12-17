@@ -116,6 +116,9 @@ window.Vue.component('floating-add', require('./components/ui/FloatingAddCompone
 // GIT
 window.Vue.component('git-info', require('./components/git/GitInfoComponent'))
 
+// Curriculum
+window.Vue.component('curriculum', require('./components/curriculum/CurriculumComponent'))
+
 window.Vuetify = Vuetify
 
 window.Vue.use(window.Vuetify, {

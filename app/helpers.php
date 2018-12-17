@@ -24,6 +24,7 @@ use App\Models\Setting;
 use App\Models\Specialty;
 use App\Models\Job;
 use App\Models\JobType;
+use App\Models\StudyTag;
 use App\Models\Subject;
 use App\Models\SubjectGroup;
 use App\Models\Teacher;
@@ -5818,8 +5819,8 @@ if (!function_exists('initialize_subjects')) {
 
         $study = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
-            'code' => 'DAM',
-            'law_id' => $loe->id
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM'
         ]);
 
         // No existeix 1DAM -> és comú amb 1rASIX
@@ -5882,8 +5883,8 @@ if (!function_exists('initialize_subjects')) {
 
         $study = Study::firstOrCreate([
             'name' => 'Gestió administrativa',
+            'shortname' => 'Gestió administrativa',
             'code' => 'GAD',
-            'law_id' => $loe->id
         ]);
 
         $course1 = Course::firstOrCreate([
@@ -6526,8 +6527,8 @@ if (!function_exists('initialize_subjects')) {
 
         $study = Study::firstOrCreate([
             'name' => 'Administració i finances',
+            'shortname' => 'Administració i finances',
             'code' => 'AIF',
-            'law_id' => $loe->id
         ]);
 
         $course1 = Course::firstOrCreate([
@@ -7130,8 +7131,8 @@ if (!function_exists('initialize_subjects')) {
         // Disseny i Edició De Publicacions Impreses
         $study = Study::firstOrCreate([
             'name' => 'Disseny i Edició De Publicacions Impreses',
+            'shortname' => 'Disseny i Edició De Publicacions Impreses',
             'code' => 'DEP',
-            'law_id' => $loe->id
         ]);
         $course1 = Course::firstOrCreate([
             'code' => '1DEP',
@@ -7836,8 +7837,8 @@ if (!function_exists('initialize_subjects')) {
         // Preimpressió digital
         $study = Study::firstOrCreate([
             'name' => 'Preimpressió digital',
+            'shortname' => 'Preimpressió digital',
             'code' => 'PRID',
-            'law_id' => $loe->id
         ]);
         $course1 = Course::firstOrCreate([
             'code' => '1PRID',
@@ -8201,8 +8202,8 @@ if (!function_exists('initialize_fake_subjects')) {
 
         $study = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Desenvolupament Aplicacions Multiplataforma',
             'code' => 'DAM',
-            'law_id' => $loe->id
         ]);
 
         // No existeix 1DAM -> és comú amb 1rASIX
@@ -8792,16 +8793,18 @@ if (! function_exists('create_sample_studies')) {
         $dam->assignFamily($informatica);
         $depInformatica = Department::create([
             'name' => 'Departament Informàtica',
-            'shortname' => 'Informàtica'
+            'shortname' => 'Informàtica',
+            'code' => 'INFORMÀTICA',
+            'order' => 1
         ]);
         $dam->assignDepartment($depInformatica);
         $loe = StudyTag::create([
-            'name' => 'LOE',
+            'value' => 'LOE',
             'description' => 'Ley Orgànica de Educación'
         ]);
         $dam->assignTag($loe);
         $fp = StudyTag::create([
-            'name' => 'FP',
+            'value' => 'FP',
             'description' => 'Formació Professional'
         ]);
         $dam->assignTag($fp);
@@ -8828,22 +8831,23 @@ if (! function_exists('create_sample_studies')) {
 
         $smx = Study::create([
             'name' => 'Farmaci bla bla bla',
-            'shortname' => 'Sistemes',
-            'code' => 'SMX'
+            'shortname' => 'Farmacia',
+            'code' => 'FAR'
         ]);
         $depsanitat = Department::create([
             'name' => 'Departament Sanitat',
-            'shortname' => 'Sanitat'
+            'shortname' => 'Sanitat',
+            'code' => 'SANITAT',
+            'order' => 2
         ]);
         $sanitat = Family::create([
             'name' => 'Sanitat',
+            'code' => 'Sanitat',
         ]);
         $smx->assignFamily($sanitat);
         $smx->assignDepartment($depsanitat);
         $smx->assignTag($loe);
         $smx->assignTag($fp);
-
-
     }
 }
 

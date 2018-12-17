@@ -42,4 +42,17 @@ class Department extends Model
     {
         return $this->hasMany(Teacher::class);
     }
+
+    public function addStudy($study)
+    {
+        $this->studies()->save($study);
+    }
+
+    /**
+     * Get the studies associated to family.
+     */
+    public function studies()
+    {
+        return $this->hasMany(Study::class);
+    }
 }

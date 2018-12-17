@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Tenants;
 
+use App\Models\Department;
 use App\Models\Family;
 use App\Models\Study;
+use App\Models\StudyTag;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -39,7 +41,10 @@ class StudyTest extends TestCase
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function assignFamily()
     {
         $dam = Study::create([
@@ -56,6 +61,70 @@ class StudyTest extends TestCase
         $dam = $dam->fresh();
         $this->assertNotNull($dam->family);
         $this->assertTrue($dam->family->is($informatica));
+    }
 
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function assignDepartment()
+    {
+        $dam = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
+            'code' => 'DAM'
+        ]);
+        $this->assertNull($dam->department);
+        $informatica = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+        $dam->assignDepartment($informatica);
+        $dam = $dam->fresh();
+        $this->assertNotNull($dam->department);
+        $this->assertTrue($dam->department->is($informatica));
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function assignTag()
+    {
+        $dam = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
+            'code' => 'DAM'
+        ]);
+        $this->assertCount(0, $dam->tags);
+        $loe = StudyTag::create([
+            'value' => 'LOE',
+            'description' => 'Ley Orgànica de Educación'
+        ]);
+        $dam->assignTag($loe);
+        $dam = $dam->fresh();
+        $this->assertCount(1,$dam->tags);
+        $this->assertTrue($dam->tags[0]->is($loe));
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function map()
+    {
+        $study = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+        ]);
+
+        $mappedStudy = $study->map();
+
+        $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
+        $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
+        $this->assertEquals('DAM',$mappedStudy['code']);
     }
 }

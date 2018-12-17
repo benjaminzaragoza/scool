@@ -39,7 +39,10 @@ class FamilyTest extends TestCase
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function addStudy()
     {
         $informatica = Family::create([

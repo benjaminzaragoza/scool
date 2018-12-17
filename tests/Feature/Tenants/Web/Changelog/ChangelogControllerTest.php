@@ -35,6 +35,7 @@ class ChangelogControllerTest extends BaseTenantTest
     /** @test */
     public function show_changelog()
     {
+//        $this->withoutExceptionHandling();
         $logs = sample_logs();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'ChangelogManager']);

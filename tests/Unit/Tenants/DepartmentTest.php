@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tenants;
 
 use App\Models\Department;
+use App\Models\Study;
 use App\Models\User;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
@@ -64,5 +65,31 @@ class DepartmentTest extends TestCase
             'head' => 1
         ]);
         $this->assertTrue($deparment->is(Department::findByName('Departament de serveis socioculturals i a la comunitat')));
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function addStudy()
+    {
+        $informatica = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+        $this->assertEmpty($informatica->studies);
+
+        $dam = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
+            'code' => 'DAM'
+        ]);
+        $informatica->addStudy($dam);
+        $informatica = $informatica->fresh();
+        $this->assertCount(1,$informatica->studies);
+        $this->assertTrue($informatica->studies[0]->is($dam));
+
     }
 }

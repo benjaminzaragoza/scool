@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Curriculum\CurriculumIndex;
+use App\Models\Study;
 
 
 /**
@@ -22,7 +23,7 @@ class CurriculumController extends Controller
     public function index(CurriculumIndex $request)
     {
 
-        $studies = collect([]);
+        $studies = map_collection(Study::all());
         return view('tenants.curriculum.index', compact('studies'));
     }
 }

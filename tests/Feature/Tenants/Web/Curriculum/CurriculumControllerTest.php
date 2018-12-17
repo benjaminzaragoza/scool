@@ -30,7 +30,10 @@ class CurriculumControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function show_curriculum_module()
     {
         $studies = create_sample_studies();
@@ -40,43 +43,12 @@ class CurriculumControllerTest extends BaseTenantTest
 
         $response->assertViewIs('tenants.curriculum.index');
         $response->assertViewHas('studies', function ($returnedStudies) use ($studies) {
-            dd($returnedStudies);
-//            return
-//                $returnedLogs[0]['user_name']=== $logs[0]['user']->name &&
-//                $returnedLogs[0]['color'] === 'teal' &&
-//                $returnedLogs[0]['action_type'] === 'update' &&
-//                $returnedLogs[0]['text'] === "Ha creat la incidència TODO_LINK_INCIDENCIA" &&
-//                $returnedLogs[0]['icon'] === 'home' &&
-//                $returnedLogs[1]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
-//                $returnedLogs[1]['action_type'] === 'update' &&
-//                $returnedLogs[2]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
-//                $returnedLogs[2]['action_type'] === 'update' &&
-//                $returnedLogs[3]['text'] === "BLA BLA BLA";
+            return
+                count($returnedStudies) === 4 &&
+                $returnedStudies[0]['name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedStudies[0]['shortname'] === 'Des. Apps Multiplataforma' &&
+                $returnedStudies[0]['code'] === "DAM";
         });
-
-//        $logs = sample_logs();
-//        $user = factory(User::class)->create();
-//        $role = Role::firstOrCreate(['name' => 'ChangelogManager']);
-//        Config::set('auth.providers.users.model', User::class);
-//        $user->assignRole($role);
-//        $this->actingAs($user);
-//        $response = $this->get('/changelog');
-//        $response->assertSuccessful();
-//        $response->assertViewIs('tenants.changelog.index');
-//        $response->assertViewHas('logs', function ($returnedLogs) use ($logs) {
-//            return
-//                $returnedLogs[0]['user_name']=== $logs[0]['user']->name &&
-//                $returnedLogs[0]['color'] === 'teal' &&
-//                $returnedLogs[0]['action_type'] === 'update' &&
-//                $returnedLogs[0]['text'] === "Ha creat la incidència TODO_LINK_INCIDENCIA" &&
-//                $returnedLogs[0]['icon'] === 'home' &&
-//                $returnedLogs[1]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
-//                $returnedLogs[1]['action_type'] === 'update' &&
-//                $returnedLogs[2]['text'] === "Ha modificat la incidència TODO_LINK_INCIDENCIA" &&
-//                $returnedLogs[2]['action_type'] === 'update' &&
-//                $returnedLogs[3]['text'] === "BLA BLA BLA";
-//        });
-//        $response->assertViewHas('users');
     }
 
     /** @test */
