@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
@@ -255,6 +256,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //Git info
             Route::get('/git/info','\\' . GitController::class . '@index');
+
+            // Studies
+            Route::get('/studies','\\' . StudiesController::class . '@index');
 
         });
 

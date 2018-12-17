@@ -36,7 +36,6 @@ class CurriculumControllerTest extends BaseTenantTest
      */
     public function show_curriculum_module()
     {
-        $this->withoutExceptionHandling();
         $studies = create_sample_studies();
         $this->loginAsSuperAdmin();
         $response = $this->get('/curriculum');
