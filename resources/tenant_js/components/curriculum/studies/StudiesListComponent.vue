@@ -113,8 +113,12 @@
                         <td class="text-xs-left">
                             <inline-text-field-edit-dialog v-model="study" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-text="study.department_code"></td>
-                        <td class="text-xs-left" v-text="study.family_code"></td>
+                        <td class="text-xs-left">
+                            <study-department :study="study" :departments="departments"></study-department>
+                        </td>
+                        <td class="text-xs-left">
+                            <study-family :study="study" :studies="studies"></study-family>
+                        </td>
                         <td class="text-xs-left">
                             TAGS TODO
                             <!--<study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>-->
@@ -144,6 +148,8 @@
 import FullScreenDialog from '../../ui/FullScreenDialog'
 import StudyDelete from './StudyDeleteComponent'
 import StudyShowComponent from './StudyShowComponent'
+import StudyDepartment from './StudyDepartment'
+import StudyFamily from './StudyFamily'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import * as actions from '../../../store/action-types'
 import * as mutations from '../../../store/mutation-types'
@@ -165,7 +171,9 @@ export default {
     'fullscreen-dialog': FullScreenDialog,
     'study-delete': StudyDelete,
     'study-show': StudyShowComponent,
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'study-department': StudyDepartment,
+    'study-family': StudyFamily,
   },
   data () {
     return {
