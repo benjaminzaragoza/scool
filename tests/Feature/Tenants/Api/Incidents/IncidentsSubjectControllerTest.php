@@ -42,7 +42,6 @@ class IncidentsSubjectControllerTest extends BaseTenantTest {
      */
     public function manager_can_update_incident_subject()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'name' => 'Carles Puigdemont'
         ]);

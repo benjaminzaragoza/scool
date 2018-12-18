@@ -258,25 +258,7 @@ class StudiesControllerTest extends BaseTenantTest
     {
         $this->loginAsSuperAdmin('api');
 
-        $department = Department::create([
-            'name' => "Departament d'Informàtica",
-            'shortname' => 'Informàtica',
-            'code' => 'INF',
-            'order' => 1
-        ]);
-
-        $family = Family::create([
-            'name' => 'Informàtica',
-            'code' => 'INF',
-        ]);
-
-        $study= Study::create([
-            'name' => 'Desenvolupament Aplicacions Multiplataforma',
-            'shortname' => 'Des. Aplicacions Multiplataforma',
-            'code' => 'DAM',
-            'department_id' => $department->id,
-            'family_id' => $family->id,
-        ]);
+        $study = create_sample_study();
 
         $response = $this->json('DELETE','/api/v1/studies/' . $study->id);
 

@@ -117,7 +117,6 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
     /** @test */
     public function can_remove_tag_from_incident()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
         Config::set('auth.providers.users.model', User::class);

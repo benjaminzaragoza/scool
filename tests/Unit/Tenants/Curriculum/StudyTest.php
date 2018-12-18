@@ -142,6 +142,8 @@ class StudyTest extends TestCase
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);
 
+        $this->assertEquals('studies',$mappedStudy['api_uri']);
+
         $this->assertEquals($department->id,$mappedStudy['department_id']);
         $this->assertEquals("Departament d'Informàtica",$mappedStudy['department_name']);
         $this->assertEquals('Informàtica',$mappedStudy['department_shortname']);

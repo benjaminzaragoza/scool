@@ -8869,6 +8869,29 @@ if (! function_exists('create_sample_studies')) {
     }
 }
 
+if (! function_exists('create_sample_study')) {
+    function create_sample_study()
+    {
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
 
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
+        return Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+            'department_id' => $department->id,
+            'family_id' => $family->id,
+        ]);
+    }
+}
 
 

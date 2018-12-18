@@ -104,7 +104,9 @@
                 <template slot="items" slot-scope="{item: study}">
                     <tr :id="'study_row_' + study.id">
                         <td class="text-xs-left" v-text="study.id"></td>
-                        <td class="text-xs-left" :title="study.shortname" v-text="study.code"></td>
+                        <td class="text-xs-left">
+                            <inline-text-field-edit-dialog v-model="study" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
+                        </td>
                         <td class="text-xs-left" v-text="study.name"></td>
                         <td class="text-xs-left" v-text="study.department_code"></td>
                         <td class="text-xs-left" v-text="study.family_code"></td>
@@ -137,6 +139,7 @@
 import FullScreenDialog from '../../ui/FullScreenDialog'
 import StudyDelete from './StudyDeleteComponent'
 import StudyShowComponent from './StudyShowComponent'
+import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import * as actions from '../../../store/action-types'
 import * as mutations from '../../../store/mutation-types'
 
@@ -157,6 +160,7 @@ export default {
     'fullscreen-dialog': FullScreenDialog,
     'study-delete': StudyDelete,
     'study-show': StudyShowComponent,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
   },
   data () {
     return {

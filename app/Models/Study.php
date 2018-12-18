@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ApiURI;
 use App\Models\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Study extends Model
 {
-    use FormattedDates;
+    use FormattedDates, ApiURI;
 
     protected $guarded = [];
 
@@ -70,6 +71,7 @@ class Study extends Model
             'name' => $this->name,
             'shortname' => $this->shortname,
             'code' => $this->code,
+            'api_uri' => $this->api_uri,
             'created_at' => $this->created_at,
             'created_at_timestamp' => $this->created_at_timestamp,
             'formatted_created_at' => $this->formatted_created_at,

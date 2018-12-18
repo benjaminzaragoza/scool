@@ -66,7 +66,7 @@ export default {
     save () {
       if (!this.$v.$invalid) {
         window.axios.put(this.url(), {
-          subject: this.value
+          [this.field]: this.value
         }).then(() => {
           this.$emit('save', this.value)
         }).catch(error => {

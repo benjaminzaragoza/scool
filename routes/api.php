@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
@@ -261,6 +262,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/studies','\\' . StudiesController::class . '@index');
             Route::post('/studies','\\' . StudiesController::class . '@store');
             Route::delete('/studies/{study}','\\' . StudiesController::class . '@destroy');
+
+            Route::put('/studies/{study}/code','\\' . StudiesCodeController::class . '@update');
 
         });
 
