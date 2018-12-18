@@ -24,7 +24,7 @@ class StudiesController extends Controller
      * Display a listing of the resource.
      *
      * @param StudyIndex $request
-     * @return Incident[]|\Illuminate\Database\Eloquent\Collection
+     * @return mixed
      */
     public function index(StudyIndex $request)
     {
@@ -73,11 +73,11 @@ class StudiesController extends Controller
      * @return Study
      * @throws \Exception
      */
-    public function destroy(StudyDestroy $request, $tenant, Study $incident)
+    public function destroy(StudyDestroy $request, $tenant, Study $study)
     {
-//        $oldIncident = $incident->map(false);
-//        $incident->delete();
+//        $oldIncident = $study->map(false);
+        $study->delete();
 //        event(new IncidentDeleted($oldIncident));
-//        return $incident;
+        return $study;
     }
 }

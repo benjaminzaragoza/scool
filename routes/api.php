@@ -260,6 +260,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Studies
             Route::get('/studies','\\' . StudiesController::class . '@index');
             Route::post('/studies','\\' . StudiesController::class . '@store');
+            Route::delete('/studies/{study}','\\' . StudiesController::class . '@destroy');
 
         });
 

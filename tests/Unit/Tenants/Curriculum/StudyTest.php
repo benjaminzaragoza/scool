@@ -115,10 +115,24 @@ class StudyTest extends TestCase
      */
     public function map()
     {
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
         $study = Study::create([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
             'shortname' => 'Des. Aplicacions Multiplataforma',
             'code' => 'DAM',
+            'department_id' => $department->id,
+            'family_id' => $family->id
         ]);
 
         $mappedStudy = $study->map();
@@ -127,6 +141,15 @@ class StudyTest extends TestCase
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);
+
+        $this->assertEquals($department->id,$mappedStudy['department_id']);
+        $this->assertEquals("Departament d'Informàtica",$mappedStudy['department_name']);
+        $this->assertEquals('Informàtica',$mappedStudy['department_shortname']);
+        $this->assertEquals('INF',$mappedStudy['department_code']);
+
+        $this->assertEquals($family->id,$mappedStudy['family_id']);
+        $this->assertEquals('Informàtica',$mappedStudy['family_name']);
+        $this->assertEquals('INF',$mappedStudy['family_code']);
 
         $this->assertNotNull($mappedStudy['created_at']);
         $this->assertNotNull($mappedStudy['updated_at']);

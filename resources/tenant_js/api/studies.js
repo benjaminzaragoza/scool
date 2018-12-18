@@ -12,5 +12,8 @@ export default {
       'family': study.family,
       'department': study.department
     })
+  },
+  delete (study) {
+    return axios.delete('/api/v1/studies/' + study.id)
   }
 }

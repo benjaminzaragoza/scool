@@ -247,9 +247,16 @@ class StudiesControllerTest extends BaseTenantTest
     public function can_store_studies_validation()
     {
         $this->loginAsSuperAdmin('api');
+        $response = $this->json('POST', '/api/v1/studies', []);
+        $response->assertStatus(422);
+    }
 
-//        Event::fake();
-//        create_setting('studies_manager_email','incidencies@iesebre.com','IncidentsManager');
+    /**
+     * @test
+     */
+    public function can_delete_studies()
+    {
+        $this->loginAsSuperAdmin('api');
 
         $department = Department::create([
             'name' => "Departament d'Informàtica",
@@ -263,7 +270,19 @@ class StudiesControllerTest extends BaseTenantTest
             'code' => 'INF',
         ]);
 
-        $response = $this->json('POST', '/api/v1/studies', []);
-        $response->assertStatus(422);
+        $study= Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+            'department_id' => $department->id,
+            'family_id' => $family->id,
+        ]);
+
+        $response = $this->json('DELETE','/api/v1/studies/' . $study->id);
+
+        $response->assertSuccessful();
+        $study = $study->fresh();
+        $this->assertNull($study);
+
     }
 }

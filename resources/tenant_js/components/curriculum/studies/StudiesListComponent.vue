@@ -106,10 +106,8 @@
                         <td class="text-xs-left" v-text="study.id"></td>
                         <td class="text-xs-left" :title="study.shortname" v-text="study.code"></td>
                         <td class="text-xs-left" v-text="study.name"></td>
-                        <!--<td class="text-xs-left">-->
-                            <!--<inline-text-area-edit-dialog v-model="study" :marked="false" field="description" label="Descripció" @save="refresh"></inline-text-area-edit-dialog>-->
-                        <!--</td>-->
-
+                        <td class="text-xs-left" v-text="study.department_code"></td>
+                        <td class="text-xs-left" v-text="study.family_code"></td>
                         <td class="text-xs-left">
                             TAGS TODO
                             <!--<study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>-->
@@ -117,28 +115,15 @@
                         <td class="text-xs-left" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
                         <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
-                            TODO ACTIONS
                             <!--<changelog-loggable :loggable="study"></changelog-loggable>-->
-                            <!--<fullscreen-dialog-->
-                                    <!--:badge="study.comments && study.comments.length"-->
-                                    <!--badge-color="teal"-->
-                                    <!--icon="chat_bubble_outline"-->
-                                    <!--color="teal"-->
-                                    <!--v-model="addCommentDialog"-->
-                                    <!--title="Afegir un comentari"-->
-                                    <!--:resource="study"-->
-                                    <!--v-if="addCommentDialog === false || addCommentDialog === study.id">-->
-                                <!--<study-show :show-data="false" :study="study" v-role="'Incidents'" @close="addCommentDialog = false" :tags="dataTags" :study-users="studyUsers"></study-show>-->
-                            <!--</fullscreen-dialog>-->
-                            <!--<fullscreen-dialog-->
-                                    <!--v-model="showDialog"-->
-                                    <!--title="Mostra la incidència"-->
-                                    <!--:resource="study"-->
-                                    <!--v-if="showDialog === false || showDialog === study.id">-->
-                                <!--<study-show :study="study" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :study-users="studyUsers"></study-show>-->
-                            <!--</fullscreen-dialog>-->
-                            <!--<study-close v-model="study" v-if="$can('close',study) || $hasRole('IncidentsManager')" @toggle="refresh"></study-close>-->
-                            <!--<study-delete :study="study" v-if="$hasRole('IncidentsManager')"></study-delete>-->
+                            <fullscreen-dialog
+                                    v-model="showDialog"
+                                    title="Mostra l'estudi"
+                                    :resource="study"
+                                    v-if="showDialog === false || showDialog === study.id">
+                                <study-show :study="study" @close="showDialog = false" :tags="dataTags"></study-show>
+                            </fullscreen-dialog>
+                            <study-delete :study="study" v-if="$hasRole('CurriculumManager')"></study-delete>
                         </td>
                     </tr>
                 </template>
@@ -150,6 +135,8 @@
 
 <script>
 import FullScreenDialog from '../../ui/FullScreenDialog'
+import StudyDelete from './StudyDeleteComponent'
+import StudyShowComponent from './StudyShowComponent'
 import * as actions from '../../../store/action-types'
 import * as mutations from '../../../store/mutation-types'
 
@@ -167,7 +154,9 @@ var filters = {
 export default {
   name: 'StudiesListComponent',
   components: {
-    'fullscreen-dialog': FullScreenDialog
+    'fullscreen-dialog': FullScreenDialog,
+    'study-delete': StudyDelete,
+    'study-show': StudyShowComponent,
   },
   data () {
     return {
@@ -179,7 +168,8 @@ export default {
       },
       filter: 'all',
       selectedTags: [],
-      dataTags: this.tags
+      dataTags: this.tags,
+      showDialog: false
     }
   },
   computed: {
@@ -200,6 +190,8 @@ export default {
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       headers.push({ text: 'Codi', value: 'code' })
       headers.push({ text: 'Nom', value: 'name' })
+      headers.push({ text: 'Departament', value: 'department_code' })
+      headers.push({ text: 'Família', value: 'family_code' })
       headers.push({ text: 'Etiquetes', value: 'tags' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })

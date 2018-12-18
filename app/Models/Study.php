@@ -78,6 +78,13 @@ class Study extends Model
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'department_id' => optional($this->department)->id,
+            'department_name' => optional($this->department)->name,
+            'department_shortname' => optional($this->department)->shortname,
+            'department_code' => optional($this->department)->code,
+            'family_id' => optional($this->family)->id,
+            'family_name' => optional($this->family)->name,
+            'family_code' => optional($this->family)->code
         ];
     }
 

@@ -23,4 +23,14 @@ export default {
       })
     })
   },
+  [ actions.DELETE_STUDY ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.delete(incident).then(response => {
+        context.commit(mutations.DELETE_STUDY, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
