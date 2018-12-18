@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Incidents;
 
 use App\Events\Incidents\IncidentDescriptionUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Incidents\StudyCodeUpdated;
+use App\Http\Requests\Incidents\UpdateDescriptionIncident;
 use App\Models\Incident;
 
 /**
@@ -17,12 +17,12 @@ class IncidentsDescriptionController extends Controller
     /**
      * Update incident description.
      *
-     * @param StudyCodeUpdated $request
+     * @param UpdateDescriptionIncident $request
      * @param $tenant
      * @param Incident $incident
      * @return array
      */
-    public function update(StudyCodeUpdated $request, $tenant, Incident $incident)
+    public function update(UpdateDescriptionIncident $request, $tenant, Incident $incident)
     {
         $oldIncident = $incident->map(false);
         $incident->description = $request->description;
