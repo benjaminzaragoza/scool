@@ -107,7 +107,12 @@
                         <td class="text-xs-left">
                             <inline-text-field-edit-dialog v-model="study" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-text="study.name"></td>
+                        <td class="text-xs-left">
+                            <inline-text-field-edit-dialog v-model="study" field="name" label="Nom" @save="refresh"></inline-text-field-edit-dialog>
+                        </td>
+                        <td class="text-xs-left">
+                            <inline-text-field-edit-dialog v-model="study" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
+                        </td>
                         <td class="text-xs-left" v-text="study.department_code"></td>
                         <td class="text-xs-left" v-text="study.family_code"></td>
                         <td class="text-xs-left">
@@ -194,6 +199,7 @@ export default {
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       headers.push({ text: 'Codi', value: 'code' })
       headers.push({ text: 'Nom', value: 'name' })
+      headers.push({ text: 'Nom curt', value: 'shortname' })
       headers.push({ text: 'Departament', value: 'department_code' })
       headers.push({ text: 'Família', value: 'family_code' })
       headers.push({ text: 'Etiquetes', value: 'tags' })

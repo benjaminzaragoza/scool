@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Events\Studies\StudyNameUpdated;
+use App\Events\Studies\StudyShortnameUpdated;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -10,11 +10,11 @@ use Illuminate\Contracts\Console\Kernel;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class StudiesNameControllerTest.
+ * Class StudiesShortnameControllerTest.
  *
  * @package Tests\Feature\Tenants\Api
  */
-class StudiesNameControllerTest extends BaseTenantTest {
+class StudiesShortnameControllerTest extends BaseTenantTest {
 
     use RefreshDatabase, CanLogin;
 
@@ -38,25 +38,26 @@ class StudiesNameControllerTest extends BaseTenantTest {
      */
     public function can_update_study_name()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $study = create_sample_study();
 
         Event::fake();
 
-        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
-            'name' => 'NOUNOM'
+        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/shortname',[
+            'shortname' => 'NOUNOMCURT'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyNameUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(StudyShortnameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());
-        $this->assertEquals('NOUNOM',$result->name);
+        $this->assertEquals('NOUNOMCURT',$result->shortname);
         $this->assertEquals($result->id,$study->id);
 
         $study = $study->fresh();
-        $this->assertEquals($study->name,'NOUNOM');
+        $this->assertEquals($study->shortname,'NOUNOMCURT');
     }
 
     /**
@@ -72,18 +73,18 @@ class StudiesNameControllerTest extends BaseTenantTest {
         Event::fake();
 
         $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
-            'name' => 'NOUNOM'
+            'name' => 'NOUNOMCURT'
         ]);
         $response->assertSuccessful();
         Event::assertDispatched(StudyNameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());
-        $this->assertEquals('NOUNOM',$result->name);
+        $this->assertEquals('NOUNOMCURT',$result->name);
         $this->assertEquals($result->id,$study->id);
 
         $study = $study->fresh();
-        $this->assertEquals($study->name,'NOUNOM');
+        $this->assertEquals($study->name,'NOUNOMCURT');
     }
 
     /**
@@ -95,7 +96,7 @@ class StudiesNameControllerTest extends BaseTenantTest {
         $this->login('api');
         $study = create_sample_study();
         $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
-            'name' => 'NOUNOM'
+            'name' => 'NOUNOMCURT'
         ]);
         $response->assertStatus(403);
     }
@@ -108,7 +109,7 @@ class StudiesNameControllerTest extends BaseTenantTest {
     {
         $study = create_sample_study();
         $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
-            'name' => 'NOUNOM'
+            'name' => 'NOUNOMCURT'
         ]);
         $response->assertStatus(401);
     }
