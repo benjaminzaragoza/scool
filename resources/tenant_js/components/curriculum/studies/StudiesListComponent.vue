@@ -224,6 +224,10 @@ export default {
         return undefined
       }
     },
+    departments: {
+      type: Array,
+      required: true
+    },
     study: {
       type: Object,
       default: function () {

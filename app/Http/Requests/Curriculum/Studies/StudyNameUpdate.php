@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateStudyShortname.
+ * Class UpdateStudyName.
  *
  * @package App\Http\Requests
  */
-class UpdateStudyShortname extends FormRequest
+class StudyNameUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,6 +29,6 @@ class UpdateStudyShortname extends FormRequest
      */
     public function rules()
     {
-        return ['shortname' => 'required'];
+        return ['name' => 'required'];
     }
 }

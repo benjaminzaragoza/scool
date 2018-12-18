@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyShortnameUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Studies\UpdateStudyShortname;
+use App\Http\Requests\Studies\StudyShortnameUpdate;
 use App\Models\Incident;
 use App\Models\Study;
 
@@ -18,12 +18,12 @@ class StudiesShortnameController extends Controller
     /**
      * Update study name.
      *
-     * @param UpdateStudyShortname $request
+     * @param StudyShortnameUpdate $request
      * @param $tenant
      * @param Incident $incident
      * @return Incident
      */
-    public function update(UpdateStudyShortname $request, $tenant,Study $study)
+    public function update(StudyShortnameUpdate $request, $tenant, Study $study)
     {
         $oldStudy = $study->map(false);
         $study->shortname = $request->shortname;

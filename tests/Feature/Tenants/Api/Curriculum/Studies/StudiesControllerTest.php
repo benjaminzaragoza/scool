@@ -11,7 +11,7 @@ use Tests\BaseTenantTest;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class CurriculumControllerTest.
+ * Class StudiesControllerTest.
  *
  * @package Tests\Feature
  */

@@ -82,8 +82,8 @@ import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent
 import FamilySelectComponent from '../families/FamilySelectComponent'
 
 export default {
-  'name': 'StudyAdd',
-  'components': {
+  name: 'StudyAdd',
+  components: {
     'family-select': FamilySelectComponent,
     'department-select': DepartmentSelectComponent
   },
