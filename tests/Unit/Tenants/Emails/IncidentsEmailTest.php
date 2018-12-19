@@ -6,8 +6,8 @@ use App\Events\Incidents\IncidentDescriptionUpdated;
 use App\Events\Incidents\IncidentReplyAdded;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
-use App\Events\Incidents\StudyTagAdded;
-use App\Events\Incidents\StudyTagRemoved;
+use App\Events\Incidents\IncidentTagAdded;
+use App\Events\Incidents\IncidentTagRemoved;
 use App\Listeners\Incidents\SendIncidentAssignedEmail;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
@@ -245,7 +245,7 @@ class IncidentsEmailTest extends BaseTenantTest
             'user_id' => $user->id
         ]);
         $incident->addReply($reply);
-        $event = new StudyTagAdded($incident,$reply);
+        $event = new IncidentTagAdded($incident,$reply);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
@@ -271,7 +271,7 @@ class IncidentsEmailTest extends BaseTenantTest
             'user_id' => $user->id
         ]);
         $incident->addReply($reply);
-        $event = new StudyTagRemoved($incident,$reply);
+        $event = new IncidentTagRemoved($incident,$reply);
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         Mail::fake();
         $listener->handle($event);
