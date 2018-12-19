@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Api\Studies\Curriculum;
 
+use App\Events\Studies\StudyStored;
 use App\Models\Department;
 use App\Models\Family;
 use App\Models\Study;
+use Event;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -110,8 +112,7 @@ class StudiesControllerTest extends BaseTenantTest
     {
         $this->loginAsSuperAdmin('api');
 
-//        Event::fake();
-//        create_setting('studies_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Event::fake();
 
         $department = Department::create([
             'name' => "Departament d'Informàtica",
@@ -134,10 +135,9 @@ class StudiesControllerTest extends BaseTenantTest
         ]);
         $response->assertSuccessful();
         $createdStudy = json_decode($response->getContent());
-
-//        Event::assertDispatched(IncidentStored::class,function ($event){
-//            return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
-//        });
+        Event::assertDispatched(StudyStored::class,function ($event) use ($createdStudy){
+            return $event->study->is(Study::findOrFail($createdStudy->id));
+        });
         $this->assertSame($createdStudy->id,1);
         $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
         $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
@@ -175,12 +175,11 @@ class StudiesControllerTest extends BaseTenantTest
     /**
      * @test
      */
-    public function curriculum_manager_can_store_studies()
+    public function curriuclum_manager_can_store_studies()
     {
         $this->loginAsCurriculumManager('api');
 
-//        Event::fake();
-//        create_setting('studies_manager_email','incidencies@iesebre.com','IncidentsManager');
+        Event::fake();
 
         $department = Department::create([
             'name' => "Departament d'Informàtica",
@@ -203,10 +202,9 @@ class StudiesControllerTest extends BaseTenantTest
         ]);
         $response->assertSuccessful();
         $createdStudy = json_decode($response->getContent());
-
-//        Event::assertDispatched(IncidentStored::class,function ($event){
-//            return $event->incident->subject === 'Ordinador Aula 36 no funciona' && $event->incident->description === "El ordinador de l'aula 36 bla bla la";
-//        });
+        Event::assertDispatched(StudyStored::class,function ($event) use ($createdStudy){
+            return $event->study->is(Study::findOrFail($createdStudy->id));
+        });
         $this->assertSame($createdStudy->id,1);
         $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
         $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');

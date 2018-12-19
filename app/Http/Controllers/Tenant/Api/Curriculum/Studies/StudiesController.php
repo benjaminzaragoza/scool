@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
-//use App\Events\Incidents\IncidentDeleted;
-//use App\Events\Incidents\IncidentShowed;
-//use App\Events\Incidents\IncidentStored;
+use App\Events\Studies\StudyStored;
 use App\Http\Requests\Curriculum\Studies\StudyIndex;
 use App\Http\Requests\Curriculum\Studies\StudyShow;
 use App\Http\Requests\Curriculum\Studies\StudyStore;
@@ -46,7 +44,7 @@ class StudiesController extends Controller
             'department_id' => $request->department,
             'family_id' => $request->family
         ]);
-//        event(new IncidentStored($study));
+        event(new StudyStored($study));
         return $study->map();
     }
 
