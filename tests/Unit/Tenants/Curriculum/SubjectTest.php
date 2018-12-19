@@ -118,6 +118,5 @@ class SubjectTest extends TestCase
         $this->assertNotNull($mappedSubject['formatted_created_at_diff']);
         $this->assertNotNull($mappedSubject['formatted_updated_at_diff']);
 
-
     }
 }

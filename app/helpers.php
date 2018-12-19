@@ -8276,7 +8276,7 @@ if (!function_exists('initialize_fake_subjects')) {
 
         $study = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
-            'shortname' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
             'code' => 'DAM',
         ]);
 
@@ -8287,14 +8287,14 @@ if (!function_exists('initialize_fake_subjects')) {
 //        ]);
         $course2 = Course::firstOrCreate([
             'code' => '2DAM',
-            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
             'order' => 2
         ]);
 
 //        Mòdul professional (Subject Group) 7: desenvolupament d’interfícies
         $group = SubjectGroup::firstOrCreate([
-            'shortname' => 'Desenvolupament d’interfícies',
             'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
             'code' =>  'DAM_MP7',
             'number' => 7,
             'study_id' => $study->id,
@@ -8310,7 +8310,7 @@ if (!function_exists('initialize_fake_subjects')) {
 
         Subject::firstOrCreate([
             'name' => 'Disseny i implementació d’interfícies',
-            'shortname'=> 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Interfícies',
             'code' =>  'DAM_MP7_UF1',
             'number' => 1,
             'subject_group_id' => $group->id,

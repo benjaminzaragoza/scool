@@ -44,18 +44,46 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
 
         $response->assertViewIs('tenants.curriculum.subjects.index');
         $response->assertViewHas('subjects', function ($returnedSubjects) use ($subjects) {
+            dump($returnedSubjects[0]);
             return
-                count($returnedSubjects) === 4 &&
-                $returnedSubjects[0]['name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
-                $returnedSubjects[0]['shortname'] === 'Des. Apps Multiplataforma' &&
-                $returnedSubjects[0]['code'] === "DAM" &&
+                count($returnedSubjects) === 2 &&
+                $returnedSubjects[0]['id'] === 1 &&
+                $returnedSubjects[0]['name'] === "Disseny i implementació d’interfícies" &&
+                $returnedSubjects[0]['shortname'] === 'Interfícies' &&
+                $returnedSubjects[0]['code'] === 'DAM_MP7_UF1' &&
+                $returnedSubjects[0]['number'] === 1 &&
+                $returnedSubjects[0]['hours'] === 79 &&
+                $returnedSubjects[0]['start'] === '2017-09-15' &&
+                $returnedSubjects[0]['end'] === '2018-06-01' &&
+                $returnedSubjects[0]['api_uri'] === 'subjects' &&
                 $returnedSubjects[0]['created_at'] !== null &&
                 $returnedSubjects[0]['created_at_timestamp'] !== null &&
                 $returnedSubjects[0]['formatted_created_at'] !== null &&
                 $returnedSubjects[0]['formatted_created_at_diff'] !== null &&
                 $returnedSubjects[0]['updated_at_timestamp'] !== null &&
                 $returnedSubjects[0]['formatted_updated_at'] !== null &&
-                $returnedSubjects[0]['formatted_updated_at_diff'] !== null;
+                $returnedSubjects[0]['formatted_updated_at_diff'] !== null &&
+
+                $returnedSubjects[0]['subject_group_id'] === 1 &&
+                $returnedSubjects[0]['subject_group_name'] === 'Desenvolupament d’interfícies' &&
+                $returnedSubjects[0]['subject_group_shortname'] === 'Interfícies' &&
+                $returnedSubjects[0]['subject_group_code'] === 'DAM_MP7' &&
+                $returnedSubjects[0]['subject_group_number'] === 7 &&
+                $returnedSubjects[0]['subject_group_hours'] === 99 &&
+                $returnedSubjects[0]['subject_group_free_hours'] === 0 &&
+                $returnedSubjects[0]['subject_group_week_hours'] === 3 &&
+                $returnedSubjects[0]['subject_group_start'] === '2017-09-15' &&
+                $returnedSubjects[0]['subject_group_end'] === '2018-06-01' &&
+                $returnedSubjects[0]['subject_group_type'] === 'Normal' &&
+                $returnedSubjects[0]['study_id'] === 1 &&
+                $returnedSubjects[0]['study_name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedSubjects[0]['study_shortname'] === 'Des. Apps Multiplataforma' &&
+                $returnedSubjects[0]['study_code'] === 'DAM' &&
+                $returnedSubjects[0]['course_id'] === 1 &&
+                $returnedSubjects[0]['course_name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedSubjects[0]['course_code'] === '2DAM' &&
+                $returnedSubjects[0]['course_order'] === 2 &&
+                $returnedSubjects[0]['type_id'] === 1;
         });
 //        $response->assertViewHas('departments', function ($returnedDepartments) {
 //            return
