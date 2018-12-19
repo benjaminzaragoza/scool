@@ -265,7 +265,6 @@ class SubjectsControllerTest extends BaseTenantTest
      */
     public function can_delete_subjects()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $subject = create_sample_subject();
@@ -278,5 +277,49 @@ class SubjectsControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $subject = $subject->fresh();
         $this->assertNull($subject);
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function manager_can_delete_subjects()
+    {
+        $this->loginAsCurriculumManager('api');
+
+        $subject = create_sample_subject();
+        Event::fake();
+        $response = $this->json('DELETE','/api/v1/subjects/' . $subject->id);
+        Event::assertDispatched(SubjectDeleted::class,function ($event) use ($subject){
+            return $event->oldSubject['id'] === $subject->id;
+        });
+
+        $response->assertSuccessful();
+        $subject = $subject->fresh();
+        $this->assertNull($subject);
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function regular_user_cannot_delete_subjects()
+    {
+        $this->login('api');
+
+        $subject = create_sample_subject();
+        $response = $this->json('DELETE','/api/v1/subjects/' . $subject->id);
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function guest_user_cannot_delete_subjects()
+    {
+        $subject = create_sample_subject();
+        $response = $this->json('DELETE','/api/v1/subjects/' . $subject->id);
+        $response->assertStatus(401);
     }
 }
