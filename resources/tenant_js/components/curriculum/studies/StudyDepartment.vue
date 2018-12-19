@@ -1,6 +1,6 @@
 <template>
     <span>
-        <span :title="study.department_code" v-text="study.department_name"></span>
+        <span :title="study.department_name" v-text="study.department_code"></span>
         <v-btn v-role="'CurriculumManager'" icon flat color="teal" class="text--white ma-0" @click="dialog = true">
           <v-icon v-if="study.department_id">edit</v-icon>
           <v-icon v-else>add</v-icon>

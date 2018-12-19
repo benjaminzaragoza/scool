@@ -117,7 +117,7 @@
                             <study-department :study="study" :departments="departments" @assigned="refresh"></study-department>
                         </td>
                         <td class="text-xs-left">
-                            <study-family :study="study" :studies="studies"></study-family>
+                            <study-family :study="study" :families="families" @assigned="refresh"></study-family>
                         </td>
                         <td class="text-xs-left">
                             TAGS TODO
@@ -225,6 +225,10 @@ export default {
       }
     },
     departments: {
+      type: Array,
+      required: true
+    },
+    families: {
       type: Array,
       required: true
     },

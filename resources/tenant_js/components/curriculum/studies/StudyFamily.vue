@@ -1,6 +1,6 @@
 <template>
     <span>
-        <span :title="study.family_code" v-text="study.family_name"></span>
+        <span :title="study.family_name" v-text="study.family_code"></span>
         <v-btn v-role="'CurriculumManager'" icon flat color="teal" class="text--white ma-0" @click="dialog = true">
           <v-icon v-if="study.family_id">edit</v-icon>
           <v-icon v-else>add</v-icon>
