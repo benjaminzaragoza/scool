@@ -51,7 +51,6 @@ class StudiesControllerTest extends BaseTenantTest
         $this->assertSame(1,$studies[0]->id);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$studies[0]->name);
         $this->assertEquals('Des. Apps Multiplataforma',$studies[0]->shortname);
-        $this->assertEquals('Des. Apps Multiplataforma',$studies[0]->shortname);
         $this->assertEquals('DAM',$studies[0]->code);
         $this->assertNotNull($studies[0]->created_at);
         $this->assertNotNull($studies[0]->created_at_timestamp);
@@ -185,7 +184,7 @@ class StudiesControllerTest extends BaseTenantTest
      * @test
      * @group curriculum
      */
-    public function curriuclum_manager_can_store_studies()
+    public function curriculum_manager_can_store_studies()
     {
         $this->loginAsCurriculumManager('api');
 
@@ -275,6 +274,50 @@ class StudiesControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $study = $study->fresh();
         $this->assertNull($study);
+    }
 
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function curriculum_manager_can_delete_studies()
+    {
+        $this->loginAsCurriculumManager('api');
+
+        $study = create_sample_study();
+
+        $response = $this->json('DELETE','/api/v1/studies/' . $study->id);
+
+        $response->assertSuccessful();
+        $study = $study->fresh();
+        $this->assertNull($study);
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function regular_user_cannot_delete_studies()
+    {
+        $this->login('api');
+
+        $study = create_sample_study();
+
+        $response = $this->json('DELETE','/api/v1/studies/' . $study->id);
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function guest_user_cannot_delete_studies()
+    {
+       $study = create_sample_study();
+
+        $response = $this->json('DELETE','/api/v1/studies/' . $study->id);
+
+        $response->assertStatus(401);
     }
 }

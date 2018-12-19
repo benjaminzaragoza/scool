@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class IncidentsControllerTest.
@@ -20,7 +21,7 @@ use Illuminate\Contracts\Console\Kernel;
  */
 class IncidentsControllerTest extends BaseTenantTest {
 
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -258,4 +259,28 @@ class IncidentsControllerTest extends BaseTenantTest {
 
     }
 
+    /**
+     * @test
+     */
+    public function can_delete_incidents()
+    {
+        $otherUser = factory(User::class)->create([
+            'name' => 'Carme Forcadell'
+        ]);
+        $this->loginAsSuperAdmin('api');
+
+        $incident= Incident::create([
+            'subject' => "No funciona res a l'aula 45",
+            'description' => 'Bla bla bla'
+        ])->assignUser($otherUser);
+
+        Event::fake();
+        create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
+
+        $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id);
+
+        $response->assertSuccessful();
+        $incident = $incident->fresh();
+        $this->assertNull($incident);
+    }
 }

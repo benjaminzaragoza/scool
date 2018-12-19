@@ -652,10 +652,25 @@ if (!function_exists('curriculum_manager_permissions')) {
             'studies.tags.update',
             'studies.tags.destroy',
             'tagged.studies.store',
-            'tagged.studies.destroy'
+            'tagged.studies.destroy',
+            'subjects.index',
+            'subjects.store',
+            'subjects.show',
+            'subjects.update',
+            'subjects.destroy',
         ];
     }
 }
+
+if (!function_exists('incidents_manager_permissions')) {
+    function incidents_manager_permissions()
+    {
+        return [
+
+        ];
+    }
+}
+
 
 if (!function_exists('users_manager_permissions')) {
     function users_manager_permissions()
@@ -829,6 +844,20 @@ if (!function_exists('initialize_curriculum_manager_role')) {
         }
     }
 }
+
+if (!function_exists('initialize_incidents_manager_role')) {
+    function initialize_incidents_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'IncidentsManager']);
+        $permissions = incidents_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+
 
 
 

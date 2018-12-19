@@ -1,0 +1,337 @@
+<template>
+    <span>
+        <v-toolbar color="blue darken-3">
+            <v-menu bottom>
+                <v-btn slot="activator" icon dark>
+                    <v-icon>more_vert</v-icon>
+                </v-btn>
+                <v-list>
+                    <v-list-tile href="/curriculum" target="_blank">
+                        <v-list-tile-title>Estudis</v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile href="#" target="_blank">
+                        <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-toolbar-title class="white--text title">Unitats formatives</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn id="subjects_help_button" icon class="white--text" href="http://docs.scool.cat/docs/curriculum" target="_blank">
+                <v-icon>help</v-icon>
+            </v-btn>
+
+            <fullscreen-dialog
+                    v-role="'CurriculumManager'"
+                    :flat="false"
+                    class="white--text"
+                    icon="settings"
+                    v-model="settingsDialog"
+                    color="blue darken-3"
+                    title="Canviar la configuració">
+                <!--// TODO-->
+                        <!--<subjects-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></subjects-settings>-->
+            </fullscreen-dialog>
+
+            <v-btn id="subjects_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                <v-icon>refresh</v-icon>
+            </v-btn>
+        </v-toolbar>
+
+        <v-card>
+            <v-card-title>
+                <v-layout>
+                  <v-flex xs9 style="align-self: flex-end;">
+                      <v-layout>
+                          <v-flex xs9>
+                               <v-layout>
+                                   <v-flex xs4>
+                                       <!--<department-select-->
+                                               <!--v-model="selectedDepartment"-->
+                                               <!--:departments="departments"-->
+                                       <!--&gt;</department-select>-->
+                                   </v-flex>
+                                   <v-flex xs4>
+                                       <!--<family-select-->
+                                               <!--v-model="selectedFamily"-->
+                                               <!--:families="families"-->
+                                       <!--&gt;</family-select>-->
+                                   </v-flex>
+                                   <v-flex xs4>
+                                       <!--<v-autocomplete-->
+                                               <!--v-model="selectedTags"-->
+                                               <!--:items="dataTags"-->
+                                               <!--attach-->
+                                               <!--chips-->
+                                               <!--label="Etiquetes"-->
+                                               <!--multiple-->
+                                               <!--item-value="id"-->
+                                               <!--item-text="value"-->
+                                       <!--&gt;-->
+                                            <!--<template slot="selection" slot-scope="data">-->
+                                                <!--<v-chip-->
+                                                        <!--small-->
+                                                        <!--label-->
+                                                        <!--@input="data.parent.selectItem(data.item)"-->
+                                                        <!--:selected="data.selected"-->
+                                                        <!--class="chip&#45;&#45;select-multi"-->
+                                                        <!--:color="data.item.color"-->
+                                                        <!--text-color="white"-->
+                                                        <!--:key="JSON.stringify(data.item)"-->
+                                                <!--&gt;<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>-->
+                                            <!--</template>-->
+                                            <!--<template slot="item" slot-scope="data">-->
+                                                <!--<v-checkbox v-model="data.tile.props.value"></v-checkbox>-->
+                                                <!--<v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">-->
+                                                    <!--<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}-->
+                                                <!--</v-chip>-->
+                                            <!--</template>-->
+                                       <!--</v-autocomplete>-->
+                                   </v-flex>
+                               </v-layout>
+                          </v-flex>
+                      </v-layout>
+                  </v-flex>
+                  <v-flex xs3>
+                      <v-text-field
+                              append-icon="search"
+                              label="Buscar"
+                              single-line
+                              hide-details
+                              v-model="search"
+                      ></v-text-field>
+                  </v-flex>
+                </v-layout>
+            </v-card-title>
+            <v-data-table
+                    class="px-0 mb-2 hidden-sm-and-down"
+                    :headers="headers"
+                    :items="filteredSubjects"
+                    :search="search"
+                    item-key="id"
+                    no-results-text="No s'ha trobat cap registre coincident"
+                    no-data-text="No hi han dades disponibles"
+                    rows-per-page-text="Estudis per pàgina"
+                    :rows-per-page-items="[5,10,25,50,100,200,{'text':'Tots','value':-1}]"
+                    :pagination.sync="pagination"
+                    :loading="refreshing"
+            >
+                <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                <template slot="items" slot-scope="{item: subject}">
+                    <tr :id="'subject_row_' + subject.id">
+                        <td class="text-xs-left" v-text="subject.id"></td>
+                        <td class="text-xs-left">
+                            <inline-text-field-edit-dialog v-model="subject" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
+                        </td>
+                        <td class="text-xs-left">
+                            <inline-text-field-edit-dialog v-model="subject" field="name" label="Nom" @save="refresh"></inline-text-field-edit-dialog>
+                        </td>
+                        <td class="text-xs-left">
+                            <inline-text-field-edit-dialog v-model="subject" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
+                        </td>
+                        <td class="text-xs-left" v-text="subject.number"></td>
+                        <td class="text-xs-left" v-text="subject.hours"></td>
+                        <td class="text-xs-left"> {{subject.start }} | {{ subject.end }}</td>
+                        <!--<td class="text-xs-left">-->
+                            <!--&lt;!&ndash;<subject-department :subject="subject" :departments="departments" @assigned="refresh"></subject-department>&ndash;&gt;-->
+                        <!--</td>-->
+                        <!--<td class="text-xs-left">-->
+                            <!--&lt;!&ndash;<subject-family :subject="subject" :families="families" @assigned="refresh"></subject-family>&ndash;&gt;-->
+                        <!--</td>-->
+                        <td class="text-xs-left">
+                            <!--<subject-tags @refresh="refresh(false)" :subject="subject" :tags="dataTags" ></subject-tags>-->
+                        </td>
+                        <td class="text-xs-left" v-html="subject.formatted_created_at_diff" :title="subject.formatted_created_at"></td>
+                        <td class="text-xs-left" :title="subject.formatted_updated_at">{{subject.formatted_updated_at_diff}}</td>
+                        <td class="text-xs-left">
+                            <changelog-loggable :loggable="subject"></changelog-loggable>
+                            <fullscreen-dialog
+                                    v-model="showDialog"
+                                    title="Mostra l'estudi"
+                                    :resource="subject"
+                                    v-if="showDialog === false || showDialog === subject.id">
+                                <subject-show :subject="subject" @close="showDialog = false" :tags="dataTags" :families="families" :departments="departments"></subject-show>
+                            </fullscreen-dialog>
+                            <subject-delete :subject="subject" v-if="$hasRole('CurriculumManager')"></subject-delete>
+                        </td>
+                    </tr>
+                </template>
+            </v-data-table>
+        </v-card>
+
+    </span>
+</template>
+
+<script>
+import FullScreenDialog from '../../ui/FullScreenDialog'
+import SubjectDelete from './SubjectDeleteComponent'
+import SubjectShowComponent from './SubjectShowComponent'
+import SubjectDepartment from './SubjectDepartment'
+import SubjectTags from './SubjectTagsComponent'
+import SubjectFamily from './SubjectFamily'
+import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
+import ChangelogLoggable from '../../changelog/ChangelogLoggable'
+import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
+import FamilySelectComponent from '../families/FamilySelectComponent'
+import * as actions from '../../../store/action-types'
+import * as mutations from '../../../store/mutation-types'
+
+var filters = {
+  all: function (subjects) {
+    return subjects
+  }
+  // open: function (incidents) {
+  //   return incidents ? incidents.filter(function (incident) {
+  //     return incident.closed_at === null
+  //   }) : []
+  // },
+}
+
+export default {
+  name: 'SubjectsListComponent',
+  components: {
+    'fullscreen-dialog': FullScreenDialog,
+    'subject-delete': SubjectDelete,
+    'subject-show': SubjectShowComponent,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'subject-department': SubjectDepartment,
+    'subject-family': SubjectFamily,
+    'subject-tags': SubjectTags,
+    'changelog-loggable': ChangelogLoggable,
+    'family-select': FamilySelectComponent,
+    'department-select': DepartmentSelectComponent
+  },
+  data () {
+    return {
+      refreshing: false,
+      settingsDialog: false,
+      search: '',
+      pagination: {
+        rowsPerPage: 25
+      },
+      filter: 'all',
+      selectedTags: [],
+      selectedDepartment: null,
+      selectedFamily: null,
+      dataTags: this.tags,
+      showDialog: false
+    }
+  },
+  computed: {
+    dataSubjects () {
+      return this.$store.getters.subjects
+    },
+    filteredSubjects () {
+      console.log(this.filter)
+      return filters[this.filter](this.dataSubjects)
+      // if (this.selectedDepartment) filteredByState = filteredByState.filter(subject => { return subject.department_id === this.selectedDepartment })
+      // if (this.selectedFamily) filteredByState = filteredByState.filter(subject => { return subject.family_id === this.selectedFamily })
+
+      // if (this.selectedTags.length > 0) {
+      //   filteredByState = filteredByState.filter(subject => {
+      //     return subject.tags.some(tag => this.selectedTags.includes(tag.id))
+      //   })
+      // }
+    },
+    headers () {
+
+      //
+      // $this->assertEquals(1,$mappedSubject['subject_group_id']);
+      // $this->assertEquals('Desenvolupament d’interfícies',$mappedSubject['subject_group_name']);
+      // $this->assertEquals('Interfícies',$mappedSubject['subject_group_shortname']);
+      // $this->assertEquals('DAM_MP7',$mappedSubject['subject_group_code']);
+      // $this->assertSame(7,$mappedSubject['subject_group_number']);
+      // $this->assertSame(99,$mappedSubject['subject_group_hours']);
+      // $this->assertSame(0,$mappedSubject['subject_group_free_hours']);
+      // $this->assertEquals(3,$mappedSubject['subject_group_week_hours']);
+      // $this->assertEquals('2017-09-15',$mappedSubject['subject_group_start']);
+      // $this->assertEquals('2018-06-01',$mappedSubject['subject_group_end']);
+      // $this->assertEquals('Normal',$mappedSubject['subject_group_type']);
+      //
+      // $this->assertSame(1,$mappedSubject['study_id']);
+      // $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedSubject['study_name']);
+      // $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedSubject['study_shortname']);
+      // $this->assertEquals('DAM',$mappedSubject['study_code']);
+      //
+      // $this->assertSame(1,$mappedSubject['course_id']);
+      // $this->assertEquals('Segon Curs Desenvolupament Aplicacions Multiplataforma', $mappedSubject['course_name']);
+      // $this->assertEquals('2DAM',$mappedSubject['course_code']);
+      // $this->assertSame(2,$mappedSubject['course_order']);
+      //
+      // $this->assertSame(1,$mappedSubject['type_id']);
+      //
+      // $this->assertNotNull($mappedSubject['created_at']);
+      // $this->assertNotNull($mappedSubject['updated_at']);
+      // $this->assertNotNull($mappedSubject['created_at_timestamp']);
+      // $this->assertNotNull($mappedSubject['updated_at_timestamp']);
+      // $this->assertNotNull($mappedSubject['formatted_created_at']);
+      // $this->assertNotNull($mappedSubject['formatted_updated_at']);
+      // $this->assertNotNull($mappedSubject['formatted_created_at_diff']);
+      // $this->assertNotNull($mappedSubject['formatted_updated_at_diff']);
+      let headers = []
+      headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
+      headers.push({ text: 'Codi', value: 'code' })
+      headers.push({ text: 'Nom', value: 'name' })
+      headers.push({ text: 'Nom curt', value: 'shortname' })
+      headers.push({ text: '#', value: 'number' })
+      headers.push({ text: 'Hores', value: 'hours' })
+      headers.push({ text: 'Dates', value: 'start' })
+      headers.push({ text: 'Etiquetes', value: 'tags' })
+      headers.push({ text: 'Creada', value: 'created_at_timestamp' })
+      headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
+      headers.push({ text: 'Accions', value: 'user_email', sortable: false })
+      return headers
+    }
+  },
+  props: {
+    subjects: {
+      type: Array,
+      default: function () {
+        return undefined
+      }
+    },
+    // departments: {
+    //   type: Array,
+    //   required: true
+    // },
+    // families: {
+    //   type: Array,
+    //   required: true
+    // },
+    // study: {
+    //   type: Object,
+    //   default: function () {
+    //     return undefined
+    //   }
+    // },
+    // tags: {
+    //   type: Array,
+    //   required: true
+    // }
+  },
+  methods: {
+    refresh (message = true) {
+      this.fetch(message)
+    },
+    fetch (message = true) {
+      this.refreshing = true
+      this.$store.dispatch(actions.SET_SUBJECTS).then(response => {
+        if (message) this.$snackbar.showMessage('Estudis actualitzats correctament')
+        this.refreshing = false
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.refreshing = false
+      })
+    }
+  },
+  created () {
+    if (this.subjects === undefined) this.fetch()
+    else this.$store.commit(mutations.SET_SUBJECTS, this.subjects)
+    this.filters = Object.keys(filters)
+    if (this.subject) {
+      this.showDialog = this.subject.id
+      this.filter = 'all'
+    }
+  }
+}
+</script>

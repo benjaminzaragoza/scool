@@ -118,6 +118,7 @@ window.Vue.component('git-info', require('./components/git/GitInfoComponent'))
 
 // Curriculum
 window.Vue.component('curriculum', require('./components/curriculum/CurriculumComponent'))
+window.Vue.component('subjects', require('./components/curriculum/subjects/SubjectsComponent'))
 
 window.Vuetify = Vuetify
 

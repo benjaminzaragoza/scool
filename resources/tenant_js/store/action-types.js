@@ -51,3 +51,8 @@ export const UPDATE_INCIDENT = 'UPDATE_INCIDENT'
 export const SET_STUDIES = 'SET_STUDIES'
 export const ADD_STUDY = 'ADD_STUDY'
 export const DELETE_STUDY = 'DELETE_STUDY'
+
+// STUDIES
+export const SET_SUBJECTS = 'SET_SUBJECTS'
+export const ADD_SUBJECT = 'ADD_SUBJECT'
+export const DELETE_SUBJECT = 'DELETE_SUBJECT'

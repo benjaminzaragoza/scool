@@ -41,8 +41,6 @@ export default {
           this.$snackbar.showMessage('Estudi eliminat correctament')
           this.loading = false
         }).catch(error => {
-          console.log('HAY')
-          console.log(error)
           this.$snackbar.showError(error)
           this.loading = false
         })

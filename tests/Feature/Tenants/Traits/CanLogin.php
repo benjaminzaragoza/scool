@@ -64,6 +64,12 @@ trait CanLogin
         return $this->loginAsUsingRole($guard, 'CurriculumManager');
     }
 
+    public function loginAsIncidentsManager($guard = 'web')
+    {
+        initialize_incidents_manager_role();
+        return $this->loginAsUsingRole($guard, 'CurriculumManager');
+    }
+
     /**
      * @param null $guard
      * @return mixed
