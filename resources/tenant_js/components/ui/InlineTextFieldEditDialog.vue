@@ -3,7 +3,7 @@
             :return-value.sync="value"
             lazy
             @save="save"
-    > <span class="limit" :title="value">{{ value }}</span>
+    > <span :class="className" :title="value">{{ value }}</span>
         <v-text-field
                 v-focus
                 v-model="value"
@@ -38,6 +38,10 @@ export default {
     event: 'save'
   },
   props: {
+    className: {
+      type: String,
+      default: 'limit'
+    },
     object: {
       type: Object,
       required: true
@@ -81,6 +85,24 @@ export default {
 <style scoped>
     .limit {
         max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .limit200 {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .limit150 {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .limit100 {
+        max-width: 100px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

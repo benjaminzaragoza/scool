@@ -44,7 +44,6 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
 
         $response->assertViewIs('tenants.curriculum.subjects.index');
         $response->assertViewHas('subjects', function ($returnedSubjects) use ($subjects) {
-            dump($returnedSubjects[0]);
             return
                 count($returnedSubjects) === 2 &&
                 $returnedSubjects[0]['id'] === 1 &&
@@ -85,15 +84,16 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjects[0]['course_order'] === 2 &&
                 $returnedSubjects[0]['type_id'] === 1;
         });
-//        $response->assertViewHas('departments', function ($returnedDepartments) {
-//            return
-//                count($returnedDepartments) === 2 &&
-//                $returnedDepartments[0]['id'] === 1 &&
-//                $returnedDepartments[0]['name'] === 'Departament Informàtica' &&
-//                $returnedDepartments[0]['shortname'] === 'Informàtica' &&
-//                $returnedDepartments[0]['code'] === 'INFORMÀTICA' &&
-//                $returnedDepartments[0]['order'] === 1;
-//        });
+        $response->assertViewHas('studies', function ($returnedStudies) {
+            dd($returnedStudies);
+            return
+                count($returnedStudies) === 2 &&
+                $returnedStudies[0]['id'] === 1 &&
+                $returnedStudies[0]['name'] === 'Departament Informàtica' &&
+                $returnedStudies[0]['shortname'] === 'Informàtica' &&
+                $returnedStudies[0]['code'] === 'INFORMÀTICA' &&
+                $returnedStudies[0]['order'] === 1;
+        });
 //        $response->assertViewHas('families', function ($returnedFamilies) {
 //            return
 //                count($returnedFamilies) === 2 &&

@@ -46,18 +46,19 @@
                           <v-flex xs9>
                                <v-layout>
                                    <v-flex xs4>
-                                       <!--<department-select-->
-                                               <!--v-model="selectedDepartment"-->
-                                               <!--:departments="departments"-->
-                                       <!--&gt;</department-select>-->
+                                       <study-select
+                                               v-model="selectedStudy"
+                                               :studies="studies"
+                                       ></study-select>
                                    </v-flex>
                                    <v-flex xs4>
-                                       <!--<family-select-->
-                                               <!--v-model="selectedFamily"-->
-                                               <!--:families="families"-->
-                                       <!--&gt;</family-select>-->
+                                       <subject-groups-select
+                                               v-model="selectedSubjectGroup"
+                                               :subject-groups="subjectGroups"
+                                       ></subject-groups-select>
                                    </v-flex>
                                    <v-flex xs4>
+                                       TODO TAGS?
                                        <!--<v-autocomplete-->
                                                <!--v-model="selectedTags"-->
                                                <!--:items="dataTags"-->
@@ -120,24 +121,20 @@
                 <template slot="items" slot-scope="{item: subject}">
                     <tr :id="'subject_row_' + subject.id">
                         <td class="text-xs-left" v-text="subject.id"></td>
+                        <td class="text-xs-left" v-text="subject.number"></td>
+                        <td class="text-xs-left" v-text="subject.study_code" :title="subject.study_id + ' ' + subject.study_name"></td>
+                        <td class="text-xs-left" v-text="subject.subject_group_code" :title="subject.subject_group_id + ' ' + subject.subject_group_name"></td>
                         <td class="text-xs-left">
                             <inline-text-field-edit-dialog v-model="subject" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
-                            <inline-text-field-edit-dialog v-model="subject" field="name" label="Nom" @save="refresh"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="subject" field="name" label="Nom" @save="refresh" class-name="limit150"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
-                            <inline-text-field-edit-dialog v-model="subject" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="subject" field="shortname" label="Nom curt" @save="refresh" class-name="limit100"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-text="subject.number"></td>
                         <td class="text-xs-left" v-text="subject.hours"></td>
                         <td class="text-xs-left"> {{subject.start }} | {{ subject.end }}</td>
-                        <!--<td class="text-xs-left">-->
-                            <!--&lt;!&ndash;<subject-department :subject="subject" :departments="departments" @assigned="refresh"></subject-department>&ndash;&gt;-->
-                        <!--</td>-->
-                        <!--<td class="text-xs-left">-->
-                            <!--&lt;!&ndash;<subject-family :subject="subject" :families="families" @assigned="refresh"></subject-family>&ndash;&gt;-->
-                        <!--</td>-->
                         <td class="text-xs-left">
                             <!--<subject-tags @refresh="refresh(false)" :subject="subject" :tags="dataTags" ></subject-tags>-->
                         </td>
@@ -150,7 +147,7 @@
                                     title="Mostra l'estudi"
                                     :resource="subject"
                                     v-if="showDialog === false || showDialog === subject.id">
-                                <subject-show :subject="subject" @close="showDialog = false" :tags="dataTags" :families="families" :departments="departments"></subject-show>
+                                <subject-show :subject="subject" @close="showDialog = false" :tags="dataTags"></subject-show>
                             </fullscreen-dialog>
                             <subject-delete :subject="subject" v-if="$hasRole('CurriculumManager')"></subject-delete>
                         </td>
@@ -169,10 +166,10 @@ import SubjectShowComponent from './SubjectShowComponent'
 import SubjectDepartment from './SubjectDepartment'
 import SubjectTags from './SubjectTagsComponent'
 import SubjectFamily from './SubjectFamily'
+import StudySelect from '../studies/StudySelect'
+import SubjectGroupsSelect from './SubjectGroupsSelect'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
-import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
-import FamilySelectComponent from '../families/FamilySelectComponent'
 import * as actions from '../../../store/action-types'
 import * as mutations from '../../../store/mutation-types'
 
@@ -180,11 +177,6 @@ var filters = {
   all: function (subjects) {
     return subjects
   }
-  // open: function (incidents) {
-  //   return incidents ? incidents.filter(function (incident) {
-  //     return incident.closed_at === null
-  //   }) : []
-  // },
 }
 
 export default {
@@ -198,8 +190,8 @@ export default {
     'subject-family': SubjectFamily,
     'subject-tags': SubjectTags,
     'changelog-loggable': ChangelogLoggable,
-    'family-select': FamilySelectComponent,
-    'department-select': DepartmentSelectComponent
+    'study-select': StudySelect,
+    'subject-groups-select': SubjectGroupsSelect
   },
   data () {
     return {
@@ -211,8 +203,8 @@ export default {
       },
       filter: 'all',
       selectedTags: [],
-      selectedDepartment: null,
-      selectedFamily: null,
+      selectedStudy: null,
+      selectedSubjectGroup: null,
       dataTags: this.tags,
       showDialog: false
     }
@@ -222,7 +214,6 @@ export default {
       return this.$store.getters.subjects
     },
     filteredSubjects () {
-      console.log(this.filter)
       return filters[this.filter](this.dataSubjects)
       // if (this.selectedDepartment) filteredByState = filteredByState.filter(subject => { return subject.department_id === this.selectedDepartment })
       // if (this.selectedFamily) filteredByState = filteredByState.filter(subject => { return subject.family_id === this.selectedFamily })
@@ -268,13 +259,16 @@ export default {
       // $this->assertNotNull($mappedSubject['formatted_updated_at']);
       // $this->assertNotNull($mappedSubject['formatted_created_at_diff']);
       // $this->assertNotNull($mappedSubject['formatted_updated_at_diff']);
+
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
+      headers.push({ text: '#', value: 'number', width: '1%' })
+      headers.push({ text: 'Estudi', align: 'study_code', value: 'study_code' })
+      headers.push({ text: 'Mòdul', align: 'subject_code', value: 'subject_code' })
       headers.push({ text: 'Codi', value: 'code' })
       headers.push({ text: 'Nom', value: 'name' })
       headers.push({ text: 'Nom curt', value: 'shortname' })
-      headers.push({ text: '#', value: 'number' })
-      headers.push({ text: 'Hores', value: 'hours' })
+      headers.push({ text: 'Hores', value: 'hours', width: '1%' })
       headers.push({ text: 'Dates', value: 'start' })
       headers.push({ text: 'Etiquetes', value: 'tags' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
@@ -289,15 +283,7 @@ export default {
       default: function () {
         return undefined
       }
-    },
-    // departments: {
-    //   type: Array,
-    //   required: true
-    // },
-    // families: {
-    //   type: Array,
-    //   required: true
-    // },
+    }
     // study: {
     //   type: Object,
     //   default: function () {

@@ -83,6 +83,7 @@ class SubjectTest extends TestCase
         $this->assertSame(1,$mappedSubject['number']);
         $this->assertSame(79,$mappedSubject['hours']);
         $this->assertSame('2017-09-15',$mappedSubject['start']);
+        $this->assertSame('2018-06-01',$mappedSubject['end']);
         $this->assertEquals('subjects',$mappedSubject['api_uri']);
 
         $this->assertEquals(1,$mappedSubject['subject_group_id']);

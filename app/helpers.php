@@ -8234,6 +8234,31 @@ digital",
     }
 }
 
+if (!function_exists('create_sample_subject_group')) {
+    function create_sample_subject_group()
+    {
+        $study = Study::firstOrCreate([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+        ]);
+        return SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $study->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'type' => 'Normal'
+        ]);
+    }
+}
+
+
 if (!function_exists('create_sample_subject')) {
     function create_sample_subject()
     {
