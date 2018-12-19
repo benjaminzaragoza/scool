@@ -74,12 +74,11 @@ class CurriculumControllerTest extends BaseTenantTest
                 $returnedFamilies[0]['code'] === 'INF';
         });
         $response->assertViewHas('tags', function ($returnedTags) {
-            dd($returnedTags);
             return
                 count($returnedTags) === 2 &&
                 $returnedTags[0]['id'] === 1 &&
-                $returnedTags[0]['name'] === 'Informàtica' &&
-                $returnedTags[0]['code'] === 'INF';
+                $returnedTags[0]['value'] === 'LOE' &&
+                $returnedTags[0]['description'] === 'Ley Orgànica de Educación';
         });
     }
 

@@ -645,7 +645,14 @@ if (!function_exists('curriculum_manager_permissions')) {
             'studies.store',
             'studies.show',
             'studies.update',
-            'studies.destroy'
+            'studies.destroy',
+            'studies.tags.index',
+            'studies.tags.store',
+            'studies.tags.show',
+            'studies.tags.update',
+            'studies.tags.destroy',
+            'tagged.studies.store',
+            'tagged.studies.destroy'
         ];
     }
 }
@@ -8894,4 +8901,45 @@ if (! function_exists('create_sample_study')) {
     }
 }
 
+if (! function_exists('initialize_curriculum_module')) {
+    function initialize_curriculum_module()
+    {
+        initialize_studies();
+    }
+}
 
+if (! function_exists('initialize_studies')) {
+    function initialize_studies()
+    {
+        initialize_studies_tags();
+    }
+}
+
+if (! function_exists('initialize_studies_tags')) {
+    function initialize_studies_tags()
+    {
+        StudyTag::firstOrCreate([
+            'value' => 'LOE',
+            'description' => "Lley Orgànica d'Educació",
+            'color' => 'amber',
+        ]);
+
+        StudyTag::firstOrCreate([
+            'value' => 'LOGSE',
+            'description' => "Lley Orgànica General del Sistema Educatiu",
+            'color' => 'teal lighten-1',
+        ]);
+
+        StudyTag::firstOrCreate([
+            'value' => 'FP',
+            'description' => 'Formació Professional',
+            'color' => 'pink lighten-1',
+        ]);
+
+        StudyTag::firstOrCreate([
+            'value' => 'Curs Accés',
+            'description' => "Cursos d'accés",
+            'color' => 'cyan lighten-1',
+        ]);
+    }
+}

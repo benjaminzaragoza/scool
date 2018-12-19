@@ -34,6 +34,16 @@ class Study extends Model
         $department->addStudy($this);
     }
 
+    /**
+     * Add tag.
+     *
+     * @param $tag
+     */
+    public function addTag($tag)
+    {
+        $this->tags()->save($tag);
+    }
+
     public function assignTag($tag)
     {
         $tag = is_object($tag) ? $tag : StudyTag::where('value',$tag)->firstorFail();
@@ -86,7 +96,8 @@ class Study extends Model
             'department_code' => optional($this->department)->code,
             'family_id' => optional($this->family)->id,
             'family_name' => optional($this->family)->name,
-            'family_code' => optional($this->family)->code
+            'family_code' => optional($this->family)->code,
+            'tags' => map_collection($this->tags)
         ];
     }
 

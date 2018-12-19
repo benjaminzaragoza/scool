@@ -16,8 +16,8 @@ use App\Events\Incidents\IncidentReplyUpdated;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
-use App\Events\Incidents\IncidentTagAdded;
-use App\Events\Incidents\IncidentTagRemoved;
+use App\Events\Incidents\StudyTagAdded;
+use App\Events\Incidents\StudyTagRemoved;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
@@ -152,12 +152,12 @@ class EventServiceProvider extends ServiceProvider
             LogIncidentReplyAdded::class,
         ],
 
-        IncidentTagAdded::class => [
+        StudyTagAdded::class => [
             SendIncidentTagAddedEmail::class,
             LogIncidentTagAdded::class,
         ],
 
-        IncidentTagRemoved::class => [
+        StudyTagRemoved::class => [
             SendIncidentTagRemovedEmail::class,
             LogIncidentTagRemoved::class,
         ],

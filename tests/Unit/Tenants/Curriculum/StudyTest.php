@@ -111,6 +111,43 @@ class StudyTest extends TestCase
 
     /**
      * @test
+     */
+    public function addTag()
+    {
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
+        $study = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+            'department_id' => $department->id,
+            'family_id' => $family->id
+        ]);
+
+        $tag = StudyTag::create([
+            'value' => 'Tag1',
+            'description' => 'Tag 1 bla bla bla',
+            'color' => '#453423'
+        ]);
+        $this->assertCount(0,$study->tags);
+        $study->addTag($tag);
+        $study = $study->fresh();
+        $this->assertCount(1,$study->tags);
+        $this->assertTrue($study->tags[0]->is($tag));
+    }
+
+    /**
+     * @test
      * @group curriculum
      */
     public function map()
@@ -161,6 +198,41 @@ class StudyTest extends TestCase
         $this->assertNotNull($mappedStudy['formatted_updated_at']);
         $this->assertNotNull($mappedStudy['formatted_created_at_diff']);
         $this->assertNotNull($mappedStudy['formatted_updated_at_diff']);
+
+        // TAGS
+        $tag1 = StudyTag::create([
+            'value' => 'Tag1',
+            'description' => 'Tag 1 bla bla bla',
+            'color' => '#453423'
+        ]);
+        $tag2 = StudyTag::create([
+            'value' => 'Tag2',
+            'description' => 'Tag 2 bla bla bla',
+            'color' => '#223423'
+        ]);
+        $tag3 = StudyTag::create([
+            'value' => 'Tag3',
+            'description' => 'Tag 3 bla bla bla',
+            'color' => '#333423'
+        ]);
+        $study->addTag($tag1);
+        $study->addTag($tag2);
+        $study->addTag($tag3);
+
+        $study= $study->fresh();
+        $mappedStudy = $study->map();
+        $this->assertCount(3, $mappedStudy['tags']);
+        $this->assertEquals('Tag1',$mappedStudy['tags'][0]['value']);
+        $this->assertEquals('Tag 1 bla bla bla',$mappedStudy['tags'][0]['description']);
+        $this->assertEquals('#453423',$mappedStudy['tags'][0]['color']);
+
+        $this->assertEquals('Tag2',$mappedStudy['tags'][1]['value']);
+        $this->assertEquals('Tag 2 bla bla bla',$mappedStudy['tags'][1]['description']);
+        $this->assertEquals('#223423',$mappedStudy['tags'][1]['color']);
+
+        $this->assertEquals('Tag3',$mappedStudy['tags'][2]['value']);
+        $this->assertEquals('Tag 3 bla bla bla',$mappedStudy['tags'][2]['description']);
+        $this->assertEquals('#333423',$mappedStudy['tags'][2]['color']);
 
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesShortnameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
@@ -273,6 +274,17 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             Route::put('/studies/{study}/department/{department}','\\' . StudyDepartmentController::class . '@update');
             Route::put('/studies/{study}/family/{family}','\\' . StudyFamilyController::class . '@update');
+
+            // StudyTags
+            Route::get('/studies/tags','\\' . StudyTagsController::class . '@index');
+            Route::get('/studies/tags/{tag}','\\' . StudyTagsController::class . '@show');
+            Route::post('/studies/tags','\\' . StudyTagsController::class . '@store');
+            Route::put('/studies/tags/{tag}','\\' . StudyTagsController::class . '@update');
+            Route::delete('/studies/tags/{tag}','\\' . StudyTagsController::class . '@destroy');
+
+            //Tagged studies
+            Route::post('/studies/{study}/tags/{tag}','\\' . TaggedStudiesController::class . '@store');
+            Route::delete('/studies/{study}/tags/{tag}', '\\' . TaggedStudiesController . '@destroy');
 
         });
 

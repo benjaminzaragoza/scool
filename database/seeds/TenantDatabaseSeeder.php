@@ -53,7 +53,7 @@ class TenantDatabaseSeeder extends Seeder
 
         initialize_incidents_module();
 
-
+        initialize_curriculum_module();
 
     }
 }

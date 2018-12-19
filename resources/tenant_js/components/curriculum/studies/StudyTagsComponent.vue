@@ -87,7 +87,10 @@ export default {
       deep: true
     },
     close (close) {
-      let tagObjToRemove = this.studyTags[close.indexOf(false)]
+      let tagObjToRemove
+      if (this.studyTags) {
+        tagObjToRemove = this.studyTags[close.indexOf(false)]
+      }
       if (tagObjToRemove && this.$hasRole('CurriculumManager')) {
         this.remove(tagObjToRemove)
       }
@@ -95,10 +98,13 @@ export default {
   },
   methods: {
     pendingTagsToAssign () {
-      const tagsIds = this.studyTags.map(tag => tag['id'])
-      return this.tags.filter(tag => {
-        return !tagsIds.includes(tag.id)
-      })
+      if (this.studyTags) {
+        const tagsIds = this.studyTags.map(tag => tag['id'])
+        return this.tags.filter(tag => {
+          return !tagsIds.includes(tag.id)
+        })
+      }
+      return []
     },
     add () {
       this.adding = true
@@ -134,9 +140,11 @@ export default {
     },
     syncClose () {
       this.close = []
-      this.studyTags.forEach(tag => {
-        this.close.push(true)
-      })
+      if (this.studyTags) {
+        this.studyTags.forEach(tag => {
+          this.close.push(true)
+        })
+      }
     },
     sync (tags) {
       this.studyTags = this.study.tags
