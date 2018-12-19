@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyCodeUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Studies\StudyCodeUpdate;
+use App\Http\Requests\Curriculum\Studies\StudyCodeUpdate;
 use App\Models\Incident;
 use App\Models\Study;
 
