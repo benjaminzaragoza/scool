@@ -85,22 +85,31 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjects[0]['type_id'] === 1;
         });
         $response->assertViewHas('studies', function ($returnedStudies) {
-            dd($returnedStudies);
             return
-                count($returnedStudies) === 2 &&
+                count($returnedStudies) === 1 &&
                 $returnedStudies[0]['id'] === 1 &&
-                $returnedStudies[0]['name'] === 'Departament Informàtica' &&
-                $returnedStudies[0]['shortname'] === 'Informàtica' &&
-                $returnedStudies[0]['code'] === 'INFORMÀTICA' &&
-                $returnedStudies[0]['order'] === 1;
+                $returnedStudies[0]['name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedStudies[0]['shortname'] === 'Des. Apps Multiplataforma' &&
+                $returnedStudies[0]['code'] === 'DAM' &&
+                $returnedStudies[0]['api_uri'] === 'studies';
         });
-//        $response->assertViewHas('families', function ($returnedFamilies) {
-//            return
-//                count($returnedFamilies) === 2 &&
-//                $returnedFamilies[0]['id'] === 1 &&
-//                $returnedFamilies[0]['name'] === 'Informàtica' &&
-//                $returnedFamilies[0]['code'] === 'INF';
-//        });
+        $response->assertViewHas('subject_groups', function ($returnedSubjectGroups) {
+            return
+                count($returnedSubjectGroups) === 1 &&
+                $returnedSubjectGroups[0]['id'] === 1 &&
+                $returnedSubjectGroups[0]['name'] === "Desenvolupament d’interfícies" &&
+                $returnedSubjectGroups[0]['shortname'] === 'Interfícies' &&
+                $returnedSubjectGroups[0]['code'] === 'DAM_MP7' &&
+                $returnedSubjectGroups[0]['number'] === 7 &&
+                $returnedSubjectGroups[0]['hours'] === 99 &&
+                $returnedSubjectGroups[0]['free_hours'] === 99 &&
+                $returnedSubjectGroups[0]['week_hours'] === 99 &&
+                $returnedSubjectGroups[0]['start'] === '2017-09-15' &&
+                $returnedSubjectGroups[0]['end'] === '2018-06-01' &&
+                $returnedSubjectGroups[0]['type'] === 'Normal' &&
+                $returnedSubjectGroups[0]['api_uri'] === 'subject_groups';
+        });
+        // TODO
 //        $response->assertViewHas('tags', function ($returnedTags) {
 //            return
 //                count($returnedTags) === 2 &&

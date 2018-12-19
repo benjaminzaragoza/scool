@@ -6,7 +6,7 @@
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex xs12>
-                    <subjects-list :subjects="subjects"></subjects-list>
+                    <subjects-list :subjects="subjects" :studies="studies" :subject-groups="subjectGroups"></subjects-list>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -29,6 +29,14 @@ export default {
   },
   props: {
     subjects: {
+      type: Array,
+      required: true
+    },
+    studies: {
+      type: Array,
+      required: true
+    },
+    subjectGroups: {
       type: Array,
       required: true
     }

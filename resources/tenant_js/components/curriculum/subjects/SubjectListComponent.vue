@@ -214,18 +214,17 @@ export default {
       return this.$store.getters.subjects
     },
     filteredSubjects () {
-      return filters[this.filter](this.dataSubjects)
-      // if (this.selectedDepartment) filteredByState = filteredByState.filter(subject => { return subject.department_id === this.selectedDepartment })
-      // if (this.selectedFamily) filteredByState = filteredByState.filter(subject => { return subject.family_id === this.selectedFamily })
-
+      let filteredByState = filters[this.filter](this.dataSubjects)
+      if (this.selectedStudy) filteredByState = filteredByState.filter(subject => { return subject.study_id === this.selectedStudy })
+      if (this.selectedSubjectGroup) filteredByState = filteredByState.filter(subject => { return subject.subject_group_id === this.selectedSubjectGroup })
       // if (this.selectedTags.length > 0) {
       //   filteredByState = filteredByState.filter(subject => {
       //     return subject.tags.some(tag => this.selectedTags.includes(tag.id))
       //   })
       // }
+      return filteredByState
     },
     headers () {
-
       //
       // $this->assertEquals(1,$mappedSubject['subject_group_id']);
       // $this->assertEquals('Desenvolupament d’interfícies',$mappedSubject['subject_group_name']);
@@ -283,17 +282,21 @@ export default {
       default: function () {
         return undefined
       }
+    },
+    subject: {
+      type: Object,
+      default: function () {
+        return undefined
+      }
+    },
+    studies: {
+      type: Array,
+      required: true
+    },
+    subjectGroups: {
+      type: Array,
+      required: true
     }
-    // study: {
-    //   type: Object,
-    //   default: function () {
-    //     return undefined
-    //   }
-    // },
-    // tags: {
-    //   type: Array,
-    //   required: true
-    // }
   },
   methods: {
     refresh (message = true) {
