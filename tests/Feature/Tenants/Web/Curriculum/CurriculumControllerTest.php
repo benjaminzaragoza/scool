@@ -36,6 +36,7 @@ class CurriculumControllerTest extends BaseTenantTest
      */
     public function show_curriculum_module()
     {
+        $this->withoutExceptionHandling();
         $studies = create_sample_studies();
         $this->loginAsSuperAdmin();
         $response = $this->get('/curriculum');
@@ -71,6 +72,14 @@ class CurriculumControllerTest extends BaseTenantTest
                 $returnedFamilies[0]['id'] === 1 &&
                 $returnedFamilies[0]['name'] === 'Informàtica' &&
                 $returnedFamilies[0]['code'] === 'INF';
+        });
+        $response->assertViewHas('tags', function ($returnedTags) {
+            dd($returnedTags);
+            return
+                count($returnedTags) === 2 &&
+                $returnedTags[0]['id'] === 1 &&
+                $returnedTags[0]['name'] === 'Informàtica' &&
+                $returnedTags[0]['code'] === 'INF';
         });
     }
 

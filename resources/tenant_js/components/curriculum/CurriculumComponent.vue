@@ -6,7 +6,7 @@
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex xs12>
-                    <studies-list :studies="studies" :departments="departments" :families="families"></studies-list>
+                    <studies-list :studies="studies" :departments="departments" :families="families" :tags="tags"></studies-list>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -40,6 +40,10 @@ export default {
       required: true
     },
     families: {
+      type: Array,
+      required: true
+    },
+    tags: {
       type: Array,
       required: true
     }

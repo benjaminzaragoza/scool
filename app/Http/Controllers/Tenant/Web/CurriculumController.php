@@ -7,6 +7,7 @@ use App\Http\Requests\Curriculum\CurriculumIndex;
 use App\Models\Department;
 use App\Models\Family;
 use App\Models\Study;
+use App\Models\StudyTag;
 
 /**
  * Class CurriculumController.
@@ -27,6 +28,7 @@ class CurriculumController extends Controller
         $studies = map_collection(Study::all());
         $departments = map_collection(Department::all());
         $families = map_collection(Family::all());
-        return view('tenants.curriculum.index', compact('studies','departments','families'));
+        $tags = map_collection(StudyTag::all());
+        return view('tenants.curriculum.index', compact('studies','departments','families','tags'));
     }
 }

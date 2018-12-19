@@ -120,8 +120,7 @@
                             <study-family :study="study" :families="families" @assigned="refresh"></study-family>
                         </td>
                         <td class="text-xs-left">
-                            TAGS TODO
-                            <!--<study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>-->
+                            <study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>
                         </td>
                         <td class="text-xs-left" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
                         <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
@@ -149,6 +148,7 @@ import FullScreenDialog from '../../ui/FullScreenDialog'
 import StudyDelete from './StudyDeleteComponent'
 import StudyShowComponent from './StudyShowComponent'
 import StudyDepartment from './StudyDepartment'
+import StudyTags from './StudyTagsComponent'
 import StudyFamily from './StudyFamily'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import * as actions from '../../../store/action-types'
@@ -174,6 +174,7 @@ export default {
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'study-department': StudyDepartment,
     'study-family': StudyFamily,
+    'study-tags': StudyTags
   },
   data () {
     return {
@@ -240,9 +241,7 @@ export default {
     },
     tags: {
       type: Array,
-      default: function () {
-        return []
-      }
+      required: true
     }
   },
   methods: {
