@@ -1,5 +1,5 @@
 <template>
-    <v-btn title="Registre de canvis" icon :href="'/changelog/loggable/incidents/' + loggable.id" target="_blank">
+    <v-btn title="Registre de canvis" icon :href="'/changelog/loggable/' + loggable.api_uri + '/' + loggable.id" target="_blank">
         <v-icon>history</v-icon>
     </v-btn>
 </template>

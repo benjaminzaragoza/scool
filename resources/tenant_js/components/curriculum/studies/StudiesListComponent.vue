@@ -125,7 +125,7 @@
                         <td class="text-xs-left" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
                         <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
-                            <!--<changelog-loggable :loggable="study"></changelog-loggable>-->
+                            <changelog-loggable :loggable="study"></changelog-loggable>
                             <fullscreen-dialog
                                     v-model="showDialog"
                                     title="Mostra l'estudi"
@@ -151,6 +151,7 @@ import StudyDepartment from './StudyDepartment'
 import StudyTags from './StudyTagsComponent'
 import StudyFamily from './StudyFamily'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
+import ChangelogLoggable from '../../changelog/ChangelogLoggable'
 import * as actions from '../../../store/action-types'
 import * as mutations from '../../../store/mutation-types'
 
@@ -174,7 +175,8 @@ export default {
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'study-department': StudyDepartment,
     'study-family': StudyFamily,
-    'study-tags': StudyTags
+    'study-tags': StudyTags,
+    'changelog-loggable': ChangelogLoggable
   },
   data () {
     return {
