@@ -26,7 +26,7 @@ class SubjectDeleted
      * @param $oldSubject
      *
      */
-    public function __construct(Subject $oldSubject)
+    public function __construct($oldSubject)
     {
         $this->oldSubject = $oldSubject;
     }

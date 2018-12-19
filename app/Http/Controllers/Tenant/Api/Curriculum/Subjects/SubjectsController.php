@@ -73,9 +73,9 @@ class SubjectsController extends Controller
      */
     public function destroy(SubjectDestroy $request, $tenant, Subject $subject)
     {
-        $oldIncident = $subject->map(false);
+        $oldSubject = $subject->map();
         $subject->delete();
-        event(new SubjectDeleted($oldIncident));
+        event(new SubjectDeleted($oldSubject));
         return $subject;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api\Subjects\Curriculum;
 
+use App\Events\Subjects\SubjectDeleted;
 use App\Events\Subjects\SubjectStored;
 use App\Models\Department;
 use App\Models\Family;
@@ -268,8 +269,11 @@ class SubjectsControllerTest extends BaseTenantTest
         $this->loginAsSuperAdmin('api');
 
         $subject = create_sample_subject();
-
+        Event::fake();
         $response = $this->json('DELETE','/api/v1/subjects/' . $subject->id);
+        Event::assertDispatched(SubjectDeleted::class,function ($event) use ($subject){
+            return $event->oldSubject['id'] === $subject->id;
+        });
 
         $response->assertSuccessful();
         $subject = $subject->fresh();

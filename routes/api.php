@@ -291,7 +291,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Subjects
             Route::get('/subjects','\\' . SubjectsController::class . '@index');
             Route::post('/subjects','\\' . SubjectsController::class . '@store');
-            Route::delete('/subjects/{study}','\\' . SubjectsController::class . '@destroy');
+            Route::delete('/subjects/{subject}','\\' . SubjectsController::class . '@destroy');
 
         });
 

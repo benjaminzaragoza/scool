@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Incidents\IncidentDeleted;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Models\Incident;
@@ -252,7 +253,9 @@ class IncidentsControllerTest extends BaseTenantTest {
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
 
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id);
-
+        Event::assertDispatched(IncidentDeleted::class,function ($event) use ($incident){
+            return $event->oldIncident['id'] === $incident->id;
+        });
         $response->assertSuccessful();
         $incident = $incident->fresh();
         $this->assertNull($incident);
