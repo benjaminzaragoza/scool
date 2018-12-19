@@ -68,7 +68,7 @@ export default {
         window.axios.put(this.url(), {
           [this.field]: this.value
         }).then(() => {
-          this.$emit('save', this.value)
+          this.$emit('save', this.object)
         }).catch(error => {
           this.$snackbar.showError(error)
         })

@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Tenant\HomeController;
 use App\Http\Controllers\Tenant\Web\CurriculumController;
+use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
@@ -172,6 +173,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             //Curriculum
             Route::get('/curriculum','\\' . CurriculumController::class . '@index');
+            Route::get('/curriculum/subjects','\\' . CurriculumSubjectsController::class . '@index');
         });
     });
 

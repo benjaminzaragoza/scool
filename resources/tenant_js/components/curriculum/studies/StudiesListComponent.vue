@@ -6,6 +6,9 @@
                     <v-icon>more_vert</v-icon>
                 </v-btn>
                 <v-list>
+                    <v-list-tile href="/curriculum/subjects" target="_blank">
+                        <v-list-tile-title>Unitats Formatives</v-list-tile-title>
+                    </v-list-tile>
                     <v-list-tile href="#" target="_blank">
                         <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
                     </v-list-tile>
@@ -143,7 +146,7 @@
                                     title="Mostra l'estudi"
                                     :resource="study"
                                     v-if="showDialog === false || showDialog === study.id">
-                                <study-show :study="study" @close="showDialog = false" :tags="dataTags"></study-show>
+                                <study-show :study="study" @close="showDialog = false" :tags="dataTags" :families="families" :departments="departments"></study-show>
                             </fullscreen-dialog>
                             <study-delete :study="study" v-if="$hasRole('CurriculumManager')"></study-delete>
                         </td>

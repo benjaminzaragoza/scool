@@ -5,7 +5,7 @@
               {{ study.id }}
             </span>
             <v-toolbar-title>
-                <inline-text-field-edit-dialog :object="study" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
+                <inline-text-field-edit-dialog :object="dataStudy" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
@@ -22,38 +22,43 @@
                     <div slot="header" class="font-weight-medium">Dades del estudi</div>
                     <v-layout row wrap>
                         <v-flex md8>
-                            <v-list three-line subheader>
+                            <v-list two-line subheader>
                                 <v-list-tile avatar>
                                     <v-list-tile-content>
-                                        <v-list-tile-title v-text="study.name"></v-list-tile-title>
+                                        <v-list-tile-title>
+                                            <inline-text-field-edit-dialog v-model="dataStudy" field="name" label="Nom" @save="refresh()"></inline-text-field-edit-dialog>
+                                        </v-list-tile-title>
                                         <v-list-tile-sub-title>Nom</v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-list-tile avatar>
                                     <v-list-tile-content>
-                                        <v-list-tile-title v-text="study.shortname"></v-list-tile-title>
+                                        <v-list-tile-title>
+                                            <inline-text-field-edit-dialog v-model="dataStudy" field="shortname" label="Nom curt" @save="refresh()"></inline-text-field-edit-dialog>
+                                        </v-list-tile-title>
                                         <v-list-tile-sub-title>Nom curt</v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-list-tile avatar>
                                     <v-list-tile-content>
-                                        <v-list-tile-title v-text="study.code"></v-list-tile-title>
+                                        <v-list-tile-title>
+                                            <inline-text-field-edit-dialog v-model="dataStudy" field="code" label="Codi" @save="refresh()"></inline-text-field-edit-dialog>
+                                        </v-list-tile-title>
                                         <v-list-tile-sub-title>Codi</v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-list-tile avatar>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            <!--<study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>-->
+                                            <study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>
                                         </v-list-tile-title>
-                                        <v-list-tile-sub-title>Etiquetes
-                                        </v-list-tile-sub-title>
+                                        <v-list-tile-sub-title>Etiquetes</v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                             </v-list>
                         </v-flex>
                         <v-flex md4>
-                            <v-list three-line subheader>
+                            <v-list two-line>
                                 <v-list-tile avatar>
                                     <v-list-tile-content>
                                         <v-list-tile-title :title="study.formatted_created_at" v-text="study.formatted_created_at_diff"></v-list-tile-title>
@@ -65,6 +70,24 @@
                                     <v-list-tile-content>
                                         <v-list-tile-title :title="study.formatted_updated_at" v-text="study.formatted_created_at_diff">Password</v-list-tile-title>
                                         <v-list-tile-sub-title>Data de modificació
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            <study-family :study="study" :families="families" @assigned="refresh"></study-family>
+                                        </v-list-tile-title>
+                                        <v-list-tile-sub-title>Familia
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            <study-department :study="study" :departments="departments" @assigned="refresh"></study-department>
+                                        </v-list-tile-title>
+                                        <v-list-tile-sub-title>Departament
                                         </v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
@@ -81,7 +104,9 @@
 import StudyDeleteComponent from './StudyDeleteComponent'
 import InlineTextAreaEditDialog from '../../ui/InlineTextAreaEditDialog'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
-// import StudyTagsComponent from './StudyTagsComponent'
+import StudyTagsComponent from './StudyTagsComponent'
+import StudyDepartment from './StudyDepartment'
+import StudyFamily from './StudyFamily'
 
 import * as actions from '../../../store/action-types'
 
@@ -90,13 +115,16 @@ export default {
   components: {
     'study-delete': StudyDeleteComponent,
     'inline-text-area-edit-dialog': InlineTextAreaEditDialog,
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
-    // 'study-tags': IncidentTagsComponent,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'study-tags': StudyTagsComponent,
+    'study-department': StudyDepartment,
+    'study-family': StudyFamily
   },
   data () {
     return {
       show: this.showData ? 0 : null,
-      dataTags: this.tags
+      dataTags: this.tags,
+      dataStudy: this.study
     }
   },
   props: {
@@ -109,6 +137,14 @@ export default {
       default: true
     },
     tags: {
+      type: Array,
+      required: true
+    },
+    families: {
+      type: Array,
+      required: true
+    },
+    departments: {
       type: Array,
       required: true
     }
@@ -127,7 +163,7 @@ export default {
 </script>
 
 <style scoped>
-    .white-space-pre-wrap {
-        white-space: pre-wrap;
+    .v-list__tile__title {
+        height: auto;
     }
 </style>

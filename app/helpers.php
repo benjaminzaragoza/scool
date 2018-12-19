@@ -5808,7 +5808,6 @@ if (!function_exists('check_teacher')) {
     }
 }
 
-
 /**
  * CURRÍCULUM
  */
@@ -8201,6 +8200,56 @@ digital",
             'start' => $mp_start_date,
             'end' => $mp_end_date,
             'type' => 'FCT'
+        ]);
+
+    }
+}
+
+if (!function_exists('create_sample_subject')) {
+    function create_sample_subject()
+    {
+        $mp_start_date = '2017-09-15';
+        $mp_end_date = '2018-06-01';
+
+        $study = Study::firstOrCreate([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+        ]);
+
+        //        Mòdul professional (Subject Group) 7: desenvolupament d’interfícies
+        $group = SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $study->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => $mp_start_date,
+            'end' => $mp_end_date,
+            'type' => 'Normal'
+        ]);
+
+        $course2 = Course::firstOrCreate([
+            'code' => '2DAM',
+            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
+            'order' => 2
+        ]);
+
+        return Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Interfícies',
+            'code' =>  'DAM_MP7_UF1',
+            'number' => 1,
+            'subject_group_id' => $group->id,
+            'study_id' => $study->id,
+            'course_id' => $course2->id,
+            'type_id' => 1,
+            'hours' => 79,
+            'start' => $mp_start_date,
+            'end' => $mp_end_date
         ]);
 
     }

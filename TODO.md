@@ -972,8 +972,8 @@ Rols: Cap estudis
 - [ ] initialize_fake_subjects hi ha uns studies incorrectes donats d'alta tenen cap law_id. Arreglar
 - [ ] Feature Test web Controller -> CurriculumTest
  - [X]  Permisos usuaris no logats, usuaris regulars, admin i Manager
- - [ ] Comprovar retorna vista que toca i amb les dades que toca
- - [ ] create_sample_studies
+ - [X] Comprovar retorna vista que toca i amb les dades que toca
+ - [X] create_sample_studies
 - [ ] Trobar icona barret estudiant (més similar cast for education)
   - [ ] Activar altres moduls icones Vuetify
 - [ ] Depèn del mòdul de professors: aquest mòdul crear els usuaris professors, els departaments i els càrrecs
@@ -986,9 +986,10 @@ Rols: Cap estudis
      - [ ] Permissos assignats al rol
   - [ ] Assignar a Cap estudis el rol Currículum Manager
   - [ ] Assignar a tots els professors el rol de Currículum
-- [ ] Mostrar llista estudis del centre
+- [X] Mostrar llista estudis del centre
   - [ ] Filtres
-    - [ ] Per departament principal
+    - [X] Per departament principal
+    - [X] Per família
     - [ ] Per departament (FOl per exemple hauria de sortir a tots els estudis si se selecciona)
 - [ ] Seguretat i autorització
   - [ ] Cap estudis (Curriculum Manager) igual que superadmin pot fer tots
@@ -1000,13 +1001,24 @@ Rols: Cap estudis
     - [ ] No pot crear estudis    
     - [ ] no pot eliminar
   - Regular users: no poden entrar al mòdul  
-
+  - [X] Eliminar estudi
+    - [ ] Els usuaris sense permisos no poden eliminar estudis i no poden veure la icona d'esborrar
+  - [X] Mostrar estudi
+      - [ ] Els usuaris sense permisos no poden veure accions edició a la vista show
+  - [X] Etiquetes
+    - [ ] Els usuaris sense permisos no poden assignar ni dessasgnar etiquetes
+  - [X] Assignar departament als estudis
+      - [ ] Els usuaris sense permisos no poden assignar ni dessasgnar estudis
+  - [X]Assignar familia als estudis
+      - [ ] Els usuaris sense permisos no poden assignar ni dessasignar families          
 Vistes secundàries:
 - [ ] Registre de canvis: tot el mòdul! Canvis a estudis, ufs o qualsevol cosa relacionada ha d'apareixer aquí 
 - [ ] Vista UFS-SUBMODULES (mostrar-les al botó ... )
+  - [ ] Crear link des de la vista primaria
   - [ ] Todo similar a estudis tema rols:
     - [ ] Algunes adaptacions com que els professors puguin editar les UFs assignades 
-- [] Vista MPS-MODULES    
+- [] Vista MPS-MODULES
+    
 ### Wizard (boto add)
 0) Desplegable amb els centres: per defecte un sol centre (creat durant la creació del tenant) però podria tenir més centres
 1) [ ] Estudi que es vol modificar o que es vol crear
