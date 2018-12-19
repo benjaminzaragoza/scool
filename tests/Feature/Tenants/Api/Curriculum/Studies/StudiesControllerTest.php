@@ -37,6 +37,7 @@ class StudiesControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_list_studies()
     {
@@ -64,6 +65,7 @@ class StudiesControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function curriculum_manager_can_list_studies()
     {
@@ -89,7 +91,10 @@ class StudiesControllerTest extends BaseTenantTest
         $this->assertNotNull($studies[0]->formatted_updated_at_diff);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function regular_user_cannot_list_studies()
     {
         $this->login('api');
@@ -97,7 +102,10 @@ class StudiesControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function guest_user_cannot_list_studies()
     {
         $response = $this->json('GET','/api/v1/studies');
@@ -107,6 +115,7 @@ class StudiesControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_store_studies()
     {
@@ -174,6 +183,7 @@ class StudiesControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function curriuclum_manager_can_store_studies()
     {
@@ -241,6 +251,7 @@ class StudiesControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_store_studies_validation()
     {
@@ -251,6 +262,7 @@ class StudiesControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_delete_studies()
     {

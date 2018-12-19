@@ -35,6 +35,7 @@ class StudyDepartmentControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_assign_department_to_study()
     {

@@ -35,6 +35,7 @@ class StudyFamilyControllerTest extends BaseTenantTest
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_assign_family_to_study()
     {

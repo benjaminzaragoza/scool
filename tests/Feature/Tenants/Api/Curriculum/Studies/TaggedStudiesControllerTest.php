@@ -35,7 +35,10 @@ class TaggedStudiesControllerTest extends BaseTenantTest{
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function can_add_tag_to_study()
     {
         $this->loginAsSuperAdmin('api');
@@ -58,7 +61,10 @@ class TaggedStudiesControllerTest extends BaseTenantTest{
         $this->assertTrue($study->tags[0]->is($tag));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function regular_user_cannot_add_tag_to_study()
     {
         $user = factory(User::class)->create();
@@ -77,7 +83,10 @@ class TaggedStudiesControllerTest extends BaseTenantTest{
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function can_remove_tag_from_study()
     {
         $this->loginAsSuperAdmin('api');
@@ -102,7 +111,10 @@ class TaggedStudiesControllerTest extends BaseTenantTest{
     }
 
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function regular_user_cannot_remove_tag_from_study()
     {
         $user = factory(User::class)->create();

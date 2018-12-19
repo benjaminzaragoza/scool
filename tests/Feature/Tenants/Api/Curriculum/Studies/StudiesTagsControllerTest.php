@@ -33,6 +33,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_show_studies_tags()
     {
@@ -57,6 +58,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function manager_can_show_studies_tags()
     {
@@ -81,6 +83,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function regular_user_cannot_show_studies_tags()
     {
@@ -98,6 +101,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_list_studies_tags()
     {
@@ -145,6 +149,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function regular_user_cannot_list_studies_tags()
     {
@@ -156,6 +161,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function can_store_studies_tag()
     {
@@ -177,6 +183,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function regular_user_cannot_store_studiestag()
     {
@@ -192,6 +199,7 @@ class StudiesTagsControllerTest extends BaseTenantTest{
 
     /**
      * @test
+     * @group curriculum
      */
     public function store_studies_tag_validation()
     {
@@ -201,7 +209,10 @@ class StudiesTagsControllerTest extends BaseTenantTest{
         $response->assertStatus(422);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function can_update_studies_tag()
     {
         $this->loginAsSuperAdmin('api');
@@ -228,7 +239,10 @@ class StudiesTagsControllerTest extends BaseTenantTest{
         $this->assertEquals($tag->color, $result->color);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function regular_user_cannot_update_studies_tag()
     {
         $this->login('api');
@@ -247,7 +261,10 @@ class StudiesTagsControllerTest extends BaseTenantTest{
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function can_destroy_studies_tag()
     {
         $this->loginAsSuperAdmin('api');
