@@ -114,7 +114,7 @@
                             <inline-text-field-edit-dialog v-model="study" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
-                            <study-department :study="study" :departments="departments"></study-department>
+                            <study-department :study="study" :departments="departments" @assigned="refresh"></study-department>
                         </td>
                         <td class="text-xs-left">
                             <study-family :study="study" :studies="studies"></study-family>
