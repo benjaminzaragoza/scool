@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Studies;
+namespace App\Http\Requests\Curriculum\Studies;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -19,7 +19,7 @@ class TaggedStudyStore extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('tagged.studies.store',$this->incident);
+        return Auth::user()->can('tagged.studies.store',$this->study);
     }
 
     /**

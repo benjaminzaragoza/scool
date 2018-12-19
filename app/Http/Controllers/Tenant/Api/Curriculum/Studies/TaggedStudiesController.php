@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyTagAdded;
 use App\Events\Studies\StudyTagRemoved;
+use App\Http\Requests\Curriculum\Studies\TaggedStudyDestroy;
+use App\Http\Requests\Curriculum\Studies\TaggedStudyStore;
 use App\Models\StudyTag;
 use App\Http\Controllers\Tenant\Controller;
 use App\Models\Study;

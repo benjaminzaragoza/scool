@@ -7,6 +7,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesShortnameControlle
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\TaggedStudiesController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
@@ -284,7 +285,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //Tagged studies
             Route::post('/studies/{study}/tags/{tag}','\\' . TaggedStudiesController::class . '@store');
-            Route::delete('/studies/{study}/tags/{tag}', '\\' . TaggedStudiesController . '@destroy');
+            Route::delete('/studies/{study}/tags/{tag}', '\\' . TaggedStudiesController::class . '@destroy');
 
         });
 

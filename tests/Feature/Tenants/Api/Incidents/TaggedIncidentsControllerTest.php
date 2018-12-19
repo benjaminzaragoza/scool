@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
-use App\Events\Incidents\StudyTagAdded;
-use App\Events\Incidents\StudyTagRemoved;
+use App\Events\Incidents\IncidentTagAdded;
+use App\Events\Incidents\IncidentTagRemoved;
 use App\Models\Incident;
 use App\Models\IncidentTag;
 use App\Models\User;
@@ -60,7 +60,7 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('POST','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyTagAdded::class,function ($event) use ($incident){
+        Event::assertDispatched(IncidentTagAdded::class,function ($event) use ($incident){
             return $event->incident->is($incident) && $event->tag->value === 'etiqueta 2';
         });
         $incident = $incident->fresh();
@@ -138,7 +138,7 @@ class TaggedIncidentsControllerTest extends BaseTenantTest{
         create_setting('incidents_manager_email','incidencies@iesebre.com','IncidentsManager');
         $response = $this->json('DELETE','/api/v1/incidents/' . $incident->id . '/tags/' . $tag-> id);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyTagRemoved::class,function ($event) use ($incident){
+        Event::assertDispatched(IncidentTagRemoved::class,function ($event) use ($incident){
             return $event->incident->is($incident) && $event->oldTag->value === 'etiqueta 2';
         });
         $incident = $incident->fresh();
