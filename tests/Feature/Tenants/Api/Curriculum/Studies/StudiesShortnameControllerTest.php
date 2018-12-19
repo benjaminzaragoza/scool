@@ -36,7 +36,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
      * @test
      * @group curriculum
      */
-    public function can_update_study_name()
+    public function can_update_study_shortname()
     {
         $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
@@ -64,7 +64,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
      * @test
      * @group curriculum
      */
-    public function manager_can_update_study_name()
+    public function manager_can_update_study_shortname()
     {
         $this->loginAsCurriculumManager('api');
 
@@ -72,26 +72,26 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
 
         Event::fake();
 
-        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
-            'name' => 'NOUNOMCURT'
+        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/shortname',[
+            'shortname' => 'NOUNOMCURT'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyNameUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(StudyShortnameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());
-        $this->assertEquals('NOUNOMCURT',$result->name);
+        $this->assertEquals('NOUNOMCURT',$result->shortname);
         $this->assertEquals($result->id,$study->id);
 
         $study = $study->fresh();
-        $this->assertEquals($study->name,'NOUNOMCURT');
+        $this->assertEquals($study->shortname,'NOUNOMCURT');
     }
 
     /**
      * @test
      * @group curriculum
      */
-    public function regular_user_cannot_update_study_subject()
+    public function regular_user_cannot_update_study_shortname()
     {
         $this->login('api');
         $study = create_sample_study();
@@ -105,7 +105,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
      * @test
      * @group curriculum
      */
-    public function guest_user_cannot_update_study_subject()
+    public function guest_user_cannot_update_study_shortname()
     {
         $study = create_sample_study();
         $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[

@@ -90,7 +90,7 @@ class StudiesNameControllerTest extends BaseTenantTest {
      * @test
      * @group curriculum
      */
-    public function regular_user_cannot_update_study_subject()
+    public function regular_user_cannot_update_study_name()
     {
         $this->login('api');
         $study = create_sample_study();
@@ -104,7 +104,7 @@ class StudiesNameControllerTest extends BaseTenantTest {
      * @test
      * @group curriculum
      */
-    public function guest_user_cannot_update_study_subject()
+    public function guest_user_cannot_update_study_name()
     {
         $study = create_sample_study();
         $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
