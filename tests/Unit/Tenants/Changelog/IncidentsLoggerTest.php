@@ -15,8 +15,8 @@ use App\Events\Incidents\IncidentReplyUpdated;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
-use App\Events\Incidents\StudyTagAdded;
-use App\Events\Incidents\StudyTagRemoved;
+use App\Events\Incidents\IncidentTagAdded;
+use App\Events\Incidents\IncidentTagRemoved;
 use App\Logger\Incidents\IncidentLogger;
 use App\Models\Incident;
 use App\Models\IncidentTag;
@@ -364,7 +364,7 @@ class IncidentsLoggerTest extends TestCase
         $tag = IncidentTag::create([
             'value' => 'wontfix'
         ]);
-        $event = new StudyTagAdded($incident, $tag);
+        $event = new IncidentTagAdded($incident, $tag);
         IncidentLogger::tagAdded($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha afegit la etiqueta <strong>wontfix</strong> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
@@ -393,7 +393,7 @@ class IncidentsLoggerTest extends TestCase
         $oldTag = IncidentTag::create([
             'value' => 'wontfix'
         ]);
-        $event = new StudyTagRemoved($incident, $oldTag);
+        $event = new IncidentTagRemoved($incident, $oldTag);
         IncidentLogger::tagRemoved($event);
         $log = Log::first();
         $this->assertEquals($log->text,'Ha eliminat la etiqueta <strong>wontfix</strong> a la incidència <a target="_blank" href="/incidents/1">No funciona res aula 20</a>');
