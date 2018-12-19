@@ -42,6 +42,18 @@
                           <v-flex xs9>
                                <v-layout>
                                    <v-flex xs4>
+                                       <department-select
+                                               v-model="selectedDepartment"
+                                               :departments="departments"
+                                       ></department-select>
+                                   </v-flex>
+                                   <v-flex xs4>
+                                       <family-select
+                                               v-model="selectedFamily"
+                                               :families="families"
+                                       ></family-select>
+                                   </v-flex>
+                                   <v-flex xs4>
                                        <v-autocomplete
                                                v-model="selectedTags"
                                                :items="dataTags"
@@ -152,6 +164,8 @@ import StudyTags from './StudyTagsComponent'
 import StudyFamily from './StudyFamily'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
+import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
+import FamilySelectComponent from '../families/FamilySelectComponent'
 import * as actions from '../../../store/action-types'
 import * as mutations from '../../../store/mutation-types'
 
@@ -176,7 +190,9 @@ export default {
     'study-department': StudyDepartment,
     'study-family': StudyFamily,
     'study-tags': StudyTags,
-    'changelog-loggable': ChangelogLoggable
+    'changelog-loggable': ChangelogLoggable,
+    'family-select': FamilySelectComponent,
+    'department-select': DepartmentSelectComponent
   },
   data () {
     return {
@@ -188,6 +204,8 @@ export default {
       },
       filter: 'all',
       selectedTags: [],
+      selectedDepartment: null,
+      selectedFamily: null,
       dataTags: this.tags,
       showDialog: false
     }
@@ -198,9 +216,12 @@ export default {
     },
     filteredStudies () {
       let filteredByState = filters[this.filter](this.dataStudies)
+      if (this.selectedDepartment) filteredByState = filteredByState.filter(study => { return study.department_id === this.selectedDepartment })
+      if (this.selectedFamily) filteredByState = filteredByState.filter(study => { return study.family_id === this.selectedFamily })
+
       if (this.selectedTags.length > 0) {
-        filteredByState = filteredByState.filter(incident => {
-          return incident.tags.some(tag => this.selectedTags.includes(tag.id))
+        filteredByState = filteredByState.filter(study => {
+          return study.tags.some(tag => this.selectedTags.includes(tag.id))
         })
       }
       return filteredByState

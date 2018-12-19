@@ -245,7 +245,7 @@ export default {
     'incident-settings': IncidentSettings,
     'incident-tags': IncidentTagsComponent,
     'incident-assignees': IncidentAssigneesComponent,
-    'changelog-loggable': ChangelogLoggable
+    'changelog-loggable': ChangelogLoggable,
   },
   data () {
     return {
