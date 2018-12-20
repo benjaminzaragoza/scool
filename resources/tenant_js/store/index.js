@@ -8,8 +8,12 @@ import googleUsers from './modules/google_users'
 import staff from './modules/jobs'
 import teachers from './modules/teachers'
 import incidents from './modules/incidents'
+import departments from './modules/departments'
+import families from './modules/families'
+import courses from './modules/courses'
 import studies from './modules/studies'
 import subjects from './modules/subjects'
+import subjectGroups from './modules/subjectGroups'
 
 Vue.use(Vuex)
 
@@ -25,8 +29,12 @@ export default new Vuex.Store({
     teachers,
     googleUsers,
     incidents,
+    departments,
+    families,
     studies,
-    subjects
+    courses,
+    subjects,
+    subjectGroups
   },
   strict: debug
 })

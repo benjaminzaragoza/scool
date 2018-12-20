@@ -118,24 +118,22 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedCourses[0]['api_uri'] === 'courses';
         });
         $response->assertViewHas('departments', function ($returnedDepartments) {
-            dump($returnedDepartments);
             return
                 count($returnedDepartments) === 1 &&
                 $returnedDepartments[0]['id'] === 1 &&
-                $returnedDepartments[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
-                $returnedDepartments[0]['shortname'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
-                $returnedDepartments[0]['code'] === '2DAM' &&
-                $returnedDepartments[0]['order'] === 2 &&
-                $returnedDepartments[0]['api_uri'] === 'deparments';
+                $returnedDepartments[0]['name'] === 'Departament Informàtica' &&
+                $returnedDepartments[0]['shortname'] === 'Informàtica' &&
+                $returnedDepartments[0]['code'] === 'INFORMÀTICA' &&
+                $returnedDepartments[0]['order'] === 1 &&
+                $returnedDepartments[0]['api_uri'] === 'departments';
         });
         $response->assertViewHas('families', function ($returnedFamilies) {
             return
                 count($returnedFamilies) === 1 &&
                 $returnedFamilies[0]['id'] === 1 &&
-                $returnedFamilies[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
-                $returnedFamilies[0]['code'] === '2DAM' &&
-                $returnedFamilies[0]['order'] === 2 &&
-                $returnedFamilies[0]['api_uri'] === 'courses';
+                $returnedFamilies[0]['name'] === 'Informàtica' &&
+                $returnedFamilies[0]['code'] === 'INF' &&
+                $returnedFamilies[0]['api_uri'] === 'families';
         });
     }
 

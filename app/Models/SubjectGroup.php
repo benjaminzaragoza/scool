@@ -74,6 +74,17 @@ class SubjectGroup extends Model
             'study_name' => optional($this->study)->name,
             'study_shortname' => optional($this->study)->shortname,
             'study_code' => optional($this->study)->code,
+            'full_search' => $this->full_search
         ];
+    }
+
+    /**
+     * full_search accessor.
+     *
+     * @return string
+     */
+    public function getFullSearchAttribute()
+    {
+        return "$this->name $this->shortname $this->code";
     }
 }

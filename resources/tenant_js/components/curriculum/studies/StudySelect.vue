@@ -5,9 +5,9 @@
                 @click:prepend="dialog=true"
                 :name="name"
                 :label="label"
-                :items="studies"
+                :items="dataStudies"
                 v-model="dataStudy"
-                item-text="name"
+                item-text="full_search"
                 :item-value="itemValue"
                 clearable
                 @input="input"
@@ -33,7 +33,12 @@
                         <v-container fluid grid-list-md text-xs-center>
                             <v-layout row wrap>
                                 <v-flex xs12>
-                                     <study-add @close="dialog = false" :departments="departments" :families="families"></study-add>
+                                     <study-add
+                                             @close="dialog = false"
+                                             :departments="departments"
+                                             :families="families"
+                                             @added="add"
+                                     ></study-add>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -44,8 +49,13 @@
 </template>
 
 <script>
+import StudyAdd from './StudyAddComponent'
+
 export default {
-  name: 'StudySelectComponent',
+  name: 'StudySelect',
+  components: {
+    'study-add': StudyAdd
+  },
   data () {
     return {
       dataStudy: this.study,
@@ -59,7 +69,7 @@ export default {
   props: {
     studies: {
       type: Array,
-      required: true
+      required: false
     },
     name: {
       type: String,
@@ -77,14 +87,17 @@ export default {
     itemValue: {
       type: String,
       default: 'id'
+    }
+  },
+  computed: {
+    dataStudies () {
+      return this.$store.getters.studies
     },
-    departments: {
-      type: Array,
-      required: true
+    departments () {
+      return this.$store.getters.departments
     },
-    families: {
-      type: Array,
-      required: true
+    families () {
+      return this.$store.getters.families
     }
   },
   watch: {
@@ -93,6 +106,12 @@ export default {
     }
   },
   methods: {
+    add (study) {
+      this.dataStudies.push(study)
+      this.dataStudy = this.dataStudies.find(s => {
+        return s.id === study.id
+      })
+    },
     input () {
       this.$emit('input', this.dataStudy)
     },

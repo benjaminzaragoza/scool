@@ -1,12 +1,12 @@
 <template>
     <span id="curriculum_component">
-        <floating-add v-model="dialog" title="Nova Unitat Formativa">
-            <subject-add :studies="studies" :subject-groups="subjectGroups" :courses="courses"></subject-add>
-        </floating-add>
+        <!--<floating-add v-model="dialog" title="Nova Unitat Formativa">-->
+            <!--<subject-add></subject-add>-->
+        <!--</floating-add>-->
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex xs12>
-                    <subjects-list :subjects="subjects" :studies="studies" :subject-groups="subjectGroups"></subjects-list>
+                    <subjects-list></subjects-list>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -16,6 +16,8 @@
 <script>
 import SubjectAddComponent from './SubjectAddComponent'
 import SubjectListComponent from './SubjectListComponent'
+import * as mutations from '../../../store/mutation-types'
+
 export default {
   name: 'Subjects',
   components: {
@@ -52,6 +54,14 @@ export default {
       type: Array,
       required: true
     }
+  },
+  created () {
+    this.$store.commit(mutations.SET_DEPARTMENTS, this.departments)
+    this.$store.commit(mutations.SET_FAMILIES, this.families)
+    this.$store.commit(mutations.SET_COURSES, this.courses)
+    this.$store.commit(mutations.SET_STUDIES, this.studies)
+    this.$store.commit(mutations.SET_SUBJECTS, this.subjects)
+    this.$store.commit(mutations.SET_SUBJECT_GROUPS, this.subjectGroups)
   }
 }
 </script>

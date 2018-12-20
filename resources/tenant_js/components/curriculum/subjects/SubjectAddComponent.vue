@@ -3,34 +3,28 @@
         <v-stepper v-model="step" vertical>
             <v-stepper-step :complete="step > 1" step="1">
                 Estudi
-                <small>Seleccioneu l'estudi al que pertany la Unitat Formativa</small>
+                <small>Seleccioneu l'estudi al que pertany la Unitat Formativa. Feu clic a la icona + per afegir l'estudi si encara no existeix</small>
             </v-stepper-step>
             <v-stepper-content step="1">
-                <study-select v-model="study" :studies="studies"></study-select>
+                <study-select v-model="study"></study-select>
                 <v-btn v-if="study" @click="step=2">Continuar</v-btn>
             </v-stepper-content>
             <v-stepper-step :complete="step > 2" step="2">Mòdul Professional</v-stepper-step>
             <v-stepper-content step="2">
-                <subject-group-select v-model="subjectGroup" :subject-groups="subjectGroups"></subject-group-select>
+                <subject-group-select v-model="subjectGroup"></subject-group-select>
                 <v-btn v-if="subjectGroup" @click="step=3">Continuar</v-btn>
                 <v-btn @click="step=1">Tornar a escollir estudi</v-btn>
             </v-stepper-content>
             <v-stepper-step :complete="step > 3" step="3">Curs</v-stepper-step>
             <v-stepper-content step="3">
-                <courses-select v-model="course" :courses="courses"></courses-select>
+                <courses-select v-model="course"></courses-select>
                 <v-btn v-if="course" @click="step=4">Continuar</v-btn>
                 <v-btn @click="step=2">Tornar a escollir Mòdul</v-btn>
             </v-stepper-content>
             <v-stepper-step step="4">Unitat Formativa</v-stepper-step>
             <v-stepper-content step="4">
                 <v-btn @click="step=3">Tornar a escollir Curs</v-btn>
-                <subject-add-form
-                        :study="study"
-                        :course="course"
-                        :subjectGroup="subjectGroup"
-                        :studies="studies"
-                        :subject-groups="subjectGroups"
-                        :courses="courses"></subject-add-form>
+                <subject-add-form></subject-add-form>
             </v-stepper-content>
         </v-stepper>
     </v-card>
@@ -57,20 +51,6 @@ export default {
     'subject-group-select': SubjectGroupSelect,
     'courses-select': CoursesSelect,
     'subject-add-form': SubjectAddForm
-  },
-  props: {
-    studies: {
-      type: Array,
-      required: true
-    },
-    subjectGroups: {
-      type: Array,
-      required: true
-    },
-    courses: {
-      type: Array,
-      required: true
-    }
   },
   watch: {
     study (newStudy) {

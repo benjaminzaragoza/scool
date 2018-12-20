@@ -80,5 +80,15 @@ class FamilyTest extends TestCase
         $this->assertEquals(1,$mappedFamily['id']);
         $this->assertEquals('Informàtica',$mappedFamily['name']);
         $this->assertEquals('INF',$mappedFamily['code']);
+
+        $this->assertNotNull($mappedFamily['created_at']);
+        $this->assertNotNull($mappedFamily['updated_at']);
+        $this->assertNotNull($mappedFamily['created_at_timestamp']);
+        $this->assertNotNull($mappedFamily['updated_at_timestamp']);
+        $this->assertNotNull($mappedFamily['formatted_created_at']);
+        $this->assertNotNull($mappedFamily['formatted_updated_at']);
+        $this->assertNotNull($mappedFamily['formatted_created_at_diff']);
+        $this->assertNotNull($mappedFamily['formatted_updated_at_diff']);
+        $this->assertEquals('families',$mappedFamily['api_uri']);
     }
 }

@@ -43,21 +43,16 @@
                 <v-layout>
                   <v-flex xs9 style="align-self: flex-end;">
                       <v-layout>
-                          <v-flex xs9>
+                          <v-flex xs12>
                                <v-layout>
-                                   <v-flex xs4>
-                                       <study-select
-                                               v-model="selectedStudy"
-                                               :studies="studies"
-                                       ></study-select>
+                                   <v-flex xs5>
+                                       <study-select v-model="selectedStudy"></study-select>
                                    </v-flex>
                                    <v-flex xs4>
-                                       <subject-groups-select
-                                               v-model="selectedSubjectGroup"
-                                               :subject-groups="subjectGroups"
-                                       ></subject-groups-select>
+                                       <subject-groups-select v-model="selectedSubjectGroup"></subject-groups-select>
                                    </v-flex>
-                                   <v-flex xs4>
+                                   <v-flex xs3>
+                                       <!--// TODO-->
                                        TODO TAGS?
                                        <!--<v-autocomplete-->
                                                <!--v-model="selectedTags"-->
@@ -171,7 +166,6 @@ import SubjectGroupsSelect from './SubjectGroupsSelect'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
 import * as actions from '../../../store/action-types'
-import * as mutations from '../../../store/mutation-types'
 
 var filters = {
   all: function (subjects) {
@@ -217,6 +211,7 @@ export default {
       let filteredByState = filters[this.filter](this.dataSubjects)
       if (this.selectedStudy) filteredByState = filteredByState.filter(subject => { return subject.study_id === this.selectedStudy })
       if (this.selectedSubjectGroup) filteredByState = filteredByState.filter(subject => { return subject.subject_group_id === this.selectedSubjectGroup })
+      // TODO
       // if (this.selectedTags.length > 0) {
       //   filteredByState = filteredByState.filter(subject => {
       //     return subject.tags.some(tag => this.selectedTags.includes(tag.id))
@@ -225,40 +220,6 @@ export default {
       return filteredByState
     },
     headers () {
-      //
-      // $this->assertEquals(1,$mappedSubject['subject_group_id']);
-      // $this->assertEquals('Desenvolupament d’interfícies',$mappedSubject['subject_group_name']);
-      // $this->assertEquals('Interfícies',$mappedSubject['subject_group_shortname']);
-      // $this->assertEquals('DAM_MP7',$mappedSubject['subject_group_code']);
-      // $this->assertSame(7,$mappedSubject['subject_group_number']);
-      // $this->assertSame(99,$mappedSubject['subject_group_hours']);
-      // $this->assertSame(0,$mappedSubject['subject_group_free_hours']);
-      // $this->assertEquals(3,$mappedSubject['subject_group_week_hours']);
-      // $this->assertEquals('2017-09-15',$mappedSubject['subject_group_start']);
-      // $this->assertEquals('2018-06-01',$mappedSubject['subject_group_end']);
-      // $this->assertEquals('Normal',$mappedSubject['subject_group_type']);
-      //
-      // $this->assertSame(1,$mappedSubject['study_id']);
-      // $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedSubject['study_name']);
-      // $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedSubject['study_shortname']);
-      // $this->assertEquals('DAM',$mappedSubject['study_code']);
-      //
-      // $this->assertSame(1,$mappedSubject['course_id']);
-      // $this->assertEquals('Segon Curs Desenvolupament Aplicacions Multiplataforma', $mappedSubject['course_name']);
-      // $this->assertEquals('2DAM',$mappedSubject['course_code']);
-      // $this->assertSame(2,$mappedSubject['course_order']);
-      //
-      // $this->assertSame(1,$mappedSubject['type_id']);
-      //
-      // $this->assertNotNull($mappedSubject['created_at']);
-      // $this->assertNotNull($mappedSubject['updated_at']);
-      // $this->assertNotNull($mappedSubject['created_at_timestamp']);
-      // $this->assertNotNull($mappedSubject['updated_at_timestamp']);
-      // $this->assertNotNull($mappedSubject['formatted_created_at']);
-      // $this->assertNotNull($mappedSubject['formatted_updated_at']);
-      // $this->assertNotNull($mappedSubject['formatted_created_at_diff']);
-      // $this->assertNotNull($mappedSubject['formatted_updated_at_diff']);
-
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       headers.push({ text: '#', value: 'number', width: '1%' })
@@ -277,25 +238,11 @@ export default {
     }
   },
   props: {
-    subjects: {
-      type: Array,
-      default: function () {
-        return undefined
-      }
-    },
     subject: {
       type: Object,
       default: function () {
         return undefined
       }
-    },
-    studies: {
-      type: Array,
-      required: true
-    },
-    subjectGroups: {
-      type: Array,
-      required: true
     }
   },
   methods: {
@@ -314,8 +261,6 @@ export default {
     }
   },
   created () {
-    if (this.subjects === undefined) this.fetch()
-    else this.$store.commit(mutations.SET_SUBJECTS, this.subjects)
     this.filters = Object.keys(filters)
     if (this.subject) {
       this.showDialog = this.subject.id

@@ -99,8 +99,19 @@ class Study extends Model
             'family_id' => optional($this->family)->id,
             'family_name' => optional($this->family)->name,
             'family_code' => optional($this->family)->code,
-            'tags' => map_collection($this->tags)
+            'tags' => map_collection($this->tags),
+            'full_search' => $this->full_search
         ];
+    }
+
+    /**
+     * full_search accessor.
+     *
+     * @return string
+     */
+    public function getFullSearchAttribute()
+    {
+        return "$this->name $this->shortname $this->code";
     }
 
 }

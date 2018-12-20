@@ -8345,6 +8345,12 @@ if (!function_exists('initialize_fake_subjects')) {
         ]);
         $dam->assignDepartment($depInformatica);
 
+        $familyInformatica = $informatica = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF'
+        ]);
+        $dam->assignFamily($familyInformatica);
+
         // No existeix 1DAM -> és comú amb 1rASIX
 //        $course1 = Course::create([
 //            'name' => 'Desenvolupament Aplicacions Multiplataforma',

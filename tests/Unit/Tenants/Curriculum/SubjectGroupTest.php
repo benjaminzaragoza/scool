@@ -107,5 +107,8 @@ class SubjectGroupTest extends TestCase
         $this->assertNotNull($mappedSubjectGroup['formatted_updated_at']);
         $this->assertNotNull($mappedSubjectGroup['formatted_created_at_diff']);
         $this->assertNotNull($mappedSubjectGroup['formatted_updated_at_diff']);
+
+        $this->assertEquals('Desenvolupament d’interfícies Interfícies DAM_MP7',$mappedSubjectGroup['full_search']);
+
     }
 }
