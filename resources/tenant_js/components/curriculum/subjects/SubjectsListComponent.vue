@@ -49,7 +49,7 @@
                                        <study-select v-model="selectedStudy"></study-select>
                                    </v-flex>
                                    <v-flex xs4>
-                                       <subject-groups-select v-model="selectedSubjectGroup"></subject-groups-select>
+                                       <subject-groups-select v-model="selectedSubjectGroup" :study="selectedStudy"></subject-groups-select>
                                    </v-flex>
                                    <v-flex xs3>
                                        <!--// TODO-->

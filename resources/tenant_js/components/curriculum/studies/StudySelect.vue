@@ -33,12 +33,7 @@
                         <v-container fluid grid-list-md text-xs-center>
                             <v-layout row wrap>
                                 <v-flex xs12>
-                                     <study-add
-                                             @close="dialog = false"
-                                             :departments="departments"
-                                             :families="families"
-                                             @added="add"
-                                     ></study-add>
+                                     <study-add @close="dialog = false"></study-add>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -92,12 +87,6 @@ export default {
   computed: {
     dataStudies () {
       return this.$store.getters.studies
-    },
-    departments () {
-      return this.$store.getters.departments
-    },
-    families () {
-      return this.$store.getters.families
     }
   },
   watch: {

@@ -5,7 +5,7 @@
                 @click:prepend="dialog=true"
                 :name="name"
                 :label="label"
-                :items="subjectGroups"
+                :items="filteredSubjectGroups"
                 v-model="dataSubjectGroup"
                 item-text="full_search"
                 :item-value="itemValue"
@@ -61,6 +61,9 @@ export default {
     event: 'input'
   },
   props: {
+    study: {
+      default: null
+    },
     name: {
       type: String,
       default: 'subjectGroup'
@@ -80,6 +83,10 @@ export default {
     }
   },
   computed: {
+    filteredSubjectGroups () {
+      if (this.study) return this.subjectGroups.filter(subjectGroup => { return subjectGroup.study_id === this.study })
+      return this.subjectGroups
+    },
     subjectGroups () {
       return this.$store.getters.subjectGroups
     }

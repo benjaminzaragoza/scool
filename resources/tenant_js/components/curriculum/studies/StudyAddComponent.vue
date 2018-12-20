@@ -134,6 +134,12 @@ export default {
     }
   },
   computed: {
+    departments () {
+      return this.$store.getters.departments
+    },
+    families () {
+      return this.$store.getters.families
+    },
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
@@ -177,16 +183,6 @@ export default {
       !this.$v.subjectsNumber.required && errors.push("És obligatori indicar el nombre total d'unitats formatives")
       !this.$v.subjectsNumber.numeric && errors.push('Cal indicar un nombre enter positiu')
       return errors
-    }
-  },
-  props: {
-    departments: {
-      type: Array,
-      required: true
-    },
-    families: {
-      type: Array,
-      required: true
     }
   },
   methods: {
