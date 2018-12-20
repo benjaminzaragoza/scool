@@ -148,7 +148,6 @@ class StudiesControllerTest extends BaseTenantTest
         Event::assertDispatched(StudyStored::class,function ($event) use ($createdStudy){
             return $event->study->is(Study::findOrFail($createdStudy->id));
         });
-        dump($createdStudy);
         $this->assertSame($createdStudy->id,1);
         $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
         $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
