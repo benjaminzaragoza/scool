@@ -927,6 +927,38 @@ Cal revisar component Pare App.vue i app.blade.php i l'ús de la funció checkRo
 
 # CURRICULUM
 
+TODO:
+- [ ] Etiquetes d'estudis que cal crear:
+  - LOE/LOGSE
+  - FP/Cursos d'accés
+  - Grau mitjà o Grau superior
+- [ ] Estaria bé disposar d'una icona per cada estudi   
+- [ ] Per les famílies hi ha una imatge associada a la web de la gene: http://queestudiar.gencat.cat/ca/estudis/fp/cicles-families/act-fisiques-esportives/?p_id=46&estudi
+- http://www.todofp.es/sobre-fp/informacion-general/centros-integrados/nuevos-centros/familias.html
+
+Rendiment:
+- 436 consultes a la web de llista UFS
+ 
+## Vistes públiques:
+
+- [ ] Reproduir un format web consultable del currículum similar a la web
+- [ ] Cicles/Estudis per família professional i Grau Mitjà o Superior
+- [ ] Camps extres estudis
+  - [ ] Link al tríptic: https://www.iesebre.com/documents/estudis/triptics/dam.pdf
+  - [ ] Exemple estudi a la web: https://www.iesebre.com/index.php/continguts/23-cfgs/455-dam?showall=1
+    - [ ] Info camps que falten a la base de dades:
+       - [ ] Durada en cursos academics -> Relació amb cursos (camps computat)
+       - [ ] Horari -> També calculat a partir dels cursos?
+       - [ ] Hores de FCT
+       - [ ] Dual?
+  - Vistes:
+    - [ ] Pla docent (Taula Mòduls UFS i hores ) https://www.iesebre.com/index.php/continguts/23-cfgs/455-dam?showall=&start=1
+    - [ ] Textos:
+       - [ ] Aprèn treballant | Què faràs | De què treballaràs
+       - [ ] Deixar Obert? Utilitzar miniword o similar   
+  - [ ] Upload del tríptic
+  - [ ] Altres documents?
+
 ## Gestió del curriculum 
 
 Característiques principals:

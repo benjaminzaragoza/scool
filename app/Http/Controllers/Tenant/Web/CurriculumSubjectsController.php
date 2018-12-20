@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Tenant\Web;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Curriculum\CurriculumIndex;
 use App\Models\Study;
-use App\Models\StudyTag;
 use App\Models\Subject;
 use App\Models\SubjectGroup;
 
