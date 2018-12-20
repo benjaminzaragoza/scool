@@ -3,6 +3,8 @@
         <study-select
                 v-model="dataStudy"
                 :studies="studies"
+                :departments="departments"
+                :families="families"
                 :error-messages="dataStudyErrors"
                 @input="$v.dataStudy.$touch()"
                 @blur="$v.dataStudy.$touch()"
@@ -179,6 +181,14 @@ export default {
     subjectGroup: {},
     course: {},
     studies: {
+      type: Array,
+      required: true
+    },
+    departments: {
+      type: Array,
+      required: true
+    },
+    families: {
       type: Array,
       required: true
     },

@@ -113,5 +113,15 @@ class DepartmentTest extends TestCase
         $this->assertEquals('Informàtica',$mappedDepartment['shortname']);
         $this->assertEquals('INFORMÀTICA',$mappedDepartment['code']);
         $this->assertSame(1,$mappedDepartment['order']);
+
+        $this->assertNotNull($mappedDepartment['created_at']);
+        $this->assertNotNull($mappedDepartment['updated_at']);
+        $this->assertNotNull($mappedDepartment['created_at_timestamp']);
+        $this->assertNotNull($mappedDepartment['updated_at_timestamp']);
+        $this->assertNotNull($mappedDepartment['formatted_created_at']);
+        $this->assertNotNull($mappedDepartment['formatted_updated_at']);
+        $this->assertNotNull($mappedDepartment['formatted_created_at_diff']);
+        $this->assertNotNull($mappedDepartment['formatted_updated_at_diff']);
+        $this->assertEquals('departments',$mappedDepartment['api_uri']);
     }
 }

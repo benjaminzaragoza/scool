@@ -8326,24 +8326,24 @@ if (!function_exists('initialize_fake_subjects')) {
         $mp_start_date = '2017-09-15';
         $mp_end_date = '2018-06-01';
 
-        // Per estudis i mòduls:
-
-        // Informàtica
-//        Mòdul professional 1: sistemes informàtics
-
-        // http://portaldogc.gencat.cat/utilsEADOP/PDF/6958/1444503.pdf
-        // O matrícula TIC
-
         $loe = Law::firstOrCreate([
             'code' => 'LOE',
             'name' => 'Ley Orgánica de Educación'
         ]);
 
-        $study = Study::firstOrCreate([
+        $dam = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
             'shortname' => 'Des. Apps Multiplataforma',
             'code' => 'DAM',
         ]);
+
+        $depInformatica = Department::create([
+            'name' => 'Departament Informàtica',
+            'shortname' => 'Informàtica',
+            'code' => 'INFORMÀTICA',
+            'order' => 1
+        ]);
+        $dam->assignDepartment($depInformatica);
 
         // No existeix 1DAM -> és comú amb 1rASIX
 //        $course1 = Course::create([
@@ -8362,7 +8362,7 @@ if (!function_exists('initialize_fake_subjects')) {
             'shortname' => 'Interfícies',
             'code' =>  'DAM_MP7',
             'number' => 7,
-            'study_id' => $study->id,
+            'study_id' => $dam->id,
             'hours' => 99,
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 3,
@@ -8379,7 +8379,7 @@ if (!function_exists('initialize_fake_subjects')) {
             'code' =>  'DAM_MP7_UF1',
             'number' => 1,
             'subject_group_id' => $group->id,
-            'study_id' => $study->id,
+            'study_id' => $dam->id,
             'course_id' => $course2->id,
             'type_id' => 1,
             'hours' => 79,
@@ -8393,7 +8393,7 @@ if (!function_exists('initialize_fake_subjects')) {
             'code' =>  'DAM_MP7_UF2',
             'number' => 2,
             'subject_group_id' => $group->id,
-            'study_id' => $study->id,
+            'study_id' => $dam->id,
             'course_id' => $course2->id,
             'type_id' => 1,
             'hours' => 20

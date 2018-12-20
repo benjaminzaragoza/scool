@@ -60,5 +60,6 @@ class CourseTest extends TestCase
         $this->assertNotNull($mappedCourse['formatted_updated_at']);
         $this->assertNotNull($mappedCourse['formatted_created_at_diff']);
         $this->assertNotNull($mappedCourse['formatted_updated_at_diff']);
+        $this->assertEquals('courses',$mappedCourse['api_uri']);
     }
 }

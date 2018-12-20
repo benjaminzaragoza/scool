@@ -36,6 +36,14 @@ export default {
       type: Array,
       required: true
     },
+    departments: {
+      type: Array,
+      required: true
+    },
+    families: {
+      type: Array,
+      required: true
+    },
     subjectGroups: {
       type: Array,
       required: true

@@ -36,7 +36,6 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
      */
     public function show_curriculum_subjects()
     {
-        $this->withoutExceptionHandling();
         $subjects = initialize_fake_subjects();
         $this->loginAsSuperAdmin();
         $response = $this->get('curriculum/subjects');
@@ -117,6 +116,26 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedCourses[0]['code'] === '2DAM' &&
                 $returnedCourses[0]['order'] === 2 &&
                 $returnedCourses[0]['api_uri'] === 'courses';
+        });
+        $response->assertViewHas('departments', function ($returnedDepartments) {
+            dump($returnedDepartments);
+            return
+                count($returnedDepartments) === 1 &&
+                $returnedDepartments[0]['id'] === 1 &&
+                $returnedDepartments[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedDepartments[0]['shortname'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedDepartments[0]['code'] === '2DAM' &&
+                $returnedDepartments[0]['order'] === 2 &&
+                $returnedDepartments[0]['api_uri'] === 'deparments';
+        });
+        $response->assertViewHas('families', function ($returnedFamilies) {
+            return
+                count($returnedFamilies) === 1 &&
+                $returnedFamilies[0]['id'] === 1 &&
+                $returnedFamilies[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedFamilies[0]['code'] === '2DAM' &&
+                $returnedFamilies[0]['order'] === 2 &&
+                $returnedFamilies[0]['api_uri'] === 'courses';
         });
     }
 
