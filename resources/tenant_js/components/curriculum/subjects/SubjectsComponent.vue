@@ -1,7 +1,7 @@
 <template>
     <span id="curriculum_component">
-        <floating-add v-model="dialog" title="Nou estudi">
-            <subject-add></subject-add>
+        <floating-add v-model="dialog" title="Nova Unitat Formativa">
+            <subject-add :studies="studies" :subject-groups="subjectGroups" :courses="courses"></subject-add>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
@@ -37,6 +37,10 @@ export default {
       required: true
     },
     subjectGroups: {
+      type: Array,
+      required: true
+    },
+    courses: {
       type: Array,
       required: true
     }

@@ -109,14 +109,15 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['type'] === 'Normal' &&
                 $returnedSubjectGroups[0]['api_uri'] === 'subject_groups';
         });
-        // TODO
-//        $response->assertViewHas('tags', function ($returnedTags) {
-//            return
-//                count($returnedTags) === 2 &&
-//                $returnedTags[0]['id'] === 1 &&
-//                $returnedTags[0]['value'] === 'LOE' &&
-//                $returnedTags[0]['description'] === 'Ley Orgànica de Educación';
-//        });
+        $response->assertViewHas('courses', function ($returnedCourses) {
+            return
+                count($returnedCourses) === 1 &&
+                $returnedCourses[0]['id'] === 1 &&
+                $returnedCourses[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedCourses[0]['code'] === '2DAM' &&
+                $returnedCourses[0]['order'] === 2 &&
+                $returnedCourses[0]['api_uri'] === 'courses';
+        });
     }
 
     /** @test */

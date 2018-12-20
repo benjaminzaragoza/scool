@@ -8234,6 +8234,17 @@ digital",
     }
 }
 
+if (!function_exists('create_sample_course')) {
+    function create_sample_course()
+    {
+        return Course::firstOrCreate([
+            'code' => '2DAM',
+            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
+            'order' => 2
+        ]);
+    }
+}
+
 if (!function_exists('create_sample_subject_group')) {
     function create_sample_subject_group()
     {
