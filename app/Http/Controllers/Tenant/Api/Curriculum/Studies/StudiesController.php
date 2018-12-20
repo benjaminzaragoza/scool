@@ -42,7 +42,9 @@ class StudiesController extends Controller
             'shortname' => $request->shortname,
             'code' => $request->code,
             'department_id' => $request->department,
-            'family_id' => $request->family
+            'family_id' => $request->family,
+            'subjects_number' => $request->subjects_number,
+            'subject_groups_number' => $request->subject_groups_number
         ]);
         event(new StudyStored($study));
         return $study->map();

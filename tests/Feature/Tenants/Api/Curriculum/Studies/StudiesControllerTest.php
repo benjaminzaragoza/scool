@@ -140,16 +140,34 @@ class StudiesControllerTest extends BaseTenantTest
             'code' => 'DAM',
             'department' => $department->id,
             'family' => $family->id,
+            'subjects_number'=> 37,
+            'subject_groups_number' => 14
         ]);
         $response->assertSuccessful();
         $createdStudy = json_decode($response->getContent());
         Event::assertDispatched(StudyStored::class,function ($event) use ($createdStudy){
             return $event->study->is(Study::findOrFail($createdStudy->id));
         });
+        dump($createdStudy);
         $this->assertSame($createdStudy->id,1);
         $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
         $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
         $this->assertEquals($createdStudy->code,'DAM');
+        $this->assertEquals($createdStudy->subjects_number,37);
+        $this->assertEquals($createdStudy->subject_groups_number,14);
+
+        $this->assertEquals($createdStudy->department_id,1);
+        $this->assertEquals($createdStudy->department_name,"Departament d'Informàtica");
+        $this->assertEquals($createdStudy->department_shortname,'Informàtica');
+        $this->assertEquals($createdStudy->department_code,'INF');
+        $this->assertEquals($createdStudy->department_id,1);
+
+        $this->assertEquals($createdStudy->family_id,1);
+        $this->assertEquals($createdStudy->family_name,'Informàtica');
+        $this->assertEquals($createdStudy->family_code,'INF');
+        $this->assertEquals($createdStudy->family_id,1);
+
+
         $this->assertNotNull($createdStudy->created_at);
         $this->assertNotNull($createdStudy->created_at_timestamp);
         $this->assertNotNull($createdStudy->formatted_created_at);

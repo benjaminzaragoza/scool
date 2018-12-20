@@ -936,8 +936,22 @@ TODO:
 - [ ] Per les famílies hi ha una imatge associada a la web de la gene: http://queestudiar.gencat.cat/ca/estudis/fp/cicles-families/act-fisiques-esportives/?p_id=46&estudi
 - http://www.todofp.es/sobre-fp/informacion-general/centros-integrados/nuevos-centros/familias.html
 
+Afegir Subject/UF:
+- [ ] Relació entre desplegables/filtres
+  - [ ] Llista de Mòduls professional -> Filtrar i només veure els corresponents a l'estudi seleccionat previàment 
+  - [ ] Llista de cursos -> Filtrar i només veure els corresponents al curs seleccionat previàment
+- Navegacions:
+  - [] Crear un studi sinó existeix des de la llista d'estudis
+- [ ] Camp number: seleccionar per defecte el pròxim número d'UF lliure
+  - [ ] Mostrar una alerta si el Mòdul Professional té número de UFS indicat i ja estan totes creades  
+   
 Rendiment:
 - 436 consultes a la web de llista UFS
+
+Crear Estudi:
+- Camps pendents:
+- Número de mòduls (13)
+- [ ] Dual?
  
 ## Vistes públiques:
 

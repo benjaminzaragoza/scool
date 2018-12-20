@@ -58,6 +58,30 @@
                             @blur="$v.family.$touch()"
                     ></family-select>
                 </v-flex>
+                <v-flex xs12>
+                    <v-text-field
+                            v-model="subjectGroupsNumber"
+                            name="subjectGroupsNumber"
+                            label="Número de MPs"
+                            :error-messages="subjectGroupsNumberErrors"
+                            @input="$v.subjectGroupsNumber.$touch()"
+                            @blur="$v.subjectGroupsNumber.$touch()"
+                            hint="Total de Mòduls Professionals de l'estudi"
+                            autofocus
+                    ></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                    <v-text-field
+                            v-model="subjectsNumber"
+                            name="subjectsNumber"
+                            label="Número de UFS"
+                            :error-messages="subjectsNumberErrors"
+                            @input="$v.subjectsNumber.$touch()"
+                            @blur="$v.subjectsNumber.$touch()"
+                            hint="Total d'Unitats Formatives de l'estudi"
+                            autofocus
+                    ></v-text-field>
+                </v-flex>
             </v-layout>
         </v-container>
         <v-btn @click="add(true)"
@@ -76,7 +100,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { required, numeric } from 'vuelidate/lib/validators'
 import * as actions from '../../../store/action-types'
 import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
 import FamilySelectComponent from '../families/FamilySelectComponent'
@@ -93,7 +117,9 @@ export default {
     shortname: { required },
     code: { required },
     department: { required },
-    family: { required }
+    family: { required },
+    subjectGroupsNumber: { required, numeric },
+    subjectsNumber: { required, numeric }
   },
   data () {
     return {
@@ -102,6 +128,8 @@ export default {
       code: '',
       family: null,
       department: null,
+      subjectGroupsNumber: null,
+      subjectsNumber: null,
       adding: false
     }
   },
@@ -134,6 +162,20 @@ export default {
       const errors = []
       if (!this.$v.family.$dirty) return errors
       !this.$v.family.required && errors.push('És obligatori indicar una família')
+      return errors
+    },
+    subjectGroupsNumberErrors () {
+      const errors = []
+      if (!this.$v.subjectGroupsNumber.$dirty) return errors
+      !this.$v.subjectGroupsNumber.required && errors.push('És obligatori indicar el nombre total de Mòduls Professionals')
+      !this.$v.subjectGroupsNumber.numeric && errors.push('Cal indicar un nombre enter positiu')
+      return errors
+    },
+    subjectsNumberErrors () {
+      const errors = []
+      if (!this.$v.subjectsNumber.$dirty) return errors
+      !this.$v.subjectsNumber.required && errors.push("És obligatori indicar el nombre total d'unitats formatives")
+      !this.$v.subjectsNumber.numeric && errors.push('Cal indicar un nombre enter positiu')
       return errors
     }
   },

@@ -23,6 +23,8 @@ class CreateTenantStudiesTable extends Migration
             $table->string('shortname')->unique();
             $table->unsignedInteger('family_id')->nullable();
             $table->unsignedInteger('department_id')->nullable();
+            $table->unsignedInteger('subjects_number')->nullable();
+            $table->unsignedInteger('subject_groups_number')->nullable();
             $table->timestamps();
         });
 

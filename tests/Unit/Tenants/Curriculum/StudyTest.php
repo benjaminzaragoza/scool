@@ -169,7 +169,9 @@ class StudyTest extends TestCase
             'shortname' => 'Des. Aplicacions Multiplataforma',
             'code' => 'DAM',
             'department_id' => $department->id,
-            'family_id' => $family->id
+            'family_id' => $family->id,
+            'subjects_number' => 14,
+            'subject_groups_number' => 33
         ]);
 
         $mappedStudy = $study->map();
@@ -178,6 +180,8 @@ class StudyTest extends TestCase
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);
+        $this->assertEquals(14,$mappedStudy['subjects_number']);
+        $this->assertEquals(33,$mappedStudy['subject_groups_number']);
 
         $this->assertEquals('studies',$mappedStudy['api_uri']);
 

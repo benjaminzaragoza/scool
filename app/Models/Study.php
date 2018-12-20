@@ -81,6 +81,8 @@ class Study extends Model
             'name' => $this->name,
             'shortname' => $this->shortname,
             'code' => $this->code,
+            'subjects_number' => $this->subjects_number,
+            'subject_groups_number' => $this->subject_groups_number,
             'api_uri' => $this->api_uri,
             'created_at' => $this->created_at,
             'created_at_timestamp' => $this->created_at_timestamp,
