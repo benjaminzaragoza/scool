@@ -39,6 +39,7 @@
                 @blur="$v.code.$touch()"
                 :course="dataCourse"
                 :subject-group="dataSubjectGroup"
+                :number="number"
                 :error-messages="codeErrors"
         ></subject-code>
 

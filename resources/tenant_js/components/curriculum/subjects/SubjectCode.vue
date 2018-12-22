@@ -1,5 +1,7 @@
 <template>
     <v-text-field
+            append-icon="refresh"
+            @click:append="calculateCode"
             v-model="dataCode"
             name="code"
             label="Codi de la UF"
@@ -25,10 +27,18 @@ export default {
   props: {
     code: {},
     course: {},
+    number: {},
     subjectGroup: {},
     errorMessages: {
       type: Array,
       required: false
+    }
+  },
+  watch: {
+    code (code) {
+      if (code || code === '') {
+        this.calculateCode()
+      }
     }
   },
   methods: {
@@ -39,16 +49,19 @@ export default {
       this.$emit('blur', this.dataCode)
     },
     calculateCode () {
+      console.log('calculateCode!!!!!!')
       let code = ''
+      console.log(this.course)
       if (this.course) {
+        console.log('1')
         code = this.course.code
         if (this.subjectGroup) code = code + '_' + this.subjectGroup.code
       }
-      return code
+      this.dataCode = code
     }
   },
   created () {
-    if (!this.code) {
+    if (!this.code || this.code === '') {
       this.calculateCode()
     }
   }

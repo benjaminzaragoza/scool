@@ -120,7 +120,7 @@ export default {
     selectStudy () {
       if (this.itemValue === null) {
         if (Number.isInteger(parseInt(this.study))) this.dataStudy = this.filterStudy(this.study)[0]
-        if (this.study.id) this.dataStudy = this.filterStudy(this.study.id)[0]
+        else if (this.study && this.study.id) this.dataStudy = this.filterStudy(this.study.id)[0]
       }
     }
   },

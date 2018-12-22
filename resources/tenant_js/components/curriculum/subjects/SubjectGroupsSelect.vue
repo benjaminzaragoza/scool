@@ -98,6 +98,11 @@ export default {
     },
     subjectGroups () {
       return this.$store.getters.subjectGroups
+    },
+    subjectGroupId() {
+      if (Number.isInteger(parseInt(this.subjectGroup))) return this.subjectGroup
+      if (this.subjectGroup) return this.subjectGroup.id
+      return null
     }
   },
   watch: {
@@ -121,8 +126,7 @@ export default {
     },
     selectSubjectGroup () {
       if (this.itemValue === null) {
-        if (Number.isInteger(parseInt(this.subjectGroup))) this.dataSubjectGroup = this.filterSubjectGroups(this.subjectGroup)[0]
-        if (this.subjectGroup.id) this.dataSubjectGroup = this.filterSubjectGroups(this.subjectGroup.id)[0]
+        this.dataSubjectGroup = this.filterSubjectGroups(this.subjectGroupId)[0]
       }
     }
   },
