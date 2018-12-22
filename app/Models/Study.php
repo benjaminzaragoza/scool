@@ -50,6 +50,12 @@ class Study extends Model
         $this->tags()->save($tag);
     }
 
+    public function assignSubjectGroup($subjectGroup)
+    {
+        $subjectGroup = is_object($subjectGroup) ? $subjectGroup : SubjectGroup::where('code',$subjectGroup)->firstorFail();
+        $this->subjectGroups()->save($subjectGroup);
+    }
+
     /**
      * Get the family record associated with the study.
      */
@@ -72,6 +78,14 @@ class Study extends Model
     public function tags()
     {
         return $this->belongsToMany(StudyTag::class,'tagged_studies')->withTimestamps();
+    }
+
+    /**
+     * Get the subjectGroups for the study
+     */
+    public function subjectGroups()
+    {
+        return $this->hasMany(SubjectGroup::class);
     }
 
     public function map()
@@ -100,7 +114,9 @@ class Study extends Model
             'family_name' => optional($this->family)->name,
             'family_code' => optional($this->family)->code,
             'tags' => map_collection($this->tags),
-            'full_search' => $this->full_search
+            'full_search' => $this->full_search,
+
+            'subjectGroups' => map_collection($this->subjectGroups)
         ];
     }
 

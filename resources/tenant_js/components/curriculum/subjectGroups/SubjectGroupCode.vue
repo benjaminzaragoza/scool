@@ -4,16 +4,16 @@
             @click:append="calculateCode"
             v-model="dataCode"
             name="code"
-            label="Codi de la UF"
+            label="Codi del MP"
             @input="input"
             @blur="blur"
             :error-messages="errorMessages"
-            hint="Seguiu el format CODICURS_CODIMODULPROFESSIONAL_CODIUF. Exemple: 2DAM_MP1_UF1"
+            hint="Seguiu el format CODI-ESTUDI_CODI-MP. Exemple: DAM_MP1"
     ></v-text-field>
 </template>
 <script>
 export default {
-  name: 'SubjectCode',
+  name: 'SubjectGroupCode',
   data () {
     return {
       dataCode: this.code
@@ -26,7 +26,7 @@ export default {
   props: {
     code: {},
     number: {},
-    subjectGroup: {},
+    study: {},
     errorMessages: {
       type: Array,
       required: false
@@ -41,7 +41,7 @@ export default {
     number () {
       this.calculateCode()
     },
-    subjectGroup () {
+    study () {
       this.calculateCode()
     }
   },
@@ -54,8 +54,8 @@ export default {
     },
     calculateCode () {
       let code = ''
-      if (this.subjectGroup) code = this.subjectGroup.code
-      if (this.number) code = code + '_UF' + this.number
+      if (this.study) code = this.study.code
+      if (this.number) code = code + '_MP' + this.number
       this.dataCode = code
       this.$emit('input', this.dataCode)
     }

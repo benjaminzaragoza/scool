@@ -2,43 +2,34 @@
     <form>
         <study-select
                 v-model="dataStudy"
+                :studies="studies"
+                :departments="departments"
+                :families="families"
                 :error-messages="dataStudyErrors"
                 @input="$v.dataStudy.$touch()"
                 @blur="$v.dataStudy.$touch()"
         ></study-select>
-        <subject-group-select
-                v-model="dataSubjectGroup"
-                :subject-groups="subjectGroups"
-                :error-messages="dataSubjectGroupErrors"
-                @input="$v.dataSubjectGroup.$touch()"
-                @blur="$v.dataSubjectGroup.$touch()"
-        ></subject-group-select>
-        <courses-select
-                v-model="dataCourse"
-                :courses="courses"
-                :error-messages="dataCourseErrors"
-                @input="$v.dataCourse.$touch()"
-                @blur="$v.dataCourse.$touch()"
-        ></courses-select>
 
-        <subject-number
+        <!--
+        Per cada estudi tenim la info : numero de MPS i número total de UFS
+        També hem de tenir una llista dels MPS -> $study->subjectGroups
+        -->
+        <subject-group-number
                 v-model="number"
                 @input="$v.number.$touch()"
                 @blur="$v.number.$touch()"
                 :error-messages="numberErrors"
                 :study="dataStudy"
-                :subject-group="dataSubjectGroup"
-        ></subject-number>
+        ></subject-group-number>
 
-        <subject-code
+        <subject-group-code
                 v-model="code"
                 @input="$v.code.$touch()"
                 @blur="$v.code.$touch()"
-                :course="dataCourse"
-                :subject-group="dataSubjectGroup"
+                :study="dataStudy"
                 :number="number"
                 :error-messages="codeErrors"
-        ></subject-code>
+        ></subject-group-code>
 
         <v-text-field
                 ref="name"
@@ -48,7 +39,7 @@
                 :error-messages="nameErrors"
                 @input="$v.name.$touch()"
                 @blur="$v.name.$touch()"
-                hint="Nom de la Unitat Formativa"
+                hint="Nom del MP"
         ></v-text-field>
 
         <v-text-field
@@ -58,7 +49,7 @@
                 :error-messages="shortnameErrors"
                 @input="$v.shortname.$touch()"
                 @blur="$v.shortname.$touch()"
-                hint="Nom curt de la UF"
+                hint="Nom curt del MP"
         ></v-text-field>
 
         <v-text-field
@@ -68,8 +59,29 @@
                 :error-messages="hoursErrors"
                 @input="$v.hours.$touch()"
                 @blur="$v.hours.$touch()"
-                hint="Número d'hores totals de la UF"
+                hint="Número d'hores totals del MP"
         ></v-text-field>
+
+        <v-text-field
+                v-model="freeHours"
+                name="freeHours"
+                label="Hores lliure disposició"
+                hint="Número d'hores de lliure disposició del MP"
+        ></v-text-field>
+
+        <v-text-field
+                v-model="weekHours"
+                name="weekHours"
+                label="Hores setmanals"
+                hint="Número d'hores setmanals del MP"
+        ></v-text-field>
+
+        <subject-group-types
+                v-model="type"
+                :error-messages="typeErrors"
+                @input="$v.type.$touch()"
+                @blur="$v.type.$touch()"
+        ></subject-group-types>
 
         <v-menu
                 :close-on-content-click="false"
@@ -126,55 +138,54 @@
         <v-btn @click="add(true)"
                color="success"
                :disabled="adding || $v.$invalid"
-               :loading="adding">Afegir UF</v-btn>
+               :loading="adding">Afegir MP</v-btn>
 
         <v-btn @click="add(false)"
                color="primary"
                :disabled="adding || $v.$invalid"
-               :loading="adding">Afegir UF i continuar</v-btn>
+               :loading="adding">Afegir MP i continuar</v-btn>
     </form>
 </template>
 
 <script>
+
 import StudySelect from '../studies/StudySelect'
-import SubjectGroupSelect from '../subjectGroups/SubjectGroupsSelect'
-import CoursesSelect from '../courses/CoursesSelect'
-import SubjectCode from './SubjectCode'
-import SubjectNumber from './SubjectNumber'
+import SubjectGroupCode from './SubjectGroupCode'
+import SubjectGroupNumber from './SubjectGroupNumber'
+import SubjectGroupTypes from './SubjectGroupTypes'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 import * as actions from '../../../store/action-types'
 
 export default {
-  name: 'SubjectAddForm',
+  name: 'SubjectGroupAddForm',
   mixins: [validationMixin],
   validations: {
     dataStudy: { required },
-    dataSubjectGroup: { required },
-    dataCourse: { required },
     number: { required, numeric },
     code: { required },
     name: { required },
     shortname: { required },
-    hours: { required, numeric }
+    hours: { required, numeric },
+    type: { required }
   },
   components: {
     'study-select': StudySelect,
-    'subject-group-select': SubjectGroupSelect,
-    'courses-select': CoursesSelect,
-    'subject-number': SubjectNumber,
-    'subject-code': SubjectCode
+    'subject-group-number': SubjectGroupNumber,
+    'subject-group-code': SubjectGroupCode,
+    'subject-group-types': SubjectGroupTypes
   },
   data () {
     return {
       dataStudy: this.study,
-      dataSubjectGroup: this.subjectGroup,
-      dataCourse: this.course,
       number: null,
       hours: null,
+      freeHours: 0,
+      weekHours: null,
       name: '',
       shortname: '',
       code: '',
+      type: 'Normal',
       start: null,
       startMenu: false,
       end: null,
@@ -185,7 +196,6 @@ export default {
   props: {
     study: {},
     subjectGroup: {},
-    course: {},
     subjectGroups () {
       return this.$store.getters.subjectGroups
     },
@@ -209,60 +219,48 @@ export default {
       !this.$v.dataStudy.required && errors.push('És obligatori indicar un estudi.')
       return errors
     },
-    dataSubjectGroupErrors () {
-      const errors = []
-      if (!this.$v.dataSubjectGroup.$dirty) return errors
-      !this.$v.dataSubjectGroup.required && errors.push('És obligatori indicar un mòdul professional.')
-      return errors
-    },
-    dataCourseErrors () {
-      const errors = []
-      if (!this.$v.dataCourse.$dirty) return errors
-      !this.$v.dataCourse.required && errors.push('És obligatori indicar un curs')
-      return errors
-    },
     numberErrors () {
       const errors = []
       if (!this.$v.number.$dirty) return errors
-      !this.$v.number.required && errors.push('És obligatori indicar el número de UF')
-      !this.$v.number.numeric && errors.push('El número de UF ha de ser un enter positiu')
+      !this.$v.number.required && errors.push('És obligatori indicar el número de MP')
+      !this.$v.number.numeric && errors.push('El número de MP ha de ser un enter positiu')
       return errors
     },
     hoursErrors () {
       const errors = []
       if (!this.$v.hours.$dirty) return errors
-      !this.$v.hours.required && errors.push('És obligatori indicar el número de hores de la UF')
-      !this.$v.hours.numeric && errors.push("El número d'hores de la UF ha de ser un enter positiu")
+      !this.$v.hours.required && errors.push('És obligatori indicar el número de hores del MP')
+      !this.$v.hours.numeric && errors.push("El número d'hores del MP ha de ser un enter positiu")
       return errors
     },
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.required && errors.push('És obligatori indicar el nom de la UF')
+      !this.$v.name.required && errors.push('És obligatori indicar el nom del MP')
       return errors
     },
     shortnameErrors () {
       const errors = []
       if (!this.$v.shortname.$dirty) return errors
-      !this.$v.shortname.required && errors.push('És obligatori indicar un nom curt per la UF')
+      !this.$v.shortname.required && errors.push('És obligatori indicar un nom curt pel MP')
       return errors
     },
     codeErrors () {
       const errors = []
       if (!this.$v.code.$dirty) return errors
-      !this.$v.code.required && errors.push('És obligatori indicar un codi per a la UF')
+      !this.$v.code.required && errors.push('És obligatori indicar un codi pel MP')
+      return errors
+    },
+    typeErrors () {
+      const errors = []
+      if (!this.$v.type.$dirty) return errors
+      !this.$v.type.required && errors.push('És obligatori indicar el tipus de MP')
       return errors
     }
   },
   watch: {
     study (study) {
       this.dataStudy = study
-    },
-    course (course) {
-      this.dataCourse = course
-    },
-    subjectGroup (subjectGroup) {
-      this.dataSubjectGroup = subjectGroup
     }
   },
   methods: {
@@ -273,25 +271,28 @@ export default {
       this.hours = null
       this.start = null
       this.end = null
+      console.log('hrefs:')
+      console.log(this.$refs)
+      console.log('this.$refs.name:')
+      console.log(this.$refs.name)
       this.$nextTick(this.$refs.name.focus)
     },
     allowedDates: val => ![0, 6].includes(new Date(val).getDay()),
     add (close = false) {
       if (!this.$v.$invalid) {
         this.adding = true
-        this.$store.dispatch(actions.ADD_SUBJECT, {
+        this.$store.dispatch(actions.ADD_SUBJECT_GROUP, {
           name: this.name,
           shortname: this.shortname,
           code: this.code,
           number: this.number,
-          study_id: this.dataStudy.id,
-          subject_group_id: this.dataSubjectGroup.id,
+          study_id: this.dataCourse.id,
           course_id: this.dataCourse.id,
           hours: this.hours,
           start: this.start,
           end: this.end
         }).then(response => {
-          this.$snackbar.showMessage('Unitat formativa creada correctament')
+          this.$snackbar.showMessage('Mòdul Professional creat correctament')
           this.adding = false
           this.$emit('added', response.data)
           if (close) {
@@ -300,6 +301,8 @@ export default {
             this.partialReset()
           }
         }).catch(error => {
+          console.log('error:')
+          console.log(error)
           this.$snackbar.showError(error)
           this.adding = false
         })

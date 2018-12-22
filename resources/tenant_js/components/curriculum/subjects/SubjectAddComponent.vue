@@ -37,7 +37,7 @@
 
 <script>
 import StudySelect from '../studies/StudySelect'
-import SubjectGroupSelect from './SubjectGroupsSelect'
+import SubjectGroupSelect from '../subjectGroups/SubjectGroupsSelect'
 import SubjectAddForm from './SubjectAddForm'
 import CoursesSelect from '../courses/CoursesSelect'
 export default {

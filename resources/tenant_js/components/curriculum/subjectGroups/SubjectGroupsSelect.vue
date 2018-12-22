@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import SubjectGroupAdd from './SubjectGroupAddForm'
+import SubjectGroupAddForm from './SubjectGroupAddForm'
 export default {
   name: 'SubjectGroupSelect',
   components: {
