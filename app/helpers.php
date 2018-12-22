@@ -5884,7 +5884,8 @@ if (!function_exists('initialize_subjects')) {
         $course2 = Course::firstOrCreate([
             'code' => '2DAM',
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
-            'order' => 2
+            'order' => 2,
+            'study_id' => $study->id
         ]);
 
 //        Mòdul professional (Subject Group) 7: desenvolupament d’interfícies
@@ -5943,12 +5944,14 @@ if (!function_exists('initialize_subjects')) {
         $course1 = Course::firstOrCreate([
             'code' => '1GAD',
             'name' => '1r de Gestió administrativa',
+            'study_id' => $study->id,
             'order' => 1
         ]);
 
         $course2 = Course::firstOrCreate([
             'code' => '2GAD',
             'name' => '2n de Gestió administrativa',
+            'study_id' => $study->id,
             'order' => 2
         ]);
 
@@ -6587,13 +6590,15 @@ if (!function_exists('initialize_subjects')) {
         $course1 = Course::firstOrCreate([
             'code' => '1AIF',
             'name' => "1r d'Administració i finances",
-            'order' => 1
+            'order' => 1,
+            'study_id' => $study->id
         ]);
 
         $course2 = Course::firstOrCreate([
             'code' => '2AIF',
             'name' => "2n d'Administració i finances",
-            'order' => 2
+            'order' => 2,
+            'study_id' => $study->id
         ]);
 
         $group = SubjectGroup::firstOrCreate([
@@ -7190,12 +7195,14 @@ if (!function_exists('initialize_subjects')) {
         $course1 = Course::firstOrCreate([
             'code' => '1DEP',
             'name' => '1r de Disseny i Edició De Publicacions Impreses',
-            'order' => 1
+            'order' => 1,
+            'study_id' => $study->id
         ]);
         $course2 = Course::firstOrCreate([
             'code' => '2DEP',
             'name' => '2n de Disseny i Edició De Publicacions Impreses',
-            'order' => 2
+            'order' => 2,
+            'study_id' => $study->id
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Materials de producció gràfica',
@@ -7896,12 +7903,14 @@ if (!function_exists('initialize_subjects')) {
         $course1 = Course::firstOrCreate([
             'code' => '1PRID',
             'name' => '1r de Preimpressió digital',
-            'order' => 1
+            'order' => 1,
+            'study_id' => $study->id
         ]);
         $course2 = Course::firstOrCreate([
             'code' => '2PRID',
             'name' => '2n de Preimpressió digital',
-            'order' => 2
+            'order' => 2,
+            'study_id' => $study->id
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Tractament de textos',
@@ -8237,10 +8246,17 @@ digital",
 if (!function_exists('create_sample_course')) {
     function create_sample_course()
     {
+        $study = Study::firstOrCreate([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+        ]);
+
         return Course::firstOrCreate([
             'code' => '2DAM',
             'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
-            'order' => 2
+            'order' => 2,
+            'study_id' => $study->id
         ]);
     }
 }
@@ -8300,7 +8316,8 @@ if (!function_exists('create_sample_subject')) {
         $course2 = Course::firstOrCreate([
             'code' => '2DAM',
             'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
-            'order' => 2
+            'order' => 2,
+            'study_id' => $study->id
         ]);
 
         return Subject::firstOrCreate([
@@ -8359,7 +8376,8 @@ if (!function_exists('initialize_fake_subjects')) {
         $course2 = Course::firstOrCreate([
             'code' => '2DAM',
             'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
-            'order' => 2
+            'order' => 2,
+            'study_id' => $dam->id
         ]);
 
 //        Mòdul professional (Subject Group) 7: desenvolupament d’interfícies

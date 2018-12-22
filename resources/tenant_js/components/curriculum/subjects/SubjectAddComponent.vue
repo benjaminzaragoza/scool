@@ -35,7 +35,7 @@
 import StudySelect from '../studies/StudySelect'
 import SubjectGroupSelect from './SubjectGroupsSelect'
 import SubjectAddForm from './SubjectAddForm'
-import CoursesSelect from '../courses/SubjectGroupsSelect'
+import CoursesSelect from '../courses/CoursesSelect'
 export default {
   name: 'SubjectAdd',
   data () {

@@ -139,7 +139,7 @@
 <script>
 import StudySelect from '../studies/StudySelect'
 import SubjectGroupSelect from './SubjectGroupsSelect'
-import CoursesSelect from '../courses/SubjectGroupsSelect'
+import CoursesSelect from '../courses/CoursesSelect'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 export default {

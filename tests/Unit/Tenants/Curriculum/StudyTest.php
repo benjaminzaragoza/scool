@@ -238,7 +238,7 @@ class StudyTest extends TestCase
         $this->assertEquals('Tag 3 bla bla bla',$mappedStudy['tags'][2]['description']);
         $this->assertEquals('#333423',$mappedStudy['tags'][2]['color']);
 
-        $this->assertEquals('Desenvolupament d’interfícies Interfícies DAM_MP7',$mappedStudy['full_search']);
+        $this->assertEquals('Desenvolupament Aplicacions Multiplataforma Des. Aplicacions Multiplataforma DAM',$mappedStudy['full_search']);
 
     }
 }

@@ -21,6 +21,7 @@ class CreateTenantCoursesTable extends Migration
             $table->string('code')->unique();
             $table->string('name')->unique();
             $table->unsignedTinyInteger('order');
+            $table->unsignedInteger('study_id')->nullable();
             $table->timestamps();
         });
     }
