@@ -61,5 +61,10 @@ class CourseTest extends TestCase
         $this->assertNotNull($mappedCourse['formatted_created_at_diff']);
         $this->assertNotNull($mappedCourse['formatted_updated_at_diff']);
         $this->assertEquals('courses',$mappedCourse['api_uri']);
+
+        $this->assertSame(1,$mappedCourse['study_id']);
+        $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedCourse['study_name']);
+        $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedCourse['study_shortname']);
+        $this->assertEquals('DAM',$mappedCourse['study_code']);
     }
 }

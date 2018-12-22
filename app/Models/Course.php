@@ -17,6 +17,14 @@ class Course extends Model
 
     protected $guarded = [];
 
+    /**
+     * Get the subject's study.
+     */
+    public function study()
+    {
+        return $this->belongsTo(Study::class);
+    }
+
     public function map()
     {
         return [
@@ -32,7 +40,13 @@ class Course extends Model
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
-            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+
+            'study_id' => (int) $this->study_id,
+            'study_name' => optional($this->study)->name,
+            'study_shortname' => optional($this->study)->shortname,
+            'study_code' => optional($this->study)->code,
+            'full_search' => $this->full_search
         ];
     }
 }
