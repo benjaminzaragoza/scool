@@ -14,6 +14,12 @@
                 @blur="blur"
                 :error-messages="errorMessages"
         >
+                <template
+                        slot="selection"
+                        slot-scope="{ item: study }"
+                >
+                    {{ study.name }}
+              </template>
             <template slot="item" slot-scope="{ item: study }">
                 <v-list-tile-content>
                     <v-list-tile-title v-html="study.name"></v-list-tile-title>

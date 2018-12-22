@@ -946,7 +946,7 @@ Afegir Subject/UF:
   - [ ] Mostrar una alerta si el Mòdul Professional té número de UFS indicat i ja estan totes creades  
    
 Rendiment:
-- 436 consultes a la web de llista UFS
+- [X] Solucionar 436 consultes a la web de llista UFS
 
 Crear Estudi:
 - Camps pendents:

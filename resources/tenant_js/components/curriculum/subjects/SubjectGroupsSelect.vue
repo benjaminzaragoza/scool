@@ -14,6 +14,12 @@
                 @blur="blur"
                 :error-messages="errorMessages"
         >
+        <template
+                slot="selection"
+                slot-scope="{ item: subjectGroup }"
+        >
+                {{ subjectGroup.name }}
+        </template>
         <template slot="item" slot-scope="{ item: subjectGroup }">
             <v-list-tile-content>
                 <v-list-tile-title v-html="subjectGroup.name"></v-list-tile-title>
