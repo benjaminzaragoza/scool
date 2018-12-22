@@ -4,9 +4,10 @@ namespace Tests\Feature\Api\Subjects\Curriculum;
 
 use App\Events\Subjects\SubjectDeleted;
 use App\Events\Subjects\SubjectStored;
-use App\Models\Department;
-use App\Models\Family;
+use App\Models\Course;
+use App\Models\Study;
 use App\Models\Subject;
+use App\Models\SubjectGroup;
 use Event;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -118,69 +119,33 @@ class SubjectsControllerTest extends BaseTenantTest
      */
     public function can_store_subjects()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
-//
-//
-//
-//
-//        $mp_start_date = '2017-09-15';
-//        $mp_end_date = '2018-06-01';
-//
-//        $study = Study::firstOrCreate([
-//            'name' => 'Desenvolupament Aplicacions Multiplataforma',
-//            'shortname' => 'Des. Aplicacions Multiplataforma',
-//            'code' => 'DAM',
-//        ]);
-//
-//        //        Mòdul professional (Subject Group) 7: desenvolupament d’interfícies
-//        $group = SubjectGroup::firstOrCreate([
-//            'name' => 'Desenvolupament d’interfícies',
-//            'shortname' => 'Interfícies',
-//            'code' =>  'DAM_MP7',
-//            'number' => 7,
-//            'study_id' => $study->id,
-//            'hours' => 99,
-//            'free_hours' => 0, // Lliure disposició
-//            'week_hours' => 3,
-//            'start' => $mp_start_date,
-//            'end' => $mp_end_date,
-//            'type' => 'Normal'
-//        ]);
-//
-//        $course2 = Course::firstOrCreate([
-//            'code' => '2DAM',
-//            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
-//            'order' => 2
-//        ]);
-//
-//        return Subject::firstOrCreate([
-//            'name' => 'Disseny i implementació d’interfícies',
-//            'shortname'=> 'Interfícies',
-//            'code' =>  'DAM_MP7_UF1',
-//            'number' => 1,
-//            'subject_group_id' => $group->id,
-//            'study_id' => $study->id,
-//            'course_id' => $course2->id,
-//            'type_id' => 1,
-//            'hours' => 79,
-//            'start' => $mp_start_date,
-//            'end' => $mp_end_date
-//        ]);
 
-
-
-
-        $department = Department::create([
-            'name' => "Departament d'Informàtica",
-            'shortname' => 'Informàtica',
-            'code' => 'INF',
-            'order' => 1
+        $dam = Study::firstOrCreate([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
         ]);
 
-        $family = Family::create([
-            'name' => 'Informàtica',
-            'code' => 'INF',
+        $course2Dam = Course::firstOrCreate([
+            'code' => '2DAM',
+            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
+            'order' => 2,
+            'study_id' => $dam->id
+        ]);
+
+        $subjectGroup = SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $dam->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'type' => 'Normal'
         ]);
 
         Event::fake();
@@ -189,42 +154,58 @@ class SubjectsControllerTest extends BaseTenantTest
             'shortname'=> 'Interfícies',
             'code' =>  'DAM_MP7_UF1',
             'number' => 1,
-            'study_id' => $study->id,
-            'subject_group_id' => $group->id,
-            'course_id' => $course2->id,
+            'study_id' => $dam->id,
+            'subject_group_id' => $subjectGroup->id,
+            'course_id' => $course2Dam->id,
             'type_id' => 1,
             'hours' => 79,
-            'start' => $mp_start_date,
-            'end' => $mp_end_date
+            'start' => '2017-09-15',
+            'end' => '2018-06-01'
         ]);
         $response->assertSuccessful();
-        $createdStudy = json_decode($response->getContent());
-        Event::assertDispatched(StudyStored::class,function ($event) use ($createdStudy){
-            return $event->study->is(Study::findOrFail($createdStudy->id));
+        $createdSubject = json_decode($response->getContent());
+        Event::assertDispatched(SubjectStored::class,function ($event) use ($createdSubject){
+            return $event->subject->is(Subject::findOrFail($createdSubject->id));
         });
-        $this->assertSame($createdStudy->id,1);
-        $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
-        $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
-        $this->assertEquals($createdStudy->code,'DAM');
-        $this->assertNotNull($createdStudy->created_at);
-        $this->assertNotNull($createdStudy->created_at_timestamp);
-        $this->assertNotNull($createdStudy->formatted_created_at);
-        $this->assertNotNull($createdStudy->formatted_created_at_diff);
-        $this->assertNotNull($createdStudy->updated_at);
-        $this->assertNotNull($createdStudy->updated_at_timestamp);
-        $this->assertNotNull($createdStudy->formatted_updated_at);
-        $this->assertNotNull($createdStudy->formatted_updated_at_diff);
+        $this->assertSame($createdSubject->id,1);
+        $this->assertEquals($createdSubject->name,'Disseny i implementació d’interfícies');
+        $this->assertEquals($createdSubject->shortname,'Interfícies');
+        $this->assertEquals($createdSubject->code,'DAM_MP7_UF1');
+        $this->assertSame($createdSubject->number,1);
+        $this->assertEquals($createdSubject->study_id,$dam->id);
+        $this->assertEquals($createdSubject->subject_group_id,1);
+        $this->assertEquals($createdSubject->course_id,1);
+        $this->assertEquals($createdSubject->type_id,1);
+        $this->assertEquals($createdSubject->hours,79);
+        $this->assertEquals($createdSubject->start,'2017-09-15');
+        $this->assertEquals($createdSubject->end,'2018-06-01');
+        $this->assertNotNull($createdSubject->created_at);
+        $this->assertNotNull($createdSubject->created_at_timestamp);
+        $this->assertNotNull($createdSubject->formatted_created_at);
+        $this->assertNotNull($createdSubject->formatted_created_at_diff);
+        $this->assertNotNull($createdSubject->updated_at);
+        $this->assertNotNull($createdSubject->updated_at_timestamp);
+        $this->assertNotNull($createdSubject->formatted_updated_at);
+        $this->assertNotNull($createdSubject->formatted_updated_at_diff);
 
         try {
-            $subject = Study::findOrFail($createdStudy->id);
+            $subject = Subject::findOrFail($createdSubject->id);
         } catch (\Exception $e) {
             $this->fails('Study not found at database!');
         }
 
         $this->assertSame($subject->id,1);
-        $this->assertEquals($subject->name,'Desenvolupament Aplicacions Multiplataforma');
-        $this->assertEquals($subject->shortname,'Des. aplicacion Multiplataforma');
-        $this->assertEquals($subject->code,'DAM');
+        $this->assertEquals($subject->name,'Disseny i implementació d’interfícies');
+        $this->assertEquals($subject->shortname,'Interfícies');
+        $this->assertEquals($subject->code,'DAM_MP7_UF1');
+        $this->assertEquals($subject->number,1);
+        $this->assertEquals($subject->study_id,$dam->id);
+        $this->assertEquals($subject->subject_group_id,1);
+        $this->assertEquals($subject->course_id,1);
+        $this->assertEquals($subject->type_id,1);
+        $this->assertEquals($subject->hours,79);
+        $this->assertEquals($subject->start,'2017-09-15');
+        $this->assertEquals($subject->end,'2018-06-01');
         $this->assertNotNull($subject->created_at);
         $this->assertNotNull($subject->created_at_timestamp);
         $this->assertNotNull($subject->formatted_created_at);
@@ -244,55 +225,91 @@ class SubjectsControllerTest extends BaseTenantTest
     {
         $this->loginAsCurriculumManager('api');
 
-        Event::fake();
-
-        $department = Department::create([
-            'name' => "Departament d'Informàtica",
-            'shortname' => 'Informàtica',
-            'code' => 'INF',
-            'order' => 1
-        ]);
-
-        $family = Family::create([
-            'name' => 'Informàtica',
-            'code' => 'INF',
-        ]);
-
-        $response =  $this->json('POST','/api/v1/subjects',$subject = [
+        $dam = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
-            'shortname' => 'Des. aplicacion Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
             'code' => 'DAM',
-            'department' => $department->id,
-            'family' => $family->id,
+        ]);
+
+        $course2Dam = Course::firstOrCreate([
+            'code' => '2DAM',
+            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
+            'order' => 2,
+            'study_id' => $dam->id
+        ]);
+
+        $subjectGroup = SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $dam->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'type' => 'Normal'
+        ]);
+
+        Event::fake();
+        $response =  $this->json('POST','/api/v1/subjects',$subject = [
+            'name' => 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Interfícies',
+            'code' =>  'DAM_MP7_UF1',
+            'number' => 1,
+            'study_id' => $dam->id,
+            'subject_group_id' => $subjectGroup->id,
+            'course_id' => $course2Dam->id,
+            'type_id' => 1,
+            'hours' => 79,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01'
         ]);
         $response->assertSuccessful();
-        $createdStudy = json_decode($response->getContent());
-        Event::assertDispatched(StudyStored::class,function ($event) use ($createdStudy){
-            return $event->study->is(Study::findOrFail($createdStudy->id));
+        $createdSubject = json_decode($response->getContent());
+        Event::assertDispatched(SubjectStored::class,function ($event) use ($createdSubject){
+            return $event->subject->is(Subject::findOrFail($createdSubject->id));
         });
-        $this->assertSame($createdStudy->id,1);
-        $this->assertEquals($createdStudy->name,'Desenvolupament Aplicacions Multiplataforma');
-        $this->assertEquals($createdStudy->shortname,'Des. aplicacion Multiplataforma');
-        $this->assertEquals($createdStudy->code,'DAM');
-        $this->assertNotNull($createdStudy->created_at);
-        $this->assertNotNull($createdStudy->created_at_timestamp);
-        $this->assertNotNull($createdStudy->formatted_created_at);
-        $this->assertNotNull($createdStudy->formatted_created_at_diff);
-        $this->assertNotNull($createdStudy->updated_at);
-        $this->assertNotNull($createdStudy->updated_at_timestamp);
-        $this->assertNotNull($createdStudy->formatted_updated_at);
-        $this->assertNotNull($createdStudy->formatted_updated_at_diff);
+        $this->assertSame($createdSubject->id,1);
+        $this->assertEquals($createdSubject->name,'Disseny i implementació d’interfícies');
+        $this->assertEquals($createdSubject->shortname,'Interfícies');
+        $this->assertEquals($createdSubject->code,'DAM_MP7_UF1');
+        $this->assertSame($createdSubject->number,1);
+        $this->assertEquals($createdSubject->study_id,$dam->id);
+        $this->assertEquals($createdSubject->subject_group_id,1);
+        $this->assertEquals($createdSubject->course_id,1);
+        $this->assertEquals($createdSubject->type_id,1);
+        $this->assertEquals($createdSubject->hours,79);
+        $this->assertEquals($createdSubject->start,'2017-09-15');
+        $this->assertEquals($createdSubject->end,'2018-06-01');
+        $this->assertNotNull($createdSubject->created_at);
+        $this->assertNotNull($createdSubject->created_at_timestamp);
+        $this->assertNotNull($createdSubject->formatted_created_at);
+        $this->assertNotNull($createdSubject->formatted_created_at_diff);
+        $this->assertNotNull($createdSubject->updated_at);
+        $this->assertNotNull($createdSubject->updated_at_timestamp);
+        $this->assertNotNull($createdSubject->formatted_updated_at);
+        $this->assertNotNull($createdSubject->formatted_updated_at_diff);
 
         try {
-            $subject = Study::findOrFail($createdStudy->id);
+            $subject = Subject::findOrFail($createdSubject->id);
         } catch (\Exception $e) {
             $this->fails('Study not found at database!');
         }
 
         $this->assertSame($subject->id,1);
-        $this->assertEquals($subject->name,'Desenvolupament Aplicacions Multiplataforma');
-        $this->assertEquals($subject->shortname,'Des. aplicacion Multiplataforma');
-        $this->assertEquals($subject->code,'DAM');
+        $this->assertEquals($subject->name,'Disseny i implementació d’interfícies');
+        $this->assertEquals($subject->shortname,'Interfícies');
+        $this->assertEquals($subject->code,'DAM_MP7_UF1');
+        $this->assertEquals($subject->number,1);
+        $this->assertEquals($subject->study_id,$dam->id);
+        $this->assertEquals($subject->subject_group_id,1);
+        $this->assertEquals($subject->course_id,1);
+        $this->assertEquals($subject->type_id,1);
+        $this->assertEquals($subject->hours,79);
+        $this->assertEquals($subject->start,'2017-09-15');
+        $this->assertEquals($subject->end,'2018-06-01');
         $this->assertNotNull($subject->created_at);
         $this->assertNotNull($subject->created_at_timestamp);
         $this->assertNotNull($subject->formatted_created_at);

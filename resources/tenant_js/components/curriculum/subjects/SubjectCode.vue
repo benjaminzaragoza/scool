@@ -39,6 +39,12 @@ export default {
       if (code || code === '') {
         this.calculateCode()
       }
+    },
+    number () {
+      this.calculateCode()
+    },
+    subjectGroup () {
+      this.calculateCode()
     }
   },
   methods: {
@@ -49,15 +55,11 @@ export default {
       this.$emit('blur', this.dataCode)
     },
     calculateCode () {
-      console.log('calculateCode!!!!!!')
       let code = ''
-      console.log(this.course)
-      if (this.course) {
-        console.log('1')
-        code = this.course.code
-        if (this.subjectGroup) code = code + '_' + this.subjectGroup.code
-      }
+      if (this.subjectGroup) code = this.subjectGroup.code
+      if (this.number) code = code + '_UF' + this.number
       this.dataCode = code
+      this.$emit('input', this.dataCode)
     }
   },
   created () {

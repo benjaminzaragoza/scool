@@ -7,18 +7,18 @@
             </v-stepper-step>
             <v-stepper-content step="1">
                 <study-select v-model="study"></study-select>
-                <v-btn v-if="study" @click="step=2">Continuar</v-btn>
+                <v-btn v-if="study" @click="step=2" color="primary">Continuar</v-btn>
             </v-stepper-content>
             <v-stepper-step :complete="step > 2" step="2">Mòdul Professional</v-stepper-step>
             <v-stepper-content step="2">
                 <subject-group-select v-model="subjectGroup" :study="study"></subject-group-select>
-                <v-btn v-if="subjectGroup" @click="step=3">Continuar</v-btn>
+                <v-btn v-if="subjectGroup" @click="step=3"  color="primary">Continuar</v-btn>
                 <v-btn @click="step=1">Tornar a escollir estudi</v-btn>
             </v-stepper-content>
             <v-stepper-step :complete="step > 3" step="3">Curs</v-stepper-step>
             <v-stepper-content step="3">
                 <courses-select v-model="course" :study="study"></courses-select>
-                <v-btn v-if="course" @click="step=4">Continuar</v-btn>
+                <v-btn v-if="course" @click="step=4"  color="primary">Continuar</v-btn>
                 <v-btn @click="step=2">Tornar a escollir Mòdul</v-btn>
             </v-stepper-content>
             <v-stepper-step step="4">Unitat Formativa</v-stepper-step>

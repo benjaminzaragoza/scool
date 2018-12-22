@@ -130,6 +130,16 @@
                     :first-day-of-week="1"
             ></v-date-picker>
         </v-menu>
+
+        <v-btn @click="add"
+               color="success"
+               :disabled="adding || $v.$invalid"
+               :loading="adding">Afegir UF</v-btn>
+
+        <v-btn @click="add"
+               color="primary"
+               :disabled="adding || $v.$invalid"
+               :loading="adding">Afegir UF i continuar</v-btn>
     </form>
 </template>
 
@@ -141,6 +151,8 @@ import SubjectCode from './SubjectCode'
 import SubjectNumber from './SubjectNumber'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
+import * as actions from '../../../store/action-types'
+
 export default {
   name: 'SubjectAddForm',
   mixins: [validationMixin],
@@ -148,11 +160,11 @@ export default {
     dataStudy: { required },
     dataSubjectGroup: { required },
     dataCourse: { required },
-    hours: { required },
+    number: { required, numeric },
+    code: { required },
     name: { required },
     shortname: { required },
-    code: { required },
-    number: { required, numeric }
+    hours: { required, numeric }
   },
   components: {
     'study-select': StudySelect,
@@ -174,7 +186,8 @@ export default {
       start: null,
       startMenu: false,
       end: null,
-      endMenu: false
+      endMenu: false,
+      adding: false
     }
   },
   props: {
@@ -227,7 +240,7 @@ export default {
       const errors = []
       if (!this.$v.hours.$dirty) return errors
       !this.$v.hours.required && errors.push('És obligatori indicar el número de hores de la UF')
-      !this.$v.number.numeric && errors.push("El número d'hores de la UF ha de ser un enter positiu")
+      !this.$v.hours.numeric && errors.push("El número d'hores de la UF ha de ser un enter positiu")
       return errors
     },
     nameErrors () {
@@ -261,7 +274,24 @@ export default {
     }
   },
   methods: {
-    allowedDates: val => ![0, 6].includes(new Date(val).getDay())
+    allowedDates: val => ![0, 6].includes(new Date(val).getDay()),
+    add (close = false) {
+      if (!this.$v.$invalid) {
+        this.adding = true
+        this.$store.dispatch(actions.ADD_SUBJECT, {
+          subject: this.subject,
+          description: this.description
+        }).then(response => {
+          this.$snackbar.showMessage('Unitat formativa creada correctament')
+          this.adding = false
+          this.$emit('added', response.data)
+          if (close) this.close()
+        }).catch(error => {
+          this.$snackbar.showError(error)
+          this.adding = false
+        })
+      }
+    }
   }
 }
 </script>

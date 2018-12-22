@@ -86,7 +86,7 @@ export default {
     filteredCourses () {
       if (this.study) {
         if (Number.isInteger(parseInt(this.study))) return this.filterCoursesByStudy(this.study)
-        if (this.study.id) return this.filterCoursesByStudy(this.study.id)
+        if (this.study && this.study.id) return this.filterCoursesByStudy(this.study.id)
       }
       return this.courses
     },
@@ -116,7 +116,7 @@ export default {
     selectCourse () {
       if (this.itemValue === null) {
         if (Number.isInteger(parseInt(this.course))) this.internalCourse = this.filterCourses(this.course)[0]
-        if (this.course.id) this.internalCourse = this.filterCourses(this.course.id)[0]
+        if (this.course && this.course.id) this.internalCourse = this.filterCourses(this.course.id)[0]
       }
     }
   },
