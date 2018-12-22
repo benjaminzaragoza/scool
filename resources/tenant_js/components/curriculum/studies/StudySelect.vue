@@ -87,7 +87,7 @@ export default {
     },
     itemValue: {
       type: String,
-      default: 'id'
+      default: null
     }
   },
   computed: {
@@ -98,6 +98,7 @@ export default {
   watch: {
     study (newStudy) {
       this.dataStudy = newStudy
+      this.selectStudy()
     }
   },
   methods: {
@@ -112,7 +113,19 @@ export default {
     },
     blur () {
       this.$emit('blur', this.dataStudy)
+    },
+    filterStudy (id) {
+      return this.dataStudies.filter(study => { return study.id === id })
+    },
+    selectStudy () {
+      if (this.itemValue === null) {
+        if (Number.isInteger(parseInt(this.study))) this.dataStudy = this.filterStudy(this.study)[0]
+        if (this.study.id) this.dataStudy = this.filterStudy(this.study.id)[0]
+      }
     }
+  },
+  created () {
+    this.selectStudy()
   }
 }
 </script>

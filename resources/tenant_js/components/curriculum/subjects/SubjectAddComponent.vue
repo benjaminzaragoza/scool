@@ -24,7 +24,7 @@
             <v-stepper-step step="4">Unitat Formativa</v-stepper-step>
             <v-stepper-content step="4">
                 <v-btn @click="step=3">Tornar a escollir Curs</v-btn>
-                <!--<subject-add-form></subject-add-form>-->
+                <subject-add-form :study="study" :course="course" :subject-group="subjectGroup"></subject-add-form>
             </v-stepper-content>
         </v-stepper>
     </v-card>

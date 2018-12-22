@@ -52,7 +52,7 @@
 <script>
 import SubjectGroupAdd from './SubjectGroupAdd'
 export default {
-  name: 'SubjectGroupSelectComponent',
+  name: 'SubjectGroupSelect',
   components: {
     'subject-group-add': SubjectGroupAdd
   },
@@ -85,12 +85,15 @@ export default {
     },
     itemValue: {
       type: String,
-      default: 'id'
+      default: null
     }
   },
   computed: {
     filteredSubjectGroups () {
-      if (this.study) return this.subjectGroups.filter(subjectGroup => { return subjectGroup.study_id === this.study })
+      if (this.study) {
+        if (Number.isInteger(parseInt(this.study))) return this.filterSubjectGroupsByStudy(this.study)
+        if (this.study.id) return this.filterSubjectGroupsByStudy(this.study.id)
+      }
       return this.subjectGroups
     },
     subjectGroups () {
@@ -100,6 +103,7 @@ export default {
   watch: {
     subjectGroup (newSubjectGroup) {
       this.dataSubjectGroup = newSubjectGroup
+      this.selectSubjectGroup()
     }
   },
   methods: {
@@ -108,7 +112,22 @@ export default {
     },
     blur () {
       this.$emit('blur', this.dataSubjectGroup)
+    },
+    filterSubjectGroups (id) {
+      return this.subjectGroups.filter(subjectGroup => { return subjectGroup.id === id })
+    },
+    filterSubjectGroupsByStudy (id) {
+      return this.subjectGroups.filter(subjectGroup => { return subjectGroup.study_id === id })
+    },
+    selectSubjectGroup () {
+      if (this.itemValue === null) {
+        if (Number.isInteger(parseInt(this.subjectGroup))) this.dataSubjectGroup = this.filterSubjectGroups(this.subjectGroup)[0]
+        if (this.subjectGroup.id) this.dataSubjectGroup = this.filterSubjectGroups(this.subjectGroup.id)[0]
+      }
     }
+  },
+  created () {
+    this.selectSubjectGroup()
   }
 }
 </script>

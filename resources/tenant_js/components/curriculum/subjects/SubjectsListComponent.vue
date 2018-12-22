@@ -209,8 +209,8 @@ export default {
     },
     filteredSubjects () {
       let filteredByState = filters[this.filter](this.dataSubjects)
-      if (this.selectedStudy) filteredByState = filteredByState.filter(subject => { return subject.study_id === this.selectedStudy })
-      if (this.selectedSubjectGroup) filteredByState = filteredByState.filter(subject => { return subject.subject_group_id === this.selectedSubjectGroup })
+      if (this.selectedStudy) filteredByState = filteredByState.filter(subject => { return subject.study_id === this.selectedStudy.id })
+      if (this.selectedSubjectGroup) filteredByState = filteredByState.filter(subject => { return subject.subject_group_id === this.selectedSubjectGroup.id })
       // TODO
       // if (this.selectedTags.length > 0) {
       //   filteredByState = filteredByState.filter(subject => {

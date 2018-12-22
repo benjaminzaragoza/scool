@@ -24,27 +24,23 @@
                 @blur="$v.dataCourse.$touch()"
         ></courses-select>
 
-        <v-text-field
+        <subject-number
                 v-model="number"
-                name="number"
-                label="Número de la UF"
-                :error-messages="numberErrors"
                 @input="$v.number.$touch()"
                 @blur="$v.number.$touch()"
-                hint="Les UFs estan númerades, indiqueu el número que correspon a la UF"
-                autofocus
-        ></v-text-field>
+                :error-messages="numberErrors"
+                :study="dataStudy"
+                :subject-group="dataSubjectGroup"
+        ></subject-number>
 
-        <v-text-field
+        <subject-code
                 v-model="code"
-                name="code"
-                label="Codi de la UF"
-                :error-messages="codeErrors"
                 @input="$v.code.$touch()"
                 @blur="$v.code.$touch()"
-                hint="Seguiu el format CODICURS_CODIMODULPROFESSIONAL_CODIUF. Exemple: 2DAM_MP1_UF1"
-                autofocus
-        ></v-text-field>
+                :course="dataCourse"
+                :subject-group="dataSubjectGroup"
+                :error-messages="codeErrors"
+        ></subject-code>
 
         <v-text-field
                 v-model="name"
@@ -140,6 +136,8 @@
 import StudySelect from '../studies/StudySelect'
 import SubjectGroupSelect from './SubjectGroupsSelect'
 import CoursesSelect from '../courses/CoursesSelect'
+import SubjectCode from './SubjectCode'
+import SubjectNumber from './SubjectNumber'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 export default {
@@ -158,7 +156,9 @@ export default {
   components: {
     'study-select': StudySelect,
     'subject-group-select': SubjectGroupSelect,
-    'courses-select': CoursesSelect
+    'courses-select': CoursesSelect,
+    'subject-number': SubjectNumber,
+    'subject-code': SubjectCode
   },
   data () {
     return {
@@ -180,25 +180,20 @@ export default {
     study: {},
     subjectGroup: {},
     course: {},
-    studies: {
-      type: Array,
-      required: true
+    subjectGroups () {
+      return this.$store.getters.subjectGroups
     },
-    departments: {
-      type: Array,
-      required: true
+    families () {
+      return this.$store.getters.families
     },
-    families: {
-      type: Array,
-      required: true
+    studies () {
+      return this.$store.getters.studies
     },
-    subjectGroups: {
-      type: Array,
-      required: true
+    departments () {
+      return this.$store.getters.departments
     },
-    courses: {
-      type: Array,
-      required: true
+    courses () {
+      return this.$store.getters.courses
     }
   },
   computed: {

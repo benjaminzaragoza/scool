@@ -79,12 +79,15 @@ export default {
     },
     itemValue: {
       type: String,
-      default: 'id'
+      default: null
     }
   },
   computed: {
     filteredCourses () {
-      if (this.study) return this.courses.filter(course => { return course.study_id === this.study })
+      if (this.study) {
+        if (Number.isInteger(parseInt(this.study))) return this.filterCoursesByStudy(this.study)
+        if (this.study.id) return this.filterCoursesByStudy(this.study.id)
+      }
       return this.courses
     },
     courses () {
@@ -94,6 +97,7 @@ export default {
   watch: {
     course (course) {
       this.internalCourse = course
+      this.selectCourse()
     }
   },
   methods: {
@@ -102,7 +106,22 @@ export default {
     },
     blur () {
       this.$emit('blur', this.internalCourse)
+    },
+    filterCourses (id) {
+      return this.courses.filter(course => { return course.id === id })
+    },
+    filterCoursesByStudy (id) {
+      return this.courses.filter(course => { return course.study_id === id })
+    },
+    selectCourse () {
+      if (this.itemValue === null) {
+        if (Number.isInteger(parseInt(this.course))) this.internalCourse = this.filterCourses(this.course)[0]
+        if (this.course.id) this.internalCourse = this.filterCourses(this.course.id)[0]
+      }
     }
+  },
+  created () {
+    this.selectCourse()
   }
 }
 </script>
