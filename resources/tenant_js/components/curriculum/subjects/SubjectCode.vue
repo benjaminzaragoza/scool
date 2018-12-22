@@ -9,7 +9,6 @@
             @blur="blur"
             :error-messages="errorMessages"
             hint="Seguiu el format CODICURS_CODIMODULPROFESSIONAL_CODIUF. Exemple: 2DAM_MP1_UF1"
-            autofocus
     ></v-text-field>
 </template>
 <script>

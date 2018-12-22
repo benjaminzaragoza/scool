@@ -1,5 +1,6 @@
 <template>
     <v-text-field
+            autofocus
             v-model="dataNumber"
             name="number"
             label="Número de la UF"
@@ -27,6 +28,11 @@ export default {
     errorMessages: {
       type: Array,
       required: false
+    }
+  },
+  watch: {
+    number (number) {
+      this.dataNumber = number
     }
   },
   methods: {

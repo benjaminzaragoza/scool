@@ -8,6 +8,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\TaggedStudiesController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
@@ -292,6 +293,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/subjects','\\' . SubjectsController::class . '@index');
             Route::post('/subjects','\\' . SubjectsController::class . '@store');
             Route::delete('/subjects/{subject}','\\' . SubjectsController::class . '@destroy');
+
+            // subjectGroups
+            Route::post('/subjectGroups','\\' . SubjectGroupsController::class . '@store');
+
 
         });
 

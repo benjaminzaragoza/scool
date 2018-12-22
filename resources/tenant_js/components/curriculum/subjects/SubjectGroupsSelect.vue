@@ -18,7 +18,7 @@
                 slot="selection"
                 slot-scope="{ item: subjectGroup }"
         >
-                {{ subjectGroup.name }}
+                {{ subjectGroup.code }} - {{ subjectGroup.name }}
         </template>
         <template slot="item" slot-scope="{ item: subjectGroup }">
             <v-list-tile-content>
@@ -39,7 +39,7 @@
                         <v-container fluid grid-list-md text-xs-center>
                             <v-layout row wrap>
                                 <v-flex xs12>
-                                     <subject-group-add @close="dialog = false"></subject-group-add>
+                                     <subject-group-add-form @close="dialog = false"></subject-group-add-form>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -50,11 +50,11 @@
 </template>
 
 <script>
-import SubjectGroupAdd from './SubjectGroupAdd'
+import SubjectGroupAdd from './SubjectGroupAddForm'
 export default {
   name: 'SubjectGroupSelect',
   components: {
-    'subject-group-add': SubjectGroupAdd
+    'subject-group-add-form': SubjectGroupAddForm
   },
   data () {
     return {

@@ -46,7 +46,6 @@ class SubjectsController extends Controller
             'subject_group_id' => $request->subject_group_id,
             'study_id' => $request->study_id,
             'course_id' => $request->course_id,
-            'type_id' => $request->type_id,
             'hours' => $request->hours,
             'week_hours' => $request->week_hours,
             'start' => $request->start,

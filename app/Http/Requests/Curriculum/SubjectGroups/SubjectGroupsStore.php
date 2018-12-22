@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Curriculum\Subjects;
+namespace App\Http\Requests\Curriculum\SubjectGroups;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class SubjectStore.
+ * Class SubjectGroupsStore.
  *
  * @package App\Http\Requests
  */
-class SubjectStore extends FormRequest
+class SubjectGroupsStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class SubjectStore extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('subjects.store');
+        return Auth::user()->can('subjectGroups.store');
     }
 
     /**
@@ -32,7 +32,7 @@ class SubjectStore extends FormRequest
         return [
             'name' => 'required',
             'shortname' => 'required',
-            'code' => 'required|unique:subjects,code'
+            'code' => 'required|unique:subject_groups,code'
         ];
     }
 }

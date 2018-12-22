@@ -45,44 +45,11 @@
                       <v-layout>
                           <v-flex xs12>
                                <v-layout>
-                                   <v-flex xs5>
+                                   <v-flex xs7>
                                        <study-select v-model="selectedStudy"></study-select>
                                    </v-flex>
-                                   <v-flex xs4>
+                                   <v-flex xs5>
                                        <subject-groups-select v-model="selectedSubjectGroup" :study="selectedStudy"></subject-groups-select>
-                                   </v-flex>
-                                   <v-flex xs3>
-                                       <!--// TODO-->
-                                       TODO TAGS?
-                                       <!--<v-autocomplete-->
-                                               <!--v-model="selectedTags"-->
-                                               <!--:items="dataTags"-->
-                                               <!--attach-->
-                                               <!--chips-->
-                                               <!--label="Etiquetes"-->
-                                               <!--multiple-->
-                                               <!--item-value="id"-->
-                                               <!--item-text="value"-->
-                                       <!--&gt;-->
-                                            <!--<template slot="selection" slot-scope="data">-->
-                                                <!--<v-chip-->
-                                                        <!--small-->
-                                                        <!--label-->
-                                                        <!--@input="data.parent.selectItem(data.item)"-->
-                                                        <!--:selected="data.selected"-->
-                                                        <!--class="chip&#45;&#45;select-multi"-->
-                                                        <!--:color="data.item.color"-->
-                                                        <!--text-color="white"-->
-                                                        <!--:key="JSON.stringify(data.item)"-->
-                                                <!--&gt;<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>-->
-                                            <!--</template>-->
-                                            <!--<template slot="item" slot-scope="data">-->
-                                                <!--<v-checkbox v-model="data.tile.props.value"></v-checkbox>-->
-                                                <!--<v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">-->
-                                                    <!--<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}-->
-                                                <!--</v-chip>-->
-                                            <!--</template>-->
-                                       <!--</v-autocomplete>-->
                                    </v-flex>
                                </v-layout>
                           </v-flex>
@@ -130,9 +97,6 @@
                         </td>
                         <td class="text-xs-left" v-text="subject.hours"></td>
                         <td class="text-xs-left"> {{subject.start }} | {{ subject.end }}</td>
-                        <td class="text-xs-left">
-                            <!--<subject-tags @refresh="refresh(false)" :subject="subject" :tags="dataTags" ></subject-tags>-->
-                        </td>
                         <td class="text-xs-left" v-html="subject.formatted_created_at_diff" :title="subject.formatted_created_at"></td>
                         <td class="text-xs-left" :title="subject.formatted_updated_at">{{subject.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
@@ -142,7 +106,7 @@
                                     title="Mostra l'estudi"
                                     :resource="subject"
                                     v-if="showDialog === false || showDialog === subject.id">
-                                <subject-show :subject="subject" @close="showDialog = false" :tags="dataTags"></subject-show>
+                                <subject-show :subject="subject" @close="showDialog = false"></subject-show>
                             </fullscreen-dialog>
                             <subject-delete :subject="subject" v-if="$hasRole('CurriculumManager')"></subject-delete>
                         </td>
@@ -159,7 +123,6 @@ import FullScreenDialog from '../../ui/FullScreenDialog'
 import SubjectDelete from './SubjectDeleteComponent'
 import SubjectShowComponent from './SubjectShowComponent'
 import SubjectDepartment from './SubjectDepartment'
-import SubjectTags from './SubjectTagsComponent'
 import SubjectFamily from './SubjectFamily'
 import StudySelect from '../studies/StudySelect'
 import SubjectGroupsSelect from './SubjectGroupsSelect'
@@ -182,7 +145,6 @@ export default {
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'subject-department': SubjectDepartment,
     'subject-family': SubjectFamily,
-    'subject-tags': SubjectTags,
     'changelog-loggable': ChangelogLoggable,
     'study-select': StudySelect,
     'subject-groups-select': SubjectGroupsSelect
@@ -196,10 +158,8 @@ export default {
         rowsPerPage: 25
       },
       filter: 'all',
-      selectedTags: [],
       selectedStudy: null,
       selectedSubjectGroup: null,
-      dataTags: this.tags,
       showDialog: false
     }
   },
@@ -211,12 +171,6 @@ export default {
       let filteredByState = filters[this.filter](this.dataSubjects)
       if (this.selectedStudy) filteredByState = filteredByState.filter(subject => { return subject.study_id === this.selectedStudy.id })
       if (this.selectedSubjectGroup) filteredByState = filteredByState.filter(subject => { return subject.subject_group_id === this.selectedSubjectGroup.id })
-      // TODO
-      // if (this.selectedTags.length > 0) {
-      //   filteredByState = filteredByState.filter(subject => {
-      //     return subject.tags.some(tag => this.selectedTags.includes(tag.id))
-      //   })
-      // }
       return filteredByState
     },
     headers () {
@@ -230,7 +184,6 @@ export default {
       headers.push({ text: 'Nom curt', value: 'shortname' })
       headers.push({ text: 'Hores', value: 'hours', width: '1%' })
       headers.push({ text: 'Dates', value: 'start' })
-      headers.push({ text: 'Etiquetes', value: 'tags' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })

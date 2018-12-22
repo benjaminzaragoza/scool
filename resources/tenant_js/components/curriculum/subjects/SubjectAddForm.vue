@@ -44,6 +44,7 @@
         ></subject-code>
 
         <v-text-field
+                ref="name"
                 v-model="name"
                 name="name"
                 label="Nom"
@@ -51,7 +52,6 @@
                 @input="$v.name.$touch()"
                 @blur="$v.name.$touch()"
                 hint="Nom de la Unitat Formativa"
-                autofocus
         ></v-text-field>
 
         <v-text-field
@@ -62,11 +62,7 @@
                 @input="$v.shortname.$touch()"
                 @blur="$v.shortname.$touch()"
                 hint="Nom curt de la UF"
-                autofocus
         ></v-text-field>
-
-        <!--TODO-->
-        <!--'type_id' => 1,-->
 
         <v-text-field
                 v-model="hours"
@@ -76,7 +72,6 @@
                 @input="$v.hours.$touch()"
                 @blur="$v.hours.$touch()"
                 hint="Número d'hores totals de la UF"
-                autofocus
         ></v-text-field>
 
         <v-menu
@@ -131,12 +126,12 @@
             ></v-date-picker>
         </v-menu>
 
-        <v-btn @click="add"
+        <v-btn @click="add(true)"
                color="success"
                :disabled="adding || $v.$invalid"
                :loading="adding">Afegir UF</v-btn>
 
-        <v-btn @click="add"
+        <v-btn @click="add(false)"
                color="primary"
                :disabled="adding || $v.$invalid"
                :loading="adding">Afegir UF i continuar</v-btn>
@@ -274,19 +269,46 @@ export default {
     }
   },
   methods: {
+    partialReset () {
+      this.number = parseInt(this.number) + 1
+      this.name = ''
+      this.shortname = ''
+      this.hours = null
+      this.start = null
+      this.end = null
+      console.log('hrefs:')
+      console.log(this.$refs)
+      console.log('this.$refs.name:')
+      console.log(this.$refs.name)
+      this.$nextTick(this.$refs.name.focus)
+    },
     allowedDates: val => ![0, 6].includes(new Date(val).getDay()),
     add (close = false) {
       if (!this.$v.$invalid) {
         this.adding = true
         this.$store.dispatch(actions.ADD_SUBJECT, {
-          subject: this.subject,
-          description: this.description
+          name: this.name,
+          shortname: this.shortname,
+          code: this.code,
+          number: this.number,
+          study_id: this.dataCourse.id,
+          subject_group_id: this.dataSubjectGroup.id,
+          course_id: this.dataCourse.id,
+          hours: this.hours,
+          start: this.start,
+          end: this.end
         }).then(response => {
           this.$snackbar.showMessage('Unitat formativa creada correctament')
           this.adding = false
           this.$emit('added', response.data)
-          if (close) this.close()
+          if (close) {
+            this.$emit('close')
+          } else {
+            this.partialReset()
+          }
         }).catch(error => {
+          console.log('error:')
+          console.log(error)
           this.$snackbar.showError(error)
           this.adding = false
         })

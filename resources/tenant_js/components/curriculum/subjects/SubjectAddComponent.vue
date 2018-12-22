@@ -9,13 +9,17 @@
                 <study-select v-model="study"></study-select>
                 <v-btn v-if="study" @click="step=2" color="primary">Continuar</v-btn>
             </v-stepper-content>
-            <v-stepper-step :complete="step > 2" step="2">Mòdul Professional</v-stepper-step>
+            <v-stepper-step :complete="step > 2" step="2">Mòdul Professional
+                <small>Seleccioneu el Mòdul Professional al que pertany la Unitat Formativa. Feu clic a la icona + per afegir el mòdul si encara no existeix</small>
+            </v-stepper-step>
             <v-stepper-content step="2">
                 <subject-group-select v-model="subjectGroup" :study="study"></subject-group-select>
                 <v-btn v-if="subjectGroup" @click="step=3"  color="primary">Continuar</v-btn>
                 <v-btn @click="step=1">Tornar a escollir estudi</v-btn>
             </v-stepper-content>
-            <v-stepper-step :complete="step > 3" step="3">Curs</v-stepper-step>
+            <v-stepper-step :complete="step > 3" step="3">Curs
+                <small>Seleccioneu el curs al que pertany la Unitat Formativa. Feu clic a la icona + per afegir el curs si encara no existeix</small>
+            </v-stepper-step>
             <v-stepper-content step="3">
                 <courses-select v-model="course" :study="study"></courses-select>
                 <v-btn v-if="course" @click="step=4"  color="primary">Continuar</v-btn>
@@ -24,7 +28,7 @@
             <v-stepper-step step="4">Unitat Formativa</v-stepper-step>
             <v-stepper-content step="4">
                 <v-btn @click="step=3">Tornar a escollir Curs</v-btn>
-                <subject-add-form :study="study" :course="course" :subject-group="subjectGroup"></subject-add-form>
+                <subject-add-form v-if="step === 4" :study="study" :course="course" :subject-group="subjectGroup" @close="close"></subject-add-form>
             </v-stepper-content>
         </v-stepper>
     </v-card>
@@ -61,6 +65,11 @@ export default {
     },
     course (newCourse) {
       if (newCourse) this.step = 4
+    }
+  },
+  methods: {
+    close () {
+      this.$emit('close')
     }
   }
 }

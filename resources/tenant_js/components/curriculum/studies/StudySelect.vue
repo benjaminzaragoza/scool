@@ -18,7 +18,7 @@
                         slot="selection"
                         slot-scope="{ item: study }"
                 >
-                    {{ study.name }}
+                    {{ study.code }} - {{ study.name }}
               </template>
             <template slot="item" slot-scope="{ item: study }">
                 <v-list-tile-content>

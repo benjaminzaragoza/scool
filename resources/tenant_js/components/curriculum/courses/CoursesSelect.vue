@@ -7,13 +7,19 @@
                 :label="label"
                 :items="filteredCourses"
                 v-model="internalCourse"
-                item-text="name"
+                item-text="full_search"
                 :item-value="itemValue"
                 clearable
                 @input="input"
                 @blur="blur"
                 :error-messages="errorMessages"
         >
+        <template
+                slot="selection"
+                slot-scope="{ item: course }"
+        >
+            {{ course.code }} - {{ course.name }}
+        </template>
         <template slot="item" slot-scope="{ item: course }">
             <v-list-tile-content>
                 <v-list-tile-title v-html="course.name"></v-list-tile-title>

@@ -1,7 +1,7 @@
 <template>
     <span id="curriculum_component">
         <floating-add v-model="dialog" title="Nova Unitat Formativa">
-            <subject-add></subject-add>
+            <subject-add @close="dialog=false"></subject-add>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>

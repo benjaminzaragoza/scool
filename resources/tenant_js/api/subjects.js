@@ -9,8 +9,13 @@ export default {
       'name': subject.name,
       'shortname': subject.shortname,
       'code': subject.code,
-      'family': subject.family,
-      'department': subject.department
+      'number': subject.number,
+      'study_id': subject.study_id,
+      'subject_group_id': subject.subject_group_id,
+      'course_id': subject.course_id,
+      'hours': subject.hours,
+      'start': subject.start,
+      'end': subject.end
     })
   },
   delete (subject) {

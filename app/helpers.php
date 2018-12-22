@@ -5647,7 +5647,6 @@ if (!function_exists('create_fake_audit_log_entries')) {
     {
         $job = Job::create([
             'code' => '999',
-            'type_id' => 1,
             'specialty_id' => 1,
             'family_id' => 1,
             'order' => 1,
@@ -5902,8 +5901,7 @@ if (!function_exists('initialize_subjects')) {
             'end' => $mp_end_date,
             'type' => 'Normal'
         ]);
-//        $table->enum('type', ['Normal', 'Externes', 'Síntesi', 'FCT' ])->default('Normal');
-//        $table->unsignedTinyInteger('order')->nullable();
+
 
         Subject::firstOrCreate([
             'name' => 'Disseny i implementació d’interfícies',
@@ -5913,7 +5911,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 79,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -5927,7 +5924,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 20
         ]);
 
@@ -5977,7 +5973,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 77
         ]);
 
@@ -5989,7 +5984,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6001,7 +5995,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 55
         ]);
 
@@ -6027,7 +6020,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6039,7 +6031,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6051,7 +6042,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6077,7 +6067,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6089,7 +6078,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6101,7 +6089,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6127,7 +6114,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6139,7 +6125,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6151,7 +6136,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 99
         ]);
 
@@ -6177,7 +6161,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6189,7 +6172,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6201,7 +6183,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6213,7 +6194,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6225,7 +6205,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6237,7 +6216,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6263,7 +6241,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6275,7 +6252,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6301,7 +6277,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6313,7 +6288,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6325,7 +6299,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6337,7 +6310,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6363,7 +6335,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 40
         ]);
 
@@ -6375,7 +6346,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 60
         ]);
 
@@ -6387,7 +6357,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 16
         ]);
 
@@ -6399,7 +6368,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 16
         ]);
 
@@ -6425,7 +6393,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6437,7 +6404,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6463,7 +6429,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 99
         ]);
 
@@ -6489,7 +6454,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6501,7 +6465,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 24
         ]);
 
@@ -6513,7 +6476,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 60
         ]);
 
@@ -6525,7 +6487,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 48
         ]);
 
@@ -6551,7 +6512,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 132
         ]);
 
@@ -6577,7 +6537,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 350
         ]);
 
@@ -6623,7 +6582,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 55
         ]);
 
@@ -6635,7 +6593,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 44
         ]);
 
@@ -6647,7 +6604,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6673,7 +6629,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6685,7 +6640,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6697,7 +6651,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6723,7 +6676,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6735,7 +6687,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6747,7 +6698,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6759,7 +6709,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 132
         ]);
 
@@ -6785,7 +6734,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6797,7 +6745,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6823,7 +6770,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6835,7 +6781,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6847,7 +6792,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6873,7 +6817,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 132
         ]);
 
@@ -6899,7 +6842,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6911,7 +6853,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6937,7 +6878,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -6949,7 +6889,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6961,7 +6900,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -6987,7 +6925,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 132
         ]);
 
@@ -6999,7 +6936,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7011,7 +6947,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7037,7 +6972,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7049,7 +6983,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7061,7 +6994,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7087,7 +7019,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 99
         ]);
 
@@ -7113,7 +7044,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7139,7 +7069,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 350
         ]);
 
@@ -7165,7 +7094,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66
         ]);
 
@@ -7177,7 +7105,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33
         ]);
 
@@ -7225,7 +7152,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 50,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7238,7 +7164,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 17,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7251,7 +7176,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 25,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7264,7 +7188,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 40,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7290,7 +7213,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 35,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7303,7 +7225,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 70,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7316,7 +7237,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 58,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7329,7 +7249,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 45,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7342,7 +7261,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 23,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7355,7 +7273,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7381,7 +7298,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7394,7 +7310,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7407,7 +7322,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 60,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7420,7 +7334,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 38,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7433,7 +7346,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 60,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7446,7 +7358,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7472,7 +7383,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 25,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7485,7 +7395,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 25,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7498,7 +7407,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7511,7 +7419,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 29,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7537,7 +7444,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 40,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7550,7 +7456,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7563,7 +7468,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 39,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7589,7 +7493,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 40,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7602,7 +7505,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 26,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7615,7 +7517,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 33,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7641,7 +7542,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7654,7 +7554,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7667,7 +7566,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 26,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7693,7 +7591,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 99,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7706,7 +7603,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 60,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7719,7 +7615,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 72,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7745,7 +7640,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 29,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7758,7 +7652,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 25,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7771,7 +7664,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 25,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7784,7 +7676,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7810,7 +7701,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 66,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7823,7 +7713,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 33,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7849,7 +7738,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 66,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7875,7 +7763,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 99,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7933,7 +7820,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 15,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7946,7 +7832,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 50,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7959,7 +7844,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 80,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7972,7 +7856,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -7998,7 +7881,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 20,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8011,7 +7893,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 40,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8024,7 +7905,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 80,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8050,7 +7930,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 57,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8063,7 +7942,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 75,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8089,7 +7967,6 @@ if (!function_exists('initialize_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 25,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8104,7 +7981,6 @@ digital",
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 47,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8117,7 +7993,6 @@ digital",
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course1->id,
-            'type_id' => 1,
             'hours' => 93,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8328,7 +8203,6 @@ if (!function_exists('create_sample_subject')) {
             'subject_group_id' => $group->id,
             'study_id' => $study->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 79,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8405,7 +8279,6 @@ if (!function_exists('initialize_fake_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $dam->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 79,
             'start' => $mp_start_date,
             'end' => $mp_end_date
@@ -8419,7 +8292,6 @@ if (!function_exists('initialize_fake_subjects')) {
             'subject_group_id' => $group->id,
             'study_id' => $dam->id,
             'course_id' => $course2->id,
-            'type_id' => 1,
             'hours' => 20
         ]);
     }

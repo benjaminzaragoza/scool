@@ -50,6 +50,7 @@ class SubjectGroup extends Model
             'id' => $this->id,
             'name' => $this->name,
             'shortname' => $this->shortname,
+            'description' => $this->description,
             'code' => $this->code,
             'number' => (int) $this->number,
             'hours' => (int) $this->hours,
