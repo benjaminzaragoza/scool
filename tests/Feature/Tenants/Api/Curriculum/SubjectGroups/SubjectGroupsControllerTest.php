@@ -102,7 +102,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
      */
     public function can_store_subjectGroups()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $dam = Study::firstOrCreate([
@@ -198,93 +197,76 @@ class SubjectGroupsControllerTest extends BaseTenantTest
             'code' => 'DAM',
         ]);
 
-        $course2Dam = Course::firstOrCreate([
-            'code' => '2DAM',
-            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
-            'order' => 2,
-            'study_id' => $dam->id
-        ]);
-
-        $subjectGroup = SubjectGroup::firstOrCreate([
-            'name' => 'Desenvolupament d’interfícies',
-            'shortname' => 'Interfícies',
-            'code' =>  'DAM_MP7',
-            'number' => 7,
-            'study_id' => $dam->id,
-            'hours' => 99,
-            'free_hours' => 0, // Lliure disposició
-            'week_hours' => 3,
-            'start' => '2017-09-15',
-            'end' => '2018-06-01',
-            'type' => 'Normal'
-        ]);
-
         Event::fake();
-        $response =  $this->json('POST','/api/v1/subjectGroups',$subject = [
-            'name' => 'Disseny i implementació d’interfícies',
-            'shortname'=> 'Interfícies',
-            'code' =>  'DAM_MP7_UF1',
-            'number' => 1,
+        $response =  $this->json('POST','/api/v1/subjectGroups',$subjectGroup = [
+            'number' => 7,
+            'code' =>  'DAM_MP7',
+            'name' => 'Full name MP7',
+            'shortname'=> 'Shortname MP7',
+            'description' => 'Bla bla bla',
             'study_id' => $dam->id,
-            'subject_group_id' => $subjectGroup->id,
-            'course_id' => $course2Dam->id,
-            'type_id' => 1,
-            'hours' => 79,
+            'hours' => 75,
+            'free_hours' => 0,
+            'week_hours' => 3,
+            'type' => 'Normal',
             'start' => '2017-09-15',
             'end' => '2018-06-01'
         ]);
         $response->assertSuccessful();
-        $createdSubject = json_decode($response->getContent());
-        Event::assertDispatched(SubjectStored::class,function ($event) use ($createdSubject){
-            return $event->subject->is(Subject::findOrFail($createdSubject->id));
+        $createdSubjectGroup = json_decode($response->getContent());
+        Event::assertDispatched(SubjectGroupStored::class,function ($event) use ($createdSubjectGroup){
+            return $event->subjectGroup->is(SubjectGroup::findOrFail($createdSubjectGroup->id));
         });
-        $this->assertSame($createdSubject->id,1);
-        $this->assertEquals($createdSubject->name,'Disseny i implementació d’interfícies');
-        $this->assertEquals($createdSubject->shortname,'Interfícies');
-        $this->assertEquals($createdSubject->code,'DAM_MP7_UF1');
-        $this->assertSame($createdSubject->number,1);
-        $this->assertEquals($createdSubject->study_id,$dam->id);
-        $this->assertEquals($createdSubject->subject_group_id,1);
-        $this->assertEquals($createdSubject->course_id,1);
-        $this->assertEquals($createdSubject->type_id,1);
-        $this->assertEquals($createdSubject->hours,79);
-        $this->assertEquals($createdSubject->start,'2017-09-15');
-        $this->assertEquals($createdSubject->end,'2018-06-01');
-        $this->assertNotNull($createdSubject->created_at);
-        $this->assertNotNull($createdSubject->created_at_timestamp);
-        $this->assertNotNull($createdSubject->formatted_created_at);
-        $this->assertNotNull($createdSubject->formatted_created_at_diff);
-        $this->assertNotNull($createdSubject->updated_at);
-        $this->assertNotNull($createdSubject->updated_at_timestamp);
-        $this->assertNotNull($createdSubject->formatted_updated_at);
-        $this->assertNotNull($createdSubject->formatted_updated_at_diff);
+        $this->assertSame($createdSubjectGroup->id,1);
+        $this->assertEquals($createdSubjectGroup->name,'Full name MP7');
+        $this->assertEquals($createdSubjectGroup->shortname,'Shortname MP7');
+        $this->assertEquals($createdSubjectGroup->description,'Bla bla bla');
+        $this->assertEquals($createdSubjectGroup->code,'DAM_MP7');
+        $this->assertSame($createdSubjectGroup->number,7);
+        $this->assertEquals($createdSubjectGroup->study_id,$dam->id);
+        $this->assertEquals($createdSubjectGroup->type,'Normal');
+        $this->assertEquals($createdSubjectGroup->hours,75);
+        $this->assertEquals($createdSubjectGroup->free_hours,75);
+        $this->assertEquals($createdSubjectGroup->week_hours,75);
+        $this->assertEquals($createdSubjectGroup->start,'2017-09-15');
+        $this->assertEquals($createdSubjectGroup->end,'2018-06-01');
+        $this->assertNotNull($createdSubjectGroup->created_at);
+        $this->assertNotNull($createdSubjectGroup->created_at_timestamp);
+        $this->assertNotNull($createdSubjectGroup->formatted_created_at);
+        $this->assertNotNull($createdSubjectGroup->formatted_created_at_diff);
+        $this->assertNotNull($createdSubjectGroup->updated_at);
+        $this->assertNotNull($createdSubjectGroup->updated_at_timestamp);
+        $this->assertNotNull($createdSubjectGroup->formatted_updated_at);
+        $this->assertNotNull($createdSubjectGroup->formatted_updated_at_diff);
 
         try {
-            $subject = Subject::findOrFail($createdSubject->id);
+            $subjectGroup = SubjectGroup::findOrFail($createdSubjectGroup->id);
         } catch (\Exception $e) {
-            $this->fails('Study not found at database!');
+            $this->fails('MP not found at database!');
         }
 
-        $this->assertSame($subject->id,1);
-        $this->assertEquals($subject->name,'Disseny i implementació d’interfícies');
-        $this->assertEquals($subject->shortname,'Interfícies');
-        $this->assertEquals($subject->code,'DAM_MP7_UF1');
-        $this->assertEquals($subject->number,1);
-        $this->assertEquals($subject->study_id,$dam->id);
-        $this->assertEquals($subject->subject_group_id,1);
-        $this->assertEquals($subject->course_id,1);
-        $this->assertEquals($subject->type_id,1);
-        $this->assertEquals($subject->hours,79);
-        $this->assertEquals($subject->start,'2017-09-15');
-        $this->assertEquals($subject->end,'2018-06-01');
-        $this->assertNotNull($subject->created_at);
-        $this->assertNotNull($subject->created_at_timestamp);
-        $this->assertNotNull($subject->formatted_created_at);
-        $this->assertNotNull($subject->formatted_created_at_diff);
-        $this->assertNotNull($subject->updated_at);
-        $this->assertNotNull($subject->updated_at_timestamp);
-        $this->assertNotNull($subject->formatted_updated_at);
-        $this->assertNotNull($subject->formatted_updated_at_diff);
+        $this->assertSame($subjectGroup->id,1);
+        $this->assertEquals($subjectGroup->name,'Full name MP7');
+        $this->assertEquals($subjectGroup->shortname,'Shortname MP7');
+        $this->assertEquals($subjectGroup->description,'Bla bla bla');
+        $this->assertEquals($subjectGroup->code,'DAM_MP7');
+        $this->assertEquals($subjectGroup->number,7);
+        $this->assertEquals($subjectGroup->study_id,$dam->id);
+        $this->assertEquals($subjectGroup->type,'Normal');
+        $this->assertEquals($subjectGroup->hours,75);
+        $this->assertEquals($subjectGroup->free_hours,0);
+        $this->assertEquals($subjectGroup->week_hours,3);
+        $this->assertEquals($subjectGroup->start,'2017-09-15');
+        $this->assertEquals($subjectGroup->end,'2018-06-01');
+
+        $this->assertNotNull($subjectGroup->created_at);
+        $this->assertNotNull($subjectGroup->created_at_timestamp);
+        $this->assertNotNull($subjectGroup->formatted_created_at);
+        $this->assertNotNull($subjectGroup->formatted_created_at_diff);
+        $this->assertNotNull($subjectGroup->updated_at);
+        $this->assertNotNull($subjectGroup->updated_at_timestamp);
+        $this->assertNotNull($subjectGroup->formatted_updated_at);
+        $this->assertNotNull($subjectGroup->formatted_updated_at_diff);
 
     }
 

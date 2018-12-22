@@ -658,6 +658,11 @@ if (!function_exists('curriculum_manager_permissions')) {
             'subjects.show',
             'subjects.update',
             'subjects.destroy',
+            'subjectGroups.index',
+            'subjectGroups.store',
+            'subjectGroups.show',
+            'subjectGroups.update',
+            'subjectGroups.destroy',
         ];
     }
 }
