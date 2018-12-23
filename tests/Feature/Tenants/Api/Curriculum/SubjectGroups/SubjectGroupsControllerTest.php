@@ -4,7 +4,6 @@ namespace Tests\Feature\Api\Subjects\Curriculum;
 
 use App\Events\SubjectGroups\SubjectGroupDeleted;
 use App\Events\SubjectGroups\SubjectGroupStored;
-use App\Events\Subjects\SubjectDeleted;
 use App\Models\Study;
 use App\Models\SubjectGroup;
 use Event;
@@ -45,7 +44,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         initialize_fake_subjectGroups();
         $this->loginAsSuperAdmin('api');
 
-        $response =  $this->json('GET','/api/v1/subjectGroups');
+        $response =  $this->json('GET','/api/v1/subject_groups');
         $response->assertSuccessful();
         $subjectGroups = json_decode($response->getContent());
         $this->assertCount(3,$subjectGroups);
@@ -78,7 +77,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         initialize_fake_subjectGroups();
         $this->loginAsCurriculumManager('api');
 
-        $response =  $this->json('GET','/api/v1/subjectGroups');
+        $response =  $this->json('GET','/api/v1/subject_groups');
         $response->assertSuccessful();
         $subjectGroups = json_decode($response->getContent());
         $this->assertCount(3,$subjectGroups);
@@ -109,7 +108,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
     public function regular_user_cannot_list_subjectGroups()
     {
         $this->login('api');
-        $response = $this->json('GET','/api/v1/subjectGroups');
+        $response = $this->json('GET','/api/v1/subject_groups');
         $response->assertStatus(403);
     }
 
@@ -119,7 +118,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
      */
     public function guest_user_cannot_list_subjectGroups()
     {
-        $response = $this->json('GET','/api/v1/subjectGroups');
+        $response = $this->json('GET','/api/v1/subject_groups');
         $response->assertStatus(401);
     }
 
@@ -139,7 +138,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         ]);
 
         Event::fake();
-        $response =  $this->json('POST','/api/v1/subjectGroups',$subjectGroup = [
+        $response =  $this->json('POST','/api/v1/subject_groups',$subjectGroup = [
             'number' => 7,
             'code' =>  'DAM_MP7',
             'name' => 'Full name MP7',
@@ -226,7 +225,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         ]);
 
         Event::fake();
-        $response =  $this->json('POST','/api/v1/subjectGroups',$subjectGroup = [
+        $response =  $this->json('POST','/api/v1/subject_groups',$subjectGroup = [
             'number' => 7,
             'code' =>  'DAM_MP7',
             'name' => 'Full name MP7',
@@ -305,7 +304,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
     public function can_store_subjectGroups_validation()
     {
         $this->loginAsSuperAdmin('api');
-        $response = $this->json('POST', '/api/v1/subjectGroups', []);
+        $response = $this->json('POST', '/api/v1/subject_groups', []);
         $response->assertStatus(422);
     }
 
@@ -319,7 +318,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
 
         $subjectGroup = create_sample_subject_group();
         Event::fake();
-        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subjectGroup->id);
+        $response = $this->json('DELETE','/api/v1/subject_groups/' . $subjectGroup->id);
         Event::assertDispatched(SubjectGroupDeleted::class,function ($event) use ($subjectGroup){
             return $event->oldSubjectGroup['id'] === $subjectGroup->id;
         });
@@ -339,7 +338,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
 
         $subjectGroup = create_sample_subject_group();
         Event::fake();
-        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subjectGroup->id);
+        $response = $this->json('DELETE','/api/v1/subject_groups/' . $subjectGroup->id);
         Event::assertDispatched(SubjectGroupDeleted::class,function ($event) use ($subjectGroup){
             return $event->oldSubjectGroup['id'] === $subjectGroup->id;
         });
@@ -358,7 +357,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $this->login('api');
 
         $subject = create_sample_subject();
-        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subject->id);
+        $response = $this->json('DELETE','/api/v1/subject_groups/' . $subject->id);
         $response->assertStatus(403);
     }
 
@@ -369,7 +368,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
     public function guest_user_cannot_delete_subjectGroups()
     {
         $subject = create_sample_subject();
-        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subject->id);
+        $response = $this->json('DELETE','/api/v1/subject_groups/' . $subject->id);
         $response->assertStatus(401);
     }
 }

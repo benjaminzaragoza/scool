@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\Curriculum\CurriculumIndex;
+use App\Http\Requests\Curriculum\Subjects\SubjectIndex;
 use App\Models\Course;
 use App\Models\Department;
 use App\Models\Family;
@@ -21,10 +21,10 @@ class CurriculumSubjectsController extends Controller
     /**
      * Index.
      *
-     * @param CurriculumIndex $request
+     * @param SubjectIndex $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(CurriculumIndex $request)
+    public function index(SubjectIndex $request)
     {
 
         $subjects = map_collection(Subject::with('study','course','subject_group')->get());

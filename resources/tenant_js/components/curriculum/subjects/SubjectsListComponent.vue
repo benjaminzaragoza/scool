@@ -9,6 +9,9 @@
                     <v-list-tile href="/curriculum" target="_blank">
                         <v-list-tile-title>Estudis</v-list-tile-title>
                     </v-list-tile>
+                    <v-list-tile href="/curriculum/subjectGroups" target="_blank">
+                        <v-list-tile-title>Mòduls Professionals</v-list-tile-title>
+                    </v-list-tile>
                     <v-list-tile href="#" target="_blank">
                         <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
                     </v-list-tile>
