@@ -57,7 +57,6 @@ class SubjectTest extends TestCase
             'subject_group_id' => 1,
             'study_id' => 1,
             'course_id' => 1,
-            'type_id' => 1,
             'hours' => 79,
             'start' => $mp_start_date,
             'end' => $mp_end_date
