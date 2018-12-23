@@ -1,8 +1,9 @@
 # TODO
 
 - [ ] Eliminar Model Law -> Substituit per etiquetes d'estudis -> Comprovar tots els testos van igual ok
-- [ ]
-
+- [ ] Als selects que tenen opció afegir un item al select (estudis select) fer que si s'afegeix un nou estudi pasi a ser el seleccionat
+- [ ] Opció d'editar el seleccionat (per exemple editar estudi s'ha seleccionat)
+- [ ] Tipus MP -> SubjectGroupTypes -> Són etiquetes es poden posar als MPS
 
 # NPM RUN PRODUCTION
 

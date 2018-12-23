@@ -100,6 +100,15 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
                 $returnedFamilies[0]['code'] === 'INF' &&
                 $returnedFamilies[0]['api_uri'] === 'families';
         });
+        $response->assertViewHas('subjectGroupTypes', function ($returnedsubjectGroupTypes) {
+            dump($returnedsubjectGroupTypes);
+            return
+                count($returnedsubjectGroupTypes) === 1 &&
+                $returnedsubjectGroupTypes[0]['id'] === 1 &&
+                $returnedsubjectGroupTypes[0]['name'] === 'Informàtica' &&
+                $returnedsubjectGroupTypes[0]['code'] === 'INF' &&
+                $returnedsubjectGroupTypes[0]['api_uri'] === 'families';
+        });
     }
 
     /**

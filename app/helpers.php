@@ -5905,7 +5905,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 3,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
 
@@ -5968,7 +5967,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6015,7 +6013,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6062,7 +6059,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6109,7 +6105,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6156,7 +6151,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6272,7 +6266,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6330,7 +6323,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6388,7 +6380,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6424,7 +6415,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6449,7 +6439,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6577,7 +6566,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6624,7 +6612,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6671,7 +6658,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6729,7 +6715,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6765,7 +6750,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6837,7 +6821,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6873,7 +6856,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6920,7 +6902,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -6967,7 +6948,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -7014,7 +6994,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         Subject::firstOrCreate([
@@ -7148,7 +7127,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Característiques dels materials de producció gràfica',
@@ -7209,7 +7187,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Planificació dels processos de preimpressió',
@@ -7294,7 +7271,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Briefing i documentació del projecte gràfic',
@@ -7379,7 +7355,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Planificació de la producció en processos d’edició',
@@ -7440,7 +7415,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Gestió i planificació editorial',
@@ -7489,7 +7463,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Desenvolupament del projecte',
@@ -7538,7 +7511,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Especificacions i arquitectura dels projectes editorials multimèdia',
@@ -7587,7 +7559,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Prototips de productes editorials multimèdia',
@@ -7636,7 +7607,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Comunicació i màrqueting en l’empresa gràfica',
@@ -7816,7 +7786,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Equips i programari de tractament de textos',
@@ -7877,7 +7846,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Classificació i preparació d’originals d’imatge',
@@ -7926,7 +7894,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Traçat i imposició digital',
@@ -7963,7 +7930,6 @@ if (!function_exists('initialize_subjects')) {
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         Subject::firstOrCreate([
             'name' => 'Tractament de la informació digital',
@@ -8014,7 +7980,6 @@ digital",
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Il·lustració vectorial',
@@ -8027,7 +7992,6 @@ digital",
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Identificació de materials en preimpressió',
@@ -8040,7 +8004,6 @@ digital",
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Realització de publicacions electròniques',
@@ -8053,7 +8016,6 @@ digital",
             'week_hours' => 0,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Formació i orientació laboral',
@@ -8161,8 +8123,7 @@ if (!function_exists('create_sample_subject_group')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 3,
             'start' => '2017-09-15',
-            'end' => '2018-06-01',
-            'type' => 'Normal'
+            'end' => '2018-06-01'
         ]);
     }
 }
@@ -8192,7 +8153,6 @@ if (!function_exists('create_sample_subject')) {
             'week_hours' => 3,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
 
         $course2 = Course::firstOrCreate([
@@ -8221,11 +8181,25 @@ if (!function_exists('create_sample_subject')) {
 if (!function_exists('initialize_fake_subjectGroups')) {
     function initialize_fake_subjectGroups()
     {
+        $depInformatica = Department::create([
+            'name' => 'Departament Informàtica',
+            'shortname' => 'Informàtica',
+            'code' => 'INFORMÀTICA',
+            'order' => 1
+        ]);
+
         $dam = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
             'shortname' => 'Des. Apps Multiplataforma',
             'code' => 'DAM',
         ]);
+        $dam->assignDepartment($depInformatica);
+
+        $familyInformatica = $informatica = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF'
+        ]);
+        $dam->assignFamily($familyInformatica);
 
         SubjectGroup::firstOrCreate([
             'name' => 'Desenvolupament d’interfícies',
@@ -8237,8 +8211,7 @@ if (!function_exists('initialize_fake_subjectGroups')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 3,
             'start' => '2017-09-15',
-            'end' => '2018-06-01',
-            'type' => 'Normal'
+            'end' => '2018-06-01'
         ]);
 
         $gad = Study::firstOrCreate([
@@ -8257,11 +8230,10 @@ if (!function_exists('initialize_fake_subjectGroups')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => '2017-09-15',
-            'end' => '2018-06-01',
-            'type' => 'Normal'
+            'end' => '2018-06-01'
         ]);
 
-        $group = SubjectGroup::firstOrCreate([
+        SubjectGroup::firstOrCreate([
             'shortname' => 'Operacions de recursos humans',
             'name' => 'Operacions de recursos humans',
             'code' =>  'GAD_MP3',
@@ -8271,8 +8243,7 @@ if (!function_exists('initialize_fake_subjectGroups')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => '2017-09-15',
-            'end' => '2018-06-01',
-            'type' => 'Normal'
+            'end' => '2018-06-01'
         ]);
     }
 }
@@ -8329,10 +8300,7 @@ if (!function_exists('initialize_fake_subjects')) {
             'week_hours' => 3,
             'start' => $mp_start_date,
             'end' => $mp_end_date,
-            'type' => 'Normal'
         ]);
-//        $table->enum('type', ['Normal', 'Externes', 'Síntesi', 'FCT' ])->default('Normal');
-//        $table->unsignedTinyInteger('order')->nullable();
 
         Subject::firstOrCreate([
             'name' => 'Disseny i implementació d’interfícies',

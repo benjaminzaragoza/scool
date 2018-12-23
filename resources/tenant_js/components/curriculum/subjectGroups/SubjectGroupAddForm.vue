@@ -10,10 +10,8 @@
                 @blur="$v.dataStudy.$touch()"
         ></study-select>
 
-        <!--
-        Per cada estudi tenim la info : numero de MPS i número total de UFS
-        També hem de tenir una llista dels MPS -> $study->subjectGroups
-        -->
+        MPs existents: <study-subject-groups-code-list v-if="dataStudy" :study="dataStudy"></study-subject-groups-code-list>
+
         <subject-group-number
                 v-model="number"
                 @input="$v.number.$touch()"
@@ -156,7 +154,7 @@ import SubjectGroupTypes from './SubjectGroupTypes'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 import * as actions from '../../../store/action-types'
-
+import StudySubjectGroupsCodeList from '../studies/StudySubjectGroupsCodeList'
 export default {
   name: 'SubjectGroupAddForm',
   mixins: [validationMixin],
@@ -173,7 +171,8 @@ export default {
     'study-select': StudySelect,
     'subject-group-number': SubjectGroupNumber,
     'subject-group-code': SubjectGroupCode,
-    'subject-group-types': SubjectGroupTypes
+    'subject-group-types': SubjectGroupTypes,
+    'study-subject-groups-code-list': StudySubjectGroupsCodeList
   },
   data () {
     return {
@@ -260,10 +259,43 @@ export default {
   },
   watch: {
     study (study) {
-      this.dataStudy = study
+      if (study) {
+        this.dataStudy = study
+        this.updatedNumber()
+      }
+    },
+    dataStudy (dataStudy) {
+      if (dataStudy) {
+        this.updatedNumber()
+      }
     }
   },
   methods: {
+    updatedNumber () {
+      this.number = this.calculateNextNumber(this.dataStudy)
+      this.$nextTick(this.$refs.name.focus)
+    },
+    calculateNextNumber (dataStudy) {
+      if (dataStudy.subject_groups_number) {
+        var i
+        for (i = 1; i < dataStudy.subject_groups_number; i++) {
+          if (this.dataStudy.subjectGroups.find(subjectGroup => { return subjectGroup.number === i })) continue
+          return i
+        }
+      } else {
+        if (dataStudy.subjectGroups) {
+          if (dataStudy.subjectGroups.length > 0) {
+            let i = 1
+            let cond = true
+            while (cond) {
+              if (this.dataStudy.subjectGroups.find(subjectGroup => { return subjectGroup.number === i })) i++
+              else cond = false
+            }
+            return i
+          } else return 1
+        } else return 1
+      }
+    },
     partialReset () {
       this.number = parseInt(this.number) + 1
       this.name = ''
@@ -271,10 +303,6 @@ export default {
       this.hours = null
       this.start = null
       this.end = null
-      console.log('hrefs:')
-      console.log(this.$refs)
-      console.log('this.$refs.name:')
-      console.log(this.$refs.name)
       this.$nextTick(this.$refs.name.focus)
     },
     allowedDates: val => ![0, 6].includes(new Date(val).getDay()),
@@ -301,8 +329,6 @@ export default {
             this.partialReset()
           }
         }).catch(error => {
-          console.log('error:')
-          console.log(error)
           this.$snackbar.showError(error)
           this.adding = false
         })

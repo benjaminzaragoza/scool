@@ -30,7 +30,8 @@ class CurriculumSubjectGroupsController extends Controller
         $studies = map_collection(Study::with('family','department','tags')->get());
         $departments = map_collection(Department::all());
         $families = map_collection(Family::all());
+        $subjectGroupTypes = map_collection(SubjectGroupType::all());
         return view('tenants.curriculum.subjectGroups.index',
-            compact('subjectGroups','studies','departments','families'));
+            compact('subjectGroups','studies','departments','families','subjectGroupTypes'));
     }
 }

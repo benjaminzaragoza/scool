@@ -1,7 +1,7 @@
 <template>
     <span id="curriculum_component">
         <floating-add v-model="dialog" title="Nou Mòdul Professional">
-            <subject-group-add @close="dialog=false"></subject-group-add>
+            <subject-group-add-form @close="dialog = false"></subject-group-add-form>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import SubjectGroupAddComponent from './SubjectGroupAddComponent'
 import SubjectGroupsListComponent from './SubjectGroupsListComponent'
+import SubjectGroupAddForm from './SubjectGroupAddForm'
 import * as mutations from '../../../store/mutation-types'
 
 export default {
   name: 'SubjectGroups',
   components: {
-    'subject-group-add': SubjectGroupAddComponent,
-    'subject-groups-list': SubjectGroupsListComponent
+    'subject-groups-list': SubjectGroupsListComponent,
+    'subject-group-add-form': SubjectGroupAddForm
   },
   data () {
     return {

@@ -85,7 +85,7 @@ class Study extends Model
      */
     public function subjectGroups()
     {
-        return $this->hasMany(SubjectGroup::class);
+        return $this->hasMany(SubjectGroup::class)->orderBy('number');
     }
 
     public function map()
