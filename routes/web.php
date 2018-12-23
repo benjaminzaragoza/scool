@@ -176,6 +176,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/curriculum','\\' . CurriculumController::class . '@index');
             Route::get('/curriculum/subjects','\\' . CurriculumSubjectsController::class . '@index');
             Route::get('/curriculum/subjectGroups','\\' . CurriculumSubjectGroupsController::class . '@index');
+            Route::get('/curriculum/subject_groups','\\' . CurriculumSubjectGroupsController::class . '@index');
         });
     });
 
