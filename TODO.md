@@ -1,3 +1,9 @@
+# TODO
+
+- [ ] Eliminar Model Law -> Substituit per etiquetes d'estudis -> Comprovar tots els testos van igual ok
+- [ ]
+
+
 # NPM RUN PRODUCTION
 
 - [ ] Recordar executar de tant en tant abans de passar a producció. S'executa npm run production (abans atureu npm run hot) a local abans de fer

@@ -108,8 +108,6 @@ class SubjectTest extends TestCase
         $this->assertEquals('2DAM',$mappedSubject['course_code']);
         $this->assertSame(2,$mappedSubject['course_order']);
 
-        $this->assertSame(1,$mappedSubject['type_id']);
-
         $this->assertNotNull($mappedSubject['created_at']);
         $this->assertNotNull($mappedSubject['updated_at']);
         $this->assertNotNull($mappedSubject['created_at_timestamp']);

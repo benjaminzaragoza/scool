@@ -295,9 +295,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/subjects/{subject}','\\' . SubjectsController::class . '@destroy');
 
             // subjectGroups
+            Route::get('/subjectGroups','\\' . SubjectGroupsController::class . '@index');
             Route::post('/subjectGroups','\\' . SubjectGroupsController::class . '@store');
-
-
+            Route::delete('/subjectGroups/{subjectGroup}','\\' . SubjectGroupsController::class . '@destroy');
         });
 
         Route::group(['prefix' => 'v1'], function () {

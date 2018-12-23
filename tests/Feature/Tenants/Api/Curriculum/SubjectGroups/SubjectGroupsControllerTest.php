@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\Api\Subjects\Curriculum;
 
+use App\Events\SubjectGroups\SubjectGroupDeleted;
 use App\Events\SubjectGroups\SubjectGroupStored;
 use App\Events\Subjects\SubjectDeleted;
-use App\Events\Subjects\SubjectStored;
-use App\Models\Course;
 use App\Models\Study;
-use App\Models\Subject;
 use App\Models\SubjectGroup;
 use Event;
 use Illuminate\Contracts\Console\Kernel;
@@ -50,11 +48,17 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $response =  $this->json('GET','/api/v1/subjectGroups');
         $response->assertSuccessful();
         $subjectGroups = json_decode($response->getContent());
-        $this->assertCount(2,$subjectGroups);
+        $this->assertCount(3,$subjectGroups);
         $this->assertSame(1,$subjectGroups[0]->id);
-        $this->assertEquals('Disseny i implementació d’interfícies',$subjectGroups[0]->name);
+        $this->assertEquals('Desenvolupament d’interfícies',$subjectGroups[0]->name);
         $this->assertEquals('Interfícies',$subjectGroups[0]->shortname);
-        $this->assertEquals('DAM_MP7_UF1',$subjectGroups[0]->code);
+        $this->assertEquals('DAM_MP7',$subjectGroups[0]->code);
+        $this->assertEquals('Operacions de compravenda',$subjectGroups[1]->name);
+        $this->assertEquals('Operacions de compravenda',$subjectGroups[1]->shortname);
+        $this->assertEquals('GAD_MP2',$subjectGroups[1]->code);
+        $this->assertEquals('Operacions de recursos humans',$subjectGroups[2]->name);
+        $this->assertEquals('Operacions de recursos humans',$subjectGroups[2]->shortname);
+        $this->assertEquals('GAD_MP3',$subjectGroups[2]->code);
         $this->assertNotNull($subjectGroups[0]->created_at);
         $this->assertNotNull($subjectGroups[0]->created_at_timestamp);
         $this->assertNotNull($subjectGroups[0]->formatted_created_at);
@@ -71,7 +75,31 @@ class SubjectGroupsControllerTest extends BaseTenantTest
      */
     public function manager_can_list_subjectGroups()
     {
-        // TODO
+        initialize_fake_subjectGroups();
+        $this->loginAsCurriculumManager('api');
+
+        $response =  $this->json('GET','/api/v1/subjectGroups');
+        $response->assertSuccessful();
+        $subjectGroups = json_decode($response->getContent());
+        $this->assertCount(3,$subjectGroups);
+        $this->assertSame(1,$subjectGroups[0]->id);
+        $this->assertEquals('Desenvolupament d’interfícies',$subjectGroups[0]->name);
+        $this->assertEquals('Interfícies',$subjectGroups[0]->shortname);
+        $this->assertEquals('DAM_MP7',$subjectGroups[0]->code);
+        $this->assertEquals('Operacions de compravenda',$subjectGroups[1]->name);
+        $this->assertEquals('Operacions de compravenda',$subjectGroups[1]->shortname);
+        $this->assertEquals('GAD_MP2',$subjectGroups[1]->code);
+        $this->assertEquals('Operacions de recursos humans',$subjectGroups[2]->name);
+        $this->assertEquals('Operacions de recursos humans',$subjectGroups[2]->shortname);
+        $this->assertEquals('GAD_MP3',$subjectGroups[2]->code);
+        $this->assertNotNull($subjectGroups[0]->created_at);
+        $this->assertNotNull($subjectGroups[0]->created_at_timestamp);
+        $this->assertNotNull($subjectGroups[0]->formatted_created_at);
+        $this->assertNotNull($subjectGroups[0]->formatted_created_at_diff);
+        $this->assertNotNull($subjectGroups[0]->updated_at);
+        $this->assertNotNull($subjectGroups[0]->updated_at_timestamp);
+        $this->assertNotNull($subjectGroups[0]->formatted_updated_at);
+        $this->assertNotNull($subjectGroups[0]->formatted_updated_at_diff);
     }
 
     /**
@@ -289,16 +317,16 @@ class SubjectGroupsControllerTest extends BaseTenantTest
     {
         $this->loginAsSuperAdmin('api');
 
-        $subject = create_sample_subject();
+        $subjectGroup = create_sample_subject_group();
         Event::fake();
-        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subject->id);
-        Event::assertDispatched(SubjectDeleted::class,function ($event) use ($subject){
-            return $event->oldSubject['id'] === $subject->id;
+        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subjectGroup->id);
+        Event::assertDispatched(SubjectGroupDeleted::class,function ($event) use ($subjectGroup){
+            return $event->oldSubjectGroup['id'] === $subjectGroup->id;
         });
 
         $response->assertSuccessful();
-        $subject = $subject->fresh();
-        $this->assertNull($subject);
+        $subjectGroup = $subjectGroup->fresh();
+        $this->assertNull($subjectGroup);
     }
 
     /**
@@ -309,16 +337,16 @@ class SubjectGroupsControllerTest extends BaseTenantTest
     {
         $this->loginAsCurriculumManager('api');
 
-        $subject = create_sample_subject();
+        $subjectGroup = create_sample_subject_group();
         Event::fake();
-        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subject->id);
-        Event::assertDispatched(SubjectDeleted::class,function ($event) use ($subject){
-            return $event->oldSubject['id'] === $subject->id;
+        $response = $this->json('DELETE','/api/v1/subjectGroups/' . $subjectGroup->id);
+        Event::assertDispatched(SubjectGroupDeleted::class,function ($event) use ($subjectGroup){
+            return $event->oldSubjectGroup['id'] === $subjectGroup->id;
         });
 
         $response->assertSuccessful();
-        $subject = $subject->fresh();
-        $this->assertNull($subject);
+        $subjectGroup = $subjectGroup->fresh();
+        $this->assertNull($subjectGroup);
     }
 
     /**

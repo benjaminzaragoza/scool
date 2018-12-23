@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups;
 
+use App\Events\SubjectGroups\SubjectGroupDeleted;
 use App\Events\SubjectGroups\SubjectGroupStored;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Curriculum\SubjectGroups\SubjectGroupsDestroy;
@@ -67,7 +68,7 @@ class SubjectGroupsController extends Controller
     {
         $oldSubjectGroup = $subjectGroup->map();
         $subjectGroup->delete();
-        event(new SubjectGroupStored($oldSubjectGroup));
+        event(new SubjectGroupDeleted($oldSubjectGroup));
         return $subjectGroup;
     }
 }

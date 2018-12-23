@@ -80,8 +80,7 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjects[0]['course_id'] === 1 &&
                 $returnedSubjects[0]['course_name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
                 $returnedSubjects[0]['course_code'] === '2DAM' &&
-                $returnedSubjects[0]['course_order'] === 2 &&
-                $returnedSubjects[0]['type_id'] === 1;
+                $returnedSubjects[0]['course_order'] === 2;
         });
         $response->assertViewHas('studies', function ($returnedStudies) {
             return

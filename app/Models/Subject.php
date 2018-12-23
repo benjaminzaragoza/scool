@@ -95,10 +95,7 @@ class Subject extends Model
             'course_id' => (int) $this->course_id,
             'course_name' => optional($this->course)->name,
             'course_code' => optional($this->course)->code,
-            'course_order' => (int) optional($this->course)->order,
-
-            // TODO TYPE
-            'type_id' => (int) $this->type_id
+            'course_order' => (int) optional($this->course)->order
         ];
     }
 

@@ -5857,14 +5857,15 @@ if (!function_exists('initialize_subjects')) {
         // Comú
 
         // LAWS
-        $loe = Law::firstOrCreate([
-            'code' => 'LOE',
-            'name' => 'Ley Orgánica de Educación'
-        ]);
-        $logse = Law::firstOrCreate([
-            'code' => 'LOGSE',
-            'name' => 'Ley Orgánica de Ordenació General del Sistema Educativo'
-        ]);
+        // TODO ELIMINAR
+//        $loe = Law::firstOrCreate([
+//            'code' => 'LOE',
+//            'name' => 'Ley Orgánica de Educación'
+//        ]);
+//        $logse = Law::firstOrCreate([
+//            'code' => 'LOGSE',
+//            'name' => 'Ley Orgánica de Ordenació General del Sistema Educativo'
+//        ]);
 
         // Per estudis i mòduls:
 
@@ -8152,6 +8153,7 @@ if (!function_exists('create_sample_subject_group')) {
         return SubjectGroup::firstOrCreate([
             'name' => 'Desenvolupament d’interfícies',
             'shortname' => 'Interfícies',
+            'description' => 'Bla bla bla',
             'code' =>  'DAM_MP7',
             'number' => 7,
             'study_id' => $study->id,
@@ -8216,16 +8218,76 @@ if (!function_exists('create_sample_subject')) {
     }
 }
 
+if (!function_exists('initialize_fake_subjectGroups')) {
+    function initialize_fake_subjectGroups()
+    {
+        $dam = Study::firstOrCreate([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
+            'code' => 'DAM',
+        ]);
+
+        SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $dam->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'type' => 'Normal'
+        ]);
+
+        $gad = Study::firstOrCreate([
+            'name' => 'Gestió administrativa',
+            'shortname' => 'Gestió administrativa',
+            'code' => 'GAD',
+        ]);
+
+        SubjectGroup::firstOrCreate([
+            'shortname' => 'Operacions de compravenda',
+            'name' => 'Operacions de compravenda',
+            'code' =>  'GAD_MP2',
+            'number' => 2,
+            'study_id' => $gad->id,
+            'hours' => 165,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 0,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'type' => 'Normal'
+        ]);
+
+        $group = SubjectGroup::firstOrCreate([
+            'shortname' => 'Operacions de recursos humans',
+            'name' => 'Operacions de recursos humans',
+            'code' =>  'GAD_MP3',
+            'number' => 3,
+            'study_id' => $gad->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 0,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'type' => 'Normal'
+        ]);
+    }
+}
+
 if (!function_exists('initialize_fake_subjects')) {
     function initialize_fake_subjects()
     {
         $mp_start_date = '2017-09-15';
         $mp_end_date = '2018-06-01';
 
-        $loe = Law::firstOrCreate([
-            'code' => 'LOE',
-            'name' => 'Ley Orgánica de Educación'
-        ]);
+        // TODO ELIMINAR
+//        $loe = Law::firstOrCreate([
+//            'code' => 'LOE',
+//            'name' => 'Ley Orgánica de Educación'
+//        ]);
 
         $dam = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
@@ -8248,10 +8310,6 @@ if (!function_exists('initialize_fake_subjects')) {
         $dam->assignFamily($familyInformatica);
 
         // No existeix 1DAM -> és comú amb 1rASIX
-//        $course1 = Course::create([
-//            'name' => 'Desenvolupament Aplicacions Multiplataforma',
-//            'code' => '1DAM'
-//        ]);
         $course2 = Course::firstOrCreate([
             'code' => '2DAM',
             'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',

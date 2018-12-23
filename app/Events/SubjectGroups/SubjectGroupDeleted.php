@@ -17,18 +17,18 @@ class SubjectGroupDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $oldSubject;
+    public $oldSubjectGroup;
 
     /**
      * SubjectDeleted constructor.
      *
-     * @param Subject $oldSubject
-     * @param $oldSubject
+     * @param Subject $oldSubjectGroup
+     * @param $oldSubjectGroup
      *
      */
-    public function __construct($oldSubject)
+    public function __construct($oldSubjectGroup)
     {
-        $this->oldSubject = $oldSubject;
+        $this->oldSubjectGroup = $oldSubjectGroup;
     }
 
 

@@ -77,7 +77,7 @@ class SubjectGroupTest extends TestCase
         $this->assertEquals("Desenvolupament d’interfícies",$mappedSubjectGroup['name']);
         $this->assertEquals('Interfícies',$mappedSubjectGroup['shortname']);
         $this->assertEquals('DAM_MP7',$mappedSubjectGroup['code']);
-        $this->assertEquals('DAM_MP7',$mappedSubjectGroup['description']);
+        $this->assertEquals('Bla bla bla',$mappedSubjectGroup['description']);
         $this->assertSame(7,$mappedSubjectGroup['number']);
         $this->assertSame(99,$mappedSubjectGroup['hours']);
         $this->assertSame(99,$mappedSubjectGroup['free_hours']);
