@@ -242,7 +242,10 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function regular_user_cannot_show_curriculum_module()
     {
         $this->login();
@@ -250,7 +253,10 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function guest_user_cannot_show_curriculum_module()
     {
         $response = $this->get('/curriculum/subjects');

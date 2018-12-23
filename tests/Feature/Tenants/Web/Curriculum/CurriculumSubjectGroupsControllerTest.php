@@ -72,6 +72,34 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['study_code'] === 'DAM';
         });
 
+        $response->assertViewHas('studies', function ($returnedStudies) {
+            return
+                count($returnedStudies) === 2 &&
+                $returnedStudies[0]['id'] === 1 &&
+                $returnedStudies[0]['name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedStudies[0]['shortname'] === 'Des. Apps Multiplataforma' &&
+                $returnedStudies[0]['code'] === 'DAM' &&
+                $returnedStudies[0]['api_uri'] === 'studies';
+        });
+
+        $response->assertViewHas('departments', function ($returnedDepartments) {
+            return
+                count($returnedDepartments) === 1 &&
+                $returnedDepartments[0]['id'] === 1 &&
+                $returnedDepartments[0]['name'] === 'Departament Informàtica' &&
+                $returnedDepartments[0]['shortname'] === 'Informàtica' &&
+                $returnedDepartments[0]['code'] === 'INFORMÀTICA' &&
+                $returnedDepartments[0]['order'] === 1 &&
+                $returnedDepartments[0]['api_uri'] === 'departments';
+        });
+        $response->assertViewHas('families', function ($returnedFamilies) {
+            return
+                count($returnedFamilies) === 1 &&
+                $returnedFamilies[0]['id'] === 1 &&
+                $returnedFamilies[0]['name'] === 'Informàtica' &&
+                $returnedFamilies[0]['code'] === 'INF' &&
+                $returnedFamilies[0]['api_uri'] === 'families';
+        });
     }
 
     /**
@@ -118,7 +146,10 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
 
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function regular_user_cannot_show_curriculum_module()
     {
         $this->login();
@@ -126,7 +157,10 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group curriculum
+     */
     public function guest_user_cannot_show_curriculum_module()
     {
         $response = $this->get('/curriculum/subjectGroups');

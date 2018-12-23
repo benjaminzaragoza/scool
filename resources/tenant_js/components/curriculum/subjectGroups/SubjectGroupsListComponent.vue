@@ -9,21 +9,19 @@
                     <v-list-tile href="/curriculum" target="_blank">
                         <v-list-tile-title>Estudis</v-list-tile-title>
                     </v-list-tile>
-                    <v-list-tile href="/curriculum/subjectGroups" target="_blank">
-                        <v-list-tile-title>Mòduls Professionals</v-list-tile-title>
+                    <v-list-tile href="/curriculum/subjects" target="_blank">
+                        <v-list-tile-title>Unitats Formàtives</v-list-tile-title>
                     </v-list-tile>
                     <v-list-tile href="#" target="_blank">
                         <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
             </v-menu>
-            <v-toolbar-title class="white--text title">Unitats formatives</v-toolbar-title>
+            <v-toolbar-title class="white--text title">Mòduls Professionals</v-toolbar-title>
             <v-spacer></v-spacer>
-
-            <v-btn id="subjects_help_button" icon class="white--text" href="http://docs.scool.cat/docs/curriculum" target="_blank">
+            <v-btn id="subject_groups_help_button" icon class="white--text" href="http://docs.scool.cat/docs/curriculum" target="_blank">
                 <v-icon>help</v-icon>
             </v-btn>
-
             <fullscreen-dialog
                     v-role="'CurriculumManager'"
                     :flat="false"
@@ -33,10 +31,9 @@
                     color="blue darken-3"
                     title="Canviar la configuració">
                 <!--// TODO-->
-                        <!--<subjects-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></subjects-settings>-->
+                <!--<subject-groups-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></subject-groups-settings>-->
             </fullscreen-dialog>
-
-            <v-btn id="subjects_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+            <v-btn id="subject_groups_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
                 <v-icon>refresh</v-icon>
             </v-btn>
         </v-toolbar>
@@ -52,7 +49,7 @@
                                        <study-select v-model="selectedStudy"></study-select>
                                    </v-flex>
                                    <v-flex xs5>
-                                       <subject-groups-select v-model="selectedSubjectGroup" :study="selectedStudy"></subject-groups-select>
+                                       TODO
                                    </v-flex>
                                </v-layout>
                           </v-flex>
@@ -72,46 +69,45 @@
             <v-data-table
                     class="px-0 mb-2 hidden-sm-and-down"
                     :headers="headers"
-                    :items="filteredSubjects"
+                    :items="filteredSubjectGroups"
                     :search="search"
                     item-key="id"
                     no-results-text="No s'ha trobat cap registre coincident"
                     no-data-text="No hi han dades disponibles"
-                    rows-per-page-text="UFs per pàgina"
+                    rows-per-page-text="MPs per pàgina"
                     :rows-per-page-items="[5,10,25,50,100,200,{'text':'Tots','value':-1}]"
                     :pagination.sync="pagination"
                     :loading="refreshing"
             >
                 <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-                <template slot="items" slot-scope="{item: subject}">
-                    <tr :id="'subject_row_' + subject.id">
-                        <td class="text-xs-left" v-text="subject.id"></td>
-                        <td class="text-xs-left" v-text="subject.number"></td>
-                        <td class="text-xs-left" v-text="subject.study_code" :title="subject.study_id + ' ' + subject.study_name"></td>
-                        <td class="text-xs-left" v-text="subject.subject_group_code" :title="subject.subject_group_id + ' ' + subject.subject_group_name"></td>
+                <template slot="items" slot-scope="{item: subjectGroup}">
+                    <tr :id="'subjectGroup_row_' + subjectGroup.id">
+                        <td class="text-xs-left" v-text="subjectGroup.id"></td>
+                        <td class="text-xs-left" v-text="subjectGroup.number"></td>
+                        <td class="text-xs-left" v-text="subjectGroup.study_code" :title="subjectGroup.study_id + ' ' + subjectGroup.study_name"></td>
                         <td class="text-xs-left">
-                            <inline-text-field-edit-dialog v-model="subject" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="subjectGroup" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
-                            <inline-text-field-edit-dialog v-model="subject" field="name" label="Nom" @save="refresh" class-name="limit150"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="subjectGroup" field="name" label="Nom" @save="refresh" class-name="limit150"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
-                            <inline-text-field-edit-dialog v-model="subject" field="shortname" label="Nom curt" @save="refresh" class-name="limit100"></inline-text-field-edit-dialog>
+                            <inline-text-field-edit-dialog v-model="subjectGroup" field="shortname" label="Nom curt" @save="refresh" class-name="limit100"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-text="subject.hours"></td>
-                        <td class="text-xs-left"> {{subject.start }} | {{ subject.end }}</td>
-                        <td class="text-xs-left" v-html="subject.formatted_created_at_diff" :title="subject.formatted_created_at"></td>
-                        <td class="text-xs-left" :title="subject.formatted_updated_at">{{subject.formatted_updated_at_diff}}</td>
+                        <td class="text-xs-left" v-text="subjectGroup.hours"></td>
+                        <td class="text-xs-left"> {{subjectGroup.start }} | {{ subjectGroup.end }}</td>
+                        <td class="text-xs-left" v-html="subjectGroup.formatted_created_at_diff" :title="subjectGroup.formatted_created_at"></td>
+                        <td class="text-xs-left" :title="subjectGroup.formatted_updated_at">{{subjectGroup.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
-                            <changelog-loggable :loggable="subject"></changelog-loggable>
+                            <changelog-loggable :loggable="subjectGroup"></changelog-loggable>
                             <fullscreen-dialog
                                     v-model="showDialog"
-                                    title="Mostra l'estudi"
-                                    :resource="subject"
-                                    v-if="showDialog === false || showDialog === subject.id">
-                                <subject-show :subject="subject" @close="showDialog = false"></subject-show>
+                                    title="Mostra el mòdul professional"
+                                    :resource="subjectGroup"
+                                    v-if="showDialog === false || showDialog === subjectGroup.id">
+                                <subject-group-show :subject-group="subjectGroup" @close="showDialog = false"></subject-group-show>
                             </fullscreen-dialog>
-                            <subject-delete :subject="subject" v-if="$hasRole('CurriculumManager')"></subject-delete>
+                            <subject-group-delete :subject-group="subjectGroup" v-if="$hasRole('CurriculumManager')"></subject-group-delete>
                         </td>
                     </tr>
                 </template>
@@ -123,12 +119,9 @@
 
 <script>
 import FullScreenDialog from '../../ui/FullScreenDialog'
-import SubjectDelete from './SubjectDeleteComponent'
-import SubjectShowComponent from './SubjectShowComponent'
-import SubjectDepartment from './SubjectDepartment'
-import SubjectFamily from './SubjectFamily'
+import SubjectGroupDeleteComponent from './SubjectGroupDeleteComponent'
+import SubjectGroupShowComponent from './SubjectGroupShowComponent'
 import StudySelect from '../studies/StudySelect'
-import SubjectGroupsSelect from '../subjectGroups/SubjectGroupsSelect'
 
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
@@ -144,14 +137,11 @@ export default {
   name: 'SubjectsListComponent',
   components: {
     'fullscreen-dialog': FullScreenDialog,
-    'subject-delete': SubjectDelete,
-    'subject-show': SubjectShowComponent,
+    'subject-group-delete': SubjectGroupDeleteComponent,
+    'subject-group-show': SubjectGroupShowComponent,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
-    'subject-department': SubjectDepartment,
-    'subject-family': SubjectFamily,
     'changelog-loggable': ChangelogLoggable,
-    'study-select': StudySelect,
-    'subject-groups-select': SubjectGroupsSelect
+    'study-select': StudySelect
   },
   data () {
     return {
@@ -163,18 +153,16 @@ export default {
       },
       filter: 'all',
       selectedStudy: null,
-      selectedSubjectGroup: null,
       showDialog: false
     }
   },
   computed: {
-    dataSubjects () {
-      return this.$store.getters.subjects
+    dataSubjectGroups () {
+      return this.$store.getters.subjectGroups
     },
-    filteredSubjects () {
-      let filteredByState = filters[this.filter](this.dataSubjects)
-      if (this.selectedStudy) filteredByState = filteredByState.filter(subject => { return subject.study_id === this.selectedStudy.id })
-      if (this.selectedSubjectGroup) filteredByState = filteredByState.filter(subject => { return subject.subject_group_id === this.selectedSubjectGroup.id })
+    filteredSubjectGroups () {
+      let filteredByState = filters[this.filter](this.dataSubjectGroups)
+      if (this.selectedStudy) filteredByState = filteredByState.filter(subjectGroup => { return subjectGroup.study_id === this.selectedStudy.id })
       return filteredByState
     },
     headers () {
@@ -182,7 +170,6 @@ export default {
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       headers.push({ text: '#', value: 'number', width: '1%' })
       headers.push({ text: 'Estudi', align: 'study_code', value: 'study_code' })
-      headers.push({ text: 'Mòdul', align: 'subject_code', value: 'subject_code' })
       headers.push({ text: 'Codi', value: 'code' })
       headers.push({ text: 'Nom', value: 'name' })
       headers.push({ text: 'Nom curt', value: 'shortname' })
@@ -195,7 +182,7 @@ export default {
     }
   },
   props: {
-    subject: {
+    subjectGroup: {
       type: Object,
       default: function () {
         return undefined
@@ -209,7 +196,7 @@ export default {
     fetch (message = true) {
       this.refreshing = true
       this.$store.dispatch(actions.SET_SUBJECTS).then(response => {
-        if (message) this.$snackbar.showMessage('Unitats Formatives actualitzades correctament')
+        if (message) this.$snackbar.showMessage('Mòduls professionals actualitzats correctament')
         this.refreshing = false
       }).catch(error => {
         this.$snackbar.showError(error)
@@ -219,8 +206,8 @@ export default {
   },
   created () {
     this.filters = Object.keys(filters)
-    if (this.subject) {
-      this.showDialog = this.subject.id
+    if (this.subjectGroup) {
+      this.showDialog = this.subjectGroup.id
       this.filter = 'all'
     }
   }
