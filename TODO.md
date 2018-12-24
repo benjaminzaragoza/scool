@@ -6,11 +6,22 @@ Shows:
  - [ ] Falten els shows de tots els mòdels
    - [ ] Indirectament un cop van el shows es pot fer anar la navegació (links per mostrar la info d'un model específic) 
 
+Edits:
+ - [ ] Quins casos cal? La majoria d'edits són parcials i es poden fer a altres vistes...
+
+Selects:
+- [ ] Als selects que tenen opció afegir un item al select (estudis select) fer que si s'afegeix un nou estudi passi a ser el seleccionat
+  - [X] StudySelect
+  - [ ] Altres selects
+- [ ] Opció d'editar el seleccionat (per exemple editar estudi s'ha seleccionat)
+ 
 Altres:
 - [X] Eliminar Model Law -> Substituit per etiquetes d'estudis -> Comprovar tots els testos van igual ok
-- [ ] Als selects que tenen opció afegir un item al select (estudis select) fer que si s'afegeix un nou estudi passi a ser el seleccionat
-- [ ] Opció d'editar el seleccionat (per exemple editar estudi s'ha seleccionat)
-- [ ] Tipus MP -> SubjectGroupTypes -> Són etiquetes es poden posar als MPS
+- [X] Tipus MP -> SubjectGroupTypes -> Són etiquetes es poden posar als MPS
+  - [X] Mostrar Etiquetes als MPS a la visa
+  - [X] Filtrar per etiquetes a la vista MPs
+  - [X] Afegir/eliminar etiquetes a la vista MPs
+  - [X] Afegir/eliminar etiquetes al form de create.
 
 Curriculum settings:
 - [ ] Data inici curs
@@ -18,8 +29,9 @@ Curriculum settings:
 - [ ] Dies festius/no hàbils
 
 Afegir MPS
+- [ ] Study acabat d'afegir al select, ok se selecciona bé però no es mostra/actualitza nombre MPS de l'estudi
 - [X] Permetre definir/modificar nombre màxim de MPs d'un estudi seleccionat
-- [ ] Llistat de MPS -> Links als MPS (show) al fer clic
+- [ ] Llistat de MPS -> Links als MPS (show) al fer clic .Pendent de funcionar shows
 - [X] Llistat de MPS -> Afegir icona remove al chip que permeti eliminar el MP (prèvia confirmació amb confirm)
 - [ ] Format de les dates inici i fí
 - [ ] Settings Currículum relacionades:
