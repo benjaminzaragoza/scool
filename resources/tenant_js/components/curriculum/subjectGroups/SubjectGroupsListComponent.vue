@@ -45,10 +45,10 @@
                       <v-layout>
                           <v-flex xs12>
                                <v-layout>
-                                   <v-flex xs7>
+                                   <v-flex xs8>
                                        <study-select v-model="selectedStudy"></study-select>
                                    </v-flex>
-                                   <v-flex xs5>
+                                   <v-flex xs4>
                                        <v-autocomplete
                                                v-model="selectedTags"
                                                :items="dataTags"
@@ -162,7 +162,7 @@ var filters = {
 }
 
 export default {
-  name: 'SubjectsListComponent',
+  name: 'SubjectGroupsListComponent',
   components: {
     'fullscreen-dialog': FullScreenDialog,
     'subject-group-delete': SubjectGroupDeleteComponent,
@@ -183,11 +183,10 @@ export default {
       selectedStudy: null,
       showDialog: false,
       selectedTags: [],
-      dataTags: this.tags
     }
   },
   computed: {
-    tags () {
+    dataTags () {
       return this.$store.getters.subjectGroupTags
     },
     dataSubjectGroups () {
