@@ -9,5 +9,11 @@ export default {
   },
   [ mutations.SET_SUBJECT_GROUP_TAGS ] (state, subjectGroupTags) {
     state.subjectGroupTags = subjectGroupTags
+  },
+  [ mutations.DELETE_SUBJECT_GROUP ] (state, subjectGroup) {
+    let subjectGroupInState = state.subjectGroups.find((element) => {
+      return element.id === subjectGroup.id
+    })
+    state.subjectGroups.splice(state.subjectGroups.indexOf(subjectGroupInState), 1)
   }
 }

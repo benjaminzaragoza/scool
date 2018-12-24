@@ -11,9 +11,9 @@ Curriculum settings:
 - [ ] Dies festius/no hàbils
 
 Afegir MPS
-- [ ] Mostrar dialeg que permeti definir/modificar nombre màxim de MPs d'un estudi seleccionat
-- [ ] Llista de MPS -> Links als MPS (show) al fer clic
-- [ ] Llista de MPS -> Afegir icona remove al chip que permeti eliminar el MP (prèvia confirmació amb confirm)
+- [X] Permetre definir/modificar nombre màxim de MPs d'un estudi seleccionat
+- [ ] Llistat de MPS -> Links als MPS (show) al fer clic
+- [ ] Llistat de MPS -> Afegir icona remove al chip que permeti eliminar el MP (prèvia confirmació amb confirm)
 - [ ] Format de les dates inici i fí
 - [ ] Settings Currículum relacionades:
   - [ ] Data inici curs

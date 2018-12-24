@@ -22,5 +22,15 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.DELETE_SUBJECT_GROUP ] (context, subject) {
+    return new Promise((resolve, reject) => {
+      api.delete(subject).then(response => {
+        context.commit(mutations.DELETE_SUBJECT_GROUP, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }

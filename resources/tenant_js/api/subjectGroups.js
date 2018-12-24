@@ -18,5 +18,8 @@ export default {
       'start': subjectGroup.start,
       'end': subjectGroup.end
     })
+  },
+  delete (subjectGroup) {
+    return axios.delete('/api/v1/subject_groups/' + subjectGroup.id)
   }
 }
