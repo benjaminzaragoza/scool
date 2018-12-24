@@ -33,7 +33,7 @@
                 <!--// TODO-->
                 <!--<subject-groups-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></subject-groups-settings>-->
             </fullscreen-dialog>
-            <v-btn id="subject_groups_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+            <v-btn id="subject_groups_refresh_button" icon class="white--text" @click="refresh(true)" :loading="refreshing" :disabled="refreshing">
                 <v-icon>refresh</v-icon>
             </v-btn>
         </v-toolbar>
@@ -238,7 +238,7 @@ export default {
     },
     fetch (message = true) {
       this.refreshing = true
-      this.$store.dispatch(actions.SET_SUBJECTS).then(response => {
+      this.$store.dispatch(actions.SET_SUBJECT_GROUPS).then(response => {
         if (message) this.$snackbar.showMessage('Mòduls professionals actualitzats correctament')
         this.refreshing = false
       }).catch(error => {
