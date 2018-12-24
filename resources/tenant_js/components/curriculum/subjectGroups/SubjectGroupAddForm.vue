@@ -308,6 +308,11 @@ export default {
   methods: {
     updatedNumber () {
       this.number = this.calculateNextNumber(this.dataStudy)
+      if (this.dataStudy.subject_groups_number) {
+        if (this.dataStudy.subjectGroups.length >= this.dataStudy.subject_groups_number) {
+          this.$snackbar.showError("Aquest estudi ja té tots els Mòduls Professionals donats d'alta")
+        }
+      }
       this.$nextTick(this.$refs.name.focus)
     },
     calculateNextNumber (dataStudy) {
@@ -332,13 +337,12 @@ export default {
       }
     },
     partialReset () {
-      this.number = parseInt(this.number) + 1
+      this.updatedNumber()
       this.name = ''
       this.shortname = ''
       this.hours = null
       this.start = null
       this.end = null
-      this.$nextTick(this.$refs.name.focus)
     },
     allowedDates: val => ![0, 6].includes(new Date(val).getDay()),
     add (close = false) {
