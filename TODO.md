@@ -1,5 +1,12 @@
 # TODO CURRICULUM
+- [ ] Changelogs
+ - [ ] A tots els models (studies, ufs, mps)
 
+Shows:
+ - [ ] Falten els shows de tots els mòdels
+   - [ ] Indirectament un cop van el shows es pot fer anar la navegació (links per mostrar la info d'un model específic) 
+
+Altres:
 - [X] Eliminar Model Law -> Substituit per etiquetes d'estudis -> Comprovar tots els testos van igual ok
 - [ ] Als selects que tenen opció afegir un item al select (estudis select) fer que si s'afegeix un nou estudi passi a ser el seleccionat
 - [ ] Opció d'editar el seleccionat (per exemple editar estudi s'ha seleccionat)
@@ -13,7 +20,7 @@ Curriculum settings:
 Afegir MPS
 - [X] Permetre definir/modificar nombre màxim de MPs d'un estudi seleccionat
 - [ ] Llistat de MPS -> Links als MPS (show) al fer clic
-- [ ] Llistat de MPS -> Afegir icona remove al chip que permeti eliminar el MP (prèvia confirmació amb confirm)
+- [X] Llistat de MPS -> Afegir icona remove al chip que permeti eliminar el MP (prèvia confirmació amb confirm)
 - [ ] Format de les dates inici i fí
 - [ ] Settings Currículum relacionades:
   - [ ] Data inici curs
