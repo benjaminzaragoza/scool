@@ -11,7 +11,6 @@ use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Incident;
 use App\Models\IncidentTag;
-use App\Models\Law;
 use App\Models\Lesson;
 use App\Models\Location;
 use App\Models\Menu;
@@ -5892,17 +5891,6 @@ if (!function_exists('initialize_subjects')) {
 
         // Comú
 
-        // LAWS
-        // TODO ELIMINAR
-//        $loe = Law::firstOrCreate([
-//            'code' => 'LOE',
-//            'name' => 'Ley Orgánica de Educación'
-//        ]);
-//        $logse = Law::firstOrCreate([
-//            'code' => 'LOGSE',
-//            'name' => 'Ley Orgánica de Ordenació General del Sistema Educativo'
-//        ]);
-
         // Per estudis i mòduls:
 
         // Informàtica
@@ -8274,12 +8262,6 @@ if (!function_exists('initialize_fake_subjects')) {
     {
         $mp_start_date = '2017-09-15';
         $mp_end_date = '2018-06-01';
-
-        // TODO ELIMINAR
-//        $loe = Law::firstOrCreate([
-//            'code' => 'LOE',
-//            'name' => 'Ley Orgánica de Educación'
-//        ]);
 
         $dam = Study::firstOrCreate([
             'name' => 'Desenvolupament Aplicacions Multiplataforma',
