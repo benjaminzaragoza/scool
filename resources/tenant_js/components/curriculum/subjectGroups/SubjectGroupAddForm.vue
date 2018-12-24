@@ -318,7 +318,7 @@ export default {
     calculateNextNumber (dataStudy) {
       if (dataStudy.subject_groups_number) {
         var i
-        for (i = 1; i < dataStudy.subject_groups_number; i++) {
+        for (i = 1; i <= dataStudy.subject_groups_number; i++) {
           if (this.dataStudy.subjectGroups.find(subjectGroup => { return subjectGroup.number === i })) continue
           return i
         }
