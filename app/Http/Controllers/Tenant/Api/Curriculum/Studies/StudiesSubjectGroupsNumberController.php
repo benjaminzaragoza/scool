@@ -25,10 +25,21 @@ class StudiesSubjectGroupsNumberController extends Controller
      */
     public function update(StudySubjectGroupsNumberUpdate $request, $tenant, Study $study)
     {
+
+        $this->validateSubjectGroupsNumber($study, $request->subject_groups_number);
         $oldStudy = $study->map(false);
         $study->subject_groups_number = $request->subject_groups_number;
         $study->save();
         event(new StudySubjectGroupsNumberUpdated($study, $oldStudy));
         return $study->map();
+    }
+
+    /**
+     * @param $study
+     * @param $number
+     */
+    protected function validateSubjectGroupsNumber($study, $number)
+    {
+        if($number < count($study->subjectGroups)) abort(422,'El nombre total de MPS és superior al nombre de MPs ja assignades al estudi');
     }
 }

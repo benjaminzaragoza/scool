@@ -96,9 +96,18 @@ export default {
     }
   },
   watch: {
-    study (newStudy) {
-      this.dataStudy = newStudy
-      this.selectStudy()
+    study: {
+      handler: function (study) {
+        this.dataStudy = study
+        this.selectStudy()
+      },
+      deep: true
+    },
+    studies: {
+      handler: function () {
+        this.selectStudy()
+      },
+      deep: true
     }
   },
   methods: {

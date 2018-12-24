@@ -13,7 +13,7 @@
         MPs existents: <study-subject-groups-code-list v-if="dataStudy" :study="dataStudy"></study-subject-groups-code-list>
         <span v-else>Cap</span>
         <br/>
-        Número MPs de l'estudi: {{ dataStudy && dataStudy.subject_groups_number || 0 }} <v-btn small icon color="success"><v-icon small>edit</v-icon></v-btn>
+        <study-subject-groups-number :study="dataStudy" @modified="updateStudies"></study-subject-groups-number>
 
         <subject-group-number
                 v-model="number"
@@ -179,10 +179,11 @@
 import StudySelect from '../studies/StudySelect'
 import SubjectGroupCode from './SubjectGroupCode'
 import SubjectGroupNumber from './SubjectGroupNumber'
+import StudySubjectGroupsCodeList from '../studies/StudySubjectGroupsCodeList'
+import StudySubjectGroupsNumber from '../studies/StudySubjectGroupsNumber'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 import * as actions from '../../../store/action-types'
-import StudySubjectGroupsCodeList from '../studies/StudySubjectGroupsCodeList'
 export default {
   name: 'SubjectGroupAddForm',
   mixins: [validationMixin],
@@ -199,7 +200,8 @@ export default {
     'study-select': StudySelect,
     'subject-group-number': SubjectGroupNumber,
     'subject-group-code': SubjectGroupCode,
-    'study-subject-groups-code-list': StudySubjectGroupsCodeList
+    'study-subject-groups-code-list': StudySubjectGroupsCodeList,
+    'study-subject-groups-number': StudySubjectGroupsNumber
   },
   data () {
     return {
@@ -221,10 +223,9 @@ export default {
   },
   props: {
     study: {},
-    subjectGroup: {},
-    subjectGroups () {
-      return this.$store.getters.subjectGroups
-    },
+    subjectGroup: {}
+  },
+  computed: {
     families () {
       return this.$store.getters.families
     },
@@ -234,11 +235,6 @@ export default {
     departments () {
       return this.$store.getters.departments
     },
-    courses () {
-      return this.$store.getters.courses
-    }
-  },
-  computed: {
     dataTags () {
       return this.$store.getters.subjectGroupTags
     },
@@ -307,6 +303,9 @@ export default {
     }
   },
   methods: {
+    updateStudies () {
+      this.$store.dispatch(actions.SET_STUDIES)
+    },
     updatedNumber () {
       this.number = this.calculateNextNumber(this.dataStudy)
       if (this.dataStudy.subject_groups_number) {

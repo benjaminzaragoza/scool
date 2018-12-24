@@ -28,6 +28,9 @@ class Study extends Model
         $family->addStudy($this);
     }
 
+    /**
+     * @param $department
+     */
     public function assignDepartment($department)
     {
         $department = is_object($department) ? $department : Department::where('code',$department)->firstorFail();
@@ -44,12 +47,18 @@ class Study extends Model
         $this->tags()->save($tag);
     }
 
+    /**
+     * @param $tag
+     */
     public function assignTag($tag)
     {
         $tag = is_object($tag) ? $tag : StudyTag::where('value',$tag)->firstorFail();
         $this->tags()->save($tag);
     }
 
+    /**
+     * @param $subjectGroup
+     */
     public function assignSubjectGroup($subjectGroup)
     {
         $subjectGroup = is_object($subjectGroup) ? $subjectGroup : SubjectGroup::where('code',$subjectGroup)->firstorFail();
@@ -88,6 +97,9 @@ class Study extends Model
         return $this->hasMany(SubjectGroup::class)->orderBy('number');
     }
 
+    /**
+     * @return array
+     */
     public function map()
     {
         return [
