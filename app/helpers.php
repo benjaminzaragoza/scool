@@ -664,6 +664,13 @@ if (!function_exists('curriculum_manager_permissions')) {
             'subjectGroups.show',
             'subjectGroups.update',
             'subjectGroups.destroy',
+            'subjectGroups.tags.index',
+            'subjectGroups.tags.store',
+            'subjectGroups.tags.show',
+            'subjectGroups.tags.update',
+            'subjectGroups.tags.destroy',
+            'tagged.subjectGroups.store',
+            'tagged.subjectGroups.destroy',
         ];
     }
 }

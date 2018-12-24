@@ -124,6 +124,9 @@
                         </td>
                         <td class="text-xs-left" v-text="subjectGroup.hours"></td>
                         <td class="text-xs-left"> {{subjectGroup.start }} | {{ subjectGroup.end }}</td>
+                        <td class="text-xs-left">
+                            <subject-groups-tags @refresh="refresh(false)" :subjectGroup="subjectGroup" :tags="dataTags" ></subject-groups-tags>
+                        </td>
                         <td class="text-xs-left" v-html="subjectGroup.formatted_created_at_diff" :title="subjectGroup.formatted_created_at"></td>
                         <td class="text-xs-left" :title="subjectGroup.formatted_updated_at">{{subjectGroup.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
@@ -154,6 +157,7 @@ import StudySelect from '../studies/StudySelect'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
 import * as actions from '../../../store/action-types'
+import SubjectGroupsTags from './SubjectGroupsTags'
 
 var filters = {
   all: function (subjects) {
@@ -169,7 +173,8 @@ export default {
     'subject-group-show': SubjectGroupShowComponent,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'changelog-loggable': ChangelogLoggable,
-    'study-select': StudySelect
+    'study-select': StudySelect,
+    'subject-groups-tags': SubjectGroupsTags
   },
   data () {
     return {
@@ -212,6 +217,7 @@ export default {
       headers.push({ text: 'Nom curt', value: 'shortname' })
       headers.push({ text: 'Hores', value: 'hours', width: '1%' })
       headers.push({ text: 'Dates', value: 'start' })
+      headers.push({ text: 'Etiquetes', value: 'tags' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })

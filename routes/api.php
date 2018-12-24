@@ -9,6 +9,8 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\TaggedStudiesController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsTagsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\TaggedSubjectGroupsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
@@ -20,6 +22,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
 use App\Models\Log as Changelog;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -298,6 +301,23 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/subject_groups','\\' . SubjectGroupsController::class . '@index');
             Route::post('/subject_groups','\\' . SubjectGroupsController::class . '@store');
             Route::delete('/subject_groups/{subject_group}','\\' . SubjectGroupsController::class . '@destroy');
+
+            // subjectGroups
+            Route::get('/subjectGroups','\\' . SubjectGroupsController::class . '@index');
+            Route::post('/subjectGroups','\\' . SubjectGroupsController::class . '@store');
+            Route::delete('/subjectGroups/{subject_group}','\\' . SubjectGroupsController::class . '@destroy');
+
+            // SubjectGroupsTags
+            Route::get('/subjectGroups/tags','\\' . SubjectGroupsTagsController::class . '@index');
+            Route::get('/subjectGroups/tags/{tag}','\\' . SubjectGroupsTagsController::class . '@show');
+            Route::post('/subjectGroups/tags','\\' . SubjectGroupsTagsController::class . '@store');
+            Route::put('/subjectGroups/tags/{tag}','\\' . SubjectGroupsTagsController::class . '@update');
+            Route::delete('/subjectGroups/tags/{tag}','\\' . SubjectGroupsTagsController::class . '@destroy');
+
+            //Tagged subject groups
+            Route::post('/subjectGroups/{subjectGroup}/tags/{tag}','\\' . TaggedSubjectGroupsController::class . '@store');
+            Route::delete('/subjectGroups/{subjectGroup}/tags/{tag}', '\\' . TaggedSubjectGroupsController::class . '@destroy');
+
         });
 
         Route::group(['prefix' => 'v1'], function () {
