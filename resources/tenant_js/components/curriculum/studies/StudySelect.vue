@@ -112,9 +112,6 @@ export default {
   },
   methods: {
     add (study) {
-      console.log('TODO QWEQWE')
-      console.log('study:')
-      console.log(study)
       this.dataStudies.push(study)
       this.dataStudy = this.filterStudy(study.id)[0]
       this.$emit('input', this.dataStudy)
@@ -129,7 +126,6 @@ export default {
       return this.dataStudies.filter(study => { return study.id === id })
     },
     selectStudy () {
-      console.log('selectStudy')
       if (this.itemValue === null) {
         if (Number.isInteger(parseInt(this.study))) this.dataStudy = this.filterStudy(this.study)[0]
         else if (this.study && this.study.id) this.dataStudy = this.filterStudy(this.study.id)[0]
