@@ -10,7 +10,9 @@ export default {
       'shortname': study.shortname,
       'code': study.code,
       'family': study.family,
-      'department': study.department
+      'department': study.department,
+      'subjects_number': study.subjectsNumber,
+      'subject_groups_number': study.subjectGroupsNumber
     })
   },
   delete (study) {

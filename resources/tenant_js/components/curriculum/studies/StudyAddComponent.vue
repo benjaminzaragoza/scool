@@ -197,7 +197,9 @@ export default {
           shortname: this.shortname,
           code: this.code,
           department: this.department,
-          family: this.family
+          family: this.family,
+          subjectsNumber: this.subjectsNumber,
+          subjectGroupsNumber: this.subjectGroupsNumber
         }).then(response => {
           this.$snackbar.showMessage('Estudi creat correctament')
           this.adding = false

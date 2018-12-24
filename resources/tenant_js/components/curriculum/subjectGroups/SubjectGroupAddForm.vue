@@ -11,6 +11,8 @@
         ></study-select>
 
         MPs existents: <study-subject-groups-code-list v-if="dataStudy" :study="dataStudy"></study-subject-groups-code-list>
+        <br/>
+        Número MPs de l'estudi: {{ dataStudy && dataStudy.subject_groups_number || 0 }}
 
         <subject-group-number
                 v-model="number"
@@ -356,6 +358,8 @@ export default {
           end: this.end
         }).then(response => {
           this.$snackbar.showMessage('Mòdul Professional creat correctament')
+          this.dataStudy.subjectGroups.push(response.data)
+          this.dataStudy.subjectGroups.sort((a, b) => a.number - b.number)
           this.adding = false
           this.$emit('added', response.data)
           if (close) {
