@@ -11,8 +11,9 @@
         ></study-select>
 
         MPs existents: <study-subject-groups-code-list v-if="dataStudy" :study="dataStudy"></study-subject-groups-code-list>
+        <span v-else>Cap</span>
         <br/>
-        Número MPs de l'estudi: {{ dataStudy && dataStudy.subject_groups_number || 0 }}
+        Número MPs de l'estudi: {{ dataStudy && dataStudy.subject_groups_number || 0 }} <v-btn small icon color="success"><v-icon small>edit</v-icon></v-btn>
 
         <subject-group-number
                 v-model="number"

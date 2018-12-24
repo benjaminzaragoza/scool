@@ -1,9 +1,34 @@
-# TODO
+# TODO CURRICULUM
 
 - [X] Eliminar Model Law -> Substituit per etiquetes d'estudis -> Comprovar tots els testos van igual ok
 - [ ] Als selects que tenen opció afegir un item al select (estudis select) fer que si s'afegeix un nou estudi passi a ser el seleccionat
 - [ ] Opció d'editar el seleccionat (per exemple editar estudi s'ha seleccionat)
 - [ ] Tipus MP -> SubjectGroupTypes -> Són etiquetes es poden posar als MPS
+
+Curriculum settings:
+- [ ] Data inici curs
+- [ ] Data fi curs
+- [ ] Dies festius/no hàbils
+
+Afegir MPS
+- [ ] Mostrar dialeg que permeti definir/modificar nombre màxim de MPs d'un estudi seleccionat
+- [ ] Llista de MPS -> Links als MPS (show) al fer clic
+- [ ] Llista de MPS -> Afegir icona remove al chip que permeti eliminar el MP (prèvia confirmació amb confirm)
+- [ ] Format de les dates inici i fí
+- [ ] Settings Currículum relacionades:
+  - [ ] Data inici curs
+  - [ ] Data fí curs
+  - [ ] Nombre setmanes del curs: famoses "35"
+  - [ ] Definir número de cada setmana i periodes de festes
+- Vàlidacions
+  - [ ] La data d'inici de la UF no pot ser inferior a la data d'ínici de curs
+  - [ ] La data fí de la UF no pot ser superior a la data fí de curs
+  - [ ] ???  
+Rendiment:
+- [X] Solucionar 436 consultes a la web de llista UFS
+ - [ ] 250 queries
+- [ ] Llista estudis 184 queries
+- [ ] 234 queries a MPs
 
 # NPM RUN PRODUCTION
 
@@ -935,26 +960,23 @@ Cal revisar component Pare App.vue i app.blade.php i l'ús de la funció checkRo
 # CURRICULUM
 
 TODO:
-- [ ] Etiquetes d'estudis que cal crear:
-  - LOE/LOGSE
-  - FP/Cursos d'accés
-  - Grau mitjà o Grau superior
+- [X] Etiquetes d'estudis que cal crear:
+  - [X] LOE/LOGSE
+  - [X] FP/Cursos d'accés
+  - [X] Grau mitjà o Grau superior
 - [ ] Estaria bé disposar d'una icona per cada estudi   
 - [ ] Per les famílies hi ha una imatge associada a la web de la gene: http://queestudiar.gencat.cat/ca/estudis/fp/cicles-families/act-fisiques-esportives/?p_id=46&estudi
-- http://www.todofp.es/sobre-fp/informacion-general/centros-integrados/nuevos-centros/familias.html
+  - http://www.todofp.es/sobre-fp/informacion-general/centros-integrados/nuevos-centros/familias.html
 
 Afegir Subject/UF:
 - [ ] Relació entre desplegables/filtres
   - [ ] Llista de Mòduls professional -> Filtrar i només veure els corresponents a l'estudi seleccionat previàment 
   - [ ] Llista de cursos -> Filtrar i només veure els corresponents al curs seleccionat previàment
 - Navegacions:
-  - [] Crear un studi sinó existeix des de la llista d'estudis
-- [ ] Camp number: seleccionar per defecte el pròxim número d'UF lliure
-  - [ ] Mostrar una alerta si el Mòdul Professional té número de UFS indicat i ja estan totes creades  
+  - [X] Crear un studi sinó existeix des de la llista d'estudis
+- [X] Camp number: seleccionar per defecte el pròxim número d'UF seguent que pertoca
+  - [X] Mostrar una alerta si el Mòdul Professional té número de UFS indicat i ja estan totes creades  
    
-Rendiment:
-- [X] Solucionar 436 consultes a la web de llista UFS
-
 Crear Estudi:
 - Camps pendents:
 - Número de mòduls (13)

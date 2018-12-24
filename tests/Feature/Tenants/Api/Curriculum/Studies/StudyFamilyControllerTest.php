@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Studies\Curriculum;
+namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
 use App\Models\Department;
 use App\Models\Family;

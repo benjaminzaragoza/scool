@@ -8940,7 +8940,7 @@ if (! function_exists('create_sample_study')) {
             'shortname' => 'Des. Aplicacions Multiplataforma',
             'code' => 'DAM',
             'department_id' => $department->id,
-            'family_id' => $family->id,
+            'family_id' => $family->id
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Studies\Curriculum;
+namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyDepartmentUpdated;
 use App\Models\Department;

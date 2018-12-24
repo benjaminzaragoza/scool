@@ -19,7 +19,7 @@ class StudyNameUpdate extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('studies.update', $this->incident);
+        return Auth::user()->can('studies.update', $this->study);
     }
 
     /**

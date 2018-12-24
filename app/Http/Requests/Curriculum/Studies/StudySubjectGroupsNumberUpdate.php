@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateStudyCode.
+ * Class StudySubjectGroupsNumberUpdate.
  *
  * @package App\Http\Requests
  */
-class StudyCodeUpdate extends FormRequest
+class StudySubjectGroupsNumberUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,6 +29,6 @@ class StudyCodeUpdate extends FormRequest
      */
     public function rules()
     {
-        return ['code' => 'required'];
+        return ['subject_groups_number' => 'required'];
     }
 }

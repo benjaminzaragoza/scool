@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Incidents;
+namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyShortnameUpdated;
 use Event;
@@ -95,7 +95,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
     {
         $this->login('api');
         $study = create_sample_study();
-        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
+        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/shortname',[
             'name' => 'NOUNOMCURT'
         ]);
         $response->assertStatus(403);
@@ -108,7 +108,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
     public function guest_user_cannot_update_study_shortname()
     {
         $study = create_sample_study();
-        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/name',[
+        $response = $this->json('PUT','/api/v1/studies/' . $study->id . '/shortname',[
             'name' => 'NOUNOMCURT'
         ]);
         $response->assertStatus(401);

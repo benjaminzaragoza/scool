@@ -4,6 +4,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesShortnameController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesSubjectGroupsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
@@ -277,6 +278,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/studies/{study}/code','\\' . StudiesCodeController::class . '@update');
             Route::put('/studies/{study}/name','\\' . StudiesNameController::class . '@update');
             Route::put('/studies/{study}/shortname','\\' . StudiesShortnameController::class . '@update');
+
+            Route::put('/studies/{study}/subject_groups_number','\\' . StudiesSubjectGroupsNumberController::class . '@update');
 
             Route::put('/studies/{study}/department/{department}','\\' . StudyDepartmentController::class . '@update');
             Route::put('/studies/{study}/family/{family}','\\' . StudyFamilyController::class . '@update');

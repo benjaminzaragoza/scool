@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Incidents;
+namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyCodeUpdated;
 use Event;
