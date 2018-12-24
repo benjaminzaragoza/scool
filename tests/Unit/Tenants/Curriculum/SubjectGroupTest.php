@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tenants\Curriculum;
 
 
+use App\Models\SubjectGroupTag;
 use App\Models\User;
 use App\Models\SubjectGroup;
 use Config;
@@ -56,8 +57,7 @@ class SubjectGroupTest extends TestCase
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 3,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Normal'
+            'end' => $mp_end_date
         ]);
 
         $this->assertTrue($group->is(SubjectGroup::findByCode('DAM_MP7')));
@@ -91,8 +91,6 @@ class SubjectGroupTest extends TestCase
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedSubjectGroup['study_shortname']);
         $this->assertEquals('DAM',$mappedSubjectGroup['study_code']);
 
-        $this->assertSame('Normal',$mappedSubjectGroup['type']);
-
         $this->assertNotNull($mappedSubjectGroup['created_at']);
         $this->assertNotNull($mappedSubjectGroup['updated_at']);
         $this->assertNotNull($mappedSubjectGroup['created_at_timestamp']);
@@ -104,5 +102,59 @@ class SubjectGroupTest extends TestCase
 
         $this->assertEquals('Desenvolupament d’interfícies Interfícies DAM_MP7',$mappedSubjectGroup['full_search']);
 
+        // TAGS
+        $tag1 = SubjectGroupTag::create([
+            'value' => 'Tag1',
+            'description' => 'Tag 1 bla bla bla',
+            'color' => '#453423'
+        ]);
+        $tag2 = SubjectGroupTag::create([
+            'value' => 'Tag2',
+            'description' => 'Tag 2 bla bla bla',
+            'color' => '#223423'
+        ]);
+        $tag3 = SubjectGroupTag::create([
+            'value' => 'Tag3',
+            'description' => 'Tag 3 bla bla bla',
+            'color' => '#333423'
+        ]);
+        $subjectGroup->addTag($tag1);
+        $subjectGroup->addTag($tag2);
+        $subjectGroup->addTag($tag3);
+
+        $subjectGroup= $subjectGroup->fresh();
+        $mappedSubjectGroup = $subjectGroup->map();
+        $this->assertCount(3, $mappedSubjectGroup['tags']);
+        $this->assertEquals('Tag1',$mappedSubjectGroup['tags'][0]['value']);
+        $this->assertEquals('Tag 1 bla bla bla',$mappedSubjectGroup['tags'][0]['description']);
+        $this->assertEquals('#453423',$mappedSubjectGroup['tags'][0]['color']);
+
+        $this->assertEquals('Tag2',$mappedSubjectGroup['tags'][1]['value']);
+        $this->assertEquals('Tag 2 bla bla bla',$mappedSubjectGroup['tags'][1]['description']);
+        $this->assertEquals('#223423',$mappedSubjectGroup['tags'][1]['color']);
+
+        $this->assertEquals('Tag3',$mappedSubjectGroup['tags'][2]['value']);
+        $this->assertEquals('Tag 3 bla bla bla',$mappedSubjectGroup['tags'][2]['description']);
+        $this->assertEquals('#333423',$mappedSubjectGroup['tags'][2]['color']);
+
+    }
+
+    /**
+     * @test
+     */
+    public function addTag()
+    {
+        $subjectGroup = create_sample_subject_group();
+
+        $tag = SubjectGroupTag::create([
+            'value' => 'Tag1',
+            'description' => 'Tag 1 bla bla bla',
+            'color' => '#453423'
+        ]);
+        $this->assertCount(0,$subjectGroup->tags);
+        $subjectGroup->addTag($tag);
+        $subjectGroup = $subjectGroup->fresh();
+        $this->assertCount(1,$subjectGroup->tags);
+        $this->assertTrue($subjectGroup->tags[0]->is($tag));
     }
 }

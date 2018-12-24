@@ -6229,8 +6229,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -6495,8 +6494,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Síntesi'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -6520,8 +6518,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'FCT'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -6795,8 +6792,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -7017,8 +7013,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Síntesi'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -7042,8 +7037,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'FCT'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -7067,8 +7061,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
 
         Subject::firstOrCreate([
@@ -7666,8 +7659,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
         Subject::firstOrCreate([
             'name' => 'Incorporació al treball',
@@ -7703,8 +7695,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
         Subject::firstOrCreate([
             'name' => 'Empresa i iniciativa emprenedora',
@@ -7728,8 +7719,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Síntesi'
+            'end' => $mp_end_date
         ]);
         Subject::firstOrCreate([
             'name' => 'Projecte',
@@ -7753,8 +7743,7 @@ if (!function_exists('initialize_subjects')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'FCT'
+            'end' => $mp_end_date
         ]);
 
         // Preimpressió digital
@@ -8027,8 +8016,7 @@ digital",
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Empresa e iniciativa emprenedora',
@@ -8040,8 +8028,7 @@ digital",
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Anglès tècnic',
@@ -8053,8 +8040,7 @@ digital",
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Externes'
+            'end' => $mp_end_date
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Síntesi',
@@ -8066,8 +8052,7 @@ digital",
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'Síntesi'
+            'end' => $mp_end_date
         ]);
         $group = SubjectGroup::firstOrCreate([
             'shortname' => 'Formació en centres de treball',
@@ -8079,8 +8064,7 @@ digital",
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 0,
             'start' => $mp_start_date,
-            'end' => $mp_end_date,
-            'type' => 'FCT'
+            'end' => $mp_end_date
         ]);
 
     }

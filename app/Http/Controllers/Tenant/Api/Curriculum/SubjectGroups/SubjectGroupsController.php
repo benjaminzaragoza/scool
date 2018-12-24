@@ -46,7 +46,6 @@ class SubjectGroupsController extends Controller
             'hours' => $request->hours,
             'free_hours' => $request->free_hours,
             'week_hours' => $request->week_hours,
-            'type' => $request->type,
             'start' => $request->start,
             'end' => $request->end
         ]);

@@ -184,7 +184,6 @@ export default {
       name: '',
       shortname: '',
       code: '',
-      type: 'Normal',
       start: null,
       startMenu: false,
       end: null,

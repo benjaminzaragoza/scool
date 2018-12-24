@@ -72,7 +72,6 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjects[0]['subject_group_week_hours'] === 3 &&
                 $returnedSubjects[0]['subject_group_start'] === '2017-09-15' &&
                 $returnedSubjects[0]['subject_group_end'] === '2018-06-01' &&
-                $returnedSubjects[0]['subject_group_type'] === 'Normal' &&
                 $returnedSubjects[0]['study_id'] === 1 &&
                 $returnedSubjects[0]['study_name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
                 $returnedSubjects[0]['study_shortname'] === 'Des. Apps Multiplataforma' &&
@@ -104,7 +103,6 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['week_hours'] === 99 &&
                 $returnedSubjectGroups[0]['start'] === '2017-09-15' &&
                 $returnedSubjectGroups[0]['end'] === '2018-06-01' &&
-                $returnedSubjectGroups[0]['type'] === 'Normal' &&
                 $returnedSubjectGroups[0]['api_uri'] === 'subject_groups';
         });
         $response->assertViewHas('courses', function ($returnedCourses) {
@@ -178,7 +176,6 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjects[0]['subject_group_week_hours'] === 3 &&
                 $returnedSubjects[0]['subject_group_start'] === '2017-09-15' &&
                 $returnedSubjects[0]['subject_group_end'] === '2018-06-01' &&
-                $returnedSubjects[0]['subject_group_type'] === 'Normal' &&
                 $returnedSubjects[0]['study_id'] === 1 &&
                 $returnedSubjects[0]['study_name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
                 $returnedSubjects[0]['study_shortname'] === 'Des. Apps Multiplataforma' &&
@@ -210,7 +207,6 @@ class CurriculumSubjectsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['week_hours'] === 99 &&
                 $returnedSubjectGroups[0]['start'] === '2017-09-15' &&
                 $returnedSubjectGroups[0]['end'] === '2018-06-01' &&
-                $returnedSubjectGroups[0]['type'] === 'Normal' &&
                 $returnedSubjectGroups[0]['api_uri'] === 'subject_groups';
         });
         $response->assertViewHas('courses', function ($returnedCourses) {

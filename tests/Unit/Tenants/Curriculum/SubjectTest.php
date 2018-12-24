@@ -95,7 +95,6 @@ class SubjectTest extends TestCase
         $this->assertEquals(3,$mappedSubject['subject_group_week_hours']);
         $this->assertEquals('2017-09-15',$mappedSubject['subject_group_start']);
         $this->assertEquals('2018-06-01',$mappedSubject['subject_group_end']);
-        $this->assertEquals('Normal',$mappedSubject['subject_group_type']);
 
         $this->assertSame(1,$mappedSubject['study_id']);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedSubject['study_name']);

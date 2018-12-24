@@ -129,6 +129,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
      */
     public function can_store_subjectGroups()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $dam = Study::firstOrCreate([
@@ -148,7 +149,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
             'hours' => 75,
             'free_hours' => 0,
             'week_hours' => 3,
-            'type' => 'Normal',
             'start' => '2017-09-15',
             'end' => '2018-06-01'
         ]);
@@ -164,7 +164,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $this->assertEquals($createdSubjectGroup->code,'DAM_MP7');
         $this->assertSame($createdSubjectGroup->number,7);
         $this->assertEquals($createdSubjectGroup->study_id,$dam->id);
-        $this->assertEquals($createdSubjectGroup->type,'Normal');
         $this->assertEquals($createdSubjectGroup->hours,75);
         $this->assertEquals($createdSubjectGroup->free_hours,75);
         $this->assertEquals($createdSubjectGroup->week_hours,75);
@@ -192,7 +191,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $this->assertEquals($subjectGroup->code,'DAM_MP7');
         $this->assertEquals($subjectGroup->number,7);
         $this->assertEquals($subjectGroup->study_id,$dam->id);
-        $this->assertEquals($subjectGroup->type,'Normal');
         $this->assertEquals($subjectGroup->hours,75);
         $this->assertEquals($subjectGroup->free_hours,0);
         $this->assertEquals($subjectGroup->week_hours,3);
@@ -235,7 +233,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
             'hours' => 75,
             'free_hours' => 0,
             'week_hours' => 3,
-            'type' => 'Normal',
             'start' => '2017-09-15',
             'end' => '2018-06-01'
         ]);
@@ -251,7 +248,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $this->assertEquals($createdSubjectGroup->code,'DAM_MP7');
         $this->assertSame($createdSubjectGroup->number,7);
         $this->assertEquals($createdSubjectGroup->study_id,$dam->id);
-        $this->assertEquals($createdSubjectGroup->type,'Normal');
         $this->assertEquals($createdSubjectGroup->hours,75);
         $this->assertEquals($createdSubjectGroup->free_hours,75);
         $this->assertEquals($createdSubjectGroup->week_hours,75);
@@ -279,7 +275,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $this->assertEquals($subjectGroup->code,'DAM_MP7');
         $this->assertEquals($subjectGroup->number,7);
         $this->assertEquals($subjectGroup->study_id,$dam->id);
-        $this->assertEquals($subjectGroup->type,'Normal');
         $this->assertEquals($subjectGroup->hours,75);
         $this->assertEquals($subjectGroup->free_hours,0);
         $this->assertEquals($subjectGroup->week_hours,3);

@@ -36,6 +36,7 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
      */
     public function show_curriculum_subject_groups()
     {
+        $this->withoutExceptionHandling();
         $subjectGroups = initialize_fake_subjectGroups();
         $this->loginAsSuperAdmin();
         $response = $this->get('/curriculum/subjectGroups');
@@ -56,7 +57,6 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['week_hours'] === 99 &&
                 $returnedSubjectGroups[0]['start'] === '2017-09-15' &&
                 $returnedSubjectGroups[0]['end'] === '2018-06-01' &&
-                $returnedSubjectGroups[0]['type'] === 'Normal' &&
                 $returnedSubjectGroups[0]['api_uri'] === 'subject_groups' &&
                 $returnedSubjectGroups[0]['created_at'] !== null &&
                 $returnedSubjectGroups[0]['created_at_timestamp'] !== null &&
@@ -100,15 +100,6 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
                 $returnedFamilies[0]['code'] === 'INF' &&
                 $returnedFamilies[0]['api_uri'] === 'families';
         });
-        $response->assertViewHas('subjectGroupTypes', function ($returnedsubjectGroupTypes) {
-            dump($returnedsubjectGroupTypes);
-            return
-                count($returnedsubjectGroupTypes) === 1 &&
-                $returnedsubjectGroupTypes[0]['id'] === 1 &&
-                $returnedsubjectGroupTypes[0]['name'] === 'Informàtica' &&
-                $returnedsubjectGroupTypes[0]['code'] === 'INF' &&
-                $returnedsubjectGroupTypes[0]['api_uri'] === 'families';
-        });
     }
 
     /**
@@ -137,7 +128,6 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['week_hours'] === 99 &&
                 $returnedSubjectGroups[0]['start'] === '2017-09-15' &&
                 $returnedSubjectGroups[0]['end'] === '2018-06-01' &&
-                $returnedSubjectGroups[0]['type'] === 'Normal' &&
                 $returnedSubjectGroups[0]['api_uri'] === 'subject_groups' &&
                 $returnedSubjectGroups[0]['created_at'] !== null &&
                 $returnedSubjectGroups[0]['created_at_timestamp'] !== null &&

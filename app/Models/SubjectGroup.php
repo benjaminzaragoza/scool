@@ -58,7 +58,6 @@ class SubjectGroup extends Model
             'week_hours' => (int) $this->hours,
             'start' => $this->start,
             'end' => $this->end,
-            'type' => $this->type,
 
             'api_uri' => $this->api_uri,
 
@@ -75,7 +74,9 @@ class SubjectGroup extends Model
             'study_name' => optional($this->study)->name,
             'study_shortname' => optional($this->study)->shortname,
             'study_code' => optional($this->study)->code,
-            'full_search' => $this->full_search
+            'full_search' => $this->full_search,
+
+            'tags' => map_collection($this->tags)
         ];
     }
 
@@ -87,5 +88,23 @@ class SubjectGroup extends Model
     public function getFullSearchAttribute()
     {
         return "$this->name $this->shortname $this->code";
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(SubjectGroupTag::class,'tagged_subject_groups')->withTimestamps();
+    }
+
+    /**
+     * Add tag.
+     *
+     * @param $tag
+     */
+    public function addTag($tag)
+    {
+        $this->tags()->save($tag);
     }
 }
