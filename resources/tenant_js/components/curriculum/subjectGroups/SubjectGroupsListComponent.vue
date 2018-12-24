@@ -187,6 +187,9 @@ export default {
     }
   },
   computed: {
+    tags () {
+      return this.$store.getters.subjectGroupTags
+    },
     dataSubjectGroups () {
       return this.$store.getters.subjectGroups
     },

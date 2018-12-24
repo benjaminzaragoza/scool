@@ -34,6 +34,10 @@ export default {
       type: Array,
       required: true
     },
+    subjectGroupTags: {
+      type: Array,
+      required: true
+    },
     studies: {
       type: Array,
       required: true
@@ -49,6 +53,7 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_SUBJECT_GROUPS, this.subjectGroups)
+    this.$store.commit(mutations.SET_SUBJECT_GROUP_TAGS, this.subjectGroupTags)
     this.$store.commit(mutations.SET_STUDIES, this.studies)
     this.$store.commit(mutations.SET_DEPARTMENTS, this.departments)
     this.$store.commit(mutations.SET_FAMILIES, this.families)

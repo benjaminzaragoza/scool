@@ -8194,6 +8194,7 @@ if (!function_exists('create_sample_subject')) {
 if (!function_exists('initialize_fake_subjectGroups')) {
     function initialize_fake_subjectGroups()
     {
+        initialize_subject_group_tags();
         $depInformatica = Department::create([
             'name' => 'Departament Informàtica',
             'shortname' => 'Informàtica',

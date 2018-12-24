@@ -36,7 +36,6 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
      */
     public function show_curriculum_subject_groups()
     {
-        $this->withoutExceptionHandling();
         $subjectGroups = initialize_fake_subjectGroups();
         $this->loginAsSuperAdmin();
         $response = $this->get('/curriculum/subjectGroups');
@@ -70,6 +69,17 @@ class CurriculumSubjectGroupsControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['study_name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
                 $returnedSubjectGroups[0]['study_shortname'] === 'Des. Apps Multiplataforma' &&
                 $returnedSubjectGroups[0]['study_code'] === 'DAM';
+        });
+
+        $response->assertViewHas('subjectGroupTags', function ($returnedSubjectGroupTags) {
+            return
+                count($returnedSubjectGroupTags) === 4 &&
+                $returnedSubjectGroupTags[0]['id'] === 1 &&
+                $returnedSubjectGroupTags[0]['value'] === "Normal" &&
+                $returnedSubjectGroupTags[0]['description'] === "Mòdul normal" &&
+                $returnedSubjectGroupTags[0]['color'] === 'amber' &&
+                $returnedSubjectGroupTags[0]['icon'] === null &&
+                $returnedSubjectGroupTags[0]['api_uri'] === 'subject_group_tags';
         });
 
         $response->assertViewHas('studies', function ($returnedStudies) {

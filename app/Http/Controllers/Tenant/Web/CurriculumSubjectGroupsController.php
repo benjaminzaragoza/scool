@@ -10,6 +10,7 @@ use App\Models\Family;
 use App\Models\Study;
 use App\Models\Subject;
 use App\Models\SubjectGroup;
+use App\Models\SubjectGroupTag;
 
 /**
  * Class CurriculumSubjectGroupsController.
@@ -27,10 +28,11 @@ class CurriculumSubjectGroupsController extends Controller
     public function index(SubjectGroupsIndex $request)
     {
         $subjectGroups = map_collection(SubjectGroup::with('study')->get());
+        $subjectGroupTags = map_collection(SubjectGroupTag::all());
         $studies = map_collection(Study::with('family','department','tags')->get());
         $departments = map_collection(Department::all());
         $families = map_collection(Family::all());
         return view('tenants.curriculum.subjectGroups.index',
-            compact('subjectGroups','studies','departments','families'));
+            compact('subjectGroups','studies','departments','families','subjectGroupTags'));
     }
 }
