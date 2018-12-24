@@ -38,6 +38,7 @@ export default {
         this.$emit('before')
         this.loading = true
         this.$store.dispatch(actions.DELETE_SUBJECT_GROUP, this.subjectGroup).then(() => {
+          this.$emit('removed', this.subjectGroup)
           this.$snackbar.showMessage('Mòdul Professional eliminat correctament')
           this.loading = false
         }).catch(error => {

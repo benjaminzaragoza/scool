@@ -10,7 +10,7 @@
                 @blur="$v.dataStudy.$touch()"
         ></study-select>
 
-        MPs existents: <study-subject-groups-code-list v-if="dataStudy" :study="dataStudy"></study-subject-groups-code-list>
+        MPs existents: <study-subject-groups-code-list v-if="dataStudy" :study="dataStudy" @removed="updateStudies"></study-subject-groups-code-list>
         <span v-else>Cap</span>
         <br/>
         <study-subject-groups-number :study="dataStudy" @modified="updateStudies"></study-subject-groups-number>

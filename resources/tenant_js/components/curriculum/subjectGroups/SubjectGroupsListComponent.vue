@@ -138,7 +138,7 @@
                                     v-if="showDialog === false || showDialog === subjectGroup.id">
                                 <subject-group-show :subject-group="subjectGroup" @close="showDialog = false"></subject-group-show>
                             </fullscreen-dialog>
-                            <subject-group-delete :subject-group="subjectGroup" v-if="$hasRole('CurriculumManager')"></subject-group-delete>
+                            <subject-group-delete :subject-group="subjectGroup" v-if="$hasRole('CurriculumManager')" @removed="updateStudies"></subject-group-delete>
                         </td>
                     </tr>
                 </template>
@@ -233,6 +233,9 @@ export default {
     }
   },
   methods: {
+    updateStudies () {
+      this.$store.dispatch(actions.SET_STUDIES)
+    },
     refresh (message = true) {
       this.fetch(message)
     },
