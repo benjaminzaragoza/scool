@@ -27,6 +27,7 @@ use App\Models\JobType;
 use App\Models\StudyTag;
 use App\Models\Subject;
 use App\Models\SubjectGroup;
+use App\Models\SubjectGroupTag;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Models\UserType;
@@ -5845,6 +5846,34 @@ if (!function_exists('check_teacher')) {
  * CURRÍCULUM
  */
 
+if (! function_exists('initialize_subject_group_tags')) {
+    function initialize_subject_group_tags()
+    {
+        SubjectGroupTag::firstOrCreate([
+            'value' => 'Normal',
+            'description' => 'Mòdul normal',
+            'color' => 'amber',
+        ]);
+
+        SubjectGroupTag::firstOrCreate([
+            'value' => 'FCT',
+            'description' => 'Mòdul Formació en Centres de Treball',
+            'color' => 'teal lighten-1',
+        ]);
+
+        SubjectGroupTag::firstOrCreate([
+            'value' => 'Síntesi',
+            'description' => 'Mòdul de síntesi o Projecte',
+            'color' => 'cyan lighten-1',
+        ]);
+
+        SubjectGroupTag::firstOrCreate([
+            'value' => 'Externa',
+            'description' => 'Mòdul transversal típus Anglès, FOL...',
+            'color' => 'pink lighten-1',
+        ]);
+    }
+}
 
 // SUBJECTS -> Unitat formatives
 
@@ -8930,6 +8959,7 @@ if (! function_exists('initialize_curriculum_module')) {
     function initialize_curriculum_module()
     {
         initialize_studies();
+        initialize_subject_group_tags();
     }
 }
 

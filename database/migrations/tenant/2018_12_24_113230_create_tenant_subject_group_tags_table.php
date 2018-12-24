@@ -29,7 +29,7 @@ class CreateTenantSubjectGroupTagsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('subject_group_id');
             $table->unsignedInteger('subject_group_tag_id');
-            $table->unique(['subject_group_id', 'subject_group_tag_id']);
+            $table->unique(['subject_group_id', 'subject_group_tag_id'],'tagged_subject_group');
             $table->timestamps();
         });
     }

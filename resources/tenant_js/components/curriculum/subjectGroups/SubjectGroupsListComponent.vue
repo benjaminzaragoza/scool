@@ -49,7 +49,35 @@
                                        <study-select v-model="selectedStudy"></study-select>
                                    </v-flex>
                                    <v-flex xs5>
-                                       TODO
+                                       <v-autocomplete
+                                               v-model="selectedTags"
+                                               :items="dataTags"
+                                               attach
+                                               chips
+                                               label="Etiquetes"
+                                               multiple
+                                               item-value="id"
+                                               item-text="value"
+                                       >
+                                            <template slot="selection" slot-scope="data">
+                                                <v-chip
+                                                        small
+                                                        label
+                                                        @input="data.parent.selectItem(data.item)"
+                                                        :selected="data.selected"
+                                                        class="chip--select-multi"
+                                                        :color="data.item.color"
+                                                        text-color="white"
+                                                        :key="JSON.stringify(data.item)"
+                                                ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
+                                            </template>
+                                            <template slot="item" slot-scope="data">
+                                                <v-checkbox v-model="data.tile.props.value"></v-checkbox>
+                                                <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
+                                                    <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
+                                                </v-chip>
+                                            </template>
+                                       </v-autocomplete>
                                    </v-flex>
                                </v-layout>
                           </v-flex>
@@ -153,7 +181,9 @@ export default {
       },
       filter: 'all',
       selectedStudy: null,
-      showDialog: false
+      showDialog: false,
+      selectedTags: [],
+      dataTags: this.tags
     }
   },
   computed: {
@@ -163,6 +193,11 @@ export default {
     filteredSubjectGroups () {
       let filteredByState = filters[this.filter](this.dataSubjectGroups)
       if (this.selectedStudy) filteredByState = filteredByState.filter(subjectGroup => { return subjectGroup.study_id === this.selectedStudy.id })
+      if (this.selectedTags.length > 0) {
+        filteredByState = filteredByState.filter(subjectGroup => {
+          return subjectGroup.tags.some(tag => this.selectedTags.includes(tag.id))
+        })
+      }
       return filteredByState
     },
     headers () {
