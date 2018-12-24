@@ -130,6 +130,7 @@ class SubjectGroupsControllerTest extends BaseTenantTest
     public function can_store_subjectGroups()
     {
         $this->withoutExceptionHandling();
+        initialize_subject_group_tags();
         $this->loginAsSuperAdmin('api');
 
         $dam = Study::firstOrCreate([
@@ -150,7 +151,8 @@ class SubjectGroupsControllerTest extends BaseTenantTest
             'free_hours' => 0,
             'week_hours' => 3,
             'start' => '2017-09-15',
-            'end' => '2018-06-01'
+            'end' => '2018-06-01',
+            'tags' => [1]
         ]);
         $response->assertSuccessful();
         $createdSubjectGroup = json_decode($response->getContent());
@@ -177,6 +179,13 @@ class SubjectGroupsControllerTest extends BaseTenantTest
         $this->assertNotNull($createdSubjectGroup->updated_at_timestamp);
         $this->assertNotNull($createdSubjectGroup->formatted_updated_at);
         $this->assertNotNull($createdSubjectGroup->formatted_updated_at_diff);
+
+        $this->assertNotNull($createdSubjectGroup->tags);
+        $this->assertCount(1,$createdSubjectGroup->tags);
+        $this->assertEquals('Normal',$createdSubjectGroup->tags[0]->value);
+        $this->assertEquals('Mòdul normal',$createdSubjectGroup->tags[0]->description);
+        $this->assertEquals('amber',$createdSubjectGroup->tags[0]->color);
+        $this->assertNull($createdSubjectGroup->tags[0]->icon);
 
         try {
             $subjectGroup = SubjectGroup::findOrFail($createdSubjectGroup->id);

@@ -105,6 +105,7 @@ class SubjectGroup extends Model
      */
     public function addTag($tag)
     {
+        $tag = is_object($tag) ? $tag : SubjectGroupTag::findOrFail($tag);
         $this->tags()->save($tag);
     }
 }

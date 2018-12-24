@@ -74,12 +74,38 @@
                 hint="Número d'hores setmanals del MP"
         ></v-text-field>
 
-        <subject-group-types
-                v-model="type"
-                :error-messages="typeErrors"
-                @input="$v.type.$touch()"
-                @blur="$v.type.$touch()"
-        ></subject-group-types>
+        <v-autocomplete
+                v-model="selectedTags"
+                :items="dataTags"
+                attach
+                chips
+                label="Etiquetes"
+                multiple
+                item-value="id"
+                item-text="value"
+                :error-messages="selectedTagsErrors"
+                @input="$v.selectedTags.$touch()"
+                @blur="$v.selectedTags.$touch()"
+        >
+            <template slot="selection" slot-scope="data">
+                <v-chip
+                        small
+                        label
+                        @input="data.parent.selectItem(data.item)"
+                        :selected="data.selected"
+                        class="chip--select-multi"
+                        :color="data.item.color"
+                        text-color="white"
+                        :key="JSON.stringify(data.item)"
+                ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
+            </template>
+            <template slot="item" slot-scope="data">
+                <v-checkbox v-model="data.tile.props.value"></v-checkbox>
+                <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
+                    <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
+                </v-chip>
+            </template>
+        </v-autocomplete>
 
         <v-menu
                 :close-on-content-click="false"
@@ -150,7 +176,6 @@
 import StudySelect from '../studies/StudySelect'
 import SubjectGroupCode from './SubjectGroupCode'
 import SubjectGroupNumber from './SubjectGroupNumber'
-import SubjectGroupTypes from './SubjectGroupTypes'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 import * as actions from '../../../store/action-types'
@@ -165,13 +190,12 @@ export default {
     name: { required },
     shortname: { required },
     hours: { required, numeric },
-    type: { required }
+    selectedTags: { required }
   },
   components: {
     'study-select': StudySelect,
     'subject-group-number': SubjectGroupNumber,
     'subject-group-code': SubjectGroupCode,
-    'subject-group-types': SubjectGroupTypes,
     'study-subject-groups-code-list': StudySubjectGroupsCodeList
   },
   data () {
@@ -188,7 +212,8 @@ export default {
       startMenu: false,
       end: null,
       endMenu: false,
-      adding: false
+      adding: false,
+      selectedTags: []
     }
   },
   props: {
@@ -211,6 +236,15 @@ export default {
     }
   },
   computed: {
+    dataTags () {
+      return this.$store.getters.subjectGroupTags
+    },
+    selectedTagsErrors () {
+      const errors = []
+      if (!this.$v.selectedTags.$dirty) return errors
+      !this.$v.selectedTags.required && errors.push('És obligatori indicar almenys una etiqueta.')
+      return errors
+    },
     dataStudyErrors () {
       const errors = []
       if (!this.$v.dataStudy.$dirty) return errors
@@ -309,13 +343,15 @@ export default {
       if (!this.$v.$invalid) {
         this.adding = true
         this.$store.dispatch(actions.ADD_SUBJECT_GROUP, {
+          number: this.number,
           name: this.name,
           shortname: this.shortname,
           code: this.code,
-          number: this.number,
-          study_id: this.dataCourse.id,
-          course_id: this.dataCourse.id,
+          study_id: this.dataStudy.id,
           hours: this.hours,
+          free_hours: this.free_hours,
+          week_hours: this.week_hours,
+          tags: this.selectedTags,
           start: this.start,
           end: this.end
         }).then(response => {

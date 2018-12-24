@@ -14,9 +14,9 @@ export default {
       'hours': subjectGroup.hours,
       'free_hours': subjectGroup.free_hours,
       'week_hours': subjectGroup.week_hours,
-      'type': subjectGroup.type,
+      'tags': subjectGroup.tags,
       'start': subjectGroup.start,
       'end': subjectGroup.end
     })
-  },
+  }
 }

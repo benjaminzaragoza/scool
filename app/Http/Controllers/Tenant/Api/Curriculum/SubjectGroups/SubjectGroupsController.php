@@ -49,6 +49,11 @@ class SubjectGroupsController extends Controller
             'start' => $request->start,
             'end' => $request->end
         ]);
+        if ($request->tags) {
+            foreach ($request->tags as $tag) {
+                $subjectGroup->addTag($tag);
+            }
+        }
         event(new SubjectGroupStored($subjectGroup));
         return $subjectGroup->map();
     }
