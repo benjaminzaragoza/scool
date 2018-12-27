@@ -3,6 +3,7 @@
 namespace Tests\Unit\Tenants\Curriculum;
 
 
+use App\Models\Subject;
 use App\Models\SubjectGroupTag;
 use App\Models\User;
 use App\Models\SubjectGroup;
@@ -137,6 +138,24 @@ class SubjectGroupTest extends TestCase
         $this->assertEquals('Tag 3 bla bla bla',$mappedSubjectGroup['tags'][2]['description']);
         $this->assertEquals('#333423',$mappedSubjectGroup['tags'][2]['color']);
 
+        // SUBJECTS
+        $subject = Subject::firstOrCreate([
+            'name' => 'Circuit administratiu de la compravenda',
+            'shortname'=> 'Circuit administratiu de la compravenda',
+            'code' =>  'GAD_MP2_UF1',
+            'number' => 1,
+            'hours' => 77
+        ]);
+        $subjectGroup->addSubject($subject);
+
+        $subjectGroup= $subjectGroup->fresh();
+        $mappedSubjectGroup = $subjectGroup->map();
+        $this->assertCount(1, $mappedSubjectGroup['subjects']);
+        $this->assertEquals('Circuit administratiu de la compravenda',$mappedSubjectGroup['subjects'][0]['name']);
+        $this->assertEquals('Circuit administratiu de la compravenda',$mappedSubjectGroup['subjects'][0]['shortname']);
+        $this->assertEquals('GAD_MP2_UF1',$mappedSubjectGroup['subjects'][0]['code']);
+        $this->assertEquals(1,$mappedSubjectGroup['subjects'][0]['number']);
+        $this->assertEquals(77,$mappedSubjectGroup['subjects'][0]['hours']);
     }
 
     /**
@@ -156,5 +175,26 @@ class SubjectGroupTest extends TestCase
         $subjectGroup = $subjectGroup->fresh();
         $this->assertCount(1,$subjectGroup->tags);
         $this->assertTrue($subjectGroup->tags[0]->is($tag));
+    }
+
+    /**
+     * @test
+     */
+    public function addSubject()
+    {
+        $subjectGroup = create_sample_subject_group();
+
+        $subject = Subject::firstOrCreate([
+            'name' => 'Circuit administratiu de la compravenda',
+            'shortname'=> 'Circuit administratiu de la compravenda',
+            'code' =>  'GAD_MP2_UF1',
+            'number' => 1,
+            'hours' => 77
+        ]);
+        $this->assertCount(0,$subjectGroup->subjects);
+        $subjectGroup->addSubject($subject);
+        $subjectGroup = $subjectGroup->fresh();
+        $this->assertCount(1,$subjectGroup->subjects);
+        $this->assertTrue($subjectGroup->subjects[0]->is($subject));
     }
 }

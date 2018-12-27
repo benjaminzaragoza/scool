@@ -99,6 +99,9 @@ class Subject extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function mapSimple()
     {
         return [

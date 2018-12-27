@@ -37,6 +37,14 @@ class SubjectGroup extends Model
     }
 
     /**
+     * Get the subjects for the subjectGroup.
+     */
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
+
+    /**
      * week lessons.
      */
     public function week_lessons()
@@ -76,7 +84,9 @@ class SubjectGroup extends Model
             'study_code' => optional($this->study)->code,
             'full_search' => $this->full_search,
 
-            'tags' => map_collection($this->tags)
+            'tags' => map_collection($this->tags),
+
+            'subjects' => map_simple_collection($this->subjects)
         ];
     }
 
@@ -107,5 +117,16 @@ class SubjectGroup extends Model
     {
         $tag = is_object($tag) ? $tag : SubjectGroupTag::findOrFail($tag);
         $this->tags()->save($tag);
+    }
+
+    /**
+     * Add subject.
+     *
+     * @param $subject
+     */
+    public function addSubject($subject)
+    {
+        $subject = is_object($subject) ? $subject : Subject::findOrFail($subject);
+        $this->subjects()->save($subject);
     }
 }
