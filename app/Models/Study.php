@@ -133,6 +133,31 @@ class Study extends Model
     }
 
     /**
+     * @return array
+     */
+    public function map_simple()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'shortname' => $this->shortname,
+            'code' => $this->code,
+            'subjects_number' => $this->subjects_number,
+            'subject_groups_number' => $this->subject_groups_number,
+            'api_uri' => $this->api_uri,
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'full_search' => $this->full_search
+        ];
+    }
+
+    /**
      * full_search accessor.
      *
      * @return string

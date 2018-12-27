@@ -79,7 +79,8 @@ class Family extends Revisionable
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
-            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'studies' => map_collection($this->studies)
         ];
     }
 }

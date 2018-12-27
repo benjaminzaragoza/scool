@@ -8606,6 +8606,15 @@ if (! function_exists('map_collection')) {
     }
 }
 
+if (! function_exists('map_collection')) {
+    function map_simple_collection($collection)
+    {
+        return $collection->map(function($item) {
+            return $item->mapSimple();
+        });
+    }
+}
+
 if (! function_exists('initialize_incidents_module')) {
     function initialize_incidents_module()
     {

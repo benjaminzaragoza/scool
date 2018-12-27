@@ -81,7 +81,7 @@ export default {
     }
   },
   created () {
-    this.isEmailVerified = window.user.email_verified_at
+    this.isEmailVerified = window.user && window.user.email_verified_at
   }
 }
 </script>

@@ -2,6 +2,14 @@
 - [ ] Changelogs
  - [ ] A tots els models (studies, ufs, mps)
 
+Vistes públiques:
+- [X] Mòdul/plugin Javascript de permissions funciona amb pàgines públiqes?
+  - [X] Sí sempre i quan tingui la info de hader com window.user
+  - [ ] Evitar warning de console i/o errors window.user is null
+- [ ] Mostrar més info als usuaris Curriculum Manager
+  - [ ] Warnings:
+    - [ ] Família/es sense estudis
+
 Shows:
  - [ ] Falten els shows de tots els mòdels
    - [ ] Indirectament un cop van el shows es pot fer anar la navegació (links per mostrar la info d'un model específic) 

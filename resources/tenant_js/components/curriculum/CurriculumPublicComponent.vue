@@ -1,6 +1,14 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12>
+            <v-card v-role="'CurriculumManager'">
+                <v-card-text>
+                    HOLA Manager!!!
+                    <ul>
+                        <li>TODO LIST OF WARNINGS</li>
+                    </ul>
+                </v-card-text>
+            </v-card>
             <v-card>
                 <v-card-text>
                     <h1 class="title grey--text text--darken-3">Cicles per famílies professionals</h1>
@@ -21,7 +29,13 @@
                                 v-for="(family,i) in families"
                                 :key="i"
                         >
-                            <div slot="header" v-text="family.name"></div>
+                            <div slot="header">
+                                {{family.name}}
+                                <template v-if="$hasRole('CurriculumManager')">
+                                    <v-icon v-if="!family.studies" title="Aquesta família no té cap estudi assignat" color="red">notification_important</v-icon>
+                                    <v-icon v-if="family.studies && family.studies.length === 0" title="Aquesta família no té cap estudi assignat" color="red">notification_important</v-icon>
+                                </template>
+                            </div>
                             <v-card v-for="study in family.studies" :key="study.id">
                                 <v-card-text v-text="study.name"></v-card-text>
                             </v-card>

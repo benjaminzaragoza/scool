@@ -315,4 +315,43 @@ class StudyTest extends TestCase
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma Des. Aplicacions Multiplataforma DAM',$mappedStudy['full_search']);
 
     }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function mapSimple()
+    {
+
+        $study = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+            'subjects_number' => 14,
+            'subject_groups_number' => 33
+        ]);
+
+        $mappedStudy = $study->map_simple();
+
+        $this->assertSame(1,$mappedStudy['id']);
+        $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
+        $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
+        $this->assertEquals('DAM',$mappedStudy['code']);
+        $this->assertEquals(14,$mappedStudy['subjects_number']);
+        $this->assertEquals(33,$mappedStudy['subject_groups_number']);
+
+        $this->assertEquals('studies',$mappedStudy['api_uri']);
+
+        $this->assertNotNull($mappedStudy['created_at']);
+        $this->assertNotNull($mappedStudy['updated_at']);
+        $this->assertNotNull($mappedStudy['created_at_timestamp']);
+        $this->assertNotNull($mappedStudy['updated_at_timestamp']);
+        $this->assertNotNull($mappedStudy['formatted_created_at']);
+        $this->assertNotNull($mappedStudy['formatted_updated_at']);
+        $this->assertNotNull($mappedStudy['formatted_created_at_diff']);
+        $this->assertNotNull($mappedStudy['formatted_updated_at_diff']);
+
+        $this->assertEquals('Desenvolupament Aplicacions Multiplataforma Des. Aplicacions Multiplataforma DAM',$mappedStudy['full_search']);
+
+    }
 }

@@ -39,6 +39,18 @@ class FamilyTest extends TestCase
         $this->app[Kernel::class]->setArtisan(null);
     }
 
+    /** @test */
+    public function find_specialty_by_code()
+    {
+        $this->assertNull(Family::findByCode('INF'));
+        $family = Family::firstOrCreate([
+            'code' => 'INF',
+            'name' => 'Informàtica'
+        ]);
+
+        $this->assertTrue($family->is(Family::findByCode('INF')));
+    }
+
     /**
      * @test
      * @group curriculum
@@ -74,6 +86,12 @@ class FamilyTest extends TestCase
             'name' => 'Informàtica',
             'code' => 'INF'
         ]);
+        $dam = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Apps Multiplataforma',
+            'code' => 'DAM'
+        ]);
+        $informatica->addStudy($dam);
 
         $mappedFamily = $informatica->map();
 
@@ -90,5 +108,7 @@ class FamilyTest extends TestCase
         $this->assertNotNull($mappedFamily['formatted_created_at_diff']);
         $this->assertNotNull($mappedFamily['formatted_updated_at_diff']);
         $this->assertEquals('families',$mappedFamily['api_uri']);
+        $this->assertCount(1,$mappedFamily['studies']);
+        $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedFamily['studies'][0]['name']);
     }
 }
