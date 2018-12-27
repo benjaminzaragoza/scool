@@ -11,6 +11,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\TaggedStudiesController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsTagsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupSubjectsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\TaggedSubjectGroupsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
@@ -320,6 +321,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Tagged subject groups
             Route::post('/subjectGroups/{subjectGroup}/tags/{tag}','\\' . TaggedSubjectGroupsController::class . '@store');
             Route::delete('/subjectGroups/{subjectGroup}/tags/{tag}', '\\' . TaggedSubjectGroupsController::class . '@destroy');
+
+            Route::put('/subject_groups/{subjectGroup}/subjects_number','\\' . SubjectGroupSubjectsNumberController::class . '@update');
 
         });
 

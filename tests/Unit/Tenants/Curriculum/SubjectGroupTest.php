@@ -82,6 +82,7 @@ class SubjectGroupTest extends TestCase
         $this->assertSame(7,$mappedSubjectGroup['number']);
         $this->assertSame(99,$mappedSubjectGroup['hours']);
         $this->assertSame(99,$mappedSubjectGroup['free_hours']);
+        $this->assertSame(3,$mappedSubjectGroup['subjects_number']);
         $this->assertSame(99,$mappedSubjectGroup['week_hours']);
         $this->assertSame('2017-09-15',$mappedSubjectGroup['start']);
         $this->assertSame('2018-06-01',$mappedSubjectGroup['end']);
@@ -151,8 +152,8 @@ class SubjectGroupTest extends TestCase
         $subjectGroup= $subjectGroup->fresh();
         $mappedSubjectGroup = $subjectGroup->map();
         $this->assertCount(1, $mappedSubjectGroup['subjects']);
-        $this->assertEquals('Circuit administratiu de la compravenda',$mappedSubjectGroup['subjects'][0]['name']);
-        $this->assertEquals('Circuit administratiu de la compravenda',$mappedSubjectGroup['subjects'][0]['shortname']);
+        $this->assertEquals('Circuit administratiu de la compravenda', $mappedSubjectGroup['subjects'][0]['name']);
+        $this->assertEquals('Circuit administratiu de la compravenda', $mappedSubjectGroup['subjects'][0]['shortname']);
         $this->assertEquals('GAD_MP2_UF1',$mappedSubjectGroup['subjects'][0]['code']);
         $this->assertEquals(1,$mappedSubjectGroup['subjects'][0]['number']);
         $this->assertEquals(77,$mappedSubjectGroup['subjects'][0]['hours']);

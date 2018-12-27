@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 use App\Events\Studies\StudySubjectGroupsNumberUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Curriculum\Studies\StudySubjectGroupsNumberUpdate;
-use App\Models\Incident;
 use App\Models\Study;
 
 /**
@@ -20,8 +19,8 @@ class StudiesSubjectGroupsNumberController extends Controller
      *
      * @param StudySubjectGroupsNumberUpdate $request
      * @param $tenant
-     * @param Incident $incident
-     * @return Incident
+     * @param Study $study
+     * @return array
      */
     public function update(StudySubjectGroupsNumberUpdate $request, $tenant, Study $study)
     {

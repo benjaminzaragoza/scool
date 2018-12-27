@@ -66,6 +66,7 @@ class SubjectGroup extends Model
             'week_hours' => (int) $this->hours,
             'start' => $this->start,
             'end' => $this->end,
+            'subjects_number' => $this->subjects_number,
 
             'api_uri' => $this->api_uri,
 

@@ -27,6 +27,7 @@ class CreateTenantSubjectGroupsTable extends Migration
             $table->unsignedInteger('free_hours')->nullable();
             $table->unsignedInteger('week_hours')->nullable();
             $table->unsignedTinyInteger('number')->nullable();
+            $table->unsignedTinyInteger('subjects_number')->nullable();
             $table->dateTime('start')->nullable();
             $table->dateTime('end')->nullable();
             $table->timestamps();

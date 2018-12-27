@@ -8134,7 +8134,8 @@ if (!function_exists('create_sample_subject_group')) {
             'free_hours' => 0, // Lliure disposició
             'week_hours' => 3,
             'start' => '2017-09-15',
-            'end' => '2018-06-01'
+            'end' => '2018-06-01',
+            'subjects_number' => 3
         ]);
     }
 }
