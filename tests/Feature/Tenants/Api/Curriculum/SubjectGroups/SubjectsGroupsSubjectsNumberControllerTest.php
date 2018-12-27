@@ -133,7 +133,7 @@ class SubjectsGroupsSubjectsNumberControllerTest extends BaseTenantTest {
         ]);
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
-        $this->assertEquals('El nombre total de UFs és superior al nombre de UFs ja assignades al MP',$result->message);
+        $this->assertEquals('El nombre total de UFs és inferior al nombre de UFs ja assignades al MP',$result->message);
     }
 
     /**

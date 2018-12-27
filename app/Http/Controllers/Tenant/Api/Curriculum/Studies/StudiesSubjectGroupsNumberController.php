@@ -39,6 +39,6 @@ class StudiesSubjectGroupsNumberController extends Controller
      */
     protected function validateSubjectGroupsNumber($study, $number)
     {
-        if($number < count($study->subjectGroups)) abort(422,'El nombre total de MPS és superior al nombre de MPs ja assignades al estudi');
+        if($number < count($study->subjectGroups)) abort(422,'El nombre total de MPS és inferior al nombre de MPs ja assignades al estudi');
     }
 }

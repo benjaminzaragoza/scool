@@ -38,6 +38,6 @@ class SubjectGroupSubjectsNumberController extends Controller
      */
     protected function validateSubjectGroupsNumber($subjectGroup, $number)
     {
-        if($number < count($subjectGroup->subjects)) abort(422,'El nombre total de UFs és superior al nombre de UFs ja assignades al MP');
+        if($number < count($subjectGroup->subjects)) abort(422,'El nombre total de UFs és inferior al nombre de UFs ja assignades al MP');
     }
 }

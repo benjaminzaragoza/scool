@@ -143,7 +143,7 @@ class StudiesSubjectGroupsNumberControllerTest extends BaseTenantTest {
         ]);
         $response->assertStatus(422);
         $result = json_decode($response->getContent());
-        $this->assertEquals('El nombre total de MPS és superior al nombre de MPs ja assignades al estudi',$result->message);
+        $this->assertEquals('El nombre total de MPS és inferior al nombre de MPs ja assignades al estudi',$result->message);
     }
 
     /**
