@@ -135,7 +135,7 @@ class Study extends Model
     /**
      * @return array
      */
-    public function map_simple()
+    public function mapSimple()
     {
         return [
             'id' => $this->id,

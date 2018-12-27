@@ -5966,6 +5966,9 @@ if (!function_exists('initialize_subjects')) {
             'code' => 'GAD',
         ]);
 
+        $family = Family::findByCode('COMERÇ');
+        $family->addStudy($study);
+
         $course1 = Course::firstOrCreate([
             'code' => '1GAD',
             'name' => '1r de Gestió administrativa',
@@ -8606,7 +8609,7 @@ if (! function_exists('map_collection')) {
     }
 }
 
-if (! function_exists('map_collection')) {
+if (! function_exists('map_simple_collection')) {
     function map_simple_collection($collection)
     {
         return $collection->map(function($item) {

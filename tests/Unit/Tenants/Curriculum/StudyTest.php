@@ -331,7 +331,7 @@ class StudyTest extends TestCase
             'subject_groups_number' => 33
         ]);
 
-        $mappedStudy = $study->map_simple();
+        $mappedStudy = $study->mapSimple();
 
         $this->assertSame(1,$mappedStudy['id']);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);

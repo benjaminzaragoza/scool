@@ -30,14 +30,16 @@
                                 :key="i"
                         >
                             <div slot="header">
-                                {{family.name}}
+                                <span class="subheading grey--text text--darken-2">{{family.name}}</span>
                                 <template v-if="$hasRole('CurriculumManager')">
                                     <v-icon v-if="!family.studies" title="Aquesta família no té cap estudi assignat" color="red">notification_important</v-icon>
                                     <v-icon v-if="family.studies && family.studies.length === 0" title="Aquesta família no té cap estudi assignat" color="red">notification_important</v-icon>
                                 </template>
                             </div>
-                            <v-card v-for="study in family.studies" :key="study.id">
-                                <v-card-text v-text="study.name"></v-card-text>
+                            <v-card v-for="study in family.studies" :key="study.id" class="mt-0">
+                                <v-card-text class="ml-4 pt-0">
+                                    <a href="#" class="body-2 cyan--text text--darken-3">{{ study.name }}</a>
+                                </v-card-text>
                             </v-card>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
