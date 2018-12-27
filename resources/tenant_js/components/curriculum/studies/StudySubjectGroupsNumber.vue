@@ -1,6 +1,11 @@
 <template>
     <span>
-        Número MPs de l'estudi:
+        Número MPs: {{ numberOfSubjectGroups || '-' }}
+        <v-icon v-if="alert" color="error"
+                title="Atenció. El nombre màxim de MPs de l'estudi que heu indicat és inferior al número de MPs de l'estudi. Si us plau modifiqueu el valor">
+            notification_important
+        </v-icon>
+        Màxim MPs:
         <template v-if="dataStudy">
             <span v-if="editing">
                 <v-layout row wrap align-center justify-center fill-height>
@@ -20,12 +25,12 @@
                     </v-flex>
                 </v-layout>
             </span>
-            <span v-else @dblclick="editing = true">{{ subjectGroupsNumber }}</span>
+            <span v-else @dblclick="startEdit">{{ subjectGroupsNumber || '-' }}</span>
             <span v-if="editing">
                 <v-icon color="success" @click="edit">check</v-icon>
-                <v-icon color="error" @click="editing = false">cancel</v-icon>
+                <v-icon color="error" @click="cancelEdit">cancel</v-icon>
             </span>
-            <v-icon v-else small color="success" @click="editing = true">edit</v-icon>
+            <v-icon v-else small color="success" @click="startEdit">edit</v-icon>
         </template>
     </span>
 </template>
@@ -33,7 +38,6 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
-import * as actions from '../../../store/action-types'
 export default {
   name: 'StudySubjectGroupsNumber',
   mixins: [validationMixin],
@@ -45,10 +49,19 @@ export default {
       dataStudy: this.study,
       editing: false,
       submitting: false,
-      subjectGroupsNumber: null
+      subjectGroupsNumber: null,
+      oldSubjectGroupsNumber: null
     }
   },
   methods: {
+    startEdit () {
+      this.editing = true
+      this.oldSubjectGroupsNumber = this.subjectGroupsNumber
+    },
+    cancelEdit() {
+      this.editing = false
+      this.subjectGroupsNumber = this.oldSubjectGroupsNumber
+    },
     edit () {
       if (!this.$v.$invalid && this.dataStudy) {
         this.submitting = true
@@ -70,9 +83,21 @@ export default {
     study (study) {
       this.dataStudy = study
       this.subjectGroupsNumber = this.dataStudy && (this.dataStudy.subject_groups_number || 0)
+    },
+    alert (alert) {
+      if (alert) this.$snackbar.showError("Atenció. El nombre màxim de MPs de l'estudi que heu indicat és inferior al número de MPs de l'estudi. Si us plau modifiqueu el valor")
     }
   },
   computed: {
+    numberOfSubjectGroups () {
+      if (this.dataStudy && this.dataStudy.subjectGroups) return this.dataStudy.subjectGroups.length || 0
+    },
+    alert () {
+      if (this.subjectGroupsNumber && this.dataStudy && this.dataStudy.subjectGroups) {
+        if (this.dataStudy.subjectGroups.length > this.subjectGroupsNumber) return true
+      }
+      return false
+    },
     subjectGroupsNumberErrors () {
       const errors = []
       if (!this.$v.subjectGroupsNumber.$dirty) return errors

@@ -1,7 +1,10 @@
 <template>
     <span>
         <v-progress-circular indeterminate color="primary" v-if="removing"></v-progress-circular>
-        <v-chip small v-model="subjectGroup.close" v-for="subjectGroup in subjectGroups" :key="subjectGroup.id" label close @input="remove(subjectGroup)">{{subjectGroup.code}} ({{subjectGroup.number}})</v-chip>
+        <v-chip v-model="subjectGroup.close" v-for="subjectGroup in subjectGroups" :key="subjectGroup.id"
+                small label close
+                :title="subjectGroup.name"
+                @input="remove(subjectGroup)">{{subjectGroup.code}} ({{subjectGroup.number}})</v-chip>
     </span>
 </template>
 <script>
@@ -21,6 +24,11 @@ export default {
       required: true
     }
   },
+  watch: {
+    study (study) {
+      this.subjectGroups = study.subjectGroups
+    }
+  },
   methods: {
     async remove (subjectGroup) {
       let res = await this.$confirm('Els mòduls professionals esborrats no es poden recuperar.', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
@@ -34,10 +42,7 @@ export default {
           this.$snackbar.showError(error)
           this.removing = false
         })
-      } else {
-        console.log('ELSE')
-        subjectGroup.close = true
-      }
+      } else subjectGroup.close = true
     }
   }
 }

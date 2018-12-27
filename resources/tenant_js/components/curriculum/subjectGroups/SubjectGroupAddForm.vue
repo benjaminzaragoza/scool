@@ -19,6 +19,7 @@
                 v-model="number"
                 @input="$v.number.$touch()"
                 @blur="$v.number.$touch()"
+                @recalculate="updatedNumber"
                 :error-messages="numberErrors"
                 :study="dataStudy"
         ></subject-group-number>
@@ -304,7 +305,12 @@ export default {
   },
   methods: {
     updateStudies () {
-      this.$store.dispatch(actions.SET_STUDIES)
+      this.$store.dispatch(actions.SET_STUDIES).then(() => {
+        this.updateStudy()
+      })
+    },
+    updateStudy () {
+      this.dataStudy = this.studies.find(study => { return study.id === this.dataStudy.id })
     },
     updatedNumber () {
       this.number = this.calculateNextNumber(this.dataStudy)
@@ -318,7 +324,7 @@ export default {
     calculateNextNumber (dataStudy) {
       if (dataStudy.subject_groups_number) {
         var i
-        for (i = 1; i < dataStudy.subject_groups_number; i++) {
+        for (i = 1; i <= dataStudy.subject_groups_number; i++) {
           if (this.dataStudy.subjectGroups.find(subjectGroup => { return subjectGroup.number === i })) continue
           return i
         }

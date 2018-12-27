@@ -24,8 +24,7 @@ class CurriculumController extends Controller
      */
     public function index(CurriculumIndex $request)
     {
-
-        $studies = map_collection(Study::all());
+        $studies = map_collection(Study::with('family','department','tags','subjectGroups','subjectGroups.study','subjectGroups.tags')->get());
         $departments = map_collection(Department::all());
         $families = map_collection(Family::all());
         $tags = map_collection(StudyTag::all());

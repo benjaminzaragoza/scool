@@ -26,11 +26,10 @@ class CurriculumSubjectsController extends Controller
      */
     public function index(SubjectIndex $request)
     {
-
         $subjects = map_collection(Subject::with('study','course','subject_group')->get());
-        $studies = map_collection(Study::with('family','department','tags')->get());
-        $subject_groups = map_collection(SubjectGroup::with('study')->get());
-        $courses = map_collection(Course::all());
+        $studies = map_collection(Study::with('family','department','tags','subjectGroups','subjectGroups.study','subjectGroups.tags')->get());
+        $subject_groups = map_collection(SubjectGroup::with('study','tags')->get());
+        $courses = map_collection(Course::with('study')->get());
         $departments = map_collection(Department::all());
         $families = map_collection(Family::all());
         return view('tenants.curriculum.subjects.index',

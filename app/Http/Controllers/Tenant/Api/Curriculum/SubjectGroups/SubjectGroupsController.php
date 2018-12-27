@@ -25,7 +25,7 @@ class SubjectGroupsController extends Controller
      */
     public function index(SubjectGroupsIndex $request)
     {
-        return map_collection(SubjectGroup::all());
+        return map_collection((SubjectGroup::with('study','tags')->get()));
     }
 
     /**

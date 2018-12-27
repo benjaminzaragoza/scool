@@ -1,5 +1,7 @@
 <template>
     <v-text-field
+            append-icon="refresh"
+            @click:append="recalculateNumber"
             autofocus
             v-model="dataNumber"
             name="number"
@@ -41,6 +43,9 @@ export default {
     },
     blur () {
       this.$emit('blur', this.dataNumber)
+    },
+    recalculateNumber () {
+      this.$emit('recalculate')
     }
   }
 }

@@ -45,9 +45,9 @@ Afegir MPS
   - [ ] ???  
 Rendiment:
 - [X] Solucionar 436 consultes a la web de llista UFS
- - [ ] 250 queries
-- [ ] Llista estudis 184 queries
-- [ ] 234 queries a MPs
+ - [X] 250 queries
+- [X] Llista estudis 184 queries
+- [X] 234 queries a MPs
 
 # NPM RUN PRODUCTION
 

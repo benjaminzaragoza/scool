@@ -27,9 +27,9 @@ class CurriculumSubjectGroupsController extends Controller
      */
     public function index(SubjectGroupsIndex $request)
     {
-        $subjectGroups = map_collection(SubjectGroup::with('study')->get());
+        $subjectGroups = map_collection(SubjectGroup::with('study','tags')->get());
         $subjectGroupTags = map_collection(SubjectGroupTag::all());
-        $studies = map_collection(Study::with('family','department','tags')->get());
+        $studies = map_collection(Study::with('family','department','tags','subjectGroups','subjectGroups.study','subjectGroups.tags')->get());
         $departments = map_collection(Department::all());
         $families = map_collection(Family::all());
         return view('tenants.curriculum.subjectGroups.index',
