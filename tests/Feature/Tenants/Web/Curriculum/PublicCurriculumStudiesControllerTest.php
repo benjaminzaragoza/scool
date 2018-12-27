@@ -46,7 +46,6 @@ class PublicCurriculumStudiesControllerTest extends BaseTenantTest
      */
     public function show_public_curriculum_studies_module()
     {
-        $this->withoutExceptionHandling();
         $study = create_sample_study();
 
         $response = $this->get('/public/curriculum/studies/' . $study->slug);

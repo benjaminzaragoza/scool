@@ -116,4 +116,43 @@ class SubjectTest extends TestCase
         $this->assertNotNull($mappedSubject['formatted_updated_at_diff']);
 
     }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function mapSimple()
+    {
+        $subject = Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Interfícies',
+            'code' =>  'DAM_MP7_UF1',
+            'number' => 1,
+            'hours' => 79,
+            'start' => '2017-09-15',
+            'end' => '2018-05-15'
+        ]);
+
+        $mappedSubject = $subject->mapSimple();
+
+        $this->assertSame(1,$mappedSubject['id']);
+        $this->assertEquals("Disseny i implementació d’interfícies",$mappedSubject['name']);
+        $this->assertEquals('Interfícies',$mappedSubject['shortname']);
+        $this->assertEquals('DAM_MP7_UF1',$mappedSubject['code']);
+        $this->assertSame(1,$mappedSubject['number']);
+        $this->assertSame(79,$mappedSubject['hours']);
+        $this->assertSame('2017-09-15',$mappedSubject['start']);
+        $this->assertSame('2018-05-15',$mappedSubject['end']);
+        $this->assertEquals('subjects',$mappedSubject['api_uri']);
+
+        $this->assertNotNull($mappedSubject['created_at']);
+        $this->assertNotNull($mappedSubject['updated_at']);
+        $this->assertNotNull($mappedSubject['created_at_timestamp']);
+        $this->assertNotNull($mappedSubject['updated_at_timestamp']);
+        $this->assertNotNull($mappedSubject['formatted_created_at']);
+        $this->assertNotNull($mappedSubject['formatted_updated_at']);
+        $this->assertNotNull($mappedSubject['formatted_created_at_diff']);
+        $this->assertNotNull($mappedSubject['formatted_updated_at_diff']);
+
+    }
 }

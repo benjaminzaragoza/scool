@@ -99,4 +99,28 @@ class Subject extends Model
         ];
     }
 
+    public function mapSimple()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'shortname' => $this->shortname,
+            'code' => $this->code,
+            'number' => (int) $this->number,
+            'hours' => (int) $this->hours,
+            'start' => $this->start,
+            'end' => $this->end,
+
+            'api_uri' => $this->api_uri,
+
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+        ];
+    }
 }

@@ -13,6 +13,10 @@
                 @input="$v.dataSubjectGroup.$touch()"
                 @blur="$v.dataSubjectGroup.$touch()"
         ></subject-group-select>
+        UFS existents: <subject-group-subjects-list v-if="dataSubjectGroup" :subject-group="dataSubjectGroup" @removed="updateSubjectGroups"></subject-group-subjects-list>
+        <span v-else>Cap</span>
+        <br/>
+        <subject-group-subjects-number :subject-group="dataSubjectGroup" @modified="updateSubjectGroups"></subject-group-subjects-number>
         <courses-select
                 v-model="dataCourse"
                 :courses="courses"
@@ -144,7 +148,8 @@ import SubjectNumber from './SubjectNumber'
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
 import * as actions from '../../../store/action-types'
-
+import SubjectGroupSubjectsList from '../subjectGroups/SubjectGroupSubjectsList'
+import SubjectGroupSubjectsNumber from '../subjectGroups/SubjectGroupSubjectsNumber'
 export default {
   name: 'SubjectAddForm',
   mixins: [validationMixin],
@@ -163,7 +168,9 @@ export default {
     'subject-group-select': SubjectGroupSelect,
     'courses-select': CoursesSelect,
     'subject-number': SubjectNumber,
-    'subject-code': SubjectCode
+    'subject-code': SubjectCode,
+    'subject-group-subjects-list': SubjectGroupSubjectsList,
+    'subject-group-subjects-number': SubjectGroupSubjectsNumber
   },
   data () {
     return {
@@ -266,6 +273,9 @@ export default {
     }
   },
   methods: {
+    updateSubjectGroups () {
+      console.log('TODO updateSubjectGroups')
+    },
     partialReset () {
       this.number = parseInt(this.number) + 1
       this.name = ''

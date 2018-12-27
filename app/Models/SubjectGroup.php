@@ -37,7 +37,7 @@ class SubjectGroup extends Model
     }
 
     /**
-     * Get the comments for the blog post.
+     * week lessons.
      */
     public function week_lessons()
     {
