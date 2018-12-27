@@ -21,7 +21,7 @@ class LayoutComposer
      */
     public function compose(View $view)
     {
-        if (Auth::user()->isSuperAdmin()) {
+        if (Auth::user() && Auth::user()->isSuperAdmin()) {
             $view->with('users', User::all()->filter(function($user) {
                 return $user->canBeImpersonated();
             })->values());

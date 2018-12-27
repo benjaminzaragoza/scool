@@ -17,6 +17,7 @@ use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
+use App\Http\Controllers\Tenant\Web\PublicCurriculumController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Models\Module;
 use App\Models\User;
@@ -104,6 +105,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         // Jobs Sheet
         Route::get('/jobs/sheet_active_users','Tenant\JobsSheetController@show');
         Route::get('/jobs/sheet_holders','Tenant\JobsSheetController@showHolders');
+
+        // Public curriculum
+        Route::get('/public/curriculum','\\' . PublicCurriculumController::class . '@index');
 
         Route::group(['middleware' => 'auth'], function () {
 

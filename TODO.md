@@ -10,6 +10,11 @@ Edits:
  - [ ] Quins casos cal? La majoria d'edits són parcials i es poden fer a altres vistes...
 
 Selects:
+- [ ] Afegir icona append per refrescar elements a un select:
+  -  [ ] Tots els selects està pendent
+- [ ] Afegir icona prepend per afegir element a un select:
+  - [ ] Deparment Select
+  - [ ] Family Select
 - [ ] Als selects que tenen opció afegir un item al select (estudis select) fer que si s'afegeix un nou estudi passi a ser el seleccionat
   - [X] StudySelect
   - [ ] Altres selects
@@ -998,8 +1003,10 @@ Afegir Subject/UF:
    
 Crear Estudi:
 - Camps pendents:
-- Número de mòduls (13)
-- [ ] Dual?
+- [X] Número de mòduls (13)
+- [ ] Dual sí/no?
+- [ ] Imatge a mostrar a la llista pública
+- [ ] Link al tríptic
  
 ## Vistes públiques:
 
