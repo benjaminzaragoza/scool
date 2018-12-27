@@ -246,6 +246,7 @@ class StudyTest extends TestCase
 
         $this->assertSame(1,$mappedStudy['id']);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
+        $this->assertEquals('desenvolupament-aplicacions-multiplataforma',$mappedStudy['slug']);
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);
         $this->assertEquals(14,$mappedStudy['subjects_number']);
@@ -335,6 +336,7 @@ class StudyTest extends TestCase
 
         $this->assertSame(1,$mappedStudy['id']);
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma',$mappedStudy['name']);
+        $this->assertEquals('desenvolupament-aplicacions-multiplataforma',$mappedStudy['slug']);
         $this->assertEquals('Des. Aplicacions Multiplataforma',$mappedStudy['shortname']);
         $this->assertEquals('DAM',$mappedStudy['code']);
         $this->assertEquals(14,$mappedStudy['subjects_number']);

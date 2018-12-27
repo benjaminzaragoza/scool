@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Models\Department;
-use App\Models\Family;
+
 use App\Models\Study;
-use App\Models\StudyTag;
 use Illuminate\Http\Request;
 
 /**
- * Class PublicCurriculumController.
+ * Class PublicCurriculumStudiesController.
  *
  * @package App\Http\Controllers\Tenant\Web
  */
-class PublicCurriculumController extends Controller
+class PublicCurriculumStudiesController extends Controller
 {
     /**
      * Index.
@@ -22,9 +20,10 @@ class PublicCurriculumController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function show(Request $request, $tenant, Study $study)
     {
-        $families = map_collection(Family::orderBy('name')->get());
-        return view('tenants.curriculum.public.index', compact('families'));
+//        dd($study->name);
+        $study = collect($study->map());
+        return view('tenants.curriculum.public.studies.show', compact('study'));
     }
 }

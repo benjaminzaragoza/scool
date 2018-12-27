@@ -18,8 +18,10 @@ use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumController;
+use App\Http\Controllers\Tenant\Web\PublicCurriculumStudiesController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Models\Module;
+use App\Models\Study;
 use App\Models\User;
 use Illuminate\Broadcasting\BroadcastController;
 
@@ -29,6 +31,13 @@ Route::bind('hashuser', function($value, $route)
     $id = $hashids->decode($value)[0];
 
     return User::findOrFail($id);
+});
+
+Route::bind('studySlug', function($value, $route)
+{
+    return Study::all()->first(function ($study, $key) use ($value) {
+        return str_slug($study->name) === $value;
+    }) ?? abort(404);
 });
 
 // Allow Route Model Binding using module id or name
@@ -108,6 +117,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
         // Public curriculum
         Route::get('/public/curriculum','\\' . PublicCurriculumController::class . '@index');
+        Route::get('/public/curriculum/studies/{studySlug}','\\' . PublicCurriculumStudiesController::class . '@show');
+        Route::get('/public/curriculum/estudis/{studySlug}','\\' . PublicCurriculumStudiesController::class . '@show');
 
         Route::group(['middleware' => 'auth'], function () {
 

@@ -119,6 +119,7 @@ window.Vue.component('git-info', require('./components/git/GitInfoComponent'))
 // Curriculum
 window.Vue.component('curriculum', require('./components/curriculum/CurriculumComponent'))
 window.Vue.component('curriculum-public', require('./components/curriculum/CurriculumPublicComponent'))
+window.Vue.component('curriculum-study-public', require('./components/curriculum/CurriculumStudyPublic'))
 window.Vue.component('subjects', require('./components/curriculum/subjects/SubjectsComponent'))
 window.Vue.component('subject-groups', require('./components/curriculum/subjectGroups/SubjectGroupsComponent'))
 

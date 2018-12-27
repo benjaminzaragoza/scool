@@ -105,6 +105,7 @@ class Study extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'shortname' => $this->shortname,
             'code' => $this->code,
             'subjects_number' => $this->subjects_number,
@@ -140,6 +141,7 @@ class Study extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'shortname' => $this->shortname,
             'code' => $this->code,
             'subjects_number' => $this->subjects_number,
@@ -165,6 +167,16 @@ class Study extends Model
     public function getFullSearchAttribute()
     {
         return "$this->name $this->shortname $this->code";
+    }
+
+    /**
+     * full_search accessor.
+     *
+     * @return string
+     */
+    public function getSlugAttribute()
+    {
+        return str_slug($this->name);
     }
 
 }
