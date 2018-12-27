@@ -67,11 +67,11 @@ export default {
   },
   computed: {
     numberOfSubjects () {
-      if (this.dataSubjectGroup && this.dataSubjectGroup.subjectGroups) return this.dataSubjectGroup.subjectGroups.length || 0
+      if (this.dataSubjectGroup && this.dataSubjectGroup.subjects) return this.dataSubjectGroup.subjects.length || 0
     },
     alert () {
-      if (this.subjectsNumber && this.dataSubjectGroup && this.dataSubjectGroup.subjectGroups) {
-        if (this.dataSubjectGroup.subjectGroups.length > this.subjectsNumber) return true
+      if (this.subjectsNumber && this.dataSubjectGroup && this.dataSubjectGroup.subjects) {
+        if (this.dataSubjectGroup.subjects.length > this.subjectsNumber) return true
       }
       return false
     },

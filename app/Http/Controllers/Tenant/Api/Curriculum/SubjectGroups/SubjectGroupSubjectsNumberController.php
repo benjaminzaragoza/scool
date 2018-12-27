@@ -24,7 +24,7 @@ class SubjectGroupSubjectsNumberController extends Controller
     public function update(SubjectGroupSubjectsNumberUpdate $request, $tenant, SubjectGroup $subjectGroup)
     {
 
-        $this->validateSubjectGroupsNumber($subjectGroup, $request->subject_groups_number);
+        $this->validateSubjectGroupsNumber($subjectGroup, $request->subjects_number);
         $oldSubjectGroup = $subjectGroup->map(false);
         $subjectGroup->subjects_number = $request->subjects_number;
         $subjectGroup->save();
