@@ -129,7 +129,6 @@ class SubjectGroupsControllerTest extends BaseTenantTest
      */
     public function can_store_subjectGroups()
     {
-        $this->withoutExceptionHandling();
         initialize_subject_group_tags();
         $this->loginAsSuperAdmin('api');
 

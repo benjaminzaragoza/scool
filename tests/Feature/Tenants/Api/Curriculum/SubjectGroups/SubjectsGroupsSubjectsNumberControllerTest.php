@@ -47,19 +47,18 @@ class SubjectsGroupsSubjectsNumberControllerTest extends BaseTenantTest {
         Event::fake();
 
         $response = $this->json('PUT','/api/v1/subject_groups/' . $subjectGroup->id . '/subjects_number',[
-            'subjects_number' => 3
+            'subjects_number' => 5
         ]);
         $response->assertSuccessful();
         Event::assertDispatched(SubjectGroupSubjectsNumberUpdated::class,function ($event) use ($subjectGroup){
             return $event->subjectGroup->is($subjectGroup);
         });
         $result = json_decode($response->getContent());
-        dump($result);
-        $this->assertEquals(3,$result->subjects_number);
+        $this->assertEquals(5,$result->subjects_number);
         $this->assertEquals($result->id,$subjectGroup->id);
 
         $subjectGroup = $subjectGroup->fresh();
-        $this->assertEquals($subjectGroup->subjects_number,13);
+        $this->assertEquals($subjectGroup->subjects_number,5);
     }
 
     /**
