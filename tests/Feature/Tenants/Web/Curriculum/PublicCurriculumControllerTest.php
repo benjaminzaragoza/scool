@@ -66,7 +66,6 @@ class PublicCurriculumControllerTest extends BaseTenantTest
                 $returnedDepartments[0]['order'] === 1;
         });
         $response->assertViewHas('families', function ($returnedFamilies) {
-            dd($returnedFamilies);
             return
                 count($returnedFamilies) === 2 &&
                 $returnedFamilies[0]['id'] === 1 &&
