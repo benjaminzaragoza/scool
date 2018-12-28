@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Family;
 use App\Models\Study;
 use App\Models\StudyTag;
+use App\Models\Subject;
 use App\Models\SubjectGroup;
 use App\Models\User;
 use Config;
@@ -355,5 +356,83 @@ class StudyTest extends TestCase
 
         $this->assertEquals('Desenvolupament Aplicacions Multiplataforma Des. Aplicacions Multiplataforma DAM',$mappedStudy['full_search']);
 
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function completed()
+    {
+        $study = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+            'subjects_number' => 3,
+            'subject_groups_number' => 2
+        ]);
+        $this->assertFalse($study->completed);
+
+        $mp1 = SubjectGroup::firstOrCreate([
+            'shortname' => 'Desenvolupament d’interfícies',
+            'name' => 'Desenvolupament d’interfícies',
+            'code' =>  'DAM_MP1',
+            'number' => 1,
+            'study_id' => $study->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3
+        ]);
+        $study = $study->fresh();
+        $this->assertFalse($study->completed);
+
+        $mp2 =SubjectGroup::firstOrCreate([
+            'shortname' => 'Desenvolupament d’interfícies2',
+            'name' => 'Desenvolupament d’interfícies2',
+            'code' =>  'DAM_MP2',
+            'number' => 2,
+            'study_id' => $study->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3
+        ]);
+        $study = $study->fresh();
+        $this->assertFalse($study->completed);
+
+        Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Disseny i implementació d’interfícies',
+            'code' =>  'DAM_MP1_UF1',
+            'number' => 1,
+            'subject_group_id' => $mp1->id,
+            'study_id' => $study->id,
+            'hours' => 79,
+        ]);
+        $study = $study->fresh();
+        $this->assertFalse($study->completed);
+
+        Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfícies2',
+            'shortname'=> 'Disseny i implementació d’interfícies2',
+            'code' =>  'DAM_MP1_UF2',
+            'number' => 2,
+            'subject_group_id' => $mp1->id,
+            'study_id' => $study->id,
+            'hours' => 79,
+        ]);
+        $study = $study->fresh();
+        $this->assertFalse($study->completed);
+
+        Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfície3',
+            'shortname'=> 'Disseny i implementació d’interfície3',
+            'code' =>  'DAM_MP2_UF1',
+            'number' => 1,
+            'subject_group_id' => $mp2->id,
+            'study_id' => $study->id,
+            'hours' => 79,
+        ]);
+        $study = $study->fresh();
+        $this->assertTrue($study->completed);
     }
 }

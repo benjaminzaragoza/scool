@@ -3,6 +3,15 @@
 - [ ] A més vuetify està agafat de unpkg que a vegades falla
 - [ ] També moure fonts de Icones de Material i de Fonw awesome 
 
+# Vista estudis
+- [ ] Estat d'un estudi (camp CALCULAT, no afegir cap camp estat ni res similar a base de dades)
+  - [ ] Estat complet: estan donats d'alta tots els MPS indicats i totes les UFS
+  - [ ] Estat incomplet: falta algun MP o alguna UF
+  - [ ] Subestats: 1 Falta algun MP 2 Falta alguna UF
+    - [ ] Boto afegir MP. Només si falta alguna MP per afegir
+       - [ ] Mostrar formulari afegir MPs però amb l'estudi ja escollit
+    - [ ] Boto afegir UF. Només si falta alguna UF per afegir
+       - [ ] Mostrar formulari afegir UFs però amb l'estudi ja escollit
 # TODO CURRICULUM
 - [ ] Tests unitaris
   - [ ] Mètode updateNumber i calculatenexNumber per UFs i per a MPS. Crear un test i refactoritzar
@@ -15,7 +24,9 @@
 - [X] studiesTags: no hi ha component està insertat codi a SubjectAddForm -> crear component
  - [X] Aprofitar component (codi WET) a la llista també no nomes al formulari de add
 - [ ] Permetre indicar etiquetes al afegir un studi (no ho pregunta el formulari)
-  
+- [ ] StudiesShow component:
+  - [ ] Afegir Pla docent
+  - [ ] Link a la vista pública (s'assemblen molt) i viceversa  
 IDEA:
 - Tot el tema dates (data inici i data fi, hores setmanals, etc), planificació de la UF té més sentit en fase d'horaris i/o desiderates (profes/caps departament) que no pas
 al donar d'alta el currículum (cap estudis)

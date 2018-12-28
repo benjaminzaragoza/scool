@@ -98,6 +98,14 @@ class Study extends Model
     }
 
     /**
+     * Get the subjects for the study
+     */
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class)->orderBy('number');
+    }
+
+    /**
      * @return array
      */
     public function map()
@@ -170,13 +178,27 @@ class Study extends Model
     }
 
     /**
-     * full_search accessor.
+     * slug accessor.
      *
      * @return string
      */
     public function getSlugAttribute()
     {
         return str_slug($this->name);
+    }
+
+    /**
+     * completed accessor.
+     *
+     * @return string
+     */
+    public function getCompletedAttribute()
+    {
+        if ($this->subjectGroups && $this->subjects) {
+            return ((int) $this->subjects_number === count($this->subjects)) &&
+                   ((int) $this->subject_groups_number === count($this->subjectGroups));
+        }
+        return false;
     }
 
 }
