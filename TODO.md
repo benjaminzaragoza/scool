@@ -1,3 +1,8 @@
+# CSS VUETIFY i FONTS
+- [ ] Estan instal·lats com a CDN externs. Instal·lació local: https://vuetifyjs.com/en/getting-started/quick-start
+- [ ] A més vuetify està agafat de unpkg que a vegades falla
+- [ ] També moure fonts de Icones de Material i de Fonw awesome 
+
 # TODO CURRICULUM
 - [ ] Tests unitaris
   - [ ] Mètode updateNumber i calculatenexNumber per UFs i per a MPS. Crear un test i refactoritzar
