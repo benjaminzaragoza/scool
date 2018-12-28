@@ -18,7 +18,7 @@
             </v-card-text>
             <v-card-actions>
             <v-btn flat link @click="dialog = false">Tancar</v-btn>
-            <v-btn color="success" flat @click="assign" :loading="assigning" :disabled="assigning || this.$v.invalid">Assignar</v-btn>
+            <v-btn color="success" flat @click="assign" :loading="assigning" :disabled="assigning || $v.$invalid">Assignar</v-btn>
           </v-card-actions>
           </v-card>
         </v-dialog>
@@ -68,15 +68,17 @@ export default {
   },
   methods: {
     assign () {
-      this.assigning = true
-      window.axios.put('/api/v1/studies/' + this.study.id + '/department/' + this.department).then(response => {
-        this.dialog = false
-        this.$emit('assigned', this.department)
-        this.assigning = false
-      }).catch(error => {
-        this.$snackbar.showError(error)
-        this.assigning = false
-      })
+      if (!this.$v.$invalid) {
+        this.assigning = true
+        window.axios.put('/api/v1/studies/' + this.study.id + '/department/' + this.department).then(response => {
+          this.dialog = false
+          this.$emit('assigned', this.department)
+          this.assigning = false
+        }).catch(error => {
+          this.$snackbar.showError(error)
+          this.assigning = false
+        })
+      }
     }
   }
 }

@@ -5,11 +5,12 @@
             attach
             chips
             label="Etiquetes d'estudis"
-            multiple
+            :multiple="multiple"
             item-value="id"
             item-text="value"
             @input="input"
             @blur="blur"
+            :return-object="returnObject"
     >
         <template slot="selection" slot-scope="data">
             <v-chip
@@ -51,8 +52,15 @@ export default {
       required: false
     },
     selectedTags: {
-      type: Array,
       required: true
+    },
+    multiple: {
+      type: Boolean,
+      default: true
+    },
+    returnObject: {
+      type: Boolean,
+      default: false
     }
   },
   watch: {
@@ -67,10 +75,10 @@ export default {
   },
   methods: {
     input () {
-      this.$emit('input', this.dataStudy)
+      this.$emit('input', this.dataSelectedTags)
     },
     blur () {
-      this.$emit('blur', this.dataStudy)
+      this.$emit('blur', this.dataSelectedTags)
     }
   },
   created () {

@@ -48,9 +48,9 @@
                 <v-layout>
                   <v-flex xs9 style="align-self: flex-end;">
                       <v-layout>
-                          <v-flex xs9>
+                          <v-flex xs12>
                                <v-layout>
-                                   <v-flex xs4>
+                                   <v-flex xs5>
                                        <department-select
                                                v-model="selectedDepartment"
                                        ></department-select>
@@ -60,7 +60,7 @@
                                                v-model="selectedFamily"
                                        ></family-select>
                                    </v-flex>
-                                   <v-flex xs4>
+                                   <v-flex xs3>
                                        <study-tags-select
                                                 v-model="selectedTags">
                                        </study-tags-select>

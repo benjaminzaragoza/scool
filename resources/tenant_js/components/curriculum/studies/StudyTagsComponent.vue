@@ -17,36 +17,12 @@
             <v-card-text>
 
             <study-tags-select
-                        v-model="newTag">
+                        v-model="newTag"
+                        :multiple="false"
+                        :return-object="true"
+                        :tags="pendingTags"
+            >
             </study-tags-select>
-
-                <!--//TODO ESBORRAR-->
-            <!--<v-autocomplete-->
-                    <!--v-model="newTag"-->
-                    <!--:items="pendingTags"-->
-                    <!--attach-->
-                    <!--chips-->
-                    <!--label="Etiquetes"-->
-                    <!--:return-object="true"-->
-            <!--&gt;-->
-                <!--<template slot="selection" slot-scope="data">-->
-                    <!--<v-chip-->
-                            <!--label-->
-                            <!--@input="data.parent.selectItem(data.item)"-->
-                            <!--:selected="data.selected"-->
-                            <!--class="chip&#45;&#45;select-multi"-->
-                            <!--:color="data.item.color"-->
-                            <!--text-color="white"-->
-                            <!--:key="JSON.stringify(data.item)"-->
-                    <!--&gt;<v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>-->
-                <!--</template>-->
-                <!--<template slot="item" slot-scope="data">-->
-                    <!--<v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">-->
-                        <!--<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}-->
-                    <!--</v-chip>-->
-                <!--</template>-->
-           <!--</v-autocomplete>-->
-
           </v-card-text>
             <v-card-actions>
             <v-btn flat link @click="tagAddDialog=false">Tancar</v-btn>
@@ -68,7 +44,7 @@ export default {
   data () {
     return {
       removing: false,
-      newTag: [],
+      newTag: null,
       adding: false,
       tagAddDialog: false,
       tagRemoveDialog: false,
@@ -164,14 +140,14 @@ export default {
       }
     },
     sync (tags) {
-      this.studyTags = this.study.tags
+      this.studyTags = tags
       this.syncClose()
       this.pendingTags = this.pendingTagsToAssign()
     }
   },
   created () {
-    this.sync(this.study.tags)
     this.dataTags = this.tags ? this.tags : this.storeTags
+    this.sync(this.study.tags)
   }
 }
 </script>

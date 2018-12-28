@@ -8979,7 +8979,7 @@ if (! function_exists('initialize_studies_tags')) {
         StudyTag::firstOrCreate([
             'value' => 'LOE',
             'description' => "Lley Orgànica d'Educació",
-            'color' => 'amber',
+            'color' => 'amber darken-2',
         ]);
 
         StudyTag::firstOrCreate([
@@ -8992,6 +8992,18 @@ if (! function_exists('initialize_studies_tags')) {
             'value' => 'FP',
             'description' => 'Formació Professional',
             'color' => 'pink lighten-1',
+        ]);
+
+        StudyTag::firstOrCreate([
+            'value' => 'CFGS',
+            'description' => 'Cicle Formatiu de Grau Superior',
+            'color' => 'orange lighten-2',
+        ]);
+
+        StudyTag::firstOrCreate([
+            'value' => 'CFGM',
+            'description' => 'Cicle Formatiu de Grau Mitjà',
+            'color' => 'green lighten-2',
         ]);
 
         StudyTag::firstOrCreate([
