@@ -50,7 +50,7 @@
                                 <v-list-tile avatar>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            <study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>
+                                            <study-tags @refresh="refresh(false)" :study="study"></study-tags>
                                         </v-list-tile-title>
                                         <v-list-tile-sub-title>Etiquetes</v-list-tile-sub-title>
                                     </v-list-tile-content>
@@ -76,7 +76,7 @@
                                 <v-list-tile>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            <study-family :study="study" :families="families" @assigned="refresh"></study-family>
+                                            <study-family :study="study" @assigned="refresh"></study-family>
                                         </v-list-tile-title>
                                         <v-list-tile-sub-title>Familia
                                         </v-list-tile-sub-title>
@@ -85,7 +85,7 @@
                                 <v-list-tile>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            <study-department :study="study" :departments="departments" @assigned="refresh"></study-department>
+                                            <study-department :study="study" @assigned="refresh"></study-department>
                                         </v-list-tile-title>
                                         <v-list-tile-sub-title>Departament
                                         </v-list-tile-sub-title>
@@ -123,7 +123,6 @@ export default {
   data () {
     return {
       show: this.showData ? 0 : null,
-      dataTags: this.tags,
       dataStudy: this.study
     }
   },
@@ -135,18 +134,6 @@ export default {
     showData: {
       type: Boolean,
       default: true
-    },
-    tags: {
-      type: Array,
-      required: true
-    },
-    families: {
-      type: Array,
-      required: true
-    },
-    departments: {
-      type: Array,
-      required: true
     }
   },
   methods: {

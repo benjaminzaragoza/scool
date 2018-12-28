@@ -113,7 +113,7 @@
                             <study-family :study="study" @assigned="refresh"></study-family>
                         </td>
                         <td class="text-xs-left">
-                            <study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>
+                            <study-tags @refresh="refresh(false)" :study="study"></study-tags>
                         </td>
                         <td class="text-xs-left" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
                         <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
@@ -125,7 +125,7 @@
                                     title="Mostra l'estudi"
                                     :resource="study"
                                     v-if="showDialog === false || showDialog === study.id">
-                                <study-show :study="study" @close="showDialog = false" :tags="dataTags"></study-show>
+                                <study-show :study="study" @close="showDialog = false"></study-show>
                             </fullscreen-dialog>
                             <study-delete :study="study" v-if="$hasRole('CurriculumManager')"></study-delete>
                         </td>

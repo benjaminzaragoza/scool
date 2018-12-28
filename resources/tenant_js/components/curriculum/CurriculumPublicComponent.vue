@@ -45,6 +45,7 @@
                             <v-card v-for="study in family.studies" :key="study.id" class="mt-0">
                                 <v-card-text class="ml-4 pt-0">
                                     <a :href="'/public/curriculum/estudis/' + study.slug" target="_blank" class="body-2 cyan--text text--darken-3">{{ study.name }}</a>
+                                    <study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>
                                 </v-card-text>
                             </v-card>
                         </v-expansion-panel-content>
@@ -56,8 +57,13 @@
 </template>
 
 <script>
+import StudyTags from './studies/StudyTagsComponent'
+
 export default {
   name: 'CurriculumPublicComponent',
+  components: {
+    'study-tags': StudyTags
+  },
   data () {
     return {
       panel: []
