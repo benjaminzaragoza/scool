@@ -1,6 +1,11 @@
 # TODO CURRICULUM
+- [ ] Tests unitaris
+  - [ ] Mètode updateNumber i calculatenexNumber per UFs i per a MPS. Crear un test i refactoritzar
+  - [ ] Codi wet repetit a UFS i MPS, fer un trait i reaprofitar
 - [ ] Changelogs
  - [ ] A tots els models (studies, ufs, mps)
+- [ ] subjectGroupTags: no hi ha component està insertat codi a SubjectAddForm -> crear component
+ - [ ] Aprofitar component (codi WET) a la llista també no nomes al formulari de add 
 
 Vistes públiques:
 - [X] Mòdul/plugin Javascript de permissions funciona amb pàgines públiqes?

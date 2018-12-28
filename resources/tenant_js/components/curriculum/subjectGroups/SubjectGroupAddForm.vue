@@ -2,9 +2,6 @@
     <form>
         <study-select
                 v-model="dataStudy"
-                :studies="studies"
-                :departments="departments"
-                :families="families"
                 :error-messages="dataStudyErrors"
                 @input="$v.dataStudy.$touch()"
                 @blur="$v.dataStudy.$touch()"
@@ -227,14 +224,8 @@ export default {
     subjectGroup: {}
   },
   computed: {
-    families () {
-      return this.$store.getters.families
-    },
     studies () {
       return this.$store.getters.studies
-    },
-    departments () {
-      return this.$store.getters.departments
     },
     dataTags () {
       return this.$store.getters.subjectGroupTags

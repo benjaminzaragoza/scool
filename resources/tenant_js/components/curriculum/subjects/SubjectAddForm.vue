@@ -8,7 +8,6 @@
         ></study-select>
         <subject-group-select
                 v-model="dataSubjectGroup"
-                :subject-groups="subjectGroups"
                 :error-messages="dataSubjectGroupErrors"
                 @input="$v.dataSubjectGroup.$touch()"
                 @blur="$v.dataSubjectGroup.$touch()"
@@ -19,7 +18,6 @@
         <subject-group-subjects-number :subject-group="dataSubjectGroup" @modified="updateSubjectGroups"></subject-group-subjects-number>
         <courses-select
                 v-model="dataCourse"
-                :courses="courses"
                 :error-messages="dataCourseErrors"
                 @input="$v.dataCourse.$touch()"
                 @blur="$v.dataCourse.$touch()"
@@ -30,8 +28,8 @@
                 @input="$v.number.$touch()"
                 @blur="$v.number.$touch()"
                 :error-messages="numberErrors"
-                :study="dataStudy"
                 :subject-group="dataSubjectGroup"
+                @recalculate="updatedNumber"
         ></subject-number>
 
         <subject-code
@@ -192,24 +190,12 @@ export default {
   props: {
     study: {},
     subjectGroup: {},
-    course: {},
+    course: {}
+  },
+  computed: {
     subjectGroups () {
       return this.$store.getters.subjectGroups
     },
-    families () {
-      return this.$store.getters.families
-    },
-    studies () {
-      return this.$store.getters.studies
-    },
-    departments () {
-      return this.$store.getters.departments
-    },
-    courses () {
-      return this.$store.getters.courses
-    }
-  },
-  computed: {
     dataStudyErrors () {
       const errors = []
       if (!this.$v.dataStudy.$dirty) return errors
@@ -270,14 +256,57 @@ export default {
     },
     subjectGroup (subjectGroup) {
       this.dataSubjectGroup = subjectGroup
+      if (subjectGroup) {
+        this.updatedNumber()
+      }
+    },
+    dataSubjectGroup (dataSubjectGroup) {
+      if (dataSubjectGroup) {
+        this.updatedNumber()
+      }
     }
   },
   methods: {
     updateSubjectGroups () {
-      console.log('TODO updateSubjectGroups')
+      this.$store.dispatch(actions.SET_SUBJECT_GROUPS).then(() => {
+        this.updateSubjectGroup()
+      })
+    },
+    updateSubjectGroup () {
+      this.dataSubjectGroup = this.subjectGroups.find(study => { return study.id === this.dataStudy.id })
+    },
+    updatedNumber () {
+      this.number = this.calculateNextNumber(this.dataSubjectGroup)
+      if (this.dataSubjectGroup.subjects_number) {
+        if (this.dataSubjectGroup.subjects.length >= this.dataSubjectGroup.subjects_number) {
+          this.$snackbar.showError("Aquest estudi ja té tots els Mòduls Professionals donats d'alta")
+        }
+      }
+      this.$nextTick(this.$refs.name.focus)
+    },
+    calculateNextNumber (dataSubjectGroup) {
+      if (dataSubjectGroup.subjects_number) {
+        var i
+        for (i = 1; i <= dataSubjectGroup.subjects_number; i++) {
+          if (this.dataSubjectGroup.subjects.find(subjectGroup => { return subjectGroup.number === i })) continue
+          return i
+        }
+      } else {
+        if (dataSubjectGroup.subjects) {
+          if (dataSubjectGroup.subjects.length > 0) {
+            let i = 1
+            let cond = true
+            while (cond) {
+              if (this.dataSubjectGroup.subjects.find(subjectGroup => { return subjectGroup.number === i })) i++
+              else cond = false
+            }
+            return i
+          } else return 1
+        } else return 1
+      }
     },
     partialReset () {
-      this.number = parseInt(this.number) + 1
+      this.updatedNumber()
       this.name = ''
       this.shortname = ''
       this.hours = null
