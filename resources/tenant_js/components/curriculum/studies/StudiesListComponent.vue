@@ -147,6 +147,7 @@
                         <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
                             <changelog-loggable :loggable="study"></changelog-loggable>
+                            <study-public-curriculum-show :study="study"></study-public-curriculum-show>
                             <fullscreen-dialog
                                     v-model="showDialog"
                                     title="Mostra l'estudi"
@@ -171,6 +172,7 @@ import StudyShowComponent from './StudyShowComponent'
 import StudyDepartment from './StudyDepartment'
 import StudyTags from './StudyTagsComponent'
 import StudyFamily from './StudyFamily'
+import StudyPublicCurriculumShow from './StudyPublicCurriculumShow'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
 import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
@@ -201,7 +203,8 @@ export default {
     'study-tags': StudyTags,
     'changelog-loggable': ChangelogLoggable,
     'family-select': FamilySelectComponent,
-    'department-select': DepartmentSelectComponent
+    'department-select': DepartmentSelectComponent,
+    'study-public-curriculum-show': StudyPublicCurriculumShow
   },
   data () {
     return {

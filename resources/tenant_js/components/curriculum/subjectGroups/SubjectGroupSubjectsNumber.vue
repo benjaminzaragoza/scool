@@ -62,7 +62,7 @@ export default {
       this.subjectsNumber = this.dataSubjectGroup && (this.dataSubjectGroup.subjects_number || 0)
     },
     alert (alert) {
-      if (alert) this.$snackbar.showError("Atenció. El nombre màxim de UFs del MP que heu indicat és inferior al número de UFs del MP. Si us plau modifiqueu el valor")
+      if (alert) this.$snackbar.showError('Atenció. El nombre màxim de UFs del MP que heu indicat és inferior al número de UFs del MP. Si us plau modifiqueu el valor')
     }
   },
   computed: {

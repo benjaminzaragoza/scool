@@ -5,8 +5,13 @@
 - [ ] Changelogs
  - [ ] A tots els models (studies, ufs, mps)
 - [ ] subjectGroupTags: no hi ha component està insertat codi a SubjectAddForm -> crear component
- - [ ] Aprofitar component (codi WET) a la llista també no nomes al formulari de add 
-
+ - [ ] Aprofitar component (codi WET) a la llista també no nomes al formulari de add
+- [ ] Afegir hores setmanals a una UF, de fet té més sentit fer TOT per UFs que per MPS? 
+  
+IDEA:
+- Tot el tema dates (data inici i data fi, hores setmanals, etc), planificació de la UF té més sentit en fase d'horaris i/o desiderates (profes/caps departament) que no pas
+al donar d'alta el currículum (cap estudis)
+  - [ ] Ara mostro estes dades a currículum al donar d'alta però són opcionals en aquesta fase
 Vistes públiques:
 - [X] Mòdul/plugin Javascript de permissions funciona amb pàgines públiqes?
   - [X] Sí sempre i quan tingui la info de hader com window.user

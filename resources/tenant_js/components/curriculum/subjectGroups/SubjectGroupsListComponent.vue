@@ -12,6 +12,9 @@
                     <v-list-tile href="/curriculum/subjects" target="_blank">
                         <v-list-tile-title>Unitats Formàtives</v-list-tile-title>
                     </v-list-tile>
+                    <v-list-tile href="/public/curriculum" target="_blank">
+                        <v-list-tile-title>Veure currículum</v-list-tile-title>
+                    </v-list-tile>
                     <v-list-tile href="#" target="_blank">
                         <v-list-tile-title>TODO 0 Estadístiques</v-list-tile-title>
                     </v-list-tile>

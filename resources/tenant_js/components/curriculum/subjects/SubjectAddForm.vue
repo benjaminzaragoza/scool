@@ -134,6 +134,8 @@
                color="primary"
                :disabled="adding || $v.$invalid"
                :loading="adding">Afegir UF i continuar</v-btn>
+        <v-btn @click="$emit('close')"
+               color="error">Sortir</v-btn>
     </form>
 </template>
 
@@ -273,7 +275,7 @@ export default {
       })
     },
     updateSubjectGroup () {
-      this.dataSubjectGroup = this.subjectGroups.find(study => { return study.id === this.dataStudy.id })
+      this.dataSubjectGroup = this.subjectGroups.find(subjectGroup => { return subjectGroup.id === this.dataSubjectGroup.id })
     },
     updatedNumber () {
       this.number = this.calculateNextNumber(this.dataSubjectGroup)
@@ -312,7 +314,6 @@ export default {
       this.hours = null
       this.start = null
       this.end = null
-      this.$nextTick(this.$refs.name.focus)
     },
     allowedDates: val => ![0, 6].includes(new Date(val).getDay()),
     add (close = false) {
@@ -331,6 +332,8 @@ export default {
           end: this.end
         }).then(response => {
           this.$snackbar.showMessage('Unitat formativa creada correctament')
+          this.dataSubjectGroup.subjects.push(response.data)
+          this.dataSubjectGroup.subjects.sort((a, b) => a.number - b.number)
           this.adding = false
           this.$emit('added', response.data)
           if (close) {
@@ -344,6 +347,9 @@ export default {
         })
       }
     }
+  },
+  mounted () {
+    this.updatedNumber()
   }
 }
 </script>

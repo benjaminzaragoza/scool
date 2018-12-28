@@ -169,6 +169,8 @@
                color="primary"
                :disabled="adding || $v.$invalid"
                :loading="adding">Afegir MP i continuar</v-btn>
+        <v-btn @click="$emit('close')"
+               color="error">Sortir</v-btn>
     </form>
 </template>
 
