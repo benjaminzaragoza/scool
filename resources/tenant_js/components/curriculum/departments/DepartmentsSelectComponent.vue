@@ -2,7 +2,7 @@
     <v-autocomplete
             :name="name"
             :label="label"
-            :items="departments"
+            :items="dataDepartments"
             v-model="internalDepartment"
             item-text="name"
             :item-value="itemValue"
@@ -25,7 +25,8 @@ export default {
   name: 'DepartmentsSelectComponent',
   data () {
     return {
-      internalDepartment: this.department
+      internalDepartment: this.department,
+      dataDepartments: []
     }
   },
   model: {
@@ -35,7 +36,7 @@ export default {
   props: {
     departments: {
       type: Array,
-      required: true
+      required: false
     },
     name: {
       type: String,
@@ -55,6 +56,11 @@ export default {
       default: 'id'
     }
   },
+  computed: {
+    storeDepartments () {
+      return this.$store.getters.departments
+    }
+  },
   watch: {
     department (newDepartment) {
       this.internalDepartment = newDepartment
@@ -67,6 +73,9 @@ export default {
     blur () {
       this.$emit('blur', this.internalDepartment)
     }
+  },
+  created () {
+    this.dataDepartments = this.departments ? this.departments : this.storeDepartments
   }
 }
 </script>

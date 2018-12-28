@@ -12,5 +12,8 @@ export default {
       return element.id === study.id
     })
     state.studies.splice(state.studies.indexOf(studyInState), 1)
+  },
+  [ mutations.SET_STUDIES_TAGS ] (state, tags) {
+    state.tags = tags
   }
 }

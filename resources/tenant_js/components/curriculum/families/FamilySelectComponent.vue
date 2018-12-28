@@ -2,7 +2,7 @@
     <v-autocomplete
             :name="name"
             :label="label"
-            :items="families"
+            :items="dataFamilies"
             v-model="internalFamily"
             item-text="name"
             :item-value="itemValue"
@@ -25,7 +25,8 @@ export default {
   name: 'FamilySelectComponent',
   data () {
     return {
-      internalFamily: this.family
+      internalFamily: this.family,
+      dataFamilies: []
     }
   },
   model: {
@@ -35,7 +36,7 @@ export default {
   props: {
     families: {
       type: Array,
-      required: true
+      required: false
     },
     name: {
       type: String,
@@ -55,6 +56,11 @@ export default {
       default: 'id'
     }
   },
+  computed: {
+    storeFamilies () {
+      return this.$store.getters.families
+    }
+  },
   watch: {
     family (newFamily) {
       this.internalFamily = newFamily
@@ -67,6 +73,9 @@ export default {
     blur () {
       this.$emit('blur', this.internalFamily)
     }
+  },
+  created () {
+    this.dataFamilies = this.families ? this.families : this.storeFamilies
   }
 }
 </script>

@@ -16,31 +16,36 @@
           <v-card>
             <v-card-text>
 
-            <v-autocomplete
-                    v-model="newTag"
-                    :items="pendingTags"
-                    attach
-                    chips
-                    label="Etiquetes"
-                    :return-object="true"
-            >
-                <template slot="selection" slot-scope="data">
-                    <v-chip
-                            label
-                            @input="data.parent.selectItem(data.item)"
-                            :selected="data.selected"
-                            class="chip--select-multi"
-                            :color="data.item.color"
-                            text-color="white"
-                            :key="JSON.stringify(data.item)"
-                    ><v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
-                </template>
-                <template slot="item" slot-scope="data">
-                    <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
-                        <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
-                    </v-chip>
-                </template>
-           </v-autocomplete>
+            <study-tags-select
+                        v-model="newTag">
+            </study-tags-select>
+
+                <!--//TODO ESBORRAR-->
+            <!--<v-autocomplete-->
+                    <!--v-model="newTag"-->
+                    <!--:items="pendingTags"-->
+                    <!--attach-->
+                    <!--chips-->
+                    <!--label="Etiquetes"-->
+                    <!--:return-object="true"-->
+            <!--&gt;-->
+                <!--<template slot="selection" slot-scope="data">-->
+                    <!--<v-chip-->
+                            <!--label-->
+                            <!--@input="data.parent.selectItem(data.item)"-->
+                            <!--:selected="data.selected"-->
+                            <!--class="chip&#45;&#45;select-multi"-->
+                            <!--:color="data.item.color"-->
+                            <!--text-color="white"-->
+                            <!--:key="JSON.stringify(data.item)"-->
+                    <!--&gt;<v-icon left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>-->
+                <!--</template>-->
+                <!--<template slot="item" slot-scope="data">-->
+                    <!--<v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">-->
+                        <!--<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}-->
+                    <!--</v-chip>-->
+                <!--</template>-->
+           <!--</v-autocomplete>-->
 
           </v-card-text>
             <v-card-actions>
@@ -53,32 +58,45 @@
 </template>
 
 <script>
+import StudyTagsSelect from './StudyTagsSelect'
 
 export default {
   name: 'StudyTags',
+  components: {
+    'study-tags-select': StudyTagsSelect
+  },
   data () {
     return {
       removing: false,
-      newTag: null,
+      newTag: [],
       adding: false,
       tagAddDialog: false,
       tagRemoveDialog: false,
       close: [],
       pendingTags: [],
-      studyTags: []
+      studyTags: [],
+      dataTags: []
     }
   },
   props: {
+    tags: {
+      type: Array,
+      required: false
+    },
     study: {
       type: Object,
       required: true
-    },
-    tags: {
-      type: Array,
-      required: true
+    }
+  },
+  computed: {
+    storeTags () {
+      return this.$store.getters.studiesTags
     }
   },
   watch: {
+    tags (tags) {
+      this.dataTags = tags
+    },
     study: {
       handler: function (newStudy) {
         this.sync(newStudy.tags)
@@ -99,7 +117,7 @@ export default {
     pendingTagsToAssign () {
       if (this.studyTags) {
         const tagsIds = this.studyTags.map(tag => tag['id'])
-        return this.tags.filter(tag => {
+        return this.dataTags.filter(tag => {
           return !tagsIds.includes(tag.id)
         })
       }
@@ -153,6 +171,7 @@ export default {
   },
   created () {
     this.sync(this.study.tags)
+    this.dataTags = this.tags ? this.tags : this.storeTags
   }
 }
 </script>

@@ -17,14 +17,63 @@ IDEA:
 - Tot el tema dates (data inici i data fi, hores setmanals, etc), planificació de la UF té més sentit en fase d'horaris i/o desiderates (profes/caps departament) que no pas
 al donar d'alta el currículum (cap estudis)
   - [ ] Ara mostro estes dades a currículum al donar d'alta però són opcionals en aquesta fase
+  
+Navegació:
+- [ ] Mostrar botó currículum de l'estudi a les llistes UFS i MPS, per tal de veure la UF/MP en el seu context
+ - [ ] Posat's que es desplaci fins la UF/MP i la marqui d'algún color es vegi remarcada  
+
 Vistes públiques:
+- [ ] Afegir botons de Login i Registre i navegació Welcome Page i Home
 - [X] Mòdul/plugin Javascript de permissions funciona amb pàgines públiqes?
   - [X] Sí sempre i quan tingui la info de hader com window.user
-  - [ ] Evitar warning de console i/o errors window.user is null
-- [ ] Mostrar més info als usuaris Curriculum Manager
+  - [X] Evitar warning de console i/o errors window.user is null
+- Vista general estudis per families
+  - [ ] Filtrar estudis per etiquetes (CFGM, CFGS...)  
+- Vista estudi
+  - [ ] Navegador/Toolbar
+    - [ ] Select estudis (canviar estudi)
+    - [ ] Estudi seguent -> Estudi anterior << >>
+  - Pla docent:
+    - [ ] Opció de mostrar per cursos (en comptes d'ordenat per MPS, ordenat per cursos i MPs)
+    - [ ] Opció mostrar dates (no falli si no estan posades)
+      - [ ] Opció editar dates (només CurriculumManager o altres amb permis)
+  - [ ] CurriculumManager:
+    - [X] Mostrar icona edit al costat títol Mòduls Professionals -> Link a CRUD Mòduls Professionals
+      - [ ] Posa'ts ja que vagi a la URL però activant el filtre de l'estudi que pertoca
+    - [X] Mostrar icona edit al costat títol Unitats Formatives -> Link a CRUD Unitats Formatives
+     - [ ] Posa'ts ja que vagi a la URL però activant el filtre de l'estudi que pertoca
+    - [ ] Mostrar icona Add a MPS si falta algun MP (se sabrà pel nombre MPs de l'estudi i les que hi ha) al estudi per donar d'alta
+      - [ ] Combinar amb una icona alerta al costat
+    - [ ] Mostrar icona Add a UFS si falta alguna UF (se sabrà pel nombre UFS del MP i les que hi ha) al MP per donar d'alta
+          - [ ] Combinar amb una icona alerta al costat    
+    - [ ] Poder modificar nombre total UFS d'un estudi
+    - [ ] Poder modificar hores
+    - [ ] Poder modificar noms amb doble click (i/o icona edit)
+      - [ ] Nom Estudi
+      - [ ] Nom UF
+      - [ ] Nom MP  
+    - [ ] Poder modificar codis amb doble click (i/o icona edit)  
+      - [ ] Codi Estudi
+      - [ ] Codi MP
+      - [ ] Codi UF
+    - [ ] Poder modificar l'enllaç al tríptic i la programació
+    - [ ] Cursos acadèmics: Link a l'edició dels cursos
+    - [ ] Hores FCT
+    - [ ] Dual sí/no
+    - [ ] Dades de contacte   
+ - [ ] Mostrar més info als usuaris Curriculum Manager
+  - Vista general estudis per families
   - [ ] Warnings:
-    - [ ] Família/es sense estudis
-
+    - [X] Família/es sense estudis (null o zero)
+  - Vista per a un estudi concret:
+    - [ ] Warnings:
+      - [X] No coincideix en número total hores MP amb la suma de hores de les UFS
+      - [ ] No coincideix el número total de UFS del estudi amb el nombre UFS real
+      - [ ] No coincideix en número total de MPs de l'estudi amb els MPS reals
+      - [ ] Estudi sense projecte/sintesi
+      - [ ] Estudi sense FCT
+      - [ ] Estudi sense assignatures transversals (FOL, EIE, Àngles)
+      
 Shows:
  - [ ] Falten els shows de tots els mòdels
    - [ ] Indirectament un cop van el shows es pot fer anar la navegació (links per mostrar la info d'un model específic) 

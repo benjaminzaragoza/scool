@@ -10,7 +10,6 @@
             <v-card-text>
               <family-select
                       v-model="family"
-                      :families="families"
                       :error-messages="familyErrors"
                       @input="$v.family.$touch()"
                       @blur="$v.family.$touch()"
@@ -47,12 +46,6 @@ export default {
     }
   },
   props: {
-    families: {
-      type: Array,
-      default: function () {
-        return undefined
-      }
-    },
     study: {
       type: Object,
       required: true

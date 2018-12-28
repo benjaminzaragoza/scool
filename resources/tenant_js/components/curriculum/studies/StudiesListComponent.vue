@@ -53,45 +53,17 @@
                                    <v-flex xs4>
                                        <department-select
                                                v-model="selectedDepartment"
-                                               :departments="departments"
                                        ></department-select>
                                    </v-flex>
                                    <v-flex xs4>
                                        <family-select
                                                v-model="selectedFamily"
-                                               :families="families"
                                        ></family-select>
                                    </v-flex>
                                    <v-flex xs4>
-                                       <v-autocomplete
-                                               v-model="selectedTags"
-                                               :items="dataTags"
-                                               attach
-                                               chips
-                                               label="Etiquetes"
-                                               multiple
-                                               item-value="id"
-                                               item-text="value"
-                                       >
-                                            <template slot="selection" slot-scope="data">
-                                                <v-chip
-                                                        small
-                                                        label
-                                                        @input="data.parent.selectItem(data.item)"
-                                                        :selected="data.selected"
-                                                        class="chip--select-multi"
-                                                        :color="data.item.color"
-                                                        text-color="white"
-                                                        :key="JSON.stringify(data.item)"
-                                                ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
-                                            </template>
-                                            <template slot="item" slot-scope="data">
-                                                <v-checkbox v-model="data.tile.props.value"></v-checkbox>
-                                                <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
-                                                    <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
-                                                </v-chip>
-                                            </template>
-                                       </v-autocomplete>
+                                       <study-tags-select
+                                                v-model="selectedTags">
+                                       </study-tags-select>
                                    </v-flex>
                                </v-layout>
                           </v-flex>
@@ -135,10 +107,10 @@
                             <inline-text-field-edit-dialog v-model="study" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left">
-                            <study-department :study="study" :departments="departments" @assigned="refresh"></study-department>
+                            <study-department :study="study" @assigned="refresh"></study-department>
                         </td>
                         <td class="text-xs-left">
-                            <study-family :study="study" :families="families" @assigned="refresh"></study-family>
+                            <study-family :study="study" @assigned="refresh"></study-family>
                         </td>
                         <td class="text-xs-left">
                             <study-tags @refresh="refresh(false)" :study="study" :tags="dataTags" ></study-tags>
@@ -153,7 +125,7 @@
                                     title="Mostra l'estudi"
                                     :resource="study"
                                     v-if="showDialog === false || showDialog === study.id">
-                                <study-show :study="study" @close="showDialog = false" :tags="dataTags" :families="families" :departments="departments"></study-show>
+                                <study-show :study="study" @close="showDialog = false" :tags="dataTags"></study-show>
                             </fullscreen-dialog>
                             <study-delete :study="study" v-if="$hasRole('CurriculumManager')"></study-delete>
                         </td>
@@ -170,9 +142,10 @@ import FullScreenDialog from '../../ui/FullScreenDialog'
 import StudyDelete from './StudyDeleteComponent'
 import StudyShowComponent from './StudyShowComponent'
 import StudyDepartment from './StudyDepartment'
-import StudyTags from './StudyTagsComponent'
 import StudyFamily from './StudyFamily'
 import StudyPublicCurriculumShow from './StudyPublicCurriculumShow'
+import StudyTags from './StudyTagsComponent'
+import StudyTagsSelect from './StudyTagsSelect'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
 import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
@@ -184,11 +157,6 @@ var filters = {
   all: function (studies) {
     return studies
   }
-  // open: function (incidents) {
-  //   return incidents ? incidents.filter(function (incident) {
-  //     return incident.closed_at === null
-  //   }) : []
-  // },
 }
 
 export default {
@@ -204,7 +172,8 @@ export default {
     'changelog-loggable': ChangelogLoggable,
     'family-select': FamilySelectComponent,
     'department-select': DepartmentSelectComponent,
-    'study-public-curriculum-show': StudyPublicCurriculumShow
+    'study-public-curriculum-show': StudyPublicCurriculumShow,
+    'study-tags-select': StudyTagsSelect
   },
   data () {
     return {
@@ -230,7 +199,6 @@ export default {
       let filteredByState = filters[this.filter](this.dataStudies)
       if (this.selectedDepartment) filteredByState = filteredByState.filter(study => { return study.department_id === this.selectedDepartment })
       if (this.selectedFamily) filteredByState = filteredByState.filter(study => { return study.family_id === this.selectedFamily })
-
       if (this.selectedTags.length > 0) {
         filteredByState = filteredByState.filter(study => {
           return study.tags.some(tag => this.selectedTags.includes(tag.id))
@@ -260,23 +228,11 @@ export default {
         return undefined
       }
     },
-    departments: {
-      type: Array,
-      required: true
-    },
-    families: {
-      type: Array,
-      required: true
-    },
     study: {
       type: Object,
       default: function () {
         return undefined
       }
-    },
-    tags: {
-      type: Array,
-      required: true
     }
   },
   methods: {

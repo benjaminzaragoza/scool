@@ -7,7 +7,7 @@
             :error-messages="errorMessages"
             @input="input()"
             @blur="blur()"
-            :items="families"
+            :items="dataFamilies"
             v-model="internalFamily"
             item-text="name"
             :item-value="itemValue"
@@ -27,7 +27,8 @@ export default {
   },
   data () {
     return {
-      internalFamily: this.family
+      internalFamily: this.family,
+      dataFamilies: []
     }
   },
   props: {
@@ -41,7 +42,7 @@ export default {
     },
     families: {
       type: Array,
-      required: true
+      required: false
     },
     family: {
       required: true
@@ -59,9 +60,17 @@ export default {
       default: 'id'
     }
   },
+  computed: {
+    storeFamilies () {
+      return this.$store.getters.families
+    }
+  },
   watch: {
     family (newFamily) {
       this.internalFamily = newFamily
+    },
+    families (families) {
+      this.dataFamilies = families
     }
   },
   methods: {
@@ -71,6 +80,9 @@ export default {
     blur () {
       this.$emit('blur', this.internalFamily)
     }
+  },
+  created () {
+    this.dataFamilies = this.families ? this.families : this.storeFamilies
   }
 }
 </script>

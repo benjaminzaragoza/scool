@@ -26,9 +26,7 @@ class CurriculumController extends Controller
     {
         $studies = map_collection(Study::with('family','department','tags','subjectGroups','subjectGroups.study','subjectGroups.tags')->get());
         $departments = map_collection(Department::all());
-//        $departments = collect([]);
         $families = map_collection(Family::with('studies','studies.family')->get());
-//        $families = collect([]);
         $tags = map_collection(StudyTag::all());
         return view('tenants.curriculum.index', compact('studies','departments','families','tags'));
     }

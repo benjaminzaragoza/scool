@@ -3,7 +3,8 @@ import actions from './actions'
 import mutations from './mutations'
 
 const state = {
-  studies: []
+  studies: [],
+  tags: []
 }
 
 export default {
