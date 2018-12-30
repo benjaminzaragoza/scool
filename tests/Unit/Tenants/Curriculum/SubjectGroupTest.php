@@ -161,6 +161,44 @@ class SubjectGroupTest extends TestCase
 
     /**
      * @test
+     * @group curriculum
+     */
+    public function mapSimple()
+    {
+        $subjectGroup = create_sample_subject_group();
+
+        $mappedSubjectGroup = $subjectGroup->mapSimple();
+
+        $this->assertSame(1,$mappedSubjectGroup['id']);
+        $this->assertEquals("Desenvolupament d’interfícies",$mappedSubjectGroup['name']);
+        $this->assertEquals('Interfícies',$mappedSubjectGroup['shortname']);
+        $this->assertEquals('DAM_MP7',$mappedSubjectGroup['code']);
+        $this->assertEquals('Bla bla bla',$mappedSubjectGroup['description']);
+        $this->assertSame(7,$mappedSubjectGroup['number']);
+        $this->assertSame(99,$mappedSubjectGroup['hours']);
+        $this->assertSame(99,$mappedSubjectGroup['free_hours']);
+        $this->assertSame(3,$mappedSubjectGroup['subjects_number']);
+        $this->assertSame(99,$mappedSubjectGroup['week_hours']);
+        $this->assertSame('2017-09-15',$mappedSubjectGroup['start']);
+        $this->assertSame('2018-06-01',$mappedSubjectGroup['end']);
+        $this->assertEquals('subject_groups',$mappedSubjectGroup['api_uri']);
+
+        $this->assertSame(1,$mappedSubjectGroup['study_id']);
+
+        $this->assertNotNull($mappedSubjectGroup['created_at']);
+        $this->assertNotNull($mappedSubjectGroup['updated_at']);
+        $this->assertNotNull($mappedSubjectGroup['created_at_timestamp']);
+        $this->assertNotNull($mappedSubjectGroup['updated_at_timestamp']);
+        $this->assertNotNull($mappedSubjectGroup['formatted_created_at']);
+        $this->assertNotNull($mappedSubjectGroup['formatted_updated_at']);
+        $this->assertNotNull($mappedSubjectGroup['formatted_created_at_diff']);
+        $this->assertNotNull($mappedSubjectGroup['formatted_updated_at_diff']);
+
+        $this->assertEquals('Desenvolupament d’interfícies Interfícies DAM_MP7',$mappedSubjectGroup['full_search']);
+    }
+
+    /**
+     * @test
      */
     public function addTag()
     {

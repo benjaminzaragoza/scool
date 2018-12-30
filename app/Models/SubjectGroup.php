@@ -52,6 +52,38 @@ class SubjectGroup extends Model
         return $this->hasMany(WeekLesson::class)->orderBy('day')->orderBy('start');
     }
 
+    public function mapSimple()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'shortname' => $this->shortname,
+            'description' => $this->description,
+            'code' => $this->code,
+            'number' => (int) $this->number,
+            'hours' => (int) $this->hours,
+            'free_hours' => (int) $this->hours,
+            'week_hours' => (int) $this->hours,
+            'start' => $this->start,
+            'end' => $this->end,
+            'subjects_number' => $this->subjects_number,
+
+            'api_uri' => $this->api_uri,
+
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+
+            'study_id' => (int) $this->study_id,
+            'full_search' => $this->full_search,
+        ];
+    }
+
     public function map()
     {
         return [

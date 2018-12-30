@@ -147,7 +147,8 @@ class Study extends Model
             'tags' => map_collection($this->tags),
             'full_search' => $this->full_search,
 
-            'subjectGroups' => map_collection($this->subjectGroups)
+            'subjectGroups' => map_simple_collection($this->subjectGroups),
+            'subjects' => map_simple_collection($this->subjects)
         ];
     }
 
