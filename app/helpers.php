@@ -5964,6 +5964,8 @@ if (!function_exists('initialize_subjects')) {
             'name' => 'Gestió administrativa',
             'shortname' => 'Gestió administrativa',
             'code' => 'GAD',
+            'subject_groups_number' => 13,
+            'subjects_number' => 37
         ]);
 
         $family = Family::findByCode('COMERÇ');

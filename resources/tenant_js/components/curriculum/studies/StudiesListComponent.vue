@@ -118,15 +118,15 @@
                         <td class="text-xs-left cell">
                             <study-tags @refresh="refresh(false)" :study="study"></study-tags>
                         </td>
-                        <td class="text-xs-left cell">
-                            <study-completed :study="study"></study-completed>
-                        </td>
                         <td class="text-xs-left cell" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
                         <td class="text-xs-left cell" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left cell">
-                            <changelog-loggable :loggable="study"></changelog-loggable>
+                            <study-completed :study="study"></study-completed>
+                        </td>
+                        <td class="text-xs-left cell">
                             <study-subject-group-add :study="study"></study-subject-group-add>
                             <study-subject-add :study="study"></study-subject-add>
+                            <changelog-loggable :loggable="study"></changelog-loggable>
                             <study-public-curriculum-show :study="study"></study-public-curriculum-show>
                             <fullscreen-dialog
                                     v-model="showDialog"
@@ -229,9 +229,9 @@ export default {
       headers.push({ text: 'Departament', value: 'department_code' })
       headers.push({ text: 'Família', value: 'family_code' })
       headers.push({ text: 'Etiquetes', value: 'tags' })
-      headers.push({ text: 'Completat', value: 'completed' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
+      headers.push({ text: 'Completat', value: 'completed' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })
       return headers
     }

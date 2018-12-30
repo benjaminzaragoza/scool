@@ -376,6 +376,9 @@ export default {
         })
       }
     }
+  },
+  mounted () {
+    this.updatedNumber()
   }
 }
 </script>
