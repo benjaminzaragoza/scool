@@ -79,9 +79,18 @@
                             </v-card>
                         </v-flex>
                         <v-flex xs7 text-xs-left :key="'subject_group_subjects_' + subjectGroup.id">
-                            <v-card v-for="subject in subjectGroup.subjects" :key="subject.id" class="mb-1" :class="{ 'fill-height': subjectGroup.subjects && subjectGroup.subjects.length === 1 }">
+                            <v-card v-for="(subject,index) in subjectGroup.subjects" :key="subject.id" class="mb-1" :class="{ 'fill-height': subjectGroup.subjects && subjectGroup.subjects.length === 1 }">
                                 <v-card-text class="pa-2">
-                                    <strong>{{ subject.code }}</strong> {{ subject.name }}
+                                    <strong>{{ subject.code }}</strong>
+                                    <inline-text-field-edit-dialog v-if="$hasRole('CurriculumManager')"
+                                                                   style="display:inline-block;width: auto;"
+                                                                   v-model="subjectGroup.subjects[index]"
+                                                                   field="name"
+                                                                   label="Nom"
+                                                                   @save="showMessage('Nom actualitzat correctament')"
+                                    >
+                                    </inline-text-field-edit-dialog>
+                                    <span v-else>{{ subject.name }}</span>
                                 </v-card-text>
                             </v-card>
                         </v-flex>

@@ -98,7 +98,6 @@
                 </v-layout>
             </v-card-title>
             <v-data-table
-                    class="px-0 mb-2 hidden-sm-and-down"
                     :headers="headers"
                     :items="filteredSubjectGroups"
                     :search="search"
@@ -113,26 +112,26 @@
                 <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                 <template slot="items" slot-scope="{item: subjectGroup}">
                     <tr :id="'subjectGroup_row_' + subjectGroup.id">
-                        <td class="text-xs-left" v-text="subjectGroup.id"></td>
-                        <td class="text-xs-left" v-text="subjectGroup.number"></td>
-                        <td class="text-xs-left" v-text="subjectGroup.study_code" :title="subjectGroup.study_id + ' ' + subjectGroup.study_name"></td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell" v-text="subjectGroup.id"></td>
+                        <td class="text-xs-left cell" v-text="subjectGroup.number"></td>
+                        <td class="text-xs-left cell" v-text="subjectGroup.study_code" :title="subjectGroup.study_id + ' ' + subjectGroup.study_name"></td>
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="subjectGroup" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="subjectGroup" field="name" label="Nom" @save="refresh" class-name="limit150"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="subjectGroup" field="shortname" label="Nom curt" @save="refresh" class-name="limit100"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-text="subjectGroup.hours"></td>
-                        <td class="text-xs-left"> {{subjectGroup.start }} | {{ subjectGroup.end }}</td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell" v-text="subjectGroup.hours"></td>
+                        <td class="text-xs-left cell"> {{subjectGroup.start }} | {{ subjectGroup.end }}</td>
+                        <td class="text-xs-left cell">
                             <subject-groups-tags @refresh="refresh(false)" :subjectGroup="subjectGroup" :tags="dataTags" ></subject-groups-tags>
                         </td>
-                        <td class="text-xs-left" v-html="subjectGroup.formatted_created_at_diff" :title="subjectGroup.formatted_created_at"></td>
-                        <td class="text-xs-left" :title="subjectGroup.formatted_updated_at">{{subjectGroup.formatted_updated_at_diff}}</td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell" v-html="subjectGroup.formatted_created_at_diff" :title="subjectGroup.formatted_created_at"></td>
+                        <td class="text-xs-left cell" :title="subjectGroup.formatted_updated_at">{{subjectGroup.formatted_updated_at_diff}}</td>
+                        <td class="text-xs-left cell">
                             <changelog-loggable :loggable="subjectGroup"></changelog-loggable>
                             <fullscreen-dialog
                                     v-model="showDialog"
@@ -214,7 +213,7 @@ export default {
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       headers.push({ text: '#', value: 'number', width: '1%' })
-      headers.push({ text: 'Estudi', align: 'study_code', value: 'study_code' })
+      headers.push({ text: 'Estudi', value: 'study_code' })
       headers.push({ text: 'Codi', value: 'code' })
       headers.push({ text: 'Nom', value: 'name' })
       headers.push({ text: 'Nom curt', value: 'shortname' })
@@ -262,3 +261,12 @@ export default {
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 0 8px !important;
+    }
+    .cell {
+        padding: 0 8px !important;
+    }
+</style>
