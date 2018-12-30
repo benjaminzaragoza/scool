@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups;
 use App\Events\SubjectGroups\SubjectGroupNameUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Curriculum\SubjectGroups\SubjectGroupNameUpdate;
-use App\Models\Incident;
 use App\Models\SubjectGroup;
 
 /**
@@ -21,7 +20,7 @@ class SubjectGroupsNameController extends Controller
      * @param SubjectGroupNameUpdate $request
      * @param $tenant
      * @param SubjectGroup $subjectGroup
-     * @return Incident
+     * @return array
      */
     public function update(SubjectGroupNameUpdate $request, $tenant, SubjectGroup $subjectGroup)
     {

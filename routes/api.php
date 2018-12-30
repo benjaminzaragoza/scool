@@ -12,6 +12,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Studies\TaggedStudiesController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsNameController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsShortnameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupSubjectsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\TaggedSubjectGroupsController;

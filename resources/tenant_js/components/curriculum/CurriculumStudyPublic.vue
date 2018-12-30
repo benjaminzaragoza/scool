@@ -59,7 +59,14 @@
                             <v-card height="100%">
                                 <v-card-text>
                                     <strong>{{ subjectGroup.code }}</strong>
-                                    <inline-text-field-edit-dialog style="display:inline-block;width: auto;" v-if="$hasRole('CurriculumManager')" v-model="study.subjectGroups[index]" field="name" label="Nom"></inline-text-field-edit-dialog>
+                                    <inline-text-field-edit-dialog v-if="$hasRole('CurriculumManager')"
+                                            style="display:inline-block;width: auto;"
+                                            v-model="study.subjectGroups[index]"
+                                            field="name"
+                                            label="Nom"
+                                            @save="showMessage('Nom actualitzat correctament')"
+                                    >
+                                    </inline-text-field-edit-dialog>
                                     <span v-else>{{ subjectGroup.name }}</span>
                                     <br v-if="subjectGroup.subjects && subjectGroup.subjects.length > 1"/>
                                     Hores: {{ subjectGroup.hours }}
@@ -98,7 +105,7 @@ import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 export default {
   name: 'CurriculumStudyPublic',
   components: {
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
   },
   props: {
     study: {
@@ -112,6 +119,9 @@ export default {
         return subjectGroup.subjects.map(subjectGroup => subjectGroup['hours']).reduce((a, b) => a + b)
       }
       return 0
+    },
+    showMessage (message) {
+      this.$snackbar.showMessage(message)
     }
   }
 }
