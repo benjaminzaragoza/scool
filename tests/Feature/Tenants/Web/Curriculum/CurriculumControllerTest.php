@@ -130,7 +130,7 @@ class CurriculumControllerTest extends BaseTenantTest
                 $returnedSubjectGroups[0]['study_code'] === 'DAM';
         });
         $response->assertViewHas('courses', function ($returnedCourses) {
-            dump(count($returnedCourses));            return
+            return
                 count($returnedCourses) === 1 &&
                 $returnedCourses[0]['id'] === 1 &&
                 $returnedCourses[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&

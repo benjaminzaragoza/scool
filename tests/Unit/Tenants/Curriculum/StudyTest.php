@@ -305,6 +305,18 @@ class StudyTest extends TestCase
             'end' => '2018-06-01'
         ]);
 
+        Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Interfícies',
+            'code' =>  'DAM_MP7_UF1',
+            'number' => 1,
+            'subject_group_id' => $subjectGroup->id,
+            'study_id' => $study->id,
+            'hours' => 79,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01'
+        ]);
+
         $study->assignSubjectGroup($subjectGroup);
 
         $mappedStudy = $study->map();
@@ -344,9 +356,9 @@ class StudyTest extends TestCase
         $this->assertEquals('DAM_MP7',$mappedStudy['subjectGroups'][0]['code']);
 
         $this->assertCount(1, $mappedStudy['subjects']);
-        $this->assertEquals('Desenvolupament d’interfícies',$mappedStudy['subjects'][0]['name']);
+        $this->assertEquals('Disseny i implementació d’interfícies',$mappedStudy['subjects'][0]['name']);
         $this->assertEquals('Interfícies',$mappedStudy['subjects'][0]['shortname']);
-        $this->assertEquals('DAM_MP7',$mappedStudy['subjects'][0]['code']);
+        $this->assertEquals('DAM_MP7_UF1',$mappedStudy['subjects'][0]['code']);
 
 
         // TAGS
