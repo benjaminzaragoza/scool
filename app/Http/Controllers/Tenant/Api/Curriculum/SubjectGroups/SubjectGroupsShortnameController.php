@@ -15,7 +15,7 @@ use App\Models\SubjectGroup;
 class SubjectGroupsShortnameController extends Controller
 {
     /**
-     * Update study name.
+     * Update subjectGroup shortname.
      *
      * @param SubjectGroupShortnameUpdate $request
      * @param $tenant

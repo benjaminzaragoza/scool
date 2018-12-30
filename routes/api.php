@@ -16,7 +16,10 @@ use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsShortn
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupSubjectsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\TaggedSubjectGroupsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsNameController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsShortnameController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
@@ -303,6 +306,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/subjects','\\' . SubjectsController::class . '@index');
             Route::post('/subjects','\\' . SubjectsController::class . '@store');
             Route::delete('/subjects/{subject}','\\' . SubjectsController::class . '@destroy');
+
+            Route::put('/subjects/{subject}/code','\\' .  SubjectsCodeController::class . '@update');
+            Route::put('/subjects/{subject}/name','\\' .  SubjectsNameController::class . '@update');
+            Route::put('/subjects/{subject}/shortname','\\' .  SubjectsShortnameController::class . '@update');
 
             // subjectGroups
             Route::get('/subject_groups','\\' . SubjectGroupsController::class . '@index');

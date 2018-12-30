@@ -16,12 +16,12 @@ use App\Models\SubjectGroup;
 class SubjectGroupsCodeController extends Controller
 {
     /**
-     * Update study code.
+     * Update subjectGroup code.
      *
      * @param SubjectGroupCodeUpdate $request
      * @param $tenant
      * @param SubjectGroup $subjectGroup
-     * @return Incident
+     * @return array
      */
     public function update(SubjectGroupCodeUpdate $request, $tenant, SubjectGroup $subjectGroup)
     {

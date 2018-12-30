@@ -15,7 +15,7 @@ use App\Models\SubjectGroup;
 class SubjectGroupsNameController extends Controller
 {
     /**
-     * Update study name.
+     * Update subjectGroup name.
      *
      * @param SubjectGroupNameUpdate $request
      * @param $tenant
