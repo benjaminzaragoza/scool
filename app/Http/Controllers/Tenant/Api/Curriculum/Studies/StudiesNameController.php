@@ -20,8 +20,8 @@ class StudiesNameController extends Controller
      *
      * @param StudyNameUpdate $request
      * @param $tenant
-     * @param Incident $incident
-     * @return Incident
+     * @param Study $study
+     * @return array
      */
     public function update(StudyNameUpdate $request, $tenant, Study $study)
     {

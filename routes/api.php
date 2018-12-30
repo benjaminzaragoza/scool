@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesShortnameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesSubjectGroupsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController;
@@ -276,8 +278,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/studies','\\' . StudiesController::class . '@store');
             Route::delete('/studies/{study}','\\' . StudiesController::class . '@destroy');
 
-            Route::put('/studies/{study}/code','\\' . SubjectGroupsCodeController::class . '@update');
-            Route::put('/studies/{study}/name','\\' . SubjectGroupsNameController::class . '@update');
+            Route::put('/studies/{study}/code','\\' . StudiesCodeController::class . '@update');
+            Route::put('/studies/{study}/name','\\' . StudiesNameController::class . '@update');
             Route::put('/studies/{study}/shortname','\\' . StudiesShortnameController::class . '@update');
 
             Route::put('/studies/{study}/subject_groups_number','\\' . StudiesSubjectGroupsNumberController::class . '@update');

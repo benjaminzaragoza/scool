@@ -20,7 +20,7 @@ class SubjectGroupsNameController extends Controller
      *
      * @param SubjectGroupNameUpdate $request
      * @param $tenant
-     * @param Incident $incident
+     * @param SubjectGroup $subjectGroup
      * @return Incident
      */
     public function update(SubjectGroupNameUpdate $request, $tenant, SubjectGroup $subjectGroup)
