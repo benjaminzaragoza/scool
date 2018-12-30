@@ -66,6 +66,15 @@ class Study extends Model
     }
 
     /**
+     * @param $subject
+     */
+    public function assignSubject($subject)
+    {
+        $subject = is_object($subject) ? $subject : Subject::where('code',$subject)->firstorFail();
+        $this->subjects()->save($subject);
+    }
+
+    /**
      * Get the family record associated with the study.
      */
     public function family()

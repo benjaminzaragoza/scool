@@ -13,6 +13,11 @@
     - [ ] Quants de CFGS
   - [ ] Estudis cursos accés? quants 
   - Taula settings
+
+Al tenir la info d'estudis i estadístiques:
+- [ ] Boto afegir estudis: Mostri un confirm per confirmar si realment es vol crear un nou estudi si ja estan tots donats d'alta.
+En cas que es digui que si modificar el nombre màxim estudis
+- [ ] Més validacions al afegir etiquetes: confirms tipus? Segur que voleu assignar la etiqueta CFGM, ja hi ha x CFGM donats d'alta?
   
 Dashboard del cap d'estudis:
 - [ ] Estat global del currículum: complet o pendent alguna cosa?

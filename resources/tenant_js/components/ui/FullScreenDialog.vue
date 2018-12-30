@@ -2,7 +2,7 @@
     <span>
         <v-btn :flat="flat" icon :title="title" :color="color" dark class="ma-0" @click="toggle">
             <v-badge left overlap :color="badgeColor" v-if="badge">
-              <span slot="badge" v-text="badge">6</span>
+              <span slot="badge" v-text="badge"></span>
               <v-icon large v-text="icon"></v-icon>
             </v-badge>
             <v-icon v-else v-text="icon"></v-icon>

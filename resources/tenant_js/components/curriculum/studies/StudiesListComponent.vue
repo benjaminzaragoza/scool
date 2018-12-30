@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-toolbar color="blue darken-3">
+        <v-toolbar dense color="blue darken-3">
             <v-menu bottom>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -81,7 +81,7 @@
                 </v-layout>
             </v-card-title>
             <v-data-table
-                    class="px-0 mb-2 hidden-sm-and-down"
+                    class="hidden-sm-and-down"
                     :headers="headers"
                     :items="filteredStudies"
                     :search="search"
@@ -94,31 +94,39 @@
                     :loading="refreshing"
             >
                 <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                <template slot="headerCell" slot-scope="props" style="padding: 5px">
+                     {{ props.header.text }}
+                </template>
                 <template slot="items" slot-scope="{item: study}">
                     <tr :id="'study_row_' + study.id">
-                        <td class="text-xs-left" v-text="study.id"></td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell" v-text="study.id"></td>
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="study" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="study" field="name" label="Nom" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="study" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <study-department :study="study" @assigned="refresh"></study-department>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <study-family :study="study" @assigned="refresh"></study-family>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <study-tags @refresh="refresh(false)" :study="study"></study-tags>
                         </td>
-                        <td class="text-xs-left" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
-                        <td class="text-xs-left" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
+                            <study-completed :study="study"></study-completed>
+                        </td>
+                        <td class="text-xs-left cell" v-html="study.formatted_created_at_diff" :title="study.formatted_created_at"></td>
+                        <td class="text-xs-left cell" :title="study.formatted_updated_at">{{study.formatted_updated_at_diff}}</td>
+                        <td class="text-xs-left cell">
                             <changelog-loggable :loggable="study"></changelog-loggable>
+                            <study-subject-group-add :study="study"></study-subject-group-add>
+                            <study-subject-add :study="study"></study-subject-add>
                             <study-public-curriculum-show :study="study"></study-public-curriculum-show>
                             <fullscreen-dialog
                                     v-model="showDialog"
@@ -146,6 +154,9 @@ import StudyFamily from './StudyFamily'
 import StudyPublicCurriculumShow from './StudyPublicCurriculumShow'
 import StudyTags from './StudyTagsComponent'
 import StudyTagsSelect from './StudyTagsSelect'
+import StudySubjectGroupAdd from './StudySubjectGroupAdd'
+import StudySubjectAdd from './StudySubjectAdd'
+import StudyCompleted from './StudyCompleted'
 import InlineTextFieldEditDialog from '../../ui/InlineTextFieldEditDialog'
 import ChangelogLoggable from '../../changelog/ChangelogLoggable'
 import DepartmentSelectComponent from '../departments/DepartmentsSelectComponent'
@@ -173,7 +184,10 @@ export default {
     'family-select': FamilySelectComponent,
     'department-select': DepartmentSelectComponent,
     'study-public-curriculum-show': StudyPublicCurriculumShow,
-    'study-tags-select': StudyTagsSelect
+    'study-tags-select': StudyTagsSelect,
+    'study-subject-group-add': StudySubjectGroupAdd,
+    'study-subject-add': StudySubjectAdd,
+    'study-completed': StudyCompleted
   },
   data () {
     return {
@@ -215,6 +229,7 @@ export default {
       headers.push({ text: 'Departament', value: 'department_code' })
       headers.push({ text: 'Família', value: 'family_code' })
       headers.push({ text: 'Etiquetes', value: 'tags' })
+      headers.push({ text: 'Completat', value: 'completed' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })
@@ -261,3 +276,12 @@ export default {
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 0 8px !important;
+    }
+    .cell {
+        padding: 0 8px !important;
+    }
+</style>

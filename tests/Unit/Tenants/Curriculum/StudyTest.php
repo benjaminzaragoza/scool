@@ -204,6 +204,70 @@ class StudyTest extends TestCase
      * @test
      * @group curriculum
      */
+    public function assignSubject()
+    {
+        $department = Department::create([
+            'name' => "Departament d'Informàtica",
+            'shortname' => 'Informàtica',
+            'code' => 'INF',
+            'order' => 1
+        ]);
+
+        $family = Family::create([
+            'name' => 'Informàtica',
+            'code' => 'INF',
+        ]);
+
+        $study = Study::create([
+            'name' => 'Desenvolupament Aplicacions Multiplataforma',
+            'shortname' => 'Des. Aplicacions Multiplataforma',
+            'code' => 'DAM',
+            'department_id' => $department->id,
+            'family_id' => $family->id,
+            'subjects_number' => 14,
+            'subject_groups_number' => 33
+        ]);
+
+        $this->assertCount(0,$study->subjectGroups);
+
+        $subjectGroup = SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $study->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01'
+        ]);
+
+        $subject = Subject::firstOrCreate([
+            'name' => 'Disseny i implementació d’interfícies',
+            'shortname'=> 'Disseny i implementació d’interfícies',
+            'code' =>  'DAM_MP7_UF1',
+            'number' => 1,
+            'subject_group_id' => $subjectGroup->id,
+            'study_id' => $study->id,
+            'hours' => 79,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01'
+        ]);
+
+        $study->assignSubject($subject);
+
+        $study = $study->fresh();
+        $this->assertCount(1,$study->subjects);
+
+        $this->assertTrue($study->subjects[0]->is($subject));
+
+    }
+
+    /**
+     * @test
+     * @group curriculum
+     */
     public function map()
     {
         $department = Department::create([
@@ -278,6 +342,11 @@ class StudyTest extends TestCase
         $this->assertEquals('Desenvolupament d’interfícies',$mappedStudy['subjectGroups'][0]['name']);
         $this->assertEquals('Interfícies',$mappedStudy['subjectGroups'][0]['shortname']);
         $this->assertEquals('DAM_MP7',$mappedStudy['subjectGroups'][0]['code']);
+
+        $this->assertCount(1, $mappedStudy['subjects']);
+        $this->assertEquals('Desenvolupament d’interfícies',$mappedStudy['subjects'][0]['name']);
+        $this->assertEquals('Interfícies',$mappedStudy['subjects'][0]['shortname']);
+        $this->assertEquals('DAM_MP7',$mappedStudy['subjects'][0]['code']);
 
 
         // TAGS
