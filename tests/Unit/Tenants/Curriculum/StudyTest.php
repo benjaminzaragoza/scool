@@ -330,7 +330,7 @@ class StudyTest extends TestCase
             'shortname' => 'Des. Aplicacions Multiplataforma',
             'code' => 'DAM',
             'subjects_number' => 14,
-            'subject_groups_number' => 33
+            'subject_groups_number' => 33,
         ]);
 
         $mappedStudy = $study->mapSimple();

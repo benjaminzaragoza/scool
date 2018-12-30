@@ -3,6 +3,21 @@
 - [ ] A més vuetify està agafat de unpkg que a vegades falla
 - [ ] També moure fonts de Icones de Material i de Fonw awesome 
 
+# Currículum wizard inicial configuració|settings:
+
+- [ ] Preguntar el nombre d'estudis del centre
+- [ ] Preguntar pels tipus d'estudis i crear les estiquetes d'estudis que pertoquen
+  - [ ] Estudis LOE? EStudis LOGSE? quants
+  - [ ] Estudis FP? quants?
+    - [ ] Quants de CFGM?
+    - [ ] Quants de CFGS
+  - [ ] Estudis cursos accés? quants 
+  - Taula settings
+  
+Dashboard del cap d'estudis:
+- [ ] Estat global del currículum: complet o pendent alguna cosa?
+- [ ] Estadístiques nombre d'estudis per tipus i amb dades comparant la teòria i la realitat
+
 # Vista estudis
 - [ ] Estat d'un estudi (camp CALCULAT, no afegir cap camp estat ni res similar a base de dades)
   - [ ] Estat complet: estan donats d'alta tots els MPS indicats i totes les UFS
