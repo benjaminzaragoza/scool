@@ -14,6 +14,7 @@
             <li>Informat a Secretaria o iesebre@iesebre.com</li>
             <li>Llei: LOE/LOGSE -> TODO</li>
             <li>Etiquetes: CFGM/CFGS/Altres</li>
+            <li>Total hores: 2000</li>
         </ul>
 
         <v-layout row wrap mt-3>
@@ -54,7 +55,7 @@
                         </v-card>
                     </v-flex>
                     <template v-for="subjectGroup in study.subjectGroups">
-                        <v-flex xs4 text-xs-left>
+                        <v-flex xs4 text-xs-left :key="subjectGroup.id">
                             <v-card height="100%">
                                 <v-card-text><strong>{{ subjectGroup.code }}</strong> {{ subjectGroup.name }}
                                     <br v-if="subjectGroup.subjects && subjectGroup.subjects.length > 1"/>
@@ -67,14 +68,14 @@
                                 </v-card-text>
                             </v-card>
                         </v-flex>
-                        <v-flex xs7 text-xs-left>
+                        <v-flex xs7 text-xs-left :key="subjectGroup.id">
                             <v-card v-for="subject in subjectGroup.subjects" :key="subject.id" class="mb-1" :class="{ 'fill-height': subjectGroup.subjects && subjectGroup.subjects.length === 1 }">
                                 <v-card-text class="pa-2">
                                     <strong>{{ subject.code }}</strong> {{ subject.name }}
                                 </v-card-text>
                             </v-card>
                         </v-flex>
-                        <v-flex xs1>
+                        <v-flex xs1 :key="subjectGroup.id">
                             <v-card v-for="subject in subjectGroup.subjects" :key="subject.id" class="mb-1" :class="{ 'fill-height': subjectGroup.subjects && subjectGroup.subjects.length === 1 }">
                                 <v-card-text class="pa-2">
                                     {{ subject.hours }}
@@ -99,7 +100,10 @@ export default {
   },
   methods: {
     totalSubjectsHours (subjectGroup) {
-      return subjectGroup.subjects.map(subjectGroup => subjectGroup['hours']).reduce((a, b) => a + b)
+      if (subjectGroup.subjects) {
+        return subjectGroup.subjects.map(subjectGroup => subjectGroup['hours']).reduce((a, b) => a + b)
+      }
+      return 0
     }
   }
 }

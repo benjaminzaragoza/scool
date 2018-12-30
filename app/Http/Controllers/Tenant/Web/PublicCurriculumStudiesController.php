@@ -22,8 +22,7 @@ class PublicCurriculumStudiesController extends Controller
      */
     public function show(Request $request, $tenant, Study $study)
     {
-//        dd($study->name);
-        $study = collect($study->map());
+        $study = collect($study->mapForPublicView());
         return view('tenants.curriculum.public.studies.show', compact('study'));
     }
 }

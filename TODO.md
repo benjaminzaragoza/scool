@@ -23,15 +23,37 @@ Dashboard del cap d'estudis:
 - [ ] Estat global del currículum: complet o pendent alguna cosa?
 - [ ] Estadístiques nombre d'estudis per tipus i amb dades comparant la teòria i la realitat
 
+# ALTA MPS I UFS:
+- [ ] Wizard: un cop indicat el número de MPS -> Crei automàticament x MPS:
+  - [ ] El codi omplert automàticament
+  - [ ] El número UF omplert automàticament
+  - [ ] El nom pot ser temporalment el codi -> TODO
+  - [ ] Algún warning que indiqui hi ha alguna MP pendent posar nom correctament
+- Camp calculat completat d'un estudi:
+ - [ ] Hauria de comprovar més coses que nombre màxim UFS i MPS:
+   - [ ] Hores de l'estudi === Suma hores MPS
+   - [ ] Per cada MP -> Suma hores UFs === nombre hores MP
+   - [ ] Té un departament assignat
+   - [ ] Té una família assignada
+   - [ ] No hi ha cap MP o cap UF amb noms temporals (valor per defecte de la UF al crear-la)
+   
+   
 # Vista estudis
+- [ ] Implementar expand a datatable al fer click a un estudi es mostra el pla docent?
+- [ ] Cursos: número de cursos de l'estudi
+  - [ ] Camp a la base de dades
+  - [ ] Preguntar a l'afegir un estudi -> Preguntar el nombre de cursos -> Crear-los automàticament?
+  - [ ] Mostrar a la llista
 - [ ] Estat d'un estudi (camp CALCULAT, no afegir cap camp estat ni res similar a base de dades)
-  - [ ] Estat complet: estan donats d'alta tots els MPS indicats i totes les UFS
-  - [ ] Estat incomplet: falta algun MP o alguna UF
+  - [X] Estat complet: estan donats d'alta tots els MPS indicats i totes les UFS
+    - [ ] Tema cursos?
+  - [X] Estat incomplet: falta algun MP o alguna UF
   - [ ] Subestats: 1 Falta algun MP 2 Falta alguna UF
     - [ ] Boto afegir MP. Només si falta alguna MP per afegir
        - [ ] Mostrar formulari afegir MPs però amb l'estudi ja escollit
     - [ ] Boto afegir UF. Només si falta alguna UF per afegir
        - [ ] Mostrar formulari afegir UFs però amb l'estudi ja escollit
+       
 # TODO CURRICULUM
 - [ ] Tests unitaris
   - [ ] Mètode updateNumber i calculatenexNumber per UFs i per a MPS. Crear un test i refactoritzar

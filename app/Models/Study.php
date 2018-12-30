@@ -155,6 +155,43 @@ class Study extends Model
     /**
      * @return array
      */
+    public function mapForPublicView()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'shortname' => $this->shortname,
+            'code' => $this->code,
+            'subjects_number' => $this->subjects_number,
+            'subject_groups_number' => $this->subject_groups_number,
+            'completed' => $this->completed,
+            'api_uri' => $this->api_uri,
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'department_id' => optional($this->department)->id,
+            'department_name' => optional($this->department)->name,
+            'department_shortname' => optional($this->department)->shortname,
+            'department_code' => optional($this->department)->code,
+            'family_id' => optional($this->family)->id,
+            'family_name' => optional($this->family)->name,
+            'family_code' => optional($this->family)->code,
+            'tags' => map_collection($this->tags),
+            'full_search' => $this->full_search,
+
+            'subjectGroups' => map_collection($this->subjectGroups),
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function mapSimple()
     {
         return [
