@@ -73,7 +73,6 @@
                 </v-layout>
             </v-card-title>
             <v-data-table
-                    class="px-0 mb-2 hidden-sm-and-down"
                     :headers="headers"
                     :items="filteredSubjects"
                     :search="search"
@@ -88,24 +87,24 @@
                 <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                 <template slot="items" slot-scope="{item: subject}">
                     <tr :id="'subject_row_' + subject.id">
-                        <td class="text-xs-left" v-text="subject.id"></td>
-                        <td class="text-xs-left" v-text="subject.number"></td>
-                        <td class="text-xs-left" v-text="subject.study_code" :title="subject.study_id + ' ' + subject.study_name"></td>
-                        <td class="text-xs-left" v-text="subject.subject_group_code" :title="subject.subject_group_id + ' ' + subject.subject_group_name"></td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell" v-text="subject.id"></td>
+                        <td class="text-xs-left cell" v-text="subject.number"></td>
+                        <td class="text-xs-left cell" v-text="subject.study_code" :title="subject.study_id + ' ' + subject.study_name"></td>
+                        <td class="text-xs-left cell" v-text="subject.subject_group_code" :title="subject.subject_group_id + ' ' + subject.subject_group_name"></td>
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="subject" field="code" label="Codi" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="subject" field="name" label="Nom" @save="refresh" class-name="limit150"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="subject" field="shortname" label="Nom curt" @save="refresh" class-name="limit100"></inline-text-field-edit-dialog>
                         </td>
-                        <td class="text-xs-left" v-text="subject.hours"></td>
-                        <td class="text-xs-left"> {{subject.start }} | {{ subject.end }}</td>
-                        <td class="text-xs-left" v-html="subject.formatted_created_at_diff" :title="subject.formatted_created_at"></td>
-                        <td class="text-xs-left" :title="subject.formatted_updated_at">{{subject.formatted_updated_at_diff}}</td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-left cell" v-text="subject.hours"></td>
+                        <td class="text-xs-left cell"> {{subject.start }} | {{ subject.end }}</td>
+                        <td class="text-xs-left cell" v-html="subject.formatted_created_at_diff" :title="subject.formatted_created_at"></td>
+                        <td class="text-xs-left cell" :title="subject.formatted_updated_at">{{subject.formatted_updated_at_diff}}</td>
+                        <td class="text-xs-left cell">
                             <changelog-loggable :loggable="subject"></changelog-loggable>
                             <fullscreen-dialog
                                     v-model="showDialog"
@@ -229,3 +228,12 @@ export default {
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 0 8px !important;
+    }
+    .cell {
+        padding: 0 8px !important;
+    }
+</style>
