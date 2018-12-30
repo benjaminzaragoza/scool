@@ -59,6 +59,8 @@ class CurriculumControllerTest extends BaseTenantTest
             'order' => 2,
             'study_id' => $studies[0]->id
         ]);
+        initialize_subject_group_tags();
+
         $this->loginAsSuperAdmin();
         $response = $this->get('/curriculum');
         $response->assertSuccessful();
@@ -137,6 +139,16 @@ class CurriculumControllerTest extends BaseTenantTest
                 $returnedCourses[0]['code'] === '2DAM' &&
                 $returnedCourses[0]['order'] === 2 &&
                 $returnedCourses[0]['api_uri'] === 'courses';
+        });
+        $response->assertViewHas('subjectGroupTags', function ($returnedSubjectGroupTags) {
+            return
+                count($returnedSubjectGroupTags) === 4 &&
+                $returnedSubjectGroupTags[0]['id'] === 1 &&
+                $returnedSubjectGroupTags[0]['value'] === "Normal" &&
+                $returnedSubjectGroupTags[0]['description'] === "Mòdul normal" &&
+                $returnedSubjectGroupTags[0]['color'] === 'amber' &&
+                $returnedSubjectGroupTags[0]['icon'] === null &&
+                $returnedSubjectGroupTags[0]['api_uri'] === 'subject_group_tags';
         });
     }
 

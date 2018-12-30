@@ -47,6 +47,18 @@ export default {
     tags: {
       type: Array,
       required: true
+    },
+    courses: {
+      type: Array,
+      required: true
+    },
+    subjectGroups: {
+      type: Array,
+      required: true
+    },
+    subjectGroupTags: {
+      type: Array,
+      required: true
     }
   },
   created () {
@@ -54,6 +66,9 @@ export default {
     this.$store.commit(mutations.SET_DEPARTMENTS, this.departments)
     this.$store.commit(mutations.SET_FAMILIES, this.families)
     this.$store.commit(mutations.SET_STUDIES_TAGS, this.tags)
+    this.$store.commit(mutations.SET_COURSES, this.courses)
+    this.$store.commit(mutations.SET_SUBJECT_GROUPS, this.subjectGroups)
+    this.$store.commit(mutations.SET_SUBJECT_GROUP_TAGS, this.subjectGroupTags)
   }
 }
 </script>
