@@ -118,6 +118,7 @@ class Study extends Model
             'code' => $this->code,
             'subjects_number' => $this->subjects_number,
             'subject_groups_number' => $this->subject_groups_number,
+            'completed' => $this->completed,
             'api_uri' => $this->api_uri,
             'created_at' => $this->created_at,
             'created_at_timestamp' => $this->created_at_timestamp,
@@ -163,7 +164,8 @@ class Study extends Model
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
-            'full_search' => $this->full_search
+            'full_search' => $this->full_search,
+            'completed' => $this->completed
         ];
     }
 

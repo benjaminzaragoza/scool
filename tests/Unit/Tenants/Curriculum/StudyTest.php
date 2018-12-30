@@ -252,6 +252,7 @@ class StudyTest extends TestCase
         $this->assertEquals('DAM',$mappedStudy['code']);
         $this->assertEquals(14,$mappedStudy['subjects_number']);
         $this->assertEquals(33,$mappedStudy['subject_groups_number']);
+        $this->assertEquals(false,$mappedStudy['completed']);
 
         $this->assertEquals('studies',$mappedStudy['api_uri']);
 
@@ -330,7 +331,7 @@ class StudyTest extends TestCase
             'shortname' => 'Des. Aplicacions Multiplataforma',
             'code' => 'DAM',
             'subjects_number' => 14,
-            'subject_groups_number' => 33,
+            'subject_groups_number' => 33
         ]);
 
         $mappedStudy = $study->mapSimple();
@@ -342,6 +343,7 @@ class StudyTest extends TestCase
         $this->assertEquals('DAM',$mappedStudy['code']);
         $this->assertEquals(14,$mappedStudy['subjects_number']);
         $this->assertEquals(33,$mappedStudy['subject_groups_number']);
+        $this->assertEquals(false,$mappedStudy['completed']);
 
         $this->assertEquals('studies',$mappedStudy['api_uri']);
 
