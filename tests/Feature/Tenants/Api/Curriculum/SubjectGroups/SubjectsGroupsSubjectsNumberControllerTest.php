@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
+namespace Tests\Feature\Tenants\Api\Curriculum\SubjectGroups;
 
 use App\Events\SubjectGroups\SubjectGroupSubjectsNumberUpdated;
 use App\Models\Subject;

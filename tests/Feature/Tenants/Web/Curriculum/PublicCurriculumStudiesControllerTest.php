@@ -80,7 +80,6 @@ class PublicCurriculumStudiesControllerTest extends BaseTenantTest
 
         $response->assertViewIs('tenants.curriculum.public.studies.show');
         $response->assertViewHas('study', function ($returnedStudy) {
-            dump($returnedStudy['subjectGroups'][0]['subjects'][0]);
             return
                 $returnedStudy['name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
                 $returnedStudy['slug'] === 'desenvolupament-aplicacions-multiplataforma' &&

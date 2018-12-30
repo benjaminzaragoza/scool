@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
-use App\Events\Studies\StudyCodeUpdated;
+use App\Events\Studies\SubjectGroupCodeUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Curriculum\Studies\StudyCodeUpdate;
 use App\Models\Incident;
@@ -28,7 +28,7 @@ class StudiesCodeController extends Controller
         $oldStudy = $study->map(false);
         $study->code = $request->code;
         $study->save();
-        event(new StudyCodeUpdated($study, $oldStudy));
+        event(new SubjectGroupCodeUpdated($study, $oldStudy));
         return $study->map();
     }
 }

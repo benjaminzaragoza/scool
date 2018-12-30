@@ -54,10 +54,13 @@
                             <v-card-text class="pa-2 "><span class="subheading accent--text text--lighten-5">Hores</span></v-card-text>
                         </v-card>
                     </v-flex>
-                    <template v-for="subjectGroup in study.subjectGroups">
-                        <v-flex xs4 text-xs-left :key="subjectGroup.id">
+                    <template v-for="(subjectGroup,index) in study.subjectGroups">
+                        <v-flex xs4 text-xs-left :key="'subject_group' + subjectGroup.id">
                             <v-card height="100%">
-                                <v-card-text><strong>{{ subjectGroup.code }}</strong> {{ subjectGroup.name }}
+                                <v-card-text>
+                                    <strong>{{ subjectGroup.code }}</strong>
+                                    <inline-text-field-edit-dialog style="display:inline-block;width: auto;" v-if="$hasRole('CurriculumManager')" v-model="study.subjectGroups[index]" field="name" label="Nom"></inline-text-field-edit-dialog>
+                                    <span v-else>{{ subjectGroup.name }}</span>
                                     <br v-if="subjectGroup.subjects && subjectGroup.subjects.length > 1"/>
                                     Hores: {{ subjectGroup.hours }}
                                     <template v-if="$hasRole('CurriculumManager')">
@@ -68,14 +71,14 @@
                                 </v-card-text>
                             </v-card>
                         </v-flex>
-                        <v-flex xs7 text-xs-left :key="subjectGroup.id">
+                        <v-flex xs7 text-xs-left :key="'subject_group_subjects_' + subjectGroup.id">
                             <v-card v-for="subject in subjectGroup.subjects" :key="subject.id" class="mb-1" :class="{ 'fill-height': subjectGroup.subjects && subjectGroup.subjects.length === 1 }">
                                 <v-card-text class="pa-2">
                                     <strong>{{ subject.code }}</strong> {{ subject.name }}
                                 </v-card-text>
                             </v-card>
                         </v-flex>
-                        <v-flex xs1 :key="subjectGroup.id">
+                        <v-flex xs1 :key="'subject_group_subject_hours' + subjectGroup.id">
                             <v-card v-for="subject in subjectGroup.subjects" :key="subject.id" class="mb-1" :class="{ 'fill-height': subjectGroup.subjects && subjectGroup.subjects.length === 1 }">
                                 <v-card-text class="pa-2">
                                     {{ subject.hours }}
@@ -90,8 +93,13 @@
     </span>
 </template>
 <script>
+import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
+
 export default {
   name: 'CurriculumStudyPublic',
+  components: {
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+  },
   props: {
     study: {
       type: Object,

@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
-use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesShortnameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesSubjectGroupsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\TaggedStudiesController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsController;
+use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupsTagsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\SubjectGroupSubjectsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\SubjectGroups\TaggedSubjectGroupsController;
@@ -276,8 +276,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/studies','\\' . StudiesController::class . '@store');
             Route::delete('/studies/{study}','\\' . StudiesController::class . '@destroy');
 
-            Route::put('/studies/{study}/code','\\' . StudiesCodeController::class . '@update');
-            Route::put('/studies/{study}/name','\\' . StudiesNameController::class . '@update');
+            Route::put('/studies/{study}/code','\\' . SubjectGroupsCodeController::class . '@update');
+            Route::put('/studies/{study}/name','\\' . SubjectGroupsNameController::class . '@update');
             Route::put('/studies/{study}/shortname','\\' . StudiesShortnameController::class . '@update');
 
             Route::put('/studies/{study}/subject_groups_number','\\' . StudiesSubjectGroupsNumberController::class . '@update');
@@ -305,6 +305,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/subject_groups','\\' . SubjectGroupsController::class . '@index');
             Route::post('/subject_groups','\\' . SubjectGroupsController::class . '@store');
             Route::delete('/subject_groups/{subject_group}','\\' . SubjectGroupsController::class . '@destroy');
+
+            Route::put('/subject_groups/{subject_group}/code','\\' .  SubjectGroupsCodeController::class . '@update');
+            Route::put('/subject_groups/{subject_group}/name','\\' .  SubjectGroupsNameController::class . '@update');
+            Route::put('/subject_groups/{subject_group}/shortname','\\' .  SubjectGroupsShortnameController::class . '@update');
 
             // subjectGroups
             Route::get('/subjectGroups','\\' . SubjectGroupsController::class . '@index');

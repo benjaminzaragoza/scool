@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
-use App\Events\Studies\StudyCodeUpdated;
+use App\Events\Studies\SubjectGroupCodeUpdated;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -48,7 +48,7 @@ class StudiesCodeControllerTest extends BaseTenantTest {
             'code' => 'NOUCODIDAM'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyCodeUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(SubjectGroupCodeUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());
@@ -75,7 +75,7 @@ class StudiesCodeControllerTest extends BaseTenantTest {
             'code' => 'NOUCODIDAM'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyCodeUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(SubjectGroupCodeUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());

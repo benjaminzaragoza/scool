@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Subjects\Curriculum;
+namespace Tests\Feature\Tenants\Api\Curriculum\SubjectGroups;
 
 use App\Events\SubjectGroups\SubjectGroupDeleted;
 use App\Events\SubjectGroups\SubjectGroupStored;
