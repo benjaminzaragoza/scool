@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Web\Curriculum;
 
+use App\Models\Course;
+use App\Models\SubjectGroup;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -37,6 +39,26 @@ class CurriculumControllerTest extends BaseTenantTest
     public function show_curriculum_module()
     {
         $studies = create_sample_studies();
+        SubjectGroup::firstOrCreate([
+            'name' => 'Desenvolupament d’interfícies',
+            'shortname' => 'Interfícies',
+            'description' => 'Bla bla bla',
+            'code' =>  'DAM_MP7',
+            'number' => 7,
+            'study_id' => $studies[0]->id,
+            'hours' => 99,
+            'free_hours' => 0, // Lliure disposició
+            'week_hours' => 3,
+            'start' => '2017-09-15',
+            'end' => '2018-06-01',
+            'subjects_number' => 3
+        ]);
+        Course::firstOrCreate([
+            'code' => '2DAM',
+            'name' => 'Segon Curs Desenvolupament Aplicacions Multiplataforma',
+            'order' => 2,
+            'study_id' => $studies[0]->id
+        ]);
         $this->loginAsSuperAdmin();
         $response = $this->get('/curriculum');
         $response->assertSuccessful();
@@ -78,6 +100,43 @@ class CurriculumControllerTest extends BaseTenantTest
                 $returnedTags[0]['id'] === 1 &&
                 $returnedTags[0]['value'] === 'LOE' &&
                 $returnedTags[0]['description'] === 'Ley Orgànica de Educación';
+        });
+        $response->assertViewHas('subjectGroups', function ($returnedSubjectGroups) {
+            return
+                count($returnedSubjectGroups) === 1 &&
+                $returnedSubjectGroups[0]['id'] === 1 &&
+                $returnedSubjectGroups[0]['name'] === "Desenvolupament d’interfícies" &&
+                $returnedSubjectGroups[0]['shortname'] === "Interfícies" &&
+                $returnedSubjectGroups[0]['description'] === 'Bla bla bla' &&
+                $returnedSubjectGroups[0]['code'] === 'DAM_MP7' &&
+                $returnedSubjectGroups[0]['number'] === 7 &&
+                $returnedSubjectGroups[0]['hours'] === 99 &&
+                $returnedSubjectGroups[0]['free_hours'] === 99 &&
+                $returnedSubjectGroups[0]['week_hours'] === 99 &&
+                $returnedSubjectGroups[0]['start'] === '2017-09-15' &&
+                $returnedSubjectGroups[0]['end'] === '2018-06-01' &&
+                $returnedSubjectGroups[0]['api_uri'] === 'subject_groups' &&
+                $returnedSubjectGroups[0]['created_at'] !== null &&
+                $returnedSubjectGroups[0]['created_at_timestamp'] !== null &&
+                $returnedSubjectGroups[0]['formatted_created_at'] !== null &&
+                $returnedSubjectGroups[0]['formatted_created_at_diff'] !== null &&
+                $returnedSubjectGroups[0]['updated_at_timestamp'] !== null &&
+                $returnedSubjectGroups[0]['formatted_updated_at'] !== null &&
+                $returnedSubjectGroups[0]['formatted_updated_at_diff'] !== null &&
+
+                $returnedSubjectGroups[0]['study_id'] === 1 &&
+                $returnedSubjectGroups[0]['study_name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedSubjectGroups[0]['study_shortname'] === 'Des. Apps Multiplataforma' &&
+                $returnedSubjectGroups[0]['study_code'] === 'DAM';
+        });
+        $response->assertViewHas('courses', function ($returnedCourses) {
+            dump(count($returnedCourses));            return
+                count($returnedCourses) === 1 &&
+                $returnedCourses[0]['id'] === 1 &&
+                $returnedCourses[0]['name'] === 'Segon Curs Desenvolupament Aplicacions Multiplataforma' &&
+                $returnedCourses[0]['code'] === '2DAM' &&
+                $returnedCourses[0]['order'] === 2 &&
+                $returnedCourses[0]['api_uri'] === 'courses';
         });
     }
 

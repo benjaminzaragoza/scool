@@ -278,13 +278,15 @@ export default {
       this.dataSubjectGroup = this.subjectGroups.find(subjectGroup => { return subjectGroup.id === this.dataSubjectGroup.id })
     },
     updatedNumber () {
-      this.number = this.calculateNextNumber(this.dataSubjectGroup)
-      if (this.dataSubjectGroup.subjects_number) {
-        if (this.dataSubjectGroup.subjects.length >= this.dataSubjectGroup.subjects_number) {
-          this.$snackbar.showError("Aquest estudi ja té tots els Mòduls Professionals donats d'alta")
+      if (this.dataSubjectGroup) {
+        this.number = this.calculateNextNumber(this.dataSubjectGroup)
+        if (this.dataSubjectGroup.subjects_number) {
+          if (this.dataSubjectGroup.subjects.length >= this.dataSubjectGroup.subjects_number) {
+            this.$snackbar.showError("Aquest estudi ja té tots els Mòduls Professionals donats d'alta")
+          }
         }
+        this.$nextTick(this.$refs.name.focus)
       }
-      this.$nextTick(this.$refs.name.focus)
     },
     calculateNextNumber (dataSubjectGroup) {
       if (dataSubjectGroup.subjects_number) {

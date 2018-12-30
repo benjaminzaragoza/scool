@@ -6,7 +6,7 @@
               <span slot="badge" v-text="number" class="caption"></span>
             </v-badge>
         </v-btn>
-        <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="toggle">
+        <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="dialog = false">
             <v-toolbar dense color="blue darken-3">
                 <v-btn icon dark @click.native="dialog = false">
                     <v-icon>close</v-icon>

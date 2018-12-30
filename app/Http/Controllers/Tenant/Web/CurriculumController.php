@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Curriculum\CurriculumIndex;
+use App\Models\Course;
 use App\Models\Department;
 use App\Models\Family;
 use App\Models\Study;
 use App\Models\StudyTag;
+use App\Models\SubjectGroup;
 
 /**
  * Class CurriculumController.
@@ -28,6 +30,8 @@ class CurriculumController extends Controller
         $departments = map_collection(Department::all());
         $families = map_collection(Family::with('studies','studies.family')->get());
         $tags = map_collection(StudyTag::all());
-        return view('tenants.curriculum.index', compact('studies','departments','families','tags'));
+        $subjectGroups = map_collection(SubjectGroup::all());
+        $courses = map_collection(Course::all());
+        return view('tenants.curriculum.index', compact('studies','departments','families','tags','subjectGroups','courses'));
     }
 }

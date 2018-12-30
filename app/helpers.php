@@ -8932,6 +8932,8 @@ if (! function_exists('create_sample_studies')) {
         $smx->assignDepartment($depsanitat);
         $smx->assignTag($loe);
         $smx->assignTag($fp);
+
+        return collect([$dam,$asix,$smx]);
     }
 }
 
