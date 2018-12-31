@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-12-09 18:39:21.
+    * Generated on 2018-12-31 15:59:37.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -16,7 +16,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -195,7 +195,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -374,7 +374,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -553,7 +553,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -732,7 +732,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -911,7 +911,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -1090,7 +1090,7 @@ namespace PHPSTORM_META {
         'Adldap\Laravel\Resolvers\ResolverInterface' => \Adldap\Laravel\Resolvers\UserResolver::class,
         'AdminLTE' => \Acacha\AdminLTETemplateLaravel\AdminLTE::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
-        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+        'BeyondCode\LaravelWebSockets\Apps\AppProvider' => \App\LaravelWebSockets\ConfigAppProvider::class,
         'BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManager::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,

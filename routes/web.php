@@ -49,7 +49,11 @@ Route::bind('module', function($value, $route)
     }
 });
 
-//dump(config('app.domain'));
+// TODO ESBORRAR. Més exemples a: https://github.com/ivanvermeyen/laravel-google-drive-demo/blob/master/routes/web.php
+Route::get('put', function() {
+    Storage::cloud()->put('testPROVADDD.txt', 'Hello World PROVA DDD');
+    return 'File was saved to Google Drive';
+});
 
 Route::domain('{tenant}.' . config('app.domain'))->group(function () {
     Route::group(['middleware' => ['tenant','tenancy.enforce']], function () {

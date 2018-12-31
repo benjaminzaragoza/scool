@@ -197,7 +197,8 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-        App\Providers\IncidentsServiceProvider::class
+        App\Providers\IncidentsServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class
 
     ],
 

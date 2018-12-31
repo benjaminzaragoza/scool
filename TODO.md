@@ -1,3 +1,23 @@
+# Google Drive
+
+- [ ] Curriculum
+  - [ ] Crear una carpeta currículum que tingui tots els fitxers associats a curriculum:
+  - [ ] Creada com a carpeta compartida (només cal el id -> setting the curriculum) amb tot els Institut o tohotm -> public
+  - [ ] Ara està fet amb l'usuari sergitur@iesebre.com -> Canviar service account?
+  - [ ] Utilizar sistema de fitxers de Laravel per guardar els fitxers a Google Drive -> estarà automàticament compartir com a nómés lectura a totho
+  - [ ] Es podria fer públic absolutament a tothom -> ? Links públics a fitxers -> com obtenir? Tampoc cal pq es pot programar en PHP i major control
+  - [ ] Estructura
+    - [ ] Carpeta SCOOL
+      - [ ] Carpeta Curriculum
+        - [ ] Una carpeta per cada estudi -> Al crear un estudi -> crear la carpeta A més si s'han aportat fitxers guardar-los a la carpeta
+        - [ ] Al eliminar Estudi -> canviar carpeta
+        - [ ] Al modificar estudi (codi) -> modificar nom carpeta (serà el codi)
+        - [ ] Operacions cares en temps -> queues 
+        - [ ] Fitxers a guardar: imatge púplica apareix a l'estudi
+        - [ ] Qualsevol altre fitxer públic com PDF a lleis, etc
+        - [ ] Admin, cap estudis i caps de departament poden modificar els fitxers (a la app) i també es pot configurar al Drive
+- [ ] No funciona teams drives ???
+
 # CSS VUETIFY i FONTS
 - [ ] Estan instal·lats com a CDN externs. Instal·lació local: https://vuetifyjs.com/en/getting-started/quick-start
 - [ ] A més vuetify està agafat de unpkg que a vegades falla
