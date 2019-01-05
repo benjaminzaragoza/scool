@@ -1,9 +1,7 @@
 <?php
 
-namespace Tests\Feature\Web\Curriculum;
+namespace Tests\Feature\Web\Positions;
 
-use App\Models\Course;
-use App\Models\SubjectGroup;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -39,7 +37,6 @@ class PositionsControllerTest extends BaseTenantTest
     public function show_positions_module()
     {
         initialize_positions();
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin();
         $response = $this->get('/positions');
         $response->assertSuccessful();

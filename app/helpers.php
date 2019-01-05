@@ -642,6 +642,15 @@ if (!function_exists('positions_manager_permissions')) {
     {
         return [
             'positions.index',
+            'positions.store',
+            'positions.show',
+            'positions.update',
+            'positions.destroy',
+            'positions.tags.index',
+            'positions.tags.store',
+            'positions.tags.show',
+            'positions.tags.update',
+            'positions.tags.destroy',
         ];
     }
 }
@@ -863,6 +872,18 @@ if (!function_exists('initialize_curriculum_manager_role')) {
     {
         $role = Role::firstOrCreate(['name' => 'CurriculumManager']);
         $permissions = curriculum_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_positions_manager_role')) {
+    function initialize_positions_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => 'PositionsManager']);
+        $permissions = positions_manager_permissions();
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
             $role->givePermissionTo($permission);
@@ -4495,14 +4516,16 @@ if (!function_exists('initialize_positions')) {
     function initialize_positions()
     {
         Position::firstOrCreate([
+            'code' => 'TICTAC',
             'name' => 'Coordinador TIC/TAC',
+            'shortname' => 'Coord. TIC'
         ]);
 
         Position::firstOrCreate([
+            'code' => 'DIRE',
             'name' => 'Director',
+            'shortname' => 'Director',
         ]);
-
-        // TODO
     }
 }
 
@@ -8115,6 +8138,17 @@ digital",
             'end' => $mp_end_date
         ]);
 
+    }
+}
+
+if (!function_exists('create_sample_position')) {
+    function create_sample_position()
+    {
+        return Position::firstOrCreate([
+            'code' => 'TICTAC',
+            'name' => 'Coordinador TIC/TAC',
+            'shortname' => 'Coord. TIC'
+        ]);
     }
 }
 

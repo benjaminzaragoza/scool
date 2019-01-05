@@ -33,6 +33,8 @@ class Position extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'shortname' => $this->shortname,
+            'code' => $this->code,
             'api_uri' => $this->api_uri,
             'created_at' => $this->created_at,
             'created_at_timestamp' => $this->created_at_timestamp,

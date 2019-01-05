@@ -46,6 +46,12 @@ trait CanLogin
         return $this->loginAsUsingRole($guard, 'UsersManager');
     }
 
+    public function loginAsPositionsManager($guard = 'web')
+    {
+        initialize_positions_manager_role();
+        return $this->loginAsUsingRole($guard, 'PositionsManager');
+    }
+
     public function loginAsPeopleManager($guard = 'web')
     {
         initialize_people_manager_role();

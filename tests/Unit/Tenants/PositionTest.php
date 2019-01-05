@@ -57,13 +57,17 @@ class PositionsTest extends TestCase
     public function map()
     {
         $position = Position::create([
-            'name' => 'Director'
+            'name' => 'Director',
+            'shortname' => 'Director',
+            'code' => 'DIRE'
         ]);
 
         $mappedPosition = $position->map();
 
         $this->assertSame(1,$mappedPosition['id']);
         $this->assertSame('Director',$mappedPosition['name']);
+        $this->assertSame('Director',$mappedPosition['shortname']);
+        $this->assertSame('DIRE',$mappedPosition['code']);
         $this->assertSame('positions',$mappedPosition['api_uri']);
         $this->assertNotNull($mappedPosition['created_at']);
         $this->assertNotNull($mappedPosition['updated_at']);

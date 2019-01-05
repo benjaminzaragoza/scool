@@ -108,7 +108,7 @@ export default {
   components: {
     'fullscreen-dialog': FullScreenDialog,
     // 'position-delete': PositionDelete,
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     // 'changelog-loggable': ChangelogLoggable,
   },
   data () {
@@ -148,7 +148,9 @@ export default {
   props: {
     positions: {
       type: Array,
-      required: true
+      default: function () {
+        return undefined
+      }
     },
     position: {
       type: Object,
@@ -173,13 +175,8 @@ export default {
     }
   },
   created () {
-    if (this.positions === undefined) {
-      console.log('OH OH!')
-      this.fetch()
-    } else {
-      console.log('OK!')
-      this.$store.commit(mutations.SET_POSITIONS, this.positions)
-    }
+    if (this.positions === undefined) this.fetch()
+    else this.$store.commit(mutations.SET_POSITIONS, this.positions)
     this.filters = Object.keys(filters)
     if (this.position) {
       this.showDialog = this.position.id

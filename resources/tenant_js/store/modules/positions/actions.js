@@ -12,5 +12,25 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.ADD_POSITION ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.store(incident).then(response => {
+        context.commit(mutations.ADD_POSITION, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.DELETE_POSITION ] (context, incident) {
+    return new Promise((resolve, reject) => {
+      api.delete(incident).then(response => {
+        context.commit(mutations.DELETE_POSITION, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }

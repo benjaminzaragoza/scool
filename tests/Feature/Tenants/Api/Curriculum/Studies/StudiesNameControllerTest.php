@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
-use App\Events\Studies\StudyNameUpdated;
+use App\Events\Studies\PositionNameUpdated;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -48,7 +48,7 @@ class StudiesNameControllerTest extends BaseTenantTest {
             'name' => 'NOUNOM'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyNameUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(PositionNameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());
@@ -75,7 +75,7 @@ class StudiesNameControllerTest extends BaseTenantTest {
             'name' => 'NOUNOM'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyNameUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(PositionNameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());

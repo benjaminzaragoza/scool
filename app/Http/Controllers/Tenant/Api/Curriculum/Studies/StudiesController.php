@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
 use App\Events\Studies\StudyStored;
-use App\Http\Requests\Curriculum\Studies\StudyIndex;
-use App\Http\Requests\Curriculum\Studies\StudyShow;
-use App\Http\Requests\Curriculum\Studies\StudyStore;
-use App\Http\Requests\Curriculum\Studies\StudyUpdate;
-use App\Http\Requests\Curriculum\Studies\StudyDestroy;
+use App\Http\Requests\Curriculum\Studies\PositionIndex;
+use App\Http\Requests\Curriculum\Studies\PositionShow;
+use App\Http\Requests\Curriculum\Studies\PositionStore;
+use App\Http\Requests\Curriculum\Studies\PositionUpdate;
+use App\Http\Requests\Curriculum\Studies\PositionDestroy;
 use App\Http\Controllers\Controller;
 use App\Models\Study;
 
@@ -21,10 +21,10 @@ class StudiesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param StudyIndex $request
+     * @param PositionIndex $request
      * @return mixed
      */
-    public function index(StudyIndex $request)
+    public function index(PositionIndex $request)
     {
         return map_collection(Study::all());
     }
@@ -32,10 +32,10 @@ class StudiesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StudyStore $request
+     * @param PositionStore $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StudyStore $request)
+    public function store(PositionStore $request)
     {
         $study = Study::create([
             'name' => $request->name,
@@ -53,12 +53,12 @@ class StudiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param StudyShow $request
+     * @param PositionShow $request
      * @param $tenant
      * @param Study $study
      * @return array
      */
-    public function show(StudyShow $request, $tenant,Study $study)
+    public function show(PositionShow $request, $tenant, Study $study)
     {
 //        event(new IncidentShowed($incident));
 //        return $incident->map();
@@ -67,13 +67,13 @@ class StudiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param StudyDestroy $request
+     * @param PositionDestroy $request
      * @param $tenant
      * @param Study $incident
      * @return Study
      * @throws \Exception
      */
-    public function destroy(StudyDestroy $request, $tenant, Study $study)
+    public function destroy(PositionDestroy $request, $tenant, Study $study)
     {
 //        $oldIncident = $study->map(false);
         $study->delete();

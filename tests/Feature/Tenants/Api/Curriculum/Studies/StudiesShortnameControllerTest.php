@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Curriculum\Studies;
 
-use App\Events\Studies\StudyShortnameUpdated;
+use App\Events\Studies\PositionShortnameUpdated;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -49,7 +49,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
             'shortname' => 'NOUNOMCURT'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyShortnameUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(PositionShortnameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());
@@ -76,7 +76,7 @@ class StudiesShortnameControllerTest extends BaseTenantTest {
             'shortname' => 'NOUNOMCURT'
         ]);
         $response->assertSuccessful();
-        Event::assertDispatched(StudyShortnameUpdated::class,function ($event) use ($study){
+        Event::assertDispatched(PositionShortnameUpdated::class,function ($event) use ($study){
             return $event->study->is($study);
         });
         $result = json_decode($response->getContent());

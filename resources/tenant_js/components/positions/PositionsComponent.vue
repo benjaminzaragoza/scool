@@ -1,6 +1,6 @@
 <template>
     <span id="curriculum_component">
-        <floating-add v-model="dialog" title="Nou estudi">
+        <floating-add v-model="dialog" title="Nou càrrec">
             <position-add @close="dialog = false"></position-add>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>

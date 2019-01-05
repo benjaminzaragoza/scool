@@ -1,3 +1,17 @@
+# Positions
+
+- [ ] Dashboard -> pàgina principal usuari normal -> Comprovar si té algún rol assignat-> no? Que pugui demanar un rol
+  - [ ] Lo mateix per reclamar un càrrec
+  - [ ] Els usuaris configurats (settings) per a rebre notificacions de reclamacions de rols/càrrecs reben una notificació
+  - [ ] Mostrar assignacions de rols pendents/aprovar -> Boto aprovar assignació
+  - [ ] Al assinar un càrrect rol que l'usuari rebi una notificació/email
+- [ ] Dashboard -> pàgina usuari admin o positionsmanager
+  - [ ] Mostrar càrrecs no deletable (imprescindibles com cap estudis) que no tenen cap profe assignat
+  - [ ] Assignar usuaris a un càrrec
+- Càrrecs:
+  - [ ] Poden tenir o no rols assignats -> 1 càrrec -> n rols
+  - [ ] De moment fer les assignacions Càrreccs -> Rols hardcoded   
+
 # Google Drive
 
 - [ ] Curriculum

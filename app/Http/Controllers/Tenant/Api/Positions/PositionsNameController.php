@@ -13,7 +13,7 @@ use App\Models\Study;
  *
  * @package App\Http\Controllers\Tenant\Api
  */
-class StudiesNameController extends Controller
+class PositionsNameController extends Controller
 {
     /**
      * Update study name.
