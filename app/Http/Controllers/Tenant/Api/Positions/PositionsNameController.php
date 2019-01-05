@@ -1,34 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
+namespace App\Http\Controllers\Tenant\Api\Positions;
 
-use App\Events\Studies\PositionNameUpdated;
+use App\Events\Positions\PositionNameUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Curriculum\Studies\PositionNameUpdate;
-use App\Models\Incident;
-use App\Models\Study;
+use App\Http\Requests\Positions\PositionNameUpdate;
+use App\Models\Position;
 
 /**
- * Class StudiesNameController.
+ * Class PositionsNameController.
  *
  * @package App\Http\Controllers\Tenant\Api
  */
 class PositionsNameController extends Controller
 {
     /**
-     * Update study name.
+     * Update position name.
      *
      * @param PositionNameUpdate $request
      * @param $tenant
-     * @param Study $study
+     * @param Position $position
      * @return array
      */
-    public function update(PositionNameUpdate $request, $tenant, Study $study)
+    public function update(PositionNameUpdate $request, $tenant, Position $position)
     {
-        $oldStudy = $study->map(false);
-        $study->name = $request->name;
-        $study->save();
-        event(new PositionNameUpdated($study, $oldStudy));
-        return $study->map();
+        $oldPosition = $position->map(false);
+        $position->name = $request->name;
+        $position->save();
+        event(new PositionNameUpdated($position, $oldPosition));
+        return $position->map();
     }
 }

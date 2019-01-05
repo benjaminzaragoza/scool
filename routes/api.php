@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Tenant\Api\Curriculum\Studies\PositionsNameController;
-use App\Http\Controllers\Tenant\Api\Curriculum\Studies\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
@@ -29,6 +27,8 @@ use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
+use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
+use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
