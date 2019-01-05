@@ -80,8 +80,8 @@
                         <td class="text-xs-left cell" v-html="position.formatted_created_at_diff" :title="position.formatted_created_at"></td>
                         <td class="text-xs-left cell" :title="position.formatted_updated_at">{{position.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left cell">
-                          ACTIONS
-                            <!--<position-delete :position="position" v-if="$hasRole('PositionsManager')"></position-delete>-->
+                            <changelog-loggable :loggable="position"></changelog-loggable>
+                            <position-delete :position="position" v-if="$hasRole('PositionsManager')"></position-delete>
                         </td>
                     </tr>
                 </template>
@@ -94,6 +94,8 @@
 <script>
 import FullScreenDialog from '../ui/FullScreenDialog'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
+import PositionDelete from './PositionDelete'
+import ChangelogLoggable from '../changelog/ChangelogLoggable'
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 
@@ -107,9 +109,9 @@ export default {
   name: 'PositionsListComponent',
   components: {
     'fullscreen-dialog': FullScreenDialog,
-    // 'position-delete': PositionDelete,
+    'position-delete': PositionDelete,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
-    // 'changelog-loggable': ChangelogLoggable,
+    'changelog-loggable': ChangelogLoggable
   },
   data () {
     return {
