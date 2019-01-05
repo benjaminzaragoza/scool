@@ -46,19 +46,9 @@ class PositionsControllerTest extends BaseTenantTest
 
         $response->assertViewIs('tenants.positions.index');
         $response->assertViewHas('positions', function ($returnedPositions) {
-            dump($returnedPositions);
             return
-                count($returnedPositions) === 4 &&
-                $returnedPositions[0]['name'] === 'Desenvolupament Aplicacions Multiplataforma' &&
-                $returnedPositions[0]['shortname'] === 'Des. Apps Multiplataforma' &&
-                $returnedPositions[0]['code'] === "DAM" &&
-                $returnedPositions[0]['created_at'] !== null &&
-                $returnedPositions[0]['created_at_timestamp'] !== null &&
-                $returnedPositions[0]['formatted_created_at'] !== null &&
-                $returnedPositions[0]['formatted_created_at_diff'] !== null &&
-                $returnedPositions[0]['updated_at_timestamp'] !== null &&
-                $returnedPositions[0]['formatted_updated_at'] !== null &&
-                $returnedPositions[0]['formatted_updated_at_diff'] !== null;
+                count($returnedPositions) === 2 &&
+                $returnedPositions[0]['name'] === 'Coordinador TIC/TAC';
         });
     }
 

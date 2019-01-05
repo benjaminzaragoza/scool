@@ -774,7 +774,8 @@ if (!function_exists('scool_roles')) {
             'PeopleManager',
             'Superadmin',
             'Curriculum',
-            'CurriculumManager'
+            'CurriculumManager',
+            'PositionsManager'
         ];
 
     }
