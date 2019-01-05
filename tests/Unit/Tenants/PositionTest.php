@@ -49,4 +49,19 @@ class PositionsTest extends TestCase
 
         $this->assertTrue($position->is(Position::findByName('Director')));
     }
+
+    /**
+     * @test
+     * @group curriculum
+     */
+    public function map()
+    {
+        $position = Position::create([
+            'name' => 'Director'
+        ]);
+
+        $mappedPosition = $position->map();
+
+        $this->assertSame(1,$mappedPosition['id']);
+    }
 }

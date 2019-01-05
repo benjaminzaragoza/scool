@@ -23,6 +23,8 @@ class GoogleDriveServiceProvider extends ServiceProvider
     {
         \Storage::extend('google', function($app, $config) {
 
+            // https://github.com/googleapis/google-api-php-client#authentication-with-service-accounts
+
             // TODO Dinamically get file from tenant
             $credentials_file = storage_path('app/gsuite_service_accounts/scool-07eed0b50a6f.json');
             $client = new Google_Client();

@@ -637,10 +637,20 @@ if (!function_exists('moodle_manager_permissions')) {
     }
 }
 
+if (!function_exists('positions_manager_permissions')) {
+    function positions_manager_permissions()
+    {
+        return [
+            'positions.index',
+        ];
+    }
+}
+
 if (!function_exists('curriculum_manager_permissions')) {
     function curriculum_manager_permissions()
     {
         return [
+            'curriculum.index',
             'studies.index',
             'studies.store',
             'studies.show',
@@ -779,6 +789,7 @@ if (!function_exists('scool_roles_permissions')) {
             'PeopleManager' => people_manager_permissions(),
             'Curriculum' => curriculum_permissions(),
             'CurriculumManager' => curriculum_manager_permissions(),
+            'PositionsManager' => positions_manager_permissions(),
         ];
 
     }

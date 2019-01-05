@@ -19,6 +19,7 @@ class CreateTenantPositionsTable extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->boolean('deletable')->default(true);
             $table->timestamps();
         });
 

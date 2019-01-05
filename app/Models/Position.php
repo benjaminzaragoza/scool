@@ -23,4 +23,12 @@ class Position extends Model
     {
         return static::where('name','=',$name)->first();
     }
+
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
+    }
 }
