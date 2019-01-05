@@ -21,7 +21,7 @@ class PositionsController extends Controller
      */
     public function index(PositionsIndex $request)
     {
-        $positions = map_collection(Position::all());
+        $positions = map_collection(Position::with('users')->get());
         return view('tenants.positions.index', compact('positions'));
     }
 }

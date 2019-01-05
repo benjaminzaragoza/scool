@@ -86,7 +86,6 @@ class PositionsTest extends TestCase
         $position = $position->fresh();
         $mappedPosition = $position->map();
         $this->assertCount(1,$mappedPosition['users']);
-        dump($mappedPosition['users'][0]);
         $this->assertCount(1,$mappedPosition['users']);
         $this->assertEquals(1,$mappedPosition['users'][0]['id']);
         $this->assertEquals($user->name,$mappedPosition['users'][0]['name']);
