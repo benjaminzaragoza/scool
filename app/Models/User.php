@@ -579,7 +579,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
-     * Assignar una posició a un usuari
+     * Assignar un càrrec a un usuari
      *
      * @param $position
      * @return $this
@@ -587,6 +587,19 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function assignPosition($position)
     {
         $this->positions()->save($position);
+        return $this;
+    }
+
+    /**
+     * Dessasignar un càrrec a un usuari
+     *
+     * @param $position
+     * @return $this
+     */
+    public function removePosition($position)
+    {
+        $position = is_object($position) ? $position->id : $position;
+        $this->positions()->detach($position);
         return $this;
     }
 

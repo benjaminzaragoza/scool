@@ -28,6 +28,8 @@ class CreateTenantPositionsTable extends Migration
         Schema::create('position_user', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('position_id')->nullable();
+            $table->unique(['user_id', 'position_id']);
+            $table->timestamps();
         });
     }
 

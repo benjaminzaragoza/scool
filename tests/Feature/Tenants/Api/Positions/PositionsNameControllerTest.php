@@ -34,7 +34,7 @@ class PositionsNameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function can_update_study_name()
     {
@@ -61,11 +61,11 @@ class PositionsNameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function manager_can_update_study_name()
     {
-        $this->loginAsCurriculumManager('api');
+        $this->loginAsPositionsManager('api');
 
         $study = create_sample_study();
 
@@ -88,7 +88,7 @@ class PositionsNameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function regular_user_cannot_update_study_name()
     {
@@ -102,7 +102,7 @@ class PositionsNameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function guest_user_cannot_update_study_name()
     {

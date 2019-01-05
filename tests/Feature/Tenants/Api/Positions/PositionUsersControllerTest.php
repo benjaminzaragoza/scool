@@ -3,6 +3,7 @@
 namespace Tests\Feature\Tenants\Api\Positions;
 
 use App\Events\Positions\PositionStored;
+use App\Events\Positions\PositionUserDeleted;
 use App\Events\Positions\PositionUserStored;
 use App\Models\Position;
 use App\Models\User;
@@ -157,28 +158,26 @@ class PositionUsersControllerTest extends BaseTenantTest
      * @test
      * @group positions
      */
-    public function can_store_positions_validation()
+    public function can_remove_user_from_positions()
     {
-        $this->loginAsSuperAdmin('api');
-        $response = $this->json('POST', '/api/v1/positions', []);
-        $response->assertStatus(422);
-    }
-
-    /**
-     * @test
-     * @group positions
-     */
-    public function can_delete_positions()
-    {
+        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $position = create_sample_position();
+        $user = factory(User::class)->create();
+        Event::fake();
 
-        $response = $this->json('DELETE','/api/v1/positions/' . $position->id);
+        $response =  $this->json('DELETE','/api/v1/positions/' . $position->id . '/users/' . $user->id);
+        $response->assertSuccessful();
 
         $response->assertSuccessful();
         $position = $position->fresh();
         $this->assertNull($position);
+
+        Event::assertDispatched(PositionUserDeleted::class,function ($event) use ($position, $user){
+            return $event->position->is(Position::findOrFail($position->id)) &&
+                $event->user->is(User::findOrFail($user->id));
+        });
     }
 
     /**
@@ -190,12 +189,19 @@ class PositionUsersControllerTest extends BaseTenantTest
         $this->loginAsPositionsManager('api');
 
         $position = create_sample_position();
+        $user = factory(User::class)->create();
+        Event::fake();
 
         $response = $this->json('DELETE','/api/v1/positions/' . $position->id);
 
         $response->assertSuccessful();
         $position = $position->fresh();
         $this->assertNull($position);
+
+        Event::assertDispatched(PositionUserDeleted::class,function ($event) use ($position, $user){
+            return $event->position->is(Position::findOrFail($position->id)) &&
+                $event->user->is(User::findOrFail($user->id));
+        });
     }
 
     /**

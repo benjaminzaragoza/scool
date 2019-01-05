@@ -699,6 +699,20 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function can_remove_position()
+    {
+        $user = factory(User::class)->create();
+        $user->assignPosition($position = Position::firstOrCreate([
+            'name' => 'Director/a'
+        ]));
+        $this->assertCount(1,$user->positions);
+
+        $result = $user->removePosition($position);
+        $user = $user->fresh();
+        $this->assertCount(0, $user->positions);
+    }
+
+    /** @test */
     public function can_check_if_user_is_teacher()
     {
         $user = factory(User::class)->create();

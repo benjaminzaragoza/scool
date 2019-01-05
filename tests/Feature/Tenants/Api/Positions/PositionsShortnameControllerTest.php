@@ -34,7 +34,7 @@ class PositionsShortnameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function can_update_position_shortname()
     {
@@ -62,7 +62,7 @@ class PositionsShortnameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function manager_can_update_position_shortname()
     {
@@ -89,7 +89,7 @@ class PositionsShortnameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function regular_user_cannot_update_position_shortname()
     {
@@ -103,7 +103,7 @@ class PositionsShortnameControllerTest extends BaseTenantTest {
 
     /**
      * @test
-     * @group curriculum
+     * @group positions
      */
     public function guest_user_cannot_update_position_shortname()
     {
