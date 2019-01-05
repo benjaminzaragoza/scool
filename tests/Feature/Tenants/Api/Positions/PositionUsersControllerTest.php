@@ -184,19 +184,21 @@ class PositionUsersControllerTest extends BaseTenantTest
      * @test
      * @group positions
      */
-    public function positions_manager_can_delete_positions()
+    public function positions_manager_can_remove_user_from_positions()
     {
         $this->loginAsPositionsManager('api');
 
         $position = create_sample_position();
         $user = factory(User::class)->create();
+        $user->assignPosition($position);
+        $user = $user->fresh();
+        $this->assertCount(1, $position->users);
         Event::fake();
 
-        $response = $this->json('DELETE','/api/v1/positions/' . $position->id);
-
+        $response =  $this->json('DELETE','/api/v1/positions/' . $position->id . '/users/' . $user->id);
         $response->assertSuccessful();
         $position = $position->fresh();
-        $this->assertNull($position);
+        $this->assertCount(0, $position->users);
 
         Event::assertDispatched(PositionUserDeleted::class,function ($event) use ($position, $user){
             return $event->position->is(Position::findOrFail($position->id)) &&
@@ -213,8 +215,9 @@ class PositionUsersControllerTest extends BaseTenantTest
         $this->login('api');
 
         $position = create_sample_position();
+        $user = factory(User::class)->create();
 
-        $response = $this->json('DELETE','/api/v1/positions/' . $position->id);
+        $response =  $this->json('DELETE','/api/v1/positions/' . $position->id . '/users/' . $user->id);
 
         $response->assertStatus(403);
     }
@@ -225,9 +228,10 @@ class PositionUsersControllerTest extends BaseTenantTest
      */
     public function guest_user_cannot_delete_positions()
     {
-       $position = create_sample_position();
+        $position = create_sample_position();
+        $user = factory(User::class)->create();
 
-        $response = $this->json('DELETE','/api/v1/positions/' . $position->id);
+        $response =  $this->json('DELETE','/api/v1/positions/' . $position->id . '/users/' . $user->id);
 
         $response->assertStatus(401);
     }
