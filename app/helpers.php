@@ -1308,6 +1308,12 @@ if (!function_exists('initialize_menus')) {
         ]);
 
         Menu::firstOrCreate([
+            'text' => 'Càrrecs',
+            'href' => '/positions',
+            'role' => 'PositionsManager'
+        ]);
+
+        Menu::firstOrCreate([
             'text' => 'Moodle',
             'href' => '/moodle',
             'role' => 'MoodleManager,UsersManager'

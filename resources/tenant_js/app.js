@@ -123,6 +123,10 @@ window.Vue.component('curriculum-study-public', require('./components/curriculum
 window.Vue.component('subjects', require('./components/curriculum/subjects/SubjectsComponent'))
 window.Vue.component('subject-groups', require('./components/curriculum/subjectGroups/SubjectGroupsComponent'))
 
+// Positions
+window.Vue.component('positions', require('./components/positions/PositionsComponent'))
+
+
 window.Vuetify = Vuetify
 
 window.Vue.use(window.Vuetify, {

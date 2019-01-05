@@ -14,6 +14,7 @@ import courses from './modules/courses'
 import studies from './modules/studies'
 import subjects from './modules/subjects'
 import subjectGroups from './modules/subjectGroups'
+import positions from './modules/positions'
 
 Vue.use(Vuex)
 
@@ -34,7 +35,8 @@ export default new Vuex.Store({
     studies,
     courses,
     subjects,
-    subjectGroups
+    subjectGroups,
+    positions
   },
   strict: debug
 })

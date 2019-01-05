@@ -63,5 +63,15 @@ class PositionsTest extends TestCase
         $mappedPosition = $position->map();
 
         $this->assertSame(1,$mappedPosition['id']);
+        $this->assertSame('Director',$mappedPosition['name']);
+        $this->assertSame('positions',$mappedPosition['api_uri']);
+        $this->assertNotNull($mappedPosition['created_at']);
+        $this->assertNotNull($mappedPosition['updated_at']);
+        $this->assertNotNull($mappedPosition['created_at_timestamp']);
+        $this->assertNotNull($mappedPosition['updated_at_timestamp']);
+        $this->assertNotNull($mappedPosition['formatted_created_at']);
+        $this->assertNotNull($mappedPosition['formatted_updated_at']);
+        $this->assertNotNull($mappedPosition['formatted_created_at_diff']);
+        $this->assertNotNull($mappedPosition['formatted_updated_at_diff']);
     }
 }
