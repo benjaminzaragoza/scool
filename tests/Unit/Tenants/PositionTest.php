@@ -69,6 +69,7 @@ class PositionsTest extends TestCase
         $this->assertSame('Director',$mappedPosition['shortname']);
         $this->assertSame('DIRE',$mappedPosition['code']);
         $this->assertSame('positions',$mappedPosition['api_uri']);
+
         $this->assertNotNull($mappedPosition['created_at']);
         $this->assertNotNull($mappedPosition['updated_at']);
         $this->assertNotNull($mappedPosition['created_at_timestamp']);
@@ -77,5 +78,18 @@ class PositionsTest extends TestCase
         $this->assertNotNull($mappedPosition['formatted_updated_at']);
         $this->assertNotNull($mappedPosition['formatted_created_at_diff']);
         $this->assertNotNull($mappedPosition['formatted_updated_at_diff']);
+        $this->assertCount(0,$mappedPosition['users']);
+
+        $user = factory(User::class)->create();
+        $user->assignPosition($position);
+
+        $position = $position->fresh();
+        $mappedPosition = $position->map();
+        $this->assertCount(1,$mappedPosition['users']);
+        dump($mappedPosition['users'][0]);
+        $this->assertCount(1,$mappedPosition['users']);
+        $this->assertEquals(1,$mappedPosition['users'][0]['id']);
+        $this->assertEquals($user->name,$mappedPosition['users'][0]['name']);
+
     }
 }

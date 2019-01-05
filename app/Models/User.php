@@ -643,6 +643,34 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * Map simpe
+     * @return array
+     */
+    public function mapSimple()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
+            'email' => $this->email,
+            'mobile' => $this->mobile,
+            'photo' => $this->photo,
+            'photo_hash' => $this->photo_hash,
+            'email_verified_at' => $this->email_verified_at,
+            'last_login' => $this->last_login,
+            'last_login_ip' => $this->last_login_ip,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'hashid' => $this->hashid,
+            'full_search' => $this->full_search
+        ];
+    }
+
+    /**
      * Map
      * @return array
      */

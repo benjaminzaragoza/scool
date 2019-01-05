@@ -18,6 +18,14 @@ class Position extends Model
     protected $guarded = [];
 
     /**
+     * The users that have this position.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
      * Find by name.
      *
      * @param $name
@@ -44,6 +52,8 @@ class Position extends Model
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+
+            'users' => map_simple_collection($this->users)
         ];
     }
 }

@@ -909,6 +909,73 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function mapSimple()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+
+        $mappedUser = $user->mapSimple();
+
+        $this->assertEquals(1,$mappedUser['id']);
+        $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
+        $this->assertFalse($mappedUser['isSuperAdmin']);
+        $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
+        $this->assertNull($mappedUser['email_verified_at']);
+        $this->assertEquals('654789524',$mappedUser['mobile']);
+        $this->assertNull($mappedUser['last_login']);
+        $this->assertNull($mappedUser['last_login_ip']);
+        $this->assertInstanceOf(Carbon::class,$mappedUser['created_at']);
+        $this->assertInstanceOf(Carbon::class,$mappedUser['updated_at']);
+        $this->assertEquals($mappedUser['created_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_created_at']);
+        $this->assertEquals($mappedUser['updated_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_updated_at']);
+        $this->assertEquals($mappedUser['created_at']->timestamp,$mappedUser['created_at_timestamp']);
+        $this->assertEquals($mappedUser['updated_at']->timestamp,$mappedUser['updated_at_timestamp']);
+        $this->assertFalse($mappedUser['isSuperAdmin']);
+        $this->assertEquals('MX',$mappedUser['hashid']);
+        $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$mappedUser['full_search']);
+
+        //All Permissions i Permissions
+        Permission::create(['name' => 'task.store']);
+        Permission::create(['name' => 'task.update']);
+        Permission::create(['name' => 'task.destroy']);
+
+        Cache::shouldReceive('rememberForever')
+            ->andReturn(Permission::all());
+        $user = factory(User::class)->create();
+
+        $user->givePermissionTo('task.store');
+        $user->givePermissionTo('task.update');
+        $mappedUser = $user->map();
+
+        $this->assertCount(2,$mappedUser['permissions']);
+        $this->assertEquals('task.store',$mappedUser['permissions'][0]);
+        $this->assertEquals('task.update',$mappedUser['permissions'][1]);
+
+        $this->assertCount(3,$mappedUser['all_permissions']);
+        $this->assertEquals('task.store',$mappedUser['all_permissions']->toArray()[0]['name']);
+        $this->assertEquals('task.update',$mappedUser['all_permissions']->toArray()[1]['name']);
+
+
+        //Roles
+        Role::create(['name' => 'Manager']);
+        Role::create(['name' => 'Student']);
+        Role::create(['name' => 'Teacher']);
+
+        $user = factory(User::class)->create();
+
+        $user->assignRole('Manager');
+        $user->assignRole('Student');
+        $mappedUser = $user->map();
+
+        $this->assertCount(2,$mappedUser['roles']);
+        $this->assertEquals('Manager',$mappedUser['roles'][0]);
+        $this->assertEquals('Student',$mappedUser['roles'][1]);
+    }
+
+    /** @test */
     public function assignGoogleUser()
     {
         $user = factory(User::class)->create();
