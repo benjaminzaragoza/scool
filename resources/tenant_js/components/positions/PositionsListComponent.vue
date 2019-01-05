@@ -77,6 +77,12 @@
                         <td class="text-xs-left cell">
                             <inline-text-field-edit-dialog v-model="position" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
+                        <td class="text-xs-left cell">
+                            <position-users :position="position" @assigned="refresh"></position-users>
+                        </td>
+                        <td class="text-xs-left cell">
+                            <position-resource @refresh="refresh(false)" :position="position"></position-resource>
+                        </td>
                         <td class="text-xs-left cell" v-html="position.formatted_created_at_diff" :title="position.formatted_created_at"></td>
                         <td class="text-xs-left cell" :title="position.formatted_updated_at">{{position.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left cell">
@@ -95,6 +101,8 @@
 import FullScreenDialog from '../ui/FullScreenDialog'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import PositionDelete from './PositionDelete'
+import PositionUsers from './PositionUsers'
+import PositionResource from './PositionResource'
 import ChangelogLoggable from '../changelog/ChangelogLoggable'
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
@@ -110,6 +118,8 @@ export default {
   components: {
     'fullscreen-dialog': FullScreenDialog,
     'position-delete': PositionDelete,
+    'position-users': PositionUsers,
+    'position-resource': PositionResource,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'changelog-loggable': ChangelogLoggable
   },
@@ -141,6 +151,8 @@ export default {
       headers.push({ text: 'Codi', value: 'code' })
       headers.push({ text: 'Nom', value: 'name' })
       headers.push({ text: 'Nom curt', value: 'shortname' })
+      headers.push({ text: 'Usuari/Usuaris', value: 'users' })
+      headers.push({ text: 'A càrrec de', value: 'resource' })
       headers.push({ text: 'Creada', value: 'created_at_timestamp' })
       headers.push({ text: 'Última modificació', value: 'updated_at_timestamp' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })

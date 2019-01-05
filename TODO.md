@@ -9,9 +9,16 @@
   - [ ] Mostrar càrrecs no deletable (imprescindibles com cap estudis) que no tenen cap profe assignat
   - [ ] Assignar usuaris a un càrrec
 - Càrrecs:
+  - [ ] No poder eliminar càrrecs deltables = false
   - [ ] Poden tenir o no rols assignats -> 1 càrrec -> n rols
+    - [ ] assignRole to position
   - [ ] De moment fer les assignacions Càrreccs -> Rols hardcoded   
-
+  - [ ] Usuari/Usuaris que tenen un càrrec
+  - [ ] Càrrecs/positions associats a algun recurs -> relació polimorfica:
+    - [ ] Cap de departament -> Departament. Al crear un departament -> crear el càrrec
+    - [ ] Departament grans tenen rol ajuda al cap de departament
+    - [ ] Tutor -> Grup de classe. Al crear un grup de classe -> crear el càrrec
+  
 # Google Drive
 
 - [ ] Curriculum
