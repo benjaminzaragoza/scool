@@ -90,6 +90,11 @@ export default {
     },
     existingUsers (existingUsers) {
       this.dataExistingUsers = existingUsers
+    },
+    adding (adding) {
+      if (!adding && this.userAddDialog) {
+        this.userAddDialog = false
+      }
     }
   },
   methods: {

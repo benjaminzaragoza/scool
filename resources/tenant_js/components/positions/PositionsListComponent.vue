@@ -78,7 +78,7 @@
                             <inline-text-field-edit-dialog v-model="position" field="shortname" label="Nom curt" @save="refresh"></inline-text-field-edit-dialog>
                         </td>
                         <td class="text-xs-left cell">
-                            <position-users :position="position" @assigned="refresh"></position-users>
+                            <position-users :position="position" @assigned="refresh" @unassigned="refresh"></position-users>
                         </td>
                         <td class="text-xs-left cell">
                             <position-resource @refresh="refresh(false)" :position="position"></position-resource>
