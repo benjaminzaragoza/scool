@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\Tenant\Api\Curriculum\Studies\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\PositionsShortnameController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
+use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesShortnameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesSubjectGroupsNumberController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyDepartmentController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudyFamilyController;
@@ -24,6 +27,7 @@ use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
+use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
@@ -278,13 +282,13 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/git/info','\\' . GitController::class . '@index');
 
             // Studies
-            Route::get('/studies','\\' . PositionsController::class . '@index');
-            Route::post('/studies','\\' . PositionsController::class . '@store');
-            Route::delete('/studies/{study}','\\' . PositionsController::class . '@destroy');
+            Route::get('/studies','\\' . StudiesController::class . '@index');
+            Route::post('/studies','\\' . StudiesController::class . '@store');
+            Route::delete('/studies/{study}','\\' . StudiesController::class . '@destroy');
 
-            Route::put('/studies/{study}/code','\\' . PositionsCodeController::class . '@update');
-            Route::put('/studies/{study}/name','\\' . PositionsNameController::class . '@update');
-            Route::put('/studies/{study}/shortname','\\' . PositionsShortnameController::class . '@update');
+            Route::put('/studies/{study}/code','\\' . StudiesCodeController::class . '@update');
+            Route::put('/studies/{study}/name','\\' . StudiesNameController::class . '@update');
+            Route::put('/studies/{study}/shortname','\\' . StudiesShortnameController::class . '@update');
 
             Route::put('/studies/{study}/subject_groups_number','\\' . StudiesSubjectGroupsNumberController::class . '@update');
 

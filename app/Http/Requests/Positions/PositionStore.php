@@ -30,9 +30,7 @@ class PositionStore extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'shortname' => 'required',
-            'code' => 'required'
+            'name' => 'required'
         ];
     }
 }

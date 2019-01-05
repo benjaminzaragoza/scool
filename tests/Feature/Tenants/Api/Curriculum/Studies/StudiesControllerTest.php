@@ -41,6 +41,7 @@ class StudiesControllerTest extends BaseTenantTest
      */
     public function can_list_studies()
     {
+        $this->withoutExceptionHandling();
         create_sample_studies();
         $this->loginAsSuperAdmin('api');
 

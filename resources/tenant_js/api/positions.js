@@ -5,13 +5,13 @@ export default {
     return axios.get('/api/v1/positions')
   },
   store (position) {
-    return axios.post('/api/v1/studies', {
+    return axios.post('/api/v1/positions', {
       'name': position.name,
       'shortname': position.shortname,
       'code': position.code
     })
   },
   delete (position) {
-    return axios.delete('/api/v1/studies/' + position.id)
+    return axios.delete('/api/v1/positions/' + position.id)
   }
 }

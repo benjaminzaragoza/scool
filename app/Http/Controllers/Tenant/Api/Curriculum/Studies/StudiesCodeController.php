@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Tenant\Api\Curriculum\Studies;
 
-use App\Events\Studies\PositionCodeUpdated;
+use App\Events\Studies\StudyCodeUpdated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Curriculum\Studies\PositionCodeUpdate;
+use App\Http\Requests\Curriculum\Studies\StudyCodeUpdate;
 use App\Models\Study;
 
 /**
@@ -17,17 +17,17 @@ class StudiesCodeController extends Controller
     /**
      * Update study code.
      *
-     * @param PositionCodeUpdate $request
+     * @param StudyCodeUpdate $request
      * @param $tenant
      * @param Study $study
      * @return array
      */
-    public function update(PositionCodeUpdate $request, $tenant, Study $study)
+    public function update(StudyCodeUpdate $request, $tenant, Study $study)
     {
         $oldStudy = $study->map(false);
         $study->code = $request->code;
         $study->save();
-        event(new PositionCodeUpdated($study, $oldStudy));
+        event(new StudyCodeUpdated($study, $oldStudy));
         return $study->map();
     }
 }
