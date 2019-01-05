@@ -575,7 +575,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function positions()
     {
-        return $this->belongsToMany(Position::class);
+        return $this->belongsToMany(Position::class)->withTimestamps();
     }
 
     /**

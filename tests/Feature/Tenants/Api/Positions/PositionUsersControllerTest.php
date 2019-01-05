@@ -160,19 +160,19 @@ class PositionUsersControllerTest extends BaseTenantTest
      */
     public function can_remove_user_from_positions()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $position = create_sample_position();
         $user = factory(User::class)->create();
+        $user->assignPosition($position);
+        $user = $user->fresh();
+        $this->assertCount(1, $position->users);
         Event::fake();
 
         $response =  $this->json('DELETE','/api/v1/positions/' . $position->id . '/users/' . $user->id);
         $response->assertSuccessful();
-
-        $response->assertSuccessful();
         $position = $position->fresh();
-        $this->assertNull($position);
+        $this->assertCount(0, $position->users);
 
         Event::assertDispatched(PositionUserDeleted::class,function ($event) use ($position, $user){
             return $event->position->is(Position::findOrFail($position->id)) &&
