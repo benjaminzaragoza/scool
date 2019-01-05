@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Web;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Positions\PositionsIndex;
 use App\Models\Position;
+use App\Models\User;
 
 /**
  * Class PositionsController.
@@ -22,6 +23,7 @@ class PositionsController extends Controller
     public function index(PositionsIndex $request)
     {
         $positions = map_collection(Position::with('users')->get());
-        return view('tenants.positions.index', compact('positions'));
+        $users = map_simple_collection(User::all());
+        return view('tenants.positions.index', compact('positions','users'));
     }
 }

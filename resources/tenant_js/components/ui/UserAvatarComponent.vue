@@ -106,6 +106,7 @@ export default {
     },
     change () {
       if (this.editable) this.$refs.file.click()
+      this.$emit('click')
     },
     remove () {
       this.deleting = true

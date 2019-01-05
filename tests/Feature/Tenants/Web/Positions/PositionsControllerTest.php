@@ -37,7 +37,7 @@ class PositionsControllerTest extends BaseTenantTest
     public function show_positions_module()
     {
         initialize_positions();
-        $this->loginAsSuperAdmin();
+        $user = $this->loginAsSuperAdmin();
         $response = $this->get('/positions');
         $response->assertSuccessful();
 
@@ -45,7 +45,17 @@ class PositionsControllerTest extends BaseTenantTest
         $response->assertViewHas('positions', function ($returnedPositions) {
             return
                 count($returnedPositions) === 2 &&
-                $returnedPositions[0]['name'] === 'Coordinador TIC/TAC';
+                $returnedPositions[0]['name'] === 'Coordinador TIC/TAC' &&
+                $returnedPositions[0]['shortname'] === 'Coord. TIC' &&
+                $returnedPositions[0]['api_uri'] === 'positions' &&
+                $returnedPositions[0]['users'] !== null &&
+                $returnedPositions[0]['shortname'] === 'Coord. TIC' &&
+                $returnedPositions[0]['code'] === 'TICTAC';
+        });
+        $response->assertViewHas('users', function ($returnedUsers) use ($user) {
+            return
+                count($returnedUsers) === 1 &&
+                $returnedUsers[0]['name'] === $user->name;
         });
     }
 

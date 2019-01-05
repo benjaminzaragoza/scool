@@ -1,8 +1,13 @@
 <template>
     <span>
-        <v-chip small label :color="user.color" text-color="white" v-for="(user,key) in positionUsers" :key="user.id" close v-model="close[key]">
-            <v-icon left v-text="user.icon"></v-icon>{{ user.value }}
-        </v-chip>
+        <user-avatar class="mr-2" :hash-id="user.hashid"
+                     :alt="user.name"
+                     v-if="user.hashid"
+                     v-for="user in dataExistingUsers"
+                     :key="user.id"
+                     @click="remove(user)"
+        ></user-avatar>
+
         <v-progress-circular
                 size="16"
                 v-if="removing"
@@ -24,7 +29,7 @@
           </v-card-text>
             <v-card-actions>
             <v-btn flat link @click="userAddDialog=false">Tancar</v-btn>
-            <v-btn color="success" flat @click="add()" :loading="adding" :disabled="adding || newUser === null">Assignar</v-btn>
+            <v-btn color="success" flat @click="add" :loading="adding" :disabled="adding || newUser === null">Assignar</v-btn>
           </v-card-actions>
           </v-card>
         </v-dialog>
@@ -32,12 +37,14 @@
 </template>
 
 <script>
-import UsersSelect from '../users/UsersSelect'
+import UsersSelect from './UsersSelectComponent'
+import UserAvatar from '../ui/UserAvatarComponent'
 
 export default {
   name: 'UserAvatarList',
   components: {
-    'users-select': UsersSelect
+    'users-select': UsersSelect,
+    'user-avatar': UserAvatar
   },
   data () {
     return {
@@ -47,7 +54,7 @@ export default {
       userAddDialog: false,
       userRemoveDialog: false,
       close: [],
-      positionUsers: [],
+      dataExistingUsers: this.existingUsers,
       dataUsers: []
     }
   },
@@ -56,9 +63,11 @@ export default {
       type: Array,
       required: false
     },
-    position: {
-      type: Object,
-      required: true
+    existingUsers: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   computed: {
@@ -70,46 +79,19 @@ export default {
     users (users) {
       this.dataUsers = users
     },
-    position: {
-      handler: function (newPosition) {
-        this.sync(newPosition.users)
-      },
-      deep: true
-    },
-    close (close) {
-      let userObjToRemove
-      if (this.positionUsers) {
-        userObjToRemove = this.positionUsers[close.indexOf(false)]
-      }
-      if (userObjToRemove && this.$hasRole('PositionsManager')) {
-        this.remove(userObjToRemove)
-      }
+    existingUsers (existingUsers) {
+      this.dataExistingUsers = existingUsers
     }
   },
   methods: {
-    add () {
-      this.adding = true
-      window.axios.post('/api/v1/positions/' + this.position.id + '/users/' + this.newUser.id, {}).then(() => {
-        this.$emit('refresh')
-        this.adding = false
-        this.userAddDialog = false
-        this.newUser = null
-      }).catch(error => {
-        this.$snackbar.showError(error)
-        this.adding = false
-      })
+    add (user) {
+      this.$emit('add', user)
     },
-    remove (user) {
-      this.removing = true
-      const url = '/api/v1/positions/' + this.position.id + '/users/' + user.id
-      window.axios.delete(url).then(() => {
-        this.$emit('refresh')
-        this.removing = false
-        this.userRemoveDialog = false
-      }).catch(error => {
-        this.$snackbar.showError(error)
-        this.removing = false
-      })
+    async remove (user) {
+      let res = await this.$confirm('Segur que voleu treure aquest usuari del càrrec?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      if (res) {
+        this.$emit('deleted', user)
+      }
     },
     showAddDialog () {
       this.userAddDialog = true
@@ -120,7 +102,6 @@ export default {
   },
   created () {
     this.dataUsers = this.users ? this.users : this.storeUsers
-    this.positionUsers = this.position.users
   }
 }
 </script>
