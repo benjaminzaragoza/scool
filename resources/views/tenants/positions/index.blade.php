@@ -3,5 +3,6 @@
 @section('content')
     <positions
             :positions="{{ $positions }}"
+            :users="{{ $users }}"
     ></positions>
 @endsection

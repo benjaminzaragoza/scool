@@ -33,10 +33,15 @@ export default {
     positions: {
       type: Array,
       required: true
+    },
+    users: {
+      type: Array,
+      required: true
     }
   },
   created () {
     this.$store.commit(mutations.SET_POSITIONS, this.positions)
+    this.$store.commit(mutations.SET_USERS, this.users)
   }
 }
 </script>

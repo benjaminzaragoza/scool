@@ -1,5 +1,5 @@
 <template>
-    <user-avatar-list :existing-users="position.users" @added="add" @deleted="remove"></user-avatar-list>
+    <user-avatar-list :existing-users="position.users" @added="add" @deleted="remove" role="PositionsManager"></user-avatar-list>
 </template>
 
 <script>
@@ -17,9 +17,9 @@ export default {
     }
   },
   methods: {
-    add () {
+    add (user) {
       this.adding = true
-      window.axios.post('/api/v1/positions/' + this.position.id + '/users/' + this.newUser.id, {}).then(() => {
+      window.axios.post('/api/v1/positions/' + this.position.id + '/users/' + user, {}).then(() => {
         this.$emit('refresh')
         this.adding = false
         this.userAddDialog = false

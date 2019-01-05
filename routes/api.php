@@ -29,6 +29,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
+use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -351,6 +352,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/positions/{position}/name','\\' . PositionsNameController::class . '@update');
             Route::put('/positions/{position}/shortname','\\' . PositionsShortnameController::class . '@update');
 
+            Route::post('/positions/{position}/users/{user}','\\' . PositionUsersController::class . '@store');
+            Route::delete('/positions/{position}/users/{user}','\\' . PositionUsersController::class . '@destroy');
         });
 
         Route::group(['prefix' => 'v1'], function () {

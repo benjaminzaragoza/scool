@@ -14,9 +14,12 @@
                 indeterminate
                 color="primary"
         ></v-progress-circular>
-        <v-btn v-role="'PositionsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
-          <v-icon>add</v-icon>
-        </v-btn>
+        <template v-if="role">
+            <v-btn v-role="role" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
+              <v-icon>add</v-icon>
+            </v-btn>
+        </template>
+
         <v-dialog v-model="userAddDialog" max-width="500px">
           <v-card>
             <v-card-text>
@@ -48,17 +51,19 @@ export default {
   },
   data () {
     return {
-      removing: false,
       newUser: null,
-      adding: false,
       userAddDialog: false,
-      userRemoveDialog: false,
-      close: [],
       dataExistingUsers: this.existingUsers,
       dataUsers: []
     }
   },
   props: {
+    adding: {
+      type: Boolean
+    },
+    removing: {
+      type: Boolean
+    },
     users: {
       type: Array,
       required: false
@@ -68,6 +73,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    role: {
+      type: String,
+      default: null
     }
   },
   computed: {
@@ -84,8 +93,8 @@ export default {
     }
   },
   methods: {
-    add (user) {
-      this.$emit('add', user)
+    add () {
+      this.$emit('added', this.newUser)
     },
     async remove (user) {
       let res = await this.$confirm('Segur que voleu treure aquest usuari del càrrec?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
@@ -95,9 +104,6 @@ export default {
     },
     showAddDialog () {
       this.userAddDialog = true
-    },
-    showRemoveDialog () {
-      this.userRemoveDialog = true
     }
   },
   created () {
