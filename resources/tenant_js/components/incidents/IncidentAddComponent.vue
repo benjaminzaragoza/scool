@@ -17,7 +17,7 @@
                 ></v-text-field>
             </v-flex>
             <v-flex xs12>
-                <v-tabs :v-model="1" slider-color="teal">
+                <v-tabs :v-model="1" slider-color="secondary">
                     <v-tab :key="1" ripple> Descripció </v-tab>
                     <v-tab :key="2" ripple> Previsualitació</v-tab>
                     <v-tab-item :key="1">
@@ -46,7 +46,7 @@
         <template v-if="$hasRole('IncidentsManager')">
             <v-btn @click="add(false)"
                    id="add_incident_button"
-                   color="teal"
+                   color="secondary"
                    class="white--text"
                    :loading="adding"
                    :disabled="adding"

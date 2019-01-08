@@ -4,7 +4,7 @@
                 fab
                 bottom
                 right
-                color="pink"
+                color="accent"
                 dark
                 fixed
                 @click.stop="toggle"
@@ -12,7 +12,7 @@
             <v-icon>add</v-icon>
         </v-btn>
         <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="toggle">
-            <v-toolbar color="blue darken-3">
+            <v-toolbar color="primary">
                 <v-btn icon dark @click.native="toggle">
                     <v-icon>close</v-icon>
                 </v-btn>

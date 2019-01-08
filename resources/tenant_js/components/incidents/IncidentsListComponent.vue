@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-toolbar color="blue darken-3">
+        <v-toolbar color="primary" dense>
             <v-menu bottom>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -31,7 +31,7 @@
                     class="white--text"
                     icon="settings"
                     v-model="settingsDialog"
-                    color="blue darken-3"
+                    color="primary"
                     title="Canviar la configuració de les incidències">
                         <incident-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></incident-settings>
             </fullscreen-dialog>

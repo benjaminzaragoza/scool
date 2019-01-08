@@ -1,5 +1,5 @@
 <template>
-    <v-avatar class="mt-1 mb-1" :size="size" >
+    <v-avatar class="mt-1 mb-1" :size="size" @click="$emit('click')">
         <img :src="gravatarURL(user.email)" alt="avatar">
     </v-avatar>
 </template>
