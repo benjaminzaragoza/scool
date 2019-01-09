@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Models\FacebookUser;
+use App\Models\User;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Redirect;
 use Socialite;
 
 /**
@@ -69,17 +72,36 @@ class LoginController extends Controller
     /**
      * Obtain the user information from Facebook.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function handleFacebookProviderCallback()
     {
-        $faceBookUser = Socialite::driver('facebook')->user();
-        $user = $this->findOrCreateFacebookUser($faceBookUser);
-        dd($user);
+        $facebookUser = $this->findOrCreateFacebookUser(Socialite::driver('facebook')->user());
 
-        // $info de facebook la vulgui guardar en una base de dades
-        // Login
-        // Redirect home
+        $user = $this->findOrCreateUser($facebookUser);
+        $facebookUser->assignUser($user);
+        Auth::login($user, true);
+
+        return Redirect::to('home');
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $facebookUser
+     * @return User
+     */
+    private function findOrCreateUser($facebookUser)
+    {
+        if ($authUser = User::where('email', $facebookUser->email)->first()) {
+            return $authUser;
+        }
+
+        return User::create([
+            'name' => $facebookUser->name,
+            'email' => $facebookUser->email,
+            'password' => str_random()
+        ]);
     }
 
     /**
