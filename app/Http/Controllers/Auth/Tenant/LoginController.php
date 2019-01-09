@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Models\FacebookUser;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 
@@ -60,23 +61,68 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider()
+    public function redirectToFacebookProvider()
     {
         return Socialite::driver('facebook')->redirect();
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from Facebook.
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function handleFacebookProviderCallback()
     {
-        $user = Socialite::driver('facebook')->user();
+        $faceBookUser = Socialite::driver('facebook')->user();
+        $user = $this->findOrCreateFacebookUser($faceBookUser);
         dd($user);
 
         // $info de facebook la vulgui guardar en una base de dades
         // Login
         // Redirect home
+    }
+
+    /**
+     * Return facebook user if exists; create and return if doesn't
+     *
+     * @param $facebookUser
+     * @return FacebookUser
+     */
+    private function findOrCreateFacebookUser($facebookUser)
+    {
+        if ($user = FacebookUser::where('facebook_id', $facebookUser->id)->first()) {
+            $user = $this->updateFacebookUser($user,$facebookUser);
+            return $user;
+        }
+
+        return FacebookUser::create([
+            'facebook_id' => $facebookUser->id,
+            'token' => $facebookUser->token,
+            'refreshToken' => $facebookUser->refreshToken,
+            'nickname' => $facebookUser->nickname,
+            'name' => $facebookUser->name,
+            'email' => $facebookUser->email,
+            'avatar_original' => $facebookUser->avatar_original,
+            'profileUrl' => $facebookUser->profileUrl
+        ]);
+    }
+
+    /**
+     * Update facebook user.
+     *
+     * @param $facebookUser
+     * @return
+     */
+    private function updateFacebookUser($user, $facebookUser)
+    {
+        $user->token = $facebookUser->token;
+        $user->refreshToken = $facebookUser->refreshToken;
+        $user->nickname = $facebookUser->nickname;
+        $user->name = $facebookUser->name;
+        $user->email = $facebookUser->email;
+        $user->avatar_original = $facebookUser->avatar_original;
+        $user->profileUrl = $facebookUser->profileUrl;
+        $user->update();
+        return $user->fresh();
     }
 }
