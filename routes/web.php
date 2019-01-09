@@ -126,8 +126,14 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('/public/curriculum/studies/{studySlug}','\\' . PublicCurriculumStudiesController::class . '@show');
         Route::get('/public/curriculum/estudis/{studySlug}','\\' . PublicCurriculumStudiesController::class . '@show');
 
-        Route::get('auth/facebook', '\\'. LoginController::class . '@redirectToProvider');
-        Route::get('auth/facebook/callback', '\\'. LoginController::class . '@handleProviderCallback');
+//        Route::get('auth/facebook', '\\'. LoginController::class . '@redirectToProvider');
+//        Route::get('auth/facebook/callback', '\\'. LoginController::class . '@handleProviderCallback');
+
+        Route::get('auth/{provider}', '\\'. LoginController::class . '@redirectToProvider');
+        Route::get('auth/{provider}/callback', '\\'. LoginController::class . '@handleProviderCallback');
+
+//        Route::get('auth/github', '\\'. LoginController::class . '@redirectToProvider');
+//        Route::get('auth/github/callback', '\\'. LoginController::class . '@handleProviderCallback');
 
         Route::group(['middleware' => 'auth'], function () {
 

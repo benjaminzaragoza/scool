@@ -64,4 +64,19 @@ class LoginController extends Controller
     {
         return Socialite::driver('facebook')->redirect();
     }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+        dd($user);
+
+        // $info de facebook la vulgui guardar en una base de dades
+        // Login
+        // Redirect home
+    }
 }

@@ -17,7 +17,6 @@
    </transition>
   </div>
 
-
   <div class="form-group has-feedback" :class="{ 'has-error': form.errors.has('password') }">
    <input type="password" class="form-control" :placeholder="trans('adminlte_lang_message.password')" name="password" v-model="form.password"/>
    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
@@ -44,85 +43,85 @@
 
 <script>
 
-  import Form from 'acacha-forms'
-  import initialitzeIcheck from './InitializeIcheck'
-  import redirect from './redirect'
+import Form from 'acacha-forms'
+import initialitzeIcheck from './InitializeIcheck'
+import redirect from './redirect'
 
-  export default {
-    mixins: [initialitzeIcheck, redirect],
-    data: function () {
-      let form = new Form({ username: '', password: '', remember: '' })
-      if (this.name === 'email') {
-        form = new Form({ email: '', password: '', remember: '' })
-      }
-      return {
-        form: form,
-      }
+export default {
+  mixins: [initialitzeIcheck, redirect],
+  data: function () {
+    let form = new Form({ username: '', password: '', remember: '' })
+    if (this.name === 'email') {
+      form = new Form({ email: '', password: '', remember: '' })
+    }
+    return {
+      form: form
+    }
+  },
+  props: {
+    name: {
+      type: String,
+      required: true
     },
-    props: {
-      name: {
-        type: String,
-        required: true
-      },
-      domain: {
-        type: String,
-        required: false
+    domain: {
+      type: String,
+      required: false
+    }
+  },
+  computed: {
+    placeholder: function () {
+      if (this.name === 'email') return this.trans('adminlte_lang_message.email')
+      return this.trans('adminlte_lang_message.username')
+    },
+    type: function () {
+      if (this.name === 'email') return 'email'
+      return 'text'
+    },
+    icon: function () {
+      if (this.name === 'email') return 'glyphicon-envelope'
+      return 'glyphicon-user'
+    }
+  },
+  watch: {
+    'form.remember': function (value) {
+      if (value) {
+        $('input').iCheck('check')
+      } else {
+        $('input').iCheck('uncheck')
       }
+    }
+  },
+  methods: {
+    submit () {
+      this.form.post('/login')
+        .then(response => {
+          var component = this
+          setTimeout(function () {
+            component.redirect(response)
+          }, 2500)
+        })
+        .catch(error => {
+          console.log(this.trans('adminlte_lang_message.loginerror') + ':' + error)
+        })
     },
-    computed: {
-      placeholder: function () {
-        if (this.name === 'email') return this.trans('adminlte_lang_message.email')
-        return this.trans('adminlte_lang_message.username')
-      },
-      type: function () {
-        if (this.name === 'email') return 'email'
-        return 'text'
-      },
-      icon: function () {
-        if (this.name === 'email') return 'glyphicon-envelope'
-        return 'glyphicon-user'
+    adddomain: function () {
+      if (this.type === 'email') return
+      if (this.domain === '') return
+      if (this.form.username.endsWith(this.domain)) return
+      if (this.form.username.includes('@')) return
+      this.form.username = this.form.username + '@' + this.domain
+    },
+    clearErrors (name) {
+      if (name === 'password') {
+        this.form.errors.clear('password')
+        name = this.name
       }
-    },
-    watch: {
-      'form.remember': function (value) {
-        if (value) {
-          $('input').iCheck('check')
-        } else {
-          $('input').iCheck('uncheck')
-        }
-      }
-    },
-    methods: {
-      submit () {
-        this.form.post('/login')
-          .then(response => {
-            var component = this;
-            setTimeout(function(){
-              component.redirect(response)
-            }, 2500);
-          })
-          .catch(error => {
-            console.log(this.trans('adminlte_lang_message.loginerror') + ':' + error)
-          })
-      },
-      adddomain: function () {
-        if (this.type === 'email') return
-        if (this.domain === '') return
-        if (this.form.username.endsWith(this.domain)) return
-        if (this.form.username.includes('@')) return
-        this.form.username = this.form.username + '@' + this.domain
-      },
-      clearErrors (name) {
-        if (name === 'password') {
-          this.form.errors.clear('password')
-          name = this.name
-        }
-        this.form.errors.clear(name)
-      }
-    },
-    mounted () {
-      this.initialitzeICheck('remember')
-    },
+      this.form.errors.clear(name)
+    }
+  },
+  mounted () {
+    this.initialitzeICheck('remember')
   }
+}
 
 </script>
