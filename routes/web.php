@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Auth\Tenant\LoginController;
 use App\Http\Controllers\Tenant\HomeController;
 use App\Http\Controllers\Tenant\Web\CurriculumController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
@@ -125,6 +126,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('/public/curriculum/studies/{studySlug}','\\' . PublicCurriculumStudiesController::class . '@show');
         Route::get('/public/curriculum/estudis/{studySlug}','\\' . PublicCurriculumStudiesController::class . '@show');
 
+        Route::get('auth/facebook', '\\'. LoginController::class . '@redirectToProvider');
+        Route::get('auth/facebook/callback', '\\'. LoginController::class . '@handleProviderCallback');
+
         Route::group(['middleware' => 'auth'], function () {
 
             // Google groups
@@ -199,7 +203,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/curriculum/subject_groups','\\' . CurriculumSubjectGroupsController::class . '@index');
 
             Route::get('/positions', '\\' . PositionsController::class . '@index');
-
         });
     });
 
