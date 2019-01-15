@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Tenants\Api\Positions;
 
-use App\Mail\PositionAssigned;
+use App\Mail\Positions\PositionAssigned;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;

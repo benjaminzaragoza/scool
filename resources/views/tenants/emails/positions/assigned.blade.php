@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+# Assignació de càrrec
 
-The body of your message.
+Us han assignat el càrrec **{{ $position->name }}** a l'aplicatiu del centre.
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => url('/home')])
+Anem-hi!
 @endcomponent
 
-Thanks,<br>
+Salutacions,<br>
 {{ config('app.name') }}
 @endcomponent

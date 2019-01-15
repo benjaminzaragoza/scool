@@ -2,6 +2,7 @@
 
 - [ ] Dashboard -> pàgina principal usuari normal -> Comprovar si té algún rol assignat-> no? Que pugui demanar un rol
   - [ ] Al assignar un càrrec que l'usuari rebi una notificació/email
+  - [X] Acció reenviar email d'assignació càrrec
   - [ ] Al assignar un rol que l'usuari rebi una notificació/email
   - [ ] Lo mateix per reclamar un càrrec
   - [ ] Els usuaris configurats (settings) per a rebre notificacions de reclamacions de rols/càrrecs reben una notificació

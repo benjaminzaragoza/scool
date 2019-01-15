@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Positions;
 
 use App\Models\Position;
 use Illuminate\Bus\Queueable;
@@ -23,6 +23,14 @@ class PositionAssigned extends Mailable
         $this->position = $position;
     }
 
+    /**
+     * Get subject.
+     * @return string
+     */
+    protected function getSubject()
+    {
+        return ellipsis('Càrrec assignat (' . $this->position->name . ')', 80);
+    }
 
     /**
      * Build the message.
@@ -31,6 +39,6 @@ class PositionAssigned extends Mailable
      */
     public function build()
     {
-        return $this->markdown('tenants.emails.positions.assigned');
+        return $this->markdown('tenants.emails.positions.assigned')->subject($this->getSubject());
     }
 }

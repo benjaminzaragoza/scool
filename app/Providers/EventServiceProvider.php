@@ -18,6 +18,8 @@ use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
 use App\Events\Incidents\StudyTagAdded;
 use App\Events\Incidents\StudyTagRemoved;
+use App\Events\Studies\StudyTagAdded;
+use App\Events\Studies\StudyTagRemoved;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
@@ -178,6 +180,11 @@ class EventServiceProvider extends ServiceProvider
         IncidentDesassigned::class => [
             SendIncidentDesassignedEmail::class,
             LogIncidentDesassigned::class,
+        ],
+
+        // POSITIONS
+        PositionAssigned::class => [
+            SendPositionAssignedEmail::class,
         ],
 
         // TENANTS

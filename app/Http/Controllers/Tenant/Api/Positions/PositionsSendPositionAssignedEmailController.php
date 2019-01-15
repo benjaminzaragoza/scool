@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Positions;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Positions\PositionSendEmail;
-use App\Mail\PositionAssigned;
+use App\Mail\Positions\PositionAssigned;
 use App\Models\Position;
 use Mail;
 
