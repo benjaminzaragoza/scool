@@ -1,3 +1,14 @@
+# Que utilitzem?
+
+- nao-pon/flysystem-google-drive: Driver flysistem per a Google Drive
+
+```
+composer require nao-pon/flysystem-google-drive
+```
+
+## Com obtenir les credencials de Google
+
+- https://medium.com/@dennissmink/laravel-backup-database-to-your-google-drive-f4728a2b74bd
 
 # Google Drive i Laravel Filesystem
 
@@ -16,7 +27,7 @@ Canvi a la configuració del client Google:
 //            $client->setApplicationName("Client_Library_Examples");
  $client->addScope(Google_Service_Drive::DRIVE); // Google_Service_Drive::DRIVE = https://www.googleapis.com/auth/drive
  $client->setSubject('sergitur@iesebre.com');
-``
+```
 
 El canvi és fa al fitxer: GoogleDriveServiceProvider
 
