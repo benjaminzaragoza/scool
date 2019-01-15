@@ -31,7 +31,7 @@ class SendPositionAssignedEmail
      */
     public function handle($event)
     {
-        Mail::to($event->position->user)->cc(Setting::get('positions_manager_email'))
+        Mail::to($event->user)->cc(Setting::get('positions_manager_email'))
             ->queue((new PositionAssigned($event->position))->onQueue(tenant_from_current_url()));
     }
 }

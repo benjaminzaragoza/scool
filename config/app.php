@@ -198,6 +198,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\IncidentsServiceProvider::class,
+        App\Providers\PositionsServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class
 
     ],

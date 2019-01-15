@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class IncidentsServiceProvider.
+ * Class PositionsServiceProvider.
  *
  * @package App\Providers
  */
-class IncidentsServiceProvider extends ServiceProvider
+class PositionsServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -21,7 +21,7 @@ class IncidentsServiceProvider extends ServiceProvider
      */
     public function boot(Request $request)
     {
-        $this->setIncidentsManagerEmail($request);
+        $this->setPositionsManagerEmail($request);
     }
 
     /**
@@ -38,14 +38,14 @@ class IncidentsServiceProvider extends ServiceProvider
      *
      * @param Request $request
      */
-    protected function setIncidentsManagerEmail(Request $request)
+    protected function setPositionsManagerEmail(Request $request)
     {
         $tenant = tenant_from_current_url();
         if (! is_null($tenant)) {
             $previousConnection = config('database.default');
             apply_tenant($tenant);
-            if ($email = Setting::get('incidents_manager_email')) {
-                Config::set('incidents_manager_email', $email);
+            if ($email = Setting::get('position_manager_email')) {
+                Config::set('position.manager_email', $email);
             }
             restore_connect($previousConnection);
          }

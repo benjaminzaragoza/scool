@@ -8628,6 +8628,13 @@ if (! function_exists('initialize_settings')) {
             'Email del/s gestor/s de les incidències',
             'Podeu utilitzar una adreça de correu electrònic personal o d\'un grup de gestors'
             );
+        create_setting(
+            'positions_manager_email',
+            'positions@iesebre.com',
+            'PositionsManager',
+            'Email del/s gestor/s dels càrrecs',
+            'Podeu utilitzar una adreça de correu electrònic personal o d\'un grup de gestors'
+        );
     }
 }
 
