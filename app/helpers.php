@@ -651,6 +651,7 @@ if (!function_exists('positions_manager_permissions')) {
             'positions.tags.show',
             'positions.tags.update',
             'positions.tags.destroy',
+            'positions.send.email'
         ];
     }
 }

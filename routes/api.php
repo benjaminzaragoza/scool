@@ -28,6 +28,7 @@ use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
+use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmailController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
@@ -354,6 +355,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             Route::post('/positions/{position}/users/{user}','\\' . PositionUsersController::class . '@store');
             Route::delete('/positions/{position}/users/{user}','\\' . PositionUsersController::class . '@destroy');
+
+            Route::get('/positions/{position}/email/send','\\'. PositionsSendPositionAssignedEmailController::class . '@send');
         });
 
         Route::group(['prefix' => 'v1'], function () {

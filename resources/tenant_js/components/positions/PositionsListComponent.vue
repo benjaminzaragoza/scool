@@ -87,6 +87,7 @@
                         <td class="text-xs-left cell" :title="position.formatted_updated_at">{{position.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left cell">
                             <changelog-loggable :loggable="position"></changelog-loggable>
+                            <position-send-email :position="position"></position-send-email>
                             <position-delete :position="position" v-if="$hasRole('PositionsManager')"></position-delete>
                         </td>
                     </tr>
@@ -103,7 +104,9 @@ import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import PositionDelete from './PositionDelete'
 import PositionUsers from './PositionUsers'
 import PositionResource from './PositionResource'
+import PositionSendEmail from './PositionSendEmail'
 import ChangelogLoggable from '../changelog/ChangelogLoggable'
+
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 
@@ -121,7 +124,8 @@ export default {
     'position-users': PositionUsers,
     'position-resource': PositionResource,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
-    'changelog-loggable': ChangelogLoggable
+    'changelog-loggable': ChangelogLoggable,
+    'position-send-email': PositionSendEmail
   },
   data () {
     return {

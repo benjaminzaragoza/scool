@@ -19,7 +19,7 @@ class PositionShortnameUpdate extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('positions.update', $this->study);
+        return Auth::user()->can('positions.update', $this->position);
     }
 
     /**

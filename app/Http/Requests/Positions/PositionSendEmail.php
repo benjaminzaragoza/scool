@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PositionNameUpdate.
+ * Class PositionSendEmail.
  *
  * @package App\Http\Requests
  */
-class PositionNameUpdate extends FormRequest
+class PositionSendEmail extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class PositionNameUpdate extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('positions.update', $this->position);
+        return Auth::user()->can('positions.send.email');
     }
 
     /**
@@ -29,6 +29,6 @@ class PositionNameUpdate extends FormRequest
      */
     public function rules()
     {
-        return ['name' => 'required'];
+        return [];
     }
 }
