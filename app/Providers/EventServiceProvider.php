@@ -16,8 +16,7 @@ use App\Events\Incidents\IncidentReplyUpdated;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
-use App\Events\Incidents\StudyTagAdded;
-use App\Events\Incidents\StudyTagRemoved;
+use App\Events\Positions\PositionUserStored;
 use App\Events\Studies\StudyTagAdded;
 use App\Events\Studies\StudyTagRemoved;
 use App\Events\TeacherPhotosZipUploaded;
@@ -56,6 +55,7 @@ use App\Listeners\Incidents\SendIncidentReplyAddedEmail;
 use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
 use App\Listeners\Incidents\SendIncidentTagAddedEmail;
 use App\Listeners\Incidents\SendIncidentTagRemovedEmail;
+use App\Listeners\Positions\SendPositionAssignedEmail;
 use App\Listeners\SetLastLoginInfo;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
 use App\Listeners\SendGoogleUserNotificationReceivedEmail;
@@ -183,7 +183,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // POSITIONS
-        PositionAssigned::class => [
+        PositionUserStored::class => [
             SendPositionAssignedEmail::class,
         ],
 
