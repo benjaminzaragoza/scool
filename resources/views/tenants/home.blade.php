@@ -2,10 +2,10 @@
 
 @section('content')
     <v-container
-        fill-height
-        fluid
-        grid-list-xl
-        text-xs-center
+            fill-height
+            fluid
+            grid-list-xl
+            text-xs-center
     >
         <v-layout wrap row>
             <v-flex xs12>
