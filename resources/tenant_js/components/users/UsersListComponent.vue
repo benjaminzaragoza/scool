@@ -2,7 +2,7 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
-                <v-toolbar color="blue darken-3">
+                <v-toolbar color="primary" dense>
                     <v-menu bottom>
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
@@ -51,10 +51,10 @@
                             >
                             <template slot="items" slot-scope="{item: user}">
                                 <tr>
-                                    <td class="text-xs-left">
+                                    <td class="text-xs-left cell">
                                         {{ user.id }}
                                     </td>
-                                    <td>
+                                    <td class="cell">
                                         <user-avatar :hash-id="user.hashid"
                                                      :alt="user.name"
                                                      :user="user"
@@ -62,58 +62,41 @@
                                                      :removable="true"
                                         ></user-avatar>
                                     </td>
-                                    <td class="text-xs-left">
+                                    <td class="text-xs-left cell">
                                         {{ user.name }}
                                     </td>
-                                    <td class="text-xs-left">{{ user.email }}</td>
-                                    <td class="text-xs-left">{{ formatBoolean(user.email_verified_at) }}</td>
-                                    <td class="text-xs-left">
+                                    <td class="text-xs-left cell">{{ user.email }}</td>
+                                    <td class="text-xs-left cell">{{ formatBoolean(user.email_verified_at) }}</td>
+                                    <td class="text-xs-left cell">
                                         <template v-if="user.corporativeEmail">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
                                         </template>
                                         <manage-corporative-email-icon :user="user" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
-                                    <td class="text-xs-left">{{ user.mobile }}</td>
-                                    <td class="text-xs-left">
+                                    <td class="text-xs-left cell">{{ user.mobile }}</td>
+                                    <td class="text-xs-left cell">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ user.last_login }}</span>
                                             <span>{{ user.last_login_ip }}</span>
                                         </v-tooltip>
                                     </td>
-                                    <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(user) }}</span>
                                             <span>{{ formatRoles(user) }}</span>
                                         </v-tooltip>
                                     </td>
-                                    <td class="text-xs-left">{{ user.formatted_created_at }}</td>
-                                    <td class="text-xs-left">{{ user.formatted_updated_at }}</td>
-                                    <td class="text-xs-left">
+                                    <td class="text-xs-left cell" v-html="user.formatted_created_at_diff" :title="user.formatted_created_at"></td>
+                                    <td class="text-xs-left cell" :title="user.formatted_updated_at">{{user.formatted_updated_at_diff}}</td>
+                                    <td class="text-xs-left cell">
                                         <show-user-icon :user="user" :users="users"></show-user-icon>
 
-                                        <confirm-icon icon="email"
-                                                      :working="sendingWelcomeEmail"
-                                                      @confirmed="sendWelcomeEmail(user)"
-                                                      tooltip="(Re)Enviar email de benvinguda"
-                                                      message="Esteu segurs que voleu enviar email de benvinguda a l'usuari?"
-                                                      confirm="Enviar"
-                                        ></confirm-icon>
+                                        <user-emails :user="user"></user-emails>
 
-                                        <confirm-icon icon="email"
-                                                      :working="sendingResetPassword"
-                                                      @confirmed="sendResetPasswordEmail(user)"
-                                                      tooltip="Enviar email restauració paraula de pas"
-                                                      message="Esteu segurs que voleu enviar email per canviar paraula de pas?"
-                                                      confirm="Enviar"
-                                        ></confirm-icon>
+                                        <!--<user-send-welcome-email :user="user"></user-send-welcome-email>-->
+                                        <!--<user-send-reset-password-email :user="user"></user-send-reset-password-email>-->
+                                        <!--<user-send-confirmation-email :user="user"></user-send-confirmation-email>-->
 
-                                        <confirm-icon v-show="!user.email_verified_at" icon="email"
-                                                      :working="sendingEmailConfirmation"
-                                                      @confirmed="sendEmailConfirmation(user)"
-                                                      tooltip="Enviar email confirmació email"
-                                                      message="Esteu segurs que voleu enviar email per confirmar email de l'usuari?"
-                                                      confirm="Enviar"
-                                        ></confirm-icon>
                                         <v-btn icon class="mx-0" @click="editItem(user)">
                                             <v-icon color="teal">edit</v-icon>
                                         </v-btn>
@@ -186,14 +169,21 @@ import * as actions from '../../store/action-types'
 import withSnackbar from '../mixins/withSnackbar'
 import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
 import ShowUserIcon from './ShowUserIconComponent.vue'
-import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
 import UserAvatar from '../ui/UserAvatarComponent'
+import UserSendWelcomeEmail from './UserSendWelcomeEmail'
+import UserSendResetPasswordEmail from './UserSendResetPasswordEmail'
+import UserSendConfirmationEmail from './UserSendConfirmationEmail'
+import UserEmails from './UserEmailsComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
-import axios from 'axios'
 
 export default {
-  mixins: [withSnackbar, SendsWelcomeEmail],
+  name: 'UsersList',
+  mixins: [withSnackbar],
   components: {
+    'user-emails': UserEmails,
+    'user-send-welcome-email': UserSendWelcomeEmail,
+    'user-send-reset-password-email': UserSendResetPasswordEmail,
+    'user-send-confirmation-email': UserSendConfirmationEmail,
     'confirm-icon': ConfirmIcon,
     'show-user-icon': ShowUserIcon,
     'manage-corporative-email-icon': ManageCorporativeEmailIcon,
@@ -218,9 +208,7 @@ export default {
         { text: 'Data creació', value: 'created_at_timestamp' },
         { text: 'Data actualització', value: 'updated_at_timestamp' },
         { text: 'Accions', sortable: false }
-      ],
-      sendingResetPassword: false,
-      sendingEmailConfirmation: false
+      ]
     }
   },
   props: {
@@ -251,28 +239,6 @@ export default {
     settings () {
       console.log('settings TODO') // TODO
     },
-    sendResetPasswordEmail (user) {
-      this.sendingResetPassword = true
-      axios.post('password/email', {
-        email: user.email
-      }).then(response => {
-        this.sendingResetPassword = false
-        this.showMessage(`Correu electrònic enviat correctament`)
-      }).catch(error => {
-        this.showError(error)
-      })
-    },
-    sendEmailConfirmation (user) {
-      this.sendingEmailConfirmation = true
-      this.$store.dispatch(actions.CONFIRM_USER_EMAIL, user).then(response => {
-        this.showMessage(`Correu electrònic enviat per tal de confirmar el email`)
-      }).catch(error => {
-        console.dir(error)
-        this.showError(error)
-      }).then(() => {
-        this.sendingEmailConfirmation = false
-      })
-    },
     formatRoles (user) {
       return Object.values(user.roles).join(', ')
     },
@@ -298,3 +264,12 @@ export default {
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 0 5px !important;
+    }
+    .cell {
+        padding: 0 5px !important;
+    }
+</style>

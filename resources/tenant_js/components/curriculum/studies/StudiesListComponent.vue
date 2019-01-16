@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-toolbar dense color="blue darken-3">
+        <v-toolbar dense color="primary" dense>
             <v-menu bottom>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -33,7 +33,7 @@
                     class="white--text"
                     icon="settings"
                     v-model="settingsDialog"
-                    color="blue darken-3"
+                    color="primary"
                     title="Canviar la configuració">
                         <!--<studies-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></studies-settings>-->
             </fullscreen-dialog>

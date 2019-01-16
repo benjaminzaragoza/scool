@@ -637,6 +637,15 @@ if (!function_exists('moodle_manager_permissions')) {
     }
 }
 
+if (!function_exists('teacher_permissions')) {
+    function teacher_permissions()
+    {
+        return [
+            'positions.index',
+        ];
+    }
+}
+
 if (!function_exists('positions_manager_permissions')) {
     function positions_manager_permissions()
     {
@@ -802,6 +811,7 @@ if (!function_exists('scool_roles_permissions')) {
             'Curriculum' => curriculum_permissions(),
             'CurriculumManager' => curriculum_manager_permissions(),
             'PositionsManager' => positions_manager_permissions(),
+            'Teacher'  => teacher_permissions(),
         ];
 
     }

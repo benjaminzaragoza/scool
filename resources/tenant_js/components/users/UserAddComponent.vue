@@ -4,7 +4,7 @@
             fab
             bottom
             right
-            color="pink"
+            color="accent"
             dark
             fixed
             @click.stop="dialog = !dialog"

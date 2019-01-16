@@ -882,6 +882,16 @@ class UserTest extends TestCase
         $this->assertEquals($mappedUser['updated_at']->format('h:i:sA d-m-Y'),$mappedUser['formatted_updated_at']);
         $this->assertEquals($mappedUser['created_at']->timestamp,$mappedUser['created_at_timestamp']);
         $this->assertEquals($mappedUser['updated_at']->timestamp,$mappedUser['updated_at_timestamp']);
+
+        $this->assertNotNull($mappedUser['created_at']);
+        $this->assertNotNull($mappedUser['updated_at']);
+        $this->assertNotNull($mappedUser['created_at_timestamp']);
+        $this->assertNotNull($mappedUser['updated_at_timestamp']);
+        $this->assertNotNull($mappedUser['formatted_created_at']);
+        $this->assertNotNull($mappedUser['formatted_updated_at']);
+        $this->assertNotNull($mappedUser['formatted_created_at_diff']);
+        $this->assertNotNull($mappedUser['formatted_updated_at_diff']);
+
         $this->assertNull($mappedUser['admin']);
         $this->assertEquals('MX',$mappedUser['hashid']);
         $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$mappedUser['full_search']);

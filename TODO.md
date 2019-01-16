@@ -1,3 +1,11 @@
+# Users management
+
+- [ ] Rendiment: Masses queries 385
+- [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
+- [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
+- [ ] Last Login de l'usuari, permetre saber usuaris no s'han logat mai
+- [ ] Esborrat massiu d'usuaris    
+
 # Usuaris acabats de registrar | sense rols
 
 ## Dashboard
@@ -37,10 +45,11 @@ Si l'usuari vol ser alumne ha de formalitzar una matrícula:
 ## Ex-profesor
 - Posibilitar mantenir compte de centre com correu
 
-# Personal
+## Personal
 
-# Superusuaris
+## Superusuaris
 - Usuaris admin amb tots els permisos
+
 
 # Positions
 

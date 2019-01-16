@@ -18,13 +18,10 @@
                     :color="data.item.color"
                     text-color="white"
                     :key="JSON.stringify(data.item)"
-            ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>
+            ><v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.name }}</v-chip>
         </template>
         <template slot="item" slot-scope="data">
-            <v-checkbox v-model="data.tile.props.value"></v-checkbox>
-            <v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">
-                <v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}
-            </v-chip>
+            {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
@@ -51,7 +48,7 @@ export default {
     fetch () {
       this.fetching = true
       window.axios.get('/api/v1/positions').then(response => {
-        this.positions = response.data
+        this.dataPositions = response.data
         this.fetching = false
       }).catch(error => {
         this.$snackbar.showError(error)

@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs12 style="border: 15px solid green;">
+    <v-flex xs12>
         <v-layout align-center justify-center>
             <v-flex sm12
                     md8
@@ -10,7 +10,7 @@
                     <v-flex sm12
                             md4
                     >
-                        <material-card class="v-card-profile ma-1 primary lighten-5" style="border-radius: 0.5em;">
+                        <material-card class="v-card-profile ma-1" style="border-radius: 0.5em;">
                             <v-avatar
                                     slot="offset"
                                     class="mx-auto d-block"

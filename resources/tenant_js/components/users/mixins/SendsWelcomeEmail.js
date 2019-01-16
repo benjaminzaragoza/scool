@@ -10,10 +10,10 @@ export default {
     sendWelcomeEmail (user) {
       this.sendingWelcomeEmail = true
       this.$store.dispatch(actions.WELCOME_EMAIL, user).then(response => {
-        this.showMessage(`Correu electrònic enviat correctament`)
+        this.$snackbar.showMessage(`Correu electrònic enviat correctament`)
       }).catch(error => {
         console.dir(error)
-        this.showError(error)
+        this.$snackbar.showError(error)
       }).then(() => {
         this.sendingWelcomeEmail = false
       })
