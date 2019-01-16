@@ -14,11 +14,7 @@
             @endif
             {{--TEACHERS--}}
             @if (($user->user_type_id === \App\Models\UserType::TEACHER))
-                <v-flex md12
-                        sm12
-                        lg4>
-                    <dashboard-positions :user="{{ $user }}"></dashboard-positions>
-                </v-flex>
+                <teachers-welcome :user="{{ $user }}"></teachers-welcome>
             @endif
             {{--<v-flex xs12>--}}
             {{--User Type: {{ boolval($user->user_type_id) ? 'true' : 'false' }}--}}

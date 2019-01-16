@@ -133,6 +133,7 @@ window.Vue.component('material-card', require('./components/ui/MaterialCard'))
 window.Vue.component('helper-offset', require('./components/helper/Offset'))
 
 window.Vue.component('welcome', require('./components/welcome/Welcome'))
+window.Vue.component('teachers-welcome', require('./components/welcome/TeachersWelcome'))
 
 window.Vuetify = Vuetify
 

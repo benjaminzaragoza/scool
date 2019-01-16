@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs12>
+    <v-flex xs12 style="border: 15px solid green;">
         <v-layout align-center justify-center>
             <v-flex sm12
                     md8
@@ -24,9 +24,9 @@
                                     large
                                     color="success"
                                     round
-                                    :loading="loading[1]"
-                                    :disabled="loading[1]"
-                                    @click="setUserType(1)"
+                                    :loading="loading[2]"
+                                    :disabled="loading[2]"
+                                    @click="setUserType(2)"
                             >Alumne</v-btn>
                         </material-card>
                     </v-flex>
@@ -48,9 +48,9 @@
                                     large
                                     color="accent"
                                     round
-                                    :loading="loading[2]"
-                                    :disabled="loading[2]"
-                                    @click="setUserType(2)"
+                                    :loading="loading[1]"
+                                    :disabled="loading[1]"
+                                    @click="setUserType(1)"
                             >Professor</v-btn>
                         </material-card>
                     </v-flex>
