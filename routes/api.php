@@ -31,6 +31,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmailController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
+use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -357,6 +358,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/positions/{position}/users/{user}','\\' . PositionUsersController::class . '@destroy');
 
             Route::get('/positions/{position}/email/send','\\'. PositionsSendPositionAssignedEmailController::class . '@send');
+
+            // User Type
+            Route::post('/user/type','\\' . UserTypeController::class . '@store');
         });
 
         Route::group(['prefix' => 'v1'], function () {

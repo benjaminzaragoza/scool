@@ -4,8 +4,6 @@ namespace Tests\Feature\Tenants\Api\People;
 
 use App\Models\Person;
 use App\Models\User;
-use Config;
-use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
