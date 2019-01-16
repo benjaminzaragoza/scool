@@ -440,6 +440,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function assignTeacher($teacher)
     {
         $teacher->user_id = $this->id;
+        $this->user_type_id = UserType::TEACHER;
+        $this->save();
         $teacher->save();
         return $this;
     }

@@ -132,6 +132,8 @@ window.Vue.component('material-stats-card', require('./components/ui/MaterialSta
 window.Vue.component('material-card', require('./components/ui/MaterialCard'))
 window.Vue.component('helper-offset', require('./components/helper/Offset'))
 
+window.Vue.component('welcome', require('./components/welcome/Welcome'))
+
 window.Vuetify = Vuetify
 
 window.Vue.use(window.Vuetify, {

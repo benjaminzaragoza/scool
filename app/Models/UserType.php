@@ -13,6 +13,8 @@ use Spatie\Permission\Models\Role;
  */
 class UserType extends Model
 {
+    const TEACHER = 1;
+
     protected $guarded = [];
 
     /**
