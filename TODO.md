@@ -1,3 +1,47 @@
+# Usuaris acabats de registrar | sense rols
+
+## Dashboard
+
+- Quan usuari serà nou? No té assignat tipus d'usuari
+- Text de benvinguda -> Gran i centrat (Benvingut)
+- Emoticona de saludar ma movent-se: https://instapage.com/blog/how-to-setup-welcome-pages (exemple slack)
+- Escollir tipus d'usuari que interesa ser (principals).
+  - Alumne
+  - Profesor
+  - Personal
+- Altres: secundari
+  - Ex-alumne
+  - Ex-professor
+  - Altres
+  - Familiars
+
+## Exalumne
+
+- Per aquells que els interessi mantenir contacte amb el centre
+- Recuperar usuari si havien tingut? Com fer?
+- Indicar les xarxes socials a les que es pot apuntar per estar al dia de les novetats del centre 
+
+## Alumne
+
+Si l'usuari vol ser alumne ha de formalitzar una matrícula:
+- Periode de matrícula: cal fer un manteniment al mòdul matrícula que permeti indicar periode de matrícula
+- Mantenir-me informat|Notificar/Avís quan s'obri el periode de matrícula/preinscripció
+  - Indicar els estudis en els que el potencial alumne està interessat -> llista
+  - Agafar alguna dada extra com el telèfon Mòbil -> Potser també l'adreça per fer mailing?
+  - Indicar les xarxes socials a les que es pot apuntar per estar al dia de les novetats del centre 
+- Sí es periode de matrícula i està activada la automatriculació pot fer la matrícua
+- Preinscripció?
+
+## Professor 
+- Usuari potencial professor
+## Ex-profesor
+- Posibilitar mantenir compte de centre com correu
+
+# Personal
+
+# Superusuaris
+- Usuaris admin amb tots els permisos
+
 # Positions
 
 - [ ] Dashboard -> pàgina principal usuari normal -> Comprovar si té algún rol assignat-> no? Que pugui demanar un rol

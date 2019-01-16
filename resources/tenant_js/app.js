@@ -125,6 +125,12 @@ window.Vue.component('subject-groups', require('./components/curriculum/subjectG
 
 // Positions
 window.Vue.component('positions', require('./components/positions/PositionsComponent'))
+window.Vue.component('dashboard-positions', require('./components/positions/DashboardPositions'))
+
+//
+window.Vue.component('material-stats-card', require('./components/ui/MaterialStatsCard'))
+window.Vue.component('material-card', require('./components/ui/MaterialCard'))
+window.Vue.component('helper-offset', require('./components/helper/Offset'))
 
 window.Vuetify = Vuetify
 

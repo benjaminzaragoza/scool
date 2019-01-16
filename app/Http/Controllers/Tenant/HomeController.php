@@ -37,7 +37,7 @@ class HomeController extends Controller
      */
     public function show(Request $request)
     {
-        dd('SHIT');
+        return view('tenants.home', [ 'user' => Auth::user()]);
     }
 
 }
