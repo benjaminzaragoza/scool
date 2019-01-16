@@ -295,7 +295,7 @@ if (! function_exists('create_iesebre_tenant')) {
         return Tenant::create([
             'name' => config('iesebre.name',"Institut de l'Ebre") ,
             'subdomain' => config('iesebre.subdomain','iesebre') ,
-            'email_domain' => config('iesebre.subdomain','email_domain') ,
+            'email_domain' => config('iesebre.email_domain','iesebre.com') ,
             'hostname' =>  config('iesebre.database_host','localhost'),
             'database' => config('iesebre.database_name','iesebre'),
             'username' => config('iesebre.database_username','iesebre'),

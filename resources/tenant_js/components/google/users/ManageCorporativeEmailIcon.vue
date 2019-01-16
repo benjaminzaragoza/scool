@@ -1,17 +1,19 @@
 <template>
-    <span style="display:inline-block">
+    <span class="ma-0 pa-0">
         <template v-if="user.corporativeEmail">
-            <v-btn icon class="mx-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
-                <v-icon small color="teal">edit</v-icon>
-            </v-btn>
-            <v-btn icon class="mx-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser">
-                <v-icon small color="red">remove</v-icon>
-            </v-btn>
-            <v-btn icon class="mx-0" title="Sincronitzar" @click.native.stop="sync">
-                <v-icon small color="teal">sync</v-icon>
-            </v-btn>
+            <div class="mt-0 mb-0 pa-0" style="border: 1px black solid;">
+                <v-btn icon class="ma-0 pa-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
+                    <v-icon small color="teal">edit</v-icon>
+                </v-btn>
+                <v-btn icon class="ma-0 pa-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser">
+                    <v-icon small color="red">remove</v-icon>
+                </v-btn>
+                <v-btn icon class="ma-0 pa-0" title="Sincronitzar" @click.native.stop="sync">
+                    <v-icon small color="teal">sync</v-icon>
+                </v-btn>
+            </div>
         </template>
-        <v-btn v-else icon class="mx-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
+        <v-btn v-else icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
             <v-icon color="primary">add</v-icon>
         </v-btn>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">

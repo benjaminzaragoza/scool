@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'email_domain' => env('APP_EMAIL_DOMAIN', ''),
+    'email_domain' => env('APP_EMAIL_DOMAIN', 'iesebre.com'),
 
     /*
     |--------------------------------------------------------------------------

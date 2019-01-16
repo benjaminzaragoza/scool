@@ -15,28 +15,20 @@
                         @change="photoChange"/>
             </form>
         </v-avatar>
-        <confirm-icon v-if="removable && user.photo"
-                      icon="delete"
-                      color="pink"
-                      :working="deleting"
-                      @confirmed="remove()"
-                      tooltip="Eliminar foto"
-                      message="Segur que voleu esborrar la foto de l'usuari?"
-        ></confirm-icon>
+        <v-tooltip bottom slot="activator" v-if="removable && user.photo">
+            <v-btn icon slot="activator" style="margin: 0px" @click="remove" :loading="deleting" :disabled="deleting">
+                <v-icon small color="pink">delete</v-icon>
+            </v-btn>
+            <span>Eliminar foto</span>
+        </v-tooltip>
     </span>
 </template>
 
 <script>
 import axios from 'axios'
-import ConfirmIconComponent from './ConfirmIconComponent'
-import withSnackbar from '../mixins/withSnackbar'
 
 export default {
   name: 'UserAvatarComponent',
-  mixins: [withSnackbar],
-  components: {
-    'confirm-icon': ConfirmIconComponent
-  },
   data () {
     return {
       uploading: false,
@@ -92,7 +84,7 @@ export default {
         })
         .catch(error => {
           this.uploading = false
-          this.showError(error)
+          this.$snackbar.showError(error)
         })
     },
     preview () {
@@ -108,20 +100,25 @@ export default {
       if (this.editable) this.$refs.file.click()
       this.$emit('click')
     },
-    remove () {
-      this.deleting = true
-      axios.delete('/api/v1/user/' + this.user.id + '/photo')
-        .then(response => {
+    async remove () {
+      let res = await this.$confirm("Voleu eliminar l'Avatar de l'usuari?", {
+        title: 'Esteu segurs?',
+        buttonTrueText: 'Eliminar'
+      })
+      if (res) {
+        this.deleting = true
+        axios.delete('/api/v1/user/' + this.user.id + '/photo').then(response => {
           this.deleting = false
           this.path = ''
           this.$emit('input', this.path)
           this.$refs.previewImage.setAttribute('src', 'img/default.png')
           this.user.photo = null
         })
-        .catch(error => {
-          this.deleting = false
-          this.showError(error)
-        })
+          .catch(error => {
+            this.deleting = false
+            this.$snackbar.showError(error)
+          })
+      }
     }
   }
 }

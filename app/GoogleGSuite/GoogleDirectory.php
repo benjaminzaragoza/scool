@@ -27,7 +27,6 @@ class GoogleDirectory
     public function __construct()
     {
         $this->directory = Google::make('directory');
-//        $domain =
         $this->domain = config('app.email_domain','iesebre.com');
     }
 

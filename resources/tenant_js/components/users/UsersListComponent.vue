@@ -54,7 +54,7 @@
                                     <td class="text-xs-left cell">
                                         {{ user.id }}
                                     </td>
-                                    <td class="cell">
+                                    <td class="text-xs-left cell">
                                         <user-avatar :hash-id="user.hashid"
                                                      :alt="user.name"
                                                      :user="user"
@@ -62,28 +62,36 @@
                                                      :removable="true"
                                         ></user-avatar>
                                     </td>
-                                    <td class="text-xs-left cell">
-                                        {{ user.name }}
+                                    <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <v-tooltip bottom>
+                                            <span slot="activator">{{ user.name }}</span>
+                                            <span>{{ user.name }}</span>
+                                        </v-tooltip>
                                     </td>
-                                    <td class="text-xs-left cell">{{ user.email }}</td>
-                                    <td class="text-xs-left cell">{{ formatBoolean(user.email_verified_at) }}</td>
+                                    <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <v-tooltip bottom>
+                                            <span slot="activator">{{ user.email }}</span>
+                                            <span>{{ user.email }}</span>
+                                        </v-tooltip>
+                                    </td>
+                                    <td class="text-xs-center cell">{{ formatBoolean(user.email_verified_at) }}</td>
                                     <td class="text-xs-left cell">
-                                        <template v-if="user.corporativeEmail">
+                                        <span v-if="user.corporativeEmail">
                                             <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
-                                        </template>
+                                        </span>
                                         <manage-corporative-email-icon :user="user" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ user.mobile }}</td>
+                                    <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <v-tooltip bottom>
+                                            <span slot="activator">{{ formatRoles(user) }}</span>
+                                            <span>{{ formatRoles(user) }}</span>
+                                        </v-tooltip>
+                                    </td>
                                     <td class="text-xs-left cell">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ user.last_login_diff }}</span>
                                             <span>{{ user.last_login_ip }} | {{ user.last_login_formatted }}</span>
-                                        </v-tooltip>
-                                    </td>
-                                    <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <v-tooltip bottom>
-                                            <span slot="activator">{{ formatRoles(user) }}</span>
-                                            <span>{{ formatRoles(user) }}</span>
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell" v-html="user.formatted_created_at_diff" :title="user.formatted_created_at"></td>
@@ -203,8 +211,8 @@ export default {
         { text: 'Verificat', value: 'email_verified_at' },
         { text: 'Email corporatiu', value: 'corporativeEmail' },
         { text: 'Mòbil', value: 'mobile' },
-        { text: 'Últim login', value: 'last_login' },
         { text: 'Rols', value: 'roles', sortable: false },
+        { text: 'Últim login', value: 'last_login' },
         { text: 'Data creació', value: 'created_at_timestamp' },
         { text: 'Data actualització', value: 'updated_at_timestamp' },
         { text: 'Accions', sortable: false }
@@ -267,9 +275,9 @@ export default {
 
 <style>
     .column {
-        padding: 0 5px !important;
+        padding: 3px 3px !important;
     }
     .cell {
-        padding: 0 5px !important;
+        padding: 3px 3px !important;
     }
 </style>
