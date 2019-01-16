@@ -75,9 +75,12 @@
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-center cell">{{ formatBoolean(user.email_verified_at) }}</td>
-                                    <td class="text-xs-left cell">
+                                    <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <span v-if="user.corporativeEmail">
-                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a>
+                                            <v-tooltip bottom>
+                                                <span slot="activator"><a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a></span>
+                                                <span>{{ user.corporativeEmail }}</span>
+                                            </v-tooltip>
                                         </span>
                                         <manage-corporative-email-icon :user="user" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
