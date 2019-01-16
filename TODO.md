@@ -1,6 +1,6 @@
 # Users management
 
-- [ ] Rendiment: Masses queries 385
+- [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
 - [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
 - [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
 - [ ] Last Login de l'usuari, permetre saber usuaris no s'han logat mai

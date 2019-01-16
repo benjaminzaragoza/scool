@@ -874,6 +874,8 @@ class UserTest extends TestCase
         $this->assertNull($mappedUser['email_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
         $this->assertNull($mappedUser['last_login']);
+        $this->assertNull($mappedUser['last_login_formatted']);
+        $this->assertNull($mappedUser['last_login_diff']);
         $this->assertNull($mappedUser['last_login_ip']);
         $this->assertInstanceOf(Carbon::class,$mappedUser['created_at']);
         $this->assertInstanceOf(Carbon::class,$mappedUser['updated_at']);

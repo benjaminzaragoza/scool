@@ -76,8 +76,8 @@
                                     <td class="text-xs-left cell">{{ user.mobile }}</td>
                                     <td class="text-xs-left cell">
                                         <v-tooltip bottom>
-                                            <span slot="activator">{{ user.last_login }}</span>
-                                            <span>{{ user.last_login_ip }}</span>
+                                            <span slot="activator">{{ user.last_login_diff }}</span>
+                                            <span>{{ user.last_login_ip }} | {{ user.last_login_formatted }}</span>
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">

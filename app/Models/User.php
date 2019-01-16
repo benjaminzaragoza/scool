@@ -58,6 +58,12 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         'all_permissions'
     ];
 
+    protected $dates = [
+        'last_login',
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -350,6 +356,27 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function getPhotoPathAttribute($value)
     {
         return 'user_photos/';
+    }
+
+    /**
+     * formatted_updated_at_date attribute.
+     *
+     * @return mixed
+     */
+    public function getLastLoginFormattedAttribute()
+    {
+        return optional($this->last_login)->format('h:i:sA d-m-Y');
+    }
+
+    /**
+     * formatted_created_at_date_diff attribute.
+     *
+     * @return mixed
+     */
+    public function getLastLoginDiffAttribute()
+    {
+        Carbon::setLocale(config('app.locale'));
+        return optional($this->last_login)->diffForHumans(Carbon::now());
     }
 
     /**
@@ -673,6 +700,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'photo_hash' => $this->photo_hash,
             'email_verified_at' => $this->email_verified_at,
             'last_login' => $this->last_login,
+            'last_login_formatted' => $this->last_login_formatted,
             'last_login_ip' => $this->last_login_ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -708,6 +736,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'email_verified_at' => $this->email_verified_at,
             'mobile' => $this->mobile,
             'last_login' => $this->last_login,
+            'last_login_formatted' => $this->last_login_formatted,
+            'last_login_diff' => $this->last_login_diff,
             'last_login_ip' => $this->last_login_ip,
             'roles' => $this->userRoles(),
             'permissions' => $this->userPermissions(),
