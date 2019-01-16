@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import * as actions from '../../store/action-types'
+import api from './api/emails/user_emails'
 
 export default {
   name: 'UserSendConfirmationEmail',
@@ -32,17 +32,16 @@ export default {
     async send () {
       let res = await this.$confirm("Voleu enviar email per confirmar correu electrònic personal de l'usuari?", { title: 'Esteu segurs?', buttonTrueText: 'Enviar' })
       if (res) {
-        this.sendEmailConfirmation(this.user)
+        this.sendEmailConfirmation(t)
       }
     },
-    sendEmailConfirmation (user) {
+    sendEmailConfirmation () {
       this.loading = true
-      this.$store.dispatch(actions.CONFIRM_USER_EMAIL, user).then(response => {
+      api.sendConfirmationEmail(this.user).then(response => {
         this.$snackbar.showMessage('Correu electrònic enviat correctament')
+        this.loading = false
       }).catch(error => {
         this.$snackbar.showError(error)
-        this.loading = false
-      }).then(() => {
         this.loading = false
       })
     }

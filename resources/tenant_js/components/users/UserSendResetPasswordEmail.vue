@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import api from './api/emails/user_emails'
+
 export default {
   name: 'UserSendResetPasswordEmail',
   data () {
@@ -30,14 +32,12 @@ export default {
     async send () {
       let res = await this.$confirm('Voleu enviar email per canviar paraula de pas?', { title: 'Esteu segurs?', buttonTrueText: 'Enviar' })
       if (res) {
-        this.sendResetPasswordEmail(this.user)
+        this.sendResetPasswordEmail()
       }
     },
-    sendResetPasswordEmail (user) {
+    sendResetPasswordEmail () {
       this.loading = true
-      window.axios.post('password/email', {
-        email: user.email
-      }).then(response => {
+      api.sendResetPasswordEmail(this.user).then(response => {
         this.loading = false
         this.showMessage()
         this.$snackbar.showMessage(`Correu electrònic enviat correctament`)

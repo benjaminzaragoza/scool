@@ -37,7 +37,13 @@ export default {
     }
   },
   methods: {
-    send (method) {
+    async send (method) {
+      let res = await this.$confirm(this.messages[method], { title: 'Esteu segurs?', buttonTrueText: 'Enviar' })
+      if (res) {
+        this.sendEmail(method)
+      }
+    },
+    sendEmail (method) {
       this.loading = true
       api[method](this.user).then(() => {
         this.loading = false
@@ -46,6 +52,13 @@ export default {
         this.loading = false
         this.$snackbar.showError(error)
       })
+    }
+  },
+  created () {
+    this.messages = {
+      'sendWelcomeEmail': "Voleu tornar a enviar l'email de benvinguda a l'usuari?",
+      'sendResetPasswordEmail': 'Voleu enviar email per canviar paraula de pas?',
+      'sendConfirmationEmail': "Voleu enviar email per confirmar correu electrònic personal de l'usuari?"
     }
   }
 }

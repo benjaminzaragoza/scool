@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import * as actions from '../../store/action-types'
+import api from './api/emails/user_emails'
 
 export default {
   name: 'UserSendWelcomeEmail',
@@ -33,7 +33,7 @@ export default {
       let res = await this.$confirm("Voleu tornar a enviar l'email de benvinguda a l'usuari?", { title: 'Esteu segurs?', buttonTrueText: 'Enviar' })
       if (res) {
         this.loading = true
-        this.$store.dispatch(actions.WELCOME_EMAIL, this.user).then(response => {
+        api.sendWelcomeEmail(this.user).then(response => {
           this.$snackbar.showMessage('Email enviat correctament')
           this.loading = false
         }).catch(error => {
