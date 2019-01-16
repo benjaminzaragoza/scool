@@ -1,6 +1,7 @@
 <template>
     <span>
         <v-btn
+                v-if="show"
                 fab
                 bottom
                 right
@@ -44,6 +45,10 @@ export default {
     dialog: {
       type: Boolean,
       default: false
+    },
+    show: {
+      type: Boolean,
+      default: true
     },
     title: {
       type: String,
