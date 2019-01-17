@@ -49,6 +49,7 @@ window.Vue.component('users-list', require('./components/users/UsersListComponen
 window.Vue.component('user-add', require('./components/users/UserAddComponent.vue'))
 
 window.Vue.component('roles', require('./components/users/roles/RolesComponent.vue'))
+window.Vue.component('permissions', require('./components/users/permissions/PermissionsComponent.vue'))
 
 window.Vue.component('jobs-list', require('./components/jobs/JobsListComponent.vue'))
 window.Vue.component('job-add', require('./components/jobs/JobAddComponent.vue'))

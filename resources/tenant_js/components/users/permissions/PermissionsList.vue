@@ -15,7 +15,7 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
-            <v-toolbar-title class="white--text title">Roles</v-toolbar-title>
+            <v-toolbar-title class="white--text title">Permissions</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon class="white--text" @click="settings">
                 <v-icon>settings</v-icon>
@@ -38,20 +38,20 @@
                         ></v-text-field>
                     </v-card-title>
                     <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
-                        <roles-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></roles-delete-multiple>
+                        <permissions-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></permissions-delete-multiple>
                     </div>
                     <v-data-table
                             v-model="selected"
                             select-all
                             class="px-0 mb-2 hidden-sm-and-down"
                             :headers="headers"
-                            :items="internalRoles"
+                            :items="internalPermissions"
                             :search="search"
                             item-key="id"
                             disable-initial-sort
                             no-results-text="No s'ha trobat cap registre coincident"
                             no-data-text="No hi han dades disponibles"
-                            rows-per-page-text="Rols per pàgina"
+                            rows-per-page-text="Permisos per pàgina"
                             :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
                     >
                         <template slot="items" slot-scope="props">
@@ -81,7 +81,7 @@
                                 <td class="text-xs-left cell" v-html="props.item.formatted_created_at_diff" :title="props.item.formatted_created_at"></td>
                                 <td class="text-xs-left cell" :title="props.item.formatted_updated_at">{{props.item.formatted_updated_at_diff}}</td>
                                 <td class="text-xs-left cell">
-                                    <delete-role :role="props.item"></delete-role>
+                                    <delete-permission :permission="props.item"></delete-permission>
                                 </td>
                             </tr>
                         </template>
@@ -93,7 +93,7 @@
                         content-tag="v-layout"
                         row
                         wrap
-                        :items="internalRoles"
+                        :items="internalPermissions"
                 >
                     <v-flex
                             slot="item"
@@ -133,13 +133,13 @@
 import { mapGetters } from 'vuex'
 import * as mutations from '../../../store/mutation-types'
 import * as actions from '../../../store/action-types'
-import RolesDeleteMultiple from './RolesDeleteMultiple'
-import RoleDelete from './RoleDelete'
+import PermissionsDeleteMultiple from './PermissionsDeleteMultiple'
+import PermissionsDelete from './PermissionsDelete'
 export default {
-  name: 'RolesList',
+  name: 'PermissionsList',
   components: {
-    'roles-delete-multiple': RolesDeleteMultiple,
-    'role-delete': RoleDelete
+    'permissions-delete-multiple': PermissionsDeleteMultiple,
+    'permission-delete': PermissionsDelete
   },
   data () {
     return {
@@ -157,14 +157,14 @@ export default {
     }
   },
   props: {
-    roles: {
+    permissions: {
       type: Array,
       required: true
     }
   },
   computed: {
     ...mapGetters({
-      internalRoles: 'roles'
+      internalPermissions: 'permissions'
     })
   },
   methods: {
@@ -173,9 +173,9 @@ export default {
     },
     refresh (message = true) {
       this.refreshing = true
-      this.$store.dispatch(actions.FETCH_ROLES).then(response => {
+      this.$store.dispatch(actions.FETCH_PERMISSIONS).then(response => {
         this.refreshing = false
-        if (message) this.$snackbar.showMessage('Roles actualizats correctament')
+        if (message) this.$snackbar.showMessage('Permisos actualizats correctament')
       }).catch(error => {
         this.refreshing = false
         this.$snackbar.showError(error)
@@ -183,7 +183,7 @@ export default {
     }
   },
   created () {
-    this.$store.commit(mutations.SET_ROLES, this.roles)
+    this.$store.commit(mutations.SET_PERMISSIONS, this.permissions)
   }
 }
 </script>

@@ -19,6 +19,18 @@ export const ADD_USER = 'ADD_USER'
 export const DELETE_USER = 'DELETE_USER'
 export const EDIT_USER = 'EDIT_USER'
 
+// ROLES
+export const SET_ROLES = 'SET_ROLES'
+export const ADD_ROLE = 'ADD_ROLE'
+export const DELETE_ROLE = 'DELETE_ROLE'
+export const EDIT_ROLE = 'EDIT_ROLE'
+
+// PERMISSIONS
+export const SET_PERMISSIONS = 'SET_PERMISSIONS'
+export const ADD_PERMISSION = 'ADD_PERMISSION'
+export const DELETE_PERMISSION = 'DELETE_PERMISSION'
+export const UPDATE_PERMISSION = 'UPDATE_PERMISSION'
+
 // JOBS
 export const SET_JOBS = 'SET_JOBS'
 export const ADD_JOB = 'ADD_JOB'
