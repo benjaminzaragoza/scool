@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async remove () {
-      let res = await this.$confirm('Esteu segurs que voleu eliminar aquest rol?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      let res = await this.$confirm('Esteu segurs que voleu eliminar aquest permís?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
       if (res) {
         this.removePermission()
       }

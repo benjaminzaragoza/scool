@@ -19,7 +19,13 @@ export default {
     }
   },
   methods: {
-    remove () {
+    async remove () {
+      let res = await this.$confirm('Esteu segurs que voleu eliminar aquests rols?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      if (res) {
+        this.removeRoles()
+      }
+    },
+    removeRoles () {
       this.loading = true
       window.axios.post('/api/v1/roles/multiple', { roles: this.roles.map(role => role.id) }).then(response => {
         this.$snackbar.showMessage("S'han esborrat correctament " + response.data + ' roles')
