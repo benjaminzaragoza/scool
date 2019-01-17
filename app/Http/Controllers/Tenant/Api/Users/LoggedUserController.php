@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Tenant\Api\Users;
 
+use App\Http\Controllers\Tenant\Controller;
 use Auth;
 use Illuminate\Http\Request;
 

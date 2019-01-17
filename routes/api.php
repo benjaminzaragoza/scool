@@ -31,6 +31,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmailController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
+use App\Http\Controllers\Tenant\Api\Users\LoggedUserController;
 use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
 use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
 use App\Http\Controllers\Tenant\Api\Users\UserPersonController;
@@ -130,7 +131,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //GET USER BY name
             Route::get('/users/name/{name}', '\\'. UserNamesController::class . '@show');
 
-            Route::put('/user', 'Tenant\LoggedUserController@update');
+            Route::put('/user', '\\'. LoggedUserController::class. '@update');
 
             // User Person
             Route::post('/user_person', '\\' . UserPersonController::class . '@store');
