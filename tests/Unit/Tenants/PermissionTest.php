@@ -52,7 +52,6 @@ class PermissionTest extends TestCase
         $mappedPermission = $role->map();
 
         $this->assertSame(1,$mappedPermission['id']);
-        dump($mappedPermission);
         $this->assertSame('Rol1',$mappedPermission['name']);
         $this->assertSame('web',$mappedPermission['guard_name']);
         $this->assertSame('permissions',$mappedPermission['api_uri']);
