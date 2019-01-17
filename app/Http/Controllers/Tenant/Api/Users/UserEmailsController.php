@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Tenant\Api\Users;
 
-use App\Http\Requests\GetUser;
+use App\Http\Controllers\Tenant\Controller;
+use App\Http\Requests\Users\ShowUser;
 use App\Models\User;
 
 /**
@@ -16,12 +17,12 @@ class UserEmailsController extends Controller
     protected $repository;
 
     /**
-     * @param GetUser $request
+     * @param ShowUser $request
      * @param $tenant
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get(GetUser $request, $tenant, $email)
+    public function get(ShowUser $request, $tenant, $email)
     {
         return User::where('email',$email)->firstOrFail()->map();
     }

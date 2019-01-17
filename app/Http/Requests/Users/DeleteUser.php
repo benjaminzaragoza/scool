@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Users;
 
 use Auth;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListUsersManagement.
- *
+ * Class DeleteUser
  * @package App\Http\Requests
  */
-class ListUsersManagement extends FormRequest
+class DeleteUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class ListUsersManagement extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('list-users');
+        return Gate::allows('users.destroy');
     }
 
     /**

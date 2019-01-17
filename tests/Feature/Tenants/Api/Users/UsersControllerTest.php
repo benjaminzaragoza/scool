@@ -78,12 +78,11 @@ class UsersControllerTest extends BaseTenantTest
         $this->assertCount(3,json_decode($response->getContent()));
     }
 
-
     /**
      * @test
      * @group users
      */
-    public function incidents_manager_can_see_users()
+    public function incidents_manager_can_delete_multiple_users()
     {
         $this->loginAsUsersManager('api');
 
@@ -94,12 +93,19 @@ class UsersControllerTest extends BaseTenantTest
         $this->assertCount(4,User::all());
 
         $response = $this->json('POST','/api/v1/users/multiple', [
-            $user1->id, $user2->id, $user3->id,
+            'users' => [ $user1->id, $user2->id, $user3->id ]
         ]);
 
         $response->assertSuccessful();
         $this->assertCount(1,User::all());
-        dd($response->getContent());
+        $this->assertEquals(3,$response->getContent());
+
+        $user1 = $user1->fresh();
+        $user2 = $user2->fresh();
+        $user3 = $user3->fresh();
+        $this->assertNull($user1);
+        $this->assertNull($user2);
+        $this->assertNull($user3);
     }
     /**
      * @test

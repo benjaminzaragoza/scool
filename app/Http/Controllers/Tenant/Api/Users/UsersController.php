@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Tenant\Api\Users;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\AddUser;
-use App\Http\Requests\DeleteUser;
-use App\Http\Requests\ListUsersManagement;
+use App\Http\Requests\Users\AddUser;
+use App\Http\Requests\Users\DeleteMultipleUsers;
+use App\Http\Requests\Users\ListUsersManagement;
+use App\Http\Requests\Users\DeleteUser;
 use App\Http\Requests\Users\ShowUser;
 use App\Models\User;
 use App\Repositories\UserRepository;
@@ -97,4 +98,11 @@ class UsersController extends Controller
         $user->delete();
         return $user;
     }
+
+    public function destroyMultiple(DeleteMultipleUsers $request)
+    {
+        $result = User::destroy($request->users);
+        return $result;
+    }
+
 }

@@ -33,6 +33,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
+use App\Http\Controllers\Tenant\UserNamesController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Laravel\Dusk\Http\Controllers\UserController;
@@ -123,8 +124,13 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/users', '\\'. UsersController::class . '@store');
             Route::delete('/users/{user}', '\\'. UsersController::class . '@destroy');
             //DELETE MULTIPLE USERS
-            Route::post('/users/multiple', '\\'. UsersController::class . '@destroy');
+            Route::post('/users/multiple', '\\'. UsersController::class . '@destroyMultiple');
             Route::get('/users/{user}', '\\'. UsersController::class . '@show');
+
+            //GET USER BY EMAIL
+            Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');
+            //GET USER BY name
+            Route::get('/users/name/{name}', '\\'. UserNamesController::class . '@show');
 
             Route::put('/user', 'Tenant\LoggedUserController@update');
 
@@ -140,11 +146,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Moodle users check
             Route::post('/moodle/users/check', '\\'. MoodleUsersCheckController::class .'@store');
 
-            //GET USER BY EMAIL
-            Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');
 
-            //GET USER BY name
-            Route::get('/users/name/{name}', 'Tenant\UserNamesController@get');
 
             // Available users
             // TODO: UMMMMM

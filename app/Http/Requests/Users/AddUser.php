@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Users;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -19,7 +19,7 @@ class AddUser extends FormRequest
     public function authorize()
     {
         Auth::shouldUse('api'); // TODO but Auth::user('api') does not work
-        return Auth::user()->can('create_users');
+        return Auth::user()->can('users.store');
     }
 
     /**

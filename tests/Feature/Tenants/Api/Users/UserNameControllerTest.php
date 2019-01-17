@@ -1,7 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
-
+namespace Tests\Feature\Tenants\Api\Users;
 
 use App\Models\User;
 use Config;
@@ -33,9 +32,13 @@ class UsersNameControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function can_get_user_by_name()
     {
+        $this->withoutExceptionHandling();
         $manager = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'UsersManager']);
         Config::set('auth.providers.users.model', User::class);
@@ -70,7 +73,10 @@ class UsersNameControllerTest extends BaseTenantTest
         $this->assertEquals('Ay',$user->hashid);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function regular_user_cannot_get_user_by_email()
     {
         $regularUser = factory(User::class)->create();
@@ -83,7 +89,10 @@ class UsersNameControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function can_get_user_by_email_404()
     {
         $manager = factory(User::class)->create();
@@ -98,6 +107,4 @@ class UsersNameControllerTest extends BaseTenantTest
 
         $response->assertStatus(404);
     }
-
-
 }

@@ -915,9 +915,6 @@ if (!function_exists('initialize_incidents_manager_role')) {
 }
 
 
-
-
-
 if (!function_exists('initialize_gates')) {
     function initialize_gates()
     {
@@ -947,22 +944,6 @@ if (!function_exists('initialize_gates')) {
 
         Gate::define('approve-teacher', function ($user) {
             return $user->hasRole(['UsersManager','TeachersManager']);
-        });
-
-        Gate::define('users.show', function ($user) {
-            return $user->hasRole('UsersManager');
-        });
-
-        Gate::define('list-users', function ($user) {
-            return $user->hasRole('UsersManager') || $user->hasRole('IncidentsManager');
-        });
-
-        Gate::define('create_users', function ($user) {
-            return $user->hasRole('UsersManager') || $user->hasRole('TeachersManager');
-        });
-
-        Gate::define('delete_users', function ($user) {
-            return $user->hasRole('UsersManager');
         });
 
         // Google suite groups
@@ -1150,6 +1131,31 @@ if (!function_exists('initialize_gates')) {
             if ($user->isSuperAdmin()) {
                 return true;
             }
+        });
+
+        //USERS
+        Gate::define('users.list', function ($user) {
+            return $user->hasRole('UsersManager') || $user->hasRole('IncidentsManager');
+        });
+
+        Gate::define('users.store', function ($user) {
+            return $user->hasRole('UsersManager') || $user->hasRole('TeachersManager');
+        });
+
+        Gate::define('users.show', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('users.update', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('users.destroy', function ($user) {
+            return $user->hasRole('UsersManager');
+        });
+
+        Gate::define('users.destroy.multiple', function ($user) {
+            return $user->hasRole('UsersManager');
         });
 
         //INCIDENTS
