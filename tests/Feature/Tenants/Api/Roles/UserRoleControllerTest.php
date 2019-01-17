@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Tenant\Api\Roles;
 
 use App\Models\User;
 use Config;

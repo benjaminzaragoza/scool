@@ -31,6 +31,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmailController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
+use App\Http\Controllers\Tenant\Api\Roles\RolesController;
 use App\Http\Controllers\Tenant\Api\Users\LoggedUserController;
 use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
 use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
@@ -136,6 +137,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // User Person
             Route::post('/user_person', '\\' . UserPersonController::class . '@store');
             Route::delete('/user_person/{user}', '\\' . UserPersonController::class . '@destroy');
+
+//            Roles
+            Route::get('/roles', '\\'. RolesController::class . '@index');
 
             // Moodle Users
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');

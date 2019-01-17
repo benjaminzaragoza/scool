@@ -817,6 +817,15 @@ if (!function_exists('scool_roles_permissions')) {
     }
 }
 
+if (!function_exists('sample_roles')) {
+    function sample_roles()
+    {
+        Role::create(['name' => 'Rol1']);
+        Role::create(['name' => 'Rol2']);
+        Role::create(['name' => 'Rol3']);
+    }
+}
+
 if (!function_exists('initialize_tenant_roles_and_permissions')) {
     function initialize_tenant_roles_and_permissions()
     {

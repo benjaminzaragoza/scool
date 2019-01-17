@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Tenant\Api\Roles;
 
 use App\Models\User;
-use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
@@ -35,7 +34,6 @@ class RoleUserControllerTest extends BaseTenantTest
     /** @test */
     public function can_show_users_with_an_specific_role()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'ProvaRol']);
 

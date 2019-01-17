@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Tenant\Api\Roles;
 
 use App\Models\User;
-use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
