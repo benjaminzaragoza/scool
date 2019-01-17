@@ -37,6 +37,9 @@
                                         v-model="search"
                                 ></v-text-field>
                             </v-card-title>
+                            <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
+                                <users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></users-delete-multiple>
+                            </div>
                             <v-data-table
                                 v-model="selected"
                                 select-all
@@ -94,6 +97,7 @@
                                         <manage-corporative-email-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ props.item.mobile }}</td>
+                                    <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
@@ -121,7 +125,7 @@
                                             <v-icon color="teal">edit</v-icon>
                                         </v-btn>
                                         <v-btn icon class="mx-0" @click="showConfirmationDialog(props.item)">
-                                            <v-icon color="pink">delete</v-icon>
+                                            <v-icon color="error">delete</v-icon>
                                             <v-dialog v-model="showDeleteUserDialog" max-width="500px">
                                                 <v-card>
                                                     <v-card-text>
@@ -193,6 +197,7 @@ import UserAvatar from '../ui/UserAvatarComponent'
 import UserSendWelcomeEmail from './UserSendWelcomeEmail'
 import UserSendResetPasswordEmail from './UserSendResetPasswordEmail'
 import UserSendConfirmationEmail from './UserSendConfirmationEmail'
+import UsersDeleteMultiple from './UsersDeleteMultiple'
 import UserEmails from './UserEmailsComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 
@@ -207,7 +212,8 @@ export default {
     'confirm-icon': ConfirmIcon,
     'show-user-icon': ShowUserIcon,
     'manage-corporative-email-icon': ManageCorporativeEmailIcon,
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
+    'users-delete-multiple': UsersDeleteMultiple
   },
   data () {
     return {
@@ -224,6 +230,7 @@ export default {
         { text: 'Verificat', value: 'email_verified_at' },
         { text: 'Email corporatiu', value: 'corporativeEmail' },
         { text: 'Mòbil', value: 'mobile' },
+        { text: 'Tipus', value: 'user_type_id' },
         { text: 'Rols', value: 'roles', sortable: false },
         { text: 'Últim login', value: 'last_login' },
         { text: 'Data creació', value: 'created_at_timestamp' },
@@ -244,14 +251,17 @@ export default {
     })
   },
   methods: {
+    formatUserType (userType) {
+      return this.userTypes[userType]
+    },
     formatBoolean (boolean) {
       return boolean ? 'Sí' : 'No'
     },
-    refresh () {
+    refresh (message = true) {
       this.refreshing = true
       this.$store.dispatch(actions.FETCH_USERS).then(response => {
         this.refreshing = false
-        this.showMessage('Usuaris actualizats correctament')
+        if (message) this.showMessage('Usuaris actualizats correctament')
       }).catch(error => {
         this.refreshing = false
         this.showError(error)
@@ -282,6 +292,13 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_USERS, this.users)
+    this.userTypes = {
+      1: 'Professor',
+      2: 'Estudiant',
+      3: 'Conserge',
+      4: 'Administratiu',
+      5: 'Familiar'
+    }
   }
 }
 </script>
