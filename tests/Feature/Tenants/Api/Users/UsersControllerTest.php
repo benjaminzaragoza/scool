@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\Api\Users;
 
 use App\Models\User;
 use App\Models\UserType;
@@ -33,7 +33,10 @@ class UsersControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_see_users()
     {
         $manager = create(User::class);
@@ -75,7 +78,10 @@ class UsersControllerTest extends BaseTenantTest
     }
 
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function incidents_manager_can_see_users()
     {
         $manager = create(User::class);
@@ -115,7 +121,10 @@ class UsersControllerTest extends BaseTenantTest
         }
         $this->assertCount(3,json_decode($response->getContent()));
     }
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_add_users()
     {
         $manager = create(User::class);
@@ -140,7 +149,10 @@ class UsersControllerTest extends BaseTenantTest
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_add_user_with_mobile()
     {
         $manager = create(User::class);
@@ -167,7 +179,10 @@ class UsersControllerTest extends BaseTenantTest
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_add_user_with_user_type_and_roles()
     {
         $manager = create(User::class);
@@ -202,7 +217,10 @@ class UsersControllerTest extends BaseTenantTest
 
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_cannot_add_users()
     {
         $regularUser = create(User::class);
@@ -217,7 +235,10 @@ class UsersControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_add_users_validate()
     {
         $manager = create(User::class);
@@ -235,26 +256,10 @@ class UsersControllerTest extends BaseTenantTest
 
     }
 
-    /** @test */
-    public function user_with_role_manager_can_see_users_management()
-    {
-        $user = create(User::class);
-        $this->actingAs($user);
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $user->assignRole($role);
-
-        $response = $this->get('/users');
-
-        $response->assertSuccessful();
-        $response->assertViewIs('tenants.users.show');
-        $response->assertViewHas('users');
-        $response->assertViewHas('userTypes');
-        $response->assertViewHas('roles');
-
-    }
-
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_with_role_manager_can_delete_users()
     {
         $manager = create(User::class);
@@ -275,7 +280,10 @@ class UsersControllerTest extends BaseTenantTest
         ]);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_cannot_delete_users()
     {
         $regularUser = create(User::class);
@@ -288,35 +296,10 @@ class UsersControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-
-    /** @test */
-    public function super_admin_can_see_users_management()
-    {
-        $user = create(User::class);
-        $user->admin = true;
-        $user->save();
-        $this->actingAs($user);
-
-        Config::set('auth.providers.users.model', User::class);
-
-        $response = $this->get('/users');
-
-        $response->assertSuccessful();
-    }
-
-    /** @test */
-    public function user_without_role_manager_cannot_see_users_management()
-    {
-        $user = create(User::class);
-        $this->actingAs($user);
-        Config::set('auth.providers.users.model', User::class);
-
-        $response = $this->get('/users');
-
-        $response->assertStatus(403);
-    }
-
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function can_get_user_info()
     {
         $manager = create(User::class);
@@ -352,7 +335,9 @@ class UsersControllerTest extends BaseTenantTest
         $this->assertEquals('Ay',$user->hashid);
     }
 
-    /** @test */
+    /** @test
+     *  @group users
+     */
     public function regular_user_cannot_get_user_info()
     {
         $regularUser = create(User::class);

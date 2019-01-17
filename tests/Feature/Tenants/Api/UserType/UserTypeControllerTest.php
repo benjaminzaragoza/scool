@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\People;
+namespace Tests\Feature\Tenants\Api\UserType;
 
 use App\Models\UserType;
 use Illuminate\Contracts\Console\Kernel;
