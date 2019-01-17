@@ -68,7 +68,6 @@ class PermissionsControllerTest extends BaseTenantTest
         $response = $this->json('GET','/api/v1/permissions');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertCount(4, $result);
         $this->assertEquals('Permission1', $result[0]->name);
         $this->assertEquals('web', $result[0]->guard_name);
         $this->assertEquals('permissions', $result[0]->api_uri);
