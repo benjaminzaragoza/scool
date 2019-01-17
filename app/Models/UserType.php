@@ -14,6 +14,18 @@ use Spatie\Permission\Models\Role;
 class UserType extends Model
 {
     const TEACHER = 1;
+    const STUDENT = 2;
+    const JANITOR = 3;
+    const ADMINISTRATIVE = 4;
+    const FAMILY = 5;
+
+    const TYPES = [
+        UserType::TEACHER => 'teacher',
+        UserType::STUDENT => 'student',
+        UserType::JANITOR => 'janitor',
+        UserType::ADMINISTRATIVE => 'administrative',
+        UserType::FAMILY => 'family'
+    ];
 
     protected $guarded = [];
 

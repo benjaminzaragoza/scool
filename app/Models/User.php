@@ -694,6 +694,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'id' => $this->id,
             'name' => $this->name,
             'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
+            'user_type_id' => $this->user_type_id,
+            'user_type' => $this->user_type,
             'email' => $this->email,
             'mobile' => $this->mobile,
             'photo' => $this->photo,
@@ -723,6 +725,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'id' => $this->id,
             'name' => $this->name,
             'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
+            'user_type_id' => $this->user_type_id,
+            'user_type' => $this->user_type,
             'person_id' => optional($this->person)->id,
             'givenName' => optional($this->person)->givenName,
             'sn1' => optional($this->person)->sn1,
@@ -791,6 +795,17 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function getFullSearchAttribute($value)
     {
         return "$this->email $this->name";
+    }
+
+    /**
+     * user_type
+     *
+     * @param $value
+     * @return string
+     */
+    public function getUserTypeAttribute($value)
+    {
+        if ($this->user_type_id) return UserType::TYPES[$this->user_type_id];
     }
 
     /**

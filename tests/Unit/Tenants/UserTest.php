@@ -836,6 +836,19 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function user_type_attribute() {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com',
+            'mobile' => '654789524'
+        ]);
+        $user->assignTeacher($teacher = Teacher::create([
+            'code' => '040'
+        ]));
+        $this->assertEquals('teacher',$user->user_type);
+    }
+
+    /** @test */
     public function map()
     {
         $user = factory(User::class)->create([
@@ -843,6 +856,10 @@ class UserTest extends TestCase
             'email' => 'pepepardojeans@gmail.com',
             'mobile' => '654789524'
         ]);
+
+        $user->assignTeacher($teacher = Teacher::create([
+            'code' => '040'
+        ]));
 
         GoogleUser::create([
             'user_id' => $user->id,
@@ -864,6 +881,10 @@ class UserTest extends TestCase
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe',$mappedUser['givenName']);
         $this->assertFalse($mappedUser['isSuperAdmin']);
+
+        $this->assertEquals('teacher',$mappedUser['user_type']);
+        $this->assertEquals(1,$mappedUser['user_type_id']);
+
         $this->assertEquals($person->id,$mappedUser['person_id']);
         $this->assertEquals('Pardo',$mappedUser['sn1']);
         $this->assertEquals('Jeans',$mappedUser['sn2']);

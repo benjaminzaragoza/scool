@@ -38,6 +38,8 @@
                                 ></v-text-field>
                             </v-card-title>
                             <v-data-table
+                                v-model="selected"
+                                select-all
                                 class="px-0 mb-2 hidden-sm-and-down"
                                 :headers="headers"
                                 :items="internalUsers"
@@ -49,69 +51,76 @@
                                 rows-per-page-text="Usuaris per pàgina"
                                 :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
                             >
-                            <template slot="items" slot-scope="{item: user}">
+                            <template slot="items" slot-scope="props">
                                 <tr>
-                                    <td class="text-xs-left cell">
-                                        {{ user.id }}
+                                    <td>
+                                        <v-checkbox
+                                                v-model="props.selected"
+                                                primary
+                                                hide-details
+                                        ></v-checkbox>
                                     </td>
                                     <td class="text-xs-left cell">
-                                        <user-avatar :hash-id="user.hashid"
-                                                     :alt="user.name"
-                                                     :user="user"
+                                        {{ props.item.id }}
+                                    </td>
+                                    <td class="text-xs-left cell">
+                                        <user-avatar :hash-id="props.item.hashid"
+                                                     :alt="props.item.name"
+                                                     :user="props.item"
                                                      :editable="true"
                                                      :removable="true"
                                         ></user-avatar>
                                     </td>
                                     <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
-                                            <span slot="activator">{{ user.name }}</span>
-                                            <span>{{ user.name }}</span>
+                                            <span slot="activator">{{ props.item.name }}</span>
+                                            <span>{{ props.item.name }}</span>
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
-                                            <span slot="activator">{{ user.email }}</span>
-                                            <span>{{ user.email }}</span>
+                                            <span slot="activator">{{ props.item.email }}</span>
+                                            <span>{{ props.item.email }}</span>
                                         </v-tooltip>
                                     </td>
-                                    <td class="text-xs-center cell">{{ formatBoolean(user.email_verified_at) }}</td>
+                                    <td class="text-xs-center cell">{{ formatBoolean(props.item.email_verified_at) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <span v-if="user.corporativeEmail">
+                                        <span v-if="props.item.corporativeEmail">
                                             <v-tooltip bottom>
-                                                <span slot="activator"><a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.googleId">{{ user.corporativeEmail }}</a></span>
-                                                <span>{{ user.corporativeEmail }}</span>
+                                                <span slot="activator"><a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + props.item.googleId">{{ props.item.corporativeEmail }}</a></span>
+                                                <span>{{ props.item.corporativeEmail }}</span>
                                             </v-tooltip>
                                         </span>
-                                        <manage-corporative-email-icon :user="user" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
+                                        <manage-corporative-email-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
-                                    <td class="text-xs-left cell">{{ user.mobile }}</td>
+                                    <td class="text-xs-left cell">{{ props.item.mobile }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
-                                            <span slot="activator">{{ formatRoles(user) }}</span>
-                                            <span>{{ formatRoles(user) }}</span>
+                                            <span slot="activator">{{ formatRoles(props.item) }}</span>
+                                            <span>{{ formatRoles(props.item) }}</span>
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell">
                                         <v-tooltip bottom>
-                                            <span slot="activator">{{ user.last_login_diff }}</span>
-                                            <span>{{ user.last_login_ip }} | {{ user.last_login_formatted }}</span>
+                                            <span slot="activator">{{ props.item.last_login_diff }}</span>
+                                            <span>{{ props.item.last_login_ip }} | {{ props.item.last_login_formatted }}</span>
                                         </v-tooltip>
                                     </td>
-                                    <td class="text-xs-left cell" v-html="user.formatted_created_at_diff" :title="user.formatted_created_at"></td>
-                                    <td class="text-xs-left cell" :title="user.formatted_updated_at">{{user.formatted_updated_at_diff}}</td>
+                                    <td class="text-xs-left cell" v-html="props.item.formatted_created_at_diff" :title="props.item.formatted_created_at"></td>
+                                    <td class="text-xs-left cell" :title="props.item.formatted_updated_at">{{props.item.formatted_updated_at_diff}}</td>
                                     <td class="text-xs-left cell">
-                                        <show-user-icon :user="user" :users="users"></show-user-icon>
+                                        <show-user-icon :user="props.item" :users="users"></show-user-icon>
 
-                                        <user-emails :user="user"></user-emails>
+                                        <user-emails :user="props.item"></user-emails>
 
-                                        <!--<user-send-welcome-email :user="user"></user-send-welcome-email>-->
-                                        <!--<user-send-reset-password-email :user="user"></user-send-reset-password-email>-->
-                                        <!--<user-send-confirmation-email :user="user"></user-send-confirmation-email>-->
+                                        <!--<user-send-welcome-email :user="props.item"></user-send-welcome-email>-->
+                                        <!--<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>-->
+                                        <!--<user-send-confirmation-email :user="props.item"></user-send-confirmation-email>-->
 
-                                        <v-btn icon class="mx-0" @click="editItem(user)">
+                                        <v-btn icon class="mx-0" @click="editItem(props.item)">
                                             <v-icon color="teal">edit</v-icon>
                                         </v-btn>
-                                        <v-btn icon class="mx-0" @click="showConfirmationDialog(user)">
+                                        <v-btn icon class="mx-0" @click="showConfirmationDialog(props.item)">
                                             <v-icon color="pink">delete</v-icon>
                                             <v-dialog v-model="showDeleteUserDialog" max-width="500px">
                                                 <v-card>
@@ -202,6 +211,7 @@ export default {
   },
   data () {
     return {
+      selected: [],
       showDeleteUserDialog: false,
       search: '',
       deleting: false,
@@ -282,5 +292,8 @@ export default {
     }
     .cell {
         padding: 3px 3px !important;
+    }
+    table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child) {
+        padding: 0 5px !important;
     }
 </style>
