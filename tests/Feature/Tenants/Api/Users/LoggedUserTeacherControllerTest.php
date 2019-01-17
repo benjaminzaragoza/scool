@@ -62,12 +62,13 @@ class LoggedUserTeacherControllerTest extends BaseTenantTest
      */
     public function logged_user_as_teacher()
     {
-        $this->markTestSkipped('TODO');
+//        $this->markTestSkipped('TODO');
         initialize_tenant_roles_and_permissions();
         initialize_user_types();
         initialize_job_types();
         initialize_forces();
         initialize_families();
+        initialize_departments();
         initialize_specialities();
 
         $user = User::createIfNotExists([
