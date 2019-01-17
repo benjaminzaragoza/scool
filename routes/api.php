@@ -31,9 +31,10 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmailController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
+use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
+use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
-use App\Http\Controllers\Tenant\UserNamesController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Laravel\Dusk\Http\Controllers\UserController;
@@ -128,7 +129,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/users/{user}', '\\'. UsersController::class . '@show');
 
             //GET USER BY EMAIL
-            Route::get('/users/email/{email}', 'Tenant\UserEmailsController@get');
+            Route::get('/users/email/{email}', '\\' . UserEmailsController::class . '@show');
             //GET USER BY name
             Route::get('/users/name/{name}', '\\'. UserNamesController::class . '@show');
 

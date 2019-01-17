@@ -19,13 +19,12 @@ class UserEmailsController extends Controller
     /**
      * @param ShowUser $request
      * @param $tenant
-     * @param User $user
+     * @param $email
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get(ShowUser $request, $tenant, $email)
+    public function show(ShowUser $request, $tenant, $email)
     {
         return User::where('email',$email)->firstOrFail()->map();
     }
-
 
 }
