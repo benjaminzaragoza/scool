@@ -34,7 +34,7 @@ export default {
     },
     buttonFalseColor: {
       type: String,
-      default: 'success'
+      default: 'primary'
     },
     color: {
       type: String,

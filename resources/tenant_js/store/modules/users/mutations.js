@@ -12,5 +12,11 @@ export default {
   },
   [ types.EDIT_USER ] (state, user) {
     state.users.push(user)
+  },
+  [ types.DELETE_USER ] (state, user) {
+    let userInState = state.users.find((element) => {
+      return element.id === user.id
+    })
+    state.users.splice(state.users.indexOf(userInState), 1)
   }
 }

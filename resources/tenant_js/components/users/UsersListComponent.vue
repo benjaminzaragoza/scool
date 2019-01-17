@@ -117,30 +117,11 @@
                                     <td class="text-xs-left cell" :title="props.item.formatted_updated_at">{{props.item.formatted_updated_at_diff}}</td>
                                     <td class="text-xs-left cell">
                                         <show-user-icon :user="props.item" :users="users"></show-user-icon>
-
                                         <user-emails :user="props.item"></user-emails>
-
                                         <!--<user-send-welcome-email :user="props.item"></user-send-welcome-email>-->
                                         <!--<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>-->
                                         <!--<user-send-confirmation-email :user="props.item"></user-send-confirmation-email>-->
-
-                                        <v-btn icon class="mx-0" @click="editItem(props.item)">
-                                            <v-icon color="teal">edit</v-icon>
-                                        </v-btn>
-                                        <v-btn icon class="mx-0" @click="showConfirmationDialog(props.item)">
-                                            <v-icon color="error">delete</v-icon>
-                                            <v-dialog v-model="showDeleteUserDialog" max-width="500px">
-                                                <v-card>
-                                                    <v-card-text>
-                                                        Esteu segurs que voleu eliminar aquest usuari?
-                                                    </v-card-text>
-                                                    <v-card-actions>
-                                                        <v-btn flat @click.stop="showDeleteUserDialog=false">Cancel·lar</v-btn>
-                                                        <v-btn color="primary" @click.stop="deleteUser" :loading="deleting">Esborrar</v-btn>
-                                                    </v-card-actions>
-                                                </v-card>
-                                            </v-dialog>
-                                        </v-btn>
+                                        <user-delete :user="props.item"></user-delete>
                                     </td>
                                 </tr>
                             </template>
@@ -200,12 +181,14 @@ import UserSendResetPasswordEmail from './UserSendResetPasswordEmail'
 import UserSendConfirmationEmail from './UserSendConfirmationEmail'
 import UsersDeleteMultiple from './UsersDeleteMultiple'
 import UserEmails from './UserEmailsComponent'
+import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 
 export default {
   name: 'UsersList',
   components: {
     'user-emails': UserEmails,
+    'user-delete': UserDelete,
     'user-send-welcome-email': UserSendWelcomeEmail,
     'user-send-reset-password-email': UserSendResetPasswordEmail,
     'user-send-confirmation-email': UserSendConfirmationEmail,
@@ -217,9 +200,7 @@ export default {
   data () {
     return {
       selected: [],
-      showDeleteUserDialog: false,
       search: '',
-      deleting: false,
       refreshing: false,
       headers: [
         { text: 'Id', align: 'left', value: 'id' },
@@ -271,22 +252,6 @@ export default {
     },
     formatRoles (user) {
       return Object.values(user.roles).join(', ')
-    },
-    showConfirmationDialog (user) {
-      this.currentUser = user
-      this.showDeleteUserDialog = true
-    },
-    deleteUser () {
-      this.deleting = true
-      this.$store.dispatch(actions.DELETE_USER, this.currentUser).then(response => {
-        this.deleting = false
-        this.showDeleteUserDialog = false
-      }).catch(error => {
-        this.$snackbar.showError(error)
-        this.deleting = false
-      }).then(() => {
-        this.deleting = false
-      })
     }
   },
   created () {
