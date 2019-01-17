@@ -24,6 +24,7 @@ use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
+use App\Http\Controllers\Tenant\Api\Permissions\PermissionsController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
@@ -140,6 +141,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
 //            Roles
             Route::get('/roles', '\\'. RolesController::class . '@index');
+
+//            Permissions
+            Route::get('/permissions', '\\'. PermissionsController::class . '@index');
 
             // Moodle Users
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');

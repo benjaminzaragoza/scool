@@ -817,6 +817,15 @@ if (!function_exists('scool_roles_permissions')) {
     }
 }
 
+if (!function_exists('sample_permissions')) {
+    function sample_permissions()
+    {
+        Permission::create(['name' => 'Permission1']);
+        Permission::create(['name' => 'Permission2']);
+        Permission::create(['name' => 'Permission3']);
+    }
+}
+
 if (!function_exists('sample_roles')) {
     function sample_roles()
     {

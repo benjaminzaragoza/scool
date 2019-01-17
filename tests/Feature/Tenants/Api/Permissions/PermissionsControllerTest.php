@@ -8,11 +8,11 @@ use Tests\BaseTenantTest;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class RolesControllerTest.
+ * Class PermissionsControllerTest.
  *
  * @package Tests\Feature
  */
-class RolesControllerTest extends BaseTenantTest
+class PermissionsControllerTest extends BaseTenantTest
 {
     use RefreshDatabase,CanLogin;
 
@@ -34,18 +34,18 @@ class RolesControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function users_manager_can_index_roles()
+    public function superadmin_can_index_permissions()
     {
-        sample_roles();
-        $this->loginAsUsersManager('api');
+        sample_permissions();
+        $this->loginAsSuperAdmin('api');
 
-        $response = $this->json('GET','/api/v1/roles');
+        $response = $this->json('GET','/api/v1/permissions');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertCount(4, $result);
-        $this->assertEquals('Rol1', $result[0]->name);
+        $this->assertCount(3, $result);
+        $this->assertEquals('Permission1', $result[0]->name);
         $this->assertEquals('web', $result[0]->guard_name);
-        $this->assertEquals('roles', $result[0]->api_uri);
+        $this->assertEquals('permissions', $result[0]->api_uri);
         $this->assertNotNull($result[0]->created_at);
         $this->assertNotNull($result[0]->created_at_timestamp);
         $this->assertNotNull($result[0]->formatted_created_at);
@@ -60,21 +60,36 @@ class RolesControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function super_admin_can_see_roles_management()
+    public function users_manager_can_index_permissions()
     {
-        $this->loginAsSuperAdmin('web');
-        $response = $this->get('/users/roles');
+        sample_permissions();
+        $this->loginAsUsersManager('api');
+
+        $response = $this->json('GET','/api/v1/permissions');
         $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertCount(4, $result);
+        $this->assertEquals('Permission1', $result[0]->name);
+        $this->assertEquals('web', $result[0]->guard_name);
+        $this->assertEquals('permissions', $result[0]->api_uri);
+        $this->assertNotNull($result[0]->created_at);
+        $this->assertNotNull($result[0]->created_at_timestamp);
+        $this->assertNotNull($result[0]->formatted_created_at);
+        $this->assertNotNull($result[0]->formatted_created_at_diff);
+        $this->assertNotNull($result[0]->updated_at);
+        $this->assertNotNull($result[0]->updated_at_timestamp);
+        $this->assertNotNull($result[0]->formatted_updated_at);
+        $this->assertNotNull($result[0]->formatted_updated_at_diff);
     }
 
     /**
      * @test
      * @group users
      */
-    public function regular_user_cannot_see_roles_management()
+    public function regular_user_cannot_see_permissions_management()
     {
-        $this->login('web');
-        $response = $this->get('/users/roles');
+        $this->login('api');
+        $response = $this->json('GET','/api/v1/permissions');
         $response->assertStatus(403);
     }
 
@@ -82,9 +97,9 @@ class RolesControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function guest_user_cannot_see_roles_management()
+    public function guest_user_cannot_see_permissions_management()
     {
-        $response = $this->get('/users/roles');
-        $response->assertRedirect('/login');
+        $response = $this->json('GET','/api/v1/permissions');
+        $response->assertStatus(401);
     }
 }
