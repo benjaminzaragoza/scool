@@ -22,10 +22,10 @@ class UserGsuiteController extends Controller
     protected $repository;
 
     /**
-     * @param GetUser $request
+     * @param AssociateGsuiteUserToUser $request
      * @param $tenant
      * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return void
      */
     public function store(AssociateGsuiteUserToUser $request, $tenant, User $user)
     {
@@ -44,6 +44,7 @@ class UserGsuiteController extends Controller
     public function edit(EditGoogleUsers $request, $tenant, User $user)
     {
         if (!$user->googleUser) abort (422, "L'usuari $user->name no té un compte de Google associat");
+        dd($user->googleUser->google_email);
         if (!google_user_exists($googleEmail = $user->googleUser->google_email)) abort('422',
             "No existeix el compte de Google $googleEmail");
         try {

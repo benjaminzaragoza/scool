@@ -20,7 +20,7 @@ class AssociateGsuiteUserToUser
      */
     public function authorize()
     {
-        return Auth::user()->can('create_users');
+        return Auth::user()->can('users.store');
     }
 
     /**
