@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Users\ShowUsersManagement;
-use App\Models\Role;
+use App\Models\Permission;
 
 /**
- * Class RolesController.
+ * Class PermissionsController.
  *
  * @package App\Http\Controllers\Tenant\Web
  */
-class RolesController extends Controller
+class PermissionsController extends Controller
 {
     /**
      * @param ShowUsersManagement $request
@@ -19,8 +19,8 @@ class RolesController extends Controller
      */
     public function index(ShowUsersManagement $request)
     {
-        $roles = map_collection(Role::all());
-        return view('tenants.users.roles.index',compact('roles'));
+        $permissions = map_collection(Permission::all());
+        return view('tenants.users.permissions.index',compact('permissions'));
     }
 
 }

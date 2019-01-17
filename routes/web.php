@@ -18,6 +18,7 @@ use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
 use App\Http\Controllers\Tenant\Web\MoodleController;
+use App\Http\Controllers\Tenant\Web\PermissionsController;
 use App\Http\Controllers\Tenant\Web\PositionsController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumStudiesController;
