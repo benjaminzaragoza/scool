@@ -949,7 +949,7 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole(['UsersManager','TeachersManager']);
         });
 
-        Gate::define('show-users', function ($user) {
+        Gate::define('users.show', function ($user) {
             return $user->hasRole('UsersManager');
         });
 

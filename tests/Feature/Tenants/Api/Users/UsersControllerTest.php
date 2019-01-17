@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class UsersControllerTest.
@@ -17,7 +18,7 @@ use Tests\BaseTenantTest;
  */
 class UsersControllerTest extends BaseTenantTest
 {
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -84,42 +85,21 @@ class UsersControllerTest extends BaseTenantTest
      */
     public function incidents_manager_can_see_users()
     {
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'IncidentsManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
+        $user1 = create(User::class);
         $user2 = create(User::class);
         $user3 = create(User::class);
 
-        $response = $this->json('GET','/api/v1/users');
+        $this->assertCount(4,User::all());
+
+        $response = $this->json('POST','/api/v1/users/multiple', [
+            $user1->id, $user2->id, $user3->id,
+        ]);
 
         $response->assertSuccessful();
-        $this->assertCount(3,json_decode($response->getContent()));
-
-        $response->assertJsonStructure([[
-            'id',
-            'name',
-            'email',
-            'created_at',
-            'updated_at',
-            'formatted_created_at',
-            'formatted_updated_at',
-            'admin',
-        ]]);
-
-        foreach ( [$manager, $user2, $user3] as $user) {
-            $response->assertJsonFragment([
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email
-            ]);
-        }
-        $this->assertCount(3,json_decode($response->getContent()));
+        $this->assertCount(1,User::all());
+        dd($response->getContent());
     }
     /**
      * @test
@@ -294,6 +274,41 @@ class UsersControllerTest extends BaseTenantTest
         $response = $this->json('DELETE','/api/v1/users/' . $userToDelete->id);
 
         $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function guest_user_cannot_delete_users()
+    {
+        $userToDelete = create(User::class);
+        $response = $this->json('DELETE','/api/v1/users/' . $userToDelete->id);
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function user_with_role_manager_can_delete_multiple_users()
+    {
+        $manager = create(User::class);
+        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+        $this->actingAs($manager,'api');
+
+        $userToDelete = create(User::class);
+
+        $response = $this->json('DELETE','/api/v1/users/' . $userToDelete->id);
+
+        $response->assertSuccessful();
+        $response->assertJsonFragment([
+            'name' => $userToDelete->name,
+            'email' => $userToDelete->email,
+            'id' => $userToDelete->id
+        ]);
     }
 
     /**

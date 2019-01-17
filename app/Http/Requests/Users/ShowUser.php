@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Users;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ShowUsersManagement.
+ * Class ShowUser.
  *
  * @package App\Http\Requests
  */
-class ShowUsersManagement extends FormRequest
+class ShowUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class ShowUsersManagement extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('show-users');
+        return Auth::user()->can('users.show');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\Web\Users;
 
 use App\Models\User;
 use App\Models\UserType;
@@ -39,6 +39,7 @@ class UsersControllerTest extends BaseTenantTest
      */
     public function user_with_role_manager_can_see_users_management()
     {
+        $this->withoutExceptionHandling();
         $user = create(User::class);
         $this->actingAs($user);
         $role = Role::firstOrCreate(['name' => 'UsersManager']);

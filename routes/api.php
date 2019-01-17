@@ -31,9 +31,11 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmailController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
+use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
+use Laravel\Dusk\Http\Controllers\UserController;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
 use App\Models\Log as Changelog;
@@ -117,11 +119,14 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
 
             // USERS
-            Route::get('/users', 'Tenant\UsersController@index');
-            Route::post('/users', 'Tenant\UsersController@store');
+            Route::get('/users', '\\'. UsersController::class . '@index');
+            Route::post('/users', '\\'. UsersController::class . '@store');
+            Route::delete('/users/{user}', '\\'. UsersController::class . '@destroy');
+            //DELETE MULTIPLE USERS
+            Route::post('/users/multiple', '\\'. UsersController::class . '@destroy');
+            Route::get('/users/{user}', '\\'. UsersController::class . '@show');
+
             Route::put('/user', 'Tenant\LoggedUserController@update');
-            Route::delete('/users/{user}', 'Tenant\UsersController@destroy');
-            Route::get('/users/{user}', 'Tenant\UsersController@get');
 
             // Moodle Users
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');

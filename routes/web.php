@@ -22,6 +22,7 @@ use App\Http\Controllers\Tenant\Web\PositionsController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumStudiesController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
+use App\Http\Controllers\Tenant\Web\UsersController;
 use App\Models\Module;
 use App\Models\Study;
 use App\Models\User;
@@ -160,9 +161,10 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/home', '\\' . HomeController::class . '@show');
 
-            Route::get('/users', 'Tenant\UsersController@show');
 
-            Route::get('/moodle', '\\'.MoodleController::class.'@index');
+            Route::get('/users', '\\' . UsersController::class . ' @index');
+
+            Route::get('/moodle', '\\' . MoodleController::class.'@index');
 
             Route::get('/jobs', 'Tenant\JobsController@show');
 

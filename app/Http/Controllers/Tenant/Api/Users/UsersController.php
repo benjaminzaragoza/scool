@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Tenant\Api\Users;
 
+use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\AddUser;
 use App\Http\Requests\DeleteUser;
-use App\Http\Requests\GetUser;
 use App\Http\Requests\ListUsersManagement;
-use App\Http\Requests\ShowUsersManagement;
-use App\Http\Resources\Tenant\UserTypesCollection;
+use App\Http\Requests\Users\ShowUser;
 use App\Models\User;
-use App\Models\UserType;
 use App\Repositories\UserRepository;
 use Spatie\Permission\Models\Role;
 
 /**
  * Class UsersController.
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Tenant\Api\Users
  */
 class UsersController extends Controller
 {
@@ -33,24 +31,12 @@ class UsersController extends Controller
     }
 
     /**
-     * @param ShowUsersManagement $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show(ShowUsersManagement $request)
-    {
-        $users = User::getUsers();
-        $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
-        $roles = Role::all()->pluck('name');
-        return view('tenants.users.show',compact('users','userTypes','roles'));
-    }
-
-    /**
-     * @param GetUser $request
+     * @param ShowUser $request
      * @param $tenant
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get(GetUser $request, $tenant, User $user)
+    public function show(ShowUser $request, $tenant, User $user)
     {
         return $user->map();
     }
