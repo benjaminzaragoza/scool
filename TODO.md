@@ -7,11 +7,30 @@
 
 # Users management
 
+ROLS:
+- [ ] CRUD DE ROLS
+- [ ] Protegir certs Rols -> NO ES PODEN ESBORRAR
+
+PERMISSIONS:
+- [ ] CRUD DE ROLS
+- [ ] Protegir certs Rols -> NO ES PODEN ESBORRAR
+
+
+EDIT:
+- [ ] Editar el name inline a la llsita d'usuaris (datatables)
+- [ ]  Editar l'email name inline a la llsita d'usuaris (datatables) 
+  - [ ] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
+- [ ] Modificar el mòbil online
+  - [ ] Confirmar mòbil
+- [ ] Modificar el tipus usuari
+
+  
 - [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
 - [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
 - [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
 - [ ] Last Login de l'usuari, permetre saber usuaris no s'han logat mai
-- [ ] Esborrat massiu d'usuaris    
+- [X] Esborrat massiu d'usuaris
+- [ ] Protegir alguns usuaris -> no es puguin esborrar    
 
 # Usuaris acabats de registrar | sense rols
 

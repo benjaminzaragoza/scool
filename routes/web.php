@@ -21,6 +21,7 @@ use App\Http\Controllers\Tenant\Web\MoodleController;
 use App\Http\Controllers\Tenant\Web\PositionsController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumStudiesController;
+use App\Http\Controllers\Tenant\Web\RolesController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use App\Http\Controllers\Tenant\Web\UsersController;
 use App\Models\Module;
@@ -163,6 +164,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
 
             Route::get('/users', '\\' . UsersController::class . '@index');
+            Route::get('/users/roles', '\\' . RolesController::class . '@index');
+            Route::get('/users/permissions', '\\' . PermissionsController::class . '@index');
+
 
             Route::get('/moodle', '\\' . MoodleController::class.'@index');
 

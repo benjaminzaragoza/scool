@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Tenant\Web;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Users\ShowUsersManagement;
-use App\Http\Resources\Tenant\UserTypesCollection;
-use App\Models\User;
-use App\Models\UserType;
 use Spatie\Permission\Models\Role;
 
 /**
- * Class UsersController.
+ * Class RolesController.
  *
  * @package App\Http\Controllers\Tenant\Web
  */
-class UsersController extends Controller
+class RolesController extends Controller
 {
     /**
      * @param ShowUsersManagement $request
@@ -22,10 +19,8 @@ class UsersController extends Controller
      */
     public function index(ShowUsersManagement $request)
     {
-        $users = User::getUsers();
-        $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
-        $roles = Role::all()->pluck('name');
-        return view('tenants.users.show',compact('users','userTypes','roles'));
+        $roles = map_collection(Role::all());
+        return view('tenants.users.roles.index',compact('roles'));
     }
 
 }

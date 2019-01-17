@@ -12,11 +12,11 @@ use Tests\BaseTenantTest;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class UsersControllerTest.
+ * Class RolesControllerTest.
  *
  * @package Tests\Feature
  */
-class UsersControllerTest extends BaseTenantTest
+class RolesControllerTest extends BaseTenantTest
 {
     use RefreshDatabase,CanLogin;
 
@@ -38,11 +38,12 @@ class UsersControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function users_manager_can_see_users_management()
+    public function users_manager_can_see_roles_management()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsUsersManager('web');
 
-        $response = $this->get('/users');
+        $response = $this->get('/users/roles');
 
         $response->assertSuccessful();
         $response->assertViewIs('tenants.users.show');
@@ -55,10 +56,10 @@ class UsersControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function super_admin_can_see_users_management()
+    public function super_admin_can_see_roles_management()
     {
         $this->loginAsSuperAdmin('web');
-        $response = $this->get('/users');
+        $response = $this->get('/users/roles');
         $response->assertSuccessful();
     }
 
@@ -66,20 +67,10 @@ class UsersControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function regular_user_cannot_see_users_management()
+    public function regular_user_cannot_see_roles_management()
     {
         $this->login('web');
-        $response = $this->get('/users');
+        $response = $this->get('/users/roles');
         $response->assertStatus(403);
-    }
-
-    /**
-     * @test
-     * @group users
-     */
-    public function guest_user_cannot_see_users_management()
-    {
-        $response = $this->get('/users');
-        $response->assertRedirect('/login');
     }
 }

@@ -9,8 +9,11 @@
                         </v-btn>
 
                         <v-list>
-                            <v-list-tile>
-                                <v-list-tile-title>TODO: llista d'usuaris AAAAAAAA</v-list-tile-title>
+                            <v-list-tile href="/user/permissions" target="_blank">
+                                <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/user/roles" target="_blank">
+                                <v-list-tile-title>Gestionar Rols</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
