@@ -48,6 +48,8 @@ window.Vue.component('users-dashboard', require('./components/users/UsersDashboa
 window.Vue.component('users-list', require('./components/users/UsersListComponent.vue'))
 window.Vue.component('user-add', require('./components/users/UserAddComponent.vue'))
 
+window.Vue.component('roles', require('./components/users/roles/RolesComponent.vue'))
+
 window.Vue.component('jobs-list', require('./components/jobs/JobsListComponent.vue'))
 window.Vue.component('job-add', require('./components/jobs/JobAddComponent.vue'))
 window.Vue.component('jobs-list-by-family', require('./components/jobs/JobsListByFamilyComponent.vue'))

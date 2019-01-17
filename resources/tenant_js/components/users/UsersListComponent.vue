@@ -9,10 +9,10 @@
                         </v-btn>
 
                         <v-list>
-                            <v-list-tile href="/user/permissions" target="_blank">
+                            <v-list-tile href="/users/permissions" target="_blank">
                                 <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
                             </v-list-tile>
-                            <v-list-tile href="/user/roles" target="_blank">
+                            <v-list-tile href="/users/roles" target="_blank">
                                 <v-list-tile-title>Gestionar Rols</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
@@ -193,8 +193,6 @@
 import { mapGetters } from 'vuex'
 import * as mutations from '../../store/mutation-types'
 import * as actions from '../../store/action-types'
-import withSnackbar from '../mixins/withSnackbar'
-import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
 import ShowUserIcon from './ShowUserIconComponent.vue'
 import UserAvatar from '../ui/UserAvatarComponent'
 import UserSendWelcomeEmail from './UserSendWelcomeEmail'
@@ -206,13 +204,11 @@ import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIc
 
 export default {
   name: 'UsersList',
-  mixins: [withSnackbar],
   components: {
     'user-emails': UserEmails,
     'user-send-welcome-email': UserSendWelcomeEmail,
     'user-send-reset-password-email': UserSendResetPasswordEmail,
     'user-send-confirmation-email': UserSendConfirmationEmail,
-    'confirm-icon': ConfirmIcon,
     'show-user-icon': ShowUserIcon,
     'manage-corporative-email-icon': ManageCorporativeEmailIcon,
     'user-avatar': UserAvatar,
@@ -264,10 +260,10 @@ export default {
       this.refreshing = true
       this.$store.dispatch(actions.FETCH_USERS).then(response => {
         this.refreshing = false
-        if (message) this.showMessage('Usuaris actualizats correctament')
+        if (message) this.$snackbar.showMessage('Usuaris actualizats correctament')
       }).catch(error => {
         this.refreshing = false
-        this.showError(error)
+        this.$snackbar.showError(error)
       })
     },
     settings () {
@@ -286,7 +282,7 @@ export default {
         this.deleting = false
         this.showDeleteUserDialog = false
       }).catch(error => {
-        this.showError(error)
+        this.$snackbar.showError(error)
         this.deleting = false
       }).then(() => {
         this.deleting = false
