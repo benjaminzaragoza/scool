@@ -19,7 +19,7 @@ class UserPersonStore extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('create_users');
+        return Auth::user()->can('users.store');
     }
 
     /**

@@ -19,7 +19,7 @@ class UserPersonDestroy extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('delete_users');
+        return Auth::user()->can('users.destroy');
     }
 
     /**

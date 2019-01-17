@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Tenant\Api\Users;
 
+use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\UserPerson\UserPersonDestroy;
 use App\Http\Requests\UserPerson\UserPersonStore;
 use App\Models\Person;
@@ -15,7 +16,6 @@ use Spatie\Permission\Models\Role;
  */
 class UserPersonController extends Controller
 {
-
     /**
      * Store user on database.
      *

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\Api\Users;
 
 use App\Models\Person;
 use App\Models\User;
@@ -33,7 +33,10 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_add_user_persons()
     {
         $manager = create(User::class);
@@ -78,7 +81,10 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertTrue($user->hasRole('UsersManager'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_add_user_persons_ucfirst()
     {
         $manager = create(User::class);
@@ -122,7 +128,10 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertTrue($user->hasRole('UsersManager'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function regular_user_cannot_add_user_persons()
     {
         $user = create(User::class);
@@ -136,7 +145,10 @@ class UserPersonControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_delete_user_persons()
     {
         $this->withoutExceptionHandling();
@@ -168,7 +180,10 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertNull(Person::find($person->id));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group users
+     */
     public function regular_user_cannot_delete_user_persons()
     {
         $user = create(User::class);

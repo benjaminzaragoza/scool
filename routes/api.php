@@ -33,6 +33,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
 use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
 use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
+use App\Http\Controllers\Tenant\Api\Users\UserPersonController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
@@ -112,10 +113,6 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Available teacher code:
             Route::get('/teacher/available_code', 'Tenant\TeacherAvailableCodeController@show');
 
-            // User Person
-            Route::post('/user_person', 'Tenant\UserPersonController@store');
-            Route::delete('/user_person/{user}', 'Tenant\UserPersonController@destroy');
-
             // Persons
             Route::post('/people', '\\'. PeopleController::class .'@store');
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
@@ -134,6 +131,10 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/users/name/{name}', '\\'. UserNamesController::class . '@show');
 
             Route::put('/user', 'Tenant\LoggedUserController@update');
+
+            // User Person
+            Route::post('/user_person', '\\' . UserPersonController::class . '@store');
+            Route::delete('/user_person/{user}', '\\' . UserPersonController::class . '@destroy');
 
             // Moodle Users
             Route::get('/moodle/users', '\\'. MoodleUsersController::class .'@index');
