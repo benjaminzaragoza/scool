@@ -1,3 +1,10 @@
+# Mòdul de comandes
+
+- [ ] Associat a incidències (incidències que queden pendents d'una comanda)
+- [ ] Comanda oberta/tancada
+- [ ] Rebre un email cada cop hi ha una nova comanda
+- [ ] Cal validació de comandes abans enviar administradora?
+
 # Users management
 
 - [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
