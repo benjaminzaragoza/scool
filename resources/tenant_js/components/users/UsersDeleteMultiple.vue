@@ -19,10 +19,16 @@ export default {
     }
   },
   methods: {
-    remove () {
+    async remove () {
+      let res = await this.$confirm('Esteu segurs que voleu eliminar aquests usuaris?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      if (res) {
+        this.removeUsers()
+      }
+    },
+    removeUsers () {
       this.loading = true
       window.axios.post('/api/v1/users/multiple', { users: this.users.map(user => user.id) }).then(response => {
-        this.$snackbar.showMessage("S'han esborrar correctament " + response.data + ' usuaris')
+        this.$snackbar.showMessage("S'han esborrat correctament " + response.data + ' usuaris')
         this.$emit('deleted', response.data)
         this.loading = false
       }).catch(error => {

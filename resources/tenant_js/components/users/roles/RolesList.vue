@@ -38,7 +38,7 @@
                         ></v-text-field>
                     </v-card-title>
                     <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
-                        <roles-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></roles-delete-multiple>
+                        <roles-delete-multiple :roles="selected" @deleted="selected=[];refresh(false)"></roles-delete-multiple>
                     </div>
                     <v-data-table
                             v-model="selected"
@@ -81,7 +81,7 @@
                                 <td class="text-xs-left cell" v-html="props.item.formatted_created_at_diff" :title="props.item.formatted_created_at"></td>
                                 <td class="text-xs-left cell" :title="props.item.formatted_updated_at">{{props.item.formatted_updated_at_diff}}</td>
                                 <td class="text-xs-left cell">
-                                    <delete-role :role="props.item"></delete-role>
+                                    <role-delete :role="props.item"></role-delete>
                                 </td>
                             </tr>
                         </template>
