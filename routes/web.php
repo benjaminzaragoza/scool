@@ -162,7 +162,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/home', '\\' . HomeController::class . '@show');
 
 
-            Route::get('/users', '\\' . UsersController::class . ' @index');
+            Route::get('/users', '\\' . UsersController::class . '@index');
 
             Route::get('/moodle', '\\' . MoodleController::class.'@index');
 
