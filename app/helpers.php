@@ -4810,6 +4810,12 @@ if (!function_exists('initialize_specialities')) {
 if (!function_exists('initialize_user_types')) {
     function initialize_user_types()
     {
+        Role::firstOrCreate([
+            'name' => 'Teacher'
+        ]);
+        Role::firstOrCreate([
+            'name' => 'Student'
+        ]);
         $teacher = UserType::firstOrCreate([
             'name' => 'Professor/a'
         ]);

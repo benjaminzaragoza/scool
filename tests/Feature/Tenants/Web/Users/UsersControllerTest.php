@@ -40,14 +40,19 @@ class UsersControllerTest extends BaseTenantTest
      */
     public function users_manager_can_see_users_management()
     {
-        $this->loginAsUsersManager('web');
+        initialize_user_types();
+        $user = $this->loginAsUsersManager('web');
 
         $response = $this->get('/users');
 
         $response->assertSuccessful();
         $response->assertViewIs('tenants.users.show');
-        $response->assertViewHas('users');
-        $response->assertViewHas('userTypes');
+        $response->assertViewHas('users', function($returnedUsers) use ($user) {
+            return $returnedUsers[0]['id'] === $user->id;
+        });
+        $response->assertViewHas('userTypes',function($returnedUserTypes) {
+            return $returnedUserTypes[0]['name'] === 'Professor/a';
+        });
         $response->assertViewHas('roles');
     }
 
