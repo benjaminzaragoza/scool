@@ -26,7 +26,7 @@ EDIT:
 
  
 - [ ] Filtres usuaris
-  - [ ] Per típus/s d'usuari
+  - [X] Per típus/s d'usuari
   - [ ] Per Rol/s  
   - [ ] Altres característiques:
      - [ ] Emails confirmats/verificats (email)

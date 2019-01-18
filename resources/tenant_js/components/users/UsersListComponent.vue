@@ -35,12 +35,15 @@
                                     <v-flex xs9 style="align-self: flex-end;">
                                         <v-layout>
                                             <v-flex xs3 class="text-sm-left" style="align-self: center;">
-                                                TODO 4
+                                                <user-types-select
+                                                        :user-types="userTypes"
+                                                        v-model="userType"
+                                                ></user-types-select>
                                             </v-flex>
                                             <v-flex xs9>
                                                 <v-layout>
                                                     <v-flex xs4>
-                                                        TODO 3
+                                                        <roles-select :roles="roles" v-model="selectedRoles"></roles-select>
                                                     </v-flex>
                                                     <v-flex xs4>
                                                         TODO 1
@@ -71,7 +74,7 @@
                                 select-all
                                 class="px-0 mb-2 hidden-sm-and-down"
                                 :headers="headers"
-                                :items="internalUsers"
+                                :items="filteredUsers"
                                 :search="search"
                                 item-key="id"
                                 disable-initial-sort
@@ -206,7 +209,9 @@ import UsersDeleteMultiple from './UsersDeleteMultiple'
 import UserEmails from './UserEmailsComponent'
 import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
-
+import UserTypesSelect from './UserTypesSelect'
+import RolesSelect from './roles/RolesSelect'
+// TODO -> Cal? eliminar
 var filters = {
   all: function (users) {
     return users
@@ -234,13 +239,17 @@ export default {
     'show-user-icon': ShowUserIcon,
     'manage-corporative-email-icon': ManageCorporativeEmailIcon,
     'user-avatar': UserAvatar,
-    'users-delete-multiple': UsersDeleteMultiple
+    'users-delete-multiple': UsersDeleteMultiple,
+    'user-types-select': UserTypesSelect,
+    'roles-select': RolesSelect
   },
   data () {
     return {
       selected: [],
       search: '',
       refreshing: false,
+      userType: null,
+      selectedRoles: [],
       headers: [
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Avatar', value: 'photo', sortable: false },
@@ -262,16 +271,40 @@ export default {
     users: {
       type: Array,
       required: false
+    },
+    userTypes: {
+      type: Array,
+      required: false
+    },
+    roles: {
+      type: Array,
+      required: false
     }
   },
   computed: {
     ...mapGetters({
       internalUsers: 'users'
-    })
+    }),
+    filteredUsers: function () {
+      // let filteredUsers = filters[this.filter](this.internalUsers)
+      let filteredUsers = this.internalUsers
+      if (this.userType) filteredUsers = filteredUsers.filter(user => { return user.user_type_id === this.userType })
+      // if (this.assignee) {
+      //   filteredUsers = filteredUsers.filter(user => {
+      //     return user.assignees.map(assignee => assignee['id']).includes(this.assignee)
+      //   })
+      // }
+      if (this.selectedRoles.length > 0) {
+        filteredUsers = filteredUsers.filter(user => {
+          return user.roles.some(role => this.selectedRoles.includes(role.id))
+        })
+      }
+      return filteredUsers
+    }
   },
   methods: {
     formatUserType (userType) {
-      return this.userTypes[userType]
+      if (userType) return this.userTypesTranslation[userType]
     },
     formatBoolean (boolean) {
       return boolean ? 'Sí' : 'No'
@@ -295,7 +328,7 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_USERS, this.users)
-    this.userTypes = {
+    this.userTypesTranslation = {
       1: 'Professor',
       2: 'Estudiant',
       3: 'Conserge',

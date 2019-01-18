@@ -2,10 +2,6 @@
 
 namespace Tests\Feature\Tenants\Web\Users;
 
-use App\Models\User;
-use App\Models\UserType;
-use Config;
-use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -53,7 +49,9 @@ class UsersControllerTest extends BaseTenantTest
         $response->assertViewHas('userTypes',function($returnedUserTypes) {
             return $returnedUserTypes[0]['name'] === 'Professor/a';
         });
-        $response->assertViewHas('roles');
+        $response->assertViewHas('roles',function($returnedRoles) {
+            return $returnedRoles[0]->name === 'Teacher';
+        });
     }
 
     /**

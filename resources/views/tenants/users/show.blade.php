@@ -4,7 +4,7 @@
 
     <user-add :roles="{{ $roles }}" :users="{{ $users }}"></user-add>
 
-    <users-list :users="{{ $users }}"></users-list>
+    <users-list :users="{{ $users }}" :user-types=" {{ $userTypes }}" :roles="{{ $roles }}"></users-list>
 
     <users-dashboard></users-dashboard>
 
