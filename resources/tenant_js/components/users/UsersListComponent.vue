@@ -31,14 +31,37 @@
                     <v-card-text class="px-0 mb-2">
                         <v-card>
                             <v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-text-field
-                                        append-icon="search"
-                                        label="Buscar"
-                                        single-line
-                                        hide-details
-                                        v-model="search"
-                                ></v-text-field>
+                                <v-layout>
+                                    <v-flex xs9 style="align-self: flex-end;">
+                                        <v-layout>
+                                            <v-flex xs3 class="text-sm-left" style="align-self: center;">
+                                                TODO 4
+                                            </v-flex>
+                                            <v-flex xs9>
+                                                <v-layout>
+                                                    <v-flex xs4>
+                                                        TODO 3
+                                                    </v-flex>
+                                                    <v-flex xs4>
+                                                        TODO 1
+                                                    </v-flex>
+                                                    <v-flex xs4>
+                                                        TODO 0
+                                                    </v-flex>
+                                                </v-layout>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-flex>
+                                    <v-flex xs3>
+                                        <v-text-field
+                                                append-icon="search"
+                                                label="Buscar"
+                                                single-line
+                                                hide-details
+                                                v-model="search"
+                                        ></v-text-field>
+                                    </v-flex>
+                                </v-layout>
                             </v-card-title>
                             <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
                                 <users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></users-delete-multiple>
@@ -183,6 +206,22 @@ import UsersDeleteMultiple from './UsersDeleteMultiple'
 import UserEmails from './UserEmailsComponent'
 import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
+
+var filters = {
+  all: function (users) {
+    return users
+  },
+  open: function (users) {
+    return users ? users.filter(function (user) {
+      return user.closed_at === null
+    }) : []
+  },
+  closed: function (users) {
+    return users ? users.filter(function (user) {
+      return user.closed_at !== null
+    }) : []
+  }
+}
 
 export default {
   name: 'UsersList',

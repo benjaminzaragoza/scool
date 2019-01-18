@@ -24,7 +24,17 @@ EDIT:
   - [ ] Confirmar mòbil
 - [ ] Modificar el tipus usuari
 
-  
+ 
+- [ ] Filtres usuaris
+  - [ ] Per típus/s d'usuari
+  - [ ] Per Rol/s  
+  - [ ] Altres característiques:
+     - [ ] Emails confirmats/verificats (email)
+     - [ ] Mòbils no confirmats/verificats
+     - [ ] Sense email corporatiu
+     - [ ] Sense avatar
+     - [ ] Mai logats
+     - [ ] Logats desde un periode especific
 - [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
 - [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
 - [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
