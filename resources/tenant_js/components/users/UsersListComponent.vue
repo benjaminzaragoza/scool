@@ -127,6 +127,7 @@
                                     </td>
                                     <td class="text-xs-left cell">{{ props.item.mobile }}</td>
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
+                                    <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
@@ -211,19 +212,19 @@ import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
-// TODO -> Cal? eliminar
+
 var filters = {
   all: function (users) {
     return users
   },
-  open: function (users) {
+  byUserType: function (users, userType) {
     return users ? users.filter(function (user) {
-      return user.closed_at === null
+      return user.user_type_id === userType
     }) : []
   },
-  closed: function (users) {
+  byRoles: function (users, roles) {
     return users ? users.filter(function (user) {
-      return user.closed_at !== null
+      return user.roles.some(role => roles.includes(role.id))
     }) : []
   }
 }
@@ -259,6 +260,7 @@ export default {
         { text: 'Email corporatiu', value: 'corporativeEmail' },
         { text: 'Mòbil', value: 'mobile' },
         { text: 'Tipus', value: 'user_type_id' },
+        { text: 'Admin', value: 'admin' },
         { text: 'Rols', value: 'roles', sortable: false },
         { text: 'Últim login', value: 'last_login' },
         { text: 'Data creació', value: 'created_at_timestamp' },
@@ -286,25 +288,9 @@ export default {
       internalUsers: 'users'
     }),
     filteredUsers: function () {
-      // let filteredUsers = filters[this.filter](this.internalUsers)
       let filteredUsers = this.internalUsers
-      if (this.userType) filteredUsers = filteredUsers.filter(user => { return user.user_type_id === this.userType })
-      // if (this.assignee) {
-      //   filteredUsers = filteredUsers.filter(user => {
-      //     return user.assignees.map(assignee => assignee['id']).includes(this.assignee)
-      //   })
-      // }
-      console.log('SelectedRoles:')
-      console.log(this.selectedRoles)
-      if (this.selectedRoles.length > 0) {
-        filteredUsers = filteredUsers.filter(user => {
-          console.log('USER:')
-          console.log(user.name)
-          console.log('ROLES:')
-          console.log(user.roles)
-          return user.roles.some(role => this.selectedRoles.includes(role))
-        })
-      }
+      if (this.userType) filteredUsers = filters['byUserType'](this.internalUsers, this.userType)
+      if (this.selectedRoles.length > 0) filteredUsers = filters['byRoles'](this.internalUsers, this.selectedRoles)
       return filteredUsers
     }
   },
@@ -329,7 +315,7 @@ export default {
       console.log('settings TODO') // TODO
     },
     formatRoles (user) {
-      return Object.values(user.roles).join(', ')
+      return user.roles.map(role => role.name).join(', ')
     }
   },
   created () {

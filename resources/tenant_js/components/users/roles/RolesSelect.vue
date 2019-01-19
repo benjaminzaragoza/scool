@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-            v-model="selectedRoles"
+            v-model="dataSelectedRoles"
             :items="roles"
             attach
             chips
@@ -21,6 +21,11 @@
 <script>
 export default {
   name: 'RolesSelect',
+  data () {
+    return {
+      dataSelectedRoles: this.selectedRoles
+    }
+  },
   model: {
     prop: 'selectedRoles',
     event: 'input'
@@ -32,9 +37,14 @@ export default {
       required: false
     }
   },
+  watch: {
+    selectedRoles (selectedRoles) {
+      this.dataSelectedRoles = selectedRoles
+    }
+  },
   methods: {
     input () {
-      this.$emit('input', this.selectedRoles)
+      this.$emit('input', this.dataSelectedRoles)
     }
   }
 }

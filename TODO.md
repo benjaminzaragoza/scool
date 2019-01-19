@@ -33,7 +33,8 @@ EDIT:
  
 - [ ] Filtres usuaris
   - [X] Per típus/s d'usuari
-  - [ ] Per Rol/s
+  - [X] Per Rol/s
+    - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
   - [ ] Altres característiques:
      - [ ] Emails confirmats/verificats (email)
      - [ ] Mòbils no confirmats/verificats
