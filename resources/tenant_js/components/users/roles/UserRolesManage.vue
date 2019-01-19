@@ -75,6 +75,7 @@ export default {
   },
   methods: {
     add () {
+      this.loading = true
       window.axios.post('/api/v1/user/' + this.user.id + '/role/multiple', {
         'roles': this.selectedRoles.map(role => role.id)
       }).then(() => {
@@ -87,8 +88,10 @@ export default {
           })
         })
         this.selectedRoles = []
+        this.loading = false
       }).catch(error => {
         this.$snackbar.showError(error)
+        this.loading = false
       })
     }
   }
