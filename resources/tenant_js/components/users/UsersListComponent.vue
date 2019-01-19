@@ -138,8 +138,7 @@
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <add-role-to-user-icon :user="props.item" @added="refresh"></add-role-to-user-icon>
-                                        <remove-role-to-user-icon :user="props.item" @removed="refresh"></remove-role-to-user-icon>
+                                        <user-roles-manage :user="props.item" @added="refresh"></user-roles-manage>
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
                                             <span>{{ formatRoles(props.item) }}</span>
@@ -225,8 +224,7 @@ import ManageMoodleUserIcon from '../moodle/ManageMoodleUserIcon'
 import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
 import UserFiltersSelect from './UserFiltersSelect'
-import AddRoleToUserIcon from './roles/AddRoleToUserIcon'
-import RemoveRoleToUserIcon from './roles/RemoveRoleToUserIcon'
+import UserRolesManage from './roles/UserRolesManage'
 
 var filterNames = [
   {
@@ -363,8 +361,7 @@ export default {
     'user-types-select': UserTypesSelect,
     'roles-select': RolesSelect,
     'user-filters-select': UserFiltersSelect,
-    'add-role-to-user-icon': AddRoleToUserIcon,
-    'remove-role-to-user-icon': RemoveRoleToUserIcon
+    'user-roles-manage': UserRolesManage
   },
   data () {
     return {
