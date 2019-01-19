@@ -780,10 +780,10 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     {
         if ($this->isSuperAdmin()) {
             return Cache::rememberForever('roleNames', function () {
-                return Role::all()->pluck('name')->unique()->toArray();
+                return Role::all();
             });
         }
-        return $this->roles->pluck('name')->unique()->toArray();
+        return $this->roles;
     }
 
     /**

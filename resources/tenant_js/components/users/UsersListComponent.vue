@@ -294,9 +294,15 @@ export default {
       //     return user.assignees.map(assignee => assignee['id']).includes(this.assignee)
       //   })
       // }
+      console.log('SelectedRoles:')
+      console.log(this.selectedRoles)
       if (this.selectedRoles.length > 0) {
         filteredUsers = filteredUsers.filter(user => {
-          return user.roles.some(role => this.selectedRoles.includes(role.id))
+          console.log('USER:')
+          console.log(user.name)
+          console.log('ROLES:')
+          console.log(user.roles)
+          return user.roles.some(role => this.selectedRoles.includes(role))
         })
       }
       return filteredUsers
