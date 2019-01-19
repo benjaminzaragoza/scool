@@ -132,10 +132,15 @@
                                         <manage-corporative-email-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ props.item.mobile }}</td>
+                                    <td class="text-xs-left cell">
+                                        <manage-moodle-user-icon></manage-moodle-user-icon>
+                                    </td>
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <v-tooltip bottom>
+                                            <add-role-to-user-icon :user="props.item"></add-role-to-user-icon>
+                                            <remove-role-to-user-icon :user="props.item"></remove-role-to-user-icon>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
                                             <span>{{ formatRoles(props.item) }}</span>
                                         </v-tooltip>
@@ -216,9 +221,12 @@ import UsersDeleteMultiple from './UsersDeleteMultiple'
 import UserEmails from './UserEmailsComponent'
 import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
+import ManageMoodleUserIcon from '../moodle/ManageMoodleUserIcon'
 import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
 import UserFiltersSelect from './UserFiltersSelect'
+import AddRoleToUserIcon from './roles/AddRoleToUserIcon'
+import RemoveRoleToUserIcon from './roles/RemoveRoleToUserIcon'
 
 var filterNames = [
   {
@@ -349,11 +357,14 @@ export default {
     'user-send-confirmation-email': UserSendConfirmationEmail,
     'show-user-icon': ShowUserIcon,
     'manage-corporative-email-icon': ManageCorporativeEmailIcon,
+    'manage-moodle-user-icon': ManageMoodleUserIcon,
     'user-avatar': UserAvatar,
     'users-delete-multiple': UsersDeleteMultiple,
     'user-types-select': UserTypesSelect,
     'roles-select': RolesSelect,
-    'user-filters-select': UserFiltersSelect
+    'user-filters-select': UserFiltersSelect,
+    'add-role-to-user-icon': AddRoleToUserIcon,
+    'remove-role-to-user-icon': RemoveRoleToUserIcon
   },
   data () {
     return {
@@ -371,6 +382,7 @@ export default {
         { text: 'Verificat', value: 'email_verified_at' },
         { text: 'Email corporatiu', value: 'corporativeEmail' },
         { text: 'Mòbil', value: 'mobile' },
+        { text: 'Moodle', value: 'moodle' },
         { text: 'Tipus', value: 'user_type_id' },
         { text: 'Admin', value: 'admin' },
         { text: 'Rols', value: 'roles', sortable: false },

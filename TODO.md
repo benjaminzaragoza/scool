@@ -730,6 +730,36 @@ HELPERS I SEEDERS
 
 # Moodle
 
+Relació amb USERS:
+- idnumber: camp de moodle s'hauria d'utilitzar per a relacionar amb usuaris locals
+- TEMA EMAIL: QUIN UTILITZAR?
+- Sincronitzar: 
+ - [ ] Coincideixi nom local amb nom a Moodle
+ - [ ] Avatar/Photo
+
+INFO MOODLE USER:
+
+"id": 1
+ "username": "guest"
+ "firstname": "Guest user"
+ "lastname": " "
+ "fullname": "Guest user "
+ "email": "root@localhost"
+ "department": ""
+ "firstaccess": 0
+ "lastaccess": 0
+ "auth": "manual"
+ "suspended": false
+ "confirmed": true
+ "lang": "en"
+ "theme": ""
+ "timezone": "99"
+ "mailformat": 1
+ "description": "This user is a special user that allows read-only access to some courses."
+ "descriptionformat": 1
+ "profileimageurlsmall": "https://secure.gravatar.com/avatar/b1a4b2518dbbdd47dd4a713d5cd1df94?s=35&d=mm"
+ "profileimageurl": "https://secure.gravatar.com/avatar/b1a4b2518dbbdd47dd4a713d5cd1df94?s=100&d=mm"
+
 MOODLE USERS LIST:
 - Operacions massives:
   - [ ] Eliminació
