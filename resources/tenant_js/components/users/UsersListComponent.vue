@@ -52,7 +52,7 @@
                                             <v-flex xs10>
                                                 <v-layout>
                                                     <v-flex xs4>
-                                                        <roles-select :roles="roles" v-model="selectedRoles"></roles-select>
+                                                        <roles-select v-model="selectedRoles"></roles-select>
                                                     </v-flex>
                                                     <v-flex xs8>
                                                         <user-filters-select v-model="selectedFilters" :filters="filterNames"></user-filters-select>
@@ -133,14 +133,14 @@
                                     </td>
                                     <td class="text-xs-left cell">{{ props.item.mobile }}</td>
                                     <td class="text-xs-left cell">
-                                        <manage-moodle-user-icon></manage-moodle-user-icon>
+                                        <manage-moodle-user-icon :user="props.item"></manage-moodle-user-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <add-role-to-user-icon :user="props.item" @added="refresh"></add-role-to-user-icon>
+                                        <remove-role-to-user-icon :user="props.item" @removed="refresh"></remove-role-to-user-icon>
                                         <v-tooltip bottom>
-                                            <add-role-to-user-icon :user="props.item"></add-role-to-user-icon>
-                                            <remove-role-to-user-icon :user="props.item"></remove-role-to-user-icon>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
                                             <span>{{ formatRoles(props.item) }}</span>
                                         </v-tooltip>
@@ -451,6 +451,7 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_USERS, this.users)
+    this.$store.commit(mutations.SET_ROLES, this.roles)
     this.filterNames = filterNames
     this.userTypesTranslation = {
       1: 'Professor',

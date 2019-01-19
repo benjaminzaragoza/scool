@@ -13,8 +13,8 @@
                 </v-btn>
             </div>
         </template>
-        <v-btn v-else icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
-            <v-icon color="primary">add</v-icon>
+        <v-btn small v-else icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
+            <v-icon color="primary" small>add</v-icon>
         </v-btn>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
             <v-card>

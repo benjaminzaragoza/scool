@@ -1,7 +1,7 @@
 <template>
     <v-autocomplete
             v-model="dataSelectedRoles"
-            :items="roles"
+            :items="dataRoles"
             attach
             label="Roles"
             multiple
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'RolesSelect',
   data () {
@@ -34,6 +36,19 @@ export default {
     roles: {
       type: Array,
       required: false
+    },
+    exclude: {
+      type: Array,
+      required: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      storeRoles: 'roles'
+    }),
+    dataRoles () {
+      if (this.roles) return this.excludeRoles(this.roles)
+      else return this.excludeRoles(this.storeRoles)
     }
   },
   watch: {
@@ -42,6 +57,16 @@ export default {
     }
   },
   methods: {
+    excludeRoles (roles) {
+      if (this.exclude) {
+        if (this.exclude.length > 0) {
+          return roles.filter((role1) => {
+            return !this.exclude.some(role2 => { return role2.id === role1.id })
+          })
+        }
+      }
+      return roles
+    },
     input () {
       this.$emit('input', this.dataSelectedRoles)
     }
