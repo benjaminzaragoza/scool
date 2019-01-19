@@ -33,8 +33,12 @@ export default {
       }
     },
     removeRole (role) {
-      console.log('TODO Remove Role')
-      this.roles.splice(this.roles.indexOf(role), 1)
+      window.axios.delete('/api/v1/user/' + this.user.id + '/role/' + role.id).then(()=> {
+        this.$snackbar.showMessage('Rol eliminat correctament')
+        this.roles.splice(this.roles.indexOf(role), 1)
+      }).catch(error => {
+        this.$snackbar.showError(error)
+      })
     }
   }
 }

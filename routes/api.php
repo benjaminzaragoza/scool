@@ -33,6 +33,7 @@ use App\Http\Controllers\Tenant\Api\Positions\PositionsSendPositionAssignedEmail
 use App\Http\Controllers\Tenant\Api\Positions\PositionsShortnameController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionUsersController;
 use App\Http\Controllers\Tenant\Api\Roles\RolesController;
+use App\Http\Controllers\Tenant\Api\Roles\UserRoleController;
 use App\Http\Controllers\Tenant\Api\Users\LoggedUserController;
 use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
 use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
@@ -164,8 +165,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 //            Route::get('/users/available', 'Tenant\UsersAvailableController@index');
 
             // UserRoles
-            Route::post('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@store');
-            Route::delete('/user/{user}/role/{role}','Tenant\Api\Roles\UserRoleController@destroy');
+            Route::post('/user/{user}/role/multiple','\\' . UserRoleController::class . '@storeMultiple');
+            Route::post('/user/{user}/role/{role}', '\\' . UserRoleController::class . '@store');
+            Route::delete('/user/{user}/role/{role}','\\' . UserRoleController::class . '@destroy');
 
             //RoleUsers
             Route::get('/role/{role}/users','Tenant\Api\Roles\RoleUsersController@index');

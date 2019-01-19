@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Roles;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Roles\UserRoleDestroy;
+use App\Http\Requests\Roles\UserRolesStore;
 use App\Http\Requests\Roles\UserRoleStore;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -15,6 +16,22 @@ use Spatie\Permission\Models\Role;
  */
 class UserRoleController extends Controller
 {
+
+    /**
+     * Store multiple.
+     * 
+     * @param UserRolesStore $request
+     * @param $tenant
+     * @param User $user
+     * @return int
+     */
+    public function storeMultiple(UserRolesStore $request, $tenant, User $user)
+    {
+        foreach ($request->roles as $role) {
+            $user->assignRole(Role::where('name',$role)->first());
+        }
+        return count($request->roles);
+    }
     /**
      * Store.
      *

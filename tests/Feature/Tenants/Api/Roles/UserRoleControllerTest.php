@@ -8,6 +8,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class UserRoleControllerTest.
@@ -16,7 +17,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class UserRoleControllerTest extends BaseTenantTest
 {
-    use RefreshDatabase;
+    use RefreshDatabase,CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -30,6 +31,39 @@ class UserRoleControllerTest extends BaseTenantTest
         ]);
 
         $this->app[Kernel::class]->setArtisan(null);
+    }
+
+    /** @test */
+    public function superadmin_can_add_roles_to_user()
+    {
+        $this->withoutExceptionHandling();
+        $this->loginAsSuperAdmin('api');
+
+        $user = factory(User::class)->create();
+        $roleToAdd = Role::firstOrCreate(['name' => 'ProvaRol','guard_name' => 'web']);
+        $this->assertFalse($user->hasRole($roleToAdd));
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/multiple', [
+            'roles' => ['ProvaRol']
+        ]);
+
+        $response->assertSuccessful();
+        $user = $user->fresh();
+        $this->assertTrue($user->hasRole($roleToAdd));
+    }
+
+    /** @test */
+    public function superadmin_can_add_roles_to_user_validation()
+    {
+        $this->loginAsSuperAdmin('api');
+
+        $user = factory(User::class)->create();
+        $roleToAdd = Role::firstOrCreate(['name' => 'ProvaRol']);
+        $this->assertFalse($user->hasRole($roleToAdd));
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/multiple');
+
+        $response->assertStatus(422);
     }
 
     /** @test */
