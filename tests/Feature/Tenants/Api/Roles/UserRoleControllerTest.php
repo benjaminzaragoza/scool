@@ -39,16 +39,40 @@ class UserRoleControllerTest extends BaseTenantTest
         $this->loginAsSuperAdmin('api');
 
         $user = factory(User::class)->create();
-        $roleToAdd = Role::firstOrCreate(['name' => 'ProvaRol','guard_name' => 'web']);
-        $this->assertFalse($user->hasRole($roleToAdd));
+        $roleToAdd1 = Role::firstOrCreate(['name' => 'ProvaRol1','guard_name' => 'web']);
+        $roleToAdd2 = Role::firstOrCreate(['name' => 'ProvaRol2','guard_name' => 'web']);
+        $this->assertFalse($user->hasRole($roleToAdd1));
+        $this->assertFalse($user->hasRole($roleToAdd2));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/multiple', [
-            'roles' => ['ProvaRol']
+            'roles' => ['ProvaRol1','ProvaRol2']
         ]);
 
         $response->assertSuccessful();
         $user = $user->fresh();
-        $this->assertTrue($user->hasRole($roleToAdd));
+        $this->assertTrue($user->hasRole($roleToAdd1));
+        $this->assertTrue($user->hasRole($roleToAdd2));
+    }
+
+    /** @test */
+    public function superadmin_can_add_roles_using_ids_to_user()
+    {
+        $this->loginAsSuperAdmin('api');
+
+        $user = factory(User::class)->create();
+        $roleToAdd1 = Role::firstOrCreate(['name' => 'ProvaRol1','guard_name' => 'web']);
+        $roleToAdd2 = Role::firstOrCreate(['name' => 'ProvaRol2','guard_name' => 'web']);
+        $this->assertFalse($user->hasRole($roleToAdd1));
+        $this->assertFalse($user->hasRole($roleToAdd2));
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/role/multiple', [
+            'roles' => [$roleToAdd1->id,$roleToAdd2->id]
+        ]);
+
+        $response->assertSuccessful();
+        $user = $user->fresh();
+        $this->assertTrue($user->hasRole($roleToAdd1));
+        $this->assertTrue($user->hasRole($roleToAdd2));
     }
 
     /** @test */

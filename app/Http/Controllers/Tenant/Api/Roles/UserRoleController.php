@@ -28,7 +28,8 @@ class UserRoleController extends Controller
     public function storeMultiple(UserRolesStore $request, $tenant, User $user)
     {
         foreach ($request->roles as $role) {
-            $user->assignRole(Role::where('name',$role)->first());
+            if (is_integer($role)) $user->assignRole(Role::findOrFail($role));
+            else $user->assignRole(Role::where('name',$role)->first());
         }
         return count($request->roles);
     }
