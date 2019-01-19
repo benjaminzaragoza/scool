@@ -34,22 +34,19 @@
                                 <v-layout>
                                     <v-flex xs9 style="align-self: flex-end;">
                                         <v-layout>
-                                            <v-flex xs3 class="text-sm-left" style="align-self: center;">
+                                            <v-flex xs2 class="text-sm-left" style="align-self: center;">
                                                 <user-types-select
                                                         :user-types="userTypes"
                                                         v-model="userType"
                                                 ></user-types-select>
                                             </v-flex>
-                                            <v-flex xs9>
+                                            <v-flex xs10>
                                                 <v-layout>
                                                     <v-flex xs4>
                                                         <roles-select :roles="roles" v-model="selectedRoles"></roles-select>
                                                     </v-flex>
-                                                    <v-flex xs4>
-                                                        TODO 1
-                                                    </v-flex>
-                                                    <v-flex xs4>
-                                                        TODO 0
+                                                    <v-flex xs8>
+                                                        <user-filters-select v-model="selectedFilters" :filters="filterNames"></user-filters-select>
                                                     </v-flex>
                                                 </v-layout>
                                             </v-flex>
@@ -212,6 +209,60 @@ import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
+import UserFiltersSelect from './UserFiltersSelect'
+
+var filterNames = [
+  {
+    id: 1,
+    name: 'Email confirmat',
+    function: 'confirmedEmail'
+  },
+  {
+    id: 2,
+    name: 'Email no confirmat',
+    function: 'unconfirmedEmail'
+  },
+  {
+    id: 3,
+    name: 'Mòbil confirmat',
+    function: 'confirmedMobile'
+  },
+  {
+    id: 4,
+    name: 'Mòbil no confirmat',
+    function: 'unconfirmedMobile'
+  },
+  {
+    id: 5,
+    name: 'Amb email corporatiu',
+    function: 'withCorporativeEmail'
+  },
+  {
+    id: 6,
+    name: 'Sense email corporatiu',
+    function: 'withoutCorporativeEmail'
+  },
+  {
+    id: 7,
+    name: 'Admins',
+    function: 'admins'
+  },
+  {
+    id: 8,
+    name: 'Amb Avatar',
+    function: 'withAvatar'
+  },
+  {
+    id: 9,
+    name: 'Sense Avatar',
+    function: 'withoutAvatar'
+  },
+  {
+    id: 10,
+    name: 'No han entrat mai',
+    function: 'neverLogged'
+  }
+]
 
 var filters = {
   all: function (users) {
@@ -225,6 +276,56 @@ var filters = {
   byRoles: function (users, roles) {
     return users ? users.filter(function (user) {
       return user.roles.some(role => roles.includes(role.id))
+    }) : []
+  },
+  confirmedEmail: function (users) {
+    return users ? users.filter(function (user) {
+      return user.email_verified_at !== null
+    }) : []
+  },
+  unconfirmedEmail: function (users) {
+    return users ? users.filter(function (user) {
+      return user.email_verified_at === null
+    }) : []
+  },
+  confirmedMobile: function (users) {
+    return users ? users.filter(function (user) {
+      return user.mobile_verified_at !== null
+    }) : []
+  },
+  unconfirmedMobile: function (users) {
+    return users ? users.filter(function (user) {
+      return user.mobile_verified_at === null
+    }) : []
+  },
+  withCorporativeEmail: function (users) {
+    return users ? users.filter(function (user) {
+      return user.corporativeEmail !== null
+    }) : []
+  },
+  withoutCorporativeEmail: function (users) {
+    return users ? users.filter(function (user) {
+      return user.corporativeEmail === null
+    }) : []
+  },
+  admins: function (users) {
+    return users ? users.filter(function (user) {
+      return user.isSuperAdmin
+    }) : []
+  },
+  withAvatar: function (users) {
+    return users ? users.filter(function (user) {
+      return user.isSuperAdmin
+    }) : []
+  },
+  withoutAvatar: function (users) {
+    return users ? users.filter(function (user) {
+      return user.isSuperAdmin
+    }) : []
+  },
+  neverLogged: function (users) {
+    return users ? users.filter(function (user) {
+      return user.last_login === null
     }) : []
   }
 }
@@ -242,7 +343,8 @@ export default {
     'user-avatar': UserAvatar,
     'users-delete-multiple': UsersDeleteMultiple,
     'user-types-select': UserTypesSelect,
-    'roles-select': RolesSelect
+    'roles-select': RolesSelect,
+    'user-filters-select': UserFiltersSelect
   },
   data () {
     return {
@@ -251,6 +353,7 @@ export default {
       refreshing: false,
       userType: null,
       selectedRoles: [],
+      selectedFilters: [],
       headers: [
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Avatar', value: 'photo', sortable: false },
@@ -291,6 +394,13 @@ export default {
       let filteredUsers = this.internalUsers
       if (this.userType) filteredUsers = filters['byUserType'](this.internalUsers, this.userType)
       if (this.selectedRoles.length > 0) filteredUsers = filters['byRoles'](this.internalUsers, this.selectedRoles)
+      if (this.selectedFilters.length > 0) {
+        this.selectedFilters.forEach(filter => {
+          console.log('filter:')
+          console.log(filter)
+          filteredUsers = filters[filter.function](this.internalUsers)
+        })
+      }
       return filteredUsers
     }
   },
@@ -320,6 +430,7 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_USERS, this.users)
+    this.filterNames = filterNames
     this.userTypesTranslation = {
       1: 'Professor',
       2: 'Estudiant',

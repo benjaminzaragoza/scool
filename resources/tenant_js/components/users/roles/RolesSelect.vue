@@ -3,7 +3,6 @@
             v-model="dataSelectedRoles"
             :items="roles"
             attach
-            chips
             label="Roles"
             multiple
             item-value="id"
