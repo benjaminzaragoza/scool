@@ -19,7 +19,7 @@ class UserRoleController extends Controller
 
     /**
      * Store multiple.
-     * 
+     *
      * @param UserRolesStore $request
      * @param $tenant
      * @param User $user

@@ -198,9 +198,11 @@ class UsersControllerTest extends BaseTenantTest
         $response->assertJsonFragment([
             'name' => 'Pepe Pardo',
             'email' =>'pepepardo@jeans.com',
-            'roles' => [ 'Role1', 'Role2']
         ]);
-
+        $result = json_decode($response->getContent());
+        $this->assertCount(2, $result->roles);
+        $this->assertEquals('Role1', $result->roles[0]->name);
+        $this->assertEquals('Role2', $result->roles[1]->name);
     }
 
     /**

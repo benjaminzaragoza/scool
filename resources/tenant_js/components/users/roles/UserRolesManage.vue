@@ -29,7 +29,7 @@
                                       :user="user"
                                 ></user-avatar>
                                 <span class="font-weight-medium">{{ user.name }}</span>:
-                                 <roles-select :exclude="user.roles"></roles-select>
+                                 <roles-select :exclude="user.roles" v-model="selectedRoles"></roles-select>
                                  Rols actuals de l'usuari:
                                  <user-roles-list :user="user"></user-roles-list>
                             </v-card-text>
@@ -64,7 +64,8 @@ export default {
   data () {
     return {
       dialog: false,
-      loading: false
+      loading: false,
+      selectedRoles: []
     }
   },
   props: {
@@ -75,7 +76,13 @@ export default {
   },
   methods: {
     add () {
-      console.log('TODO ADD')
+      window.axios.post('/api/v1/user/' + this.user.id + '/role/multiple',{
+        'roles': this.selectedRoles
+      }).then(() => {
+        this.$snackbar.showMessage('Rol/s afegit/s correctament')
+      }).catch(error => {
+        this.$snackbar.showError(error)
+      })
     }
   }
 }
