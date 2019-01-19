@@ -34,7 +34,7 @@
                                  <user-roles-list :user="user" :roles="user.roles"></user-roles-list>
                             </v-card-text>
                              <v-card-actions>
-                                 <v-btn color="primary" @click="add" :disabled="loading" :loading="loading">
+                                 <v-btn color="primary" @click="add" :disabled="loading || this.selectedRoles.length === 0" :loading="loading">
                                      <v-icon>add</v-icon> Afegir</v-btn>
                                  <v-btn flat @click="dialog = false">
                                      <v-icon small>close</v-icon> Sortir</v-btn>
