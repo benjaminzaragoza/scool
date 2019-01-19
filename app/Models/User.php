@@ -685,7 +685,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
-     * Map simpe
+     * Map simple
      * @return array
      */
     public function mapSimple()
