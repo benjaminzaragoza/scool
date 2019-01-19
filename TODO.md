@@ -7,6 +7,43 @@
 
 # Users management
 
+Changelog:
+- [ ] Igual que incidències logar totes les accions
+
+Operacions massives:
+- [X] Eliminar -> FET
+- [ ] Check -> Comprovar incoherencies:
+  - [ ] NO quadra tipus usuari i rol
+    - [ ] Si ets teacher has de tenir el rol Teacher
+    - [ ] Si ets alumne has de tenir el rol Student
+  - [ ] Alumne sense email corporatiu
+  - [ ] Teacher sense email corporatiu
+  - [ ] Teacher sense avatar
+  - [ ] Personal sense email corporatiu
+  - [ ] Teacher/Alumne/Profe sense dades personals
+  - [ ] Teacher/Alumne/Profe sense compte Google
+  - [ ] Teacher/Alumne/Profe sense compte Moodle
+  - [ ] Teacher/Alumne/Profe sense compte Ldap
+   
+RELACIONS AMB ALTRES ENTITATS/MODELS
+
+PERSONES:
+- Nom:
+  - [ ] Edició inline del nom
+    - [ ] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
+USUARI MOODLE
+- 
+USUARI DE GOOGLE
+- [ ] Mostrar acció permeti navegar (link) a l'usuari de Google associat
+  - [ ] Show usuaris Google existeix? Crear
+  - [ ] Mostrar només (o disabled sinó) els usuaris no tinguin camp user google associat
+- [X] CorporativeEmail
+  - [X] Falta o no funciona operació Afegir usuari corporatiu
+    - Hi ha un 404 d'una crida API: https://iesebre.scool.test/api/v1/gsuite/users/search 404
+    - [ ] Funcionalitat ajudar a buscar posible usuari Google associat
+  - [X] Dessasociar usuari Google a usuari
+  - [X] Sincronitzar
+  - [X] Editar -> Canviar l'usuari corporatiu associat
 
 ROLS:
 - [ ] CRUD DE ROLS
@@ -23,7 +60,7 @@ PERMISSIONS:
 
 
 EDIT:
-- [ ] Editar el name inline a la llsita d'usuaris (datatables)
+- [ ] Editar el name inline a la llista d'usuaris (datatables)
 - [ ]  Editar l'email name inline a la llsita d'usuaris (datatables) 
   - [ ] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
 - [ ] Modificar el mòbil online
@@ -35,19 +72,21 @@ EDIT:
   - [X] Per típus/s d'usuari
   - [X] Per Rol/s
     - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
-  - [ ] Altres característiques:
-     - [ ] Emails confirmats/verificats (email)
-     - [ ] Mòbils no confirmats/verificats
-     - [ ] Sense email corporatiu
-     - [ ] Sense avatar
-     - [ ] Mai logats al sistema
+  - [ ] Altres característiques/filtres:
+     - [X] Emails confirmats/verificats (email)
+     - [ ] Mòbils no confirmats/verificats. TODO falta està funcionalitat
+     - [X] Sense email corporatiu
+     - [ ] Sense avatar. TODO -> Falta crear camp (calculat) indiqui usuari no té avatar 
+     - [X] Mai logats al sistema
      - [ ] Logats desde un periode especific
 - [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
 - [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
 - [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
-- [ ] Last Login de l'usuari, permetre saber usuaris no s'han logat mai
+- [X] Last Login de l'usuari, permetre saber usuaris no s'han logat mai. FET UN FILTRE
 - [X] Esborrat massiu d'usuaris
-- [ ] Protegir alguns usuaris -> no es puguin esborrar    
+- [ ] Protegir alguns usuaris -> no es puguin esborrar:
+  - [ ] Superadmins
+  - [ ] Configuració: altres usuaris no es puguin esborrar    
 
 # Usuaris acabats de registrar | sense rols
 
@@ -645,9 +684,9 @@ Moodle:
 
 ### Comptes d'usuari:
 
-Moodle:
+#### Moodle
 
-- [ ] MoodleUser de entity canviar tots els usos a MoodleUser a App\Modelss
+- [ ] MoodleUser de entity canviar tots els usos a MoodleUser a App\Models
 - [ ] Carpeta app/Moodle crec no cal!
 
 Casos
@@ -674,12 +713,6 @@ TeachersController i TeachersControllerTest:
 
 HELPERS I SEEDERS
 - [ ] Creació de professors associar usuari de Moodle. Taula external_users camp moodle_id
- 
-Google Apps:
-- [ ]
-
-Ldap:
-- [ ]
 
 # Mòdul usuaris
 
@@ -697,16 +730,30 @@ Ldap:
 
 # Moodle
 
-Migració:
-- [ ] Caldria canviar tots els usuaris actuals de moodle (sense modificar el id) a que utilitzin com a username compte de correu
-  - [ ] Quina compte de correu? La institucional
-  - [ ] TODO
+MOODLE USERS LIST:
+- Operacions massives:
+  - [ ] Eliminació
+- Filtres:
+  - [ ] Sense usuari local
+  - [ ] Amb usuari local
+  - [ ] No sincronitzat
+  - [ ] Confirmat
+  - [ ] No confirmat
+  - [ ] No ha entrat mai
+- [ ] Color de la toolbar i dense
+- [ ] estil de la taula més dens?
+- [ ] Accions posar en components externs
 
 Millores:
 - [ ] Al crear un usuari de Moodle no mostrar els usuaris locals que ja tenen un usuari de Moodle al desplegable
 - [ ] Tipus d'usuari:
-  - [ ] El pas i secretaries i pares i altres no tenen/ no necessiten usuari de Moodle
+  - [ ] El pas i secretaries i pares i altres no tenen/no necessiten usuari de Moodle
 - [ ] Treure de Javascript les URLs hardcoded a iesebre.com agafar-les del fitxer de config de config/moodle.php
+
+Migració:
+- [ ] Caldria canviar tots els usuaris actuals de moodle (sense modificar el id) a que utilitzin com a username compte de correu
+  - [ ] Quina compte de correu? La institucional
+  - [ ] TODO
   
 Edit:
 - [ ] Opcions relacionades amb la edició i sincronització amb usuari local

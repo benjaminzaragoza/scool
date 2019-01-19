@@ -15,6 +15,15 @@
                             <v-list-tile href="/users/roles" target="_blank">
                                 <v-list-tile-title>Gestionar Rols</v-list-tile-title>
                             </v-list-tile>
+                            <v-list-tile href="/google_users" target="_blank">
+                                <v-list-tile-title>Usuaris de Google</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/moodle" target="_blank">
+                                <v-list-tile-title>Usuaris Moodle</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/ldap_users" target="_blank">
+                                <v-list-tile-title>Usuaris Ldap</v-list-tile-title>
+                            </v-list-tile>
                         </v-list>
                     </v-menu>
                     <v-toolbar-title class="white--text title">Usuaris</v-toolbar-title>

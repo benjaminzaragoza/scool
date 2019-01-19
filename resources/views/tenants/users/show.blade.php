@@ -6,7 +6,8 @@
 
     <users-list :users="{{ $users }}" :user-types=" {{ $userTypes }}" :roles="{{ $roles }}"></users-list>
 
-    <users-dashboard></users-dashboard>
+    {{--TODO--}}
+    {{--<users-dashboard></users-dashboard>--}}
 
 @endsection
 

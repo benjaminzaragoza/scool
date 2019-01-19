@@ -145,7 +145,6 @@
 
 <script>
 import UserAddForm from './UserAddFormComponent'
-import * as mutations from '../../store/mutation-types'
 import UserAvatar from '../ui/UserAvatarComponent'
 
 export default {
