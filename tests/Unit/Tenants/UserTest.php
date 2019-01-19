@@ -1020,7 +1020,7 @@ class UserTest extends TestCase
         $mappedUser = $user->map();
 
         $this->assertCount(2,$mappedUser['roles']);
-        
+
         $this->assertEquals('Manager',$mappedUser['roles'][0]->name);
         $this->assertEquals('Student',$mappedUser['roles'][1]->name);
     }

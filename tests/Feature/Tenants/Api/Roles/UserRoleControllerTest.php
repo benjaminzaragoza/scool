@@ -36,7 +36,6 @@ class UserRoleControllerTest extends BaseTenantTest
     /** @test */
     public function superadmin_can_add_roles_to_user()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
 
         $user = factory(User::class)->create();

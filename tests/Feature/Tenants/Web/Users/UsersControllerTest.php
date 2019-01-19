@@ -44,7 +44,7 @@ class UsersControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $response->assertViewIs('tenants.users.show');
         $response->assertViewHas('users', function($returnedUsers) use ($user) {
-            mapSimple            return $returnedUsers[0]['id'] === $user->id;
+            return $returnedUsers[0]['id'] === $user->id;
         });
         $response->assertViewHas('userTypes',function($returnedUserTypes) {
             return $returnedUserTypes[0]['name'] === 'Professor/a';
