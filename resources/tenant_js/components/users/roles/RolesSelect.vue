@@ -5,7 +5,7 @@
             attach
             label="Roles"
             multiple
-            item-value="id"
+            return-object
             item-text="name"
             @input="input"
     >

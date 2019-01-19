@@ -31,7 +31,7 @@
                                 <span class="font-weight-medium">{{ user.name }}</span>:
                                  <roles-select :exclude="user.roles" v-model="selectedRoles"></roles-select>
                                  Rols actuals de l'usuari:
-                                 <user-roles-list :user="user"></user-roles-list>
+                                 <user-roles-list :user="user" :roles="user.roles"></user-roles-list>
                             </v-card-text>
                              <v-card-actions>
                                  <v-btn color="primary" @click="add" :disabled="loading" :loading="loading">
@@ -45,7 +45,6 @@
                 </v-container>
             </v-card>
         </v-dialog>
-
     </span>
 </template>
 
@@ -76,10 +75,18 @@ export default {
   },
   methods: {
     add () {
-      window.axios.post('/api/v1/user/' + this.user.id + '/role/multiple',{
-        'roles': this.selectedRoles
+      window.axios.post('/api/v1/user/' + this.user.id + '/role/multiple', {
+        'roles': this.selectedRoles.map(role => role.id)
       }).then(() => {
         this.$snackbar.showMessage('Rol/s afegit/s correctament')
+        this.$emit('added', this.selectedRoles)
+        this.selectedRoles.forEach(role => {
+          this.user.roles.push({
+            'name': role.name,
+            'guard_name': role.guard_name
+          })
+        })
+        this.selectedRoles = []
       }).catch(error => {
         this.$snackbar.showError(error)
       })

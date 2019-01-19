@@ -138,7 +138,7 @@
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <user-roles-manage :user="props.item" @added="refresh"></user-roles-manage>
+                                        <user-roles-manage :user="props.item" @added="refresh(false)" @removed="refresh(false)"></user-roles-manage>
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
                                             <span>{{ formatRoles(props.item) }}</span>

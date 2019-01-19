@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-chip :small="small" close @input="remove(role)" v-for="role in roles" :key="role.id" label outline color="grey grey--text text--darken-2">{{ role.name }} ({{ role.guard_name}})</v-chip>
+        <v-chip :small="small" close @input="remove(role)" v-for="role in dataRoles" :key="role.id" label outline color="grey grey--text text--darken-2">{{ role.name }} ({{ role.guard_name}})</v-chip>
     </span>
 </template>
 
@@ -10,12 +10,16 @@ export default {
   data () {
     return {
       close: [],
-      roles: this.user.roles
+      dataRoles: this.roles
     }
   },
   props: {
     user: {
       type: Object,
+      required: true
+    },
+    roles: {
+      type: Array,
       required: true
     },
     small: {
@@ -33,9 +37,9 @@ export default {
       }
     },
     removeRole (role) {
-      window.axios.delete('/api/v1/user/' + this.user.id + '/role/' + role.id).then(()=> {
+      window.axios.delete('/api/v1/user/' + this.user.id + '/role/' + role.id).then(() => {
         this.$snackbar.showMessage('Rol eliminat correctament')
-        this.roles.splice(this.roles.indexOf(role), 1)
+        this.dataRoles.splice(this.dataRoles.indexOf(role), 1)
       }).catch(error => {
         this.$snackbar.showError(error)
       })
