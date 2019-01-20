@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Tenant\VerificationController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesCodeController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Studies\StudiesNameController;
@@ -253,7 +254,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
 
             //Resend user email verification email
-            Route::get('/email/resend/{user}', 'Auth\Tenant\VerificationController@resendUser');
+            Route::get('/email/resend/{user}', '\\'. VerificationController::class .'@resendUser');
 
             //Re(send) welcome user email
             Route::get('/email/welcome/{user}', 'Auth\Tenant\ForgotPasswordController@welcome');
