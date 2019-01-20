@@ -2,7 +2,7 @@
     <span>
         <v-avatar color="grey lighten-4" :size="size" v-if="hashId" :tile="tile" @click="change" @dblclick="$emit('dblclick')">
             <img ref="previewImage"
-                 :src="'/user/' + hashId + '/photo'"
+                 :src="imageUrl"
                  :alt="alt"
                  :title="alt">
             <form class="upload" v-if="editable">
@@ -62,6 +62,14 @@ export default {
     tile: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    imageUrl () {
+      if (this.user.photo_hash) {
+        return '/user/' + this.hashId + '/photo?' + this.user.photo_hash
+      }
+      return '/user/' + this.hashId + '/photo'
     }
   },
   methods: {
