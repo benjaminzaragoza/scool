@@ -1371,7 +1371,7 @@ if (!function_exists('initialize_menus')) {
 
         Menu::firstOrCreate([
             'text' => 'Moodle',
-            'href' => '/moodle',
+            'href' => '/moodle/users',
             'role' => 'MoodleManager,UsersManager'
         ]);
 

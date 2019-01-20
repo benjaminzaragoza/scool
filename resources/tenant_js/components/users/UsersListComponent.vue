@@ -18,7 +18,7 @@
                             <v-list-tile href="/google_users" target="_blank">
                                 <v-list-tile-title>Usuaris de Google</v-list-tile-title>
                             </v-list-tile>
-                            <v-list-tile href="/moodle" target="_blank">
+                            <v-list-tile href="/moodle/users" target="_blank">
                                 <v-list-tile-title>Usuaris Moodle</v-list-tile-title>
                             </v-list-tile>
                             <v-list-tile href="/ldap_users" target="_blank">

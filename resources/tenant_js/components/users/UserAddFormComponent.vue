@@ -359,8 +359,7 @@ export default {
     },
     associateMoodleUserToLocalUser (moodleUser) {
       window.axios.post('/api/v1/user/' + this.user.id + '/moodle', {
-        google_id: moodleUser.id,
-        google_email: moodleUser.primaryEmail
+        moodle_id: moodleUser.id
       }).then(() => {
         this.$snackbar.showMessage('Usuari Moodle associat correctament')
         this.$emit('moodleUserCreated', moodleUser)

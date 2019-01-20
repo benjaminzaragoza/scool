@@ -107,7 +107,7 @@
                                             <v-list-tile>
                                                 <v-list-tile-content>
                                                     <v-list-tile-title v-if="moodleUser">
-                                                        <a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id='"> {{ moodleUser.id }}</a>
+                                                        <a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + moodleUser.id"> {{ moodleUser.id }}</a>
                                                     </v-list-tile-title>
                                                     <template v-else>
                                                             <v-progress-circular indeterminate color="primary"></v-progress-circular>
