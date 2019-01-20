@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api\Users;
 
+use App\Events\UserEmailUpdated;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Users\ShowUser;
 use App\Http\Requests\Users\UpdateUser;
@@ -39,6 +40,7 @@ class UserEmailsController extends Controller
         $user->email = $request->email;
         $user->email_verified_at = null;
         $user->save();
+        event(new UserEmailUpdated($user));
         return $user->map();
     }
 

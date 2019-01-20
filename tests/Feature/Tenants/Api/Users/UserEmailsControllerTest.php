@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Tenants\Api\Users;
 
+use App\Events\UserEmailUpdated;
 use App\Models\User;
 use Carbon\Carbon;
 use Config;
+use Event;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -107,10 +109,15 @@ class UserEmailsControllerTest extends BaseTenantTest
             'email' => 'oldemail@gmail.com',
             'email_verified_at' => Carbon::now()
         ]);
+
+        Event::fake();
         $response = $this->json('PUT', '/api/v1/users/' . $user->id . '/email', [
             'email' => 'newemail@gmail.com'
         ]);
         $response->assertSuccessful();
+        Event::assertDispatched(UserEmailUpdated::class, function ($e) use ($user) {
+            return $e->user->id === $user->id;
+        });
 
         $result = json_decode($response->getContent());
         $this->assertEquals($user->id,$result->id);
