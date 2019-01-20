@@ -57,7 +57,7 @@ class MoodleUsersControllerTest extends BaseTenantTest
             ->with('permissionNames',\Closure::class)
             ->andReturn(collect([]));
 
-        $response = $this->get('/moodle');
+        $response = $this->get('/moodle/users');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.moodle.index');
 
@@ -87,7 +87,7 @@ class MoodleUsersControllerTest extends BaseTenantTest
             ->with('user_all_permissions',\Closure::class)
             ->andReturn(collect([]));
 
-        $response = $this->get('/moodle');
+        $response = $this->get('/moodle/users');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.moodle.index');
 
@@ -113,7 +113,7 @@ class MoodleUsersControllerTest extends BaseTenantTest
             ->with('user_all_permissions',\Closure::class)
             ->andReturn(collect([]));
 
-        $response = $this->get('/moodle');
+        $response = $this->get('/moodle/users');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.moodle.index');
 
@@ -125,7 +125,7 @@ class MoodleUsersControllerTest extends BaseTenantTest
     /** @test */
     public function guest_cannot_show_moodle()
     {
-        $response = $this->get('/moodle');
+        $response = $this->get('/moodle/users');
         $response->assertRedirect('/login');
     }
 
@@ -134,7 +134,7 @@ class MoodleUsersControllerTest extends BaseTenantTest
     {
         $user = factory(User::class)->create();
         $this->actingAs($user);
-        $response = $this->get('/moodle');
+        $response = $this->get('/moodle/users');
         $response->assertStatus(403);
     }
 
