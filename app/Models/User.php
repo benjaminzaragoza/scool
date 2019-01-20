@@ -720,7 +720,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'created_at_timestamp' => $this->created_at_timestamp,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'hashid' => $this->hashid,
-            'full_search' => $this->full_search
+            'full_search' => $this->full_search,
+            'api_uri' => $this->api_uri
         ];
     }
 
@@ -767,7 +768,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'admin' => $this->admin,
             'hashid' => $this->hashid,
             'full_search' => $this->full_search,
-            'all_permissions' => $this->all_permissions
+            'all_permissions' => $this->all_permissions,
+            'api_uri' => $this->api_uri
         ];
     }
 

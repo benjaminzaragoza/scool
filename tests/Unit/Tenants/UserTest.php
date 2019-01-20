@@ -892,6 +892,9 @@ class UserTest extends TestCase
         $this->assertEquals($user->photo,'tenant_test/user_photos/1_pepe-pardo-jeans_pepepardojeans-at-gmailcom.jpeg');
         $this->assertEquals($user->photo_hash,'3728b0e69b303b6613e9986e3202c3bb');
 
+        $this->assertEquals('users',$mappedUser['api_uri']);
+
+
         $this->assertEquals('teacher',$mappedUser['user_type']);
         $this->assertEquals(1,$mappedUser['user_type_id']);
 
@@ -997,6 +1000,8 @@ class UserTest extends TestCase
         $this->assertFalse($mappedUser['isSuperAdmin']);
         $this->assertEquals('MX',$mappedUser['hashid']);
         $this->assertEquals('pepepardojeans@gmail.com Pepe Pardo Jeans',$mappedUser['full_search']);
+
+        $this->assertEquals('users',$mappedUser['api_uri']);
 
         //All Permissions i Permissions
         Permission::create(['name' => 'task.store']);

@@ -133,7 +133,9 @@
                                         </span>
                                         <manage-corporative-email-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
-                                    <td class="text-xs-left cell">{{ props.item.mobile }}</td>
+                                    <td class="text-xs-left cell">
+                                        <inline-text-field-edit-dialog v-model="props.item" field="mobile" label="Mòbil" @save="refresh"></inline-text-field-edit-dialog>
+                                    </td>
                                     <td class="text-xs-left cell">
                                         <manage-moodle-user-icon :user="props.item"></manage-moodle-user-icon>
                                     </td>
@@ -229,6 +231,7 @@ import UserFiltersSelect from './UserFiltersSelect'
 import UserRolesManageButton from './roles/UserRolesManageButton'
 import UserEditName from './UserEditName'
 import UserEditEmail from './UserEditEmail'
+import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 
 var filterNames = [
   {
@@ -367,7 +370,8 @@ export default {
     'user-filters-select': UserFiltersSelect,
     'user-roles-manage-button': UserRolesManageButton,
     'user-edit-name': UserEditName,
-    'user-edit-email': UserEditEmail
+    'user-edit-email': UserEditEmail,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
   },
   data () {
     return {
