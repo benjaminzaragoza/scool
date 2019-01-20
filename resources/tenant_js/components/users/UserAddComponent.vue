@@ -131,10 +131,7 @@
                 <v-stepper-step :complete="step > 4" step="4">Assignar rol</v-stepper-step>
 
                 <v-stepper-content step="4">
-
-                    <v-btn @click="close">Tancar</v-btn>
-                    <v-btn color="error" @click="step = 2">Endarrera</v-btn>
-                    <v-btn color="error" @click="step = 4">Següent</v-btn>
+                    <user-roles-manage v-if="user" :user="user" @step="changeStep" :step="4" @close="close"></user-roles-manage>
                 </v-stepper-content>
 
             </v-stepper>
@@ -146,12 +143,14 @@
 <script>
 import UserAddForm from './UserAddFormComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
+import UserRolesManage from './roles/UserRolesManage'
 
 export default {
   name: 'UserAddComponent',
   components: {
     'user-add-form': UserAddForm,
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
+    'user-roles-manage': UserRolesManage
   },
   data () {
     return {
@@ -168,6 +167,9 @@ export default {
     }
   },
   methods: {
+    changeStep (step) {
+      this.step = step
+    },
     close () {
       this.step = 1
       this.dialog = false
