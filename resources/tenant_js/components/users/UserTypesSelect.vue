@@ -9,6 +9,8 @@
             clearable
             @input="input"
             @blur="blur"
+            :tabindex="tabindex"
+            :error-messages="errorMessages"
     >
         <template slot="selection" slot-scope="data">{{ data.item.name }}</template>
         <template slot="item" slot-scope="{ item: userType }">
@@ -31,6 +33,10 @@ export default {
   },
   props: {
     userType: {},
+    tabindex: {
+      type: Number,
+      required: false
+    },
     userTypes: {
       type: Array,
       required: false
@@ -50,6 +56,10 @@ export default {
     itemText: {
       type: String,
       default: 'name'
+    },
+    errorMessages: {
+      type: Array,
+      required: false
     }
   },
   watch: {

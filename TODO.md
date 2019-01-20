@@ -13,9 +13,10 @@ USER DELETE:
     
 
 USER ADD WIZARD
-- [ ] Primer camp tipus usuari
+- [ ] Eliminar tots els links i valors hardcoded de Javascript apuntant a iesebre.com i agafar-los del tenant
+- [X] Primer camp tipus usuari
   -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
-    - [ ] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
+    - [X] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
     - [ ] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou user
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google

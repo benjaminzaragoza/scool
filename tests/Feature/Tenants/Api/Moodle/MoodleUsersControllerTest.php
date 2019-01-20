@@ -75,7 +75,6 @@ class MoodleUsersControllerTest extends BaseTenantTest {
      */
     public function superadmin_can_create_moodle_users()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
         $moddleUser = MoodleUser::get('usuariesborrar18@gmail.com');
         if ($moddleUser) MoodleUser::destroy($moddleUser->id);

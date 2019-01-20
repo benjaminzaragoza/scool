@@ -7,6 +7,16 @@
         <select-user v-if="!newUser" :users="users" v-model="user" :item-value="null"></select-user>
         <v-container v-else fluid grid-list-md text-xs-center>
             <v-layout row wrap>
+                <v-flex md2>
+                    <user-types-select
+                        :user-types="userTypes"
+                        v-model="dataUserType"
+                        :error-messages="userTypeErrors"
+                        @input="$v.dataUserType.$touch()"
+                        @blur="$v.dataUserType.$touch()"
+                        :tabindex="1"
+                    ></user-types-select>
+                </v-flex>
                 <v-flex md3>
                     <v-text-field
                             label="Nom"
@@ -14,28 +24,28 @@
                             :error-messages="givenNameErrors"
                             @input="$v.givenName.$touch()"
                             @blur="givenNameBlur()"
-                            tabindex="1"
+                            tabindex="2"
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md3>
+                <v-flex md2>
                     <v-text-field
                             label="Cognom1"
                             v-model="sn1"
                             :error-messages="sn1Errors"
                             @input="$v.sn1.$touch()"
                             @blur="sn1Blur()"
-                            tabindex="2"
+                            tabindex="3"
                             required
                     ></v-text-field>
                 </v-flex>
-                <v-flex md3>
+                <v-flex md2>
                     <v-text-field
                             label="Cognom2"
                             v-model="sn2"
                             @blur="sn2Blur()"
                             required
-                            tabindex="3"
+                            tabindex="4"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md3>
@@ -56,7 +66,7 @@
                             :disabled="loadingProposedUser"
                             :loading="loadingProposedUser"
                             required
-                            tabindex="4"
+                            tabindex="5"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md1>
@@ -64,7 +74,7 @@
                             label="Telèfon mòbil"
                             v-model="mobile"
                             required
-                            tabindex="5"
+                            tabindex="6"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md2>
@@ -96,7 +106,14 @@
 
         <v-btn v-if="!newUser" color="primary" @click="select">Seleccionar</v-btn>
         <template v-else>
-            <v-btn v-if="!user" color="primary" @click.native="create" :disabled="creating" :loading="creating">Crear usuari</v-btn>
+            <v-btn
+                    v-if="!user"
+                    color="primary"
+                    @click.native="create"
+                    :disabled="creating || $v.$invalid"
+                    :loading="creating"
+                >Crear usuari
+            </v-btn>
             <template v-else>
                 <v-btn color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
                 <v-btn color="primary" @click.native="$emit('created', this.user)">Continuar</v-btn>
@@ -106,22 +123,23 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { validationMixin } from 'vuelidate'
-import withSnackbar from '../mixins/withSnackbar'
 import SendsWelcomeEmail from './mixins/SendsWelcomeEmail'
 import { required, email } from 'vuelidate/lib/validators'
 import * as actions from '../../store/action-types'
 import SelectUser from './UsersSelectComponent'
+import UserTypesSelect from './UserTypesSelect'
 import hasTenantInfo from '../mixins/hasTenantInfo'
 
 export default {
-  mixins: [validationMixin, withSnackbar, hasTenantInfo, SendsWelcomeEmail],
-  name: 'UserAddFormComponent',
+  mixins: [validationMixin, hasTenantInfo, SendsWelcomeEmail],
+  name: 'UserAddForm',
   components: {
+    'user-types-select': UserTypesSelect,
     'select-user': SelectUser
   },
   validations: {
+    dataUserType: { required },
     givenName: { required },
     sn1: { required },
     personalEmail: { required, email }
@@ -130,6 +148,7 @@ export default {
     return {
       user: null,
       username: '',
+      dataUserType: this.userType,
       givenName: '',
       sn1: '',
       sn2: '',
@@ -159,6 +178,10 @@ export default {
       type: Array,
       required: true
     },
+    userTypes: {
+      type: Array,
+      required: true
+    },
     userType: {
       required: false
     },
@@ -166,9 +189,26 @@ export default {
       required: false
     }
   },
+  watch: {
+    userType (userType) {
+      this.dataUserType = userType
+    },
+    dataUserType (dataUserType) {
+      this.googleUser = this.googleUsers[dataUserType]
+      this.ldapUser = this.ldapUsers[dataUserType]
+      this.moodleUser = this.moodleUsers[dataUserType]
+    }
+  },
   computed: {
     name () {
       return (this.givenName.trim() + ' ' + this.sn1.trim() + ' ' + this.sn2.trim()).trim()
+    },
+    userTypeErrors () {
+      const userTypeErrors = []
+      if (!this.$v.dataUserType.$dirty) return userTypeErrors
+      !this.$v.dataUserType.required && userTypeErrors.push("El tipus d'usuari és obligatori.")
+      this.errors['dataUserType'] && userTypeErrors.push(this.errors['dataUserType'])
+      return userTypeErrors
     },
     givenNameErrors () {
       const givenNameErrors = []
@@ -208,10 +248,10 @@ export default {
           this.user = response.data
           this.$v.$reset()
           this.$emit('deleted', this.user)
-          this.showMessage('Usuari eliminat correctament')
+          this.$snackbar.showMessage('Usuari eliminat correctament')
         }).catch(error => {
           this.removing = false
-          this.showError(error)
+          this.$snackbar.showError(error)
         }).then(() => {
           this.removing = false
         })
@@ -228,26 +268,26 @@ export default {
     checkPersonalEmail () {
       this.checkingPersonalEmail = true
       if (this.personalEmail) {
-        axios.get('/api/v1/users/email/' + this.personalEmail).then(response => {
+        window.axios.get('/api/v1/users/email/' + this.personalEmail).then(response => {
           this.checkingPersonalEmail = false
           this.username = response.data
           this.email = this.username + '@' + window.tenant.email_domain
-          this.showMessage('Ja existeix un usuari amb aquest correu electrònic')
+          this.$snackbar.showMessage('Ja existeix un usuari amb aquest correu electrònic')
         }).catch(error => {
           this.checkingPersonalEmail = false
-          if (error.status !== 404) this.showError(error)
+          if (error.status !== 404) this.$snackbar.showError(error)
         })
       }
     },
     checkUsername () {
       this.checkingUsername = true
       if (this.name) {
-        axios.get('/api/v1/users/name/' + this.name).then(response => {
+        window.axios.get('/api/v1/users/name/' + this.name).then(response => {
           this.checkingUsername = false
-          this.showMessage('Vigileu! Ja existeix un usuari amb aquest nom i correu electrònic: ' + response.data.email + '. Potser no cal crear aquest usuari?')
+          this.$snackbar.showMessage('Vigileu! Ja existeix un usuari amb aquest nom i correu electrònic: ' + response.data.email + '. Potser no cal crear aquest usuari?')
         }).catch(error => {
           this.checkingUsername = false
-          if (error.status !== 404) this.showError(error)
+          if (error.status !== 404) this.$snackbar.showError(error)
         })
       }
     },
@@ -271,25 +311,40 @@ export default {
     proposeFreeUserName (name, sn1) {
       this.loadingProposedUser = true
       if (name && sn1) {
-        axios.get('/api/v1/proposeFreeUserName/' + name + '/' + sn1).then(response => {
+        window.axios.get('/api/v1/proposeFreeUserName/' + name + '/' + sn1).then(response => {
           this.loadingProposedUser = false
           this.username = response.data
           this.email = this.username + '@' + window.tenant.email_domain
         }).catch(error => {
           this.loadingProposedUser = false
-          this.showError(error)
+          this.$snackbar.showError(error)
         })
       }
     },
     select () {
       if (this.user) this.$emit('created', this.user)
-      else this.showError('Cal seleccionar un usuari!')
+      else this.$snackbar.showError('Cal seleccionar un usuari!')
     },
     getFamilyName (sn1, sn2) {
       return sn2 ? sn1 + ' ' + sn2 : sn1
     },
+    createMoodleUser () {
+      window.axios.post('/api/v1/moodle/users', {
+        'user': {
+          'username': this.username,
+          'firstname': this.givenName,
+          'lastname': this.getFamilyName(this.sn1, this.sn2),
+          'email': this.email,
+          'createpassword': true
+        }
+      }).then((response) => {
+        this.associateMoodleUserToLocalUser(response.data)
+      }).catch(error => {
+        this.$snackbar.showError(error)
+      })
+    },
     createGoogleUser () {
-      axios.post('/api/v1/gsuite/users', {
+      window.axios.post('/api/v1/gsuite/users', {
         id: this.user.id,
         givenName: this.givenName,
         familyName: this.getFamilyName(this.sn1, this.sn2),
@@ -299,18 +354,29 @@ export default {
       }).then(response => {
         this.associateGoogleUserToLocalUser(response.data)
       }).catch(error => {
-        this.showError(error)
+        this.$snackbar.showError(error)
+      })
+    },
+    associateMoodleUserToLocalUser (moodleUser) {
+      window.axios.post('/api/v1/user/' + this.user.id + '/moodle', {
+        google_id: moodleUser.id,
+        google_email: moodleUser.primaryEmail
+      }).then(() => {
+        this.$snackbar.showMessage('Usuari Moodle associat correctament')
+        this.$emit('moodleUserCreated', moodleUser)
+      }).catch(error => {
+        this.$snackbar.showError(error)
       })
     },
     associateGoogleUserToLocalUser (googleUser) {
-      axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
+      window.axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
         google_id: googleUser.id,
         google_email: googleUser.primaryEmail
-      }).then(response => {
-        this.showMessage('Usuari Google associat correctament')
-        this.$emit('googleUsercreated', googleUser)
+      }).then(() => {
+        this.$snackbar.showMessage('Usuari Google associat correctament')
+        this.$emit('googleUserCreated', googleUser)
       }).catch(error => {
-        this.showError(error)
+        this.$snackbar.showError(error)
       })
     },
     createLdapUser () {
@@ -319,7 +385,7 @@ export default {
     create () {
       this.$v.$touch()
       if (this.personalEmail.endsWith(this.tenant.email_domain)) {
-        this.showError('Cal indicar un email personal, no es pot utilitzar el domini ' + this.tenant.email_domain)
+        this.$snackbar.showError('Cal indicar un email personal, no es pot utilitzar el domini ' + this.tenant.email_domain)
         return
       }
       if (!this.$v.$invalid) {
@@ -330,7 +396,7 @@ export default {
           sn2: this.sn2,
           email: this.personalEmail,
           mobile: this.mobile,
-          user_type_id: this.userType,
+          user_type_id: this.dataUserType,
           role: this.role
         }).then(response => {
           this.creating = false
@@ -338,18 +404,43 @@ export default {
           this.$v.$reset()
           this.welcomeEmail && this.sendWelcomeEmail(this.user)
           this.googleUser && this.createGoogleUser()
+          this.moodleUser && this.createMoodleUser()
           this.ldapUser && this.createLdapUser(this.user)
           this.$emit('created', this.user)
         }).catch(error => {
           if (error && error.status === 422) {
             this.errors = error.data && error.data.errors
             this.creating = false
-            this.showError(error)
+            this.$snackbar.showError(error)
           }
         }).then(() => {
           this.creating = false
         })
       }
+    }
+  },
+  created () {
+    // 1 Teacher // 2 Student // 3 Janitor // 4 Administratiu // 5 Familiars
+    this.googleUsers = {
+      1: true,
+      2: true,
+      3: true,
+      4: true,
+      5: false
+    }
+    this.ldapUsers = {
+      1: true,
+      2: true,
+      3: true,
+      4: true,
+      5: false
+    }
+    this.moodleUsers = {
+      1: true,
+      2: true,
+      3: false,
+      4: false,
+      5: false
     }
   }
 }

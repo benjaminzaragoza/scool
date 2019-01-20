@@ -30,7 +30,12 @@
                 </v-stepper-step>
                 <v-stepper-content step="1">
                   <v-card class="mb-5">
-                      <user-add-form @created="userCreated" @googleUsercreated="googleUserCreated" :users="users"></user-add-form>
+                      <user-add-form
+                              @created="userCreated"
+                              @googleUserCreated="googleUserCreated"
+                              @moodleUserCreated="moodleUserCreated"
+                              :users="users"
+                              :userTypes="userTypes"></user-add-form>
                   </v-card>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 2" step="2">Avatar</v-stepper-step>
@@ -101,11 +106,12 @@
                                             </v-list-tile>
                                             <v-list-tile>
                                                 <v-list-tile-content>
-                                                    <v-list-tile-title v-if="user">
-                                                        <a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id='"> {{ user.name }}</a>
+                                                    <v-list-tile-title v-if="moodleUser">
+                                                        <a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id='"> {{ moodleUser.id }}</a>
                                                     </v-list-tile-title>
                                                     <template v-else>
-                                                            <v-progress-circular indeterminate color="primary"></v-progress-circular> Carregant...
+                                                            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                                                            Esperant les dades de l'usuari de Moodle
                                                         </template>
                                                     <v-list-tile-sub-title>Usuari de moodle</v-list-tile-sub-title>
                                                 </v-list-tile-content>
@@ -157,11 +163,16 @@ export default {
       dialog: false,
       step: 1,
       user: null,
-      googleUser: null
+      googleUser: null,
+      moodleUser: null
     }
   },
   props: {
     users: {
+      type: Array,
+      required: true
+    },
+    userTypes: {
       type: Array,
       required: true
     }
@@ -184,6 +195,10 @@ export default {
     googleUserCreated (user) {
       this.googleUser = user
       this.$emit('googleUsercreated', user)
+    },
+    moodleUserCreated (user) {
+      this.moodleUser = user
+      this.$emit('moodleUsercreated', user)
     }
   }
 }
