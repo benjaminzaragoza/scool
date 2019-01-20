@@ -3,13 +3,14 @@
 namespace Tests\Feature\Tenants\Api\Users;
 
 use App\Models\Person;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserType;
-use Config;
-use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
+use App\Models\Role as ScoolRole;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class UserPersonControllerTest.
@@ -18,7 +19,7 @@ use Tests\BaseTenantTest;
  */
 class UserPersonControllerTest extends BaseTenantTest
 {
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -40,14 +41,7 @@ class UserPersonControllerTest extends BaseTenantTest
      */
     public function user_manager_can_add_user_persons()
     {
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $response = $this->json('POST','/api/v1/user_person',[
             'givenName' => 'Pepe',
@@ -88,15 +82,8 @@ class UserPersonControllerTest extends BaseTenantTest
      */
     public function user_manager_can_add_teacher()
     {
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
-
+        initialize_teacher_role();
+        $this->loginAsUsersManager('api');
         $response = $this->json('POST','/api/v1/user_person',[
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -104,7 +91,6 @@ class UserPersonControllerTest extends BaseTenantTest
             'email' =>'pepepardo@jeans.com',
             'user_type_id' => UserType::TEACHER,
         ]);
-
         $response->assertSuccessful();
 
         $result = json_decode($response->getContent());
@@ -125,8 +111,45 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertEquals('Pepe',$person->givenName);
         $this->assertEquals('Pardo',$person->sn1);
         $this->assertEquals('Jeans',$person->sn2);
+        $this->assertTrue($user->hasRole(ScoolRole::TEACHER['name']));
+    }
 
-        $this->assertTrue($user->hasRole('Teacher'));
+    /**
+     * @test
+     * @group users
+     */
+    public function user_manager_can_add_student()
+    {
+        initialize_student_role();
+        $this->loginAsUsersManager('api');
+        $response = $this->json('POST','/api/v1/user_person',[
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'email' =>'pepepardo@jeans.com',
+            'user_type_id' => UserType::STUDENT,
+        ]);
+        $response->assertSuccessful();
+
+        $result = json_decode($response->getContent());
+
+        $this->assertNotNull($result->id);
+        $this->assertEquals('Pepe Pardo Jeans',$result->name);
+        $this->assertEquals('Pepe',$result->givenName);
+        $this->assertEquals('Pardo',$result->sn1);
+        $this->assertEquals('Jeans',$result->sn2);
+        $this->assertEquals('pepepardo@jeans.com',$result->email);
+        $this->assertEquals('Ay',$result->hash_id);
+
+        $user = User::findByName('Pepe Pardo Jeans');
+        $this->assertNotNull($user);
+        $this->assertEquals('pepepardo@jeans.com',$user->email);
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $person = Person::where('user_id',$user->id)->first();
+        $this->assertEquals('Pepe',$person->givenName);
+        $this->assertEquals('Pardo',$person->sn1);
+        $this->assertEquals('Jeans',$person->sn2);
+        $this->assertTrue($user->hasRole(ScoolRole::STUDENT['name']));
     }
 
     /**
@@ -135,14 +158,7 @@ class UserPersonControllerTest extends BaseTenantTest
      */
     public function user_manager_can_add_user_persons_ucfirst()
     {
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $response = $this->json('POST','/api/v1/user_person',[
             'givenName' => 'pepe',
@@ -182,8 +198,7 @@ class UserPersonControllerTest extends BaseTenantTest
      */
     public function regular_user_cannot_add_user_persons()
     {
-        $user = create(User::class);
-        $this->actingAs($user,'api');
+        $this->login('api');
 
         $response = $this->json('POST','/api/v1/user_person',[
             'name' => 'Pepe Pardo',
@@ -197,17 +212,23 @@ class UserPersonControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
+    public function guest_user_cannot_add_user_persons()
+    {
+        $response = $this->json('POST','/api/v1/user_person',[
+            'name' => 'Pepe Pardo',
+            'email' =>'pepepardo@jeans.com'
+        ]);
+
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
     public function user_manager_can_delete_user_persons()
     {
-        $this->withoutExceptionHandling();
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans'
@@ -234,8 +255,7 @@ class UserPersonControllerTest extends BaseTenantTest
      */
     public function regular_user_cannot_delete_user_persons()
     {
-        $user = create(User::class);
-        $this->actingAs($user,'api');
+        $this->login('api');
 
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans'
@@ -244,5 +264,20 @@ class UserPersonControllerTest extends BaseTenantTest
         $response = $this->json('DELETE','/api/v1/user_person/' . $user->id);
 
         $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function guest_user_cannot_delete_user_persons()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+
+        $response = $this->json('DELETE','/api/v1/user_person/' . $user->id);
+
+        $response->assertStatus(401);
     }
 }

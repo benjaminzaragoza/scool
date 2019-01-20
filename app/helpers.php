@@ -647,6 +647,15 @@ if (!function_exists('teacher_permissions')) {
     }
 }
 
+if (!function_exists('student_permissions')) {
+    function student_permissions()
+    {
+        return [
+            'positions.index',
+        ];
+    }
+}
+
 if (!function_exists('positions_manager_permissions')) {
     function positions_manager_permissions()
     {
@@ -713,7 +722,6 @@ if (!function_exists('incidents_manager_permissions')) {
     }
 }
 
-
 if (!function_exists('users_manager_permissions')) {
     function users_manager_permissions()
     {
@@ -776,7 +784,6 @@ if (!function_exists('scool_roles')) {
     function scool_roles()
     {
         return ScoolRole::ROLES;
-
     }
 }
 
@@ -825,7 +832,7 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
 
         $roles = scool_roles();
         foreach ($roles as $role) {
-            Role::firstOrCreate(['id' => $role['id'], 'name' => $role['name']]);
+            Role::firstOrCreate(['name' => $role['name']]);
         }
 
         $rolePermissions = scool_roles_permissions();
@@ -838,10 +845,34 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
     }
 }
 
+if (!function_exists('initialize_student_role')) {
+    function initialize_student_role()
+    {
+        $role = Role::firstOrCreate(['name' => ScoolRole::STUDENT['name']]);
+        $permissions = student_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_users_manager_role')) {
+    function initialize_teacher_role()
+    {
+        $role = Role::firstOrCreate(['name' => ScoolRole::TEACHER['name']]);
+        $permissions = teacher_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
 if (!function_exists('initialize_users_manager_role')) {
     function initialize_users_manager_role()
     {
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
+        $role = Role::firstOrCreate(['name' => ScoolRole::USERS_MANAGER['name']]);
         $permissions = users_manager_permissions();
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);

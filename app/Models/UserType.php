@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Exceptions\UserTypeDoesNotExist;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Role;
+use App\Models\Role as ScoolRole;
 
 /**
  * Class UserType.
@@ -21,19 +22,19 @@ class UserType extends Model
 
     const ROLES = [
         UserType::TEACHER => [
-
+            ScoolRole::TEACHER['name']
         ],
         UserType::STUDENT => [
-
+            ScoolRole::STUDENT['name']
         ],
         UserType::JANITOR => [
-
+            ScoolRole::JANITOR['name']
         ],
         UserType::ADMINISTRATIVE => [
-
+            ScoolRole::ADMINISTRATIVE_ASSISTANT['name']
         ],
         UserType::FAMILY => [
-
+            ScoolRole::FAMILIAR['name']
         ],
     ];
 

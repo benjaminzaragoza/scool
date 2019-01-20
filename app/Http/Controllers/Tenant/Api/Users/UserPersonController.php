@@ -8,6 +8,7 @@ use App\Http\Requests\UserPerson\UserPersonStore;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\UserType;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -44,7 +45,7 @@ class UserPersonController extends Controller
             $user->assignRole(Role::findByName($request->role,'web'));
         }
 
-        $this->assignRoleToUserByUserType();
+        if ($user->user_type_id) $this->assignRoleToUserByUserType($user->user_type_id, $user);
 
         return $user->map();
     }
@@ -65,15 +66,21 @@ class UserPersonController extends Controller
     }
 
     /**
-     *
+     * @param $user
      */
-    protected function assignRoleToUserByUserType($user)
+    protected function assignRoleToUserByUserType($userType, $user)
     {
-        foreach ($this->rolesByUserType($user->user_type_id) as $role) {
-            $user->assignRole(Role::findByName($role, 'web'));
+        foreach ($this->rolesByUserType($userType) as $role) {
+            try {
+                $user->assignRole(Role::findByName($role,'web'));
+            } catch (RoleDoesNotExist $e) {}
         }
     }
 
+    /**
+     * @param $user_type_id
+     * @return mixed
+     */
     private function rolesByUserType($user_type_id)
     {
         return UserType::ROLES[$user_type_id];
