@@ -10,11 +10,11 @@ use App\Models\MoodleUser;
 use Cache;
 
 /**
- * Class MoodleController.
+ * Class MoodleUsersController.
  *
  * @package App\Http\Controllers\Tenant\Web
  */
-class MoodleController extends Controller
+class MoodleUsersController extends Controller
 {
     /**
      * Index.

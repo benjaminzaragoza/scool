@@ -24,6 +24,7 @@ use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
+use App\Http\Controllers\Tenant\Api\Moodle\Users\UserMoodleController;
 use App\Http\Controllers\Tenant\Api\Permissions\PermissionsController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
@@ -155,11 +156,13 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Moodle Password
             Route::put('/moodle/users/{moodleuser}/password', '\\'. MoodleUsersPasswordController::class .'@update');
 
-
             //Moodle users check
             Route::post('/moodle/users/check', '\\'. MoodleUsersCheckController::class .'@store');
 
-
+            //Associate Gsuite user to user
+            Route::post('/user/{user}/moodle','\\' . UserMoodleController::class .'@store');
+            Route::put('/user/{user}/moodle','\\' . UserMoodleController::class .'@update');
+            Route::delete('/user/{userid}/moodle','\\' . UserMoodleController::class .'@destroy');
 
             // Available users
             // TODO: UMMMMM

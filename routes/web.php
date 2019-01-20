@@ -17,7 +17,7 @@ use App\Http\Controllers\Tenant\Web\CurriculumController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
-use App\Http\Controllers\Tenant\Web\MoodleController;
+use App\Http\Controllers\Tenant\Web\MoodleUsersController;
 use App\Http\Controllers\Tenant\Web\PermissionsController;
 use App\Http\Controllers\Tenant\Web\PositionsController;
 use App\Http\Controllers\Tenant\Web\PublicCurriculumController;
@@ -168,13 +168,11 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/users/roles', '\\' . RolesController::class . '@index');
             Route::get('/users/permissions', '\\' . PermissionsController::class . '@index');
 
-
-            Route::get('/moodle', '\\' . MoodleController::class.'@index');
+            Route::get('/moodle/users', '\\' . MoodleUsersController::class.'@index');
 
             Route::get('/jobs', 'Tenant\JobsController@show');
 
             Route::get('/teachers', '\\' . TeachersController::class . '@show');
-
 
             Route::get('/teachers_photos', 'Tenant\TeachersPhotosController@show');
 

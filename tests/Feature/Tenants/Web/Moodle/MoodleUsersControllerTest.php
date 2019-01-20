@@ -10,11 +10,11 @@ use Tests\BaseTenantTest;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class MoodleControllerTest.
+ * Class MoodleUsersControllerTest.
  *
  * @package Tests\Feature
  */
-class MoodleControllerTest extends BaseTenantTest
+class MoodleUsersControllerTest extends BaseTenantTest
 {
     use RefreshDatabase, CanLogin;
 

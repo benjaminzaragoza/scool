@@ -685,6 +685,14 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * Get the moodle user record associated with the user.
+     */
+    public function moodleUser()
+    {
+        return $this->hasOne(MoodleUser::class);
+    }
+
+    /**
      * Map simple
      * @return array
      */
