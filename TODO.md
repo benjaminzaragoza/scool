@@ -84,8 +84,8 @@ ROLS:
 
 PERSONES:
 - Nom:
-  - [ ] Edició inline del nom
-    - [ ] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
+  - [X] Edició inline del nom
+    - [X] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
 USUARI MOODLE
 - [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
 USUARI DE GOOGLE
@@ -137,6 +137,8 @@ FILTRES
 # Usuaris acabats de registrar | sense rols
 
 ## Dashboard
+
+- [ ] Usuaris sense email verificat -> VERIFICAR EMAIL (enviar email verificació) 
 
 - Quan usuari serà nou? No té assignat tipus d'usuari
 - Text de benvinguda -> Gran i centrat (Benvingut)
