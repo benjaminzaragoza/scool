@@ -87,6 +87,7 @@ class UserGsuiteController extends Controller
      */
     public function destroy(UnAssociateGsuiteUserToUser $request, $tenant, $userid)
     {
-        GoogleUser::where('user_id', $userid)->first()->delete();
+        $user = GoogleUser::where('user_id', $userid)->first();
+        if ($user) $user->delete();
     }
 }

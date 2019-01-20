@@ -132,8 +132,8 @@ import UserTypesSelect from './UserTypesSelect'
 import hasTenantInfo from '../mixins/hasTenantInfo'
 
 export default {
-  mixins: [validationMixin, hasTenantInfo, SendsWelcomeEmail],
   name: 'UserAddForm',
+  mixins: [validationMixin, hasTenantInfo, SendsWelcomeEmail],
   components: {
     'user-types-select': UserTypesSelect,
     'select-user': SelectUser

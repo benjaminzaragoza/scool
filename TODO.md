@@ -26,13 +26,14 @@ Changelog:
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
 - [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+- [X] CONTINUA DONANT ERROR Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
 - [ ] Proteccions contra errors: usuaris protegits no es puguin esborrar    
 
 USER ADD WIZARD
 - [ ] Tema password i sincronització dels diferents password
   - [ ] Moodle no permet passar hash del password -> S'ha de canviar password de Moodle en el moment es canvia password local
   - [ ] Com gestionar-lo?
-  - [ ] Lligar amb el dialeg pendent que permeti canviar
+  - [ ] Lligar amb el dialeg pendent que permetra canviar paraules de pas
 - [ ] Eliminar tots els links i valors hardcoded de Javascript apuntant a iesebre.com i agafar-los del tenant
 - [ ] Estils:
   - [ ] Botons rojos no!
@@ -42,7 +43,7 @@ USER ADD WIZARD
 - [X] Primer camp tipus usuari
   -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
     - [X] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
-    - [ ] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
+    - [X] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou user
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
 - [X] Refrescar la llista d'usuari cada cop que es modifica un avatar

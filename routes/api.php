@@ -141,6 +141,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // User Person
             Route::post('/user_person', '\\' . UserPersonController::class . '@store');
+            Route::put('/user_person/{user}', '\\' . UserPersonController::class . '@update');
             Route::delete('/user_person/{user}', '\\' . UserPersonController::class . '@destroy');
 
 //            Roles

@@ -109,7 +109,8 @@
                                                      :removable="true"
                                         ></user-avatar>
                                     </td>
-                                    <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <user-edit-name :user="props.item" @saved="refresh(false)"></user-edit-name>
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ props.item.name }}</span>
                                             <span>{{ props.item.name }}</span>
@@ -225,6 +226,7 @@ import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
 import UserFiltersSelect from './UserFiltersSelect'
 import UserRolesManageButton from './roles/UserRolesManageButton'
+import UserEditName from './UserEditName'
 
 var filterNames = [
   {
@@ -361,7 +363,8 @@ export default {
     'user-types-select': UserTypesSelect,
     'roles-select': RolesSelect,
     'user-filters-select': UserFiltersSelect,
-    'user-roles-manage-button': UserRolesManageButton
+    'user-roles-manage-button': UserRolesManageButton,
+    'user-edit-name': UserEditName
   },
   data () {
     return {

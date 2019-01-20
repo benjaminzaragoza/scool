@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Api\Users;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\UserPerson\UserPersonDestroy;
 use App\Http\Requests\UserPerson\UserPersonStore;
+use App\Http\Requests\UserPerson\UserPersonUpdate;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\UserType;
@@ -47,6 +48,39 @@ class UserPersonController extends Controller
 
         if ($user->user_type_id) $this->assignRoleToUserByUserType($user->user_type_id, $user);
 
+        return $user->map();
+    }
+
+    /**
+     * Update.
+     *
+     * @param UserPersonUpdate $request
+     * @param $tenant
+     * @param User $user
+     * @return array
+     */
+    public function update(UserPersonUpdate $request, $tenant, User $user )
+    {
+        if($request->email) $user->email = $request->email;
+        if($request->name) $user->name = $request->name;
+        if($request->mobile) $user->mobile = $request->mobile;
+        $user->save();
+        if ($user->person) {
+            if ($request->givenName) $user->person->givenName = format_name($request->givenName);
+            if ($request->mobile) $user->person->mobile = format_name($request->mobile);
+            if ($request->sn1) $user->person->sn1 = format_name($request->sn1);
+            if ($request->sn2) $user->person->sn2 = format_name($request->sn2);
+            $user->person->save();
+        } else {
+            $person = Person::create([
+                'givenName' => format_name($request->givenName),
+                'mobile' => $request->mobile,
+                'sn1' => format_name($request->sn1),
+                'sn2' => format_name($request->sn2)
+            ]);
+            $person->assignUser($user->id);
+        }
+        $user = $user->fresh();
         return $user->map();
     }
 
