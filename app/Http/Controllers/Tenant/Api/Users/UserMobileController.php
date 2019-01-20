@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Tenant\Api\Users;
 
-use App\Events\UserEmailUpdated;
+use App\Events\UserMobileUpdated;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Users\ShowUser;
-use App\Http\Requests\Users\UpdateUser;
+use App\Http\Requests\Users\UpdateUserMobile;
 use App\Models\User;
 
 /**
@@ -21,26 +21,26 @@ class UserMobileController extends Controller
     /**
      * @param ShowUser $request
      * @param $tenant
-     * @param $email
+     * @param $mobile
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(ShowUser $request, $tenant, $email)
+    public function show(ShowUser $request, $tenant, $mobile)
     {
-        return User::where('email',$email)->firstOrFail()->map();
+        return User::where('mobile',$mobile)->firstOrFail()->map();
     }
 
     /**
-     * @param UpdateUser $request
+     * @param UpdateUserMobile $request
      * @param $tenant
      * @param User $user
      * @return array
      */
-    public function update(UpdateUser $request, $tenant, User $user)
+    public function update(UpdateUserMobile $request, $tenant, User $user)
     {
-        $user->email = $request->email;
-        $user->email_verified_at = null;
+        $user->mobile = $request->mobile;
+        $user->mobile_verified_at = null;
         $user->save();
-        event(new UserEmailUpdated($user));
+        event(new UserMobileUpdated($user));
         return $user->map();
     }
 

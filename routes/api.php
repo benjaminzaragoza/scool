@@ -38,6 +38,7 @@ use App\Http\Controllers\Tenant\Api\Roles\RolesController;
 use App\Http\Controllers\Tenant\Api\Roles\UserRoleController;
 use App\Http\Controllers\Tenant\Api\Users\LoggedUserController;
 use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
+use App\Http\Controllers\Tenant\Api\Users\UserMobileController;
 use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
 use App\Http\Controllers\Tenant\Api\Users\UserPersonController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;

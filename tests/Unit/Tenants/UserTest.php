@@ -903,6 +903,7 @@ class UserTest extends TestCase
         $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);
         $this->assertNull($mappedUser['email_verified_at']);
+        $this->assertNull($mappedUser['mobile_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
         $this->assertNull($mappedUser['last_login']);
         $this->assertNull($mappedUser['last_login_formatted']);
@@ -983,6 +984,7 @@ class UserTest extends TestCase
         $this->assertFalse($mappedUser['isSuperAdmin']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
         $this->assertNull($mappedUser['email_verified_at']);
+        $this->assertNull($mappedUser['mobile_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
         $this->assertNull($mappedUser['last_login']);
         $this->assertNull($mappedUser['last_login_ip']);
