@@ -1,3 +1,7 @@
+# USERS MOBILE
+
+- [ ] Confirmar mòbil -> enviar SMS
+
 # Mòdul de comandes
 
 - [ ] Associat a incidències (incidències que queden pendents d'una comanda)
@@ -16,8 +20,7 @@ EDIT:
 - [X] Editar el name inline a la llista d'usuaris (datatables). NO inline però si currat per poder mdificar sn1 sn2 i givenName també
 - [X]  Editar l'email name inline a la llsita d'usuaris (datatables). Fet no inline però fet
   - [X] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
-- [ ] Modificar el mòbil online
-  - [ ] Confirmar mòbil
+- [X] Modificar el mòbil inline  
 - [ ] Modificar el tipus usuari
 
 Changelog:
