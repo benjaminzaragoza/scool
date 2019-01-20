@@ -3,6 +3,7 @@
 namespace Tests\Feature\Tenants\Api\Users;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -103,7 +104,8 @@ class UserEmailsControllerTest extends BaseTenantTest
     {
         $this->loginAsUsersManager('api');
         $user = factory(User::class)->create([
-            'email' => 'oldemail@gmail.com'
+            'email' => 'oldemail@gmail.com',
+            'email_verified_at' => Carbon::now()
         ]);
         $response = $this->json('PUT', '/api/v1/users/' . $user->id . '/email', [
             'email' => 'newemail@gmail.com'
@@ -117,6 +119,7 @@ class UserEmailsControllerTest extends BaseTenantTest
         $newUser = $user->fresh();
         $this->assertEquals($newUser->id,$user->id);
         $this->assertEquals('newemail@gmail.com',$newUser->email);
+        $this->assertNull($newUser->email_verified_at);
     }
 
     /** @test */

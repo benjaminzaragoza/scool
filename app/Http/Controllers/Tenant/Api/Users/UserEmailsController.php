@@ -37,6 +37,7 @@ class UserEmailsController extends Controller
     public function update(UpdateUser $request, $tenant, User $user)
     {
         $user->email = $request->email;
+        $user->email_verified_at = null;
         $user->save();
         return $user->map();
     }
