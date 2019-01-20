@@ -133,9 +133,16 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/users/multiple', '\\'. UsersController::class . '@destroyMultiple');
             Route::get('/users/{user}', '\\'. UsersController::class . '@show');
 
+            // USER EMAILS
             //GET USER BY EMAIL
             Route::get('/users/email/{email}', '\\' . UserEmailsController::class . '@show');
             Route::put('/users/{user}/email', '\\' . UserEmailsController::class . '@update');
+
+            // USER MOBILE
+            //GET USER BY EMAIL
+            Route::get('/users/mobile/{mobile}', '\\' . UserMobileController::class . '@show');
+            Route::put('/users/{user}/mobile', '\\' . UserMobileController::class . '@update');
+
             //GET USER BY name
             Route::get('/users/name/{name}', '\\'. UserNamesController::class . '@show');
 
