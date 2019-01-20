@@ -7,34 +7,52 @@
 
 # Users management
 
-AVATARS:
-- [X] NO es refresquen si ja estaven cachejats
-  - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
-  - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
+Dades personals
+- [ ] Card/formulari creació/modificació de dades personals d'un usuari concret
+  - [ ] No incloura dades específiques segons tipus usuari
+    -  [ ] Formulari dades de professor  
+
+EDIT:
+- [ ] Editar el name inline a la llista d'usuaris (datatables)
+- [ ]  Editar l'email name inline a la llsita d'usuaris (datatables) 
+  - [ ] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
+- [ ] Modificar el mòbil online
+  - [ ] Confirmar mòbil
+- [ ] Modificar el tipus usuari
+
+Changelog:
+- [ ] Igual que incidències logar totes les accions
 
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
 - [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
-    
+- [ ] Proteccions contra errors: usuaris protegits no es puguin esborrar    
 
 USER ADD WIZARD
+- [ ] Tema password i sincronització dels diferents password
+  - [ ] Moodle no permet passar hash del password -> S'ha de canviar password de Moodle en el moment es canvia password local
+  - [ ] Com gestionar-lo?
+  - [ ] Lligar amb el dialeg pendent que permeti canviar
 - [ ] Eliminar tots els links i valors hardcoded de Javascript apuntant a iesebre.com i agafar-los del tenant
+- [ ] Estils:
+  - [ ] Botons rojos no!
+  - [ ] Aplicar jerarquia! Quina botons són més important i quins secundaris
+- [X] Fase/Step assignar rols
+  - [X] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
 - [X] Primer camp tipus usuari
   -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
     - [X] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
     - [ ] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou user
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
-- [ ] Refrescar la llista d'usuari cada cop que es modifica un avatar
-- [ ] Crear usuari de Moodle
-- [ ] Estils:
-  - [ ] Botons rojos no!
-  - [ ] Aplicar jerarquia! Quina botons són més important i quins secundaris
-- [X] Fase/Step assignar rols
-  - [X] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
+- [X] Refrescar la llista d'usuari cada cop que es modifica un avatar
+- [X] Crear usuari de Moodle
 
-Changelog:
-- [ ] Igual que incidències logar totes les accions
+AVATARS:
+- [X] NO es refresquen si ja estaven cachejats
+  - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
+  - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
+
 
 Operacions massives:
 - [X] Eliminar -> FET
@@ -60,7 +78,6 @@ Operacions:
    
 RELACIONS AMB ALTRES ENTITATS/MODELS
 
-
 ROLS:
 - [X] Dialeg que permeti gestionar rols d'un usuaris concret (afegir i treure rols)
 
@@ -69,7 +86,7 @@ PERSONES:
   - [ ] Edició inline del nom
     - [ ] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
 USUARI MOODLE
-- 
+- [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
 USUARI DE GOOGLE
 - [ ] Mostrar acció permeti navegar (link) a l'usuari de Google associat
   - [ ] Show usuaris Google existeix? Crear
@@ -95,16 +112,7 @@ PERMISSIONS:
 - [ ] CRUD DE ROLS
 - [ ] Protegir certs Rols -> NO ES PODEN ESBORRAR
 
-
-EDIT:
-- [ ] Editar el name inline a la llista d'usuaris (datatables)
-- [ ]  Editar l'email name inline a la llsita d'usuaris (datatables) 
-  - [ ] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
-- [ ] Modificar el mòbil online
-  - [ ] Confirmar mòbil
-- [ ] Modificar el tipus usuari
-
- 
+FILTRES
 - [ ] Filtres usuaris
   - [X] Per típus/s d'usuari
   - [X] Per Rol/s
@@ -121,9 +129,9 @@ EDIT:
 - [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
 - [X] Last Login de l'usuari, permetre saber usuaris no s'han logat mai. FET UN FILTRE
 - [X] Esborrat massiu d'usuaris
-- [ ] Protegir alguns usuaris -> no es puguin esborrar:
-  - [ ] Superadmins
-  - [ ] Configuració: altres usuaris no es puguin esborrar    
+  - [ ] Protegir alguns usuaris -> no es puguin esborrar:
+    - [ ] Superadmins
+    - [ ] Configuració: altres usuaris no es puguin esborrar    
 
 # Usuaris acabats de registrar | sense rols
 
