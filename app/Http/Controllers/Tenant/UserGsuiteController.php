@@ -83,12 +83,10 @@ class UserGsuiteController extends Controller
      *
      * @param UnAssociateGsuiteUserToUser $request
      * @param $tenant
-     * @param User $user
+     * @param $userid
      */
-    public function destroy(UnAssociateGsuiteUserToUser $request, $tenant, User $user)
+    public function destroy(UnAssociateGsuiteUserToUser $request, $tenant, $userid)
     {
-        if ($existing = GoogleUser::where('user_id', $user->id)->first()) {
-            GoogleUser::destroy($existing->id);
-        }
+        GoogleUser::where('user_id', $userid)->first()->delete();
     }
 }

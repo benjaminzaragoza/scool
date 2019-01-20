@@ -133,6 +133,7 @@ class UserGsuiteControllerTest extends BaseTenantTest
     /** @test */
     public function can_unassociate_gsuite_user_to_user()
     {
+        $this->withoutExceptionHandling();
         $manager = factory(User::class)->create();
         $role = Role::firstOrCreate(['name' => 'UsersManager']);
         Config::set('auth.providers.users.model', User::class);

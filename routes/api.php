@@ -233,7 +233,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Associate Gsuite user to user
             Route::post('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@store');
             Route::put('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@update');
-            Route::delete('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@destroy');
+            Route::delete('/user/{userid}/gsuite','\\' . UserGsuiteController::class .'@destroy');
 
             Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
 

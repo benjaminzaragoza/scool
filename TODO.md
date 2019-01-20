@@ -9,12 +9,17 @@
 
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
-- [ ] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+- [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
     
 
 USER ADD WIZARD
+- [ ] Primer camp tipus usuari
+  -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
+    - [ ] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
+    - [ ] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou user
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
+- [ ] Crear usuari de Moodle
 - [ ] Estils:
   - [ ] Botons rojos no!
   - [ ] Aplicar jerarquia! Quina botons són més important i quins secundaris
