@@ -7,9 +7,19 @@
 
 # Users management
 
-USER ADD
-- [ ] Fase assignar rols
-  - [ ] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
+USER DELETE:
+- [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
+- [ ] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+    
+
+USER ADD WIZARD
+- [X] Refrescar la llista d'usuari cada cop que es crea un nou user
+- [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
+- [ ] Estils:
+  - [ ] Botons rojos no!
+  - [ ] Aplicar jerarquia! Quina botons són més important i quins secundaris
+- [X] Fase/Step assignar rols
+  - [X] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
 
 Changelog:
 - [ ] Igual que incidències logar totes les accions

@@ -41,7 +41,15 @@ class UserGsuiteController extends Controller
         // TODO edit google user to modify employeeId == user->id i emailPersonal => user.email
     }
 
-    public function edit(EditGoogleUsers $request, $tenant, User $user)
+    /**
+     * Update.
+     *
+     * @param EditGoogleUsers $request
+     * @param $tenant
+     * @param User $user
+     * @return array
+     */
+    public function update(EditGoogleUsers $request, $tenant, User $user)
     {
         if (!$user->googleUser) abort (422, "L'usuari $user->name no té un compte de Google associat");
         dd($user->googleUser->google_email);

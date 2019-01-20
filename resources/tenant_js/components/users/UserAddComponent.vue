@@ -131,7 +131,7 @@
                 <v-stepper-step :complete="step > 4" step="4">Assignar rol</v-stepper-step>
 
                 <v-stepper-content step="4">
-                    <user-roles-manage v-if="user" :user="user" @step="changeStep" :step="4" @close="close"></user-roles-manage>
+                    <user-roles-manage v-if="user" :user="user" @step="changeStep" :step="4" @close="close" :dialog="false"></user-roles-manage>
                 </v-stepper-content>
 
             </v-stepper>
@@ -179,9 +179,11 @@ export default {
     userCreated (user) {
       this.user = user
       this.step = 2
+      this.$emit('created', user)
     },
     googleUserCreated (user) {
       this.googleUser = user
+      this.$emit('googleUsercreated', user)
     }
   }
 }

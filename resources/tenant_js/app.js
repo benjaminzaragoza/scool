@@ -45,8 +45,8 @@ window.Vue.component('reset-password', require('./components/ResetPasswordCompon
 window.Vue.component('snackbar', require('./components/ui/SnackBarComponent.vue'))
 window.Vue.component('gravatar', require('./components/GravatarComponent.vue'))
 window.Vue.component('users-dashboard', require('./components/users/UsersDashboardComponent.vue'))
-window.Vue.component('users-list', require('./components/users/UsersListComponent.vue'))
-window.Vue.component('user-add', require('./components/users/UserAddComponent.vue'))
+
+window.Vue.component('users', require('./components/users/UsersComponent.vue'))
 
 window.Vue.component('roles', require('./components/users/roles/RolesComponent.vue'))
 window.Vue.component('permissions', require('./components/users/permissions/PermissionsComponent.vue'))

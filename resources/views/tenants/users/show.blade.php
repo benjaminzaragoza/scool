@@ -1,14 +1,7 @@
 @extends('tenants.layouts.app')
 
 @section('content')
-
-    <user-add :roles="{{ $roles }}" :users="{{ $users }}"></user-add>
-
-    <users-list :users="{{ $users }}" :user-types=" {{ $userTypes }}" :roles="{{ $roles }}"></users-list>
-
-    {{--TODO--}}
-    {{--<users-dashboard></users-dashboard>--}}
-
+    <users :users="{{ $users }}" :roles="{{ $roles }}" :user-types=" {{ $userTypes }}"></users>
 @endsection
 
 

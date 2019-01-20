@@ -40,6 +40,7 @@ use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
 use App\Http\Controllers\Tenant\Api\Users\UserPersonController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
+use App\Http\Controllers\Tenant\UserGsuiteController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Laravel\Dusk\Http\Controllers\UserController;
@@ -230,9 +231,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/gsuite/users/{user}', 'Tenant\GoogleUsersController@destroy');
 
             //Associate Gsuite user to user
-            Route::post('/user/{user}/gsuite','Tenant\UserGsuiteController@store');
-            Route::put('/user/{user}/gsuite','Tenant\UserGsuiteController@edit');
-            Route::delete('/user/{user}/gsuite','Tenant\UserGsuiteController@destroy');
+            Route::post('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@store');
+            Route::put('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@update');
+            Route::delete('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@destroy');
 
             Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
 
