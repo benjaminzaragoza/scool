@@ -42,6 +42,7 @@ use App\Http\Controllers\Tenant\Api\Users\UserPersonController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
 use App\Http\Controllers\Tenant\UserGsuiteController;
+use App\Http\Controllers\Tenant\UserPhotoController;
 use App\Http\Controllers\Tenant\Web\TeachersController;
 use Illuminate\Http\Request;
 use Laravel\Dusk\Http\Controllers\UserController;
@@ -206,8 +207,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::delete('/teacher/{user}/photo','Tenant\AssignedTeacherPhotoController@delete');
 
             //User photos
-            Route::post('/user/{user}/photo','Tenant\UserPhotoController@store');
-            Route::delete('/user/{user}/photo','Tenant\UserPhotoController@destroy');
+            Route::post('/user/{user}/photo','\\' . UserPhotoController::class. '@store');
+            Route::delete('/user/{user}/photo','\\' . UserPhotoController::class. '@destroy');
 
             //Jobs
             Route::get('/jobs', 'Tenant\JobsController@index');

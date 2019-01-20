@@ -857,6 +857,13 @@ class UserTest extends TestCase
             'mobile' => '654789524'
         ]);
 
+        Storage::fake('local');
+
+        $fakeImage = UploadedFile::fake()->image('avatar.jpg');
+        $photo = Storage::disk('local')->putFile('teacher_photos',$fakeImage);
+        $this->assertNull($user->photo);
+        $user->assignPhoto($photo,'tenant_test');
+
         $user->assignTeacher($teacher = Teacher::create([
             'code' => '040'
         ]));
@@ -881,6 +888,9 @@ class UserTest extends TestCase
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe',$mappedUser['givenName']);
         $this->assertFalse($mappedUser['isSuperAdmin']);
+
+        $this->assertEquals($user->photo,'tenant_test/user_photos/1_pepe-pardo-jeans_pepepardojeans-at-gmailcom.jpeg');
+        $this->assertEquals($user->photo_hash,'3728b0e69b303b6613e9986e3202c3bb');
 
         $this->assertEquals('teacher',$mappedUser['user_type']);
         $this->assertEquals(1,$mappedUser['user_type_id']);
