@@ -21,6 +21,7 @@ use App\Events\Studies\StudyTagAdded;
 use App\Events\Studies\StudyTagRemoved;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
+use App\Events\UserEmailUpdated;
 use App\Listeners\Authentication\LogAttemptLoginUser;
 use App\Listeners\Authentication\LogLeaveImpersonation;
 use App\Listeners\Authentication\LogLogedOutUser;
@@ -202,6 +203,11 @@ class EventServiceProvider extends ServiceProvider
         ],
         GoogleInvalidUserNotificationReceived::class => [
             SendGoogleInvalidUserNotificationReceivedEmail::class,
+        ],
+
+        // USER EMAIL UPDATED
+        UserEmailUpdated::class => [
+            SendEmailVerificationNotification::class
         ]
     ];
 
