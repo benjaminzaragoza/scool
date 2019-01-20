@@ -134,6 +134,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             //GET USER BY EMAIL
             Route::get('/users/email/{email}', '\\' . UserEmailsController::class . '@show');
+            Route::put('/users/{user}/email', '\\' . UserEmailsController::class . '@update');
             //GET USER BY name
             Route::get('/users/name/{name}', '\\'. UserNamesController::class . '@show');
 

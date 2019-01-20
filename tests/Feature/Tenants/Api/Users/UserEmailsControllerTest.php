@@ -8,6 +8,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\BaseTenantTest;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class UserEmailsControllerTest.
@@ -16,7 +17,7 @@ use Tests\BaseTenantTest;
  */
 class UserEmailsControllerTest extends BaseTenantTest
 {
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -38,12 +39,7 @@ class UserEmailsControllerTest extends BaseTenantTest
      */
     public function can_get_user_by_email()
     {
-        $this->withoutExceptionHandling();
-        $manager = factory(User::class)->create();
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
-        $this->actingAs($manager, 'api');
+        $this->loginAsUsersManager('api');
 
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
@@ -79,8 +75,7 @@ class UserEmailsControllerTest extends BaseTenantTest
      */
     public function regular_user_cannot_get_user_by_email()
     {
-        $regularUser = factory(User::class)->create();
-        $this->actingAs($regularUser, 'api');
+        $this->login('api');
 
         $user = factory(User::class)->create();
 
@@ -95,17 +90,65 @@ class UserEmailsControllerTest extends BaseTenantTest
      */
     public function can_get_user_by_email_404()
     {
-        $manager = factory(User::class)->create();
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
-        $this->actingAs($manager, 'api');
-
+        $this->loginAsUsersManager('api');
         factory(User::class)->create();
 
         $response = $this->json('GET', '/api/v1/users/email/noexistingemail@gmail.com');
 
         $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function can_update_user_email()
+    {
+        $this->loginAsUsersManager('api');
+        $user = factory(User::class)->create([
+            'email' => 'oldemail@gmail.com'
+        ]);
+        $response = $this->json('PUT', '/api/v1/users/' . $user->id . '/email', [
+            'email' => 'newemail@gmail.com'
+        ]);
+        $response->assertSuccessful();
+
+        $result = json_decode($response->getContent());
+        $this->assertEquals($user->id,$result->id);
+        $this->assertEquals('newemail@gmail.com',$result->email);
+
+        $newUser = $user->fresh();
+        $this->assertEquals($newUser->id,$user->id);
+        $this->assertEquals('newemail@gmail.com',$newUser->email);
+    }
+
+    /** @test */
+    public function can_update_user_email_validation()
+    {
+        $this->loginAsUsersManager('api');
+        $user = factory(User::class)->create([
+            'email' => 'oldemail@gmail.com'
+        ]);
+        $response = $this->json('PUT', '/api/v1/users/' . $user->id . '/email');
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function regular_user_cannot_update_email()
+    {
+        $this->login('api');
+        $user = factory(User::class)->create([
+            'email' => 'oldemail@gmail.com'
+        ]);
+        $response = $this->json('PUT', '/api/v1/users/' . $user->id . '/email');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function guest_user_cannot_update_email()
+    {
+        $user = factory(User::class)->create([
+            'email' => 'oldemail@gmail.com'
+        ]);
+        $response = $this->json('PUT', '/api/v1/users/' . $user->id . '/email');
+        $response->assertStatus(401);
     }
 
 }
