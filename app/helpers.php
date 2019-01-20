@@ -43,6 +43,7 @@ use Carbon\Carbon;
 use PulkitJalan\Google\Client;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\Role as ScoolRole;
 
 /**
  * Create model.
@@ -774,29 +775,7 @@ if (!function_exists('scool_permissions')) {
 if (!function_exists('scool_roles')) {
     function scool_roles()
     {
-        return [
-            'Student',
-            'Teacher',
-            'Janitor',
-            'AdministrativeAssistant',
-            'Familiar',
-            'Manager',
-            'Admin',
-            'UsersManager',
-            'StaffManager',
-            'TeachersManager',
-            'PhotoTeachersManager',
-            'LessonsManager',
-            'Incidents',
-            'IncidentsManager',
-            'ChangelogManager',
-            'MoodleManager',
-            'PeopleManager',
-            'Superadmin',
-            'Curriculum',
-            'CurriculumManager',
-            'PositionsManager'
-        ];
+        return ScoolRole::ROLES;
 
     }
 }
@@ -845,9 +824,8 @@ if (!function_exists('initialize_tenant_roles_and_permissions')) {
         }
 
         $roles = scool_roles();
-
         foreach ($roles as $role) {
-            Role::firstOrCreate(['name' => $role]);
+            Role::firstOrCreate(['id' => $role['id'], 'name' => $role['name']]);
         }
 
         $rolePermissions = scool_roles_permissions();

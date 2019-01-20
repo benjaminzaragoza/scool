@@ -4,6 +4,7 @@ namespace Tests\Feature\Tenants\Api\Users;
 
 use App\Models\Person;
 use App\Models\User;
+use App\Models\UserType;
 use Config;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
@@ -53,7 +54,7 @@ class UserPersonControllerTest extends BaseTenantTest
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
             'email' =>'pepepardo@jeans.com',
-            'user_type_id' => 1,
+            'user_type_id' => UserType::TEACHER,
             'role' => 'UsersManager'
         ]);
 
@@ -79,6 +80,53 @@ class UserPersonControllerTest extends BaseTenantTest
         $this->assertEquals('Jeans',$person->sn2);
 
         $this->assertTrue($user->hasRole('UsersManager'));
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function user_manager_can_add_teacher()
+    {
+        $manager = create(User::class);
+        $this->actingAs($manager,'api');
+        $role = Role::firstOrCreate([
+            'name' => 'UsersManager',
+            'guard_name' => 'web'
+        ]);
+        Config::set('auth.providers.users.model', User::class);
+        $manager->assignRole($role);
+
+        $response = $this->json('POST','/api/v1/user_person',[
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'email' =>'pepepardo@jeans.com',
+            'user_type_id' => UserType::TEACHER,
+        ]);
+
+        $response->assertSuccessful();
+
+        $result = json_decode($response->getContent());
+
+        $this->assertNotNull($result->id);
+        $this->assertEquals('Pepe Pardo Jeans',$result->name);
+        $this->assertEquals('Pepe',$result->givenName);
+        $this->assertEquals('Pardo',$result->sn1);
+        $this->assertEquals('Jeans',$result->sn2);
+        $this->assertEquals('pepepardo@jeans.com',$result->email);
+        $this->assertEquals('Ay',$result->hash_id);
+
+        $user = User::findByName('Pepe Pardo Jeans');
+        $this->assertNotNull($user);
+        $this->assertEquals('pepepardo@jeans.com',$user->email);
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $person = Person::where('user_id',$user->id)->first();
+        $this->assertEquals('Pepe',$person->givenName);
+        $this->assertEquals('Pardo',$person->sn1);
+        $this->assertEquals('Jeans',$person->sn2);
+
+        $this->assertTrue($user->hasRole('Teacher'));
     }
 
     /**

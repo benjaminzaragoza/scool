@@ -19,6 +19,24 @@ class UserType extends Model
     const ADMINISTRATIVE = 4;
     const FAMILY = 5;
 
+    const ROLES = [
+        UserType::TEACHER => [
+
+        ],
+        UserType::STUDENT => [
+
+        ],
+        UserType::JANITOR => [
+
+        ],
+        UserType::ADMINISTRATIVE => [
+
+        ],
+        UserType::FAMILY => [
+
+        ],
+    ];
+
     const TYPES = [
         UserType::TEACHER => 'teacher',
         UserType::STUDENT => 'student',
