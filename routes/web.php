@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Auth\Tenant\LoginController;
 use App\Http\Controllers\Tenant\HomeController;
+use App\Http\Controllers\Tenant\UserPhotoController;
 use App\Http\Controllers\Tenant\Web\CurriculumController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
@@ -113,8 +114,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         Route::get('/pending_teacher/{teacher}', 'Tenant\PendingTeachersController@show');
 
         // User photos
-        Route::get('/user/{hashuser}/photo','Tenant\UserPhotoController@show')->name('user.photo.show');
-        Route::get('/user/{hashuser}/photo/download', 'Tenant\UserPhotoController@download')->name('user.photo.download');
+        Route::get('/user/{hashuser}/photo','\\' . UserPhotoController::class . '@show')->name('user.photo.show');
+        Route::get('/user/{hashuser}/photo/download', '\\' . UserPhotoController::class . '@download')->name('user.photo.download');
 
         //File upload to storage
         Route::post('file/upload/to/{storage}', 'Tenant\UploadFileToStorageController@store');

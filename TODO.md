@@ -7,6 +7,11 @@
 
 # Users management
 
+AVATARS:
+- [ ] NO es refresquen si ja estaven cachejats
+  - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
+  - [ ] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
+
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
 - [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
