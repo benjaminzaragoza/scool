@@ -1,51 +1,41 @@
 <template>
-    <span>
-        <v-tooltip bottom>
-          <v-btn slot="activator" icon small color="success" flat class="ma-0" @click="dialog=true">
-            <v-icon small>edit</v-icon>
-          </v-btn>
-          <span>Modificar els rols</span>
-        </v-tooltip>
-        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
-            <v-card>
-                <v-toolbar dark color="primary">
-                    <v-btn icon dark @click.native="dialog = false">
-                        <v-icon>close</v-icon>
-                    </v-btn>
-                    <v-toolbar-title>Gestionar rols</v-toolbar-title>
-                    <v-spacer></v-spacer>
-                    <v-toolbar-items>
-                        <v-btn dark flat @click.native="dialog = false"><v-icon small>close</v-icon> Sortir</v-btn>
-                    </v-toolbar-items>
-                </v-toolbar>
-                <v-container grid-list-lg fluid>
-                <v-layout row wrap>
-                     <v-flex xs12>
-                         <v-card class="elevation-3">
-                            <v-card-text>
-                                 Escolliu un rol/s per afegir a l'usuari
-                                <user-avatar :hash-id="user.hashid"
-                                      :alt="user.name"
-                                      :user="user"
-                                ></user-avatar>
-                                <span class="font-weight-medium">{{ user.name }}</span>:
-                                 <roles-select :exclude="user.roles" v-model="selectedRoles"></roles-select>
-                                 Rols actuals de l'usuari:
-                                 <user-roles-list :user="user" :roles="user.roles"></user-roles-list>
-                            </v-card-text>
-                             <v-card-actions>
-                                 <v-btn color="primary" @click="add" :disabled="loading || this.selectedRoles.length === 0" :loading="loading">
-                                     <v-icon>add</v-icon> Afegir</v-btn>
-                                 <v-btn flat @click="dialog = false">
-                                     <v-icon small>close</v-icon> Sortir</v-btn>
-                             </v-card-actions>
-                         </v-card>
-                    </v-flex>
-                </v-layout>
-                </v-container>
-            </v-card>
-        </v-dialog>
-    </span>
+    <v-card>
+        <v-toolbar dark color="primary">
+            <v-btn icon dark @click.native="close">
+                <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Gestionar rols</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn dark flat @click.native="close"><v-icon small>close</v-icon> Sortir</v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+        <v-container grid-list-lg fluid>
+        <v-layout row wrap>
+             <v-flex xs12>
+                 <v-card class="elevation-3">
+                    <v-card-text>
+                         Escolliu un rol/s per afegir a l'usuari
+                        <user-avatar :hash-id="user.hashid"
+                              :alt="user.name"
+                              :user="user"
+                        ></user-avatar>
+                        <span class="font-weight-medium">{{ user.name }}</span>:
+                         <roles-select :exclude="user.roles" v-model="selectedRoles"></roles-select>
+                         Rols actuals de l'usuari:
+                         <user-roles-list :user="user" :roles="user.roles"></user-roles-list>
+                    </v-card-text>
+                     <v-card-actions>
+                         <v-btn color="primary" @click="add" :disabled="loading || this.selectedRoles.length === 0" :loading="loading">
+                             <v-icon>add</v-icon> Afegir</v-btn>
+                         <v-btn flat @click="close">
+                             <v-icon small>close</v-icon> Sortir</v-btn>
+                     </v-card-actions>
+                 </v-card>
+            </v-flex>
+        </v-layout>
+        </v-container>
+    </v-card>
 </template>
 
 <script>
@@ -62,7 +52,6 @@ export default {
   },
   data () {
     return {
-      dialog: false,
       loading: false,
       selectedRoles: []
     }
@@ -74,6 +63,9 @@ export default {
     }
   },
   methods: {
+    close () {
+      this.$emit('close')
+    },
     add () {
       this.loading = true
       window.axios.post('/api/v1/user/' + this.user.id + '/role/multiple', {

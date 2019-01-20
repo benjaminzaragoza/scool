@@ -7,6 +7,10 @@
 
 # Users management
 
+USER ADD
+- [ ] Fase assignar rols
+  - [ ] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
+
 Changelog:
 - [ ] Igual que incidències logar totes les accions
 
@@ -24,8 +28,19 @@ Operacions massives:
   - [ ] Teacher/Alumne/Profe sense compte Google
   - [ ] Teacher/Alumne/Profe sense compte Moodle
   - [ ] Teacher/Alumne/Profe sense compte Ldap
+  
+Operacions:
+- [ ] Check individual d'un usuari
+- [ ] Diàleg canviar paraula de pas
+  - [ ] Poder posar una paraula de pas
+  - [ ] Generador de paraules de pas i enviar per correu electrònic
+  - [ ] Forçar canvi de paraula de pas al següent login  
    
 RELACIONS AMB ALTRES ENTITATS/MODELS
+
+
+ROLS:
+- [X] Dialeg que permeti gestionar rols d'un usuaris concret (afegir i treure rols)
 
 PERSONES:
 - Nom:

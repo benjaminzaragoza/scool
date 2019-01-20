@@ -138,7 +138,7 @@
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <user-roles-manage :user="props.item" @added="refresh(false)" @removed="refresh(false)"></user-roles-manage>
+                                        <user-roles-manage-button :user="props.item" @added="refresh(false)" @removed="refresh(false)"></user-roles-manage-button>
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ formatRoles(props.item) }}</span>
                                             <span>{{ formatRoles(props.item) }}</span>
@@ -224,7 +224,7 @@ import ManageMoodleUserIcon from '../moodle/ManageMoodleUserIcon'
 import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
 import UserFiltersSelect from './UserFiltersSelect'
-import UserRolesManage from './roles/UserRolesManage'
+import UserRolesManageButton from './roles/UserRolesManageButton'
 
 var filterNames = [
   {
@@ -361,7 +361,7 @@ export default {
     'user-types-select': UserTypesSelect,
     'roles-select': RolesSelect,
     'user-filters-select': UserFiltersSelect,
-    'user-roles-manage': UserRolesManage
+    'user-roles-manage-button': UserRolesManageButton
   },
   data () {
     return {

@@ -131,7 +131,7 @@
                 <v-stepper-step :complete="step > 4" step="4">Assignar rol</v-stepper-step>
 
                 <v-stepper-content step="4">
-                    TODO assignar rol
+
                     <v-btn @click="close">Tancar</v-btn>
                     <v-btn color="error" @click="step = 2">Endarrera</v-btn>
                     <v-btn color="error" @click="step = 4">Següent</v-btn>
