@@ -4,7 +4,12 @@ namespace App\Listeners;
 
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+/**
+ * Class SendEmailVerificationNotification
+ * @package App\Listeners
+ */
 class SendEmailVerificationNotification
 {
     /**
@@ -25,6 +30,8 @@ class SendEmailVerificationNotification
      */
     public function handle($event)
     {
-        $event->user->sendEmailVerificationNotification();
+        if ($event->user instanceof MustVerifyEmail && ! $event->user->hasVerifiedEmail()) {
+            $event->user->sendEmailVerificationNotification();
+        }
     }
 }

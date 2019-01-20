@@ -65,7 +65,6 @@
 import UserAvatar from '../ui/UserAvatarComponent'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
-import * as actions from '../../store/action-types'
 
 export default {
   name: 'UserNameManage',
@@ -146,20 +145,20 @@ export default {
     save () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.creating = true
+        this.loading = true
         window.axios.put('/api/v1/user_person/' + this.user.id, {
           givenName: this.givenName,
           sn1: this.sn1,
           sn2: this.sn2,
           name: this.fullname
         }).then(response => {
-          this.creating = false
+          this.loading = false
           this.$v.$reset()
           this.$emit('saved', this.user)
         }).catch(error => {
           if (error && error.status === 422) {
             this.errors = error.data && error.data.errors
-            this.creating = false
+            this.loading = false
             this.$snackbar.showError(error)
           }
         })

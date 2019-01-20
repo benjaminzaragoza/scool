@@ -69,6 +69,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Listeners\SendEmailVerificationNotification as ScoolSendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Lab404\Impersonate\Events\LeaveImpersonation;
 use Lab404\Impersonate\Events\TakeImpersonation;
@@ -207,7 +208,7 @@ class EventServiceProvider extends ServiceProvider
 
         // USER EMAIL UPDATED
         UserEmailUpdated::class => [
-            SendEmailVerificationNotification::class
+            ScoolSendEmailVerificationNotification::class
         ]
     ];
 

@@ -116,7 +116,8 @@
                                             <span>{{ props.item.name }}</span>
                                         </v-tooltip>
                                     </td>
-                                    <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="text-xs-left cell" style="max-width: 175px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <user-edit-email :user="props.item" @saved="refresh(false)"></user-edit-email>
                                         <v-tooltip bottom>
                                             <span slot="activator">{{ props.item.email }}</span>
                                             <span>{{ props.item.email }}</span>
@@ -227,6 +228,7 @@ import RolesSelect from './roles/RolesSelect'
 import UserFiltersSelect from './UserFiltersSelect'
 import UserRolesManageButton from './roles/UserRolesManageButton'
 import UserEditName from './UserEditName'
+import UserEditEmail from './UserEditEmail'
 
 var filterNames = [
   {
@@ -364,7 +366,8 @@ export default {
     'roles-select': RolesSelect,
     'user-filters-select': UserFiltersSelect,
     'user-roles-manage-button': UserRolesManageButton,
-    'user-edit-name': UserEditName
+    'user-edit-name': UserEditName,
+    'user-edit-email': UserEditEmail
   },
   data () {
     return {
