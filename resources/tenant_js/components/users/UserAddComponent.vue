@@ -52,6 +52,7 @@
                                                            :editable="true"
                                                            :removable="true"
                                                            size="64"
+                                                           @input="avatarSaved"
                                               ></user-avatar>
                                              <span class="ml-2">Avatar (feu clic per canviar-lo)</span>
                                              <v-divider class="mt-3 mb-3"></v-divider>
@@ -199,6 +200,9 @@ export default {
     moodleUserCreated (user) {
       this.moodleUser = user
       this.$emit('moodleUsercreated', user)
+    },
+    avatarSaved (path) {
+      this.$emit('avatarSaved', path)
     }
   }
 }

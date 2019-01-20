@@ -8,9 +8,9 @@
 # Users management
 
 AVATARS:
-- [ ] NO es refresquen si ja estaven cachejats
+- [X] NO es refresquen si ja estaven cachejats
   - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
-  - [ ] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
+  - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
 
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
@@ -25,6 +25,7 @@ USER ADD WIZARD
     - [ ] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou user
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
+- [ ] Refrescar la llista d'usuari cada cop que es modifica un avatar
 - [ ] Crear usuari de Moodle
 - [ ] Estils:
   - [ ] Botons rojos no!
