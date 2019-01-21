@@ -1,6 +1,24 @@
+# Mòdul de tasques
+
+- [ ] Moure Aplicació tasques a scool
+  - [ ] Seria un bon complement per a tenir una llista de tasques pendents per projectes
+  - [ ] Obrir un projecte per maninfo 
+
 # USERS MOBILE
 
 - [ ] Confirmar mòbil -> enviar SMS
+  - [ ] Mobile confirmation by entering a code send my SMS
+  - [ ] Codis tenen un periode màxim de vàlidesa 
+  - [ ] Laravel notifications: Nexmo
+   - https://laravel.com/docs/5.7/notifications#sms-notifications
+  - [ ] stur@iesebre.com és l'usuari utilitzo amb el meu mòbil personal
+  - Crèdit de 2e per fer proves i paareix text
+- [ ] Shorten links:
+  - [ ] https://zapier.com/blog/best-url-shorteners/
+  - [ ] Hi ha serveis però una opció es instal·lar un de propi tipus https://scool.cat/r/HASH
+  - [ ] POlr: https://polrproject.org/?utm_source=zapier.com&utm_medium=referral&utm_campaign=zapier
+     - [ ] Utilitza Larave Lumen 
+     - [ ] Fer quelcom similar. redireccions Laravel per convertir en URLS curtes URLS llarges
 
 # Mòdul de comandes
 
