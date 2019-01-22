@@ -6,6 +6,11 @@
 
 # USERS MOBILE
 
+- [ ] Recollida del mòbil
+  - [ ] Només mòbils españols +34 davant
+  - [ ] Configurable el codi de pai
+  - [ ] Guardar tots els telefons a base de dades amb 34 davant (no cal +)
+  - [ ] Vuetify input file masks
 - [ ] Confirmar mòbil -> enviar SMS
   - [ ] Mobile confirmation by entering a code send my SMS
   - [ ] Codis tenen un periode màxim de vàlidesa 

@@ -850,4 +850,15 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     {
         return '<a target="_blank" href="/' . $this->apiURI . '/' . $this->id . '">' . $this->name . '</a>';
     }
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->mobile;
+    }
 }
