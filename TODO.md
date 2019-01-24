@@ -141,12 +141,12 @@ USUARI MOODLE
 - [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
   - [X] Mostrar l'usuari de moodle associat
   - [X] Editar/canviar l'usuari de Moodle associat
-  - [ ] Sincronitzar l'usuari de Moodle associat
+  - [X] Sincronitzar l'usuari de Moodle associat
   - [X] Dessasociar l'usuari de Moodle associat
   - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
   - [X] Associar Usuaris Moodle
     - [X] Al associar un usuari s'hauria de modificar el idnumber de Moodle i posar el id del usuari local associat
-  - [ ] Afegir a la relació el fullname i el email de Moodle
+  - [ ] Afegir a la relació el username de Moodle
   - [X] dessasociar usuari de Moodle
     - [X] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
   - [X] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle

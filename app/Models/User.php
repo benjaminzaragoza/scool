@@ -749,6 +749,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'corporativeEmail' => optional($this->googleUser)->google_email,
             'googleId' => optional($this->googleUser)->google_id,
             'moodleId' => optional($this->moodleUser)->moodle_id,
+            'moodleUsername' => optional($this->moodleUser)->moodle_username,
             'email_verified_at' => $this->email_verified_at,
             'mobile_verified_at' => $this->mobile_verified_at,
             'mobile' => $this->mobile,

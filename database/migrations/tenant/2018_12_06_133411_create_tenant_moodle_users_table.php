@@ -17,6 +17,7 @@ class CreateTenantMoodleUsersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable()->unique();
             $table->string('moodle_id')->unique();
+            $table->string('moodle_username')->unique();
             $table->timestamps();
         });
     }

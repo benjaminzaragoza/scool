@@ -877,7 +877,8 @@ class UserTest extends TestCase
 
         MoodleUser::create([
             'user_id' => $user->id,
-            'moodle_id' => '789'
+            'moodle_id' => '789',
+            'moodle_username' => $user->email
         ]);
 
         $person = Person::create([
@@ -912,6 +913,7 @@ class UserTest extends TestCase
         $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);
         $this->assertEquals('789',$mappedUser['moodleId']);
+        $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['moodleUsername']);
         $this->assertNull($mappedUser['email_verified_at']);
         $this->assertNull($mappedUser['mobile_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);

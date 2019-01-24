@@ -38,6 +38,7 @@ class UserMoodleController extends Controller
         $moodleUser = MoodleUser::create([
             'user_id' => $user->id,
             'moodle_id' => $request->moodle_id,
+            'moodle_username' => $user->email,
         ]);
         event(new MoodleUserAssociated($user, $moodleUser));
     }

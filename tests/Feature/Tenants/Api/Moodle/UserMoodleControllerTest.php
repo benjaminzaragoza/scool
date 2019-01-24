@@ -48,11 +48,12 @@ class UserMoodleControllerTest extends BaseTenantTest
         $response = $this->json('POST', '/api/v1/user/' . $user->id . '/moodle', [
             'moodle_id' => 89
         ]);
+
+        $response->assertSuccessful();
         Event::assertDispatched(MoodleUserAssociated::class, function ($e) use ($user) {
             return $e->user->id === $user->id &&
-                   $e->moodleUser->moodle_id === 89;
+                $e->moodleUser->moodle_id === 89;
         });
-        $response->assertSuccessful();
 
         $user = $user->fresh();
         $this->assertEquals($user->id, $user->moodleUser->user_id);
@@ -104,18 +105,19 @@ class UserMoodleControllerTest extends BaseTenantTest
 
         MoodleUser::create([
             'user_id' => $user->id,
-            'moodle_id' => 89
+            'moodle_id' => 89,
+            'moodle_username' => $user->email
         ]);
 
         $this->assertEquals(89,$user->moodleUser->moodle_id);
         Event::fake();
         $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/moodle');
+
+        $response->assertSuccessful();
         Event::assertDispatched(MoodleUserUnAssociated::class, function ($e) use ($user) {
             return $e->user->id === $user->id &&
-                   intval($e->moodleUser) === 89;
+                intval($e->moodleUser) === 89;
         });
-        $response->assertSuccessful();
-
         $user = $user->fresh();
         $this->assertNull($user->moodleUser);
     }
@@ -132,7 +134,8 @@ class UserMoodleControllerTest extends BaseTenantTest
 
         MoodleUser::create([
             'user_id' => $user->id,
-            'moodle_id' => 89
+            'moodle_id' => 89,
+            'moodle_username' => $user->email
         ]);
 
         $this->assertEquals(89,$user->moodleUser->moodle_id);
@@ -152,7 +155,8 @@ class UserMoodleControllerTest extends BaseTenantTest
 
         MoodleUser::create([
             'user_id' => $user->id,
-            'moodle_id' => 89
+            'moodle_id' => 89,
+            'moodle_username' => $user->email
         ]);
 
         $this->assertEquals(89,$user->moodleUser->moodle_id);
