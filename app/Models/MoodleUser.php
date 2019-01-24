@@ -198,4 +198,36 @@ class MoodleUser extends Model
         return $result;
     }
 
+    /**
+     * Sync.
+     *
+     * @param $userId
+     * @param User $user
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function sync($userId, User $user)
+    {
+        $functionname = 'core_user_update_users';
+        $serverurl = config('moodle.url') . config('moodle.uri') .  '?wstoken=' . config('moodle.token') . '&wsfunction='.$functionname . '&moodlewsrestformat=json';
+        $client = new Client();
+        $email = $user->corporativeEmail ? $user->corporativeEmail : $user->email;
+        $user = [
+            'id' => $userId,
+            'username' => $user->email,
+            'firstname' => optional($user->person)->givenName,
+            'lastname' => $user->lastname(),
+            'email' => $email,
+            'idnumber' => $user->id
+        ];
+        $params = [
+            'users' => [ $user ]
+        ];
+        $res = $client->request('POST', $serverurl, [
+            'form_params' => $params
+        ]);
+        $result = (string) $res->getBody();
+        if (str_contains($result,'"exception"')) throw new \Exception($result);
+        return $result;
+    }
 }

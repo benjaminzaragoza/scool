@@ -155,7 +155,7 @@
                                                 <span>{{ props.item.moodleId }}</span>
                                             </v-tooltip>
                                         </span>
-                                        <manage-moodle-user-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-moodle-user-icon>
+                                        <manage-moodle-user-icon :user="props.item" @unassociated="refresh(false)" @associated="refresh(false)"></manage-moodle-user-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>

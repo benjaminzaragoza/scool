@@ -135,9 +135,12 @@ PERSONES:
   - [X] Edició inline del nom
     - [X] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
 USUARI MOODLE
+- [ ] Operació sync
+  - [ ] Actualitzi també dades personals Moodle? (adreces etc)
+  - [ ] Al crear usuari a partir usuari local si estas dades estan disponibles crear-les
 - [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
   - [X] Mostrar l'usuari de moodle associat
-  - [ ] Editar/canviar l'usuari de Moodle associat
+  - [X] Editar/canviar l'usuari de Moodle associat
   - [ ] Sincronitzar l'usuari de Moodle associat
   - [X] Dessasociar l'usuari de Moodle associat
   - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users

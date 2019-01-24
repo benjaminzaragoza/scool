@@ -130,6 +130,7 @@
                 <template slot="items" slot-scope="{item: user}">
                     <tr :id="'user_row_' + user.id">
                         <td class="text-xs-left" v-text="user.id"></td>
+                        <td class="text-xs-left" v-text="user.idnumber"></td>
                         <td class="text-xs-left">
                             <template v-if="user.idnumber">
                                 <template v-if="localUsers[user.idnumber]">
@@ -289,6 +290,7 @@ export default {
     headers () {
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
+      headers.push({ text: 'IdNumber', align: 'left', value: 'idnumber', width: '1%' })
       headers.push({ text: 'Usuari local', align: 'left', value: 'idnumber', width: '1%' })
       headers.push({ text: 'Usuari', align: 'left', value: 'username' })
       headers.push({ text: 'Correu electrònic', align: 'left', value: 'email' })
