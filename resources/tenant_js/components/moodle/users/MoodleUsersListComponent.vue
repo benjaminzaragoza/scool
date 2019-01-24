@@ -1,6 +1,6 @@
 <template>
     <span>
-        <v-toolbar color="blue darken-3">
+        <v-toolbar color="primary" dense>
             <v-menu bottom>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -24,7 +24,7 @@
                     class="white--text"
                     icon="settings"
                     v-model="settingsDialog"
-                    color="blue darken-3"
+                    color="primary"
                     title="Canviar la configuració moodle">
                         <moodle-settings module="moodle" @close="settingsDialog = false"></moodle-settings>
             </fullscreen-dialog>

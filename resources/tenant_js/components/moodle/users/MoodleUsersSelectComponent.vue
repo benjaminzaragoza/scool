@@ -1,16 +1,16 @@
 <template>
     <v-autocomplete
-            :items="googleUsers"
-            v-model="googleUser"
+            :items="moodleUsers"
+            v-model="moodleUser"
             hint="Utilitzeu la funcionalitat autocompletar per buscar usuaris..."
-            label="Escolliu un usuari de Google"
+            label="Escolliu un usuari de Moodle"
             persistent-hint
             prepend-icon="mdi-city"
             clearable
             chips
-            item-text="fullName"
+            item-text="fullname"
             return-object
-            @change="$emit('selected',googleUser)"
+            @change="$emit('selected',moodleUser)"
     >
         <template
                 slot="selection"
@@ -23,10 +23,10 @@
                     @input="remove(data.item)"
             >
                 <v-avatar>
-                    <img v-if="data.item.thumbnailPhotoUrl" :src="data.item.thumbnailPhotoUrl">
+                    <img v-if="data.item.profileimageurl" :src="data.item.profileimageurl">
                     <img v-else src="/img/default.png" alt="photo per defecte">
                 </v-avatar>
-                {{ data.item.primaryEmail }}
+                {{ data.item.fullname }} | {{ data.item.email }}
             </v-chip>
         </template>
         <template
@@ -36,14 +36,14 @@
             <template v-if="typeof data.item !== 'object'">
                 <v-list-tile-content v-text="data.item"></v-list-tile-content>
             </template>
-            <template v-else>
+            <template>
                 <v-list-tile-avatar>
-                    <img v-if="data.item.thumbnailPhotoUrl" :src="data.item.thumbnailPhotoUrl">
+                    <img v-if="data.item.profileimageurl" :src="data.item.profileimageurl">
                     <img v-else src="/img/default.png" alt="photo per defecte">
                 </v-list-tile-avatar>
                 <v-list-tile-content>
-                    <v-list-tile-title v-html="data.item.fullName"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.primaryEmail"></v-list-tile-sub-title>
+                    <v-list-tile-title v-html="data.item.fullname"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
                 </v-list-tile-content>
             </template>
         </template>
@@ -54,12 +54,12 @@
 import axios from 'axios'
 
 export default {
-  name: 'GoogleUsersSelectComponent',
+  name: 'MoodleUsersSelectComponent',
   data () {
     return {
       isEditing: true,
-      googleUser: null,
-      googleUsers: []
+      moodleUser: null,
+      moodleUsers: []
     }
   },
   props: {
@@ -70,27 +70,27 @@ export default {
   },
   methods: {
     remove () {
-      this.googleUser = null
+      this.moodleUser = null
     },
     refresh () {
-      this.getGoogleUsers(true)
+      this.getMoodleUsers(true)
     },
     selectCurrentUser () {
       if (this.user.corporativeEmail) {
-        this.googleUser = this.googleUsers.find(googleUser => {
-          return googleUser.primaryEmail === this.user.corporativeEmail
+        this.moodleUser = this.moodleUsers.find(moodleUser => {
+          return moodleUser.primaryEmail === this.user.corporativeEmail
         })
-        if (!this.googleUser) this.$snackbar.showError('El compte ' + this.user.corporativeEmail + ' no existeix a Google')
+        if (!this.moodleUser) this.$snackbar.showError('El compte ' + this.user.corporativeEmail + ' no existeix a Moodle')
       }
     },
-    getGoogleUsers (refresh) {
+    getMoodleUsers (refresh) {
       refresh = refresh || false
       this.refreshing = true
-      let url = '/api/v1/gsuite/users'
+      let url = '/api/v1/moodle/users'
       if (!refresh) url = url + '?cache=true'
       axios.get(url).then(response => {
         this.refreshing = false
-        this.googleUsers = response.data
+        this.moodleUsers = response.data
         this.selectCurrentUser()
       }).catch(error => {
         this.refreshing = false
@@ -100,7 +100,7 @@ export default {
     }
   },
   created () {
-    this.googleUsers = this.getGoogleUsers()
+    this.moodleUsers = this.getMoodleUsers()
   }
 }
 </script>

@@ -134,6 +134,10 @@ PERSONES:
     - [X] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
 USUARI MOODLE
 - [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
+  - [ ] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
+  - [ ] Associar/dessasociar Usuaris Moodle
+  - [ ] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
+  
 USUARI DE GOOGLE
 - [ ] Mostrar acció permeti navegar (link) a l'usuari de Google associat
   - [ ] Show usuaris Google existeix? Crear

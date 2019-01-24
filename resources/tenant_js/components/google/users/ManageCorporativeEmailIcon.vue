@@ -26,7 +26,9 @@
                     <v-toolbar-title>Editar correu corporatiu</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click.native="dialog = false">Sortir</v-btn>
+                        <v-btn dark flat @click.native="dialog = false">
+                            <v-icon class="mr-2">exit_to_app</v-icon> Sortir
+                        </v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-container grid-list-lg fluid>
@@ -54,8 +56,10 @@
                                 </p>
                             </v-card-text>
                             <v-card-actions>
+                                <v-btn flat @click="dialog = false">
+                                    <v-icon class="mr-2">exit_to_app</v-icon> Sortir
+                                </v-btn>
                                 <v-btn color="primary" @click="associate" :disabled="associating || !selectedGoogleuser" :loading="associating">Associar</v-btn>
-                                <v-btn flat @click="dialog = false">Sortir</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-flex>

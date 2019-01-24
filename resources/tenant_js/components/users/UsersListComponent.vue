@@ -149,7 +149,7 @@
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell">
-                                        <manage-moodle-user-icon :user="props.item"></manage-moodle-user-icon>
+                                        <manage-moodle-user-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-moodle-user-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
                                     <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
@@ -236,7 +236,7 @@ import UsersDeleteMultiple from './UsersDeleteMultiple'
 import UserEmails from './UserEmailsComponent'
 import UserDelete from './UserDeleteComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
-import ManageMoodleUserIcon from '../moodle/ManageMoodleUserIcon'
+import ManageMoodleUserIcon from '../moodle/users/ManageMoodleUserIcon'
 import UserTypesSelect from './UserTypesSelect'
 import RolesSelect from './roles/RolesSelect'
 import UserFiltersSelect from './UserFiltersSelect'
