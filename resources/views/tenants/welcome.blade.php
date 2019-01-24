@@ -8,6 +8,7 @@
     <meta name="user" content="{{ json_encode( [ 'name' => 'guest']) }}">
     <meta name="Laravel" content="{{ json_encode([ 'app' => config('app')]) }}">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,800,900" rel="stylesheet">
     <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <style>
         [v-cloak] > * { display:none; }
@@ -46,17 +47,28 @@
         <v-content>
             <section>
                 <v-parallax src="/img/iesebre/cellular-education-classroom-159844.jpeg" height="600">
+                </v-parallax>
+                <div class="overlay" style="
+                    position:absolute;
+                    left:0;
+                    top:0;
+                    background: rgba(0,0,0,.5);
+                    width:100%;
+                    height:600px;
+">
+
                     <v-layout
                             column
                             align-center
                             justify-center
                             class="white--text"
+                            style="height: 100%;"
                     >
                         <h1 class="white--text text--ligthen-2 mb-2 display-4 text-xs-center font-weight-bold"
-                            style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .4)"
+                            style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .4);font-family: 'Montserrat', sans-serif !important; z-index: 10;"
                         >Estudiar més fàcil que mai</h1>
                         <div class="display-1 mb-3 text-xs-center"
-                             style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .4)">Benvinguts a la web de l'Institut de l'Ebre</div>
+                             style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .6)">Benvinguts a la web de l'Institut de l'Ebre</div>
                         <v-btn
                                 class="accent darken-1 mt-5 pl-5 pr-5 pt-4 pb-4 headline elevation-5"
                                 style="border-radius: 10px;"
@@ -67,7 +79,7 @@
                             Inscriu'te
                         </v-btn>
                     </v-layout>
-                </v-parallax>
+                </div>
             </section>
             <div id="transp">
 
