@@ -25,8 +25,10 @@ class MoodleUsersController extends Controller
      */
     public function index(MoodleUserIndex $request)
     {
-        if (!$request->cache) Cache::forget('google_users');
-        return MoodleUser::all();
+        if (!$request->cache) Cache::forget('scool_moodle_users');
+        return Cache::rememberForever('scool_moodle_users', function () {
+            return MoodleUser::all();
+        });
     }
 
     /**
