@@ -16,6 +16,8 @@ use App\Events\Incidents\IncidentReplyUpdated;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
 use App\Events\Incidents\IncidentSubjectUpdated;
+use App\Events\Moodle\MoodleUserAssociated;
+use App\Events\Moodle\MoodleUserUnAssociated;
 use App\Events\Positions\PositionUserStored;
 use App\Events\Studies\StudyTagAdded;
 use App\Events\Studies\StudyTagRemoved;
@@ -56,6 +58,8 @@ use App\Listeners\Incidents\SendIncidentReplyAddedEmail;
 use App\Listeners\Incidents\SendIncidentSubjectUpdateEmail;
 use App\Listeners\Incidents\SendIncidentTagAddedEmail;
 use App\Listeners\Incidents\SendIncidentTagRemovedEmail;
+use App\Listeners\Incidents\UnsetMoodleUserIdNumber;
+use App\Listeners\Incidents\UpdateMoodleUserIdNumber;
 use App\Listeners\Positions\SendPositionAssignedEmail;
 use App\Listeners\SetLastLoginInfo;
 use App\Listeners\SendGoogleInvalidUserNotificationReceivedEmail;
@@ -209,6 +213,14 @@ class EventServiceProvider extends ServiceProvider
         // USER EMAIL UPDATED
         UserEmailUpdated::class => [
             ScoolSendEmailVerificationNotification::class
+        ],
+
+        // MOODLE USER ASSOCIATED/UNASSOCIATED
+        MoodleUserAssociated::class => [
+            UpdateMoodleUserIdNumber::class
+        ],
+        MoodleUserUnAssociated::class => [
+            UnsetMoodleUserIdNumber::class
         ]
     ];
 
