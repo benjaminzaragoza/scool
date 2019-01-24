@@ -20,15 +20,17 @@ class MoodleUserUnAssociated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $user;
+    public $moodleUser;
 
     /**
      * MoodleUserAssociated constructor.
      * @param $user
      * @param $moodleUser
      */
-    public function __construct($user)
+    public function __construct($user,$moodleUser)
     {
         $this->user = $user;
+        $this->moodleUser = $moodleUser;
     }
 
     /**

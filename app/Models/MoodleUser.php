@@ -170,4 +170,32 @@ class MoodleUser extends Model
         return $result;
     }
 
+    /**
+     * Change password.
+     *
+     * @param $userId
+     * @param $idnumber
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function change_idnumber($userId, $idnumber)
+    {
+        $functionname = 'core_user_update_users';
+        $serverurl = config('moodle.url') . config('moodle.uri') .  '?wstoken=' . config('moodle.token') . '&wsfunction='.$functionname . '&moodlewsrestformat=json';
+        $client = new Client();
+        $user = [
+            'id' => $userId,
+            'idnumber' => $idnumber
+        ];
+        $params = [
+            'users' => [ $user ]
+        ];
+        $res = $client->request('POST', $serverurl, [
+            'form_params' => $params
+        ]);
+        $result = (string) $res->getBody();
+        if (str_contains($result,'"exception"')) throw new \Exception($result);
+        return $result;
+    }
+
 }

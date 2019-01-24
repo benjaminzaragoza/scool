@@ -88,8 +88,9 @@ class UserMoodleController extends Controller
      */
     public function destroy(UnassociateMoodleUserToUser $request, $tenant, $userId)
     {
-        $moodleUser = MoodleUser::where('user_id', $userId)->first()->delete();
-        event(new MoodleUserUnAssociated(User::findOrFail($userId)));
+        $moodleUser = MoodleUser::where('user_id', $userId)->firstOrFail();
+        $moodleUser->delete();
+        event(new MoodleUserUnAssociated(User::findOrFail($userId), $moodleUser->moodle_id));
 
     }
 }

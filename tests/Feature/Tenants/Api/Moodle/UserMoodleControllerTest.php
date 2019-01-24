@@ -111,7 +111,8 @@ class UserMoodleControllerTest extends BaseTenantTest
         Event::fake();
         $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/moodle');
         Event::assertDispatched(MoodleUserUnAssociated::class, function ($e) use ($user) {
-            return $e->user->id === $user->id;
+            return $e->user->id === $user->id &&
+                   intval($e->moodleUser) === 89;
         });
         $response->assertSuccessful();
 
