@@ -77,7 +77,7 @@ USER DELETE:
 
 USER ADD WIZARD
 - [X] Crear usuari de Moodle
-  - [ ] El nou usuari de Moodle ha de tenir el idnumber igual a l'usuari local del sistema
+  - [X] El nou usuari de Moodle ha de tenir el idnumber igual a l'usuari local del sistema
 - [ ] Tema password i sincronització dels diferents password
   - [ ] Moodle no permet passar hash del password -> S'ha de canviar password de Moodle en el moment es canvia password local
   - [ ] Com gestionar-lo?

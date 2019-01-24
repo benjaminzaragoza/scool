@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 
+use App\Events\Moodle\MoodleUserAssociated;
+use App\Events\Moodle\MoodleUserUnAssociated;
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Moodle\Users\AssociateMoodleUserToUser;
 use App\Http\Requests\Moodle\Users\UnassociateMoodleUserToUser;
@@ -32,15 +34,16 @@ class UserMoodleController extends Controller
         if  ($existing = MoodleUser::where('user_id',$user->id)->first()) {
             MoodleUser::destroy($existing->id);
         }
-        MoodleUser::create([
+        $moodleUser = MoodleUser::create([
             'user_id' => $user->id,
             'moodle_id' => $request->moodle_id,
         ]);
+        event(new MoodleUserAssociated($user, $moodleUser));
     }
 
     // TODO
 //    /**
-//     * Update.
+//     * Update. (sync)
 //     *
 //     * @param EditMoodleUsers $request
 //     * @param $tenant
@@ -85,6 +88,8 @@ class UserMoodleController extends Controller
      */
     public function destroy(UnassociateMoodleUserToUser $request, $tenant, $userId)
     {
-        MoodleUser::where('user_id', $userId)->first()->delete();
+        $moodleUser = MoodleUser::where('user_id', $userId)->first()->delete();
+        event(new MoodleUserUnAssociated(User::findOrFail($userId)));
+
     }
 }

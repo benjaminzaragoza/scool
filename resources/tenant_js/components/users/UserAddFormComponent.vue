@@ -339,7 +339,8 @@ export default {
           'firstname': this.givenName,
           'lastname': this.getFamilyName(this.sn1, this.sn2),
           'email': this.email,
-          'createpassword': true
+          'createpassword': true,
+          'idnumber': this.user.id
         }
       }).then((response) => {
         this.associateMoodleUserToLocalUser(response.data)

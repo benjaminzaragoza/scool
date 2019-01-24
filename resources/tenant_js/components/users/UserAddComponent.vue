@@ -187,6 +187,7 @@ export default {
       this.dialog = false
       this.user = null
       this.googleUser = null
+      this.moodleUser = null
     },
     userCreated (user) {
       this.user = user

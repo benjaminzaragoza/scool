@@ -2,8 +2,11 @@
 
 namespace Tests\Feature\Tenants;
 
+use App\Events\Moodle\MoodleUserAssociated;
+use App\Events\Moodle\MoodleUserUnAssociated;
 use App\Models\MoodleUser;
 use App\Models\User;
+use Event;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -41,11 +44,14 @@ class UserMoodleControllerTest extends BaseTenantTest
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com'
         ]);
-
+        Event::fake();
         $response = $this->json('POST', '/api/v1/user/' . $user->id . '/moodle', [
             'moodle_id' => 89
         ]);
-
+        Event::assertDispatched(MoodleUserAssociated::class, function ($e) use ($user) {
+            return $e->user->id === $user->id &&
+                   $e->moodleUser->moodle_id === 89;
+        });
         $response->assertSuccessful();
 
         $user = $user->fresh();
@@ -57,6 +63,7 @@ class UserMoodleControllerTest extends BaseTenantTest
     public function can_associate_moodle_user_to_user_validation()
     {
         $this->loginAsUsersManager('api');
+
 
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
@@ -101,9 +108,11 @@ class UserMoodleControllerTest extends BaseTenantTest
         ]);
 
         $this->assertEquals(89,$user->moodleUser->moodle_id);
-
+        Event::fake();
         $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/moodle');
-
+        Event::assertDispatched(MoodleUserUnAssociated::class, function ($e) use ($user) {
+            return $e->user->id === $user->id;
+        });
         $response->assertSuccessful();
 
         $user = $user->fresh();
