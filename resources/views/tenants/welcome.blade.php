@@ -25,6 +25,13 @@
     </style>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2680C2"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/appIcon2/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/appIcon2/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/appIcon2/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/appIcon2/favicon-16x16.png">
+    <link rel="mask-icon" href="/img/appIcon2/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 </head>
 <body>
 <div id="app">
