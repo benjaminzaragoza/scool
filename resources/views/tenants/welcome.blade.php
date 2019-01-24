@@ -30,6 +30,7 @@
     <v-app light v-cloak>
         <snackbar></snackbar>
         <v-toolbar class="white">
+            <img src="/img/iesebre/logo.png" alt="Institut de l'Ebre" height="50">
             <v-toolbar-title>{{ config('app.name') }}</v-toolbar-title>
             @if (Route::has('login') && ! Auth::check() )
                 <v-spacer></v-spacer>
@@ -44,28 +45,33 @@
         </v-toolbar>
         <v-content>
             <section>
-                <v-parallax src="/img/tenant/hero.jpeg" height="600">
+                <v-parallax src="/img/iesebre/cellular-education-classroom-159844.jpeg" height="600">
                     <v-layout
                             column
                             align-center
                             justify-center
                             class="white--text"
                     >
-                        <img src="/img/tenant/vuetify.png" alt="Vuetify.js" height="200">
-                        <h1 class="white--text mb-2 display-1 text-xs-center">Parallax Template</h1>
-                        <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
+                        <h1 class="white--text text--ligthen-2 mb-2 display-4 text-xs-center font-weight-bold"
+                            style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .4)"
+                        >Estudiar més fàcil que mai</h1>
+                        <div class="display-1 mb-3 text-xs-center"
+                             style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .4)">Benvinguts a la web de l'Institut de l'Ebre</div>
                         <v-btn
-                                class="blue lighten-2 mt-5"
+                                class="accent darken-1 mt-5 pl-5 pr-5 pt-4 pb-4 headline elevation-5"
+                                style="border-radius: 10px;"
                                 dark
                                 large
                                 href="/home"
                         >
-                            Get Started
+                            Inscriu'te
                         </v-btn>
                     </v-layout>
                 </v-parallax>
             </section>
+            <div id="transp">
 
+            </div>
             <section>
                 <v-layout
                         column
