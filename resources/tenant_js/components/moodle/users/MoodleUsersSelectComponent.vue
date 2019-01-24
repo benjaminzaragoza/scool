@@ -76,11 +76,11 @@ export default {
       this.getMoodleUsers(true)
     },
     selectCurrentUser () {
-      if (this.user.corporativeEmail) {
+      if (this.user.moodleId) {
         this.moodleUser = this.moodleUsers.find(moodleUser => {
-          return moodleUser.primaryEmail === this.user.corporativeEmail
+          return parseInt(moodleUser.id) === parseInt(this.user.moodleId)
         })
-        if (!this.moodleUser) this.$snackbar.showError('El compte ' + this.user.corporativeEmail + ' no existeix a Moodle')
+        if (!this.moodleUser) this.$snackbar.showError('El compte ' + this.user.moodleId + ' no existeix a Moodle')
       }
     },
     getMoodleUsers (refresh) {

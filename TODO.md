@@ -134,19 +134,23 @@ PERSONES:
     - [X] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
 USUARI MOODLE
 - [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
-  - Mostrar l'usuari de moodle associat
+  - [X] Mostrar l'usuari de moodle associat
+  - [ ] Editar/canviar l'usuari de Moodle associat
+  - [ ] Sincronitzar l'usuari de Moodle associat
+  - [X] Dessasociar l'usuari de Moodle associat
   - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
   - [ ] Associar/dessasociar Usuaris Moodle
   - [ ] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
-  
+  - [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
 USUARI DE GOOGLE
-- [ ] Mostrar acció permeti navegar (link) a l'usuari de Google associat
-  - [ ] Show usuaris Google existeix? Crear
-  - [ ] Mostrar només (o disabled sinó) els usuaris no tinguin camp user google associat
+- [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
+- [X] Mostrar acció permeti navegar (link) a l'usuari de Google associat
+  - [X] Show usuaris Google existeix? Crear
+  - [X] FILTRE: Mostrar només (o disabled sinó) els usuaris no tinguin camp user google associat
 - [X] CorporativeEmail
   - [X] Falta o no funciona operació Afegir usuari corporatiu
-    - Hi ha un 404 d'una crida API: https://iesebre.scool.test/api/v1/gsuite/users/search 404
-    - [ ] Funcionalitat ajudar a buscar posible usuari Google associat
+    - [X] És correcte. Hi ha un 404 d'una crida API: https://iesebre.scool.test/api/v1/gsuite/users/search 404
+    - [X] Funcionalitat ajudar a buscar posible usuari Google associat
   - [X] Dessasociar usuari Google a usuari
   - [X] Sincronitzar
   - [X] Editar -> Canviar l'usuari corporatiu associat

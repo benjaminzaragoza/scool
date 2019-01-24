@@ -5,10 +5,12 @@
                 <v-btn icon class="ma-0 pa-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
                     <v-icon small color="teal">edit</v-icon>
                 </v-btn>
-                <v-btn icon class="ma-0 pa-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser">
+                <v-btn icon class="ma-0 pa-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser"
+                    :loading="unassociating" :disabled="unassociating">
                     <v-icon small color="red">remove</v-icon>
                 </v-btn>
-                <v-btn icon class="ma-0 pa-0" title="Sincronitzar" @click.native.stop="sync">
+                <v-btn icon class="ma-0 pa-0" title="Sincronitzar" @click.native.stop="sync"
+                       :loading="syncing" :disabled="syncing">
                     <v-icon small color="teal">sync</v-icon>
                 </v-btn>
             </div>

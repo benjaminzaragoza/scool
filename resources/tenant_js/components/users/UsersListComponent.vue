@@ -149,6 +149,12 @@
                                         </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell">
+                                        <span v-if="props.item.moodleId">
+                                            <v-tooltip bottom>
+                                                <span slot="activator"><a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + props.item.moodleId">{{ props.item.moodleId }}</a></span>
+                                                <span>{{ props.item.moodleId }}</span>
+                                            </v-tooltip>
+                                        </span>
                                         <manage-moodle-user-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-moodle-user-icon>
                                     </td>
                                     <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>

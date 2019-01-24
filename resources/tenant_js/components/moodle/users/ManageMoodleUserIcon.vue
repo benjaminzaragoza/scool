@@ -1,6 +1,21 @@
 <template>
-    <span>
-        <v-tooltip bottom>
+    <span class="ma-0 pa-0">
+        <template v-if="user.moodleId">
+            <div class="mt-0 mb-0 pa-0" style="width: fit-content;">
+                <v-btn icon class="ma-0 pa-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
+                    <v-icon small color="teal">edit</v-icon>
+                </v-btn>
+                <v-btn icon class="ma-0 pa-0" title="Dessasignar email corporatiu" @click.native.stop="unassignMoodleUser"
+                       :loading="unassociating" :disabled="unassociating">
+                    <v-icon small color="red">remove</v-icon>
+                </v-btn>
+                <v-btn icon class="ma-0 pa-0" title="Sincronitzar" @click.native.stop="sync"
+                       :loading="syncing" :disabled="syncing">
+                    <v-icon small color="teal">sync</v-icon>
+                </v-btn>
+            </div>
+        </template>
+        <v-tooltip bottom v-else>
             <v-btn slot="activator" small icon class="mx-0 pa-0" @click.native.stop="dialog=true">
                 <v-icon small color="primary">add</v-icon>
             </v-btn>
@@ -69,7 +84,9 @@ export default {
       dialog: false,
       associating: false,
       refreshing: false,
-      selectedMoodleuser: null
+      selectedMoodleuser: null,
+      unassociating: false,
+      syncing: false
     }
   },
   props: {
@@ -79,14 +96,40 @@ export default {
     }
   },
   methods: {
+    sync () {
+      this.syncing = true
+      window.axios.put('/api/v1/user/' + this.user.id + '/moodle').then(response => {
+        this.$snackbar.showMessage('Usuari Moodle sincronitzat correctament')
+        this.syncing = false
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.syncing = false
+      })
+    },
+    select (moodleUser) {
+      this.selectedMoodleuser = moodleUser
+    },
     refresh () {
       this.$refs.select.refresh()
+    },
+    openDialog () {
+      this.dialog = true
+    },
+    unassignMoodleUser () {
+      this.unassociating = true
+      window.axios.delete('/api/v1/user/' + this.user.id + '/moodle').then(response => {
+        this.$snackbar.showMessage('Usuari Moodle desassociat correctament')
+        this.$emit('unassociated')
+        this.unassociating = false
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.unassociating = false
+      })
     },
     associate () {
       this.associating = true
       window.axios.post('/api/v1/user/' + this.user.id + '/moodle', {
-        google_id: this.selectedMoodleuser.id,
-        google_email: this.selectedMoodleuser.primaryEmail
+        moodle_id: this.selectedMoodleuser.id
       }).then(response => {
         this.$snackbar.showMessage('Usuari Moodle associat correctament')
         this.$emit('associated', response.data)
