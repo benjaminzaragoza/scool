@@ -27,7 +27,7 @@ class MoodleUsersController extends Controller
     {
         if (!$request->cache) Cache::forget('scool_moodle_users');
         return Cache::rememberForever('scool_moodle_users', function () {
-            return MoodleUser::all();
+            return collect(MoodleUser::all());
         });
     }
 

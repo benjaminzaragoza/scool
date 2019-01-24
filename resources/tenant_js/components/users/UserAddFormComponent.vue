@@ -75,6 +75,10 @@
                             v-model="mobile"
                             required
                             tabindex="6"
+                            mask="###-###-###"
+                            placeholder="666777888"
+                            hint="9 números seguits sense codi de país"
+                            :return-masked-value="false"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md2>
