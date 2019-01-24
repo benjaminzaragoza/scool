@@ -11,6 +11,7 @@ use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Location;
+use App\Models\MoodleUser;
 use App\Models\Person;
 use App\Models\Position;
 use App\Models\Province;
@@ -874,6 +875,11 @@ class UserTest extends TestCase
             'google_email' => 'pepepardo@iesebre.com',
         ]);
 
+        MoodleUser::create([
+            'user_id' => $user->id,
+            'moodle_id' => '789'
+        ]);
+
         $person = Person::create([
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -905,6 +911,7 @@ class UserTest extends TestCase
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['email']);
         $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);
+        $this->assertEquals('789',$mappedUser['moodleId']);
         $this->assertNull($mappedUser['email_verified_at']);
         $this->assertNull($mappedUser['mobile_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
