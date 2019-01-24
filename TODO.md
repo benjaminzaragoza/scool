@@ -142,12 +142,12 @@ USUARI MOODLE
   - [X] Dessasociar l'usuari de Moodle associat
   - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
   - [X] Associar Usuaris Moodle
-    - [ ] Al associar un usuari s'hauria de modificar el idnumber de Moodle i posar el id del usuari local associat
+    - [X] Al associar un usuari s'hauria de modificar el idnumber de Moodle i posar el id del usuari local associat
   - [ ] Afegir a la relació el fullname i el email de Moodle
   - [X] dessasociar usuari de Moodle
-    - [ ] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
-  - [ ] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
-  - [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
+    - [X] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
+  - [X] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
+    - [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
 USUARI DE GOOGLE
 - [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
 - [X] Mostrar acció permeti navegar (link) a l'usuari de Google associat

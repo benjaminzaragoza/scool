@@ -36,6 +36,10 @@ export default {
     localUsers: {
       type: Object,
       required: true
+    },
+    action: {
+      type: String,
+      default: null
     }
   },
   watch: {
@@ -47,6 +51,9 @@ export default {
     add (user) {
       this.dataUsers.push(user)
     }
+  },
+  created () {
+    if (this.action && this.action === 'create') this.dialog = true
   }
 }
 </script>

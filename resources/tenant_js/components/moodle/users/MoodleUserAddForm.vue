@@ -372,6 +372,10 @@ export default {
         this.checking = false
       })
     }
+  },
+  created () {
+    const userId = parseInt((new URLSearchParams(window.location.search)).get('user'))
+    this.user = this.localUsers.find(user => user.id === userId)
   }
 }
 </script>

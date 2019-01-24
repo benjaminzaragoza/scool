@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Incidents;
+namespace App\Listeners\Moodle;
 
 use App;
 use App\Jobs\LogIncidentEvent;

@@ -24,6 +24,7 @@ class MoodleUsersController extends Controller
      */
     public function index(MoodleIndex $request)
     {
+        $action = $request->action;
         $users = Cache::rememberForever('scool_moodle_users', function () {
             return collect(MoodleUser::all());
         });
@@ -32,6 +33,6 @@ class MoodleUsersController extends Controller
         $localUsers  = $localUsers->mapWithKeys(function ($user) {
             return [$user['id'] => $user];
         });
-        return view('tenants.moodle.index', compact('users','localUsers'));
+        return view('tenants.moodle.index', compact('users','localUsers','action'));
     }
 }

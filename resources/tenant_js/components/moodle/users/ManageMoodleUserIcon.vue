@@ -51,7 +51,7 @@
                                 <v-subheader class="pa-0">Escolliu un compte de Moodle que vulgueu associar a l'usuari {{ user.name }} ({{ user.email }})</v-subheader>
                                 <moodle-users-select :user="user" v-if="dialog" ref="select" @selected="select"></moodle-users-select>
                                 <p class="mt-3">
-                                    <v-icon>add</v-icon><a href="https://iesebre.scool.test/moodle/users?action=create" target="_blank">Crear un nou compte de Moodle</a>.
+                                    <v-icon>add</v-icon><a :href="'https://iesebre.scool.test/moodle/users?action=create&user=' + user.id" target="_blank">Crear un nou compte de Moodle</a>.
                                         Un cop creat el nou compte, torneu a aquesta pàgina i actualitzeu prement el boto:
                                     <v-btn icon @click="refresh" :loading="refreshing" :disabled="refreshing">
                                         <v-icon>refresh</v-icon>
