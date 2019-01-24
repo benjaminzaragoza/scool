@@ -1,7 +1,10 @@
 <template>
-    <v-btn icon class="mx-0" @click="remove">
-        <v-icon color="error">delete</v-icon>
-    </v-btn>
+    <v-tooltip bottom>
+        <v-btn slot="activator" icon class="mx-0" @click="remove">
+            <v-icon color="error">delete</v-icon>
+        </v-btn>
+        <span>Eliminar l'usuari</span>
+    </v-tooltip>
 </template>
 
 <script>

@@ -1,8 +1,11 @@
 <template>
     <span>
-        <v-btn small icon class="mx-0 pa-0" title="Afegiu usuari de Moodle" @click.native.stop="dialog=true">
-            <v-icon small color="primary">add</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+            <v-btn slot="activator" small icon class="mx-0 pa-0" @click.native.stop="dialog=true">
+                <v-icon small color="primary">add</v-icon>
+            </v-btn>
+            <span>Afegiu usuari de Moodle</span>
+        </v-tooltip>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
             <v-card>
                 <v-toolbar dark color="primary">
