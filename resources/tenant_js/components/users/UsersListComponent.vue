@@ -123,7 +123,12 @@
                                             <span>{{ props.item.email }}</span>
                                         </v-tooltip>
                                     </td>
-                                    <td class="text-xs-center cell">{{ formatBoolean(props.item.email_verified_at) }}</td>
+                                    <td class="text-xs-center cell">
+                                        <v-tooltip bottom>
+                                            <span slot="activator">{{ formatBoolean(props.item.email_verified_at) }}</span>
+                                            <span v-if="props.item.email_verified_at">{{ props.item.email_verified_at }}</span>
+                                            <span v-else>{{ formatBoolean(props.item.email_verified_at) }}</span>
+                                        </v-tooltip>
                                     <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         <span v-if="props.item.corporativeEmail">
                                             <v-tooltip bottom>
@@ -134,7 +139,14 @@
                                         <manage-corporative-email-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                     </td>
                                     <td class="text-xs-left cell">
-                                        <inline-text-field-edit-dialog v-model="props.item" field="mobile" label="Mòbil" @save="refresh"></inline-text-field-edit-dialog>
+                                        <inline-text-field-edit-dialog mask="###-###-###" placeholder="666777895" hint="9 números seguits sense codi de país" v-model="props.item" field="mobile" label="Mòbil" @save="refresh"></inline-text-field-edit-dialog>
+                                    </td>
+                                    <td class="text-xs-center cell">
+                                        <v-tooltip bottom>
+                                            <span slot="activator">{{ formatBoolean(props.item.mobile_verified_at) }}</span>
+                                            <span v-if="props.item.mobile_verified_at">{{ props.item.mobile_verified_at }}</span>
+                                            <span v-else>{{ formatBoolean(props.item.mobile_verified_at) }}</span>
+                                        </v-tooltip>
                                     </td>
                                     <td class="text-xs-left cell">
                                         <manage-moodle-user-icon :user="props.item"></manage-moodle-user-icon>
@@ -371,7 +383,7 @@ export default {
     'user-roles-manage-button': UserRolesManageButton,
     'user-edit-name': UserEditName,
     'user-edit-email': UserEditEmail,
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
   },
   data () {
     return {
@@ -389,6 +401,7 @@ export default {
         { text: 'Verificat', value: 'email_verified_at' },
         { text: 'Email corporatiu', value: 'corporativeEmail' },
         { text: 'Mòbil', value: 'mobile' },
+        { text: 'Verificat', value: 'mobile_verified_at' },
         { text: 'Moodle', value: 'moodle' },
         { text: 'Tipus', value: 'user_type_id' },
         { text: 'Admin', value: 'admin' },

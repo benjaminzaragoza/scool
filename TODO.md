@@ -1,16 +1,31 @@
+# Correu electrònics Inbound
+- https://www.mailgun.com/inbound-routing
+- https://docs.beyondco.de/laravel-mailbox/1.0/drivers/drivers.html#sendgrid
+
+Idea:
+- [ ] Permetre crear incidències enviant un email
+- [ ] Només els usuaris registrats i amb permisos (Incidents rol i email coincideixi amb el d'un usuari) podran enviar emails
+- [ ] Un cop enviat email es rep un email de confirmació, fins que no es confirma no es crea la incidència
+- [ ] Subject serà el del email i la descripció el contingut
+
 # Mòdul de tasques
 
 - [ ] Moure Aplicació tasques a scool
   - [ ] Seria un bon complement per a tenir una llista de tasques pendents per projectes
   - [ ] Obrir un projecte per maninfo 
 
-# USERS MOBILE
+# USERS MOBILE (Mòbil dels usuaris)
 
 - [ ] Recollida del mòbil
-  - [ ] Només mòbils españols +34 davant
-  - [ ] Configurable el codi de pai
-  - [ ] Guardar tots els telefons a base de dades amb 34 davant (no cal +)
-  - [ ] Vuetify input file masks
+  - [ ] No es poden tenir dos usuaris amb el mateix mòbil
+  - [ ] Al canviar el mòbil s'ha de posar el nou mòbil com a no confirmat
+  - [ ] Poder esborrar telefòn 
+  - [X] Widget amb un boto + per afegir mòbil a un usuari 
+  - [ ] Només mòbils locals (en el nostre cas codi país +34 davant)
+  - [ ] Configurable el codi de pais
+  - [X] Els números de mòbils s'agafen sense codi país i se presuposa el país segons configuració
+  - [ ] Guardar tots els telefons a base de dades sense 34 davant (no cal +)
+  - [X] Vuetify input file masks
 - [ ] Confirmar mòbil -> enviar SMS
   - [ ] Mobile confirmation by entering a code send my SMS
   - [ ] Codis tenen un periode màxim de vàlidesa 
@@ -33,6 +48,11 @@
 - [ ] Cal validació de comandes abans enviar administradora?
 
 # Users management
+
+Troubleshooting:
+- [X] Botó afegir email corporatiu: executa un search a la api. Si previàment hi ha cache el search és ràpid sinó 
+tarda molt en obrir-se
+  - [X] No hi ha cap indicador que estigui treballant -> sembla que no funcioni
 
 Dades personals
 - [ ] Card/formulari creació/modificació de dades personals d'un usuari concret

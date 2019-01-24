@@ -13,7 +13,8 @@
                 </v-btn>
             </div>
         </template>
-        <v-btn small v-else icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser">
+        <v-btn small v-else icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser"
+            :loading="searching" :disabled="searching">
             <v-icon color="primary" small>add</v-icon>
         </v-btn>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
@@ -75,6 +76,7 @@ export default {
   },
   data () {
     return {
+      searching: false,
       dialog: false,
       refreshing: false,
       associating: false,
@@ -112,11 +114,13 @@ export default {
       })
     },
     addGoogleUser () {
+      this.searching = true
       window.axios.post('/api/v1/gsuite/users/search', {
         employeeId: this.user.id,
         personalEmail: this.user.email,
         mobile: this.user.mobile
       }).then(response => {
+        this.searching = false
         window.axios.post('/api/v1/user/' + this.user.id + '/gsuite', {
           google_id: response.data.id,
           google_email: response.data.primaryEmail
@@ -127,6 +131,7 @@ export default {
           this.$snackbar.showError(error)
         })
       }).catch(error => {
+        this.searching = false
         console.log(error)
         this.dialog = true
       })

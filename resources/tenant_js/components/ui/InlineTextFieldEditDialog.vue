@@ -1,18 +1,25 @@
 <template>
-    <v-edit-dialog
-            :return-value.sync="value"
-            lazy
-            @save="save"
-    > <span :class="className" :title="value">{{ value }}</span>
-        <v-text-field
-                v-focus
-                v-model="value"
-                slot="input"
-                :label="this.label"
-                single-line
-                :rules="valueRules"
-        ></v-text-field>
-    </v-edit-dialog>
+    <span>
+        <v-edit-dialog
+                :return-value.sync="value"
+                lazy
+                @save="save"
+        > <span :class="className" :title="value">{{ value }}</span>
+            <v-text-field
+                    v-focus
+                    v-model="value"
+                    slot="input"
+                    :label="this.label"
+                    single-line
+                    :rules="valueRules"
+                    :return-masked-value="returnMaskedValue"
+                    :mask="mask"
+                    :placeholder="placeholder"
+                    :hint="hint"
+            ></v-text-field>
+            <v-btn v-if="!value" icon slot="default" small flat color="primary"><v-icon small>add</v-icon></v-btn>
+        </v-edit-dialog>
+    </span>
 </template>
 
 <script>
@@ -27,6 +34,7 @@ export default {
   },
   data () {
     return {
+      prova: false,
       valueRules: [
         v => !!v || ' is required'
       ],
@@ -38,6 +46,22 @@ export default {
     event: 'save'
   },
   props: {
+    returnMaskedValue: {
+      type: Boolean,
+      default: false
+    },
+    mask: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    hint: {
+      type: String,
+      default: ''
+    },
     className: {
       type: String,
       default: 'limit'
@@ -64,6 +88,10 @@ export default {
     }
   },
   methods: {
+    open () {
+      console.log('TODO')
+      this.prova = true
+    },
     url () {
       return '/api/v1/' + this.object.api_uri + '/' + this.object.id + '/' + this.field
     },
