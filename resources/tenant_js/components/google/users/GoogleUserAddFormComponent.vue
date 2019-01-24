@@ -92,17 +92,10 @@ export default {
   props: {
     existing: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   computed: {
-    clear () {
-      this.givenName = ''
-      this.primaryEmail = ''
-      this.familyName = ''
-      this.mobile = ''
-      this.secondaryEmail = ''
-    },
     givenNameErrors () {
       const givenNameErrors = []
       if (!this.$v.givenName.$dirty) return givenNameErrors
@@ -133,9 +126,18 @@ export default {
     }
   },
   methods: {
+    clear () {
+      this.givenName = ''
+      this.primaryEmail = ''
+      this.familyName = ''
+      this.mobile = ''
+      this.secondaryEmail = ''
+    },
     fetchUsers () {
       axios.get('/api/v1/users').then(response => {
         this.users = response.data
+        const userId = parseInt((new URLSearchParams(window.location.search)).get('user'))
+        if (userId) this.user = this.users.find(user => user.id === userId)
       }).catch(error => {
         this.showError(error)
       })
@@ -162,6 +164,10 @@ export default {
         this.$v.$touch()
       }
     }
+  },
+  created () {
+    const userId = parseInt((new URLSearchParams(window.location.search)).get('user'))
+    if (userId) this.newUser = false
   }
 }
 </script>

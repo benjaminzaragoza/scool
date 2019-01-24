@@ -147,9 +147,9 @@ USUARI MOODLE
   - [X] dessasociar usuari de Moodle
     - [X] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
   - [X] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
-    - [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
+    - [X] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
 USUARI DE GOOGLE
-- [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
+- [X] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
 - [X] Mostrar acció permeti navegar (link) a l'usuari de Google associat
   - [X] Show usuaris Google existeix? Crear
   - [X] FILTRE: Mostrar només (o disabled sinó) els usuaris no tinguin camp user google associat
