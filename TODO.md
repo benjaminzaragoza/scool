@@ -76,6 +76,8 @@ USER DELETE:
 - [ ] Proteccions contra errors: usuaris protegits no es puguin esborrar    
 
 USER ADD WIZARD
+- [X] Crear usuari de Moodle
+  - [ ] El nou usuari de Moodle ha de tenir el idnumber igual a l'usuari local del sistema
 - [ ] Tema password i sincronització dels diferents password
   - [ ] Moodle no permet passar hash del password -> S'ha de canviar password de Moodle en el moment es canvia password local
   - [ ] Com gestionar-lo?
@@ -93,7 +95,7 @@ USER ADD WIZARD
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou user
 - [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
 - [X] Refrescar la llista d'usuari cada cop que es modifica un avatar
-- [X] Crear usuari de Moodle
+
 
 AVATARS:
 - [X] NO es refresquen si ja estaven cachejats
@@ -139,7 +141,11 @@ USUARI MOODLE
   - [ ] Sincronitzar l'usuari de Moodle associat
   - [X] Dessasociar l'usuari de Moodle associat
   - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
-  - [ ] Associar/dessasociar Usuaris Moodle
+  - [X] Associar Usuaris Moodle
+    - [ ] Al associar un usuari s'hauria de modificar el idnumber de Moodle i posar el id del usuari local associat
+  - [ ] Afegir a la relació el fullname i el email de Moodle
+  - [X] dessasociar usuari de Moodle
+    - [ ] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
   - [ ] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
   - [ ] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
 USUARI DE GOOGLE
