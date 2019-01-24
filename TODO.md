@@ -1,3 +1,24 @@
+# LANDING PAGE
+
+Millores interfície
+- Formulari de registre no cal fullscreen en pantalla completa
+- CTA: Incloure un camp email per recollir el email as soon as possible
+
+Seccions:
+- Per a tota la comunitat:
+  - Usuaris: Tres principals i un Altres agrupi la resta
+- Curriculum
+  - Accés a les pàgines públiques amb el currículum del centre  
+- Creat utilitzant l'eina scool  
+- Formulari de contacte
+  - Envia email a email predefinit  
+
+Footer:
+- Copyright
+- FAQ
+- Contacte
+- Legal
+
 # Correu electrònics Inbound
 - https://www.mailgun.com/inbound-routing
 - https://docs.beyondco.de/laravel-mailbox/1.0/drivers/drivers.html#sendgrid
