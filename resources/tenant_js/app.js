@@ -12,7 +12,10 @@ import * as mutations from './store/mutation-types'
 import snackbar from './plugins/snackbar'
 import permissions from './plugins/permissions'
 import confirm from './plugins/confirm/index.js'
-
+import 'font-awesome/css/font-awesome.min.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -222,7 +225,14 @@ window.Vue.use(window.Vuetify, {
   }
 })
 window.Vue.use(FullCalendar)
-
+window.Vue.use(Vuetify, {
+  iconfont: 'fa4'
+})
+// Vue.component('font-awesome-icon', FontAwesomeIcon) // Register component globally
+// library.add(fas) // Include needed icons.
+// Vue.use(Vuetify, {
+//   iconfont: 'faSvg'
+// })
 if (window.user) {
   store.commit(mutations.USER, window.user)
   store.commit(mutations.LOGGED, true)
