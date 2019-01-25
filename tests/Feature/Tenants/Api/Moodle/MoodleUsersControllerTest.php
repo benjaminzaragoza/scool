@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Tenants\Api\Incidents;
 
+use App\Events\Moodle\MoodleUserCreated;
 use App\Models\User;
 use App\Models\MoodleUser;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
 use Illuminate\Contracts\Console\Kernel;
@@ -87,8 +89,12 @@ class MoodleUsersControllerTest extends BaseTenantTest {
                 'password' => '123456'
            ]
         ];
+        Event::fake();
         $response =  $this->json('POST','/api/v1/moodle/users', $params);
         $response->assertSuccessful();
+        Event::assertDispatched(MoodleUserCreated::class, function ($e) use ($params) {
+            return $e->moodleUser->username === $params['user']['username'];
+        });
         $result = json_decode($response->getContent());
         $moddleUser = MoodleUser::get('usuariesborrar18@gmail.com');
         $this->assertNotNull($moddleUser);

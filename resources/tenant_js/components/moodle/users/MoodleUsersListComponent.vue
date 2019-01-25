@@ -325,7 +325,7 @@ export default {
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
       headers.push({ text: 'IdNum', align: 'left', value: 'idnumber', width: '1%' })
       headers.push({ text: 'Usuari local', align: 'left', value: 'idnumber', width: '1%' })
-      headers.push({ text: 'Usuari', align: 'left', value: 'username' })
+      headers.push({ text: 'Usuari Moodle', align: 'left', value: 'username' })
       headers.push({ text: 'Correu electrònic', align: 'left', value: 'email' })
       headers.push({ text: 'Nom', align: 'left', value: 'firstname' })
       headers.push({ text: 'Cognoms', align: 'left', value: 'lastname' })

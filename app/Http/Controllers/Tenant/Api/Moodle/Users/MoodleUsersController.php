@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 
+use App\Events\Moodle\MoodleUserCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserDestroy;
 use App\Http\Requests\Moodle\Users\MoodleUserIndex;
@@ -42,7 +43,9 @@ class MoodleUsersController extends Controller
     {
         $result = MoodleUser::store($request->user);
         Cache::forget('scool_moodle_users');
-        return json_encode(MoodleUser::get($result->username));
+        $moodleUser = MoodleUser::get($result->username);
+        event(new MoodleUserCreated($moodleUser));
+        return json_encode($moodleUser);
     }
 
     /**
