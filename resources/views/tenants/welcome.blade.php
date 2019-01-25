@@ -83,7 +83,7 @@
                                 large
                                 href="/home"
                         >
-                            Inscriu'te
+                            Entra
                         </v-btn>
                     </v-layout>
                 </div>

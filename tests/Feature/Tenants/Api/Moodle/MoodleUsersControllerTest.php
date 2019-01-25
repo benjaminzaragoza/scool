@@ -130,8 +130,6 @@ class MoodleUsersControllerTest extends BaseTenantTest {
         $response->assertStatus(401);
     }
 
-
-
     /**
      * @test
      */

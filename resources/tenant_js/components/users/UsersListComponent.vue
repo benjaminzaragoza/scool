@@ -7,7 +7,6 @@
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
                         </v-btn>
-
                         <v-list>
                             <v-list-tile href="/users/permissions" target="_blank">
                                 <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
@@ -78,7 +77,7 @@
                             <v-data-table
                                 v-model="selected"
                                 select-all
-                                class="px-0 mb-2 hidden-sm-and-down"
+                                class="px-0 mb-5 hidden-sm-and-down"
                                 :headers="headers"
                                 :items="filteredUsers"
                                 :search="search"
@@ -152,7 +151,7 @@
                                         <span v-if="props.item.moodleId">
                                             <v-tooltip bottom>
                                                 <span slot="activator"><a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + props.item.moodleId">{{ props.item.moodleId }}</a></span>
-                                                <span>{{ props.item.moodleId }}</span>
+                                                <span>{{ props.item.moodleId }} | {{ props.item.moodleUsername }}</span>
                                             </v-tooltip>
                                         </span>
                                         <manage-moodle-user-icon :user="props.item" @unassociated="refresh(false)" @associated="refresh(false)"></manage-moodle-user-icon>

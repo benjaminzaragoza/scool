@@ -5,9 +5,21 @@
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
                 </v-btn>
-                <v-list>
-                    <v-list-tile href="/changelog/module/moodle" target="_blank">
-                        <v-list-tile-title>Mostrar historial incidències (registre de canvis)</v-list-tile-title>
+                 <v-list>
+                     <v-list-tile href="/users" target="_blank">
+                        <v-list-tile-title>Usuaris locals</v-list-tile-title>
+                    </v-list-tile>
+                     <v-list-tile href="/users/permissions" target="_blank">
+                        <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile href="/users/roles" target="_blank">
+                        <v-list-tile-title>Gestionar Rols</v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile href="/google_users" target="_blank">
+                        <v-list-tile-title>Usuaris de Google</v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile href="/ldap_users" target="_blank">
+                        <v-list-tile-title>Usuaris Ldap</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
             </v-menu>
@@ -113,8 +125,13 @@
                   </v-flex>
                 </v-layout>
             </v-card-title>
+            <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
+                <moodle-users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></moodle-users-delete-multiple>
+            </div>
             <v-data-table
-                    class="px-0 mb-2 hidden-sm-and-down"
+                    class="px-0 mb-5 hidden-sm-and-down"
+                    v-model="selected"
+                    select-all
                     :headers="headers"
                     :items="filteredUsers"
                     :search="search"
@@ -127,21 +144,30 @@
                     :loading="refreshing"
             >
                 <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-                <template slot="items" slot-scope="{item: user}">
-                    <tr :id="'user_row_' + user.id">
-                        <td class="text-xs-left" v-text="user.id"></td>
-                        <td class="text-xs-left" v-text="user.idnumber"></td>
-                        <td class="text-xs-left">
-                            <template v-if="user.idnumber">
-                                <template v-if="localUsers[user.idnumber]">
+                <template slot="items" slot-scope="props">
+                    <tr :id="'user_row_' + props.item.id">
+                        <td>
+                            <v-checkbox
+                                    v-model="props.selected"
+                                    primary
+                                    hide-details
+                            ></v-checkbox>
+                        </td>
+                        <td class="text-xs-left cell" v-text="props.item.id"></td>
+                        <td class="text-xs-left cell" v-text="props.item.idnumber"></td>
+                        <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <template v-if="props.item.idnumber">
+                                <template v-if="localUsers[props.item.idnumber]">
                                     <user-avatar
-                                            class="mr-2" :hash-id="localUsers[user.idnumber].hash_id"
-                                            :alt="localUsers[user.idnumber].name"
-                                    ></user-avatar>
-                                    <span :title="localUsers[user.idnumber].name +  ' - ' + user.idnumber">{{ localUsers[user.idnumber].email }}</span>
-
-                                    <template v-if="findLocalUserByEmail(user.email)">
-                                        <template v-if="localUsers[user.idnumber].email !== user.email">
+                                            class="mr-2" :hash-id="localUsers[props.item.idnumber].hash_id"
+                                            :alt="localUsers[props.item.idnumber].name"
+                                    ></user-avatar><br/>
+                                    <v-tooltip bottom>
+                                        <span slot="activator">{{ localUsers[props.item.idnumber].email }}</span>
+                                        <span>{{ props.item.idnumber +  ' - ' + localUsers[props.item.idnumber].name }}</span>
+                                    </v-tooltip>
+                                    <template v-if="findLocalUserByEmail(props.item.email)">
+                                        <template v-if="localUsers[props.item.idnumber].email !== props.item.email">
                                             <v-btn @click="changeLocalUser()"
                                                    icon color="error" title="No coincideixen el usuari local i l'usuari de Moodle. Feu clic per arreglar-ho">
                                                 <v-icon>error</v-icon>
@@ -156,74 +182,75 @@
                                     </template>
                                 </template>
                                 <template v-else>
-                                    <v-btn @click="changeLocalUser()"
+                                    <v-btn small @click="changeLocalUser()"
                                        icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
-                                        <v-icon>add</v-icon>
+                                        <v-icon small>add</v-icon>
                                     </v-btn>
-                                    {{ user.idnumber }}
+                                    {{ props.item.idnumber }}
                                 </template>
                             </template>
                             <template v-else>
                                     Cap
-                                    <v-btn @click="changeLocalUser()"
+                                    <v-btn small @click="changeLocalUser()"
                                         icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
-                                        <v-icon>add</v-icon>
+                                        <v-icon small>add</v-icon>
                                     </v-btn>
                             </template>
-
-                        <td class="text-xs-left">
-                            <v-avatar color="primary" :title="user.fullname">
-                              <img :src="user.profileimageurlsmall" alt="avatar">
+                        </td>
+                        <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <v-avatar color="primary" :title="props.item.fullname" size="32">
+                              <img :src="props.item.profileimageurlsmall" alt="avatar">
                             </v-avatar>
-                            <a :title="user.description" v-text="user.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + user.id" target="_blank"></a>
+                            <a
+                                    :title="props.item.description" v-text="props.item.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + props.item.id"
+                                    target="_blank"></a>
                         </td>
-                        <td class="text-xs-left">
-                            <a target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + user.email">{{ user.email }}</a>
+                        <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                             <v-tooltip bottom>
+                                <a slot="activator" target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + props.item.email">{{ props.item.email }}</a>
+                                <span>{{ props.item.email }}</span>
+                             </v-tooltip>
                         </td>
-                        <td class="text-xs-left">
-                            <template v-if="localUsers[user.idnumber]">
-                                {{ user.firstname }}
-                                <template v-if="user.firstname !== localUsers[user.idnumber].givenName">
-                                    <v-btn icon color="success" title="El nom de l'usuari no concorda. Feu clic per canviar-lo">
-                                        <v-icon>sync</v-icon>
+                        <td class="text-xs-left cell">
+                            <template v-if="localUsers[props.item.idnumber]">
+                                {{ props.item.firstname }}
+                                <template v-if="props.item.firstname !== localUsers[props.item.idnumber].givenName">
+                                    <v-btn small icon color="success" title="El nom de l'usuari no concorda. Feu clic per canviar-lo">
+                                        <v-icon small>sync</v-icon>
                                     </v-btn>
                                 </template>
                             </template>
                             <template v-else>
-                                {{ user.firstname }}
+                                {{ props.item.firstname }}
                             </template>
                         </td>
-                        <td class="text-xs-left">
-                            <template v-if="localUsers[user.idnumber]">
-                                {{ user.lastname }}
-                                <template v-if="user.lastname !== localUsers[user.idnumber].lastname">
-                                    <v-btn icon color="success" title="Els cognoms de l'usuari no concorden. Feu clic per canviar-los">
-                                        <v-icon>sync</v-icon>
+                        <td class="text-xs-left cell">
+                            <template v-if="localUsers[props.item.idnumber]">
+                                {{ props.item.lastname }}
+                                <template v-if="props.item.lastname !== localUsers[props.item.idnumber].lastname">
+                                    <v-btn small icon color="success" title="Els cognoms de l'usuari no concorden. Feu clic per canviar-los">
+                                        <v-icon small>sync</v-icon>
                                     </v-btn>
                                 </template>
                             </template>
                             <template v-else>
-                                {{ user.lastname }}
+                                {{ props.item.lastname }}
                             </template>
                         </td>
-                        <td class="text-xs-left" v-text="user.auth"></td>
-                        <td class="text-xs-left" v-text="user.lang"></td>
-                        <td class="text-xs-left">{{ user.confirmed ? 'Sí' : 'No' }}</td>
-                        <td class="text-xs-left">{{ user.suspended ? 'Sí' : 'No' }}</td>
-                        <td class="text-xs-left">
-                            <timeago v-if="user.lastaccess !== 0" :auto-update="60" :datetime="new Date(user.lastaccess*1000)"></timeago>
+                        <td class="text-xs-left cell" v-text="props.item.auth"></td>
+                        <td class="text-xs-left cell" v-text="props.item.lang"></td>
+                        <td class="text-xs-left cell">{{ props.item.confirmed ? 'Sí' : 'No' }}</td>
+                        <td class="text-xs-left cell">{{ props.item.suspended ? 'Sí' : 'No' }}</td>
+                        <td class="text-xs-left cell">
+                            <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
                             <span v-else>Mai</span>
                         </td>
-                        <td v-text="isUserInSync(user)"></td>
-                        <td class="text-xs-left">
-                            <json-dialog-component icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="user"></json-dialog-component>
-                            <v-btn icon title="Edita l'usuari a Moodle" flat color="success" class="ma-0" :href="'https://www.iesebre.com/moodle/user/editadvanced.php?id=' + user.id + '&course=1&returnto=profile'" target="_blank">
-                                <v-icon>edit</v-icon>
-                            </v-btn>
-                            <v-btn icon title="Eliminar l'usuari" flat color="error" class="ma-0" @click="remove(user)" :disabled="removing === user.id" :loading="removing  === user.id">
-                                <v-icon>remove</v-icon>
-                            </v-btn>
-                            <moodle-user-change-password :user="user"></moodle-user-change-password>
+                        <td v-text="isUserInSync(props.item)"></td>
+                        <td class="text-xs-left cell">
+                            <json-dialog-component btn-class="ma-0" icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="props.item"></json-dialog-component>
+                            <moodle-user-edit-link :user="props.item" class="ma-0"></moodle-user-edit-link>
+                            <moodle-user-remove :user="props.item" class="ma-0"></moodle-user-remove>
+                            <moodle-user-change-password :user="props.item"></moodle-user-change-password>
                         </td>
                     </tr>
                 </template>
@@ -239,6 +266,9 @@ import JsonDialogComponent from '../../ui/JsonDialogComponent'
 import FullScreenDialog from '../../ui/FullScreenDialog'
 import UserAvatar from '../../ui/UserAvatarComponent'
 import MoodleUserChangePassword from './MoodleUserChangePassword'
+import MoodleUserEditLink from './MoodleUserEditLink'
+import MoodleUserRemove from './MoodleUserRemove'
+import MoodleUsersDeleteMultiple from './MoodleUsersDeleteMultiple'
 
 var filters = {
   all: function (incidents) {
@@ -253,13 +283,16 @@ export default {
     'json-dialog-component': JsonDialogComponent,
     'fullscreen-dialog': FullScreenDialog,
     'user-avatar': UserAvatar,
-    'moodle-user-change-password': MoodleUserChangePassword
+    'moodle-user-change-password': MoodleUserChangePassword,
+    'moodle-user-edit-link': MoodleUserEditLink,
+    'moodle-user-remove': MoodleUserRemove,
+    'moodle-users-delete-multiple': MoodleUsersDeleteMultiple
   },
   data () {
     return {
+      selected: [],
       search: '',
       refreshing: false,
-      removing: false,
       filter: 'all',
       dataUsers: this.users,
       settingsDialog: false,
@@ -290,7 +323,7 @@ export default {
     headers () {
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id', width: '1%' })
-      headers.push({ text: 'IdNumber', align: 'left', value: 'idnumber', width: '1%' })
+      headers.push({ text: 'IdNum', align: 'left', value: 'idnumber', width: '1%' })
       headers.push({ text: 'Usuari local', align: 'left', value: 'idnumber', width: '1%' })
       headers.push({ text: 'Usuari', align: 'left', value: 'username' })
       headers.push({ text: 'Correu electrònic', align: 'left', value: 'email' })
@@ -330,21 +363,19 @@ export default {
         this.$snackbar.showError(error)
         this.refreshing = false
       })
-    },
-    async remove (user) {
-      let res = await this.$confirm('Els usuaris esborrar no es poden recuperar.', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
-      if (res) {
-        this.removing = user.id
-        window.axios.delete('/api/v1/moodle/users/' + user.id).then(() => {
-          this.dataUsers.splice(this.dataUsers.indexOf(user), 1)
-          this.$snackbar.showMessage('Usuari esborrat correctament')
-          this.removing = null
-        }).catch(error => {
-          this.$snackbar.showError(error)
-          this.removing = null
-        })
-      }
     }
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 3px 3px !important;
+    }
+    .cell {
+        padding: 3px 3px !important;
+    }
+    table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child) {
+        padding: 0 5px !important;
+    }
+</style>

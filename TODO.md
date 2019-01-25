@@ -1,3 +1,62 @@
+# TODOS finals abans posar explotació
+
+- [ ] Some continuos integration
+- [ ] Activar a explotació les cuas
+  - [ ] Activar alguna eina per saber com funcionen les cues i estar alerta possibles errors
+  - [ ] https://laravel.com/docs/5.7/horizon
+- [ ] Treure botó de Login amb Facebook i Register amb Facebook
+- [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
+- [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)
+ - [ ] Home Superadmin: deixar el que hi ha ara
+ - [ ] Home Profes:
+    - [ ] Mostrar missatge de confirmar email si encara no l'ha confirmat! 
+    - [ ] Incidències pendents de l'usuari?
+    - [ ] Notícies: Aplicació incidències
+    - [ ] Mostrar emails enviats a l'usuari? (Telescope ho fa fer algo similar)
+    - [ ] Mostrar registre de canvis de l'usuari
+- [ ] Icona/logo del centre
+- [ ] Colors del centre
+- [ ] Avatar s'enva fora de la Toolbar
+- [ ] No mostrar icona (campana) notificacions sinó funciona o no hi ha
+- [ ] FONT: Alguns titols surten tallats alguns caràcters com la g o la p (per la part baixa)
+- [ ] Welcome Page: adaptar al centre
+- [ ] DOCS Incidències: https://docs.scool.cat/docs/1.0/incidents
+- [ ] Acabar o no mostrar TODO estadístiques
+- [ ] Acabar o no mostrar TODO exportar a Excel
+- [ ] No mostrar Teacher profile o Acabar-lo
+- [ ] Boto de sortir al costat de l'Avatar que no calgui entrar?
+- [ ] Canviar email ara es pot fer OK -> però hauria de posar el email a no confirmat
+
+# Troubleshooting
+
+- [ ] Esborrar usuaris de Google
+  - [ ] Quan té compte local associada
+  - [ ] Mostrar warning té compte local associada. Si desitja tirar endavant s'eliminara l'associació
+
+# FITXA USUARI/ PROFILE
+
+- [ ] Redisseny de l'estil
+- [ ] URL directa d'accés
+- [ ] Usuaris poden veure la seva fitxa
+- [ ] Admins poden veure fitxes de tothom i users managers també
+- [ ] Test usuaris normals no poden veure fitxa completa usuari
+  - [ ] Fitxa pública:
+  - [ ] Noms i cognoms
+  - [ ] Email corporatiu -> email personal no 
+  - [ ] Avatar|Photo
+  - [ ] Tipus usuari
+- [ ] Dades fitxa completa:
+  - [ ] Les que ja hi han fitxa actual
+  - [ ] Informació comptes externs
+    - [ ] Moodle
+      - [ ] Moodle id, idnumber, nom usuari i resta de dades Moodle
+      - [ ] Accés/link a gestió usuaris Moodle
+      - [ ] Accés/link del usuari a Moodle
+    - [ ] Gsuite/Google User
+      - [ ] Email corporatiu
+      - [ ] Google Id  
+      - [ ] Accés/link del usuari a Google
+      
 # LANDING PAGE
 
 Millores interfície
@@ -70,6 +129,24 @@ Idea:
 
 # Users management
 
+EDIT
+- [ ] Modificar el tipus usuari
+  - [ ] Questions a tenir en compte en la modificació
+     - [ ] Era professor: avisar? o que fer si té assignada una plaça
+     - [ ] Alumne: té matrícules?
+     - [ ] Altres
+
+Gestió de password:
+- [ ] Acció de menú que permeti canviar paraula de pas de l'usuari:
+ - [ ] Aprofitar per també utilitzar-la al perfil de l'usuari
+ - [ ] Switchs si es vol sincronitzar paraules de pas A Ldap/Moodle/Google
+ - [ ] Generador de password aleatori
+ - [ ] Enviar email a l'usuari
+ - [ ] Forçar canvi al pròxim Login
+     
+Changelog:
+- [ ] Igual que incidències logar totes les accions     
+
 Troubleshooting:
 - [X] Botó afegir email corporatiu: executa un search a la api. Si previàment hi ha cache el search és ràpid sinó 
 tarda molt en obrir-se
@@ -85,10 +162,6 @@ EDIT:
 - [X]  Editar l'email name inline a la llsita d'usuaris (datatables). Fet no inline però fet
   - [X] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
 - [X] Modificar el mòbil inline  
-- [ ] Modificar el tipus usuari
-
-Changelog:
-- [ ] Igual que incidències logar totes les accions
 
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
@@ -156,9 +229,8 @@ PERSONES:
   - [X] Edició inline del nom
     - [X] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
 USUARI MOODLE
-- [ ] Operació sync
-  - [ ] Actualitzi també dades personals Moodle? (adreces etc)
-  - [ ] Al crear usuari a partir usuari local si estas dades estan disponibles crear-les
+- [X] Operació sync
+  - [X] Actualitzi també dades personals Moodle? (adreces etc)
 - [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
   - [X] Mostrar l'usuari de moodle associat
   - [X] Editar/canviar l'usuari de Moodle associat
@@ -167,7 +239,7 @@ USUARI MOODLE
   - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
   - [X] Associar Usuaris Moodle
     - [X] Al associar un usuari s'hauria de modificar el idnumber de Moodle i posar el id del usuari local associat
-  - [ ] Afegir a la relació el username de Moodle
+  - [X] Afegir a la relació el username de Moodle
   - [X] dessasociar usuari de Moodle
     - [X] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
   - [X] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
@@ -819,7 +891,7 @@ Moodle:
 
 #### Moodle
 
-- [ ] MoodleUser de entity canviar tots els usos a MoodleUser a App\Models
+- [X] MoodleUser de entity canviar tots els usos a MoodleUser a App\Models
 - [ ] Carpeta app/Moodle crec no cal!
 
 Casos
@@ -837,9 +909,8 @@ Casos
 
 TeachersController i TeachersControllerTest:
 -  Afegir més info sobre els teachers relacionada amb Moodle:
-  - [ ] moodle_id -> El id de Moodle del teacher (si el té)
-  - [ ] moodle_id = null sí no en té
-  - [ ] moodle -> Objecte amb la info de l'usuari de Moodle
+  - [X] moodle_id -> El id de Moodle del teacher (si el té)
+  - [X] moodle_id = null sí no en té
   - [ ] Testos:
      - [ ] Funció check_teacher ha de comprovar camps moodle_id
 - [ ] Que passa si no hi ha mòdul Moodle activat???
@@ -894,8 +965,13 @@ INFO MOODLE USER:
  "profileimageurl": "https://secure.gravatar.com/avatar/b1a4b2518dbbdd47dd4a713d5cd1df94?s=100&d=mm"
 
 MOODLE USERS LIST:
+- [X] Accions posar en components externs
+- [ ] Guest user limitar accions, no es pot mirar perfil, no es pot esborrar
+- [ ] Similar amb usuari admin
 - Operacions massives:
   - [ ] Eliminació
+    - [X] Interfície està preparada
+    - [ ] Cal fer api
 - Filtres:
   - [ ] Sense usuari local
   - [ ] Amb usuari local
@@ -903,9 +979,14 @@ MOODLE USERS LIST:
   - [ ] Confirmat
   - [ ] No confirmat
   - [ ] No ha entrat mai
-- [ ] Color de la toolbar i dense
-- [ ] estil de la taula més dens?
-- [ ] Accions posar en components externs
+- [X] Color de la toolbar i dense
+- [X] Estil de la taula més dens?
+
+RELACIÓ AMB MODELS EXTERN USUARI LOCAL
+
+- [ ] Al crear usuaris de moodle si es fa a partir d'un usuari local utilitzar email corporatiu com a usuari de Moodle
+- 
+
 
 Millores:
 - [ ] Al crear un usuari de Moodle no mostrar els usuaris locals que ja tenen un usuari de Moodle al desplegable
@@ -981,6 +1062,12 @@ https://www.iesebre.com/moodle/admin/webservice/documentation.php
 
 Llista usuaris Moodle:
 
+TROUBLESHOOTING:
+- [ ] Ara al eliminar un usuari de Moodle s'eliminar Moodle però dona error en local
+  - [ ] Error deu ser per procés o event 
+- [ ] Eliminació usuari de Moodle amb compte local associada:
+  - [ ] MOstrar doble confirmació: té compte local associada -> Si tireu endavant aquesta associació s'eliminara
+
 FILTRES:
 - [ ]Usuaris sincronitzats/Usuaris desincronitzats
 Altres:
@@ -1040,35 +1127,6 @@ UsersManagers
 - [ ] Usuaris IncidentsManager no poden mostrar incidències (apareix blanc el dialeg show)
   - [X] Se soluciona tenint els dos rols IncidentsManager i Incidents
   
-# TODOS finals abans posar explotació
-
-- [ ] Some continuos integration
-- [ ] Activar a explotació les cuas
-  - [ ] Activar alguna eina per saber com funcionen les cues i estar alerta possibles errors
-  - [ ] https://laravel.com/docs/5.7/horizon
-- [ ] Treure botó de Login amb Facebook i Register amb Facebook
-- [ ] Config per poder desactivar el registre amb missatge que indiqui el pq està desactivat
-- [ ] Home temporal (desactivar la que hi ha ara que és un exemple concepte)
- - [ ] Home Superadmin: deixar el que hi ha ara
- - [ ] Home Profes:
-    - [ ] Mostrar missatge de confirmar email si encara no l'ha confirmat! 
-    - [ ] Incidències pendents de l'usuari?
-    - [ ] Notícies: Aplicació incidències
-    - [ ] Mostrar emails enviats a l'usuari? (Telescope ho fa fer algo similar)
-    - [ ] Mostrar registre de canvis de l'usuari
-- [ ] Icona/logo del centre
-- [ ] Colors del centre
-- [ ] Avatar s'enva fora de la Toolbar
-- [ ] No mostrar icona (campana) notificacions sinó funciona o no hi ha
-- [ ] FONT: Alguns titols surten tallats alguns caràcters com la g o la p (per la part baixa)
-- [ ] Welcome Page: adaptar al centre
-- [ ] DOCS Incidències: https://docs.scool.cat/docs/1.0/incidents
-- [ ] Acabar o no mostrar TODO estadístiques
-- [ ] Acabar o no mostrar TODO exportar a Excel
-- [ ] No mostrar Teacher profile o Acabar-lo
-- [ ] Boto de sortir al costat de l'Avatar que no calgui entrar?
-- [ ] Canviar email ara es pot fer OK -> però hauria de posar el email a no confirmat
-
 # BUGS
 
 - [X] Cal crear el canal App.Logs.Loggable.id i arreglar temps real dels logs per a un item

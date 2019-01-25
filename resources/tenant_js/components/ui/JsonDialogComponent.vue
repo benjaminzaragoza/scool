@@ -7,6 +7,7 @@
               slot="activator"
               color="blue darken-2"
               dark
+              :class="btnClass"
       >
           <v-icon v-text="icon"></v-icon>
       </v-btn>
@@ -49,6 +50,10 @@ export default {
     }
   },
   props: {
+    btnClass: {
+      type: String,
+      default: ''
+    },
     json: {
       required: true
     },
