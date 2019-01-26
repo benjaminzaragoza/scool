@@ -206,7 +206,13 @@
                             <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
                             <span v-else>Mai</span>
                         </td>
-                        <td> {{ formatBoolean(props.item.inSync) }}</td>
+                        <td>
+                            <v-tooltip bottom>
+                                <span slot="activator">{{ formatBoolean(props.item.inSync) }}</span>
+                                <span v-if="props.item.inSync">Tot sembla correcte</span>
+                                <span v-else>{{ formatMessages(props.item.errorMessages) }}</span>
+                             </v-tooltip>
+                        </td>
                         <td class="text-xs-left cell">
                             <json-dialog-component btn-class="ma-0" icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="props.item"></json-dialog-component>
                             <moodle-user-edit-link :user="props.item" class="ma-0"></moodle-user-edit-link>
@@ -314,6 +320,9 @@ export default {
     },
     formatBoolean (boolean) {
       return boolean ? 'Sí' : 'No'
+    },
+    formatMessages (messages) {
+      return messages.join('<br/>')
     }
   }
 }
