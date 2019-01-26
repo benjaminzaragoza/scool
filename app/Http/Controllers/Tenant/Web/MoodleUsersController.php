@@ -29,12 +29,7 @@ class MoodleUsersController extends Controller
             return collect(MoodleUser::all());
         });
         $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
-        dump(count($users));
-        $i = 1;
-        $users = $users->map(function($user) use ($i, $localUsers) {
-           dump($i);
-           dump($user->username);
-           $i++;
+        $users = $users->map(function($user) use ($localUsers) {
            return MoodleUser::adapt($user, $localUsers);
         });
 
