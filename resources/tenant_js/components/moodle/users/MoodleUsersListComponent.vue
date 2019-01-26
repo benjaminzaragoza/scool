@@ -107,7 +107,7 @@
                         </td>
                         <td class="text-xs-left cell" v-text="props.item.id"></td>
                         <td class="text-xs-left cell">
-                            <user-show-link :id="props.item.idnumber" :text="props.item.idnumber"></user-show-link>
+                            <user-show-link v-if="props.item.idnumber" :id="props.item.idnumber" :text="props.item.idnumber"></user-show-link>
                         </td>
                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <moodle-user-local-user :user="props.item" :local-users="localUsers"></moodle-user-local-user>
@@ -137,12 +137,13 @@
                         <td class="text-xs-left cell">{{ props.item.confirmed ? 'Sí' : 'No' }}</td>
                         <td class="text-xs-left cell">{{ props.item.suspended ? 'Sí' : 'No' }}</td>
                         <td class="text-xs-left cell">
+
                             <v-tooltip bottom>
                                 <span slot="activator">
                                     <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
                                     <span v-else>Mai</span>
                                 </span>
-                                <span>TOOLTIP</span>
+                                <span> {{ formatDateTime(props.item.lastaccess)  }} </span>
                              </v-tooltip>
                         </td>
                         <td>
@@ -179,6 +180,7 @@ import MoodleUserAuthTypesSelect from './MoodleUserAuthTypesSelect'
 import MoodleUserLanguageSelect from './MoodleUserLanguageSelect'
 import MoodleUserFiltersSelect from './MoodleUserFiltersSelect'
 import UserShowLink from '../../users/UserShowLink'
+import moment from 'moment'
 
 var filterNames = [
   {
@@ -358,6 +360,9 @@ export default {
     }
   },
   methods: {
+    formatDateTime (date) {
+      return moment(new Date(date * 1000)).format('hh:mm a DD-MM-YYYY')
+    },
     refresh () {
       this.refreshing = true
       window.axios.get('/api/v1/moodle/users').then(response => {

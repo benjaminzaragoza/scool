@@ -110,14 +110,22 @@
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
                                         <td class="text-xs-left">
-                                            <v-avatar>
+                                            <v-avatar size="32">
                                                 <img v-if="user.thumbnailPhotoUrl" :src="user.thumbnailPhotoUrl">
                                                 <img v-else src="/img/default.png" alt="photo per defecte">
                                             </v-avatar>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.fullName"></td>
-                                        <td class="text-xs-left">
-                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
+                                        <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ user.fullName }}</span>
+                                                <span>{{ user.fullName }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <v-tooltip bottom>
+                                                <a slot="activator" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
+                                                <span>{{ user.primaryEmail }}</span>
+                                            </v-tooltip>
                                         </td>
                                         <td class="text-xs-left" v-html="user.employeeId"></td>
                                         <td class="text-xs-left" v-html="user.personalEmail"></td>
@@ -144,7 +152,7 @@
                                                     <timeago v-if="user.lastLoginTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.lastLoginTime)"></timeago>
                                                     <span v-else>Mai</span>
                                                 </span>
-                                                <span>{{ user.lastLoginTime }}</span>
+                                                <span>{{ formatDateTime(user.lastLoginTime) }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left">
@@ -153,7 +161,7 @@
                                                     <timeago v-if="user.creationTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.creationTime)"></timeago>
                                                     <span v-else>Mai</span>
                                                 </span>
-                                                <span>{{ user.creationTime }}</span>
+                                                <span>{{ formatDateTime(user.creationTime) }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left">
@@ -207,6 +215,7 @@ import * as mutations from '../../../store/mutation-types'
 import axios from 'axios'
 import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import showGoogleUserIcon from './ShowGoogleUserIconComponent'
+import moment from 'moment'
 
 export default {
   name: 'GoogleUsersComponent',
@@ -268,6 +277,9 @@ export default {
     }
   },
   methods: {
+    formatDateTime (date) {
+      return moment(new Date(date)).format('hh:mm a DD-MM-YYYY')
+    },
     formatBoolean (boolean) {
       return boolean ? 'Sí' : 'No'
     },
