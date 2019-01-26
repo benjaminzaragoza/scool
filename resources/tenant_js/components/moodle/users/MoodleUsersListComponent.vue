@@ -206,7 +206,7 @@
                             <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
                             <span v-else>Mai</span>
                         </td>
-                        <td> {{ formatBoolean(props.item.userInSync) }}</td>
+                        <td> {{ formatBoolean(props.item.inSync) }}</td>
                         <td class="text-xs-left cell">
                             <json-dialog-component btn-class="ma-0" icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="props.item"></json-dialog-component>
                             <moodle-user-edit-link :user="props.item" class="ma-0"></moodle-user-edit-link>
@@ -295,7 +295,7 @@ export default {
       headers.push({ text: 'Confirmat', align: 'left', value: 'confirmed' })
       headers.push({ text: 'Suspès', align: 'left', value: 'suspended' })
       headers.push({ text: 'Últim accés', align: 'left', value: 'lastaccess' })
-      headers.push({ text: 'Sincronitzat', align: 'left', sortable: false })
+      headers.push({ text: 'Sincronitzat', align: 'left', value: 'inSync' })
       headers.push({ text: 'Accions', value: 'user_email', sortable: false })
       return headers
     }
