@@ -137,8 +137,13 @@
                         <td class="text-xs-left cell">{{ props.item.confirmed ? 'Sí' : 'No' }}</td>
                         <td class="text-xs-left cell">{{ props.item.suspended ? 'Sí' : 'No' }}</td>
                         <td class="text-xs-left cell">
-                            <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
-                            <span v-else>Mai</span>
+                            <v-tooltip bottom>
+                                <span slot="activator">
+                                    <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
+                                    <span v-else>Mai</span>
+                                </span>
+                                <span>TOOLTIP</span>
+                             </v-tooltip>
                         </td>
                         <td>
                             <v-tooltip bottom>

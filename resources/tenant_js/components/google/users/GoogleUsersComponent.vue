@@ -34,10 +34,24 @@
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
                         </v-btn>
-
                         <v-list>
                             <v-list-tile>
                                 <v-list-tile-title><a target="_blank" href="https://admin.google.com/u/3/ac/users">Panell administració Google</a></v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users" target="_blank">
+                                <v-list-tile-title>Usuaris locals</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/permissions" target="_blank">
+                                <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/roles" target="_blank">
+                                <v-list-tile-title>Gestionar Rols</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/moodle/users" target="_blank">
+                                <v-list-tile-title>Usuaris Moodle</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/ldap_users" target="_blank">
+                                <v-list-tile-title>Usuaris Ldap</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -124,8 +138,24 @@
                                                 {{ formatBoolean(user.suspended) }}
                                             </template>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.lastLoginTime"></td>
-                                        <td class="text-xs-left" v-html="user.creationTime"></td>
+                                        <td class="text-xs-left">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">
+                                                    <timeago v-if="user.lastLoginTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.lastLoginTime)"></timeago>
+                                                    <span v-else>Mai</span>
+                                                </span>
+                                                <span>{{ user.lastLoginTime }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">
+                                                    <timeago v-if="user.creationTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.creationTime)"></timeago>
+                                                    <span v-else>Mai</span>
+                                                </span>
+                                                <span>{{ user.creationTime }}</span>
+                                            </v-tooltip>
+                                        </td>
                                         <td class="text-xs-left">
                                             <show-google-user-icon :user="user"></show-google-user-icon>
                                             <v-btn icon class="mx-0" @click="">
@@ -174,14 +204,12 @@
 import { mapGetters } from 'vuex'
 import * as mutations from '../../../store/mutation-types'
 
-import withSnackbar from '../../mixins/withSnackbar'
 import axios from 'axios'
 import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import showGoogleUserIcon from './ShowGoogleUserIconComponent'
 
 export default {
   name: 'GoogleUsersComponent',
-  mixins: [withSnackbar],
   components: {
     'confirm-icon': ConfirmIcon,
     'show-google-user-icon': showGoogleUserIcon
@@ -263,24 +291,24 @@ export default {
       axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
         if (user.employeeId) {
           axios.delete('/api/v1/user/' + user.employeeId + '/gsuite').then(response => {
-            this.showMessage('Usuari esborrat correctament')
+            this.$snackbar.showMessage('Usuari esborrat correctament')
             this.removing = false
             this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
           }).catch(error => {
             console.log(error)
-            this.showMessage('Usuari esborrat correctament de Google però amb error local')
-            this.showError(error)
+            this.$snackbar.showMessage('Usuari esborrat correctament de Google però amb error local')
+            this.$snackbar.showError(error)
             this.removing = false
           })
         } else {
-          this.showMessage('Usuari esborrat correctament')
+          this.$snackbar.showMessage('Usuari esborrat correctament')
           this.removing = false
           this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
         }
-        this.showMessage('Usuari esborrat correctament')
+        this.$snackbar.showMessage('Usuari esborrat correctament')
       }).catch(error => {
         this.removing = false
-        this.showError(error)
+        this.$snackbar.showError(error)
       })
     },
     suspend (user) {
@@ -288,10 +316,10 @@ export default {
       // TODO
       axios.delete('/api/v1/gsuite/active/users/' + user.id).then(response => {
         this.suspending = false
-        this.showMessage('Usuari suspès correctament')
+        this.$snackbar.showMessage('Usuari suspès correctament')
       }).catch(error => {
         this.suspending = false
-        this.showError(error)
+        this.$snackbar.showError(error)
       })
     },
     activate (user) {
@@ -299,10 +327,10 @@ export default {
       // TODO
       axios.post('/api/v1/gsuite/active/users/' + user.id).then(response => {
         this.activating = false
-        this.showMessage('Usuari activat correctament')
+        this.$snackbar.showMessage('Usuari activat correctament')
       }).catch(error => {
         this.activating = false
-        this.showError(error)
+        this.$snackbar.showError(error)
       })
     }
   },
