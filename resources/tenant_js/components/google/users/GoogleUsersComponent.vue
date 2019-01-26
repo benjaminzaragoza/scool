@@ -29,7 +29,7 @@
                         </v-list>
                     </v-card>
                 </v-dialog>
-                <v-toolbar color="blue darken-3">
+                <v-toolbar color="primary" dense>
                     <v-menu bottom>
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
@@ -41,14 +41,31 @@
                             </v-list-tile>
                         </v-list>
                     </v-menu>
-                    <v-toolbar-title class="white--text title">Google users</v-toolbar-title>
+                    <v-toolbar-title class="white--text">Google users</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon class="white--text" @click="settingsDialog = true">
-                        <v-icon>settings</v-icon>
-                    </v-btn>
-                    <v-btn icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
-                        <v-icon>refresh</v-icon>
-                    </v-btn>
+
+
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/google/users" target="_blank">
+                            <v-icon>help</v-icon>
+                        </v-btn>
+                        <span>Ajuda</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" icon class="white--text" @click="settingsDialog = true">
+                            <v-icon>settings</v-icon>
+                        </v-btn>
+                        <span>Configuració</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" id="users_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                            <v-icon>refresh</v-icon>
+                        </v-btn>
+                        <span>Actualitzar</span>
+                    </v-tooltip>
+
                 </v-toolbar>
                 <v-card>
                     <v-card-text class="px-0 mb-2">

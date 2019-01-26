@@ -27,12 +27,27 @@
                     </v-menu>
                     <v-toolbar-title class="white--text title">Usuaris</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon class="white--text" @click="settings">
-                        <v-icon>settings</v-icon>
-                    </v-btn>
-                    <v-btn icon class="white--text" @click="refresh" :disabled="refreshing" :loading="refreshing">
-                        <v-icon>refresh</v-icon>
-                    </v-btn>
+
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/users" target="_blank">
+                            <v-icon>help</v-icon>
+                        </v-btn>
+                        <span>Ajuda</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" icon class="white--text" @click="settings">
+                            <v-icon>settings</v-icon>
+                        </v-btn>
+                        <span>Configuració</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" id="users_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                            <v-icon>refresh</v-icon>
+                        </v-btn>
+                        <span>Actualitzar</span>
+                    </v-tooltip>
                 </v-toolbar>
 
                 <v-card>
