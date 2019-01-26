@@ -29,7 +29,7 @@ class MoodleUser extends Model
 
     public static function adapt($user)
     {
-        $user = initializeUser($user);
+        $user = MoodleUser::initializeUser($user);
         if ($user['idnumber']) {
             $user = self::addLocalUser($user, User::find($user['idnumber']));
         } else {
@@ -49,17 +49,15 @@ class MoodleUser extends Model
     /**
      * addLocalUserByUsername
      * @param $user
-     * @param $scoolUser
      * @return mixed
      */
-    public static function addLocalUserByUsername($user,$scoolUser)
+    public static function addLocalUserByUsername($user)
     {
         if ($user['username']) {
             $scoolUser = User::where('email',$user['username'])->first();
             if ($scoolUser) {
                 $user['localUser'] = $scoolUser->mapSimple();
-                $user['errorMessages'][] = 'Usuari local trobat però no té idnumber sincronitzat';
-                $user['flags'][] = MoodleUser::ID_NUMBER_CAN_BE_SYNCED;
+                $user = self::userInSync($user, $scoolUser);
             }
         }
         return $user;
@@ -83,18 +81,25 @@ class MoodleUser extends Model
 
     /**
      * userInSync.
+     *
      * @param $user
      * @param $scoolUser
      * @return mixed
      */
     public static function userInSync($user,$scoolUser)
     {
+        $errors = false;
         if ($user['username'] !== $scoolUser->email) {
             $user['errorMessages']->push("Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu");
             $user['flags']->push(MoodleUser::USERNAME_CAN_BE_SYNCED);
-        } else {
-            $user['inSync'] = true;
+            $errors = true;
         }
+        if ($user['idnumber'] !== $scoolUser->id) {
+            $user['errorMessages']->push('Idnumber no vàlid. No hi ha cap usuari local amb aquest id');
+            $user['flags']->push(MoodleUser::ID_NUMBER_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        if (!$errors) $user['inSync'] = true;
         return $user;
     }
 
