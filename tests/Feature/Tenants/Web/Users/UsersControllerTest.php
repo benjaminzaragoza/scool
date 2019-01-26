@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tenants\Web\Users;
 
+use App\Models\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -42,7 +43,7 @@ class UsersControllerTest extends BaseTenantTest
         $response = $this->get('/users');
 
         $response->assertSuccessful();
-        $response->assertViewIs('tenants.users.show');
+        $response->assertViewIs('tenants.users.index');
         $response->assertViewHas('users', function($returnedUsers) use ($user) {
             return $returnedUsers[0]['id'] === $user->id;
         });
@@ -85,4 +86,30 @@ class UsersControllerTest extends BaseTenantTest
         $response = $this->get('/users');
         $response->assertRedirect('/login');
     }
+
+//    /**
+//     * @test
+//     * @group users
+//     */
+//    public function users_manager_can_see_user()
+//    {
+//        initialize_user_types();
+//        $manager = $this->loginAsUsersManager('web');
+//
+//        $user = factory(User::class)->create();
+//
+//        $response = $this->get('/users/' . $user->id);
+//
+//        $response->assertSuccessful();
+//        $response->assertViewIs('tenants.users.show');
+////        $response->assertViewHas('users', function($returnedUsers) use ($user) {
+////            return $returnedUsers[0]['id'] === $user->id;
+////        });
+////        $response->assertViewHas('userTypes',function($returnedUserTypes) {
+////            return $returnedUserTypes[0]['name'] === 'Professor/a';
+////        });
+////        $response->assertViewHas('roles',function($returnedRoles) {
+////            return $returnedRoles[0]->name === 'Teacher';
+////        });
+//    }
 }

@@ -25,6 +25,6 @@ class UsersController extends Controller
         $users = User::getUsers();
         $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
         $roles = Role::all();
-        return view('tenants.users.show',compact('users','userTypes','roles'));
+        return view('tenants.users.index',compact('users','userTypes','roles'));
     }
 }
