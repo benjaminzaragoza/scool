@@ -27,5 +27,4 @@ class UsersController extends Controller
         $roles = Role::all();
         return view('tenants.users.show',compact('users','userTypes','roles'));
     }
-
 }

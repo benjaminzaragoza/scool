@@ -1,6 +1,6 @@
 <template>
     <v-btn icon :title="title" flat :color="color" @click="remove(user)" :disabled="removing === user.id" :loading="removing  === user.id">
-        <v-icon>remove</v-icon>
+        <v-icon>delete</v-icon>
     </v-btn>
 </template>
 

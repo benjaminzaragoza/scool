@@ -971,16 +971,16 @@ MOODLE USERS LIST:
 - Operacions massives:
   - [ ] Eliminació
     - [X] Interfície està preparada
-    - [ ] Cal fer api
+    - [ ] Cal fer api delete multiple users
 - Filtres:
-  - [ ] Tipus authenticació
-  - [ ] Sense usuari local
-  - [ ] Amb usuari local
-  - [ ] No sincronitzats
-  - [ ] Sincronitzats
-  - [ ] Confirmat
-  - [ ] No confirmat
-  - [ ] No ha entrat mai
+  - [X] Tipus authenticació
+  - [X] Sense usuari local
+  - [X] Amb usuari local
+  - [X] No sincronitzats
+  - [X] Sincronitzats
+  - [X] Confirmat
+  - [X] No confirmat
+  - [X] No ha entrat mai
 - [X] Color de la toolbar i dense
 - [X] Estil de la taula més dens?
 
