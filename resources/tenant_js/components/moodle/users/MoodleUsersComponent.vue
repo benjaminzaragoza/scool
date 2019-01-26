@@ -34,7 +34,7 @@ export default {
       required: true
     },
     localUsers: {
-      type: Object,
+      type: Array,
       required: true
     },
     action: {

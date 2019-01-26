@@ -973,6 +973,7 @@ MOODLE USERS LIST:
     - [X] Interfície està preparada
     - [ ] Cal fer api
 - Filtres:
+  - [ ] Tipus authenticació
   - [ ] Sense usuari local
   - [ ] Amb usuari local
   - [ ] No sincronitzats

@@ -26,7 +26,7 @@
             <v-toolbar-title class="white--text title">Usuaris de moodle</v-toolbar-title>
             <v-spacer></v-spacer>
 
-            <v-btn id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/moodle" target="_blank">
+            <v-btn id="moodle_users_help_button" icon class="white--text" href="http://docs.scool.cat/docs/moodle" target="_blank">
                 <v-icon>help</v-icon>
             </v-btn>
 
@@ -50,36 +50,23 @@
             <v-card-title>
                 <v-layout>
                   <v-flex xs9 style="align-self: flex-end;">
-                      TODO FILTERS
-                      <!--<v-layout>-->
-                          <!--<v-flex xs3 class="text-sm-left" style="align-self: center;">-->
-                                <!--<span @click="showOpenIncidents" :class="{ bolder: filter === 'open', 'no-wrap': true, 'pointer': true }">-->
-                                    <!--<v-icon color="error" title="Obertes">lock_open</v-icon> Obertes: {{openIncidents ? openIncidents.length : 0}}-->
-                                <!--</span>-->
-                                <!--<span @click="showClosedIncidents" :class="{ bolder: filter === 'closed', 'no-wrap': true, 'pointer': true  }">-->
-                                  <!--<v-icon color="success" title="Tancades">lock</v-icon> Tancades: {{closedIncidents ? closedIncidents.length : 0}}-->
-                                <!--</span>-->
-                                <!--<span @click="showAll" :class="{ bolder: filter === 'all', 'no-wrap': true, 'pointer': true  }">-->
-                                  <!--<v-icon color="primary" title="Total">info</v-icon> Total: {{dataIncidents ? dataIncidents.length : 0}}-->
-                                <!--</span>-->
-                          <!--</v-flex>-->
-                          <!--<v-flex xs9>-->
-                               <!--<v-layout>-->
-                                   <!--<v-flex xs4>-->
-                                       <!--<user-select-->
-                                               <!--label="Creada per:"-->
-                                               <!--:users="creators"-->
-                                               <!--v-model="creator"-->
-                                       <!--&gt;</user-select>-->
-                                   <!--</v-flex>-->
-                                   <!--<v-flex xs4>-->
+                      <v-layout>
+                          <v-flex xs2 class="text-sm-left" style="align-self: center;">
+                                <moodle-user-auth-types-select v-model="authType"></moodle-user-auth-types-select>
+                          </v-flex>
+                          <v-flex xs9>
+                               <v-layout>
+                                   <v-flex xs2>
+                                        <moodle-user-language-select v-model="language"></moodle-user-language-select>
+                                   </v-flex>
+                                   <v-flex xs4>
                                        <!--<user-select-->
                                                <!--label="Assignada a:"-->
                                                <!--:users="filteredAssignees"-->
                                                <!--v-model="assignee"-->
                                        <!--&gt;</user-select>-->
-                                   <!--</v-flex>-->
-                                   <!--<v-flex xs4>-->
+                                   </v-flex>
+                                   <v-flex xs4>
                                        <!--<v-autocomplete-->
                                                <!--v-model="selectedTags"-->
                                                <!--:items="dataTags"-->
@@ -109,10 +96,10 @@
                                                 <!--</v-chip>-->
                                             <!--</template>-->
                                        <!--</v-autocomplete>-->
-                                   <!--</v-flex>-->
-                               <!--</v-layout>-->
-                          <!--</v-flex>-->
-                      <!--</v-layout>-->
+                                   </v-flex>
+                               </v-layout>
+                          </v-flex>
+                      </v-layout>
                   </v-flex>
                   <v-flex xs3>
                       <v-text-field
@@ -216,10 +203,46 @@ import MoodleUserEditLink from './MoodleUserEditLink'
 import MoodleUserRemove from './MoodleUserRemove'
 import MoodleUsersDeleteMultiple from './MoodleUsersDeleteMultiple'
 import MoodleUserLocalUser from './MoodleUserLocalUser'
+import MoodleUserAuthTypesSelect from './MoodleUserAuthTypesSelect'
+import MoodleUserLanguageSelect from './MoodleUserLanguageSelect'
 
 var filters = {
-  all: function (incidents) {
-    return incidents
+  all: function (users) {
+    return users
+  },
+  byAuthType: function (users, authType) {
+    return users ? users.filter(function (user) {
+      return user.auth === authType
+    }) : []
+  },
+  byLanguage: function (users, language) {
+    return users ? users.filter(function (user) {
+      return user.lang === language
+    }) : []
+  },
+  withoutLocalUser: function (users) {
+    return users
+  },
+  withLocalUser: function (users) {
+    return users
+  },
+  notSynced: function (users) {
+    return users
+  },
+  Synced: function (users) {
+    return users
+  },
+  confirmed: function (users) {
+    return users
+  },
+  notConfirmed: function (users) {
+    return users
+  },
+  neverLogged: function (users) {
+    return users
+  },
+  loggedOnceAtLeast: function (users) {
+    return users
   }
 }
 
@@ -233,10 +256,14 @@ export default {
     'moodle-user-edit-link': MoodleUserEditLink,
     'moodle-user-remove': MoodleUserRemove,
     'moodle-users-delete-multiple': MoodleUsersDeleteMultiple,
-    'moodle-user-local-user': MoodleUserLocalUser
+    'moodle-user-local-user': MoodleUserLocalUser,
+    'moodle-user-auth-types-select': MoodleUserAuthTypesSelect,
+    'moodle-user-language-select': MoodleUserLanguageSelect
   },
   data () {
     return {
+      authType: null,
+      language: null,
       selected: [],
       search: '',
       refreshing: false,
@@ -254,7 +281,7 @@ export default {
       required: true
     },
     localUsers: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
@@ -265,7 +292,10 @@ export default {
   },
   computed: {
     filteredUsers: function () {
-      return filters[this.filter](this.dataUsers)
+      let filteredUsers = this.dataUsers
+      if (this.authType) filteredUsers = filters['byAuthType'](this.dataUsers, this.authType)
+      if (this.language) filteredUsers = filters['byLanguage'](this.dataUsers, this.language)
+      return filteredUsers
     },
     headers () {
       let headers = []

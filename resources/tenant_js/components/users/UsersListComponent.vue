@@ -442,8 +442,6 @@ export default {
       if (this.selectedRoles.length > 0) filteredUsers = filters['byRoles'](this.internalUsers, this.selectedRoles)
       if (this.selectedFilters.length > 0) {
         this.selectedFilters.forEach(filter => {
-          console.log('filter:')
-          console.log(filter)
           filteredUsers = filters[filter.function](this.internalUsers)
         })
       }
