@@ -240,7 +240,11 @@ class MoodleUserTest extends TestCase
     public function addLocalUser()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_moodle_user_array($scoolUser->email);
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@email.com'
+        ]));
+        $user = sample_moodle_user_array('prova@email.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
 
@@ -274,7 +278,11 @@ class MoodleUserTest extends TestCase
     public function addLocalUserByUsername()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_moodle_user_array($scoolUser->email);
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@email.com'
+        ]));
+        $user = sample_moodle_user_array('prova@email.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
         $localUsers = User::all();
