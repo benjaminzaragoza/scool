@@ -129,7 +129,7 @@
             </v-dialog>
 
             <v-data-table
-                    class="px-0 mb-2 hidden-sm-and-down"
+                    class="px-0 mb-5 hidden-sm-and-down"
                     :headers="headers"
                     :items="filteredIncidents"
                     :search="search"
@@ -181,7 +181,7 @@
                         <td class="text-xs-left">
                             <changelog-loggable :loggable="incident" ></changelog-loggable>
                             <incident-comments-show :badge="incident.comments && incident.comments.length" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-comments-show>
-                            <incident-show :show-data="false" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
+                            <incident-show-icon :show-data="false" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-show-icon>
                             <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
@@ -216,7 +216,7 @@
 import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
-import IncidentShowComponent from './IncidentShowComponent'
+import IncidentShowIconComponent from './IncidentShowIconComponent'
 import IncidentCommentShowComponent from './IncidentCommentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import IncidentTagsComponent from './IncidentTagsComponent'
@@ -247,7 +247,7 @@ var filters = {
 export default {
   name: 'IncidentsList',
   components: {
-    'incident-show': IncidentShowComponent,
+    'incident-show-icon': IncidentShowIconComponent,
     'incident-comments-show': IncidentCommentShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,

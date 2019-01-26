@@ -1,16 +1,7 @@
 <template>
-    <span>
-        <v-tooltip bottom>
-            <v-btn slot="activator" flat icon color="primary" class="ma-0" @click="dialog=true">
-                <v-icon>visibility</v-icon>
-            </v-btn>
-            <span>Mostrar la incidència</span>
-        </v-tooltip>
-        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
-                  @keydown.esc.stop.prevent="dialog=false">
-            <v-card>
+    <v-card>
         <v-toolbar dark color="primary" :id="'incident_' + incident.id + '_show_toolbar'">
-            <v-btn :id="'incident_' + incident.id + '_show_close_button'" icon dark @click.native="dialog=false">
+            <v-btn :id="'incident_' + incident.id + '_show_close_button'" icon dark @click.native="$emit('close')">
                 <v-icon>close</v-icon>
             </v-btn>
             <user-avatar class="mr-2" :hash-id="incident.user_hashid"
@@ -33,9 +24,9 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <incident-close :incident="incident" v-can:close="incident" :alt="true" class="hidden-sm-and-down" @before="dialog=false"></incident-close>
-                <incident-delete :incident="incident" v-role="'IncidentsManager'" :alt="true" @before="dialog=false" class="hidden-sm-and-down"></incident-delete>
-                <v-btn dark flat @click.native="dialog=false" class="hidden-sm-and-down">
+                <incident-close :incident="incident" v-can:close="incident" :alt="true" class="hidden-sm-and-down" @before="$emit('close')"></incident-close>
+                <incident-delete :incident="incident" v-role="'IncidentsManager'" :alt="true" @before="$emit('close')" class="hidden-sm-and-down"></incident-delete>
+                <v-btn dark flat @click.native="$emit('close')" class="hidden-sm-and-down">
                     Sortir
                     <v-icon right dark>exit_to_app</v-icon>
                 </v-btn>
@@ -128,10 +119,8 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <incident-comments :incident="incident" @close="dialog=false"></incident-comments>
+        <incident-comments :incident="incident" @close="$emit('close')"></incident-comments>
     </v-card>
-        </v-dialog>
-    </span>
 </template>
 
 <script>
@@ -159,7 +148,6 @@ export default {
   },
   data () {
     return {
-      dialog: false,
       show: this.showData ? 0 : null,
       dataTags: this.tags
     }
