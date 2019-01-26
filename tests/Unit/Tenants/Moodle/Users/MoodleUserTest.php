@@ -201,7 +201,7 @@ class MoodleUserTest extends TestCase
         $user->idnumber = $scoolUser->id;
 
         $user = MoodleUser::addLocalUser($user, $scoolUser);
-        $this->assertTrue($scoolUser->id === $user['localUser']['id']);
+        $this->assertTrue($scoolUser->id === $user->localUser['id']);
         $this->assertTrue($user->inSync);
         $this->assertCount(0,$user->errorMessages);
     }
@@ -217,7 +217,7 @@ class MoodleUserTest extends TestCase
         $user = MoodleUser::initializeUser($user);
 
         $user = MoodleUser::addLocalUser($user,$scoolUser);
-        $this->assertTrue($scoolUser->id === $user['localUser']['id']);
+        $this->assertTrue($scoolUser->id === $user->localUser['id']);
         $this->assertFalse($user->inSync);
         $this->assertEquals(
             "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
@@ -235,13 +235,13 @@ class MoodleUserTest extends TestCase
         $user->idnumber = $scoolUser->id;
 
         $user = MoodleUser::addLocalUserByUsername($user, $scoolUser);
-        $this->assertTrue($scoolUser->id === $user['localUser']['id']);
+        $this->assertTrue($scoolUser->id === $user->localUser['id']);
         $this->assertTrue($user->inSync);
         $this->assertCount(0,$user->errorMessages);
         $this->assertCount(0,$user->flags);
-        $this->assertNotNull($user['localUser']);
-        $this->assertEquals($scoolUser->name, $user['localUser']['name']);
-        $this->assertEquals($scoolUser->id, $user['localUser']['id']);
+        $this->assertNotNull($user->localUser);
+        $this->assertEquals($scoolUser->name, $user->localUser['name']);
+        $this->assertEquals($scoolUser->id, $user->localUser['id']);
     }
 
     /**
