@@ -30,19 +30,19 @@ class MoodleUser extends Model
     public static function adapt($user)
     {
         $user = MoodleUser::initializeUser($user);
-        if ($user['idnumber']) {
-            $user = self::addLocalUser($user, User::find($user['idnumber']));
+        if ($user->idnumber) {
+            $user = self::addLocalUser($user, User::find($user->idnumber));
         } else {
-            $user = self::addLocalUserByUsername($user, User::find($user['idnumber']));
+            $user = self::addLocalUserByUsername($user, User::find($user->idnumber));
         }
         return $user;
     }
 
     public static function initializeUser($user)
     {
-        $user['errorMessages'] = collect([]);
-        $user['inSync'] = false;
-        $user['flags'] = collect([]);
+        $user->errorMessages = collect([]);
+        $user->inSync = false;
+        $user->flags = collect([]);
         return $user;
     }
 
@@ -53,10 +53,10 @@ class MoodleUser extends Model
      */
     public static function addLocalUserByUsername($user)
     {
-        if ($user['username']) {
-            $scoolUser = User::where('email',$user['username'])->first();
+        if ($user->username) {
+            $scoolUser = User::where('email',$user->username)->first();
             if ($scoolUser) {
-                $user['localUser'] = $scoolUser->mapSimple();
+                $user->localUser = $scoolUser->mapSimple();
                 $user = self::userInSync($user, $scoolUser);
             }
         }
@@ -71,10 +71,10 @@ class MoodleUser extends Model
     public static function addLocalUser($user,$scoolUser)
     {
         if ($scoolUser) {
-            $user['localUser'] = $scoolUser->mapSimple();
+            $user->localUser = $scoolUser->mapSimple();
             $user = self::userInSync($user, $scoolUser);
         } else {
-            $user['errorMessages'][] = 'Idnumber no vàlid. No hi ha cap usuari local amb aquest id';
+            $user->errorMessages[] = 'Idnumber no vàlid. No hi ha cap usuari local amb aquest id';
         }
         return $user;
     }
@@ -89,17 +89,17 @@ class MoodleUser extends Model
     public static function userInSync($user,$scoolUser)
     {
         $errors = false;
-        if ($user['username'] !== $scoolUser->email) {
-            $user['errorMessages']->push("Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu");
-            $user['flags']->push(MoodleUser::USERNAME_CAN_BE_SYNCED);
+        if ($user->username !== $scoolUser->email) {
+            $user->errorMessages->push("Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu");
+            $user->flags->push(MoodleUser::USERNAME_CAN_BE_SYNCED);
             $errors = true;
         }
-        if ($user['idnumber'] !== $scoolUser->id) {
-            $user['errorMessages']->push('Idnumber no vàlid. No hi ha cap usuari local amb aquest id');
-            $user['flags']->push(MoodleUser::ID_NUMBER_CAN_BE_SYNCED);
+        if ($user->idnumber !== $scoolUser->id) {
+            $user->errorMessages->push('Idnumber no vàlid. No hi ha cap usuari local amb aquest id');
+            $user->flags->push(MoodleUser::ID_NUMBER_CAN_BE_SYNCED);
             $errors = true;
         }
-        if (!$errors) $user['inSync'] = true;
+        if (!$errors) $user->inSync = true;
         return $user;
     }
 

@@ -8830,7 +8830,7 @@ if (! function_exists('sample_logs')) {
 if (! function_exists('sample_moodle_user_array')) {
     function sample_moodle_user_array($username = null) {
         $username = $username ? $username : 'pepepardo@iesebre.com';
-        return $user = [
+        return $user = (object) [
             'id' => 10,
             'username' => $username,
             'firstname' => 'Pepe',

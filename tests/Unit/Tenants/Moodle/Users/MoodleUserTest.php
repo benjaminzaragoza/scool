@@ -35,15 +35,15 @@ class MoodleUserTest extends TestCase
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = $scoolUser->id;
+        $user->idnumber = $scoolUser->id;
         $this->assertFalse(array_key_exists('localUser', $user));
         $adaptedUser = MoodleUser::adapt($user);
-        $this->assertCount(0, $adaptedUser['errorMessages']);
-        $this->assertCount(0, $adaptedUser['flags']);
-        $this->assertTrue($adaptedUser['inSync']);
-        $this->assertNotNull($adaptedUser['localUser']);
-        $this->assertEquals($scoolUser->name, $adaptedUser['localUser']['name']);
-        $this->assertEquals($scoolUser->id, $adaptedUser['localUser']['id']);
+        $this->assertCount(0, $adaptedUser->errorMessages);
+        $this->assertCount(0, $adaptedUser->flags);
+        $this->assertTrue($adaptedUser->inSync);
+        $this->assertNotNull($adaptedUser->localUser);
+        $this->assertEquals($scoolUser->name, $adaptedUser->localUser['name']);
+        $this->assertEquals($scoolUser->id, $adaptedUser->localUser['id']);
     }
 
     /**
@@ -54,13 +54,13 @@ class MoodleUserTest extends TestCase
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = null;
+        $user->idnumber = null;
         $adaptedUser = MoodleUser::adapt($user);
-        $this->assertCount(1, $adaptedUser['errorMessages']);
-        $this->assertEquals("Idnumber no vàlid. No hi ha cap usuari local amb aquest id", $adaptedUser['errorMessages']->first());
-        $this->assertCount(1, $adaptedUser['flags']);
-        $this->assertEquals(MoodleUser::ID_NUMBER_CAN_BE_SYNCED, $adaptedUser['flags'][0]);
-        $this->assertFalse($adaptedUser['inSync']);
+        $this->assertCount(1, $adaptedUser->errorMessages);
+        $this->assertEquals("Idnumber no vàlid. No hi ha cap usuari local amb aquest id", $adaptedUser->errorMessages->first());
+        $this->assertCount(1, $adaptedUser->flags);
+        $this->assertEquals(MoodleUser::ID_NUMBER_CAN_BE_SYNCED, $adaptedUser->flags[0]);
+        $this->assertFalse($adaptedUser->inSync);
     }
 
     /**
@@ -76,9 +76,9 @@ class MoodleUserTest extends TestCase
         $this->assertTrue(array_key_exists('errorMessages',$user));
         $this->assertTrue(array_key_exists('inSync',$user));
         $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user['errorMessages']);
-        $this->assertFalse($user['inSync']);
-        $this->assertCount(0,$user['flags']);
+        $this->assertCount(0,$user->errorMessages);
+        $this->assertFalse($user->inSync);
+        $this->assertCount(0,$user->flags);
     }
 
     /**
@@ -92,20 +92,20 @@ class MoodleUserTest extends TestCase
         $this->assertTrue(array_key_exists('errorMessages',$user));
         $this->assertTrue(array_key_exists('inSync',$user));
         $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user['errorMessages']);
+        $this->assertCount(0,$user->errorMessages);
         $user = MoodleUser::userInSync($user, $scoolUser);
-        $this->assertCount(2,$user['errorMessages']);
+        $this->assertCount(2,$user->errorMessages);
         $this->assertEquals(
             "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
-            $user['errorMessages'][0]
+            $user->errorMessages[0]
         );
         $this->assertEquals(
             "Idnumber no vàlid. No hi ha cap usuari local amb aquest id",
-            $user['errorMessages'][1]
+            $user->errorMessages[1]
         );
-        $this->assertFalse($user['inSync']);
-        $this->assertEquals(MoodleUser::USERNAME_CAN_BE_SYNCED, $user['flags'][0]);
-        $this->assertEquals(MoodleUser::ID_NUMBER_CAN_BE_SYNCED, $user['flags'][1]);
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(MoodleUser::USERNAME_CAN_BE_SYNCED, $user->flags[0]);
+        $this->assertEquals(MoodleUser::ID_NUMBER_CAN_BE_SYNCED, $user->flags[1]);
     }
 
     /**
@@ -119,19 +119,19 @@ class MoodleUserTest extends TestCase
         $this->assertTrue(array_key_exists('errorMessages',$user));
         $this->assertTrue(array_key_exists('inSync',$user));
         $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user['errorMessages']);
+        $this->assertCount(0,$user->errorMessages);
         $user = MoodleUser::userInSync($user, $scoolUser);
-        $this->assertCount(2,$user['errorMessages']);
+        $this->assertCount(2,$user->errorMessages);
         $this->assertEquals(
             "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
-            $user['errorMessages'][0]
+            $user->errorMessages[0]
         );
         $this->assertEquals(
             'Idnumber no vàlid. No hi ha cap usuari local amb aquest id',
-            $user['errorMessages'][1]
+            $user->errorMessages[1]
         );
-        $this->assertFalse($user['inSync']);
-        $this->assertEquals(MoodleUser::USERNAME_CAN_BE_SYNCED, $user['flags']->first());
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(MoodleUser::USERNAME_CAN_BE_SYNCED, $user->flags->first());
     }
 
     /**
@@ -142,19 +142,19 @@ class MoodleUserTest extends TestCase
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = 3244432;
+        $user->idnumber = 3244432;
         $this->assertTrue(array_key_exists('errorMessages',$user));
         $this->assertTrue(array_key_exists('inSync',$user));
         $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user['errorMessages']);
+        $this->assertCount(0,$user->errorMessages);
         $user = MoodleUser::userInSync($user, $scoolUser);
-        $this->assertCount(1,$user['errorMessages']);
+        $this->assertCount(1,$user->errorMessages);
         $this->assertEquals(
             "Idnumber no vàlid. No hi ha cap usuari local amb aquest id",
-            $user['errorMessages']->first()
+            $user->errorMessages->first()
         );
-        $this->assertFalse($user['inSync']);
-        $this->assertEquals(MoodleUser::ID_NUMBER_CAN_BE_SYNCED, $user['flags']->first());
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(MoodleUser::ID_NUMBER_CAN_BE_SYNCED, $user->flags->first());
     }
 
     /**
@@ -165,15 +165,15 @@ class MoodleUserTest extends TestCase
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = $scoolUser->id;
+        $user->idnumber = $scoolUser->id;
         $this->assertTrue(array_key_exists('errorMessages',$user));
         $this->assertTrue(array_key_exists('inSync',$user));
         $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user['errorMessages']);
+        $this->assertCount(0,$user->errorMessages);
         $user = MoodleUser::userInSync($user, $scoolUser);
-        $this->assertCount(0,$user['errorMessages']);
-        $this->assertCount(0,$user['flags']);
-        $this->assertTrue($user['inSync']);
+        $this->assertCount(0,$user->errorMessages);
+        $this->assertCount(0,$user->flags);
+        $this->assertTrue($user->inSync);
     }
 
     /**
@@ -184,10 +184,10 @@ class MoodleUserTest extends TestCase
         $scoolUser = null;
         $user = sample_moodle_user_array();
         $user = MoodleUser::initializeUser($user);
-        $this->assertCount(0, $user['errorMessages']);
+        $this->assertCount(0, $user->errorMessages);
         $user = MoodleUser::addLocalUser($user, $scoolUser);
-        $this->assertCount(1, $user['errorMessages']);
-        $this->assertEquals('Idnumber no vàlid. No hi ha cap usuari local amb aquest id', $user['errorMessages'][0]);
+        $this->assertCount(1, $user->errorMessages);
+        $this->assertEquals('Idnumber no vàlid. No hi ha cap usuari local amb aquest id', $user->errorMessages[0]);
     }
 
     /**
@@ -198,12 +198,12 @@ class MoodleUserTest extends TestCase
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = $scoolUser->id;
+        $user->idnumber = $scoolUser->id;
 
         $user = MoodleUser::addLocalUser($user, $scoolUser);
         $this->assertTrue($scoolUser->id === $user['localUser']['id']);
-        $this->assertTrue($user['inSync']);
-        $this->assertCount(0,$user['errorMessages']);
+        $this->assertTrue($user->inSync);
+        $this->assertCount(0,$user->errorMessages);
     }
 
     /**
@@ -218,10 +218,10 @@ class MoodleUserTest extends TestCase
 
         $user = MoodleUser::addLocalUser($user,$scoolUser);
         $this->assertTrue($scoolUser->id === $user['localUser']['id']);
-        $this->assertFalse($user['inSync']);
+        $this->assertFalse($user->inSync);
         $this->assertEquals(
             "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
-            $user['errorMessages']->first());
+            $user->errorMessages->first());
     }
 
     /**
@@ -232,13 +232,13 @@ class MoodleUserTest extends TestCase
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = $scoolUser->id;
+        $user->idnumber = $scoolUser->id;
 
         $user = MoodleUser::addLocalUserByUsername($user, $scoolUser);
         $this->assertTrue($scoolUser->id === $user['localUser']['id']);
-        $this->assertTrue($user['inSync']);
-        $this->assertCount(0,$user['errorMessages']);
-        $this->assertCount(0,$user['flags']);
+        $this->assertTrue($user->inSync);
+        $this->assertCount(0,$user->errorMessages);
+        $this->assertCount(0,$user->flags);
         $this->assertNotNull($user['localUser']);
         $this->assertEquals($scoolUser->name, $user['localUser']['name']);
         $this->assertEquals($scoolUser->id, $user['localUser']['id']);
@@ -251,12 +251,12 @@ class MoodleUserTest extends TestCase
     {
         $user = sample_moodle_user_array('unexistingemail@mydomain.com');
         $user = MoodleUser::initializeUser($user);
-        $user['idnumber'] = null;
+        $user->idnumber = null;
 
         $user = MoodleUser::addLocalUserByUsername($user);
-        $this->assertFalse($user['inSync']);
-        $this->assertCount(0,$user['errorMessages']);
-        $this->assertCount(0,$user['flags']);
+        $this->assertFalse($user->inSync);
+        $this->assertCount(0,$user->errorMessages);
+        $this->assertCount(0,$user->flags);
     }
 
     /**
