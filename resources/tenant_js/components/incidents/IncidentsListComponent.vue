@@ -179,25 +179,9 @@
                         <td class="text-xs-left" v-html="incident.formatted_created_at_diff" :title="incident.formatted_created_at"></td>
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
-                            <changelog-loggable :loggable="incident"></changelog-loggable>
-                            <!--<fullscreen-dialog-->
-                                    <!--:badge="incident.comments && incident.comments.length"-->
-                                    <!--badge-color="teal"-->
-                                    <!--icon="chat_bubble_outline"-->
-                                    <!--color="teal"-->
-                                    <!--v-model="addCommentDialog"-->
-                                    <!--title="Afegir un comentari"-->
-                                    <!--:resource="incident"-->
-                                    <!--v-if="addCommentDialog === false || addCommentDialog === incident.id">-->
-                                <!--<incident-show :show-data="false" :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>-->
-                            <!--</fullscreen-dialog>-->
-                            <!--<fullscreen-dialog-->
-                                    <!--v-model="showDialog"-->
-                                    <!--title="Mostra la incidència"-->
-                                    <!--:resource="incident"-->
-                                    <!--v-if="showDialog === false">-->
-                                <!--<incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>-->
-                            <!--</fullscreen-dialog>-->
+                            <changelog-loggable :loggable="incident" ></changelog-loggable>
+                            <incident-comments-show :badge="incident.comments && incident.comments.length" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-comments-show>
+                            <incident-show :show-data="false" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
                             <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
@@ -233,6 +217,7 @@ import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowComponent from './IncidentShowComponent'
+import IncidentCommentShowComponent from './IncidentCommentShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import IncidentTagsComponent from './IncidentTagsComponent'
 import IncidentAssigneesComponent from './IncidentAssigneesComponent'
@@ -263,6 +248,7 @@ export default {
   name: 'IncidentsList',
   components: {
     'incident-show': IncidentShowComponent,
+    'incident-comments-show': IncidentCommentShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
@@ -278,8 +264,6 @@ export default {
     return {
       search: '',
       refreshing: false,
-      showDialog: false,
-      addCommentDialog: false,
       pagination: {
         rowsPerPage: 25
       },

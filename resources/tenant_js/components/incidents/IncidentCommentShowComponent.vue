@@ -1,10 +1,13 @@
 <template>
     <span>
         <v-tooltip bottom>
-            <v-btn slot="activator" flat icon color="primary" class="ma-0" @click="dialog=true">
-                <v-icon>visibility</v-icon>
+            <v-btn slot="activator" flat icon color="teal" class="ma-0" @click="dialog=true">
+                <v-badge left overlap color="teal">
+                  <span slot="badge" v-text="badge"></span>
+                  <v-icon large>chat_bubble_outline</v-icon>
+                </v-badge>
             </v-btn>
-            <span>Mostrar la incidència</span>
+            <span>Mostra els comentaris</span>
         </v-tooltip>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
                   @keydown.esc.stop.prevent="dialog=false">
@@ -165,6 +168,10 @@ export default {
     }
   },
   props: {
+    badge: {
+      type: Number,
+      required: true
+    },
     incident: {
       type: Object,
       required: true

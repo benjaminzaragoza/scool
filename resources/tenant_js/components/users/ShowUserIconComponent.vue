@@ -4,9 +4,6 @@
             <v-btn slot="activator" v-if="icon" icon class="mx-0" title="" @click.native.stop="prepareDialog">
                 <v-icon color="primary">visibility</v-icon>
             </v-btn>
-            <v-btn v-else slot="activator" class="mx-0" @click.native.stop="prepareDialog">
-                <v-icon color="primary">visibility</v-icon> Fitxa de l'usuari
-            </v-btn>
             <span>Vegeu la fitxa de l'usuari</span>
         </v-tooltip>
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">

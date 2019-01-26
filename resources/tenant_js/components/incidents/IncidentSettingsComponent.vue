@@ -9,69 +9,69 @@
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
                   @keydown.esc.stop.prevent="toggle">
             <span id="incident_settings">
-        <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="dialog=false">
-                <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title v-html="title"></v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click.native="dialog=false" class="hidden-sm-and-down">
-                    Sortir
-                    <v-icon right dark>exit_to_app</v-icon>
-                </v-btn>
-            </v-toolbar-items>
-        </v-toolbar>
-        <v-stepper v-model="step" vertical>
-            <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
-            <v-stepper-step :complete="step > 1" step="1">
-              Activació del mòdul
-              <small>En aquest apartat podeu activar o desactivar el mòdul d'incidències</small>
-            </v-stepper-step>
+                <v-toolbar dark color="primary">
+                    <v-btn icon dark @click.native="dialog=false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title v-html="title"></v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn dark flat @click.native="dialog=false" class="hidden-sm-and-down">
+                            Sortir
+                            <v-icon right dark>exit_to_app</v-icon>
+                        </v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <v-stepper v-model="step" vertical>
+                    <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
+                    <v-stepper-step :complete="step > 1" step="1">
+                      Activació del mòdul
+                      <small>En aquest apartat podeu activar o desactivar el mòdul d'incidències</small>
+                    </v-stepper-step>
 
-            <v-stepper-content step="1">
-              <v-card color="grey lighten-5" class="mb-5" height="100px">
-                  <v-card-text>
-                      <v-form>
-                          <v-switch :label="activate ? 'Actiu' : 'Inactiu'" v-model="activate"></v-switch>
-                      </v-form>
-                  </v-card-text>
-              </v-card>
-              <v-btn color="primary" @click="step = 2">Continuar</v-btn>
-              <v-btn flat @click.native="dialog=false"><v-icon right dark class="mr-1">exit_to_app</v-icon>Sortir</v-btn>
-            </v-stepper-content>
+                    <v-stepper-content step="1">
+                      <v-card color="grey lighten-5" class="mb-5" height="100px">
+                          <v-card-text>
+                              <v-form>
+                                  <v-switch :label="activate ? 'Actiu' : 'Inactiu'" v-model="activate"></v-switch>
+                              </v-form>
+                          </v-card-text>
+                      </v-card>
+                      <v-btn color="primary" @click="step = 2">Continuar</v-btn>
+                      <v-btn flat @click.native="dialog=false"><v-icon right dark class="mr-1">exit_to_app</v-icon>Sortir</v-btn>
+                    </v-stepper-content>
 
-            <v-stepper-step :complete="step > 2" step="2">Usuaris del mòdul</v-stepper-step>
+                    <v-stepper-step :complete="step > 2" step="2">Usuaris del mòdul</v-stepper-step>
 
-            <v-stepper-content step="2">
-              <v-card color="grey lighten-5" class="mb-5">
-                  <incident-users @loaded="loading = false" :incident-users="incidentUsers" ></incident-users>
-              </v-card>
-              <v-btn color="primary" @click="step = 3">Continuar</v-btn>
-              <v-btn flat @click="step = 1">Anterior</v-btn>
-            </v-stepper-content>
+                    <v-stepper-content step="2">
+                      <v-card color="grey lighten-5" class="mb-5">
+                          <incident-users @loaded="loading = false" :incident-users="incidentUsers" ></incident-users>
+                      </v-card>
+                      <v-btn color="primary" @click="step = 3">Continuar</v-btn>
+                      <v-btn flat @click="step = 1">Anterior</v-btn>
+                    </v-stepper-content>
 
-            <v-stepper-step :complete="step > 3" step="3">Administradors</v-stepper-step>
+                    <v-stepper-step :complete="step > 3" step="3">Administradors</v-stepper-step>
 
-            <v-stepper-content step="3">
-              <v-card color="grey lighten-5" class="mb-5">
-                  <incident-manager-users @loaded="loading = false" :manager-users="managerUsers" :incident-users="incidentUsers" ></incident-manager-users>
-              </v-card>
-              <v-btn color="primary" @click="step = 4">Continuar</v-btn>
-              <v-btn flat @click="step = 2">Anterior</v-btn>
-            </v-stepper-content>
+                    <v-stepper-content step="3">
+                      <v-card color="grey lighten-5" class="mb-5">
+                          <incident-manager-users @loaded="loading = false" :manager-users="managerUsers" :incident-users="incidentUsers" ></incident-manager-users>
+                      </v-card>
+                      <v-btn color="primary" @click="step = 4">Continuar</v-btn>
+                      <v-btn flat @click="step = 2">Anterior</v-btn>
+                    </v-stepper-content>
 
-            <v-stepper-step :complete="step > 4" step="4">Configuració del mòdul</v-stepper-step>
+                    <v-stepper-step :complete="step > 4" step="4">Configuració del mòdul</v-stepper-step>
 
-            <v-stepper-content step="4">
-              <v-card color="grey lighten-5" class="mb-5" height="200px">
-                 <settings module="incidents" @close="settingsDialog = false" title="Prova"></settings>
-              </v-card>
-              <v-btn color="primary" @click.native="dialog=false"><v-icon right dark class="mr-1">exit_to_app</v-icon> Finalitzar</v-btn>
-              <v-btn flat @click="step = 3">Anterior</v-btn>
-            </v-stepper-content>
-        </v-stepper>
-    </span>
+                    <v-stepper-content step="4">
+                      <v-card color="grey lighten-5" class="mb-5" height="200px">
+                         <settings module="incidents" @close="settingsDialog = false" title="Prova"></settings>
+                      </v-card>
+                      <v-btn color="primary" @click.native="dialog=false"><v-icon right dark class="mr-1">exit_to_app</v-icon> Finalitzar</v-btn>
+                      <v-btn flat @click="step = 3">Anterior</v-btn>
+                    </v-stepper-content>
+                </v-stepper>
+            </span>
         </v-dialog>
     </span>
 </template>
