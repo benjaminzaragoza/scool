@@ -975,16 +975,27 @@ MOODLE USERS LIST:
 - Filtres:
   - [ ] Sense usuari local
   - [ ] Amb usuari local
-  - [ ] No sincronitzat
+  - [ ] No sincronitzats
+  - [ ] Sincronitzats
   - [ ] Confirmat
   - [ ] No confirmat
   - [ ] No ha entrat mai
 - [X] Color de la toolbar i dense
 - [X] Estil de la taula més dens?
 
+Altres:
+  - [ ] Camp idnumber sigui un link al perfil de l'usuari local amb aquest id=idnumber
+  - [ ] Últim accés tingui un title que mostri la data exacte d'últim accés
+  - [ ] Importar usuari de Moodle a Local:
+    - [ ] Crear usuari utilitzant correu de Moodle i fullname com a name
+    - [ ] Crear person a partir de firstname i lastname (autopartir en sn1 i sn2). Altres dades?
+  - [ ] Al mostrar el uidnumber que sigui un link a la fitxa (show) d'usuari local
+  - [X] Mostrar el avatar local per poder comparar amb el avatar de Moodle si hi ha uidnumber
+  - [] Mostrar també dades locals de la persona: givenName, sn1 i sn2 
+
 RELACIÓ AMB MODELS EXTERN USUARI LOCAL
 
-- [ ] Al crear usuaris de moodle si es fa a partir d'un usuari local utilitzar email corporatiu com a usuari de Moodle
+- [X] Al crear usuaris de moodle si es fa a partir d'un usuari local utilitzar email corporatiu com a usuari de Moodle
 - 
 
 
@@ -996,7 +1007,9 @@ Millores:
 
 Migració:
 - [ ] Caldria canviar tots els usuaris actuals de moodle (sense modificar el id) a que utilitzin com a username compte de correu
-  - [ ] Quina compte de correu? La institucional
+  - [ ] Quina compte de correu? 
+    - [ ] Username és el ompte institucional
+    - [ ] Email de moodle: ??? personal o institucional?
   - [ ] TODO
   
 Edit:
@@ -1068,16 +1081,6 @@ TROUBLESHOOTING:
 - [ ] Eliminació usuari de Moodle amb compte local associada:
   - [ ] MOstrar doble confirmació: té compte local associada -> Si tireu endavant aquesta associació s'eliminara
 
-FILTRES:
-- [ ]Usuaris sincronitzats/Usuaris desincronitzats
-Altres:
-- [ ] Últim accés tingui un title que mostri la data exacte d'últim accés
-- [ ] Importar usuari de Moodle a Local:
-  - [ ] Crear usuari utilitzant correu de Moodle i fullname com a name
-  - [ ] Crear person a partir de firstname i lastname (autopartir en sn1 i sn2). Altres dades?
-- [ ] Al mostrar el uidnumber que sigui un link a la fitxa (show) d'usuari local
-- [X] Mostrar el avatar local per poder comparar amb el avatar de Moodle si hi ha uidnumber
-- [] Mostrar també dades locals de la persona: givenName, sn1 i sn2 
 - Accions pendents:
   - [ ] Tornar a enviar email paraula de pas (generar nova)
   - [ ] Editar. core_user_update_users

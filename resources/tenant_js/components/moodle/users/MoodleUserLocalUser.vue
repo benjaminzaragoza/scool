@@ -1,5 +1,18 @@
 <template>
     <span>
+        <v-tooltip bottom>
+            <v-btn
+                    slot="activator"
+                    small
+                    flat
+                    @click="associateLocalUser()"
+                    icon
+                    class="ma-0"
+                    color="success" >
+                <v-icon small>edit</v-icon>
+            </v-btn>
+            <span>Associar nou o canviar usuari local</span>
+        </v-tooltip>
         <template v-if="user.localUser">
             <user-avatar
                     class="mr-2" :hash-id="user.localUser.hash_id"
@@ -11,11 +24,19 @@
             </v-tooltip>
         </template>
         <template v-else>
-            Cap
-            <v-btn small @click="associateLocalUser()"
-                   icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
-                <v-icon small>add</v-icon>
-            </v-btn>
+            <v-tooltip bottom >
+                <v-btn
+                       slot="activator"
+                       small
+                       flat
+                       @click="importMoodleUserToLocalUser()"
+                       icon
+                       color="primary"
+                       class="ma-0">
+                    <v-icon small>add</v-icon>
+                </v-btn>
+                <span>No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle</span>
+            </v-tooltip>
         </template>
     </span>
 </template>
@@ -34,13 +55,16 @@ export default {
       required: true
     },
     localUsers: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
   methods: {
     associateLocalUser () {
       console.log('TODO associateLocalUser')
+    },
+    importMoodleUserToLocalUser () {
+      console.log('TODO importMoodleUserToLocalUser')
     }
   }
 }

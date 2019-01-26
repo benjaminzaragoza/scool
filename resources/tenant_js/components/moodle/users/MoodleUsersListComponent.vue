@@ -173,30 +173,10 @@
                              </v-tooltip>
                         </td>
                         <td class="text-xs-left cell">
-                            <template v-if="localUsers[props.item.idnumber]">
-                                {{ props.item.firstname }}
-                                <template v-if="props.item.firstname !== localUsers[props.item.idnumber].givenName">
-                                    <v-btn small icon color="success" title="El nom de l'usuari no concorda. Feu clic per canviar-lo">
-                                        <v-icon small>sync</v-icon>
-                                    </v-btn>
-                                </template>
-                            </template>
-                            <template v-else>
-                                {{ props.item.firstname }}
-                            </template>
+                            {{ props.item.firstname }}
                         </td>
                         <td class="text-xs-left cell">
-                            <template v-if="localUsers[props.item.idnumber]">
-                                {{ props.item.lastname }}
-                                <template v-if="props.item.lastname !== localUsers[props.item.idnumber].lastname">
-                                    <v-btn small icon color="success" title="Els cognoms de l'usuari no concorden. Feu clic per canviar-los">
-                                        <v-icon small>sync</v-icon>
-                                    </v-btn>
-                                </template>
-                            </template>
-                            <template v-else>
-                                {{ props.item.lastname }}
-                            </template>
+                            {{ props.item.lastname }}
                         </td>
                         <td class="text-xs-left cell" v-text="props.item.auth"></td>
                         <td class="text-xs-left cell" v-text="props.item.lang"></td>
