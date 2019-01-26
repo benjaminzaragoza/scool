@@ -21,24 +21,22 @@
             <v-toolbar-title class="white--text title">Incidències</v-toolbar-title>
             <v-spacer></v-spacer>
 
-            <v-btn id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/incidents" target="_blank">
-                <v-icon>help</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+                <v-btn slot="activator" id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/incidents" target="_blank">
+                    <v-icon>help</v-icon>
+                </v-btn>
+                <span>Ajuda</span>
+            </v-tooltip>
 
-            <fullscreen-dialog
-                    v-role="'IncidentsManager'"
-                    :flat="false"
-                    class="white--text"
-                    icon="settings"
-                    v-model="settingsDialog"
-                    color="primary"
-                    title="Canviar la configuració de les incidències">
-                        <incident-settings module="incidents" @close="settingsDialog = false" :incident-users="incidentUsers" :manager-users="managerUsers"></incident-settings>
-            </fullscreen-dialog>
+            <incident-settings module="incidents" :incident-users="incidentUsers" :manager-users="managerUsers"></incident-settings>
 
-            <v-btn id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
-                <v-icon>refresh</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+                <v-btn slot="activator" id="incidents_refresh_button" icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
+                    <v-icon>refresh</v-icon>
+                </v-btn>
+                <span>Actualitzar</span>
+            </v-tooltip>
+
         </v-toolbar>
 
         <v-card>
@@ -129,7 +127,7 @@
                     @keydown.esc.stop.prevent="showIncident=false">
                 <incident-show :incident="getShowIncident()" v-role="'Incidents'" @close="showIncident = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
             </v-dialog>
-            
+
             <v-data-table
                     class="px-0 mb-2 hidden-sm-and-down"
                     :headers="headers"
@@ -182,24 +180,24 @@
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
                             <changelog-loggable :loggable="incident"></changelog-loggable>
-                            <fullscreen-dialog
-                                    :badge="incident.comments && incident.comments.length"
-                                    badge-color="teal"
-                                    icon="chat_bubble_outline"
-                                    color="teal"
-                                    v-model="addCommentDialog"
-                                    title="Afegir un comentari"
-                                    :resource="incident"
-                                    v-if="addCommentDialog === false || addCommentDialog === incident.id">
-                                <incident-show :show-data="false" :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
-                            </fullscreen-dialog>
-                            <fullscreen-dialog
-                                    v-model="showDialog"
-                                    title="Mostra la incidència"
-                                    :resource="incident"
-                                    v-if="showDialog === false">
-                                <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
-                            </fullscreen-dialog>
+                            <!--<fullscreen-dialog-->
+                                    <!--:badge="incident.comments && incident.comments.length"-->
+                                    <!--badge-color="teal"-->
+                                    <!--icon="chat_bubble_outline"-->
+                                    <!--color="teal"-->
+                                    <!--v-model="addCommentDialog"-->
+                                    <!--title="Afegir un comentari"-->
+                                    <!--:resource="incident"-->
+                                    <!--v-if="addCommentDialog === false || addCommentDialog === incident.id">-->
+                                <!--<incident-show :show-data="false" :incident="incident" v-role="'Incidents'" @close="addCommentDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>-->
+                            <!--</fullscreen-dialog>-->
+                            <!--<fullscreen-dialog-->
+                                    <!--v-model="showDialog"-->
+                                    <!--title="Mostra la incidència"-->
+                                    <!--:resource="incident"-->
+                                    <!--v-if="showDialog === false">-->
+                                <!--<incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>-->
+                            <!--</fullscreen-dialog>-->
                             <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
@@ -241,7 +239,6 @@ import IncidentAssigneesComponent from './IncidentAssigneesComponent'
 import IncidentSettings from './IncidentSettingsComponent'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
-import FullScreenDialog from '../ui/FullScreenDialog'
 import UserSelect from '../users/UsersSelectComponent.vue'
 import UserAvatar from '../ui/UserAvatarComponent'
 import ChangelogLoggable from '../changelog/ChangelogLoggable'
@@ -265,7 +262,6 @@ var filters = {
 export default {
   name: 'IncidentsList',
   components: {
-    'fullscreen-dialog': FullScreenDialog,
     'incident-show': IncidentShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
@@ -284,7 +280,6 @@ export default {
       refreshing: false,
       showDialog: false,
       addCommentDialog: false,
-      settingsDialog: false,
       pagination: {
         rowsPerPage: 25
       },
@@ -434,10 +429,7 @@ export default {
     if (this.incidents === undefined) this.fetch()
     else this.$store.commit(mutations.SET_INCIDENTS, this.incidents)
     this.filters = Object.keys(filters)
-    console.log('CREATED')
     if (this.incident) {
-      console.log('INCIDENT EXISTS: ')
-      console.log(this.incident)
       this.showIncident = true
     }
   }

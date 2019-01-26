@@ -1,5 +1,14 @@
 <template>
-    <span id="incident_settings">
+    <span>
+        <v-tooltip bottom>
+            <v-btn slot="activator" flat icon dark class="ma-0" @click="dialog=false">
+                <v-icon>settings</v-icon>
+            </v-btn>
+            <span>Configuració</span>
+        </v-tooltip>
+        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
+                  @keydown.esc.stop.prevent="toggle">
+            <span id="incident_settings">
         <v-toolbar dark color="primary">
             <v-btn icon dark @click.native="$emit('close')">
                 <v-icon>close</v-icon>
@@ -63,6 +72,8 @@
             </v-stepper-content>
         </v-stepper>
     </span>
+        </v-dialog>
+    </span>
 </template>
 
 <script>
@@ -79,6 +90,7 @@ export default {
   },
   data () {
     return {
+      dialog: false,
       step: 1,
       activate: true,
       loading: true
