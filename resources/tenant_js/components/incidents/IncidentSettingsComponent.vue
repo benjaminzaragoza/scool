@@ -1,7 +1,7 @@
 <template>
     <span>
         <v-tooltip bottom>
-            <v-btn slot="activator" flat icon dark class="ma-0" @click="dialog=false">
+            <v-btn slot="activator" flat icon dark class="ma-0" @click="dialog=true">
                 <v-icon>settings</v-icon>
             </v-btn>
             <span>Configuració</span>
@@ -10,13 +10,13 @@
                   @keydown.esc.stop.prevent="toggle">
             <span id="incident_settings">
         <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="$emit('close')">
+            <v-btn icon dark @click.native="dialog=false">
                 <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title v-html="title"></v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn dark flat @click.native="$emit('close')" class="hidden-sm-and-down">
+                <v-btn dark flat @click.native="dialog=false" class="hidden-sm-and-down">
                     Sortir
                     <v-icon right dark>exit_to_app</v-icon>
                 </v-btn>
@@ -38,7 +38,7 @@
                   </v-card-text>
               </v-card>
               <v-btn color="primary" @click="step = 2">Continuar</v-btn>
-              <v-btn flat @click.native="$emit('close')"><v-icon right dark class="mr-1">exit_to_app</v-icon>Sortir</v-btn>
+              <v-btn flat @click.native="dialog=false"><v-icon right dark class="mr-1">exit_to_app</v-icon>Sortir</v-btn>
             </v-stepper-content>
 
             <v-stepper-step :complete="step > 2" step="2">Usuaris del mòdul</v-stepper-step>
@@ -67,7 +67,7 @@
               <v-card color="grey lighten-5" class="mb-5" height="200px">
                  <settings module="incidents" @close="settingsDialog = false" title="Prova"></settings>
               </v-card>
-              <v-btn color="primary" @click.native="$emit('close')"><v-icon right dark class="mr-1">exit_to_app</v-icon> Finalitzar</v-btn>
+              <v-btn color="primary" @click.native="dialog=false"><v-icon right dark class="mr-1">exit_to_app</v-icon> Finalitzar</v-btn>
               <v-btn flat @click="step = 3">Anterior</v-btn>
             </v-stepper-content>
         </v-stepper>
