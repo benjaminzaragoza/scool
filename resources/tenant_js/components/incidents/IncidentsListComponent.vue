@@ -180,8 +180,9 @@
                         <td class="text-xs-left" :title="incident.formatted_updated_at">{{incident.formatted_updated_at_diff}}</td>
                         <td class="text-xs-left">
                             <changelog-loggable :loggable="incident" ></changelog-loggable>
-                            <incident-comments-show :badge="incident.comments && incident.comments.length" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-comments-show>
-                            <incident-show-icon :show-data="false" :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-show-icon>
+                            <incident-comments-show :badge="incident.comments && incident.comments.length"
+                                                :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-comments-show>
+                            <incident-show-icon :incident="incident" v-role="'Incidents'" :tags="dataTags" :incident-users="incidentUsers"></incident-show-icon>
                             <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
                             <incident-delete :incident="incident" v-if="$hasRole('IncidentsManager')"></incident-delete>
                         </td>
@@ -217,7 +218,8 @@ import * as actions from '../../store/action-types'
 import * as mutations from '../../store/mutation-types'
 import IncidentCloseComponent from './IncidentCloseComponent'
 import IncidentShowIconComponent from './IncidentShowIconComponent'
-import IncidentCommentShowComponent from './IncidentCommentShowComponent'
+import IncidentShowComponent from './IncidentShowComponent'
+import IncidentCommentsShowComponent from './IncidentCommentsShowComponent'
 import IncidentDeleteComponent from './IncidentDeleteComponent'
 import IncidentTagsComponent from './IncidentTagsComponent'
 import IncidentAssigneesComponent from './IncidentAssigneesComponent'
@@ -247,8 +249,9 @@ var filters = {
 export default {
   name: 'IncidentsList',
   components: {
+    'incident-show': IncidentShowComponent,
     'incident-show-icon': IncidentShowIconComponent,
-    'incident-comments-show': IncidentCommentShowComponent,
+    'incident-comments-show': IncidentCommentsShowComponent,
     'incident-close': IncidentCloseComponent,
     'incident-delete': IncidentDeleteComponent,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
