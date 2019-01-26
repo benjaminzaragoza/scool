@@ -235,8 +235,8 @@ class MoodleUserTest extends TestCase
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
-
-        $user = MoodleUser::addLocalUserByUsername($user, $scoolUser);
+        $localUsers = User::all();
+        $user = MoodleUser::addLocalUserByUsername($localUsers, $user);
         $this->assertTrue($scoolUser->id === $user->localUser['id']);
         $this->assertTrue($user->inSync);
         $this->assertCount(0,$user->errorMessages);
@@ -254,8 +254,8 @@ class MoodleUserTest extends TestCase
         $user = sample_moodle_user_array('unexistingemail@mydomain.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = null;
-
-        $user = MoodleUser::addLocalUserByUsername($user);
+        $localUsers = User::all();
+        $user = MoodleUser::addLocalUserByUsername($localUsers, $user);
         $this->assertFalse($user->inSync);
         $this->assertCount(0,$user->errorMessages);
         $this->assertCount(0,$user->flags);
