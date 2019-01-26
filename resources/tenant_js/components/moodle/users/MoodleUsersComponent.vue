@@ -1,7 +1,7 @@
 <template>
     <span id="moodle_component">
         <floating-add v-model="dialog" title="Nou usuari de Moodle">
-            <moodle-users-add @created="add" @close="dialog = false" :local-users="Object.values(localUsers)"></moodle-users-add>
+            <moodle-users-add @created="add" @close="dialog = false" :local-users="localUsers"></moodle-users-add>
         </floating-add>
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>

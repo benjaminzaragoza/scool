@@ -126,7 +126,7 @@
                 </v-layout>
             </v-card-title>
             <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
-                <moodle-users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></moodle-users-delete-multiple>
+                <moodle-users-delete-multiple :users="selected" :localUsers="localUsers" @deleted="selected=[];refresh(false)"></moodle-users-delete-multiple>
             </div>
             <v-data-table
                     class="px-0 mb-5 hidden-sm-and-down"
@@ -156,46 +156,7 @@
                         <td class="text-xs-left cell" v-text="props.item.id"></td>
                         <td class="text-xs-left cell" v-text="props.item.idnumber"></td>
                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            <template v-if="props.item.idnumber">
-                                <template v-if="localUsers[props.item.idnumber]">
-                                    <user-avatar
-                                            class="mr-2" :hash-id="localUsers[props.item.idnumber].hash_id"
-                                            :alt="localUsers[props.item.idnumber].name"
-                                    ></user-avatar><br/>
-                                    <v-tooltip bottom>
-                                        <span slot="activator">{{ localUsers[props.item.idnumber].email }}</span>
-                                        <span>{{ props.item.idnumber +  ' - ' + localUsers[props.item.idnumber].name }}</span>
-                                    </v-tooltip>
-                                    <template v-if="findLocalUserByEmail(props.item.email)">
-                                        <template v-if="localUsers[props.item.idnumber].email !== props.item.email">
-                                            <v-btn @click="changeLocalUser()"
-                                                   icon color="error" title="No coincideixen el usuari local i l'usuari de Moodle. Feu clic per arreglar-ho">
-                                                <v-icon>error</v-icon>
-                                            </v-btn>
-                                        </template>
-                                    </template>
-                                    <template v-else>
-                                        <v-btn @click="changeLocalUser()"
-                                           icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
-                                            <v-icon>add</v-icon>
-                                        </v-btn>
-                                    </template>
-                                </template>
-                                <template v-else>
-                                    <v-btn small @click="changeLocalUser()"
-                                       icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
-                                        <v-icon small>add</v-icon>
-                                    </v-btn>
-                                    {{ props.item.idnumber }}
-                                </template>
-                            </template>
-                            <template v-else>
-                                    Cap
-                                    <v-btn small @click="changeLocalUser()"
-                                        icon color="success" title="No hi ha cap usuari local amb aquestes dades. Feu clic si el voleu importar de Moodle">
-                                        <v-icon small>add</v-icon>
-                                    </v-btn>
-                            </template>
+                            <moodle-user-local-user :user="props.item" :local-users="localUsers"></moodle-user-local-user>
                         </td>
                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <v-avatar color="primary" :title="props.item.fullname" size="32">
@@ -245,7 +206,7 @@
                             <timeago v-if="props.item.lastaccess !== 0" :auto-update="60" :datetime="new Date(props.item.lastaccess*1000)"></timeago>
                             <span v-else>Mai</span>
                         </td>
-                        <td v-text="isUserInSync(props.item)"></td>
+                        <td> {{ formatBoolean(props.item.userInSync) }}</td>
                         <td class="text-xs-left cell">
                             <json-dialog-component btn-class="ma-0" icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="props.item"></json-dialog-component>
                             <moodle-user-edit-link :user="props.item" class="ma-0"></moodle-user-edit-link>
@@ -264,11 +225,11 @@
 import MoodleSettings from './MoodleSettingsComponent'
 import JsonDialogComponent from '../../ui/JsonDialogComponent'
 import FullScreenDialog from '../../ui/FullScreenDialog'
-import UserAvatar from '../../ui/UserAvatarComponent'
 import MoodleUserChangePassword from './MoodleUserChangePassword'
 import MoodleUserEditLink from './MoodleUserEditLink'
 import MoodleUserRemove from './MoodleUserRemove'
 import MoodleUsersDeleteMultiple from './MoodleUsersDeleteMultiple'
+import MoodleUserLocalUser from './MoodleUserLocalUser'
 
 var filters = {
   all: function (incidents) {
@@ -282,11 +243,11 @@ export default {
     'moodle-settings': MoodleSettings,
     'json-dialog-component': JsonDialogComponent,
     'fullscreen-dialog': FullScreenDialog,
-    'user-avatar': UserAvatar,
     'moodle-user-change-password': MoodleUserChangePassword,
     'moodle-user-edit-link': MoodleUserEditLink,
     'moodle-user-remove': MoodleUserRemove,
-    'moodle-users-delete-multiple': MoodleUsersDeleteMultiple
+    'moodle-users-delete-multiple': MoodleUsersDeleteMultiple,
+    'moodle-user-local-user': MoodleUserLocalUser
   },
   data () {
     return {
@@ -340,19 +301,6 @@ export default {
     }
   },
   methods: {
-    isUserInSync (user) {
-      const localUser = this.localUsers[user.idnumber]
-      if (localUser && localUser.email === user.email && localUser.lastname === user.lastname && localUser.givenName === user.firstname) return 'Sí'
-      return 'No'
-    },
-    findLocalUserByEmail (email) {
-      return Object.values(this.localUsers).find((user) => {
-        return user.email === email
-      })
-    },
-    changeLocalUser () {
-      console.log('TODO change local user')
-    },
     refresh () {
       this.refreshing = true
       window.axios.get('/api/v1/moodle/users').then(response => {
@@ -363,6 +311,9 @@ export default {
         this.$snackbar.showError(error)
         this.refreshing = false
       })
+    },
+    formatBoolean (boolean) {
+      return boolean ? 'Sí' : 'No'
     }
   }
 }

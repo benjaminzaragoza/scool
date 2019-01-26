@@ -8827,6 +8827,34 @@ if (! function_exists('sample_logs')) {
     }
 }
 
+if (! function_exists('sample_moodle_user_array')) {
+    function sample_moodle_user_array($username = null) {
+        $username = $username ? $username : 'pepepardo@iesebre.com';
+        return $user = [
+            'id' => 10,
+            'username' => $username,
+            'firstname' => 'Pepe',
+            'lastname' => 'Pardo Jeans',
+            'fullname' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com',
+            'department' => '',
+            'institution' => "Institut de l'Ebre",
+            'idnumber' => '131',
+            'firstaccess' => 1381338817,
+            'lastaccess' => 1401207111,
+            'auth' => 'nologin',
+            'suspended' => false,
+            'confirmed' => true,
+            'lang' => 'ca',
+            'theme' => '',
+            'timezone' => '99',
+            'mailformat' => 1,
+            'city' => 'La Senia',
+            'profileimageurlsmall' => 'https://secure.gravatar.com/avatar/46440f886cfe06f9193812d8905d2e79?s=35&d=mm'
+        ];
+    }
+}
+
 if (! function_exists('create_sample_moodle_user')) {
     function create_sample_moodle_user() {
         $user = [

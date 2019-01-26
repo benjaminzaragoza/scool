@@ -338,7 +338,7 @@ export default {
           'username': this.email,
           'firstname': this.givenName,
           'lastname': this.getFamilyName(this.sn1, this.sn2),
-          'email': this.email,
+          'email': this.personalEmail,
           'createpassword': true,
           'idnumber': this.user.id
         }

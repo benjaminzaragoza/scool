@@ -14,6 +14,9 @@ use GuzzleHttp\Client;
  */
 class MoodleUser extends Model
 {
+    const ID_NUMBER_CAN_BE_SYNCED = 1;
+    const USERNAME_CAN_BE_SYNCED = 2;
+
     protected $guarded = [];
 
     /**
@@ -22,6 +25,77 @@ class MoodleUser extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function adapt($user)
+    {
+        $user = initializeUser($user);
+        if ($user['idnumber']) {
+            $user = self::addLocalUser($user, User::find($user['idnumber']));
+        } else {
+            $user = self::addLocalUserByUsername($user, User::find($user['idnumber']));
+        }
+        return $user;
+    }
+
+    public static function initializeUser($user)
+    {
+        $user['errorMessages'] = collect([]);
+        $user['inSync'] = false;
+        $user['flags'] = collect([]);
+        return $user;
+    }
+
+    /**
+     * addLocalUserByUsername
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function addLocalUserByUsername($user,$scoolUser)
+    {
+        if ($user['username']) {
+            $scoolUser = User::where('email',$user['username'])->first();
+            if ($scoolUser) {
+                $user['localUser'] = $scoolUser->mapSimple();
+                $user['errorMessages'][] = 'Usuari local trobat però no té idnumber sincronitzat';
+                $user['flags'][] = MoodleUser::ID_NUMBER_CAN_BE_SYNCED;
+            }
+        }
+        return $user;
+    }
+
+    /**
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function addLocalUser($user,$scoolUser)
+    {
+        if ($scoolUser) {
+            $user['localUser'] = $scoolUser->mapSimple();
+            $user = self::userInSync($user, $scoolUser);
+        } else {
+            $user['errorMessages'][] = 'Idnumber no vàlid. No hi ha cap usuari local amb aquest id';
+        }
+        return $user;
+    }
+
+    /**
+     * userInSync.
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function userInSync($user,$scoolUser)
+    {
+        if ($user['username'] !== $scoolUser->email) {
+            $user['errorMessages']->push("Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu");
+            $user['flags']->push(MoodleUser::USERNAME_CAN_BE_SYNCED);
+        } else {
+            $user['inSync'] = true;
+        }
+        return $user;
     }
 
     /**

@@ -28,11 +28,10 @@ class MoodleUsersController extends Controller
         $users = Cache::rememberForever('scool_moodle_users', function () {
             return collect(MoodleUser::all());
         });
-
-        $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
-        $localUsers  = $localUsers->mapWithKeys(function ($user) {
-            return [$user['id'] => $user];
+        $users = $users->map(function($user) {
+           return MoodleUser::adapt($user);
         });
+        $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
         return view('tenants.moodle.index', compact('users','localUsers','action'));
     }
 }
