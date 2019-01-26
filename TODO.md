@@ -985,7 +985,7 @@ MOODLE USERS LIST:
 - [X] Estil de la taula més dens?
 
 Altres:
-  - [ ] Camp idnumber sigui un link al perfil de l'usuari local amb aquest id=idnumber
+  - [X] Camp idnumber sigui un link al perfil de l'usuari local amb aquest id=idnumber
   - [ ] Últim accés tingui un title que mostri la data exacte d'últim accés
   - [ ] Importar usuari de Moodle a Local:
     - [ ] Crear usuari utilitzant correu de Moodle i fullname com a name
