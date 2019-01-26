@@ -2,10 +2,13 @@
 
 namespace Tests\Unit\Tenants;
 
+use App\Models\GoogleUser;
 use App\Models\MoodleUser;
 use App\Models\User;
+use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Contracts\Console\Kernel;
 
 /**
  * Class MoodleUserTest.
@@ -15,6 +18,29 @@ use Tests\TestCase;
 class MoodleUserTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * Set up.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        Config::set('auth.providers.users.model',User::class);
+    }
+
+    /**
+     * Refresh the in-memory database.
+     *
+     * @return void
+     */
+    protected function refreshInMemoryDatabase()
+    {
+        $this->artisan('migrate',[
+            '--path' => 'database/migrations/tenant'
+        ]);
+
+        $this->app[Kernel::class]->setArtisan(null);
+    }
 
     /**
      * @test
@@ -33,7 +59,11 @@ class MoodleUserTest extends TestCase
     public function adapt()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_moodle_user_array($scoolUser->email);
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@email.com'
+        ]));
+        $user = sample_moodle_user_array('prova@email.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
         $this->assertFalse(array_key_exists('localUser', $user));
@@ -53,7 +83,11 @@ class MoodleUserTest extends TestCase
     public function adaptByUsername()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_moodle_user_array($scoolUser->email);
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@email.com'
+        ]));
+        $user = sample_moodle_user_array('prova@email.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = null;
         $localUsers = User::all();

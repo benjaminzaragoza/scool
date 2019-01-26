@@ -32,7 +32,6 @@ class MoodleUsersController extends Controller
         $users = $users->map(function($user) use ($localUsers) {
            return MoodleUser::adapt($user, $localUsers);
         });
-
         return view('tenants.moodle.index', compact('users','localUsers','action'));
     }
 }

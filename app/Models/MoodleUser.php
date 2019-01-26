@@ -51,7 +51,7 @@ class MoodleUser extends Model
     public static function findByIdEmail($localUsers, $moodleUser)
     {
         return $localUsers->filter(function($user) use ($moodleUser) {
-            return $user['email'] == $moodleUser->username;
+            return $user['corporativeEmail'] == $moodleUser->username;
         })->first();
     }
 
@@ -118,12 +118,12 @@ class MoodleUser extends Model
     public static function userInSync($user,$scoolUser)
     {
         $errors = false;
-        if ($user->username !== $scoolUser['email']) {
+        if ($user->username !== $scoolUser['corporativeEmail']) {
             $user->errorMessages->push("Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu");
             $user->flags->push(MoodleUser::USERNAME_CAN_BE_SYNCED);
             $errors = true;
         }
-        if ($user->idnumber !== $scoolUser['id']) {
+        if (intval($user->idnumber) !== intval($scoolUser['id'])) {
             $user->errorMessages->push('Idnumber no vàlid. No hi ha cap usuari local amb aquest id');
             $user->flags->push(MoodleUser::ID_NUMBER_CAN_BE_SYNCED);
             $errors = true;

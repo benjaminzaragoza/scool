@@ -726,6 +726,17 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * Get the user's corporativeEmail.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getCorporativeEmailAttribute($value)
+    {
+        return optional($this->googleUser)->google_email;
+    }
+
+    /**
      * Map
      * @return array
      */
