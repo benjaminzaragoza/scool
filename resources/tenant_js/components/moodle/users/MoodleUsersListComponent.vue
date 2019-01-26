@@ -59,43 +59,8 @@
                                    <v-flex xs2>
                                         <moodle-user-language-select v-model="language"></moodle-user-language-select>
                                    </v-flex>
-                                   <v-flex xs4>
-                                       <!--<user-select-->
-                                               <!--label="Assignada a:"-->
-                                               <!--:users="filteredAssignees"-->
-                                               <!--v-model="assignee"-->
-                                       <!--&gt;</user-select>-->
-                                   </v-flex>
-                                   <v-flex xs4>
-                                       <!--<v-autocomplete-->
-                                               <!--v-model="selectedTags"-->
-                                               <!--:items="dataTags"-->
-                                               <!--attach-->
-                                               <!--chips-->
-                                               <!--label="Etiquetes"-->
-                                               <!--multiple-->
-                                               <!--item-value="id"-->
-                                               <!--item-text="value"-->
-                                       <!--&gt;-->
-                                            <!--<template slot="selection" slot-scope="data">-->
-                                                <!--<v-chip-->
-                                                        <!--small-->
-                                                        <!--label-->
-                                                        <!--@input="data.parent.selectItem(data.item)"-->
-                                                        <!--:selected="data.selected"-->
-                                                        <!--class="chip&#45;&#45;select-multi"-->
-                                                        <!--:color="data.item.color"-->
-                                                        <!--text-color="white"-->
-                                                        <!--:key="JSON.stringify(data.item)"-->
-                                                <!--&gt;<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}</v-chip>-->
-                                            <!--</template>-->
-                                            <!--<template slot="item" slot-scope="data">-->
-                                                <!--<v-checkbox v-model="data.tile.props.value"></v-checkbox>-->
-                                                <!--<v-chip small label :title="data.item.description" :color="data.item.color" text-color="white">-->
-                                                    <!--<v-icon small left v-text="data.item.icon"></v-icon>{{ data.item.value }}-->
-                                                <!--</v-chip>-->
-                                            <!--</template>-->
-                                       <!--</v-autocomplete>-->
+                                   <v-flex xs6>
+                                        <moodle-user-filters-select v-model="selectedFilters" :filters="filterNames"></moodle-user-filters-select>
                                    </v-flex>
                                </v-layout>
                           </v-flex>
@@ -205,6 +170,50 @@ import MoodleUsersDeleteMultiple from './MoodleUsersDeleteMultiple'
 import MoodleUserLocalUser from './MoodleUserLocalUser'
 import MoodleUserAuthTypesSelect from './MoodleUserAuthTypesSelect'
 import MoodleUserLanguageSelect from './MoodleUserLanguageSelect'
+import MoodleUserFiltersSelect from './MoodleUserFiltersSelect'
+
+var filterNames = [
+  {
+    id: 1,
+    name: 'Sense usuari local',
+    function: 'withoutLocalUser'
+  },
+  {
+    id: 2,
+    name: 'Amb usuari local',
+    function: 'withLocalUser'
+  },
+  {
+    id: 3,
+    name: 'No sincronitzat',
+    function: 'notSynced'
+  },
+  {
+    id: 4,
+    name: 'Sincronitzat',
+    function: 'Synced'
+  },
+  {
+    id: 5,
+    name: 'Confirmat',
+    function: 'confirmed'
+  },
+  {
+    id: 6,
+    name: 'No confirmat',
+    function: 'notConfirmed'
+  },
+  {
+    id: 7,
+    name: 'Mai logat',
+    function: 'neverLogged'
+  },
+  {
+    id: 8,
+    name: 'Com a mínim un login',
+    function: 'loggedOnceAtLeast'
+  }
+]
 
 var filters = {
   all: function (users) {
@@ -221,28 +230,44 @@ var filters = {
     }) : []
   },
   withoutLocalUser: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('localUser')
+    }) : []
   },
   withLocalUser: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('localUser')
+    }) : []
   },
   notSynced: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return !user.inSync
+    }) : []
   },
   Synced: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return user.inSync
+    }) : []
   },
   confirmed: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return user.confirmed
+    }) : []
   },
   notConfirmed: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return !user.confirmed
+    }) : []
   },
   neverLogged: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return user.lastaccess === 0
+    }) : []
   },
   loggedOnceAtLeast: function (users) {
-    return users
+    return users ? users.filter(function (user) {
+      return user.lastaccess !== 0
+    }) : []
   }
 }
 
@@ -258,7 +283,8 @@ export default {
     'moodle-users-delete-multiple': MoodleUsersDeleteMultiple,
     'moodle-user-local-user': MoodleUserLocalUser,
     'moodle-user-auth-types-select': MoodleUserAuthTypesSelect,
-    'moodle-user-language-select': MoodleUserLanguageSelect
+    'moodle-user-language-select': MoodleUserLanguageSelect,
+    'moodle-user-filters-select': MoodleUserFiltersSelect
   },
   data () {
     return {
@@ -268,6 +294,7 @@ export default {
       search: '',
       refreshing: false,
       filter: 'all',
+      selectedFilters: [],
       dataUsers: this.users,
       settingsDialog: false,
       pagination: {
@@ -295,6 +322,11 @@ export default {
       let filteredUsers = this.dataUsers
       if (this.authType) filteredUsers = filters['byAuthType'](this.dataUsers, this.authType)
       if (this.language) filteredUsers = filters['byLanguage'](this.dataUsers, this.language)
+      if (this.selectedFilters.length > 0) {
+        this.selectedFilters.forEach(filter => {
+          filteredUsers = filters[filter.function](this.dataUsers)
+        })
+      }
       return filteredUsers
     },
     headers () {
@@ -334,6 +366,9 @@ export default {
     formatMessages (messages) {
       return messages.join('<br/>')
     }
+  },
+  created () {
+    this.filterNames = filterNames
   }
 }
 </script>
