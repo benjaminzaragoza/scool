@@ -37,7 +37,8 @@ class MoodleUserTest extends TestCase
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
         $this->assertFalse(array_key_exists('localUser', $user));
-        $adaptedUser = MoodleUser::adapt($user);
+        $localUsers = User::all();
+        $adaptedUser = MoodleUser::adapt($user, $localUsers);
         $this->assertCount(0, $adaptedUser->errorMessages);
         $this->assertCount(0, $adaptedUser->flags);
         $this->assertTrue($adaptedUser->inSync);
@@ -55,7 +56,8 @@ class MoodleUserTest extends TestCase
         $user = sample_moodle_user_array($scoolUser->email);
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = null;
-        $adaptedUser = MoodleUser::adapt($user);
+        $localUsers = User::all();
+        $adaptedUser = MoodleUser::adapt($user, $localUsers);
         $this->assertCount(1, $adaptedUser->errorMessages);
         $this->assertEquals("Idnumber no vàlid. No hi ha cap usuari local amb aquest id", $adaptedUser->errorMessages->first());
         $this->assertCount(1, $adaptedUser->flags);
@@ -213,7 +215,7 @@ class MoodleUserTest extends TestCase
     {
         $scoolUser = factory(User::class)->create();
         $user = sample_moodle_user_array();
-        $user['idNumber'] = $scoolUser->id;
+        $user->idNumber = $scoolUser->id;
         $user = MoodleUser::initializeUser($user);
 
         $user = MoodleUser::addLocalUser($user,$scoolUser);

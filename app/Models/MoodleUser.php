@@ -27,13 +27,41 @@ class MoodleUser extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function adapt($user)
+    /**
+     * findByIdNumber
+     *
+     * @param $localUsers
+     * @param $moodleUser
+     * @return
+     */
+    public static function findByIdNumber($localUsers, $moodleUser)
+    {
+        return $localUsers->filter(function($user) use ($moodleUser) {
+            return $user->id == $moodleUser->idnumber;
+        })->first();
+    }
+
+    /**
+     * findByIdEmail
+     *
+     * @param $localUsers
+     * @param $moodleUser
+     * @return
+     */
+    public static function findByIdEmail($localUsers, $moodleUser)
+    {
+        return $localUsers->filter(function($user) use ($moodleUser) {
+            return $user->email == $moodleUser->username;
+        })->first();
+    }
+
+    public static function adapt($user, $localUsers)
     {
         $user = MoodleUser::initializeUser($user);
-        if ($user->idnumber) {
-            $user = self::addLocalUser($user, User::find($user->idnumber));
+        if (isset($user->idnumber) && $user->idnumber ) {
+            $user = self::addLocalUser($user, self::findByIdNumber($localUsers, $user));
         } else {
-            $user = self::addLocalUserByUsername($user, User::find($user->idnumber));
+            $user = self::addLocalUserByUsername($localUsers, $user);
         }
         return $user;
     }
@@ -48,13 +76,14 @@ class MoodleUser extends Model
 
     /**
      * addLocalUserByUsername
+     *
      * @param $user
      * @return mixed
      */
-    public static function addLocalUserByUsername($user)
+    public static function addLocalUserByUsername($localUsers, $user)
     {
         if ($user->username) {
-            $scoolUser = User::where('email',$user->username)->first();
+            $scoolUser = self::findByIdEmail($localUsers , $user);
             if ($scoolUser) {
                 $user->localUser = $scoolUser->mapSimple();
                 $user = self::userInSync($user, $scoolUser);
