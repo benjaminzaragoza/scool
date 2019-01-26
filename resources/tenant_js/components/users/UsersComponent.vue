@@ -6,7 +6,7 @@
                   @moodleUserCreated="refresh"
                   @avatarSaved="refresh"></user-add>
 
-        <users-list :users="users" :user-types="userTypes" :roles="roles"></users-list>
+        <users-list :users="users" :user="user" :user-types="userTypes" :roles="roles"></users-list>
 
         <!--TODO-->
         <!--<users-dashboard></users-dashboard>-->
@@ -23,6 +23,10 @@ export default {
     'users-list': UsersList
   },
   props: {
+    user: {
+      type: Object,
+      required: false
+    },
     users: {
       type: Array,
       required: true

@@ -16,6 +16,13 @@ use Spatie\Permission\Models\Role;
  */
 class UsersController extends Controller
 {
+    public function show(ShowUsersManagement $request, $tenant, User $user)
+    {
+        $users = User::getUsers();
+        $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
+        $roles = Role::all();
+        return view('tenants.users.show',compact('users','user','userTypes','roles'));
+    }
     /**
      * @param ShowUsersManagement $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

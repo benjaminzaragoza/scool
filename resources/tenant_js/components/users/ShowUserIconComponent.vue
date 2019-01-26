@@ -272,6 +272,7 @@ import axios from 'axios'
 import PersonalDataCard from '../people/PersonalDataCardComponent'
 
 export default {
+  name: 'ShowUserIcon',
   components: {
     'personal-data-card': PersonalDataCard
   },
@@ -285,6 +286,10 @@ export default {
     user: {
       type: Object,
       default: () => { return {} }
+    },
+    currentUser: {
+      type: Object,
+      required: false
     },
     users: {
       type: Array,
@@ -312,6 +317,13 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    }
+  },
+  created () {
+    if (this.user) {
+      if (this.currentUser) {
+        if (this.user.id === this.currentUser.id) this.dialog = true
+      }
     }
   }
 }

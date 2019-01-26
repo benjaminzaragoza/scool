@@ -174,7 +174,7 @@
                                     <td class="text-xs-left cell" v-html="props.item.formatted_created_at_diff" :title="props.item.formatted_created_at"></td>
                                     <td class="text-xs-left cell" :title="props.item.formatted_updated_at">{{props.item.formatted_updated_at_diff}}</td>
                                     <td class="text-xs-left cell">
-                                        <show-user-icon :user="props.item" :users="users"></show-user-icon>
+                                        <show-user-icon :user="props.item" :users="users" :current-user="user"></show-user-icon>
                                         <user-emails :user="props.item"></user-emails>
                                         <!--<user-send-welcome-email :user="props.item"></user-send-welcome-email>-->
                                         <!--<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>-->
@@ -429,6 +429,10 @@ export default {
     },
     roles: {
       type: Array,
+      required: false
+    },
+    user: {
+      type: Object,
       required: false
     }
   },
