@@ -176,7 +176,11 @@ class MoodleUserTest extends TestCase
     public function userNotInSyncIdnumberIncorrect()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_moodle_user_array($scoolUser->email);
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@email.com'
+        ]));
+        $user = sample_moodle_user_array('prova@email.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = 3244432;
         $this->assertTrue(array_key_exists('errorMessages',$user));
@@ -199,7 +203,11 @@ class MoodleUserTest extends TestCase
     public function userInSync()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_moodle_user_array($scoolUser->email);
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@email.com'
+        ]));
+        $user = sample_moodle_user_array('prova@email.com');
         $user = MoodleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
         $this->assertTrue(array_key_exists('errorMessages',$user));
