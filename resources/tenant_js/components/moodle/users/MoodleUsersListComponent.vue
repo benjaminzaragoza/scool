@@ -106,7 +106,9 @@
                             ></v-checkbox>
                         </td>
                         <td class="text-xs-left cell" v-text="props.item.id"></td>
-                        <td class="text-xs-left cell" v-text="props.item.idnumber"></td>
+                        <td class="text-xs-left cell">
+                            <user-show-link :id="props.item.idnumber" :text="props.item.idnumber"></user-show-link>
+                        </td>
                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             <moodle-user-local-user :user="props.item" :local-users="localUsers"></moodle-user-local-user>
                         </td>
@@ -171,6 +173,7 @@ import MoodleUserLocalUser from './MoodleUserLocalUser'
 import MoodleUserAuthTypesSelect from './MoodleUserAuthTypesSelect'
 import MoodleUserLanguageSelect from './MoodleUserLanguageSelect'
 import MoodleUserFiltersSelect from './MoodleUserFiltersSelect'
+import UserShowLink from '../../users/UserShowLink'
 
 var filterNames = [
   {
@@ -284,7 +287,8 @@ export default {
     'moodle-user-local-user': MoodleUserLocalUser,
     'moodle-user-auth-types-select': MoodleUserAuthTypesSelect,
     'moodle-user-language-select': MoodleUserLanguageSelect,
-    'moodle-user-filters-select': MoodleUserFiltersSelect
+    'moodle-user-filters-select': MoodleUserFiltersSelect,
+    'user-show-link': UserShowLink
   },
   data () {
     return {

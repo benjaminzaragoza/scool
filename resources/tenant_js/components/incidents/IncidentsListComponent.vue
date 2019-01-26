@@ -119,6 +119,17 @@
                   </v-flex>
                 </v-layout>
             </v-card-title>
+
+            <v-dialog
+                    v-if="showIncident"
+                    v-model="showIncident"
+                    fullscreen
+                    hide-overlay
+                    transition="dialog-bottom-transition"
+                    @keydown.esc.stop.prevent="showIncident=false">
+                <incident-show :incident="getShowIncident()" v-role="'Incidents'" @close="showIncident = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
+            </v-dialog>
+            
             <v-data-table
                     class="px-0 mb-2 hidden-sm-and-down"
                     :headers="headers"
@@ -186,7 +197,7 @@
                                     v-model="showDialog"
                                     title="Mostra la incidència"
                                     :resource="incident"
-                                    v-if="showDialog === false || showDialog === incident.id">
+                                    v-if="showDialog === false">
                                 <incident-show :incident="incident" v-role="'Incidents'" @close="showDialog = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
                             </fullscreen-dialog>
                             <incident-close v-model="incident" v-if="$can('close',incident) || $hasRole('IncidentsManager')" @toggle="refresh"></incident-close>
@@ -265,7 +276,7 @@ export default {
     'incident-settings': IncidentSettings,
     'incident-tags': IncidentTagsComponent,
     'incident-assignees': IncidentAssigneesComponent,
-    'changelog-loggable': ChangelogLoggable,
+    'changelog-loggable': ChangelogLoggable
   },
   data () {
     return {
@@ -282,7 +293,8 @@ export default {
       dataTags: this.tags,
       creator: null,
       assignee: null,
-      assignees: this.managerUsers
+      assignees: this.managerUsers,
+      showIncident: false
     }
   },
   props: {
@@ -409,15 +421,24 @@ export default {
         this.$snackbar.showError(error)
         this.refreshing = false
       })
+    },
+    getShowIncident () {
+      if (this.incident) {
+        return this.dataIncidents.find(incident => {
+          return incident.id === this.incident.id
+        })
+      }
     }
   },
   created () {
     if (this.incidents === undefined) this.fetch()
     else this.$store.commit(mutations.SET_INCIDENTS, this.incidents)
     this.filters = Object.keys(filters)
+    console.log('CREATED')
     if (this.incident) {
-      this.showDialog = this.incident.id
-      this.filter = 'all'
+      console.log('INCIDENT EXISTS: ')
+      console.log(this.incident)
+      this.showIncident = true
     }
   }
 }
