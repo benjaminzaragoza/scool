@@ -137,17 +137,17 @@ Idea:
  - [ ] Sense Avatar
  - [ ] Amb usuari local
  - [ ] Sense usuari local
- - [ ] Amb email personal
- - [ ] sense email personal
- - [ ] Amb employeeId
- - [ ] Sense employeeId
- - [ ] Amb mòbil
- - [ ] Sense mòbil
- - [ ] Suspesos
- - [ ] No suspesos/Actius
- - [ ] Logats algun cop
- - [ ] Sincronitzat
- - [ ] No sincornitzat
+ - [X] Amb email personal
+ - [X] sense email personal
+ - [X] Amb employeeId
+ - [X] Sense employeeId
+ - [X] Amb mòbil
+ - [X] Sense mòbil
+ - [X] Suspesos
+ - [X] No suspesos/Actius
+ - [X] Logats algun cop
+ - [X] Sincronitzat
+ - [X] No sincornitzat
  
 - [ ] Crear usuari de Google
   - [X] employeeId s'omple correctament? COMPROVAT
