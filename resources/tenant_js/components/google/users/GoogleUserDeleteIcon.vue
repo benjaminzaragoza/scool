@@ -1,6 +1,7 @@
 <template>
     <v-tooltip bottom>
         <v-btn
+                class="ma-0"
                 slot="activator"
                 icon
                 color="error"

@@ -1,11 +1,21 @@
 <template>
     <span style="display:inline-block">
-        <v-btn v-if="icon" icon class="mx-0" title="Vegeu la fitxa de l'usuari" @click.native.stop="dialog = true">
-            <v-icon color="primary">visibility</v-icon>
-        </v-btn>
-        <v-btn v-else class="mx-0" title="Vegeu la fitxa de l'usuari" @click.native.stop="dialog = false">
-            <v-icon color="primary">visibility</v-icon> Compte de Google
-        </v-btn>
+        <span v-if="icon">
+            <v-tooltip bottom>
+                <v-btn slot="activator" icon class="mx-0 ma-0" title="" @click.native.stop="dialog = true">
+                    <v-icon color="primary">visibility</v-icon>
+                </v-btn>
+                <span>Fitxa de l'usuari</span>
+            </v-tooltip>
+        </span>
+        <span v-else>
+            <v-tooltip bottom>
+                <v-btn slot="activator" class="mx-0 ma-0" title="Vegeu la fitxa de l'usuari" @click.native.stop="dialog = false">
+                    <v-icon color="primary">visibility</v-icon> Compte de Google
+                </v-btn>
+                <span>Fitxa de l'usuari</span>
+            </v-tooltip>
+        </span>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
             <v-card>
                 <v-toolbar dark color="primary">

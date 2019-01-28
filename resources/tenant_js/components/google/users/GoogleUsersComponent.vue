@@ -203,27 +203,9 @@
                                         </td>
                                         <td class="text-xs-left cell">
                                             <show-google-user-icon :user="props.item"></show-google-user-icon>
-
                                             <google-user-delete-icon :user="props.item"></google-user-delete-icon>
-
-                                            <confirm-icon v-if="!props.item.suspended"
-                                                    :id="'google_user_suspend_' + props.item.primaryEmail.replace('@','_')"
-                                                    icon="stop"
-                                                    color="pink"
-                                                    :working="suspending"
-                                                    @confirmed="suspend(props.item)"
-                                                    tooltip="Suspendre"
-                                                    message="Esteu segurs que voleu suspendre l'usuari?"
-                                            ></confirm-icon>
-                                            <confirm-icon v-else
-                                                          :id="'google_user_activate_' + props.item.primaryEmail.replace('@','_')"
-                                                          icon="play_arrow"
-                                                          color="primary"
-                                                          :working="activating"
-                                                          @confirmed="activate(props.item)"
-                                                          tooltip="Activar"
-                                                          message="Esteu segurs que voleu activar l'usuari?"
-                                            ></confirm-icon>
+                                            <google-user-active-icon v-if="props.item.suspended" :user="props.item"></google-user-active-icon>
+                                            <google-user-suspend-icon v-else :user="props.item"></google-user-suspend-icon>
                                         </td>
                                     </tr>
                                 </template>
@@ -240,7 +222,6 @@
 import { mapGetters } from 'vuex'
 import * as mutations from '../../../store/mutation-types'
 
-import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import showGoogleUserIcon from './ShowGoogleUserIconComponent'
 import moment from 'moment'
 import UserShowLink from '../../users/UserShowLink'
@@ -248,6 +229,9 @@ import GoogleUserLocalUser from './GoogleUserLocalUser'
 import GoogleUserFiltersSelect from './GoogleUserFiltersSelect'
 import GoogleUsersDeleteMultiple from './GoogleUsersDeleteMultiple'
 import GoogleUserDeleteIcon from './GoogleUserDeleteIcon'
+import GoogleUserSuspendIcon from './GoogleUserSuspendIcon'
+import GoogleUserActiveIcon from './GoogleUserActiveIcon'
+
 var filterNames = [
   {
     id: 1,
@@ -420,9 +404,10 @@ var filters = {
 export default {
   name: 'GoogleUsersComponent',
   components: {
-    'confirm-icon': ConfirmIcon,
     'show-google-user-icon': showGoogleUserIcon,
     'google-user-delete-icon': GoogleUserDeleteIcon,
+    'google-user-suspend-icon': GoogleUserSuspendIcon,
+    'google-user-active-icon': GoogleUserActiveIcon,
     'user-show-link': UserShowLink,
     'google-user-local-user': GoogleUserLocalUser,
     'google-user-filters-select': GoogleUserFiltersSelect,
@@ -432,8 +417,6 @@ export default {
     return {
       selected: [],
       search: '',
-      suspending: false,
-      activating: false,
       refreshing: false,
       settingsDialog: false,
       googleWatch: false,
@@ -519,28 +502,6 @@ export default {
         this.refreshing = false
         this.$snackbar.showError(error)
         console.log(error)
-      })
-    },
-    suspend (user) {
-      this.suspending = true
-      // TODO
-      window.axios.delete('/api/v1/gsuite/active/users/' + user.id).then(response => {
-        this.suspending = false
-        this.$snackbar.showMessage('Usuari suspès correctament')
-      }).catch(error => {
-        this.suspending = false
-        this.$snackbar.showError(error)
-      })
-    },
-    activate (user) {
-      this.activating = true
-      // TODO
-      window.axios.post('/api/v1/gsuite/active/users/' + user.id).then(response => {
-        this.activating = false
-        this.$snackbar.showMessage('Usuari activat correctament')
-      }).catch(error => {
-        this.activating = false
-        this.$snackbar.showError(error)
       })
     }
   },
