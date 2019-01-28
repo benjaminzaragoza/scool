@@ -8856,12 +8856,15 @@ if (! function_exists('sample_moodle_user_array')) {
 }
 
 if (! function_exists('sample_google_user_array')) {
-    function sample_google_user_array($id = null) {
+    function sample_google_user_array($id = null, $employeeId = null, $personalEmail= null, $primaryEmail= null) {
         $id = $id ? $id : '113829626411274751363';
+        $employeeId = $employeeId ? $employeeId : 689;
+        $personalEmail = $personalEmail ? $personalEmail : 'personal@email.com';
+        $primaryEmail = $primaryEmail ? $primaryEmail : 'usuari@iesebre.com';
         return $user = (object) [
             'firstname' => 'Pepe',
             'creationTime' => '2015-09-22T15:31:45.000Z',
-            'employeeId' => null,
+            'employeeId' => $employeeId,
             'familyName' => 'Cuadrada Canillo',
             'fullName' => 'Aaron Cuadrada Canillo',
             'givenName' => 'Aaron',
@@ -8872,8 +8875,8 @@ if (! function_exists('sample_google_user_array')) {
             'mobile' => null,
             'orgUnitPath' => '/All/Alumnes',
             'organizations' => null,
-            'personalEmail' => null,
-            'primaryEmail' => 'aaroncuadrado@iesebre.com',
+            'personalEmail' => $personalEmail,
+            'primaryEmail' => $primaryEmail,
             'suspended' => false,
             'suspensionReason' => null,
             'thumbnailPhotoUrl' => null

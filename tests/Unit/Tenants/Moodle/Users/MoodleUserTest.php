@@ -56,7 +56,7 @@ class MoodleUserTest extends TestCase
     /**
      * @test
      */
-    public function adapt()
+    public function adapt_by_employee_id()
     {
         $scoolUser = factory(User::class)->create();
         $scoolUser->assignGoogleUser(GoogleUser::create([

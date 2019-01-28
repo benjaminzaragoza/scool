@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GoogleUser extends Model
 {
+    const EMPLOYEE_ID_NUMBER_CAN_BE_SYNCED = 1;
+    const PRIMARY_EMAIL_CAN_BE_SYNCED = 2;
+    const PERSONAL_EMAIL_CAN_BE_SYNCED = 3;
+
     protected $guarded = [];
 
     /**
@@ -172,27 +176,60 @@ class GoogleUser extends Model
 
     public static function adapt($user, $localUsers)
     {
-        $user = MoodleUser::initializeUser($user);
-        dd($user->id);
-        if (isset($user->id) && $user->id ) {
-            $user = self::addLocalUser($user, self::findById($localUsers, $user));
-        } else {
-            $user = self::addLocalUserByCorporativeEmail($localUsers, $user);
+        $user = GoogleUser::initializeUser($user);
+        if (isset($user->employeeId) && $user->employeeId ) {
+            $user = self::addLocalUser($user, self::findByEmployeeId($localUsers, $user));
+            return $user;
         }
-        return $user;
+        if (isset($user->primaryEmail) && $user->primaryEmail ) {
+            $user = self::addLocalUser($user, self::findByPrimaryEmail($localUsers, $user));
+            return $user;
+        }
+        if (isset($user->personalEmail) && $user->personalEmail ) {
+            $user = self::addLocalUser($user, self::findByPersonalEmail($localUsers, $user));
+            return $user;
+        }
     }
 
     /**
-     * findById
+     * findByEmployeeId
      *
      * @param $localUsers
      * @param $moodleUser
      * @return
      */
-    public static function findById($localUsers, $googleUser)
+    public static function findByEmployeeId($localUsers, $googleUser)
     {
         return $localUsers->filter(function($user) use ($googleUser) {
-            return $user['google_id'] == $googleUser->id;
+            return $user['id'] == $googleUser->employeeId;
+        })->first();
+    }
+
+    /**
+     * findByPrimaryEmail
+     *
+     * @param $localUsers
+     * @param $moodleUser
+     * @return
+     */
+    public static function findByPrimaryEmail($localUsers, $googleUser)
+    {
+        return $localUsers->filter(function($user) use ($googleUser) {
+            return $user['corporativeEmail'] == $googleUser->primaryEmail;
+        })->first();
+    }
+
+    /**
+     * findByPersonalEmail
+     *
+     * @param $localUsers
+     * @param $moodleUser
+     * @return
+     */
+    public static function findByPersonalEmail($localUsers, $googleUser)
+    {
+        return $localUsers->filter(function($user) use ($googleUser) {
+            return $user['email'] == $googleUser->personalEmail;
         })->first();
     }
 
@@ -206,10 +243,37 @@ class GoogleUser extends Model
     {
         if ($scoolUser) {
             $user->localUser = $scoolUser;
-            $user = self::userInSync($user, $scoolUser);
-        } else {
-            $user->errorMessages[] = 'Idnumber no vàlid. No hi ha cap usuari local amb aquest id';
         }
+        $user = self::userInSync($user, $scoolUser);
+        return $user;
+    }
+
+    /**
+     * userInSync.
+     *
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function userInSync($user,$scoolUser)
+    {
+        $errors = false;
+        if (intval($user->employeeId) !== intval($scoolUser['id'])) {
+            $user->errorMessages->push("EmployeeId no vàlid. No hi ha cap usuari local amb aquest id");
+            $user->flags->push(GoogleUser::EMPLOYEE_ID_NUMBER_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        if ($user->primaryEmail !== $scoolUser['corporativeEmail']) {
+            $user->errorMessages->push('primaryEmail no vàlid. No hi ha cap usuari local amb aquest email corporatiu');
+            $user->flags->push(GoogleUser::PRIMARY_EMAIL_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        if ($user->personalEmail !== $scoolUser['email']) {
+            $user->errorMessages->push('personalEmail no vàlid. No hi ha cap usuari local amb aquest email personal');
+            $user->flags->push(GoogleUser::PERSONAL_EMAIL_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        if (!$errors) $user->inSync = true;
         return $user;
     }
 }

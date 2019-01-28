@@ -44,18 +44,63 @@ class GoogleUserTest extends TestCase
     /**
      * @test
      */
+    public function findByEmployeeId()
+    {
+        $scoolUser = factory(User::class)->create();
+        $localUsers = User::all();
+        $googleUser = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
+        $result = GoogleUser::findByEmployeeId($localUsers,$googleUser);
+        $this->assertNotNull($result);
+        $this->assertEquals('App\Models\User', get_class($result));
+        $this->assertTrue($result->is($scoolUser));
+    }
+
+    /**
+     * @test
+     */
+    public function findByPrimaryEmail()
+    {
+        $scoolUser = factory(User::class)->create();
+        $scoolUser->assignGoogleUser(GoogleUser::create([
+            'google_id' => 231312312,
+            'google_email' => 'prova@iesebre.com'
+        ]));
+        $localUsers = User::all();
+        $googleUser = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
+        $result = GoogleUser::findByPrimaryEmail($localUsers,$googleUser);
+        $this->assertNotNull($result);
+        $this->assertEquals('App\Models\User', get_class($result));
+        $this->assertTrue($result->is($scoolUser));
+    }
+
+    /**
+     * @test
+     */
+    public function findByPersonalEmail()
+    {
+        $scoolUser = factory(User::class)->create();
+        $localUsers = User::all();
+        $googleUser = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
+        $result = GoogleUser::findByPersonalEmail($localUsers,$googleUser);
+        $this->assertNotNull($result);
+        $this->assertEquals('App\Models\User', get_class($result));
+        $this->assertTrue($result->is($scoolUser));
+    }
+
+    /**
+     * @test
+     */
     public function adapt()
     {
         $scoolUser = factory(User::class)->create();
         $scoolUser->assignGoogleUser(GoogleUser::create([
             'google_id' => 231312312,
-            'google_email' => 'prova@email.com'
+            'google_email' => 'prova@iesebre.com'
         ]));
-        $user = sample_google_user_array(231312312);
+        $user = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
         $user = GoogleUser::initializeUser($user);
         $this->assertFalse(array_key_exists('localUser', $user));
         $localUsers = User::all();
-
 
         $adaptedUser = GoogleUser::adapt($user, $localUsers);
 
@@ -65,28 +110,6 @@ class GoogleUserTest extends TestCase
         $this->assertNotNull($adaptedUser->localUser);
         $this->assertEquals($scoolUser->name, $adaptedUser->localUser['name']);
         $this->assertEquals($scoolUser->id, $adaptedUser->localUser['id']);
-    }
-
-    /**
-     * @test
-     */
-    public function adaptByUsername()
-    {
-        $scoolUser = factory(User::class)->create();
-        $scoolUser->assignGoogleUser(GoogleUser::create([
-            'google_id' => 231312312,
-            'google_email' => 'prova@email.com'
-        ]));
-        $user = sample_google_user_array('prova@email.com');
-        $user = GoogleUser::initializeUser($user);
-        $user->idnumber = null;
-        $localUsers = User::all();
-        $adaptedUser = GoogleUser::adapt($user, $localUsers);
-        $this->assertCount(1, $adaptedUser->errorMessages);
-        $this->assertEquals("Idnumber no vàlid. No hi ha cap usuari local amb aquest id", $adaptedUser->errorMessages->first());
-        $this->assertCount(1, $adaptedUser->flags);
-        $this->assertEquals(GoogleUser::ID_NUMBER_CAN_BE_SYNCED, $adaptedUser->flags[0]);
-        $this->assertFalse($adaptedUser->inSync);
     }
 
     /**
@@ -113,78 +136,34 @@ class GoogleUserTest extends TestCase
     public function userNotInSync()
     {
         $scoolUser = factory(User::class)->create();
-        $user = sample_google_user_array('emailinventat@myemail.com');
-        $user = GoogleUser::initializeUser($user);
-        $this->assertTrue(array_key_exists('errorMessages',$user));
-        $this->assertTrue(array_key_exists('inSync',$user));
-        $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user->errorMessages);
-        $user = GoogleUser::userInSync($user, $scoolUser);
-        $this->assertCount(2,$user->errorMessages);
-        $this->assertEquals(
-            "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
-            $user->errorMessages[0]
-        );
-        $this->assertEquals(
-            "Idnumber no vàlid. No hi ha cap usuari local amb aquest id",
-            $user->errorMessages[1]
-        );
-        $this->assertFalse($user->inSync);
-        $this->assertEquals(GoogleUser::USERNAME_CAN_BE_SYNCED, $user->flags[0]);
-        $this->assertEquals(GoogleUser::ID_NUMBER_CAN_BE_SYNCED, $user->flags[1]);
-    }
-
-    /**
-     * @test
-     */
-    public function userNotInSyncUsernameAndIdnumberIncorrect()
-    {
-        $scoolUser = factory(User::class)->create();
-        $user = sample_google_user_array('emailinventat@myemail.com');
-        $user = GoogleUser::initializeUser($user);
-        $this->assertTrue(array_key_exists('errorMessages',$user));
-        $this->assertTrue(array_key_exists('inSync',$user));
-        $this->assertTrue(array_key_exists('flags',$user));
-        $this->assertCount(0,$user->errorMessages);
-        $user = GoogleUser::userInSync($user, $scoolUser);
-        $this->assertCount(2,$user->errorMessages);
-        $this->assertEquals(
-            "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
-            $user->errorMessages[0]
-        );
-        $this->assertEquals(
-            'Idnumber no vàlid. No hi ha cap usuari local amb aquest id',
-            $user->errorMessages[1]
-        );
-        $this->assertFalse($user->inSync);
-        $this->assertEquals(GoogleUser::USERNAME_CAN_BE_SYNCED, $user->flags->first());
-    }
-
-    /**
-     * @test
-     */
-    public function userNotInSyncIdnumberIncorrect()
-    {
-        $scoolUser = factory(User::class)->create();
         $scoolUser->assignGoogleUser(GoogleUser::create([
             'google_id' => 231312312,
             'google_email' => 'prova@email.com'
         ]));
-        $user = sample_google_user_array('prova@email.com');
+        $user = sample_google_user_array();
         $user = GoogleUser::initializeUser($user);
-        $user->idnumber = 3244432;
         $this->assertTrue(array_key_exists('errorMessages',$user));
         $this->assertTrue(array_key_exists('inSync',$user));
         $this->assertTrue(array_key_exists('flags',$user));
         $this->assertCount(0,$user->errorMessages);
         $user = GoogleUser::userInSync($user, $scoolUser);
-        $this->assertCount(1,$user->errorMessages);
+        $this->assertCount(3,$user->errorMessages);
         $this->assertEquals(
-            "Idnumber no vàlid. No hi ha cap usuari local amb aquest id",
-            $user->errorMessages->first()
+            'EmployeeId no vàlid. No hi ha cap usuari local amb aquest id',
+            $user->errorMessages[0]
+        );
+        $this->assertEquals(
+            'primaryEmail no vàlid. No hi ha cap usuari local amb aquest email corporatiu',
+            $user->errorMessages[1]
+        );
+        $this->assertEquals(
+            'personalEmail no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[2]
         );
         $this->assertFalse($user->inSync);
-        $this->assertEquals(GoogleUser::ID_NUMBER_CAN_BE_SYNCED, $user->flags->first());
+        $this->assertEquals(GoogleUser::EMPLOYEE_ID_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
+        $this->assertEquals(GoogleUser::PRIMARY_EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+        $this->assertEquals(GoogleUser::PERSONAL_EMAIL_CAN_BE_SYNCED, $user->flags[2]);
     }
 
     /**
@@ -197,7 +176,8 @@ class GoogleUserTest extends TestCase
             'google_id' => 231312312,
             'google_email' => 'prova@email.com'
         ]));
-        $user = sample_google_user_array('prova@email.com');
+        $user = sample_google_user_array(231312312, $scoolUser->id, $scoolUser->email , 'prova@email.com'  );
+
         $user = GoogleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
         $this->assertTrue(array_key_exists('errorMessages',$user));
@@ -220,8 +200,23 @@ class GoogleUserTest extends TestCase
         $user = GoogleUser::initializeUser($user);
         $this->assertCount(0, $user->errorMessages);
         $user = GoogleUser::addLocalUser($user, $scoolUser);
-        $this->assertCount(1, $user->errorMessages);
-        $this->assertEquals('Idnumber no vàlid. No hi ha cap usuari local amb aquest id', $user->errorMessages[0]);
+        $this->assertCount(3, $user->errorMessages);
+        $this->assertEquals(
+            'EmployeeId no vàlid. No hi ha cap usuari local amb aquest id',
+            $user->errorMessages[0]
+        );
+        $this->assertEquals(
+            'primaryEmail no vàlid. No hi ha cap usuari local amb aquest email corporatiu',
+            $user->errorMessages[1]
+        );
+        $this->assertEquals(
+            'personalEmail no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[2]
+        );
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(GoogleUser::EMPLOYEE_ID_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
+        $this->assertEquals(GoogleUser::PRIMARY_EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+        $this->assertEquals(GoogleUser::PERSONAL_EMAIL_CAN_BE_SYNCED, $user->flags[2]);
     }
 
     /**
@@ -234,7 +229,7 @@ class GoogleUserTest extends TestCase
             'google_id' => 231312312,
             'google_email' => 'prova@email.com'
         ]));
-        $user = sample_google_user_array('prova@email.com');
+        $user = sample_google_user_array(231312312, $scoolUser->id, $scoolUser->email, 'prova@email.com');
         $user = GoogleUser::initializeUser($user);
         $user->idnumber = $scoolUser->id;
 
@@ -242,6 +237,7 @@ class GoogleUserTest extends TestCase
         $this->assertTrue($scoolUser->id === $user->localUser['id']);
         $this->assertTrue($user->inSync);
         $this->assertCount(0,$user->errorMessages);
+        $this->assertCount(0,$user->flags);
     }
 
     /**
@@ -251,54 +247,27 @@ class GoogleUserTest extends TestCase
     {
         $scoolUser = factory(User::class)->create();
         $user = sample_google_user_array();
-        $user->idNumber = $scoolUser->id;
         $user = GoogleUser::initializeUser($user);
 
         $user = GoogleUser::addLocalUser($user,$scoolUser);
         $this->assertTrue($scoolUser->id === $user->localUser['id']);
-        $this->assertFalse($user->inSync);
+        $this->assertCount(3,$user->errorMessages);
         $this->assertEquals(
-            "Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu",
-            $user->errorMessages->first());
-    }
-
-    /**
-     * @test
-     */
-    public function addLocalUserByUsername()
-    {
-        $scoolUser = factory(User::class)->create();
-        $scoolUser->assignGoogleUser(GoogleUser::create([
-            'google_id' => 231312312,
-            'google_email' => 'prova@email.com'
-        ]));
-        $user = sample_google_user_array('prova@email.com');
-        $user = GoogleUser::initializeUser($user);
-        $user->idnumber = $scoolUser->id;
-        $localUsers = User::all();
-        $user = GoogleUser::addLocalUserByUsername($localUsers, $user);
-        $this->assertTrue($scoolUser->id === $user->localUser['id']);
-        $this->assertTrue($user->inSync);
-        $this->assertCount(0,$user->errorMessages);
-        $this->assertCount(0,$user->flags);
-        $this->assertNotNull($user->localUser);
-        $this->assertEquals($scoolUser->name, $user->localUser['name']);
-        $this->assertEquals($scoolUser->id, $user->localUser['id']);
-    }
-
-    /**
-     * @test
-     */
-    public function addLocalUserByUnexistingUsername()
-    {
-        $user = sample_google_user_array('unexistingemail@mydomain.com');
-        $user = GoogleUser::initializeUser($user);
-        $user->idnumber = null;
-        $localUsers = User::all();
-        $user = GoogleUser::addLocalUserByUsername($localUsers, $user);
+            'EmployeeId no vàlid. No hi ha cap usuari local amb aquest id',
+            $user->errorMessages[0]
+        );
+        $this->assertEquals(
+            'primaryEmail no vàlid. No hi ha cap usuari local amb aquest email corporatiu',
+            $user->errorMessages[1]
+        );
+        $this->assertEquals(
+            'personalEmail no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[2]
+        );
         $this->assertFalse($user->inSync);
-        $this->assertCount(0,$user->errorMessages);
-        $this->assertCount(0,$user->flags);
+        $this->assertEquals(GoogleUser::EMPLOYEE_ID_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
+        $this->assertEquals(GoogleUser::PRIMARY_EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+        $this->assertEquals(GoogleUser::PERSONAL_EMAIL_CAN_BE_SYNCED, $user->flags[2]);
     }
 
 }

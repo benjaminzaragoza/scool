@@ -93,6 +93,8 @@ class MoodleUser extends Model
     }
 
     /**
+     * addLocalUser.
+     *
      * @param $user
      * @param $scoolUser
      * @return mixed
@@ -101,10 +103,8 @@ class MoodleUser extends Model
     {
         if ($scoolUser) {
             $user->localUser = $scoolUser;
-            $user = self::userInSync($user, $scoolUser);
-        } else {
-            $user->errorMessages[] = 'Idnumber no vàlid. No hi ha cap usuari local amb aquest id';
         }
+        $user = self::userInSync($user, $scoolUser);
         return $user;
     }
 

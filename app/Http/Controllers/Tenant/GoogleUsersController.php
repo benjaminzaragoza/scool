@@ -7,6 +7,7 @@ use App\Http\Requests\DestroyGoogleUsers;
 use App\Http\Requests\ListGoogleUsers;
 use App\Http\Requests\StoreGoogleUsers;
 use App\Models\GoogleUser;
+use App\Models\User;
 use Cache;
 use Google_Service_Exception;
 
