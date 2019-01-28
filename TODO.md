@@ -132,9 +132,16 @@ Idea:
 
 # GOOGLE USERS MANAGEMENT
 
+- [ ] Crear usuari de Google
+  - [X] employeeId s'omple correctament? COMPROVAT
+  - [X] personalEmail s'omple correctament?
+  - [X] primaryEmail s'omple correctament?
+  - [ ] Si s'escull no crear usuari de Moodle o de Google o Ldap aleshores al següent pas no mostrar el progress intentant obtenir les dades de Moodle o de Google
 - [X] Mostrar el id de Google a algun lloc. Al posar-se a sobre la foto avatar
 - [ ] Fer el mateix que s'ha fet amb els usuaris de Moodle:
   - [ ] Modificar la llista d'usuaris de Google per afegir camps relacionats amb l'usuari local
+    - [ ] IMPORTANT (IGUAL PASSARA A MOODLE) -> Estigui sincronitzada la llista usuaris per web i per API!!!
+    - [ ] Faltaria comprovar hi ha el registre local taula relaciona usuaris locals amb usuaris Moodle/Google
     - [ ] localUser -> Usuari local associat
     - [ ] inSync -> Indiqui estan sincronitzats correctament
     - [ ] errorMessages -> Textos amb errors de sincronització

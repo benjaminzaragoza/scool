@@ -150,7 +150,7 @@
                             <v-tooltip bottom>
                                 <span slot="activator">{{ formatBoolean(props.item.inSync) }}</span>
                                 <span v-if="props.item.inSync">Tot sembla correcte</span>
-                                <span v-else>{{ formatMessages(props.item.errorMessages) }}</span>
+                                <span v-else v-html="formatMessages(props.item.errorMessages)"></span>
                              </v-tooltip>
                         </td>
                         <td class="text-xs-left cell">

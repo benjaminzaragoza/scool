@@ -154,9 +154,12 @@ class GoogleUser extends Model
     public static function getGoogleUsers()
     {
         $users = collect([]);
-        return Cache::rememberForever('google_users', function() use ($users){
+        $users = Cache::rememberForever('google_users', function() use ($users){
             $directory = new GoogleDirectory();
             return collect($directory->users());
+        });
+        return $users->map(function($user) {
+            return (object) $user;
         });
     }
 

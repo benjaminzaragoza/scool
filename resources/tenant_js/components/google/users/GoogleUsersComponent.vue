@@ -109,7 +109,7 @@
                             >
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <v-avatar size="32" slot="activator">
                                                     <img v-if="user.thumbnailPhotoUrl" :src="user.thumbnailPhotoUrl">
@@ -118,29 +118,39 @@
                                                 <span>{{ user.id }}</span>
                                             </v-tooltip>
                                         </td>
+                                        <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <google-user-local-user :user="user" :local-users="localUsers"></google-user-local-user>
+                                        </td>
                                         <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ user.fullName }}</span>
                                                 <span>{{ user.fullName }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-tooltip bottom>
                                                 <a slot="activator" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
                                                 <span>{{ user.primaryEmail }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.employeeId"></td>
-                                        <td class="text-xs-left" v-html="user.personalEmail"></td>
-                                        <td class="text-xs-left" v-html="user.mobile"></td>
-                                        <td class="text-xs-left" >
+                                        <td class="text-xs-left cell">
+                                            <user-show-link v-if="user.employeeId" :id="user.employeeId" :text="user.employeeId"></user-show-link>
+                                        </td>
+                                        <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <v-tooltip bottom>
+                                                <a slot="activator" target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + user.personalEmail">{{ user.personalEmail }}</a>
+                                                <span>{{ user.personalEmail }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell" v-html="user.mobile"></td>
+                                        <td class="text-xs-left cell" >
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ formatOrgUnitPath(user.orgUnitPath) }}</span>
                                                 <span>{{ user.orgUnitPath }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left" v-html="formatBoolean(user.isAdmin)"></td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell" v-html="formatBoolean(user.isAdmin)"></td>
+                                        <td class="text-xs-left cell">
                                             <v-tooltip v-if="user.suspensionReason" bottom>
                                                 <span slot="activator">{{ formatBoolean(user.suspended) }}</span>
                                                 <span>Raó de la suspensió: {{ user.suspensionReason }}</span>
@@ -149,7 +159,7 @@
                                                 {{ formatBoolean(user.suspended) }}
                                             </template>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">
                                                     <timeago v-if="user.lastLoginTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.lastLoginTime)"></timeago>
@@ -158,7 +168,7 @@
                                                 <span>{{ formatDateTime(user.lastLoginTime) }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">
                                                     <timeago v-if="user.creationTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.creationTime)"></timeago>
@@ -167,7 +177,14 @@
                                                 <span>{{ formatDateTime(user.creationTime) }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ formatBoolean(user.inSync) }}</span>
+                                                <span v-if="user.inSync">Tot sembla correcte</span>
+                                                <span v-else v-html="formatMessages(user.errorMessages)"></span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
                                             <show-google-user-icon :user="user"></show-google-user-icon>
                                             <v-btn icon class="mx-0" @click="">
                                                 <v-icon color="teal">edit</v-icon>
@@ -219,12 +236,16 @@ import axios from 'axios'
 import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import showGoogleUserIcon from './ShowGoogleUserIconComponent'
 import moment from 'moment'
+import UserShowLink from '../../users/UserShowLink'
+import GoogleUserLocalUser from './GoogleUserLocalUser'
 
 export default {
   name: 'GoogleUsersComponent',
   components: {
     'confirm-icon': ConfirmIcon,
-    'show-google-user-icon': showGoogleUserIcon
+    'show-google-user-icon': showGoogleUserIcon,
+    'user-show-link': UserShowLink,
+    'google-user-local-user': GoogleUserLocalUser
   },
   data () {
     return {
@@ -247,9 +268,10 @@ export default {
     headers () {
       let headers = []
       headers.push({ text: 'Avatar', value: 'thumbnailPhotoUrl', sortable: false })
+      headers.push({ text: 'Usuari local', align: 'left', value: 'localUser' })
       headers.push({ text: 'Nom', value: 'fullName' })
       headers.push({ text: 'Correu electrònic', value: 'primaryEmail' })
-      headers.push({ text: 'User id', value: 'employeeId' })
+      headers.push({ text: 'employeeId', value: 'employeeId' })
       headers.push({ text: 'Email personal', value: 'personalEmail' })
       headers.push({ text: 'Mòbil', value: 'mobile' })
       headers.push({ text: 'Path', value: 'orgUnitPath' })
@@ -257,6 +279,7 @@ export default {
       headers.push({ text: 'Suspès?', value: 'suspended' })
       headers.push({ text: 'Últim login', value: 'lastLoginTime' })
       headers.push({ text: 'Data creació', value: 'creationTime' })
+      headers.push({ text: 'Sincronitzat', align: 'left', value: 'inSync' })
       headers.push({ text: 'Accions', sortable: false })
       return headers
     }
@@ -285,6 +308,9 @@ export default {
     },
     formatBoolean (boolean) {
       return boolean ? 'Sí' : 'No'
+    },
+    formatMessages (messages) {
+      return messages.join('<br/>')
     },
     formatOrgUnitPath (orgUnitPath) {
       if (orgUnitPath.length > 17) {
@@ -356,3 +382,16 @@ export default {
   }
 }
 </script>
+
+
+<style>
+    .column {
+        padding: 3px 3px !important;
+    }
+    .cell {
+        padding: 3px 3px !important;
+    }
+    table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child) {
+        padding: 0 5px !important;
+    }
+</style>
