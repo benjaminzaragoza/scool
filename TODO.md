@@ -129,6 +129,8 @@ Idea:
 
 # Users management
 
+## PENDENT
+
 EDIT
 - [ ] Modificar el tipus usuari
   - [ ] Questions a tenir en compte en la modificació
@@ -143,35 +145,19 @@ Gestió de password:
  - [ ] Generador de password aleatori
  - [ ] Enviar email a l'usuari
  - [ ] Forçar canvi al pròxim Login
-     
-Changelog:
-- [ ] Igual que incidències logar totes les accions     
+CHANGELOG:
+- [ ] Igual que incidències logar totes les accions
 
-Troubleshooting:
-- [X] Botó afegir email corporatiu: executa un search a la api. Si previàment hi ha cache el search és ràpid sinó 
-tarda molt en obrir-se
-  - [X] No hi ha cap indicador que estigui treballant -> sembla que no funcioni
-
-Dades personals
+DADES PERSONALS
 - [ ] Card/formulari creació/modificació de dades personals d'un usuari concret
   - [ ] No incloura dades específiques segons tipus usuari
     -  [ ] Formulari dades de professor  
 
-EDIT:
-- [X] Editar el name inline a la llista d'usuaris (datatables). NO inline però si currat per poder mdificar sn1 sn2 i givenName també
-- [X]  Editar l'email name inline a la llsita d'usuaris (datatables). Fet no inline però fet
-  - [X] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
-- [X] Modificar el mòbil inline  
-
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
-- [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
-- [X] CONTINUA DONANT ERROR Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
 - [ ] Proteccions contra errors: usuaris protegits no es puguin esborrar    
 
 USER ADD WIZARD
-- [X] Crear usuari de Moodle
-  - [X] El nou usuari de Moodle ha de tenir el idnumber igual a l'usuari local del sistema
 - [ ] Tema password i sincronització dels diferents password
   - [ ] Moodle no permet passar hash del password -> S'ha de canviar password de Moodle en el moment es canvia password local
   - [ ] Com gestionar-lo?
@@ -180,24 +166,8 @@ USER ADD WIZARD
 - [ ] Estils:
   - [ ] Botons rojos no!
   - [ ] Aplicar jerarquia! Quina botons són més important i quins secundaris
-- [X] Fase/Step assignar rols
-  - [X] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
-- [X] Primer camp tipus usuari
-  -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
-    - [X] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
-    - [X] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
-- [X] Refrescar la llista d'usuari cada cop que es crea un nou user
-- [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
-- [X] Refrescar la llista d'usuari cada cop que es modifica un avatar
 
-
-AVATARS:
-- [X] NO es refresquen si ja estaven cachejats
-  - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
-  - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
-
-
-Operacions massives:
+OPERACIONS MASSIVES:
 - [X] Eliminar -> FET
 - [ ] Check -> Comprovar incoherencies:
   - [ ] NO quadra tipus usuari i rol
@@ -211,14 +181,62 @@ Operacions massives:
   - [ ] Teacher/Alumne/Profe sense compte Google
   - [ ] Teacher/Alumne/Profe sense compte Moodle
   - [ ] Teacher/Alumne/Profe sense compte Ldap
-  
-Operacions:
+
+OPERACIONS:
 - [ ] Check individual d'un usuari
 - [ ] Diàleg canviar paraula de pas
   - [ ] Poder posar una paraula de pas
   - [ ] Generador de paraules de pas i enviar per correu electrònic
-  - [ ] Forçar canvi de paraula de pas al següent login  
-   
+  - [ ] Forçar canvi de paraula de pas al següent login
+
+RELACIONS AMB ALTRES ENTITATS/MODELS
+
+GOOGLE/GSUITE
+- [ ] Al editar link a les dades de Google d'aquest usuari
+ - [ ] POder accedir al show d'un usuari de Google directament via link
+PERSONES:
+- [ ] Altres dades personals que no siguin nom
+- [ ] Link a les dades personals de l'usuari    
+  
+## JA REALITZAT
+  
+Troubleshooting:
+- [X] Botó afegir email corporatiu: executa un search a la api. Si previàment hi ha cache el search és ràpid sinó 
+tarda molt en obrir-se
+  - [X] No hi ha cap indicador que estigui treballant -> sembla que no funcioni
+
+EDIT:
+- [X] Editar el name inline a la llista d'usuaris (datatables). NO inline però si currat per poder mdificar sn1 sn2 i givenName també
+- [X]  Editar l'email name inline a la llsita d'usuaris (datatables). Fet no inline però fet
+  - [X] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
+- [X] Modificar el mòbil inline  
+
+USER DELETE:
+- [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+- [X] CONTINUA DONANT ERROR Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+
+USER ADD WIZARD
+- [X] Crear usuari de Moodle
+  - [X] El nou usuari de Moodle ha de tenir el idnumber igual a l'usuari local del sistema
+- [X] Fase/Step assignar rols
+  - [X] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
+- [X] Primer camp tipus usuari
+  -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
+    - [X] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
+    - [X] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
+- [X] Refrescar la llista d'usuari cada cop que es crea un nou user
+- [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
+- [X] Refrescar la llista d'usuari cada cop que es modifica un avatar
+
+AVATARS:
+- [X] NO es refresquen si ja estaven cachejats
+  - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
+  - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
+
+
+Operacions massives:
+- [X] Eliminar -> FET
+  
 RELACIONS AMB ALTRES ENTITATS/MODELS
 
 ROLS:
@@ -231,7 +249,7 @@ PERSONES:
 USUARI MOODLE
 - [X] Operació sync
   - [X] Actualitzi també dades personals Moodle? (adreces etc)
-- [ ] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
+- [X] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
   - [X] Mostrar l'usuari de moodle associat
   - [X] Editar/canviar l'usuari de Moodle associat
   - [X] Sincronitzar l'usuari de Moodle associat
