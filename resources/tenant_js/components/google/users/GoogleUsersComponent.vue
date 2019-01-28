@@ -100,8 +100,13 @@
                                         v-model="search"
                                 ></v-text-field>
                             </v-card-title>
+                            <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
+                                <google-users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></google-users-delete-multiple>
+                            </div>
                             <v-data-table
                                     class="px-0 mb-2 hidden-sm-and-down"
+                                    v-model="selected"
+                                    select-all
                                     :headers="headers"
                                     :items="filteredUsers"
                                     :search="search"
@@ -112,112 +117,110 @@
                                     rows-per-page-text="Usuaris per pàgina"
                                     :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
                             >
-                                <template slot="items" slot-scope="{ item: user }">
+                                <template slot="items" slot-scope="props">
                                     <tr>
+                                        <td>
+                                            <v-checkbox
+                                                    v-model="props.selected"
+                                                    primary
+                                                    hide-details
+                                            ></v-checkbox>
+                                        </td>
                                         <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <v-avatar size="32" slot="activator">
-                                                    <img v-if="user.thumbnailPhotoUrl" :src="user.thumbnailPhotoUrl">
+                                                    <img v-if="props.item.thumbnailPhotoUrl" :src="props.item.thumbnailPhotoUrl">
                                                     <img v-else src="/img/default.png" alt="photo per defecte">
                                                 </v-avatar>
-                                                <span>{{ user.id }}</span>
+                                                <span>{{ props.item.id }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            <google-user-local-user :user="user" :local-users="localUsers"></google-user-local-user>
+                                            <google-user-local-user :user="props.item" :local-users="localUsers"></google-user-local-user>
                                         </td>
                                         <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-tooltip bottom>
-                                                <span slot="activator">{{ user.fullName }}</span>
-                                                <span>{{ user.fullName }}</span>
+                                                <span slot="activator">{{ props.item.fullName }}</span>
+                                                <span>{{ props.item.fullName }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-tooltip bottom>
-                                                <a slot="activator" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
-                                                <span>{{ user.primaryEmail }}</span>
+                                                <a slot="activator" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + props.item.id">{{ props.item.primaryEmail }}</a>
+                                                <span>{{ props.item.primaryEmail }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell">
-                                            <user-show-link v-if="user.employeeId" :id="user.employeeId" :text="user.employeeId"></user-show-link>
+                                            <user-show-link v-if="props.item.employeeId" :id="props.item.employeeId" :text="props.item.employeeId"></user-show-link>
                                         </td>
                                         <td class="text-xs-left cell" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-tooltip bottom>
-                                                <a slot="activator" target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + user.personalEmail">{{ user.personalEmail }}</a>
-                                                <span>{{ user.personalEmail }}</span>
+                                                <a slot="activator" target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + props.item.personalEmail">{{ props.item.personalEmail }}</a>
+                                                <span>{{ props.item.personalEmail }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left cell" v-html="user.mobile"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.mobile"></td>
                                         <td class="text-xs-left cell" >
                                             <v-tooltip bottom>
-                                                <span slot="activator">{{ formatOrgUnitPath(user.orgUnitPath) }}</span>
-                                                <span>{{ user.orgUnitPath }}</span>
+                                                <span slot="activator">{{ formatOrgUnitPath(props.item.orgUnitPath) }}</span>
+                                                <span>{{ props.item.orgUnitPath }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left cell" v-html="formatBoolean(user.isAdmin)"></td>
+                                        <td class="text-xs-left cell" v-html="formatBoolean(props.item.isAdmin)"></td>
                                         <td class="text-xs-left cell">
-                                            <v-tooltip v-if="user.suspensionReason" bottom>
-                                                <span slot="activator">{{ formatBoolean(user.suspended) }}</span>
-                                                <span>Raó de la suspensió: {{ user.suspensionReason }}</span>
+                                            <v-tooltip v-if="props.item.suspensionReason" bottom>
+                                                <span slot="activator">{{ formatBoolean(props.item.suspended) }}</span>
+                                                <span>Raó de la suspensió: {{ props.item.suspensionReason }}</span>
                                             </v-tooltip>
                                             <template v-else>
-                                                {{ formatBoolean(user.suspended) }}
+                                                {{ formatBoolean(props.item.suspended) }}
                                             </template>
                                         </td>
                                         <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">
-                                                    <timeago v-if="user.lastLoginTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.lastLoginTime)"></timeago>
+                                                    <timeago v-if="props.item.lastLoginTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(props.item.lastLoginTime)"></timeago>
                                                     <span v-else>Mai</span>
                                                 </span>
-                                                <span>{{ formatDateTime(user.lastLoginTime) }}</span>
+                                                <span>{{ formatDateTime(props.item.lastLoginTime) }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">
-                                                    <timeago v-if="user.creationTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(user.creationTime)"></timeago>
+                                                    <timeago v-if="props.item.creationTime !== '1970-01-01T00:00:00.000Z'" :auto-update="60" :datetime="new Date(props.item.creationTime)"></timeago>
                                                     <span v-else>Mai</span>
                                                 </span>
-                                                <span>{{ formatDateTime(user.creationTime) }}</span>
+                                                <span>{{ formatDateTime(props.item.creationTime) }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell">
                                             <v-tooltip bottom>
-                                                <span slot="activator">{{ formatBoolean(user.inSync) }}</span>
-                                                <span v-if="user.inSync">Tot sembla correcte</span>
-                                                <span v-else v-html="formatMessages(user.errorMessages)"></span>
+                                                <span slot="activator">{{ formatBoolean(props.item.inSync) }}</span>
+                                                <span v-if="props.item.inSync">Tot sembla correcte</span>
+                                                <span v-else v-html="formatMessages(props.item.errorMessages)"></span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell">
-                                            <show-google-user-icon :user="user"></show-google-user-icon>
-                                            <v-btn icon class="mx-0" @click="">
-                                                <v-icon color="teal">edit</v-icon>
-                                            </v-btn>
-                                            <confirm-icon
-                                                    :id="'google_user_remove_' + user.primaryEmail.replace('@','_')"
-                                                    icon="delete"
-                                                    color="pink"
-                                                    :working="removing"
-                                                    @confirmed="remove(user)"
-                                                    tooltip="Eliminar"
-                                                    message="Esteu segurs que voleu eliminar el compte de Google?"
-                                            ></confirm-icon>
-                                            <confirm-icon v-if="!user.suspended"
-                                                    :id="'google_user_suspend_' + user.primaryEmail.replace('@','_')"
+                                            <show-google-user-icon :user="props.item"></show-google-user-icon>
+
+                                            <google-user-delete-icon :user="props.item"></google-user-delete-icon>
+
+                                            <confirm-icon v-if="!props.item.suspended"
+                                                    :id="'google_user_suspend_' + props.item.primaryEmail.replace('@','_')"
                                                     icon="stop"
                                                     color="pink"
                                                     :working="suspending"
-                                                    @confirmed="suspend(user)"
+                                                    @confirmed="suspend(props.item)"
                                                     tooltip="Suspendre"
                                                     message="Esteu segurs que voleu suspendre l'usuari?"
                                             ></confirm-icon>
                                             <confirm-icon v-else
-                                                          :id="'google_user_activate_' + user.primaryEmail.replace('@','_')"
+                                                          :id="'google_user_activate_' + props.item.primaryEmail.replace('@','_')"
                                                           icon="play_arrow"
                                                           color="primary"
                                                           :working="activating"
-                                                          @confirmed="activate(user)"
+                                                          @confirmed="activate(props.item)"
                                                           tooltip="Activar"
                                                           message="Esteu segurs que voleu activar l'usuari?"
                                             ></confirm-icon>
@@ -237,14 +240,14 @@
 import { mapGetters } from 'vuex'
 import * as mutations from '../../../store/mutation-types'
 
-import axios from 'axios'
 import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import showGoogleUserIcon from './ShowGoogleUserIconComponent'
 import moment from 'moment'
 import UserShowLink from '../../users/UserShowLink'
 import GoogleUserLocalUser from './GoogleUserLocalUser'
 import GoogleUserFiltersSelect from './GoogleUserFiltersSelect'
-
+import GoogleUsersDeleteMultiple from './GoogleUsersDeleteMultiple'
+import GoogleUserDeleteIcon from './GoogleUserDeleteIcon'
 var filterNames = [
   {
     id: 1,
@@ -419,20 +422,31 @@ export default {
   components: {
     'confirm-icon': ConfirmIcon,
     'show-google-user-icon': showGoogleUserIcon,
+    'google-user-delete-icon': GoogleUserDeleteIcon,
     'user-show-link': UserShowLink,
     'google-user-local-user': GoogleUserLocalUser,
-    'google-user-filters-select': GoogleUserFiltersSelect
+    'google-user-filters-select': GoogleUserFiltersSelect,
+    'google-users-delete-multiple': GoogleUsersDeleteMultiple
   },
   data () {
     return {
+      selected: [],
       search: '',
-      removing: false,
       suspending: false,
       activating: false,
       refreshing: false,
       settingsDialog: false,
       googleWatch: false,
       selectedFilters: []
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    },
+    localUsers: {
+      required: true
     }
   },
   computed: {
@@ -472,18 +486,12 @@ export default {
     googleWatch (newValue) {
       console.log('googleWatch changed to : ' + newValue)
       if (newValue) {
-        axios.get('/api/v1/gsuite/users/watch').then(response => {
+        window.axios.get('/api/v1/gsuite/users/watch').then(response => {
           console.log(response)
         }).catch(error => {
           console.log(error)
         })
       }
-    }
-  },
-  props: {
-    users: {
-      type: Array,
-      required: true
     }
   },
   methods: {
@@ -503,7 +511,7 @@ export default {
     },
     refresh () {
       this.refreshing = true
-      axios.get('/api/v1/gsuite/users').then(response => {
+      window.axios.get('/api/v1/gsuite/users').then(response => {
         this.refreshing = false
         this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
         this.$snackbar.showMessage('Usuaris actualitzats correctament')
@@ -513,35 +521,10 @@ export default {
         console.log(error)
       })
     },
-    remove (user) {
-      this.removing = true
-      axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
-        if (user.employeeId) {
-          axios.delete('/api/v1/user/' + user.employeeId + '/gsuite').then(response => {
-            this.$snackbar.showMessage('Usuari esborrat correctament')
-            this.removing = false
-            this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
-          }).catch(error => {
-            console.log(error)
-            this.$snackbar.showMessage('Usuari esborrat correctament de Google però amb error local')
-            this.$snackbar.showError(error)
-            this.removing = false
-          })
-        } else {
-          this.$snackbar.showMessage('Usuari esborrat correctament')
-          this.removing = false
-          this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
-        }
-        this.$snackbar.showMessage('Usuari esborrat correctament')
-      }).catch(error => {
-        this.removing = false
-        this.$snackbar.showError(error)
-      })
-    },
     suspend (user) {
       this.suspending = true
       // TODO
-      axios.delete('/api/v1/gsuite/active/users/' + user.id).then(response => {
+      window.axios.delete('/api/v1/gsuite/active/users/' + user.id).then(response => {
         this.suspending = false
         this.$snackbar.showMessage('Usuari suspès correctament')
       }).catch(error => {
@@ -552,7 +535,7 @@ export default {
     activate (user) {
       this.activating = true
       // TODO
-      axios.post('/api/v1/gsuite/active/users/' + user.id).then(response => {
+      window.axios.post('/api/v1/gsuite/active/users/' + user.id).then(response => {
         this.activating = false
         this.$snackbar.showMessage('Usuari activat correctament')
       }).catch(error => {

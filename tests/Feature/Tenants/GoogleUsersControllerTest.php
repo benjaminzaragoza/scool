@@ -77,10 +77,11 @@ class GoogleUsersControllerTest extends BaseTenantTest
         $response = $this->get('google_users');
 
         $response->assertSuccessful();
-        $response->assertViewIs('tenants.google_users.show');
+        $response->assertViewIs('tenants.google_users.index');
         $response->assertViewHas('users', function($users) {
             return google_user_check($users[0]);
         });
+        $response->assertViewHas('localUsers');
     }
 
     /** @test */

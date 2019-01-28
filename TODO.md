@@ -135,8 +135,8 @@ Idea:
 - FILTRES:
  - [ ] Amb Avatar
  - [ ] Sense Avatar
- - [ ] Amb usuari local
- - [ ] Sense usuari local
+ - [X] Amb usuari local
+ - [ ] Sense usuari local NO funciona bé?
  - [X] Amb email personal
  - [X] sense email personal
  - [X] Amb employeeId
@@ -148,12 +148,16 @@ Idea:
  - [X] Logats algun cop
  - [X] Sincronitzat
  - [X] No sincornitzat
+OPERACIONS MASSIVES:
+- [ ] Delete
+  - [ ] Interfície gràfica preparada
+  - [ ] Falta API
  
 - [ ] Crear usuari de Google
   - [X] employeeId s'omple correctament? COMPROVAT
   - [X] personalEmail s'omple correctament?
   - [X] primaryEmail s'omple correctament?
-  - [ ] Mobil
+  - [X] Mobil
   - [ ] Si s'escull no crear usuari de Moodle o de Google o Ldap aleshores al següent pas no mostrar el progress intentant obtenir les dades de Moodle o de Google
 - [X] Mostrar el id de Google a algun lloc. Al posar-se a sobre la foto avatar
 - [ ] Fer el mateix que s'ha fet amb els usuaris de Moodle:

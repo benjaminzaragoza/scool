@@ -55,7 +55,6 @@ export default {
       required: true
     },
     localUsers: {
-      type: Array,
       required: true
     }
   },

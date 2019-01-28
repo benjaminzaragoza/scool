@@ -35,7 +35,7 @@ class GoogleUsersController extends Controller
             return GoogleUser::adapt($user, $localUsers);
         });
 
-        return view('tenants.google_users.show', compact('users','action'));
+        return view('tenants.google_users.index', compact('users','localUsers','action'));
     }
 
     public function show()
