@@ -167,9 +167,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
 
             Route::get('/users', '\\' . UsersController::class . '@index');
-            Route::get('/users/{user}','\\'.  UsersController::class . '@show');
             Route::get('/users/roles', '\\' . RolesController::class . '@index');
             Route::get('/users/permissions', '\\' . PermissionsController::class . '@index');
+            Route::get('/users/{user}','\\'.  UsersController::class . '@show');
 
             Route::get('/moodle/users', '\\' . MoodleUsersController::class.'@index');
 

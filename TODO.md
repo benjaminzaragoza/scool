@@ -1,5 +1,10 @@
 # TODOS finals abans posar explotació
 
+- [ ] Recordar executar de tant en tant abans de passar a producció. S'executa npm run production (abans atureu npm run hot) a local abans de fer
+un merge amb producció i pujar els canvis. 
+- [ ] Estan instal·lats com a CDN externs. Instal·lació local: https://vuetifyjs.com/en/getting-started/quick-start
+- [ ] A més vuetify està agafat de unpkg que a vegades falla
+- [ ] També moure fonts de Icones de Material i de Font awesome 
 - [ ] Some continuos integration
 - [ ] Activar a explotació les cuas
   - [ ] Activar alguna eina per saber com funcionen les cues i estar alerta possibles errors
@@ -29,9 +34,7 @@
 
 # Troubleshooting
 
-- [ ] Esborrar usuaris de Google
-  - [ ] Quan té compte local associada
-  - [ ] Mostrar warning té compte local associada. Si desitja tirar endavant s'eliminara l'associació
+
 
 # FITXA USUARI/ PROFILE
 
@@ -120,12 +123,20 @@ Idea:
      - [ ] Utilitza Larave Lumen 
      - [ ] Fer quelcom similar. redireccions Laravel per convertir en URLS curtes URLS llarges
 
-# Mòdul de comandes
+# MÒDUL DE COMANDES
 
 - [ ] Associat a incidències (incidències que queden pendents d'una comanda)
 - [ ] Comanda oberta/tancada
 - [ ] Rebre un email cada cop hi ha una nova comanda
 - [ ] Cal validació de comandes abans enviar administradora?
+
+# GOOGLE USERS MANAGEMENT
+
+- [ ] Mostrar el id de Google a algun lloc
+- [ ] Poder accedir al show d'un usuari amb link directe
+- [ ] Esborrar usuaris de Google
+  - [ ] Quan té compte local associada
+  - [ ] Mostrar warning té compte local associada. Si desitja tirar endavant s'eliminara l'associació
 
 # Users management
 
@@ -188,6 +199,23 @@ OPERACIONS:
   - [ ] Poder posar una paraula de pas
   - [ ] Generador de paraules de pas i enviar per correu electrònic
   - [ ] Forçar canvi de paraula de pas al següent login
+  
+FILTRES
+- [ ] Filtres usuaris
+  - [X] Per Rol/s
+    - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
+  - [ ] Altres característiques/filtres:
+     - [ ] Mòbils no confirmats/verificats. TODO falta està funcionalitat
+     - [ ] Sense avatar. TODO -> Falta crear camp (calculat) indiqui usuari no té avatar 
+     - [ ] Logats desde un periode especific
+
+ALTRES
+- [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
+- [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
+- [X] Esborrat massiu d'usuaris
+  - [ ] Protegir alguns usuaris -> no es puguin esborrar:
+    - [ ] Superadmins
+    - [ ] Configuració: altres usuaris no es puguin esborrar     
 
 RELACIONS AMB ALTRES ENTITATS/MODELS
 
@@ -233,9 +261,29 @@ AVATARS:
   - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
   - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
 
-
 Operacions massives:
 - [X] Eliminar -> FET
+
+FILTRES
+- [ ] Filtres usuaris
+  - [X] Per típus/s d'usuari
+  - [X] Per Rol/s
+    - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
+  - [ ] Altres característiques/filtres:
+     - [X] Emails confirmats/verificats (email)
+     - [ ] Mòbils no confirmats/verificats. TODO falta està funcionalitat
+     - [X] Sense email corporatiu
+     - [ ] Sense avatar. TODO -> Falta crear camp (calculat) indiqui usuari no té avatar 
+     - [X] Mai logats al sistema
+     - [ ] Logats desde un periode especific
+- [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
+- [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
+- [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
+- [X] Last Login de l'usuari, permetre saber usuaris no s'han logat mai. FET UN FILTRE
+- [X] Esborrat massiu d'usuaris
+  - [ ] Protegir alguns usuaris -> no es puguin esborrar:
+    - [ ] Superadmins
+    - [ ] Configuració: altres usuaris no es puguin esborrar    
   
 RELACIONS AMB ALTRES ENTITATS/MODELS
 
@@ -275,6 +323,8 @@ USUARI DE GOOGLE
   - [X] Sincronitzar
   - [X] Editar -> Canviar l'usuari corporatiu associat
 
+# ROLS AND PERMISSIONS MANAGEMENT
+
 ROLS:
 - [ ] CRUD DE ROLS
   - [X] LIST/RETRIEVE
@@ -288,30 +338,10 @@ PERMISSIONS:
 - [ ] CRUD DE ROLS
 - [ ] Protegir certs Rols -> NO ES PODEN ESBORRAR
 
-FILTRES
-- [ ] Filtres usuaris
-  - [X] Per típus/s d'usuari
-  - [X] Per Rol/s
-    - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
-  - [ ] Altres característiques/filtres:
-     - [X] Emails confirmats/verificats (email)
-     - [ ] Mòbils no confirmats/verificats. TODO falta està funcionalitat
-     - [X] Sense email corporatiu
-     - [ ] Sense avatar. TODO -> Falta crear camp (calculat) indiqui usuari no té avatar 
-     - [X] Mai logats al sistema
-     - [ ] Logats desde un periode especific
-- [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
-- [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
-- [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
-- [X] Last Login de l'usuari, permetre saber usuaris no s'han logat mai. FET UN FILTRE
-- [X] Esborrat massiu d'usuaris
-  - [ ] Protegir alguns usuaris -> no es puguin esborrar:
-    - [ ] Superadmins
-    - [ ] Configuració: altres usuaris no es puguin esborrar    
 
-# Usuaris acabats de registrar | sense rols
+# USUARIS ACABATS DE REGISTRAR | SENSE ROLS
 
-## Dashboard
+## DASHBOARD
 
 - [ ] Usuaris sense email verificat -> VERIFICAR EMAIL (enviar email verificació) 
 
@@ -328,13 +358,13 @@ FILTRES
   - Altres
   - Familiars
 
-## Exalumne
+### Exalumne
 
 - Per aquells que els interessi mantenir contacte amb el centre
 - Recuperar usuari si havien tingut? Com fer?
 - Indicar les xarxes socials a les que es pot apuntar per estar al dia de les novetats del centre 
 
-## Alumne
+### Alumne
 
 Si l'usuari vol ser alumne ha de formalitzar una matrícula:
 - Periode de matrícula: cal fer un manteniment al mòdul matrícula que permeti indicar periode de matrícula
@@ -345,18 +375,18 @@ Si l'usuari vol ser alumne ha de formalitzar una matrícula:
 - Sí es periode de matrícula i està activada la automatriculació pot fer la matrícua
 - Preinscripció?
 
-## Professor 
+### Professor 
 - Usuari potencial professor
-## Ex-profesor
+### Ex-profesor
 - Posibilitar mantenir compte de centre com correu
 
-## Personal
+### Personal
 
-## Superusuaris
+### Superusuaris
 - Usuaris admin amb tots els permisos
 
 
-# Positions
+# POSITIONS MANAGER
 
 - [ ] Dashboard -> pàgina principal usuari normal -> Comprovar si té algún rol assignat-> no? Que pugui demanar un rol
   - [X] Al assignar un càrrec que l'usuari rebi una notificació/email
@@ -383,6 +413,7 @@ Si l'usuari vol ser alumne ha de formalitzar una matrícula:
     - [ ] Departament grans tenen rol ajuda al cap de departament
     - [ ] Tutor -> Grup de classe. Al crear un grup de classe -> crear el càrrec
   
+  
 # Google Drive
 
 - [ ] Curriculum
@@ -402,11 +433,6 @@ Si l'usuari vol ser alumne ha de formalitzar una matrícula:
         - [ ] Qualsevol altre fitxer públic com PDF a lleis, etc
         - [ ] Admin, cap estudis i caps de departament poden modificar els fitxers (a la app) i també es pot configurar al Drive
 - [ ] No funciona teams drives ???
-
-# CSS VUETIFY i FONTS
-- [ ] Estan instal·lats com a CDN externs. Instal·lació local: https://vuetifyjs.com/en/getting-started/quick-start
-- [ ] A més vuetify està agafat de unpkg que a vegades falla
-- [ ] També moure fonts de Icones de Material i de Fonw awesome 
 
 # Currículum wizard inicial configuració|settings:
 
@@ -586,11 +612,6 @@ Rendiment:
  - [X] 250 queries
 - [X] Llista estudis 184 queries
 - [X] 234 queries a MPs
-
-# NPM RUN PRODUCTION
-
-- [ ] Recordar executar de tant en tant abans de passar a producció. S'executa npm run production (abans atureu npm run hot) a local abans de fer
-un merge amb producció i pujar els canvis. 
 
 # Monitor web del supervisor:
 
