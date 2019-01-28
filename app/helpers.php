@@ -8855,6 +8855,32 @@ if (! function_exists('sample_moodle_user_array')) {
     }
 }
 
+if (! function_exists('sample_google_user_array')) {
+    function sample_google_user_array($id = null) {
+        $id = $id ? $id : '113829626411274751363';
+        return $user = (object) [
+            'firstname' => 'Pepe',
+            'creationTime' => '2015-09-22T15:31:45.000Z',
+            'employeeId' => null,
+            'familyName' => 'Cuadrada Canillo',
+            'fullName' => 'Aaron Cuadrada Canillo',
+            'givenName' => 'Aaron',
+            'id' => $id,
+            'isAdmin' => false,
+            'json' => "",
+            'lastLoginTime' => '2018-10-09T15:39:19.000Z',
+            'mobile' => null,
+            'orgUnitPath' => '/All/Alumnes',
+            'organizations' => null,
+            'personalEmail' => null,
+            'primaryEmail' => 'aaroncuadrado@iesebre.com',
+            'suspended' => false,
+            'suspensionReason' => null,
+            'thumbnailPhotoUrl' => null
+        ];
+    }
+}
+
 if (! function_exists('create_sample_moodle_user')) {
     function create_sample_moodle_user() {
         $user = [

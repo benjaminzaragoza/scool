@@ -32,6 +32,17 @@ use App\Models\Study;
 use App\Models\User;
 use Illuminate\Broadcasting\BroadcastController;
 
+
+
+Route::bind('googleUser', function($value, $route)
+{
+    dd(intval($value));
+    if (is_integer(intval($value)) && intval($value) > 0) return Module::findOrFail($value);
+    if (is_string($value)) {
+        return Module::where('name',$value)->firstOrFail();
+    }
+});
+
 Route::bind('hashuser', function($value, $route)
 {
     $hashids = new Hashids\Hashids(config('scool.salt'));
@@ -145,7 +156,6 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             // Ldap users
             Route::get('/ldap_users','Tenant\LdapUsersController@show');
-
 
             // ******* Emails ********
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');

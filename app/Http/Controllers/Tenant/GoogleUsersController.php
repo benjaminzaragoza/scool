@@ -27,6 +27,12 @@ class GoogleUsersController extends Controller
     {
         $users = GoogleUser::getGoogleUsers();
         $action = $request->action;
+
+        $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
+        $users = $users->map(function($user) use ($localUsers) {
+            return GoogleUser::adapt($user, $localUsers);
+        });
+
         return view('tenants.google_users.show', compact('users','action'));
     }
 

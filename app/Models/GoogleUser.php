@@ -155,4 +155,61 @@ class GoogleUser extends Model
             return collect($directory->users());
         });
     }
+
+    /**
+     * initializeUser
+     *
+     * @param $user
+     * @return mixed
+     */
+    public static function initializeUser($user)
+    {
+        $user->errorMessages = collect([]);
+        $user->inSync = false;
+        $user->flags = collect([]);
+        return $user;
+    }
+
+    public static function adapt($user, $localUsers)
+    {
+        $user = MoodleUser::initializeUser($user);
+        dd($user->id);
+        if (isset($user->id) && $user->id ) {
+            $user = self::addLocalUser($user, self::findById($localUsers, $user));
+        } else {
+            $user = self::addLocalUserByCorporativeEmail($localUsers, $user);
+        }
+        return $user;
+    }
+
+    /**
+     * findById
+     *
+     * @param $localUsers
+     * @param $moodleUser
+     * @return
+     */
+    public static function findById($localUsers, $googleUser)
+    {
+        return $localUsers->filter(function($user) use ($googleUser) {
+            return $user['google_id'] == $googleUser->id;
+        })->first();
+    }
+
+    /**
+     * addLocalUser
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function addLocalUser($user,$scoolUser)
+    {
+        if ($scoolUser) {
+            $user->localUser = $scoolUser;
+            $user = self::userInSync($user, $scoolUser);
+        } else {
+            $user->errorMessages[] = 'Idnumber no vàlid. No hi ha cap usuari local amb aquest id';
+        }
+        return $user;
+    }
 }

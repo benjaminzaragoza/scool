@@ -296,6 +296,7 @@ export default {
       axios.get('/api/v1/gsuite/users').then(response => {
         this.refreshing = false
         this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
+        this.$snackbar.showMessage('Usuaris actualitzats correctament')
       }).catch(error => {
         this.refreshing = false
         this.$snackbar.showError(error)

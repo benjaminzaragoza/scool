@@ -133,6 +133,17 @@ Idea:
 # GOOGLE USERS MANAGEMENT
 
 - [X] Mostrar el id de Google a algun lloc. Al posar-se a sobre la foto avatar
+- [ ] Fer el mateix que s'ha fet amb els usuaris de Moodle:
+  - [ ] Modificar la llista d'usuaris de Google per afegir camps relacionats amb l'usuari local
+    - [ ] localUser -> Usuari local associat
+    - [ ] inSync -> Indiqui estan sincronitzats correctament
+    - [ ] errorMessages -> Textos amb errors de sincronització
+    - [ ] flags -> marques d'estat per facilitar accions
+    - [ ] La clau de relació principal: utilitzar un camp de Google per identificar -> employeeId 
+    - [ ] Altres claus:
+      - [ ] personalEmail -> email usuari 
+      - [ ] primaryEmail -> corporativeEmail
+      - [ ] Tema sincronitzar noms igual que Moodle operació sync   
 - [ ] Poder accedir al show d'un usuari amb link directe
   - [ ] Per Id
   - [ ] Per email corporatiu
