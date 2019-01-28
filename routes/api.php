@@ -22,6 +22,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsShortnameController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
+use App\Http\Controllers\Tenant\Api\Google\GoogleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
@@ -241,9 +242,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/gsuite/groups/{group}/members', 'Tenant\GoogleGroupMembersController@index');
 
             //Google Apps/GSuite users
-            Route::get('/gsuite/users', 'Tenant\GoogleUsersController@index');
-            Route::post('/gsuite/users', 'Tenant\GoogleUsersController@store');
-            Route::delete('/gsuite/users/{user}', 'Tenant\GoogleUsersController@destroy');
+            Route::get('/gsuite/users', '\\' . GoogleUsersController::class . '@index');
+            Route::post('/gsuite/users', '\\' . GoogleUsersController::class . '@store');
+            Route::delete('/gsuite/users/{user}', '\\' . GoogleUsersController::class . '@destroy');
 
             //Associate Gsuite user to user
             Route::post('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@store');

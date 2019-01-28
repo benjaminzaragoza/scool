@@ -140,7 +140,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/google_groups','Tenant\GoogleGroupsController@show');
 
             // Google users
-            Route::get('/google_users','\\' . GoogleUsersController::class . '@show');
+            Route::get('/google_users','\\' . GoogleUsersController::class . '@index');
+            Route::get('/google_users/{googleUser}','\\' . GoogleUsersController::class . '@show');
 
             // Ldap users
             Route::get('/ldap_users','Tenant\LdapUsersController@show');

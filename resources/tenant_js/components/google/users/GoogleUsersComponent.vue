@@ -110,10 +110,13 @@
                                 <template slot="items" slot-scope="{ item: user }">
                                     <tr>
                                         <td class="text-xs-left">
-                                            <v-avatar size="32">
-                                                <img v-if="user.thumbnailPhotoUrl" :src="user.thumbnailPhotoUrl">
-                                                <img v-else src="/img/default.png" alt="photo per defecte">
-                                            </v-avatar>
+                                            <v-tooltip bottom>
+                                                <v-avatar size="32" slot="activator">
+                                                    <img v-if="user.thumbnailPhotoUrl" :src="user.thumbnailPhotoUrl">
+                                                    <img v-else src="/img/default.png" alt="photo per defecte">
+                                                </v-avatar>
+                                                <span>{{ user.id }}</span>
+                                            </v-tooltip>
                                         </td>
                                         <td class="text-xs-left" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <v-tooltip bottom>
@@ -295,6 +298,7 @@ export default {
         this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
       }).catch(error => {
         this.refreshing = false
+        this.$snackbar.showError(error)
         console.log(error)
       })
     },

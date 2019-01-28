@@ -132,8 +132,10 @@ Idea:
 
 # GOOGLE USERS MANAGEMENT
 
-- [ ] Mostrar el id de Google a algun lloc
+- [X] Mostrar el id de Google a algun lloc. Al posar-se a sobre la foto avatar
 - [ ] Poder accedir al show d'un usuari amb link directe
+  - [ ] Per Id
+  - [ ] Per email corporatiu
 - [ ] Esborrar usuaris de Google
   - [ ] Quan té compte local associada
   - [ ] Mostrar warning té compte local associada. Si desitja tirar endavant s'eliminara l'associació
