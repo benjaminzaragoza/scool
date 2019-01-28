@@ -230,8 +230,9 @@ class MoodleUserTest extends TestCase
         $user = MoodleUser::initializeUser($user);
         $this->assertCount(0, $user->errorMessages);
         $user = MoodleUser::addLocalUser($user, $scoolUser);
-        $this->assertCount(1, $user->errorMessages);
-        $this->assertEquals('Idnumber no vàlid. No hi ha cap usuari local amb aquest id', $user->errorMessages[0]);
+        $this->assertCount(2, $user->errorMessages);
+        $this->assertEquals("Nom d'usuari Moodle incorrecte. S'ha trobat un usuari local amb Idnumber de Moodle però l'usuari de Moodle no correspon amb l'email corporatiu", $user->errorMessages[0]);
+        $this->assertEquals('Idnumber no vàlid. No hi ha cap usuari local amb aquest id', $user->errorMessages[1]);
     }
 
     /**
