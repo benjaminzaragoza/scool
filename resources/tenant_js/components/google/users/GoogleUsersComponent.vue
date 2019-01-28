@@ -58,7 +58,6 @@
                     <v-toolbar-title class="white--text">Google users</v-toolbar-title>
                     <v-spacer></v-spacer>
 
-
                     <v-tooltip bottom>
                         <v-btn slot="activator" id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/google/users" target="_blank">
                             <v-icon>help</v-icon>
@@ -85,7 +84,13 @@
                     <v-card-text class="px-0 mb-2">
                         <v-card>
                             <v-card-title>
-                                TODO Filter here?
+                                <v-flex xs9 style="align-self: flex-end;">
+                                    <v-layout>
+                                        <v-flex xs12 class="text-sm-left" style="align-self: center;">
+                                            <google-user-filters-select v-model="selectedFilters" :filters="filterNames"></google-user-filters-select>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
                                 <v-spacer></v-spacer>
                                 <v-text-field
                                         append-icon="search"
@@ -238,6 +243,176 @@ import showGoogleUserIcon from './ShowGoogleUserIconComponent'
 import moment from 'moment'
 import UserShowLink from '../../users/UserShowLink'
 import GoogleUserLocalUser from './GoogleUserLocalUser'
+import GoogleUserFiltersSelect from './GoogleUserFiltersSelect'
+
+var filterNames = [
+  {
+    id: 1,
+    name: 'Sense Avatar',
+    function: 'withoutAvatar'
+  },
+  {
+    id: 2,
+    name: 'Amb Avatar',
+    function: 'withAvatar'
+  },
+  {
+    id: 3,
+    name: 'Amb usuari local',
+    function: 'withLocalUser'
+  },
+  {
+    id: 4,
+    name: 'Sense usuari local',
+    function: 'withoutLocalUser'
+  },
+  {
+    id: 5,
+    name: 'Amb email personal',
+    function: 'withPersonalEmail'
+  },
+  {
+    id: 6,
+    name: 'Sense email personal',
+    function: 'withoutPersonalEmail'
+  },
+  {
+    id: 7,
+    name: 'Amb employeeId',
+    function: 'withEmployeeId'
+  },
+  {
+    id: 8,
+    name: 'Sense employeeId',
+    function: 'withoutEmployeeId'
+  },
+  {
+    id: 9,
+    name: 'Amb mòbil',
+    function: 'withMobile'
+  },
+  {
+    id: 10,
+    name: 'Sense mòbil',
+    function: 'withoutMobile'
+  },
+  {
+    id: 11,
+    name: 'Suspesos',
+    function: 'suspended'
+  },
+  {
+    id: 12,
+    name: 'Actius',
+    function: 'active'
+  },
+  {
+    id: 12,
+    name: 'Logats almenys algun cop',
+    function: 'loggedAtLeastOnce'
+  },
+  {
+    id: 13,
+    name: 'Mai logats',
+    function: 'neverLogged'
+  },
+  {
+    id: 13,
+    name: 'Sincronitzats',
+    function: 'sinchronized'
+  },
+  {
+    id: 14,
+    name: 'No Sincronitzats',
+    function: 'unsinchronized'
+  }
+]
+
+var filters = {
+  all: function (users) {
+    return users
+  },
+  withoutAvatar: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('localUser')
+    }) : []
+  },
+  withAvatar: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('localUser')
+    }) : []
+  },
+  withLocalUser: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('localUser')
+    }) : []
+  },
+  withoutLocalUser: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('localUser')
+    }) : []
+  },
+  withPersonalEmail: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('personalEmail') && user.personalEmail !== null
+    }) : []
+  },
+  withoutPersonalEmail: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('personalEmail') || user.personalEmail === null
+    }) : []
+  },
+  withEmployeeId: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('employeeId') && user.employeeId !== null && user.employeeId !== ''
+    }) : []
+  },
+  withoutEmployeeId: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('employeeId') || user.employeeId === null || user.employeeId === ''
+    }) : []
+  },
+  withMobile: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('mobile') && user.mobile !== null && user.mobile !== ''
+    }) : []
+  },
+  withoutMobile: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('mobile') || user.mobile === null || user.mobile === ''
+    }) : []
+  },
+  suspended: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('suspended') && user.suspended === true
+    }) : []
+  },
+  active: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('suspended') || user.suspended === false
+    }) : []
+  },
+  loggedAtLeastOnce: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('lastLoginTime') && user.lastLoginTime !== '1970-01-01T00:00:00.000Z'
+    }) : []
+  },
+  neverLogged: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('lastLoginTime') || user.lastLoginTime === '1970-01-01T00:00:00.000Z'
+    }) : []
+  },
+  sinchronized: function (users) {
+    return users ? users.filter(function (user) {
+      return user.hasOwnProperty('inSync') && user.inSync === true
+    }) : []
+  },
+  unsinchronized: function (users) {
+    return users ? users.filter(function (user) {
+      return !user.hasOwnProperty('inSync') || user.inSync === false
+    }) : []
+  }
+}
 
 export default {
   name: 'GoogleUsersComponent',
@@ -245,7 +420,8 @@ export default {
     'confirm-icon': ConfirmIcon,
     'show-google-user-icon': showGoogleUserIcon,
     'user-show-link': UserShowLink,
-    'google-user-local-user': GoogleUserLocalUser
+    'google-user-local-user': GoogleUserLocalUser,
+    'google-user-filters-select': GoogleUserFiltersSelect
   },
   data () {
     return {
@@ -255,7 +431,8 @@ export default {
       activating: false,
       refreshing: false,
       settingsDialog: false,
-      googleWatch: false
+      googleWatch: false,
+      selectedFilters: []
     }
   },
   computed: {
@@ -263,7 +440,14 @@ export default {
       internalUsers: 'googleUsers'
     }),
     filteredUsers: function () {
-      return this.internalUsers
+      let filteredUsers = this.internalUsers
+      // if (this.authType) filteredUsers = filters['byAuthType'](this.internalUsers, this.authType)
+      if (this.selectedFilters.length > 0) {
+        this.selectedFilters.forEach(filter => {
+          filteredUsers = filters[filter.function](this.internalUsers)
+        })
+      }
+      return filteredUsers
     },
     headers () {
       let headers = []
@@ -379,10 +563,10 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_GOOGLE_USERS, this.users)
+    this.filterNames = filterNames
   }
 }
 </script>
-
 
 <style>
     .column {

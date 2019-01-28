@@ -132,10 +132,28 @@ Idea:
 
 # GOOGLE USERS MANAGEMENT
 
+- FILTRES:
+ - [ ] Amb Avatar
+ - [ ] Sense Avatar
+ - [ ] Amb usuari local
+ - [ ] Sense usuari local
+ - [ ] Amb email personal
+ - [ ] sense email personal
+ - [ ] Amb employeeId
+ - [ ] Sense employeeId
+ - [ ] Amb mòbil
+ - [ ] Sense mòbil
+ - [ ] Suspesos
+ - [ ] No suspesos/Actius
+ - [ ] Logats algun cop
+ - [ ] Sincronitzat
+ - [ ] No sincornitzat
+ 
 - [ ] Crear usuari de Google
   - [X] employeeId s'omple correctament? COMPROVAT
   - [X] personalEmail s'omple correctament?
   - [X] primaryEmail s'omple correctament?
+  - [ ] Mobil
   - [ ] Si s'escull no crear usuari de Moodle o de Google o Ldap aleshores al següent pas no mostrar el progress intentant obtenir les dades de Moodle o de Google
 - [X] Mostrar el id de Google a algun lloc. Al posar-se a sobre la foto avatar
 - [ ] Fer el mateix que s'ha fet amb els usuaris de Moodle:
