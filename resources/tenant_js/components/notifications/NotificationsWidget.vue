@@ -11,7 +11,7 @@
                     v-for="(dataNotification, index) in dataNotifications"
                     :key="index"
             >
-                <v-list-tile-title style="max-width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ dataNotification.title }}</v-list-tile-title>
+                <v-list-tile-title style="max-width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ dataNotification.data.title }}</v-list-tile-title>
             </v-list-tile>
             <v-list-tile>
                 <v-list-tile-title>No hi ha cap notificació pendent</v-list-tile-title>

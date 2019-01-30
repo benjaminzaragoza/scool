@@ -1,7 +1,740 @@
+# TROUBLESHOOTING
+
+- NO VAN LOS LOGS de INCIDENCIES dona una BroadcastException
+- Potser no és problema del Log és problema del sistema Broadcast -> confirmat la entrada de log es crea però falla algo de broadcast
+- event(new LogCreated($log)); de LogObserver és la línia que no va
+
+{
+    "message": "",
+    "exception": "Illuminate\\Broadcasting\\BroadcastException",
+    "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Broadcasting/Broadcasters/PusherBroadcaster.php",
+    "line": 117,
+    "trace": [
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Broadcasting/BroadcastEvent.php",
+            "line": 48,
+            "function": "broadcast",
+            "class": "Illuminate\\Broadcasting\\Broadcasters\\PusherBroadcaster",
+            "type": "->"
+        },
+        {
+            "function": "handle",
+            "class": "Illuminate\\Broadcasting\\BroadcastEvent",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+            "line": 29,
+            "function": "call_user_func_array"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+            "line": 87,
+            "function": "Illuminate\\Container\\{closure}",
+            "class": "Illuminate\\Container\\BoundMethod",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+            "line": 31,
+            "function": "callBoundMethod",
+            "class": "Illuminate\\Container\\BoundMethod",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/Container.php",
+            "line": 572,
+            "function": "call",
+            "class": "Illuminate\\Container\\BoundMethod",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 94,
+            "function": "call",
+            "class": "Illuminate\\Container\\Container",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 116,
+            "function": "Illuminate\\Bus\\{closure}",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 104,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 98,
+            "function": "then",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php",
+            "line": 49,
+            "function": "dispatchNow",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Jobs/Job.php",
+            "line": 83,
+            "function": "call",
+            "class": "Illuminate\\Queue\\CallQueuedHandler",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/SyncQueue.php",
+            "line": 42,
+            "function": "fire",
+            "class": "Illuminate\\Queue\\Jobs\\Job",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Queue.php",
+            "line": 44,
+            "function": "push",
+            "class": "Illuminate\\Queue\\SyncQueue",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Broadcasting/BroadcastManager.php",
+            "line": 128,
+            "function": "pushOn",
+            "class": "Illuminate\\Queue\\Queue",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php",
+            "line": 280,
+            "function": "queue",
+            "class": "Illuminate\\Broadcasting\\BroadcastManager",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php",
+            "line": 203,
+            "function": "broadcastEvent",
+            "class": "Illuminate\\Events\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php",
+            "line": 482,
+            "function": "dispatch",
+            "class": "Illuminate\\Events\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Observers/LogObserver.php",
+            "line": 25,
+            "function": "event"
+        },
+        {
+            "function": "created",
+            "class": "App\\Observers\\LogObserver",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php",
+            "line": 379,
+            "function": "call_user_func_array"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php",
+            "line": 209,
+            "function": "Illuminate\\Events\\{closure}",
+            "class": "Illuminate\\Events\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasEvents.php",
+            "line": 162,
+            "function": "dispatch",
+            "class": "Illuminate\\Events\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php",
+            "line": 809,
+            "function": "fireModelEvent",
+            "class": "Illuminate\\Database\\Eloquent\\Model",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php",
+            "line": 651,
+            "function": "performInsert",
+            "class": "Illuminate\\Database\\Eloquent\\Model",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php",
+            "line": 790,
+            "function": "save",
+            "class": "Illuminate\\Database\\Eloquent\\Model",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Support/helpers.php",
+            "line": 1027,
+            "function": "Illuminate\\Database\\Eloquent\\{closure}",
+            "class": "Illuminate\\Database\\Eloquent\\Builder",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php",
+            "line": 791,
+            "function": "tap"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php",
+            "line": 23,
+            "function": "create",
+            "class": "Illuminate\\Database\\Eloquent\\Builder",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php",
+            "line": 1608,
+            "function": "forwardCallTo",
+            "class": "Illuminate\\Database\\Eloquent\\Model",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php",
+            "line": 1620,
+            "function": "__call",
+            "class": "Illuminate\\Database\\Eloquent\\Model",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Logger/Incidents/IncidentLogger.php",
+            "line": 197,
+            "function": "__callStatic",
+            "class": "Illuminate\\Database\\Eloquent\\Model",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Jobs/LogIncidentEvent.php",
+            "line": 43,
+            "function": "replyAdded",
+            "class": "App\\Logger\\Incidents\\IncidentLogger",
+            "type": "::"
+        },
+        {
+            "function": "handle",
+            "class": "App\\Jobs\\LogIncidentEvent",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+            "line": 29,
+            "function": "call_user_func_array"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+            "line": 87,
+            "function": "Illuminate\\Container\\{closure}",
+            "class": "Illuminate\\Container\\BoundMethod",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php",
+            "line": 31,
+            "function": "callBoundMethod",
+            "class": "Illuminate\\Container\\BoundMethod",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Container/Container.php",
+            "line": 572,
+            "function": "call",
+            "class": "Illuminate\\Container\\BoundMethod",
+            "type": "::"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 94,
+            "function": "call",
+            "class": "Illuminate\\Container\\Container",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 116,
+            "function": "Illuminate\\Bus\\{closure}",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 104,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 98,
+            "function": "then",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php",
+            "line": 49,
+            "function": "dispatchNow",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Jobs/Job.php",
+            "line": 83,
+            "function": "call",
+            "class": "Illuminate\\Queue\\CallQueuedHandler",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/SyncQueue.php",
+            "line": 42,
+            "function": "fire",
+            "class": "Illuminate\\Queue\\Jobs\\Job",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Queue/Queue.php",
+            "line": 44,
+            "function": "push",
+            "class": "Illuminate\\Queue\\SyncQueue",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 177,
+            "function": "pushOn",
+            "class": "Illuminate\\Queue\\Queue",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 160,
+            "function": "pushCommandToQueue",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php",
+            "line": 73,
+            "function": "dispatchToQueue",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Bus/PendingDispatch.php",
+            "line": 112,
+            "function": "dispatch",
+            "class": "Illuminate\\Bus\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Listeners/Incidents/LogIncidentReplyAdded.php",
+            "line": 33,
+            "function": "__destruct",
+            "class": "Illuminate\\Foundation\\Bus\\PendingDispatch",
+            "type": "->"
+        },
+        {
+            "function": "handle",
+            "class": "App\\Listeners\\Incidents\\LogIncidentReplyAdded",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php",
+            "line": 379,
+            "function": "call_user_func_array"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php",
+            "line": 209,
+            "function": "Illuminate\\Events\\{closure}",
+            "class": "Illuminate\\Events\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php",
+            "line": 482,
+            "function": "dispatch",
+            "class": "Illuminate\\Events\\Dispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Http/Controllers/Tenant/Api/Incidents/IncidentRepliesController.php",
+            "line": 50,
+            "function": "event"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php",
+            "line": 48,
+            "function": "store",
+            "class": "App\\Http\\Controllers\\Tenant\\Api\\Incidents\\IncidentRepliesController",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Route.php",
+            "line": 212,
+            "function": "dispatch",
+            "class": "Illuminate\\Routing\\ControllerDispatcher",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Route.php",
+            "line": 169,
+            "function": "runController",
+            "class": "Illuminate\\Routing\\Route",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+            "line": 682,
+            "function": "run",
+            "class": "Illuminate\\Routing\\Route",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 30,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Router",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php",
+            "line": 43,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Auth\\Middleware\\Authenticate",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
+            "line": 41,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Http/Middleware/EnforceTenancy.php",
+            "line": 42,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "App\\Http\\Middleware\\EnforceTenancy",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/app/Http/Middleware/Tenant.php",
+            "line": 33,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "App\\Http\\Middleware\\Tenant",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php",
+            "line": 58,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 104,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+            "line": 684,
+            "function": "then",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+            "line": 659,
+            "function": "runRouteWithinStack",
+            "class": "Illuminate\\Routing\\Router",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+            "line": 625,
+            "function": "runRoute",
+            "class": "Illuminate\\Routing\\Router",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+            "line": 614,
+            "function": "dispatchToRoute",
+            "class": "Illuminate\\Routing\\Router",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+            "line": 176,
+            "function": "dispatch",
+            "class": "Illuminate\\Routing\\Router",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 30,
+            "function": "Illuminate\\Foundation\\Http\\{closure}",
+            "class": "Illuminate\\Foundation\\Http\\Kernel",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php",
+            "line": 65,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Barryvdh\\Debugbar\\Middleware\\InjectDebugbar",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/fideloper/proxy/src/TrustProxies.php",
+            "line": 57,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Fideloper\\Proxy\\TrustProxies",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
+            "line": 31,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
+            "line": 31,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php",
+            "line": 27,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php",
+            "line": 62,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 151,
+            "function": "handle",
+            "class": "Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php",
+            "line": 53,
+            "function": "Illuminate\\Pipeline\\{closure}",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+            "line": 104,
+            "function": "Illuminate\\Routing\\{closure}",
+            "class": "Illuminate\\Routing\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+            "line": 151,
+            "function": "then",
+            "class": "Illuminate\\Pipeline\\Pipeline",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+            "line": 116,
+            "function": "sendRequestThroughRouter",
+            "class": "Illuminate\\Foundation\\Http\\Kernel",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/Code/acacha/scool/public/index.php",
+            "line": 55,
+            "function": "handle",
+            "class": "Illuminate\\Foundation\\Http\\Kernel",
+            "type": "->"
+        },
+        {
+            "file": "/home/sergi/.config/composer/vendor/cpriego/valet-linux/server.php",
+            "line": 204,
+            "function": "require"
+        }
+    ]
+}
+
 # NOTIFICATIONS
 
 TODO
-- [ ] Primera línia de la llista notificacions text: Teniu 10 notificacion pendent
+- [ ] Primera línia de la llista notificacions text: Teniu 10 notificacions pendent
 - [ ] Última línia: Veure totes les notificacions | Marcar totes com a llegides
 - [ ] Widget només mostrar notificacions no llegides
 - [ ] API que permeti marcar una notificació com a llegida
@@ -26,6 +759,7 @@ QUE CAL PER SUBSTITUIR E-BANDO/O SIMILAR:
 
 INCIDÈNCIES i NOTIFICACIONS
 - [ ] Quan s'afegeix un comentari a una incidència que es propia rebre notificació
+  - [ ] NOMÉS ENVIAR NOTIFICACIÓ SI EL COMENTARI LA AFEGIT UNA ALTRE USUARI! 
   - [ ] Notificació tindrà un text tipus: 'Sha afegit un comentari a una incidència'
   - [ ] Al fer click: marcar com a llegida i
   - [ ] Mostrar la incidència
