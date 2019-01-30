@@ -1,5 +1,52 @@
 # NOTIFICATIONS
 
+TODO
+- [ ] Primera línia de la llista notificacions text: Teniu 10 notificacion pendent
+- [ ] Última línia: Veure totes les notificacions | Marcar totes com a llegides
+- [ ] Widget només mostrar notificacions no llegides
+- [ ] API que permeti marcar una notificació com a llegida
+- [ ] API que permeti marcar totes les notificacins pendents com a llegides
+- [ ] Com marcar una notificació com a llegida ?
+   - [ ] Al fer click a la notificació  
+- [ ] Widget opció de navegar/link a veure l'històric de notificacions
+- [ ] Crear component datatables que permeti veure les notificacions
+  - [ ] Els usuaris que no siguin notificationsManager només poden veure les seves pròpies notificacions
+  - [ ] Filtres:
+    - [ ] Per usuari
+    - [ ] Per tipus Notificació
+- [ ] Widget, implementar temps real
+  - [ ] Rebi push notification amb avís quan hi ha una notificació nova
+  
+QUE CAL PER SUBSTITUIR E-BANDO/O SIMILAR:
+- [ ] Apartat per enviar notificacions generals
+  - Formulari:
+    - [ ] Escollir usuari/s
+    - [ ] Tipus de Notificació. De moment només una general
+    - [ ] Text de la notificació
+
+INCIDÈNCIES i NOTIFICACIONS
+- [ ] Quan s'afegeix un comentari a una incidència que es propia rebre notificació
+  - [ ] Notificació tindrà un text tipus: 'Sha afegit un comentari a una incidència'
+  - [ ] Al fer click: marcar com a llegida i
+  - [ ] Mostrar la incidència
+  - [ ] Extres: Icona associada a la notificació?
+- [ ] Quan es tanca una incidència que es propia rebre notificació:
+    - [ ] Notificació tindrà un text tipus: S'ha tancat una incidència'
+    - [ ] Al fer click: marcar com a llegida i
+    - [ ] Mostrar la incidència
+    - [ ] Extres: Icona associada a la notificació?    
+- [ ] Quan ens assignen una incidència:
+    - [ ] Notificació tindrà un text tipus: Se us ha assignat la incidència'
+    - [ ] Al fer click: marcar com a llegida i
+    - [ ] Mostrar la incidència
+    - [ ] Extres: Icona associada a la notificació?    
+- [ ] Quan assignen una incidència que es nostra
+    - [ ] Notificació tindrà un text tipus: Se us ha assignat la incidència'
+    - [ ] Al fer click: marcar com a llegida i
+    - [ ] Mostrar la incidència
+    - [ ] Extres: Icona associada a la notificació?        
+  
+Recursos
 - https://laravel.com/docs/5.7/notifications
 
 # INBOUND EMAIL

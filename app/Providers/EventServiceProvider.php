@@ -47,6 +47,7 @@ use App\Listeners\Incidents\LogIncidentStored;
 use App\Listeners\Incidents\LogIncidentSubjectUpdated;
 use App\Listeners\Incidents\LogIncidentTagAdded;
 use App\Listeners\Incidents\LogIncidentTagRemoved;
+use App\Listeners\Incidents\NotifyIncidentReplyAdded;
 use App\Listeners\Incidents\SendIncidentAssignedEmail;
 use App\Listeners\Incidents\SendIncidentClosedEmail;
 use App\Listeners\Incidents\SendIncidentCreatedEmail;
@@ -158,6 +159,7 @@ class EventServiceProvider extends ServiceProvider
         IncidentReplyAdded::class => [
             SendIncidentReplyAddedEmail::class,
             LogIncidentReplyAdded::class,
+            NotifyIncidentReplyAdded::class
         ],
 
         StudyTagAdded::class => [
