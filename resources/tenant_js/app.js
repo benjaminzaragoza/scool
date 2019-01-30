@@ -141,6 +141,10 @@ window.Vue.component('helper-offset', require('./components/helper/Offset'))
 window.Vue.component('welcome', require('./components/welcome/Welcome'))
 window.Vue.component('teachers-welcome', require('./components/welcome/TeachersWelcome'))
 
+// MAIN WIDGETS
+window.Vue.component('navigation', require('./components/ui/Nagigation'))
+
+
 window.Vuetify = Vuetify
 
 window.Vue.use(window.Vuetify, {
