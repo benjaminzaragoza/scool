@@ -33,6 +33,7 @@ use App\Models\UserType;
 use App\Models\WeekLesson;
 use App\Models\Log;
 use App\Models\MoodleUser;
+use App\Notifications\SampleNotification;
 use App\Repositories\PersonRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\UserRepository;
@@ -9186,8 +9187,10 @@ if (! function_exists('initialize_studies_tags')) {
 }
 
 if (! function_exists('set_sample_notifications_to_user')) {
-    function set_sample_notifications_to_user() {
-        // TODO
+    function set_sample_notifications_to_user($user) {
+        $user->notify(new SampleNotification('Notification 1'));
+        $user->notify(new SampleNotification('Notification 2'));
+        $user->notify(new SampleNotification('Notification 3'));
     }
 }
 

@@ -7,19 +7,26 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
+/**
+ * Class SampleNotification.
+ *
+ * @package App\Notifications
+ */
 class SampleNotification extends Notification
 {
     use Queueable;
 
+    public $title;
+
     /**
-     * Create a new notification instance.
-     *
-     * @return void
+     * SampleNotification constructor.
+     * @param $title
      */
-    public function __construct()
+    public function __construct($title)
     {
-        //
+        $this->title = $title;
     }
+
 
     /**
      * Get the notification's delivery channels.
@@ -29,7 +36,7 @@ class SampleNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -55,7 +62,7 @@ class SampleNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'title' => $this->title
         ];
     }
 }
