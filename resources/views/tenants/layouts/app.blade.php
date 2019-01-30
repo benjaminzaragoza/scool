@@ -43,9 +43,7 @@
         </v-toolbar-title>
         <div class="d-flex align-center" style="margin-left: auto">
             <span class="caption" v-role="'SuperAdmin'"><git-info></git-info></span>
-            <v-btn icon>
-                <v-icon>notifications</v-icon>
-            </v-btn>
+            <notifications-widget></notifications-widget>
             <gravatar :user="{{ Auth::user() }}" size="52px" @click="toogleRightDrawer"></gravatar>
         </div>
     </v-toolbar>

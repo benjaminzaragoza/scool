@@ -143,7 +143,7 @@ window.Vue.component('teachers-welcome', require('./components/welcome/TeachersW
 
 // MAIN WIDGETS
 window.Vue.component('navigation', require('./components/ui/Nagigation'))
-
+window.Vue.component('notifications-widget', require('./components/notifications/NotificationsWidget'))
 
 window.Vuetify = Vuetify
 

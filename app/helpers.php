@@ -9184,3 +9184,10 @@ if (! function_exists('initialize_studies_tags')) {
         ]);
     }
 }
+
+if (! function_exists('set_sample_notifications_to_user')) {
+    function set_sample_notifications_to_user() {
+        // TODO
+    }
+}
+
