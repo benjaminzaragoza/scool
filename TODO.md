@@ -1486,7 +1486,7 @@ Rendiment:
 - [X] Document my solution at https://github.com/beyondcode/laravel-websockets-docs/pull/1
 - [X] Documentar la complexitat/problema amb els Broadcast::channel autoritzacions i tenant. Blog?
 - [X] provar obrir fireall Laravel port 6001 i utilitzar explotació sense Nginx proxy apuntat a port 6001 com en local
-- [X] Comprovar hnadshake de l'anterior desde lolcahost.
+- [X] Comprovar handshake de l'anterior desde locahost.
 - [X] Configuració SSL/HTTPS local amb Valet
 - [X] Configuració SSL/HTTPS production a servidor Laravel Forge : Certificat Let's encrypt
 - [X] Instal·lar supervisor per fer permanent la execució: https://docs.beyondco.de/laravel-websockets/1.0/basic-usage/starting.html#keeping-the-socket-server-running-with-supervisord

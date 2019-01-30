@@ -158,8 +158,8 @@ class EventServiceProvider extends ServiceProvider
 
         IncidentReplyAdded::class => [
             NotifyIncidentReplyAdded::class,
-//            SendIncidentReplyAddedEmail::class,
-//            LogIncidentReplyAdded::class
+            SendIncidentReplyAddedEmail::class,
+            LogIncidentReplyAdded::class
         ],
 
         StudyTagAdded::class => [

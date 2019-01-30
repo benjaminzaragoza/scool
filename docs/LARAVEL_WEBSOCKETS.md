@@ -1,3 +1,31 @@
+# Comprovacions
+
+## Configuració SSL
+
+### WebSocket connection to 'wss://iesebre.scool.test:6001/app/6f627646afb1261d5b50?protocol=7&client=js&version=4.3.1&flash=false' failed: WebSocket is closed before the connection is established. 
+
+Consola Javascript a vegades surt aquest error. Fas un F5 i ja connecta
+
+### Configuració SSL local Laravel Valet
+
+Comproveu que existeixen els fitxers:
+
+```
+cat /home/sergi/.valet/Certificates/scool.test.crt
+cat /home/sergi/.valet/Certificates/scool.test.key
+```
+
+a **config/websockets.conf''' es configuren aquests fitxers a través de variables entorn.
+
+IMPORTANT: Els certificats es creen amb valet secure però també es poden eliminar amb valet unsecure comproveu que existeixen
+
+# Troubleshooting. 
+
+## Illuminate\\Broadcasting\\BroadcastException in PusherBroadcaster
+
+# Client Laravel Echo per consola no connecta al servidor error ERR_SSL_VERSION_OR_CIPHER_MISMATCH 
+WebSocket connection to 'wss://iesebre.scool.test:6001/app/6f627646afb1261d5b50?protocol=7&client=js&version=4.3.1&flash=false' failed: Error in connection establishment: net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH
+
 # Proxy configuration at Laravel Forge:
 
 https://github.com/acacha/scool/tree/master/nginx
