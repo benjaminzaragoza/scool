@@ -33,7 +33,10 @@ class UserNotificationsControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group notifications
+     */
     public function user_can_get_his_owned_notifications()
     {
         $user = $this->login('api');
@@ -63,7 +66,10 @@ class UserNotificationsControllerTest extends BaseTenantTest
         $this->assertCount(0,$result);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group notifications
+     */
     public function guest_user_cannot_get_his_owned_notifications()
     {
         $response = $this->json('GET','/api/v1/user/notifications/');
