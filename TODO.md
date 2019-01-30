@@ -1,8 +1,40 @@
 # TROUBLESHOOTING
 
-- NO VAN LOS LOGS de INCIDENCIES dona una BroadcastException
-- Potser no és problema del Log és problema del sistema Broadcast -> confirmat la entrada de log es crea però falla algo de broadcast
-- event(new LogCreated($log)); de LogObserver és la línia que no va
+- [X] sense cuas va correctament! Per tant és un problema del worker
+- [ ] NO van notificacions quan es fan per workers/queues. No troba classe 'App\Models\User'. Error:
+
+Symfony\Component\Debug\Exception\FatalThrowableError: Class 'App\Models\User' not found in /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesAndRestoresModelIdentifiers.php:84
+Stack trace:
+#0 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesAndRestoresModelIdentifiers.php(55): Illuminate\Notifications\SendQueuedNotifications->restoreModel(Object(Illuminate\Contracts\Database\ModelIdentifier))
+#1 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesModels.php(45): Illuminate\Notifications\SendQueuedNotifications->getRestoredPropertyValue(Object(Illuminate\Contracts\Database\ModelIdentifier))
+#2 [internal function]: Illuminate\Notifications\SendQueuedNotifications->__wakeup()
+#3 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(42): unserialize('O:48:"Illuminat...')
+#4 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/Jobs/Job.php(83): Illuminate\Queue\CallQueuedHandler->call(Object(Illuminate\Queue\Jobs\RedisJob), Array)
+#5 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(327): Illuminate\Queue\Jobs\Job->fire()
+#6 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(277): Illuminate\Queue\Worker->process('redis', Object(Illuminate\Queue\Jobs\RedisJob), Object(Illuminate\Queue\WorkerOptions))
+#7 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(118): Illuminate\Queue\Worker->runJob(Object(Illuminate\Queue\Jobs\RedisJob), 'redis', Object(Illuminate\Queue\WorkerOptions))
+#8 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/Console/WorkCommand.php(102): Illuminate\Queue\Worker->daemon('redis', 'default', Object(Illuminate\Queue\WorkerOptions))
+#9 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/Console/WorkCommand.php(86): Illuminate\Queue\Console\WorkCommand->runWorker('redis', 'default')
+#10 /home/sergi/Code/acacha/tasks/vendor/laravel/horizon/src/Console/WorkCommand.php(46): Illuminate\Queue\Console\WorkCommand->handle()
+#11 [internal function]: Laravel\Horizon\Console\WorkCommand->handle()
+#12 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#14 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#15 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Container/Container.php(572): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#16 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Console/Command.php(183): Illuminate\Container\Container->call(Array)
+#17 /home/sergi/Code/acacha/tasks/vendor/symfony/console/Command/Command.php(255): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#18 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Console/Command.php(170): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#19 /home/sergi/Code/acacha/tasks/vendor/symfony/console/Application.php(886): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 /home/sergi/Code/acacha/tasks/vendor/symfony/console/Application.php(262): Symfony\Component\Console\Application->doRunCommand(Object(Laravel\Horizon\Console\WorkCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#21 /home/sergi/Code/acacha/tasks/vendor/symfony/console/Application.php(145): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#22 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Console/Application.php(89): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#23 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(122): Illuminate\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#24 /home/sergi/Code/acacha/tasks/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#25 {main}
+
+- [X] NO VAN LOS LOGS de INCIDENCIES dona una BroadcastException. Solucionat era error no havia SSL ok a Valet i laravel sockets no anava bé.
+  - [X] Potser no és problema del Log és problema del sistema Broadcast -> confirmat la entrada de log es crea però falla algo de broadcast
+  - [X] event(new LogCreated($log)); de LogObserver és la línia que no va
 
 {
     "message": "",
