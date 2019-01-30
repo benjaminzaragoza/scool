@@ -1,3 +1,31 @@
+# NOTIFICATIONS
+
+- https://laravel.com/docs/5.7/notifications
+
+# INBOUND EMAIL
+
+MAILGUN:
+https://documentation.mailgun.com/en/latest/quickstart-receiving.html#add-receiving-mx-records
+
+## Configuració DNS del domini
+
+Registres MX:
+
+Type	Value	Purpose
+MX	mxa.mailgun.org	Receiving (Optional)
+MX	mxb.mailgun.org	Receiving (Optional)
+
+IMPORTANT: iesebre.com -> tot s'envia a GMAIL/GSUITE
+
+Cal fer-ho per a un subdomini, a més es pot fer a scool.cat
+
+- iesebre.scool.cat -> incidencies@iesebre.scool.cat
+- DNS de Digital Ocean: Afegir registre MX per enviar emails a Mailgun
+- MAILBOX_MAILGUN_KEY= api key de mailgun https://docs.beyondco.de/laravel-mailbox/1.0/drivers/drivers.html#mailgun
+- RUTA CATCH ALL -> https://awesome-laravel.com/laravel-mailbox/mailgun/mime.
+  - Interessant també enviar copia a incidencies@iesebre.com
+
+
 # TODOS finals abans posar explotació
 
 - [ ] Recordar executar de tant en tant abans de passar a producció. S'executa npm run production (abans atureu npm run hot) a local abans de fer

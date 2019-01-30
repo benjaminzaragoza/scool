@@ -1,0 +1,23 @@
+version: 1
+
+dn: sambaDomainName=INSEBRE,ou=All,dc=iesebre,dc=com
+objectClass: sambaUnixIdPool
+objectClass: sambaDomain
+gidNumber: 1000
+sambaDomainName: INSEBRE
+sambaSID: S-1-5-21-4045161930-1404234508-1517741366
+uidNumber: 1142
+sambaAlgorithmicRidBase: 1000
+sambaForceLogoff: -1
+sambaLockoutDuration: 30
+sambaLockoutObservationWindow: 30
+sambaLockoutThreshold: 0
+sambaLogonToChgPwd: 0
+sambaMaxPwdAge: -1
+sambaMinPwdAge: 0
+sambaMinPwdLength: 5
+sambaNextRid: 1137
+sambaNextUserRid: 1000
+sambaPwdHistoryLength: 0
+sambaRefuseMachinePwdChange: 0
+
