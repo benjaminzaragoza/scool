@@ -31,13 +31,13 @@ class LoggedUserProfileControllerTest extends BaseTenantTest
     }
 
     /**
+     * 
      * @test
      * @group users
      */
     public function user_can_see_his_own_profile()
     {
         $user = $this->login('web');
-
         $response = $this->get('/user/profile');
         $response->assertRedirect('/users/' . $user->id);
     }
