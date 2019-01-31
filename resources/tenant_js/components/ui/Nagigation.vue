@@ -43,7 +43,8 @@
                             </v-list-tile-content>
                         </v-list-tile>
                     </v-list-group>
-                    <v-list-tile v-else :href="item.href" :target="item.target">
+                    <v-list-tile v-else :href="item.href" :target="item.target"
+                                 :style="selectedStyle(item)">
                         <v-list-tile-action>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-tile-action>
@@ -58,6 +59,8 @@
 </template>
 
 <script>
+import colors from 'vuetify/es5/util/colors'
+
 export default {
   name: 'Navigation',
   data () {
@@ -83,6 +86,27 @@ export default {
   model: {
     prop: 'drawer',
     event: 'input'
+  },
+  methods: {
+    setSelectedItem () {
+      const currentPath = window.location.pathname
+      console.log(currentPath)
+      const selected = this.items.indexOf(this.items.find(item => item.href === currentPath))
+      this.items[selected].selected = true
+    },
+    selectedStyle (item) {
+      console.log(colors)
+      if (item.selected) {
+        return {
+          'border-left': '5px solid #F0B429',
+          'background-color': '#F0F4F8',
+          'font-size': '1em'
+        }
+      }
+    }
+  },
+  created () {
+    this.setSelectedItem()
   }
 }
 </script>
