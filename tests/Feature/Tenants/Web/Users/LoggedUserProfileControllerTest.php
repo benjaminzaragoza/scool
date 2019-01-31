@@ -31,7 +31,7 @@ class LoggedUserProfileControllerTest extends BaseTenantTest
     }
 
     /**
-     * 
+     *
      * @test
      * @group users
      */
