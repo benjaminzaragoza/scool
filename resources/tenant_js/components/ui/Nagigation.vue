@@ -59,8 +59,6 @@
 </template>
 
 <script>
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   name: 'Navigation',
   data () {
@@ -90,12 +88,10 @@ export default {
   methods: {
     setSelectedItem () {
       const currentPath = window.location.pathname
-      console.log(currentPath)
       const selected = this.items.indexOf(this.items.find(item => item.href === currentPath))
       this.items[selected].selected = true
     },
     selectedStyle (item) {
-      console.log(colors)
       if (item.selected) {
         return {
           'border-left': '5px solid #F0B429',
