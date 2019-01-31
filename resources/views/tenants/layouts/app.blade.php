@@ -63,7 +63,9 @@
                     <v-flex xs7>
                         <h3>@{{  user.name }}</h3>
                         <a href="https://en.gravatar.com/connect/">Canviar Avatar</a>
-                        <a href="/user/profile">Més informació</a>
+                        <div>
+                            <a href="/user/profile">Més informació</a>
+                        </div>
                     </v-flex>
                 </v-layout>
             </v-container>

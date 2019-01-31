@@ -2,19 +2,36 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
-                <v-toolbar color="blue darken-3">
+                <v-toolbar dense color="primary">
                     <v-menu bottom>
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
                         </v-btn>
-
                         <v-list>
                             <v-list-tile>
-                                <v-list-tile-title>Llençol de professors</v-list-tile-title>
+                                <v-list-tile-title href="#" target="_blank">Llençol de professors</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users" target="_blank">
+                                <v-list-tile-title>Gestionar usuaris</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/permissions" target="_blank">
+                                <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/roles" target="_blank">
+                                <v-list-tile-title>Gestionar Rols</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/google_users" target="_blank">
+                                <v-list-tile-title>Usuaris de Google</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/moodle/users" target="_blank">
+                                <v-list-tile-title>Usuaris Moodle</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/ldap_users" target="_blank">
+                                <v-list-tile-title>Usuaris Ldap</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
-                    <v-toolbar-title class="white--text title">Professors</v-toolbar-title>
+                    <v-toolbar-title class="white--text">Professors</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn icon class="white--text" @click="settings">
                         <v-icon>settings</v-icon>
@@ -41,7 +58,7 @@
                                 ></v-text-field>
                             </v-card-title>
                             <v-data-table
-                                    class="px-0 mb-2 hidden-sm-and-down"
+                                    class="px-0 mb-5 hidden-sm-and-down"
                                     :headers="headers"
                                     :items="filteredTeachers"
                                     :search="search"
@@ -145,13 +162,11 @@ import * as actions from '../../store/action-types'
 import ShowTeacherIcon from './ShowTeacherIconComponent.vue'
 import AdministrativeStatusSelect from './AdministrativeStatusSelectComponent.vue'
 import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
-import axios from 'axios'
-import withSnackbar from '../mixins/withSnackbar'
 import UserAvatar from '../ui/UserAvatarComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
 
 export default {
-  mixins: [withSnackbar],
+  name: 'Teachers',
   components: {
     'show-teacher-icon': ShowTeacherIcon,
     'administrative-status-select': AdministrativeStatusSelect,
@@ -223,10 +238,10 @@ export default {
     refresh () {
       this.refreshing = true
       this.$store.dispatch(actions.GET_TEACHERS).then(response => {
-        this.showMessage('Professors actualitzats correctament')
+        this.$snackbar.showMessage('Professors actualitzats correctament')
         this.refreshing = false
       }).catch(error => {
-        this.showError(error)
+        this.$snackbar.showError(error)
         this.refreshing = false
       })
     },
@@ -235,7 +250,7 @@ export default {
     },
     remove (teacher) {
       this.removing = true
-      axios.delete('/api/v1/approved_teacher/' + teacher.user_id).then(response => {
+      window.axios.delete('/api/v1/approved_teacher/' + teacher.user_id).then(response => {
         this.removing = false
         this.$store.commit(mutations.DELETE_TEACHER, teacher)
       }).catch(error => {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\Tenant\Teacher as TeacherResource;
 
 /**
  * Class Teacher.
@@ -23,6 +24,38 @@ class Teacher extends Model
         'formatted_created_at_diff',
         'formatted_updated_at_diff'
     ];
+
+    /**
+     * Get Teachers.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function teachers()
+    {
+        return collect(TeacherResource::collection(
+            Teacher::with([
+                'specialty',
+                'specialty.jobs',
+                'specialty.force',
+                'specialty.family',
+                'administrativeStatus',
+                'user',
+                'user.googleUser',
+                'user.jobs',
+                'user.jobs.specialty',
+                'user.jobs.family',
+                'user.jobs.users',
+                'user.jobs.holders',
+                'user.person',
+                'user.person.birthplace',
+                'user.person.identifier',
+                'user.person.address',
+                'user.person.address.province',
+                'user.person.address.location',
+                'user.person.media', // TODO
+                'department'
+            ])->orderByRaw('code + 0')->get()));
+    }
 
     /**
      * Get the user that owns the teacher.

@@ -14,6 +14,7 @@
             <v-container grid-list-lg fluid>
                 <v-layout row wrap>
                      <v-flex xs9>
+                         <user-card :user="internalUser"></user-card>
                         <personal-data-card :user="internalUser"></personal-data-card>
                     </v-flex>
                     <v-flex xs3>
@@ -257,11 +258,13 @@
 
 <script>
 import PersonalDataCard from '../people/PersonalDataCardComponent'
+import UserCard from '../users/UserCard'
 
 export default {
   name: 'ShowUser',
   components: {
-    'personal-data-card': PersonalDataCard
+    'personal-data-card': PersonalDataCard,
+    'user-card': UserCard
   },
   data () {
     return {

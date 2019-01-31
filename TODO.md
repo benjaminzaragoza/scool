@@ -873,14 +873,69 @@ un merge amb producció i pujar els canvis.
 - [ ] Boto de sortir al costat de l'Avatar que no calgui entrar?
 - [ ] Canviar email ara es pot fer OK -> però hauria de posar el email a no confirmat
 
+# Operacions INLINE/SINGULARS
+
+## Tipus usuari:
+
+- [ ] Crear Component per editar el tipus usuari inline a partir d'una icona
+- [ ] Implicacions canviar tipus usuari
+  - [ ] Canviar directament sense tenir res més en compte -> Només si es té clar el que es fa
+  - [ ] Relació amb els checks pendents
+    - [ ] Check per ser professor:
+      - [ ] Cal tenir usuari
+      - [ ] Cal tenir un teacher_id vinculi amb la taula teachers
+
+## Mòbil usuari
+
 # FITXA USUARI/ PROFILE
 
+USER CARD:
+Dos users cards: Mostrar dades i edit
+EDIT:
+- Full screen dialog?
+- Poder modificar totes les dades
+- [ ] Amb Labels i camps de formulari però que siguin els labels secundaris -> Important les dades
+- [ ] Id no modificable
+- [ ] Modificar email inline aprofitar ja tenim com fer-ho a la llista (modificació només email)
+- [ ] Photo Modificacle amb doble click -> Photo Component
+- [ ] Nom modificable inline i que sincronitzi amb givenName, Sn1 i Sn2
+- [ ] Tipus usuari modificable inline
+SHOW
+- [ ] Toolbar 
+  - [ ] Densa
+  - [ ] No caldria color de fons, ni title? Només mostrar widgets a la dreta
+  - [ ] Widgets: 
+    - [ ] Tancar
+    - [ ] Minimitzar
+    - [ ] Editar
+- [ ] Crear una user card per mostrar informació NOMÉS usuari (taula user sense cap taula extra suport com person o Google, Moodle, etc)
+  - [ ] Mostrar les dades sense labels. Dades: 
+  - [ ] Photo (photo)
+    - No confondre photo i Avatar
+    - Tooltip mostri nom complet i email
+  - [ ] Mostrar en un tooltip l'identificador d'usuari  
+  - [ ] Nom complet (camp name) -> Mida màxima limitada amb ellipsis
+    - [ ] Tooltip: Dades completes
+  - [ ] Email
+  - [ ] email_verified_at
+    - [ ] Una icona checked al costat email de color verd i amb tooltip: verificat si el email ha estat verificat
+    - [ ] Una icona cross al costat email de color roif i amb tooltip: verificat si el email NO ha estat verificat
+  - [ ] Telèfon (mobile)
+    - [ ] mobile_verified_at
+      - [ ] Una icona checked al costat email de color verd i amb tooltip: verificat si el mobil ha estat verificat
+      - [ ] Una icona cross al costat email de color roif i amb tooltip: verificat si el mobil NO ha estat verificat  
+  - [ ] Text: vist per el últim cop el Data Humana amb tooltip data formatada (last_login) des de l'adreça IP: last_login_ip
+  - [ ] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
+  - [ ] Tipus usuari: Text Professor | Alumne | Familiar, etc
+  
 - [ ] Redisseny de l'estil
  - [ ] Potser cal fer sempre dos vistes una de només consultar i l'altre edició
  - [ ] Cal parcelar el disseny per parts, no tothom tindrà totes les parts
  - [ ] Depenent dels permisos de l'usuari es podran fer més o menys coses
-- [ ] URL directa d'accés
-- [ ] Usuaris poden veure la seva fitxa
+- [X] URL directa d'accés ('/users/1')
+- [X] Usuaris poden veure la seva fitxa ('/user/profile')
+
+PERMISOS:
 - [ ] Admins poden veure fitxes de tothom i users managers també
 - [ ] Test usuaris normals no poden veure fitxa completa usuari
   - [ ] Fitxa pública:
@@ -888,17 +943,22 @@ un merge amb producció i pujar els canvis.
   - [ ] Email corporatiu -> email personal no 
   - [ ] Avatar|Photo
   - [ ] Tipus usuari
-- [ ] Dades fitxa completa:
-  - [ ] Les que ja hi han fitxa actual
-  - [ ] Informació comptes externs
-    - [ ] Moodle
+
+## Card Comptes externes
+
+- Mostrar de comptes externes d'un usuari:
+- [ ] Disseny similar UserCard 
+- [ ] Moodle
       - [ ] Moodle id, idnumber, nom usuari i resta de dades Moodle
       - [ ] Accés/link a gestió usuaris Moodle
-      - [ ] Accés/link del usuari a Moodle
-    - [ ] Gsuite/Google User
+      - [ ] Accés/link del usuari a Moodle 
+- [ ] Gsuite/Google User
       - [ ] Email corporatiu
       - [ ] Google Id  
       - [ ] Accés/link del usuari a Google
+- [ ] Ldap
+
+# CARD DADES PERSONALS
       
 # LANDING PAGE
 

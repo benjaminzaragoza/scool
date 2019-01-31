@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Web;
+namespace App\Http\Controllers\Tenant\Api\Teachers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyTeacher;
@@ -16,6 +16,7 @@ use App\Models\JobType;
 use App\Models\PendingTeacher;
 use App\Models\Specialty;
 use App\Models\Teacher;
+use App\Http\Resources\Tenant\Teacher as TeacherResource;
 use App\Http\Resources\Tenant\Job as JobResource;
 use App\Models\User;
 
@@ -27,44 +28,14 @@ use App\Models\User;
 class TeachersController extends Controller
 {
     /**
-     * Show teachers.
+     * Index.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param ListTeachers $request
+     * @return \Illuminate\Support\Collection
      */
-    public function index(ShowTeachersManagment $request)
+    public function index(ListTeachers $request)
     {
-        $pendingTeachers = PendingTeacher::with('specialty')->get();
-
-        $teachers =  Teacher::teachers();
-
-        $jobs =  collect(JobResource::collection(
-            Job::with(
-                'type',
-                'family',
-                'specialty',
-                'specialty.department',
-                'users',
-                'holders',
-                'holders.teacher',
-                'substitutes',
-                'substitutes.teacher')->where('type_id',JobType::findByName('Professor/a')->id)->get()));
-
-        $specialties = Specialty::all();
-        $forces = Force::all();
-        $administrativeStatuses = AdministrativeStatus::all();
-        $departments = Department::all();
-
-        $users = (new UserCollection(User::with(['roles','person','googleUser'])->get()))->transform();
-
-        return view('tenants.teachers.index', compact(
-            'pendingTeachers',
-            'teachers',
-            'specialties',
-            'forces',
-            'administrativeStatuses',
-            'jobs',
-            'departments',
-            'users'));
+        return Teacher::teachers();
     }
 
     /**
