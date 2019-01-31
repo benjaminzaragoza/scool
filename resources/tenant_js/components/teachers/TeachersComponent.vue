@@ -1,5 +1,9 @@
 <template>
-    <v-container fluid grid-list-md text-xs-center>
+    <span>
+        <v-dialog v-if="showTeacher" v-model="showTeacher" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="showTeacher = false">
+            <teacher-show-card @close="showTeacher=false" :teacher="teacherToShow" :teachers="internalTeachers"></teacher-show-card>
+        </v-dialog>
+        <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
                 <v-toolbar dense color="primary">
@@ -153,6 +157,7 @@
             </v-flex>
         </v-layout>
     </v-container>
+    </span>
 </template>
 
 <script>
@@ -164,11 +169,13 @@ import AdministrativeStatusSelect from './AdministrativeStatusSelectComponent.vu
 import ConfirmIcon from '../ui/ConfirmIconComponent.vue'
 import UserAvatar from '../ui/UserAvatarComponent'
 import ManageCorporativeEmailIcon from '../google/users/ManageCorporativeEmailIcon'
+import TeacherShowCard from './TeacherShowCard'
 
 export default {
   name: 'Teachers',
   components: {
     'show-teacher-icon': ShowTeacherIcon,
+    'teacher-show-card': TeacherShowCard,
     'administrative-status-select': AdministrativeStatusSelect,
     'confirm-icon': ConfirmIcon,
     'user-avatar': UserAvatar,
@@ -181,16 +188,19 @@ export default {
       search: '',
       deleting: false,
       removing: false,
-      refreshing: false
+      refreshing: false,
+      showTeacher: false
     }
   },
   computed: {
     ...mapGetters({
       internalTeachers: 'teachers'
     }),
+    teacherToShow () {
+      return this.internalTeachers.find(teacher => this.teacher.id === teacher.id)
+    },
     filteredTeachers: function () {
-      if (this.showStatusHeader) return this.internalTeachers
-      return this.internalTeachers.filter(teacher => teacher.administrative_status_id === this.administrativeStatus.id)
+      return this.internalTeachers
     },
     headers () {
       let headers = []
@@ -222,6 +232,10 @@ export default {
     }
   },
   props: {
+    teacher: {
+      type: Array,
+      required: false
+    },
     teachers: {
       type: Array,
       required: true
@@ -266,6 +280,7 @@ export default {
   },
   created () {
     this.$store.commit(mutations.SET_TEACHERS, this.teachers)
+    this.showTeacher = !!this.teacher
   }
 }
 </script>

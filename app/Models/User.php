@@ -673,7 +673,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public static function getUsers()
     {
-        return (new UserCollection(User::with('roles','permissions','person','googleUser')->get()))->transform();
+        return (new UserCollection(User::with('roles','permissions','person','googleUser','moodleUser')->get()))->transform();
     }
 
     /**

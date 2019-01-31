@@ -24,7 +24,7 @@ use App\Models\User;
 class TeachersController extends Controller
 {
     /**
-     * Show teachers.
+     * Index teachers.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -62,5 +62,48 @@ class TeachersController extends Controller
             'jobs',
             'departments',
             'users'));
+    }
+
+    /**
+     * Show teacher.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(ShowTeachersManagment $request, $tenant, Teacher $teacher)
+    {
+        $pendingTeachers = PendingTeacher::with('specialty')->get();
+
+        $teachers =  Teacher::teachers();
+
+        $jobs =  collect(JobResource::collection(
+            Job::with(
+                'type',
+                'family',
+                'specialty',
+                'specialty.department',
+                'users',
+                'holders',
+                'holders.teacher',
+                'substitutes',
+                'substitutes.teacher')->where('type_id',JobType::findByName('Professor/a')->id)->get()));
+
+        $specialties = Specialty::all();
+        $forces = Force::all();
+        $administrativeStatuses = AdministrativeStatus::all();
+        $departments = Department::all();
+
+        $users = (new UserCollection(User::with(['roles','person','googleUser'])->get()))->transform();
+
+        return view('tenants.teachers.show', compact(
+            'pendingTeachers',
+            'teachers',
+            'specialties',
+            'forces',
+            'administrativeStatuses',
+            'jobs',
+            'departments',
+            'users',
+            'teacher'
+        ));
     }
 }

@@ -11,7 +11,7 @@
             :administrative-statuses="{{ $administrativeStatuses }}">
     </pending-teachers>
 
-    <teachers :teachers="{{ $teachers }}" :administrative-statuses="{{ $administrativeStatuses }}"></teachers>
+    <teachers :teacher="{{ $teacher }}" :teachers="{{ $teachers }}" :administrative-statuses="{{ $administrativeStatuses }}"></teachers>
 
     <teacher-add
             :users="{{ $users }}"

@@ -1,5 +1,7 @@
 # TROUBLESHOOTING
 
+- [X] Llista usuaris falla Eager Loading 142 queries
+- [ ] No funcionen els filtres de professors a Teachers Management. Hi ha un munt de filtres per crear també
 - [X] sense cuas va correctament! Per tant és un problema del worker
 - [ ] NO van notificacions quan es fan per workers/queues. No troba classe 'App\Models\User'. Error:
 

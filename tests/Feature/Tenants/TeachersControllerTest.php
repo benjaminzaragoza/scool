@@ -102,4 +102,41 @@ class TeachersControllerTest extends BaseTenantTest
         });
     }
 
+    /**
+     * @test
+     * @group teachers
+     */
+    public function show_teacher()
+    {
+        initialize_tenant_roles_and_permissions();
+        initialize_user_types();
+        initialize_job_types();
+        initialize_forces();
+        initialize_departments();
+        initialize_families();
+        initialize_specialities();
+        initialize_users();
+        initialize_teachers();
+
+        $staffManager = create(User::class);
+        $this->actingAs($staffManager);
+        $role = Role::firstOrCreate(['name' => 'TeachersManager']);
+        Config::set('auth.providers.users.model', User::class);
+        $staffManager->assignRole($role);
+
+        $response = $this->get('/teachers/1');
+
+        $response->assertSuccessful();
+        $response->assertViewIs('tenants.teachers.show');
+        $response->assertViewHas('pendingTeachers');
+        $response->assertViewHas('teachers');
+        $response->assertViewHas('jobs');
+        $response->assertViewHas('specialties');
+        $response->assertViewHas('forces');
+        $response->assertViewHas('administrativeStatuses');
+        $response->assertViewHas('departments');
+        $response->assertViewHas('users');
+        $response->assertViewHas('teacher');
+    }
+
 }

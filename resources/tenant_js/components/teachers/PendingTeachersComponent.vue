@@ -2,8 +2,8 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
-                <v-toolbar color="blue darken-3">
-                    <v-toolbar-title class="white--text title">Professors pendents</v-toolbar-title>
+                <v-toolbar dense color="primary">
+                    <v-toolbar-title class="white--text">Professors pendents</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn icon class="white--text" @click="settings">
                         <v-icon>settings</v-icon>
