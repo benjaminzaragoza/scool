@@ -143,8 +143,8 @@ class PersonTest extends TestCase
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
-            'birthdate' => 'Jeans',
-            'birthplace_id' => 'Jeans',
+            'birthdate' => Carbon::createFromFormat('Y-m-d', '1978-03-02'),
+            'birthplace_id' => 1,
             'gender' => 'Home',
             'civil_status' => 'Casat/da',
             'phone' => '977504878',
@@ -162,6 +162,7 @@ class PersonTest extends TestCase
         $mappedPerson = $person->map();
 
         $this->assertEquals(1,$mappedPerson['id']);
+        $this->assertEquals($user->id,$mappedPerson['user_id']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedPerson['name']);
         $this->assertEquals('Pepe',$mappedPerson['givenName']);
         $this->assertEquals('Pardo',$mappedPerson['sn1']);
@@ -171,18 +172,31 @@ class PersonTest extends TestCase
         $this->assertEquals(1,$mappedPerson['userId']);
         $this->assertEquals('pepepardo@iesebre.com',$mappedPerson['corporativeEmail']);
         $this->assertEquals('123125634',$mappedPerson['googleId']);
-        $this->assertNull($mappedPerson['email_verified_at']);
+
+
         $this->assertEquals('678514427',$mappedPerson['mobile']);
-        $this->assertNull($mappedPerson['last_login']);
-        $this->assertNull($mappedPerson['last_login_ip']);
+
         $this->assertInstanceOf(Carbon::class,$mappedPerson['created_at']);
         $this->assertInstanceOf(Carbon::class,$mappedPerson['updated_at']);
         $this->assertEquals($mappedPerson['created_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_created_at']);
         $this->assertEquals($mappedPerson['updated_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_updated_at']);
         $this->assertEquals($mappedPerson['created_at']->timestamp,$mappedPerson['created_at_timestamp']);
         $this->assertEquals($mappedPerson['updated_at']->timestamp,$mappedPerson['updated_at_timestamp']);
-        $this->assertEmpty($mappedPerson['admin']);
-        $this->assertEquals('MX',$mappedPerson['hash_id']);
+
+        $this->assertEquals(1, $mappedPerson['identifier_id']);
+        $this->assertEquals('41695258A', $mappedPerson['identifier_value']);
+
+        $this->assertEquals('02-03-1978', $mappedPerson['birthdate']);
+        $this->assertEquals(1, $mappedPerson['birthplace_id']);
+        $this->assertEquals('Casat/da', $mappedPerson['civil_status']);
+        $this->assertEquals('TODO', $mappedPerson['gender']);
+        $this->assertEquals('TODO', $mappedPerson['phone']);
+        $this->assertEquals('TODO', $mappedPerson['other_phones']);
+        $this->assertEquals('TODO', $mappedPerson['mobile']);
+        $this->assertEquals('TODO', $mappedPerson['other_mobiles']);
+        $this->assertEquals('TODO', $mappedPerson['other_emails']);
+        $this->assertEquals('Bla bla bla', $mappedPerson['notes']);
+
     }
 
     /**

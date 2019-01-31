@@ -38,6 +38,7 @@ class PersonalDataControllerTest extends BaseTenantTest
      */
     public function show_personal_data_management()
     {
+        create_sample_people();
         $usersManager = create(User::class);
         $this->actingAs($usersManager);
         $role = Role::firstOrCreate(['name' => 'UsersManager']);
@@ -48,7 +49,18 @@ class PersonalDataControllerTest extends BaseTenantTest
 
         $response->assertSuccessful();
         $response->assertViewIs('tenants.people.show');
-        $response->assertViewHas('people');
+
+        $response->assertViewHas('people', function ($returnedPeople) {
+            dd($returnedPeople[0]);
+//            return
+//                count($returnedPeople) === 3 &&
+//                $returnedPositions[0]['name'] === 'Coordinador TIC/TAC' &&
+//                $returnedPositions[0]['shortname'] === 'Coord. TIC' &&
+//                $returnedPositions[0]['api_uri'] === 'positions' &&
+//                $returnedPositions[0]['users'] !== null &&
+//                $returnedPositions[0]['shortname'] === 'Coord. TIC' &&
+//                $returnedPositions[0]['code'] === 'TICTAC';
+        });
     }
 
     /**
