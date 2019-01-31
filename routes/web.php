@@ -19,6 +19,7 @@ use App\Http\Controllers\Tenant\Web\CurriculumController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectsController;
 use App\Http\Controllers\Tenant\Web\IncidentsController;
+use App\Http\Controllers\Tenant\Web\LoggedUserProfileController;
 use App\Http\Controllers\Tenant\Web\MoodleUsersController;
 use App\Http\Controllers\Tenant\Web\PermissionsController;
 use App\Http\Controllers\Tenant\Web\PositionsController;
@@ -222,6 +223,9 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/curriculum/subject_groups','\\' . CurriculumSubjectGroupsController::class . '@index');
 
             Route::get('/positions', '\\' . PositionsController::class . '@index');
+
+            Route::get('/user/profile', '\\' . LoggedUserProfileController::class . '@show');
+
         });
     });
 

@@ -873,13 +873,12 @@ un merge amb producció i pujar els canvis.
 - [ ] Boto de sortir al costat de l'Avatar que no calgui entrar?
 - [ ] Canviar email ara es pot fer OK -> però hauria de posar el email a no confirmat
 
-# Troubleshooting
-
-
-
 # FITXA USUARI/ PROFILE
 
 - [ ] Redisseny de l'estil
+ - [ ] Potser cal fer sempre dos vistes una de només consultar i l'altre edició
+ - [ ] Cal parcelar el disseny per parts, no tothom tindrà totes les parts
+ - [ ] Depenent dels permisos de l'usuari es podran fer més o menys coses
 - [ ] URL directa d'accés
 - [ ] Usuaris poden veure la seva fitxa
 - [ ] Admins poden veure fitxes de tothom i users managers també
