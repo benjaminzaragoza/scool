@@ -733,6 +733,7 @@ if (!function_exists('users_manager_permissions')) {
             'moodle.user.store',
             'moodle.user.destroy',
             'people.update',
+            'people.index',
             'people.store',
             'moodle.user.password.update'
         ];
@@ -743,6 +744,7 @@ if (!function_exists('people_manager_permissions')) {
     function people_manager_permissions()
     {
         return [
+            'people.index',
             'people.store',
             'people.update'
         ];
@@ -9191,6 +9193,100 @@ if (! function_exists('set_sample_notifications_to_user')) {
         $user->notify(new SampleNotification('Notification 1'));
         $user->notify(new SampleNotification('Notification 2'));
         $user->notify(new SampleNotification('Notification 3'));
+    }
+}
+
+if (! function_exists('create_sample_people')) {
+    function create_sample_people() {
+        $user = factory(User::class)->create([
+            'email' => 'pepepardojeans@gmail.com',
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+        Person::create([
+            'user_id' => $user->id,
+//            'identifier_id' => '',
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'birthdate' => Carbon::now(),
+//            'birthplace_id' => 'Jeans',
+            'gender' => 'Home',
+            'civil_status' => 'Solter/a',
+            'phone' => '977504678',
+            'other_phones' => '',
+            'mobile' => '650478758',
+            'other_mobiles' => '',
+            'email' => 'pepepardojeans@gmail.com',
+            'other_emails' => '',
+            'notes' => 'Bla Bla Bla'
+        ]);
+
+        $user2 = factory(User::class)->create([
+            'email' => 'pepepringao@gmail.com',
+            'name' => 'Pepe Pringao'
+        ]);
+        Person::create([
+            'user_id' => $user2->id,
+//            'identifier_id' => '',
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'birthdate' => Carbon::now(),
+//            'birthplace_id' => '',
+            'gender' => 'Dona',
+            'civil_status' => 'Solter/a',
+            'phone' => '977454673',
+            'other_phones' => '',
+            'mobile' => '650758421',
+            'other_mobiles' => '',
+            'email' => 'pepepringaogmail.com',
+            'other_emails' => '',
+            'notes' => 'Bla Bla Bla 1'
+        ]);
+
+        $user3 = factory(User::class)->create([
+            'email' => 'homersimpson@gmail.com',
+            'name' => 'Homer Simpson'
+        ]);
+        Person::create([
+            'user_id' => $user3->id,
+//            'identifier_id' => '',
+            'givenName' => 'Homer',
+            'sn1' => 'Simpson',
+            'birthdate' => Carbon::now(),
+//            'birthplace_id' => '',
+            'gender' => 'Dona',
+            'civil_status' => 'Solter/a',
+            'phone' => '977789573',
+//            'other_phones' => '',
+            'mobile' => '650778521',
+//            'other_mobiles' => '',
+            'email' => 'homersimpson.com',
+//            'other_emails' => '',
+            'notes' => 'Bla Bla Bla 2'
+        ]);
+    }
+}
+
+if (! function_exists('sample_people')) {
+    function sample_people()
+    {
+        Person::create([
+//            'identifier_id' => '',
+            'givenName' => 'Nomllargquetecagas sdasda asd asd asd asdasd asdas das asd ',
+            'sn1' => 'Cognom1llarquetecagas',
+            'sn2' => 'Cognom2llarquetecagas',
+            'birthdate' => Carbon::now(),
+//            'birthplace_id' => '',
+            'gender' => 'Dona',
+            'civil_status' => 'Solter/a',
+            'phone' => '977789573',
+//            'other_phones' => '',
+            'mobile' => '650778521',
+//            'other_mobiles' => '',
+            'email' => 'NomllargquetecagasCognom1llarquetecagas@gmail.com',
+//            'other_emails' => '',
+            'notes' => 'Bla Bla Bla 2'
+        ]);
     }
 }
 

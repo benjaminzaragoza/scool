@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Person;
 
 use App\Http\Controllers\Tenant\Controller;
+use App\Http\Requests\People\PeopleIndex;
 use App\Http\Requests\People\PeopleStore;
 use App\Http\Requests\People\PeopleUpdate;
 use App\Models\Person;
@@ -14,6 +15,16 @@ use App\Models\Person;
  */
 class PeopleController extends Controller
 {
+
+    /**
+     * Index.
+     * @param PeopleIndex $request
+     * @return mixed
+     */
+    public function index(PeopleIndex $request)
+    {
+        return map_collection(Person::all());
+    }
 
     /**
      * Store.

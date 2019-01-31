@@ -771,8 +771,9 @@ Stack trace:
 # DADES PERSONALS
 
 API:
-- [ ] Operació refresh de les dades personals 
-  - [] Crear test i API, assegurar-se dades sincornitzades amb vista web
+- [X] Operació refresh de les dades personals 
+  - [X] Crear test i API, assegurar-se dades sincornitzades amb vista web
+- [ ] Delete multiple personal data
 
 - [X] Posar opcions navegació al menú
 - [X] snackbar mixin fora
@@ -785,8 +786,21 @@ API:
 - [ ] Operacions inline:
   - [ ] Nom, cognom i 2n cognom s'han de modificar en bloc i sempre sincronitzat amb username  
 - Filtres
+ - [ ] Amb usuari associat
+ - [ ] Sense usuari associat
+ - [ ] Amb identificador
+ - [ ] Sense identificador personal
+ - [ ] Sense email
+ - [ ] Amb email
+ - [ ] Sense mobile
+ - [ ] Amb mobile
  - [ ] Per sexe  
- 
+
+Operacions massives:
+- [ ] DELETE
+  - [ ] Interfície gràdica preparada
+  - [ ] Falta API
+  
 Dades extres (mostrar al show):
             $table->date('birthdate')->nullable();
             $table->integer('birthplace_id')->unsigned()->nullable();

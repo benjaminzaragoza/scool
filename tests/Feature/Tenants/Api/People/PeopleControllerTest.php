@@ -37,6 +37,25 @@ class PeopleControllerTest extends BaseTenantTest
      * @group people
      *
      */
+    public function managers_can_list_people()
+    {
+        create_sample_people();
+        $this->loginAsUsersManager('api');
+        $response = $this->json('GET','/api/v1/people/');
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertCount(3,$result);
+        $this->assertEquals('Pepe',$result[0]->givenName);
+        $this->assertEquals('Pardo',$result[0]->sn1);
+        $this->assertEquals('Jeans',$result[0]->sn2);
+        $this->assertEquals('pepepardojeans@gmail.com',$result[0]->email);
+    }
+
+    /**
+     * @test
+     * @group people
+     *
+     */
     public function superadmin_can_store_people()
     {
         $this->loginAsSuperAdmin('api');

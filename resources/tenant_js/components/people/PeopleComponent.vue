@@ -30,7 +30,7 @@
                     </v-menu>
                     <v-toolbar-title class="white--text title">Persones</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn icon class="white--text" @click="refresh">
+                    <v-btn icon class="white--text" @click="refresh" :loading="refreshing" :disabled="refreshing">
                         <v-icon>refresh</v-icon>
                     </v-btn>
                 </v-toolbar>
@@ -48,7 +48,14 @@
                                         v-model="search"
                                 ></v-text-field>
                             </v-card-title>
+
+                            <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
+                                <people-delete-multiple :people="selected" @deleted="selected=[];refresh(false)"></people-delete-multiple>
+                            </div>
+
                             <v-data-table
+                                    v-model="selected"
+                                    select-all
                                     class="px-0 m-0 hidden-sm-and-down"
                                     :headers="headers"
                                     :items="filteredPeople"
@@ -59,48 +66,52 @@
                                     no-data-text="No hi han dades disponibles"
                                     rows-per-page-text="Persones per pàgina"
                             >
-                                <template slot="items" slot-scope="{ item: person }">
+                                <template slot="items" slot-scope="props">
                                     <tr>
-                                        <td class="text-xs-left" v-html="person.id"></td>
-                                        <td class="text-xs-left" v-html="person.identifier_id"></td>
+                                        <td>
+                                            <v-checkbox
+                                                    v-model="props.selected"
+                                                    primary
+                                                    hide-details
+                                            ></v-checkbox>
+                                        </td>
+                                        <td class="text-xs-left" v-html="props.item.id"></td>
+                                        <td class="text-xs-left" v-html="props.item.identifier_id"></td>
                                         <td class="text-xs">
-                                            <a target="_blank" :href="'/users?action=show&id=' + person.userId">{{ person.userEmail }}</a>
+                                            <a target="_blank" :href="'/users?action=show&id=' + props.item.userId">{{ props.item.userEmail }}</a>
                                         </td>
-                                        <td class="text-xs-left" v-html="person.givenName"></td>
-                                        <td class="text-xs-left" v-html="person.sn1"></td>
-                                        <td class="text-xs-left" v-html="person.sn2"></td>
-                                        <td class="text-xs-left" v-html="person.email"></td>
-                                        <td class="text-xs-left" v-html="person.mobile"></td>
-                                        <td class="text-xs-left" v-html="person.other_emails"></td>
-                                        <td class="text-xs-left" v-html="person.other_phones"></td>
-                                        <td class="text-xs-left" v-html="person.birthdate"></td>
-                                        <td class="text-xs-left" v-html="person.gender"></td>
+                                        <td class="text-xs-left">
+                                            <person-edit-name :value="props.item.givenName" :user="props.item"></person-edit-name>
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <person-edit-name :value="props.item.sn1" :user="props.item"></person-edit-name>
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <person-edit-name :value="props.item.sn2" :user="props.item"></person-edit-name>
+                                        </td>
+                                        <td class="text-xs-left">
+                                            <person-emails :email="props.item.email" :user="props.item"></person-emails>
+                                        </td>
+                                        <td class="text-xs-left" v-html="props.item.mobile"></td>
+                                        <td class="text-xs-left" v-html="props.item.birthdate"></td>
+                                        <td class="text-xs-left" v-html="props.item.gender"></td>
                                         <td class="text-xs-left">
                                             <v-tooltip bottom>
-                                                <span slot="activator">{{ person.formatted_created_at_diff }}</span>
-                                                <span>{{ person.formatted_created_at }}</span>
+                                                <span slot="activator">{{ props.item.formatted_created_at_diff }}</span>
+                                                <span>{{ props.item.formatted_created_at }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left">
                                             <v-tooltip bottom>
-                                                <span slot="activator">{{ person.formatted_updated_at_diff }}</span>
-                                                <span>{{ person.formatted_updated_at }}</span>
+                                                <span slot="activator">{{ props.item.formatted_updated_at_diff }}</span>
+                                                <span>{{ props.item.formatted_updated_at }}</span>
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left">
-                                            <!--<show-person-icon :person="person" :persons="persons"></show-person-icon>-->
-                                            <v-btn icon class="mx-0" @click="editItem(person)">
-                                                <v-icon color="teal">edit</v-icon>
-                                            </v-btn>
-                                            <confirm-icon
-                                                    :id="'person_remove_' + person.id"
-                                                    icon="delete"
-                                                    color="pink"
-                                                    :working="removing"
-                                                    @confirmed="remove(person)"
-                                                    tooltip="Eliminar"
-                                                    message="Esteu segurs?"
-                                            ></confirm-icon>
+                                            <json-dialog-component btn-class="ma-0" icon="info" name="Actual" title="Tota la informació en format Json" :json="props.item"></json-dialog-component>
+                                            <person-show-icon :person="props.item" :people="people"></person-show-icon>
+                                            <person-edit-icon :person="props.item" :people="people"></person-edit-icon>
+                                            <person-delete-icon :person="props.item" :people="people"></person-delete-icon>
                                         </td>
                                     </tr>
                                 </template>
@@ -116,24 +127,40 @@
 <script>
 import UserAvatar from '../ui/UserAvatarComponent'
 import ConfirmIcon from '../ui/ConfirmIconComponent'
+import PeopleDeleteMultiple from './PeopleDeleteMultiple'
+import PersonShowIcon from './PersonShowIcon'
+import PersonEditIcon from './PersonEditIcon'
+import PersonDeleteIcon from './PersonDeleteIcon'
+import PersonEmails from './PersonEmails'
+import PersonMobiles from './PersonMobiles'
+import PersonEditName from './PersonEditName'
+import JsonDialogComponent from '../ui/JsonDialogComponent'
 
 export default {
-  name: 'PeopleComponent',
+  name: 'People',
   components: {
     'user-avatar': UserAvatar,
-    'confirm-icon': ConfirmIcon
+    'confirm-icon': ConfirmIcon,
+    'people-delete-multiple': PeopleDeleteMultiple,
+    'person-show-icon': PersonShowIcon,
+    'person-edit-icon': PersonEditIcon,
+    'person-delete-icon': PersonDeleteIcon,
+    'person-emails': PersonEmails,
+    'person-mobiles': PersonMobiles,
+    'person-edit-name': PersonEditName,
+    'json-dialog-component': JsonDialogComponent
+
   },
   data () {
     return {
+      selected: [],
       search: '',
       internalPeople: this.people,
-      removing: false
+      removing: false,
+      refreshing: false
     }
   },
   computed: {
-    // ...mapGetters({
-    //   internalTeachers: 'teachers'
-    // }),
     filteredPeople: function () {
       return this.internalPeople
       // if (this.showStatusHeader) return this.internalTeachers
@@ -150,8 +177,6 @@ export default {
       headers.push({ text: '2n Cognom', value: 'sn2' })
       headers.push({ text: 'email', value: 'email' })
       headers.push({ text: 'mobile', value: 'mobile' })
-      headers.push({ text: 'Altres emails', value: 'other_emails' })
-      headers.push({ text: 'Altres telèfons i mòbils', value: 'other_phones' })
       // if (this.showStatusHeader) headers.push({text: 'Estatus', value: 'administrative_status_code'})
       headers.push({ text: 'Data i llocs de naixament', value: 'birthdate' })
       headers.push({ text: 'Sexe', value: 'gender' })
@@ -169,7 +194,15 @@ export default {
   },
   methods: {
     refresh () {
-      console.log('TODO refresh')
+      this.refreshing = true
+      window.axios.get('/api/v1/people').then(response => {
+        this.internalPeople = response.data
+        this.refreshing = false
+        this.$snackbar.showMessage('Dades personals actualitzades correctament')
+      }).catch(error => {
+        this.refreshing = false
+        this.$snackbar(error)
+      })
     }
   }
 }

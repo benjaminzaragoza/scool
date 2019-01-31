@@ -125,6 +125,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/teacher/available_code', 'Tenant\TeacherAvailableCodeController@show');
 
             // Persons
+            Route::get('/people', '\\'. PeopleController::class .'@index');
             Route::post('/people', '\\'. PeopleController::class .'@store');
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
 

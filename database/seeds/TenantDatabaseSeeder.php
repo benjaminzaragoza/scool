@@ -55,5 +55,8 @@ class TenantDatabaseSeeder extends Seeder
 
         initialize_curriculum_module();
 
+        // ELIMINAR
+        sample_people ();
+
     }
 }

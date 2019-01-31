@@ -17,7 +17,6 @@
 </style>
 
 <script>
-import axios from 'axios'
 import ShowUserComponent from './ShowUserComponent'
 
 export default {
@@ -56,7 +55,7 @@ export default {
         this.dialog = true
         return
       }
-      axios.get('/api/v1/user').then(response => {
+      window.axios.get('/api/v1/user').then(response => {
         this.internalUser = response.data
         this.dialog = true
       }).catch(error => {
