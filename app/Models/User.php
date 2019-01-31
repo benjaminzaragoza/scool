@@ -673,7 +673,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public static function getUsers()
     {
-        return (new UserCollection(User::with('roles','permissions','person','googleUser','moodleUser')->get()))->transform();
+        return (new UserCollection(User::with('roles','permissions','person','googleUser','moodleUser','teacher')->get()))->transform();
     }
 
     /**
@@ -742,7 +742,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
      */
     public function map()
     {
-        return [
+        $mappedUser = [
             'id' => $this->id,
             'name' => $this->name,
             'isSuperAdmin' => (boolean) $this->isSuperAdmin(),
@@ -784,6 +784,12 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'all_permissions' => $this->all_permissions,
             'api_uri' => $this->api_uri
         ];
+
+        // Teacher users
+        if ($this->user_type_id == UserType::TEACHER) {
+            $mappedUser['teacher_id'] = optional($this->teacher)->id;
+        }
+        return $mappedUser;
     }
 
     /**

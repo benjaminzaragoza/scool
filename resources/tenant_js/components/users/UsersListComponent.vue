@@ -182,7 +182,7 @@
                                             </span>
                                             <manage-moodle-user-icon :user="props.item" @unassociated="refresh(false)" @associated="refresh(false)"></manage-moodle-user-icon>
                                         </td>
-                                        <td class="text-xs-left cell">{{ formatUserType(props.item.user_type_id) }}</td>
+                                        <td class="text-xs-left cell"><a :href="userTypeLink(props.item)" target="_blank">{{ formatUserType(props.item.user_type_id) }}</a></td>
                                         <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                         <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <user-roles-manage-button :user="props.item" @added="refresh(false)" @removed="refresh(false)"></user-roles-manage-button>
@@ -482,6 +482,21 @@ export default {
     }
   },
   methods: {
+    userTypeIds (user) {
+      const field = this.userIdFields[user.user_type_id]
+      return user[field]
+    },
+    userTypeLinks (user) {
+      const prefix = this.userTypeLinksPrefix[user.user_type_id]
+      if (prefix) return prefix + this.userTypeIds(user)
+      return '#'
+    },
+    userTypeLink (user) {
+      if (user.user_type_id) {
+        return this.userTypeLinks(user)
+      }
+      return '#'
+    },
     formatUserType (userType) {
       if (userType) return this.userTypesTranslation[userType]
     },
@@ -515,6 +530,20 @@ export default {
       3: 'Conserge',
       4: 'Administratiu',
       5: 'Familiar'
+    }
+    this.userTypeLinksPrefix = {
+      1: '/teachers/',
+      2: '/students/'
+      // 3: '/janitors/',
+      // 4: '/administrative_assistants/',
+      // 5: '/familiars/'
+    }
+    this.userIdFields = {
+      1: 'teacher_id',
+      2: 'student_id'
+      // 3: 'janitor_id',
+      // 4: 'administrative_assistant_id',
+      // 5: 'familiar_id'
     }
     if (this.user) {
       this.showUser = true

@@ -901,8 +901,11 @@ class UserTest extends TestCase
 
         $this->assertEquals('users',$mappedUser['api_uri']);
 
-
         $this->assertEquals('teacher',$mappedUser['user_type']);
+        $this->assertEquals($teacher->id,$mappedUser['teacher_id']);
+
+        // Teacher
+
         $this->assertEquals(1,$mappedUser['user_type_id']);
 
         $this->assertEquals($person->id,$mappedUser['person_id']);
@@ -978,6 +981,8 @@ class UserTest extends TestCase
         $this->assertCount(2,$mappedUser['roles']);
         $this->assertEquals('Manager',$mappedUser['roles'][0]->name);
         $this->assertEquals('Student',$mappedUser['roles'][1]->name);
+
+
     }
 
     /** @test */
