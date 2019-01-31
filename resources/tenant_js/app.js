@@ -147,6 +147,11 @@ window.Vue.component('notifications-widget', require('./components/notifications
 
 window.Vuetify = Vuetify
 
+// TODO
+// import colors from './colors' export default {
+//
+// }
+
 window.Vue.use(window.Vuetify, {
   lang: {
     locales: { ca },

@@ -1,3 +1,9 @@
+# COLORS
+
+- [ ] Crear fitxer colors amb els colors del projecte
+ - [ ] Posar un nom a cada color
+ - [ ] utilitzar aquest colors a app.js  a tot arreu on utilitzem aquest colors
+
 # TROUBLESHOOTING
 
 - [ ] No va la creació d'usuaris, dona error i no crea l'usuari de Moodle (es queda pendent rebre resultat usuari moodle)
@@ -952,30 +958,30 @@ EDIT:
 - [ ] Nom modificable inline i que sincronitzi amb givenName, Sn1 i Sn2
 - [ ] Tipus usuari modificable inline
 SHOW
-- [ ] Toolbar 
-  - [ ] Densa
-  - [ ] No caldria color de fons, ni title? Només mostrar widgets a la dreta
-  - [ ] Widgets: 
-    - [ ] Tancar
-    - [ ] Minimitzar
-    - [ ] Editar
+- [X] Toolbar 
+  - [X] Densa
+  - [X] No caldria color de fons, ni title? Només mostrar widgets a la dreta
+  - [X] Widgets: 
+    - [X] Editar
+    - [X] Tancar
+    - [X] Minimitzar    
 - [ ] Crear una user card per mostrar informació NOMÉS usuari (taula user sense cap taula extra suport com person o Google, Moodle, etc)
-  - [ ] Mostrar les dades sense labels. Dades: 
+  - [X] Mostrar les dades sense labels. Dades: 
   - [ ] Photo (photo)
-    - No confondre photo i Avatar
+    - No confondre photo i Avatar (la photo és la associada a l'usuari)
     - Tooltip mostri nom complet i email
   - [ ] Mostrar en un tooltip l'identificador d'usuari  
-  - [ ] Nom complet (camp name) -> Mida màxima limitada amb ellipsis
+  - [X] Nom complet (camp name) -> Mida màxima limitada amb ellipsis
     - [ ] Tooltip: Dades completes
-  - [ ] Email
-  - [ ] email_verified_at
-    - [ ] Una icona checked al costat email de color verd i amb tooltip: verificat si el email ha estat verificat
-    - [ ] Una icona cross al costat email de color roif i amb tooltip: verificat si el email NO ha estat verificat
-  - [ ] Telèfon (mobile)
-    - [ ] mobile_verified_at
-      - [ ] Una icona checked al costat email de color verd i amb tooltip: verificat si el mobil ha estat verificat
-      - [ ] Una icona cross al costat email de color roif i amb tooltip: verificat si el mobil NO ha estat verificat  
-  - [ ] Text: vist per el últim cop el Data Humana amb tooltip data formatada (last_login) des de l'adreça IP: last_login_ip
+  - [X] Email
+  - [X] email_verified_at
+    - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el email ha estat verificat
+    - [X] Una icona cross al costat email de color roif i amb tooltip: verificat si el email NO ha estat verificat
+  - [X] Telèfon (mobile)
+    - [X] mobile_verified_at
+      - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el mobil ha estat verificat
+      - [X] Una icona cross al costat email de color roif i amb tooltip: verificat si el mobil NO ha estat verificat  
+  - [X] Text: vist per el últim cop el Data Humana amb tooltip data formatada (last_login) des de l'adreça IP: last_login_ip
   - [ ] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
   - [ ] Tipus usuari: Text Professor | Alumne | Familiar, etc
   
