@@ -188,6 +188,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/jobs', 'Tenant\JobsController@show');
 
             Route::get('/teachers', '\\' . TeachersController::class . '@index');
+            Route::get('/teachers/{teacher}', '\\' . TeachersController::class . '@show');
 
             Route::get('/teachers_photos', 'Tenant\TeachersPhotosController@show');
 
