@@ -14,6 +14,9 @@
                             <v-list-tile href="/users/roles" target="_blank">
                                 <v-list-tile-title>Gestionar Rols</v-list-tile-title>
                             </v-list-tile>
+                            <v-list-tile href="/personal_data" target="_blank">
+                                <v-list-tile-title>Gestió dades personals</v-list-tile-title>
+                            </v-list-tile>
                             <v-list-tile href="/google_users" target="_blank">
                                 <v-list-tile-title>Usuaris de Google</v-list-tile-title>
                             </v-list-tile>

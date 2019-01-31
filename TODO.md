@@ -768,6 +768,38 @@ Stack trace:
     ]
 }
 
+# DADES PERSONALS
+
+API:
+- [ ] Operació refresh de les dades personals 
+  - [] Crear test i API, assegurar-se dades sincornitzades amb vista web
+
+- [X] Posar opcions navegació al menú
+- [X] snackbar mixin fora
+- [ ] eliminar els confirm icon
+- [ ] Limitar ampla camps
+  - [ ] Usuari local
+- [ ] Formatar dates   
+- [ ] Camp usuari
+  - [ ] Podriem mostrar la foto/avatar
+- [ ] Operacions inline:
+  - [ ] Nom, cognom i 2n cognom s'han de modificar en bloc i sempre sincronitzat amb username  
+- Filtres
+ - [ ] Per sexe  
+ 
+Dades extres (mostrar al show):
+            $table->date('birthdate')->nullable();
+            $table->integer('birthplace_id')->unsigned()->nullable();
+            $table->enum('gender',['Home','Dona'])->nullable();
+            $table->enum('civil_status',['Solter/a','Casat/da','Separat/da','Divorciat/da','Vidu/a'])->nullable();
+            $table->string('phone')->nullable();
+            $table->json('other_phones')->nullable();
+            $table->string('mobile')->nullable();
+            $table->json('other_mobiles')->nullable();
+            $table->string('email')->nullable();
+            $table->json('other_emails')->nullable();
+            $table->string('notes')->nullable();
+             
 # NOTIFICATIONS
 
 TODO
@@ -963,8 +995,7 @@ PERMISOS:
       - [ ] Accés/link del usuari a Google
 - [ ] Ldap
 
-# CARD DADES PERSONALS
-      
+     
 # LANDING PAGE
 
 Millores interfície
@@ -1106,10 +1137,7 @@ Gestió de password:
 CHANGELOG:
 - [ ] Igual que incidències logar totes les accions
 
-DADES PERSONALS
-- [ ] Card/formulari creació/modificació de dades personals d'un usuari concret
-  - [ ] No incloura dades específiques segons tipus usuari
-    -  [ ] Formulari dades de professor  
+
 
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle

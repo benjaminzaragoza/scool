@@ -14,6 +14,7 @@
 use App\Http\Controllers\Auth\Tenant\LoginController;
 use App\Http\Controllers\Tenant\GoogleUsersController;
 use App\Http\Controllers\Tenant\HomeController;
+use App\Http\Controllers\Tenant\PersonalDataController;
 use App\Http\Controllers\Tenant\UserPhotoController;
 use App\Http\Controllers\Tenant\Web\CurriculumController;
 use App\Http\Controllers\Tenant\Web\CurriculumSubjectGroupsController;
@@ -162,7 +163,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');
 
             // Personal data (people) management
-            Route::get('/personal_data','Tenant\PersonalDataController@show');
+            Route::get('/personal_data','\\' . PersonalDataController::class . '@show');
+            Route::get('/people','\\' . PersonalDataController::class . '@show');
 
             // Media download
             Route::get('/media/{media}/download','Tenant\MediaController@download');

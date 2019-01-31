@@ -2,14 +2,29 @@
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
-                <v-toolbar color="blue darken-3">
+                <v-toolbar dense color="primary">
                     <v-menu bottom>
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
                         </v-btn>
                         <v-list>
-                            <v-list-tile>
-                                <v-list-tile-title>TODO</v-list-tile-title>
+                            <v-list-tile href="/users" target="_blank">
+                                <v-list-tile-title>Gestió d'usuaris</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/permissions" target="_blank">
+                                <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/roles" target="_blank">
+                                <v-list-tile-title>Gestionar Rols</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/google_users" target="_blank">
+                                <v-list-tile-title>Usuaris de Google</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/moodle/users" target="_blank">
+                                <v-list-tile-title>Usuaris Moodle</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/ldap_users" target="_blank">
+                                <v-list-tile-title>Usuaris Ldap</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -96,17 +111,14 @@
             </v-flex>
         </v-layout>
     </v-container>
-
 </template>
 
 <script>
-import withSnackbar from '../mixins/withSnackbar'
 import UserAvatar from '../ui/UserAvatarComponent'
 import ConfirmIcon from '../ui/ConfirmIconComponent'
 
 export default {
   name: 'PeopleComponent',
-  mixins: [withSnackbar],
   components: {
     'user-avatar': UserAvatar,
     'confirm-icon': ConfirmIcon

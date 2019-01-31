@@ -32,7 +32,11 @@ class PeopleControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     *
+     */
     public function superadmin_can_store_people()
     {
         $this->loginAsSuperAdmin('api');
@@ -57,7 +61,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->user_id,$user->id);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function superadmin_can_store_people_ucfirst()
     {
         $this->loginAsSuperAdmin('api');
@@ -82,7 +89,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->user_id,$user->id);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function superadmin_can_store_people_validation()
     {
         $this->loginAsSuperAdmin('api');
@@ -92,7 +102,10 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertStatus(422);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function user_manager_can_store_people()
     {
         $this->loginAsUsersManager('api');
@@ -118,7 +131,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->user_id,$user->id);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function people_manager_can_store_people()
     {
         $this->loginAsPeopleManager('api');
@@ -144,7 +160,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->user_id,$user->id);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function moodle_manager_can_store_people()
     {
         $this->loginAsMoodleManager('api');
@@ -170,7 +189,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->user_id,$user->id);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function regular_user_cannot_store_people()
     {
         $this->login('api');
@@ -183,7 +205,10 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function guest_user_cannot_store_people()
     {
         $person = [
@@ -195,7 +220,10 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertStatus(401);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function superadmin_can_update_people()
     {
         $this->loginAsSuperAdmin('api');
@@ -222,7 +250,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->sn2,'Jeans');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function superadmin_can_update_people_validation()
     {
         $this->loginAsSuperAdmin('api');
@@ -237,7 +268,10 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertStatus(422);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function users_manager_can_update_people()
     {
         $this->loginAsUsersManager('api');
@@ -264,7 +298,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->sn2,'Jeans');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function people_manager_can_update_people()
     {
         $this->loginAsPeopleManager('api');
@@ -291,7 +328,10 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals($result->sn2,'Jeans');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function regular_user_cannot_update_people()
     {
         $this->login('api');
@@ -308,7 +348,10 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function guest_user_cannot_update_people()
     {
         $person = Person::create([

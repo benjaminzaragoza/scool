@@ -32,7 +32,10 @@ class PersonalDataControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function show_personal_data_management()
     {
         $usersManager = create(User::class);
@@ -48,7 +51,10 @@ class PersonalDataControllerTest extends BaseTenantTest
         $response->assertViewHas('people');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function regular_user_cannot_show_personal_data_management()
     {
 
@@ -60,7 +66,10 @@ class PersonalDataControllerTest extends BaseTenantTest
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group people
+     */
     public function guest_user_cannot_show_personal_data_management()
     {
         $response = $this->get('/personal_data');
