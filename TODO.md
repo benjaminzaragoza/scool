@@ -1,5 +1,8 @@
 # TROUBLESHOOTING
 
+- [ ] No va la creació d'usuaris, dona error i no crea l'usuari de Moodle (es queda pendent rebre resultat usuari moodle)
+ - [ ] Hi ha una petició a l'api: https://iesebre.scool.test/api/v1/users/email/sdaasdnoexisteix@gmail.com que torna 404
+  - [ ] no li dona temps
 - [X] Llista usuaris falla Eager Loading 142 queries
 - [ ] No funcionen els filtres de professors a Teachers Management. Hi ha un munt de filtres per crear també
 - [X] sense cuas va correctament! Per tant és un problema del worker

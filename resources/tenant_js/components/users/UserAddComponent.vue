@@ -12,11 +12,11 @@
         <v-icon>add</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" v-if="dialog" fullscreen @keydown.esc="close">
-        <v-toolbar color="blue darken-3">
+        <v-toolbar color="primary">
             <v-btn icon dark @click.native="close">
                 <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title class="white--text title">Afegir usuari</v-toolbar-title>
+            <v-toolbar-title class="white--text">Afegir usuari</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon class="white--text">
                 <v-icon>exit</v-icon>
