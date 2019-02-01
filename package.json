@@ -52,6 +52,7 @@
     "filepond-plugin-file-validate-type": "^1.2.0",
     "filepond-plugin-image-preview": "^1.2.0",
     "filesize": "^3.6.1",
+    "generate-password": "^1.4.1",
     "google-palette": "^1.1.0",
     "gravatar": "^1.8.0",
     "laravel-echo": "^1.5.1",

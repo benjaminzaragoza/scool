@@ -976,6 +976,8 @@ EDIT:
 - [ ] Photo Modificacle amb doble click -> Photo Component
 - [ ] Nom modificable inline i que sincronitzi amb givenName, Sn1 i Sn2
 - [ ] Tipus usuari modificable inline
+
+
 SHOW
 - [X] Toolbar 
   - [X] Densa
@@ -1001,7 +1003,7 @@ SHOW
       - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el mobil ha estat verificat
       - [X] Una icona cross al costat email de color roif i amb tooltip: verificat si el mobil NO ha estat verificat  
   - [X] Text: vist per el últim cop el Data Humana amb tooltip data formatada (last_login) des de l'adreça IP: last_login_ip
-  - [X] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
+  - [ ] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
   - [X] Tipus usuari: Text Professor | Alumne | Familiar, etc
   
 - [ ] Redisseny de l'estil
@@ -1012,7 +1014,7 @@ SHOW
 - [X] Usuaris poden veure la seva fitxa ('/user/profile')
 
 PERMISOS:
-- [ ] Admins poden veure fitxes de tothom i users managers també
+- [ ] Admins poden veure fitxes/perfils de tothom i users managers també
 - [ ] Test usuaris normals no poden veure fitxa completa usuari
   - [ ] Fitxa pública:
   - [ ] Noms i cognoms
@@ -1034,6 +1036,7 @@ PERMISOS:
       - [ ] Accés/link del usuari a Google
 - [ ] Ldap
 
+     
      
 # LANDING PAGE
 
@@ -1160,7 +1163,7 @@ OPERACIONS MASSIVES:
 ## PENDENT
 
 EDIT
-- [ ] Modificar el tipus usuari
+- [X] Modificar el tipus usuari
   - [ ] Questions a tenir en compte en la modificació
      - [ ] Era professor: avisar? o que fer si té assignada una plaça
      - [ ] Alumne: té matrícules?
@@ -1219,7 +1222,7 @@ FILTRES
   - [X] Per Rol/s
     - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
   - [ ] Altres característiques/filtres:
-     - [ ] Mòbils no confirmats/verificats. TODO falta està funcionalitat
+     - [X] Mòbils no confirmats/verificats. TODO falta està funcionalitat
      - [ ] Sense avatar. TODO -> Falta crear camp (calculat) indiqui usuari no té avatar 
      - [ ] Logats desde un periode especific
 

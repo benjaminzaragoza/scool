@@ -1346,6 +1346,12 @@ if (!function_exists('initialize_menus')) {
         ]);
 
         Menu::firstOrCreate([
+            'icon' => 'build',
+            'text' => 'Notificacions',
+            'href' => '/notifications'
+        ]);
+
+        Menu::firstOrCreate([
             'icon' => 'cast',
             'text' => 'Curriculum',
             'href' => '/curriculum',

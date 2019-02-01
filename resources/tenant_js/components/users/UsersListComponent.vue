@@ -8,6 +8,9 @@
                             <v-icon>more_vert</v-icon>
                         </v-btn>
                         <v-list>
+                            <v-list-tile href="/changelog/module/users" target="_blank">
+                                <v-list-tile-title>Mostrar historial usuaris (registre de canvis)</v-list-tile-title>
+                            </v-list-tile>
                             <v-list-tile href="/users/permissions" target="_blank">
                                 <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
                             </v-list-tile>
@@ -215,9 +218,13 @@
                                             </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell">
+                                            <user-changelog :user="props.item" class="ma-0"></user-changelog>
                                             <show-user-icon :user="props.item" :users="users"></show-user-icon>
                                             <user-emails :user="props.item"></user-emails>
-                                            <user-personal-data-icon-link :user="props.item"></user-personal-data-icon-link>
+                                            <user-personal-data-icon-link :user="props.item" class="ma-0"></user-personal-data-icon-link>
+                                            <user-password :user="props.item" class="ma-0"></user-password>
+                                            <!-- TODO -->
+                                            <!--<user-check :user="props.item"></user-check>-->
                                             <!--<user-send-welcome-email :user="props.item"></user-send-welcome-email>-->
                                             <!--<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>-->
                                             <!--<user-send-confirmation-email :user="props.item"></user-send-confirmation-email>-->
@@ -294,6 +301,8 @@ import UserEditName from './UserEditName'
 import UserEditEmail from './UserEditEmail'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import UserPersonalDataIconLink from './UserPersonalDataIconLink'
+import UserChangeLog from './UserChangeLog'
+import UserPassword from './UserPassword'
 
 var filterNames = [
   {
@@ -436,7 +445,9 @@ export default {
     'user-roles-manage-button': UserRolesManageButton,
     'user-edit-name': UserEditName,
     'user-edit-email': UserEditEmail,
-    'inline-text-field-edit-dialog': InlineTextFieldEditDialog
+    'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
+    'user-changelog': UserChangeLog,
+    'user-password': UserPassword
   },
   data () {
     return {

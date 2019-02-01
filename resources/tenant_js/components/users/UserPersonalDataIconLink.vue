@@ -1,6 +1,6 @@
 <template>
-    <v-tooltip bottom>
-        <v-btn slot="activator" icon class="mx-0" :href="href()" target="_blank">
+    <v-tooltip bottom class="ma-0">
+        <v-btn slot="activator" icon class="mx-0 ma-0" :href="href()" target="_blank">
             <v-icon color="primary">person</v-icon>
         </v-btn>
         <span>Consultar dades personals</span>

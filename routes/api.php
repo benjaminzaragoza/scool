@@ -28,6 +28,7 @@ use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\UserMoodleController;
 use App\Http\Controllers\Tenant\Api\Notifications\UserNotificationsController;
+use App\Http\Controllers\Tenant\Api\Notifications\UserUnreadNotificationsController;
 use App\Http\Controllers\Tenant\Api\Permissions\PermissionsController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
@@ -405,6 +406,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // Notifications
             Route::get('/user/notifications','\\' . UserNotificationsController::class . '@index');
+            Route::get('/user/unread_notifications','\\' . UserUnreadNotificationsController::class . '@index');
+
+
         });
 
         Route::group(['prefix' => 'v1'], function () {

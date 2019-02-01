@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Auth\Tenant\LoginController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Tenant\GoogleUsersController;
 use App\Http\Controllers\Tenant\HomeController;
 use App\Http\Controllers\Tenant\PersonalDataController;
@@ -256,4 +257,8 @@ Route::post('subscriptions', 'PushSubscriptionController@update');
 Route::post('subscriptions/delete', 'PushSubscriptionController@destroy');
 
 Route::get('push', 'PushController@index');
-Route::post('notifications', 'NotificationController@store');
+
+Route::post('notifications', '\\' . NotificationController::class . '@store');
+
+Route::get('/notifications', '\\' . NotificationController::class . '@index');
+
