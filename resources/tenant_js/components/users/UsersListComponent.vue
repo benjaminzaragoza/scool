@@ -186,7 +186,7 @@
                                             <manage-moodle-user-icon :user="props.item" @unassociated="refresh(false)" @associated="refresh(false)"></manage-moodle-user-icon>
                                         </td>
                                         <td class="text-xs-left cell">
-                                            <users-user-type-management :user="props.item"></users-user-type-management>
+                                            <users-user-type-management :user="props.item" :user-types="userTypes"></users-user-type-management>
                                         </td>
                                         <td class="text-xs-left cell">{{ formatBoolean(props.item.admin) }}</td>
                                         <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">

@@ -23,7 +23,7 @@
 export default {
   name: 'UserTypesSelect',
   model: {
-    prop: 'user',
+    prop: 'userType',
     event: 'input'
   },
   data () {
