@@ -44,17 +44,11 @@ class NotificationsControllerTest extends BaseTenantTest
 
         $response->assertViewIs('tenants.notifications.index');
         $response->assertViewHas('notifications', function ($returnedNotifications) {
-            dd($returnedNotifications[0]->data['title']);
             return
                 count($returnedNotifications) === 3 &&
-                $returnedNotifications[0]->data['title'] === 'Notificacion 1' &&
-                $returnedNotifications[0]->data['title'] === 'Notificacion 2' &&
-                $returnedNotifications[0]->data['title'] === 'Notificacion 3';
-        });
-        $response->assertViewHas('users', function ($returnedUsers) use ($user) {
-            return
-                count($returnedUsers) === 1 &&
-                $returnedUsers[0]['name'] === $user->name;
+                $returnedNotifications[0]->data['title'] === 'Notification 1' &&
+                $returnedNotifications[1]->data['title'] === 'Notification 2' &&
+                $returnedNotifications[2]->data['title'] === 'Notification 3';
         });
     }
 

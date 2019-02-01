@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Notifications\NotificationsIndex;
-use Illuminate\Http\Request;
-use App\Events\NotificationRead;
-use App\Events\NotificationReadAll;
-use App\Notifications\HelloNotification;
-use NotificationChannels\WebPush\PushSubscription;
+use App\Http\Controllers\Tenant\Controller;
 
 /**
  * Class NotificationController.
@@ -17,16 +13,6 @@ use NotificationChannels\WebPush\PushSubscription;
 class NotificationController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('last', 'dismiss');
-    }
-
-    /**
      * NotificationsIndex.
      *
      * @param NotificationsIndex $request
@@ -34,23 +20,9 @@ class NotificationController extends Controller
      */
     public function index(NotificationsIndex $request)
     {
+//        dump('shit');
         $notifications = $request->user()->notifications;
+//        dd($notifications);
         return view('tenants.notifications.index', compact('notifications'));
     }
-
-
-    /**
-     * Create a new notification.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->user()->notify(new HelloNotification);
-
-        return response()->json('Notification sent.', 201);
-    }
-
-
 }

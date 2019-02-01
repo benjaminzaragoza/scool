@@ -230,6 +230,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 
             Route::get('/user/profile', '\\' . LoggedUserProfileController::class . '@show');
 
+            Route::get('/notifications', '\\' . NotificationController::class . '@index');
+
         });
     });
 
@@ -258,7 +260,7 @@ Route::post('subscriptions/delete', 'PushSubscriptionController@destroy');
 
 Route::get('push', 'PushController@index');
 
-Route::post('notifications', '\\' . NotificationController::class . '@store');
+//TODO eliminar
+//Route::post('notifications', '\\' . NotificationController::class . '@store');
 
-Route::get('/notifications', '\\' . NotificationController::class . '@index');
 

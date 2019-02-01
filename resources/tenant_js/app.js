@@ -13,9 +13,10 @@ import snackbar from './plugins/snackbar'
 import permissions from './plugins/permissions'
 import confirm from './plugins/confirm/index.js'
 import 'font-awesome/css/font-awesome.min.css'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+// TODO
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { fas } from '@fortawesome/free-solid-svg-icons'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -144,6 +145,9 @@ window.Vue.component('teachers-welcome', require('./components/welcome/TeachersW
 // MAIN WIDGETS
 window.Vue.component('navigation', require('./components/ui/Nagigation'))
 window.Vue.component('notifications-widget', require('./components/notifications/NotificationsWidget'))
+
+// Notifications
+window.Vue.component('notifications', require('./components/notifications/Notifications'))
 
 window.Vuetify = Vuetify
 
