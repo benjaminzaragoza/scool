@@ -1,13 +1,16 @@
 <template>
     <v-menu offset-y>
-            <v-btn  title="Enviar emails"
-                    slot="activator"
-                    icon
-                    style="margin: 0px"
-                    :loading="loading"
-                    :disabled="loading">
-                <v-icon color="primary">email</v-icon>
-            </v-btn>
+            <v-tooltip bottom slot="activator">
+                <v-btn  title="Enviar emails"
+                        slot="activator"
+                        icon
+                        style="margin: 0px"
+                        :loading="loading"
+                        :disabled="loading">
+                    <v-icon color="primary">email</v-icon>
+                </v-btn>
+                <span>Enviar emails</span>
+            </v-tooltip>
         <v-list>
             <v-list-tile @click="send('sendWelcomeEmail')" >
                 <v-list-tile-title>Benvinguda</v-list-tile-title>

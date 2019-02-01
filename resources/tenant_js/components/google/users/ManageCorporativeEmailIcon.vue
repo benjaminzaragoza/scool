@@ -2,23 +2,39 @@
     <span class="ma-0 pa-0">
         <template v-if="user.corporativeEmail">
             <div class="mt-0 mb-0 pa-0" style="width: fit-content;">
-                <v-btn icon class="ma-0 pa-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
-                    <v-icon small color="teal">edit</v-icon>
-                </v-btn>
-                <v-btn icon class="ma-0 pa-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser"
-                    :loading="unassociating" :disabled="unassociating">
-                    <v-icon small color="red">remove</v-icon>
-                </v-btn>
-                <v-btn icon class="ma-0 pa-0" title="Sincronitzar" @click.native.stop="sync"
-                       :loading="syncing" :disabled="syncing">
-                    <v-icon small color="teal">sync</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon class="ma-0 pa-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
+                        <v-icon small color="teal">edit</v-icon>
+                    </v-btn>
+                    <span>Editar correu electrònic corporatiu</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon class="ma-0 pa-0" title="Dessasignar email corporatiu" @click.native.stop="unassignGoogleUser"
+                           :loading="unassociating" :disabled="unassociating">
+                        <v-icon small color="red">remove</v-icon>
+                    </v-btn>
+                    <span>Dessasignar email corporatiu</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon class="ma-0 pa-0" title="Sincronitzar" @click.native.stop="sync"
+                           :loading="syncing" :disabled="syncing">
+                        <v-icon small color="teal">sync</v-icon>
+                    </v-btn>
+                    <span>Sincronitzar</span>
+                </v-tooltip>
+
             </div>
         </template>
-        <v-btn small v-else icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser"
-            :loading="searching" :disabled="searching">
-            <v-icon color="primary" small>add</v-icon>
-        </v-btn>
+        <v-tooltip bottom v-else>
+            <v-btn slot="activator" small icon class="mx-0 pa-0" title="Afegiu correu corporatiu" @click.native.stop="addGoogleUser"
+                   :loading="searching" :disabled="searching">
+                <v-icon color="primary" small>add</v-icon>
+            </v-btn>
+            <span>Afegiu correu corporatiu</span>
+        </v-tooltip>
+
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
             <v-card>
                 <v-toolbar dark color="primary">

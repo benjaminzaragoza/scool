@@ -17,7 +17,10 @@
                     :placeholder="placeholder"
                     :hint="hint"
             ></v-text-field>
-            <v-btn v-if="!value" icon slot="default" small flat color="primary"><v-icon small>add</v-icon></v-btn>
+            <v-tooltip bottom v-if="!value" slot="default">
+                <v-btn slot="activator" icon small flat color="primary"><v-icon small>add</v-icon></v-btn>
+                <span>Afegir</span>
+            </v-tooltip>
         </v-edit-dialog>
     </span>
 </template>

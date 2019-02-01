@@ -200,8 +200,18 @@
                                                 <span>{{ props.item.last_login_ip }} | {{ props.item.last_login_formatted }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left cell" v-html="props.item.formatted_created_at_diff" :title="props.item.formatted_created_at"></td>
-                                        <td class="text-xs-left cell" :title="props.item.formatted_updated_at">{{props.item.formatted_updated_at_diff}}</td>
+                                        <td class="text-xs-left cell" :title="props.item.formatted_created_at">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ props.item.formatted_created_at_diff }}</span>
+                                                <span>{{ props.item.formatted_created_at }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell" :title="props.item.formatted_updated_at">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ props.item.formatted_updated_at_diff }}</span>
+                                                <span>{{ props.item.formatted_updated_at }}</span>
+                                            </v-tooltip>
+                                        </td>
                                         <td class="text-xs-left cell">
                                             <show-user-icon :user="props.item" :users="users"></show-user-icon>
                                             <user-emails :user="props.item"></user-emails>
