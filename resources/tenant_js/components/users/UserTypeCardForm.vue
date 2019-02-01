@@ -4,6 +4,7 @@
             <user-types-select
                     :user-types="userTypes"
                     v-model="dataUserType"
+                    :item-value="null"
             ></user-types-select>
         </v-card-text>
 
@@ -20,7 +21,9 @@
             </v-btn>
             <v-btn
                     color="primary"
-                    @click="$emit('close')"
+                    :loading="loading"
+                    :disabled="loading"
+                    @click="change"
             >
                 Canviar
             </v-btn>
@@ -38,10 +41,15 @@ export default {
   },
   data () {
     return {
-      dataUserType: {}
+      dataUserType: null,
+      loading: false
     }
   },
   props: {
+    user: {
+      type: Object,
+      required: true
+    },
     userType: {
       type: Number
     },
@@ -50,13 +58,38 @@ export default {
       required: true
     }
   },
+  methods: {
+    update () {
+      window.axios.put('/api/v1/user/' + this.user.id + '/type/' + this.dataUserType.id).then(() => {
+        this.$snackbar.showMessage("Típus d'usuari canviat correctament")
+        this.loading = false
+        this.$emit('close')
+        this.$emit('changed')
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.loading = false
+      })
+    },
+    remove () {
+      window.axios.delete('/api/v1/user/' + this.user.id + '/type').then(() => {
+        this.$snackbar.showMessage("Correcte. Ara l'usuari no té cap tipus assignat")
+        this.loading = false
+        this.$emit('close')
+        this.$emit('changed')
+      }).catch(error => {
+        this.$snackbar.showError(error)
+        this.loading = false
+      })
+    },
+    change () {
+      this.loading = true
+      if (this.dataUserType) this.update()
+      else this.remove()
+    }
+  },
   created () {
-    console.log('CREATED')
     if (this.userType) {
-      console.log('prova')
       const found = this.userTypes.find(type => type.id === this.userType)
-      console.log('found:')
-      console.log(found)
       if (found) this.dataUserType = found
     }
   }

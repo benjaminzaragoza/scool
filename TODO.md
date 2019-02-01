@@ -1,3 +1,9 @@
+# USER TYPE
+
+- [ ] Crear el tipus becaris -> Afegir dídac i Sergio a becaris
+- [ ] Posar el tipus conserges als conserges als helpers
+- [ ] Posar el tipus administrative a les administratives
+
 # COLORS
 
 - [ ] Crear fitxer colors amb els colors del projecte

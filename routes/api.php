@@ -400,6 +400,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             // User Type
             Route::post('/user/type','\\' . UserTypeController::class . '@store');
+            Route::put('/user/{user}/type/{userType}','\\' . UserTypeController::class . '@update');
+            Route::delete('/user/{user}/type','\\' . UserTypeController::class . '@destroy');
 
             // Notifications
             Route::get('/user/notifications','\\' . UserNotificationsController::class . '@index');

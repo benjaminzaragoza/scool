@@ -26,7 +26,7 @@
             <v-toolbar color="primary" dense>
                 <v-toolbar-title class="white--text title">Tipus d'usuari</v-toolbar-title>
             </v-toolbar>
-            <user-type-card-form @close="dialog=false" :user-types="userTypes" :user-type="user.user_type_id"></user-type-card-form>
+            <user-type-card-form :user="user" @close="dialog=false" @changed="$emit('changed')" :user-types="userTypes" :user-type="user.user_type_id"></user-type-card-form>
         </v-dialog>
     </span>
 </template>
