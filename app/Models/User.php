@@ -61,7 +61,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     protected $dates = [
         'last_login',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'email_verified_at'
     ];
 
     /**
@@ -709,6 +710,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'photo' => $this->photo,
             'photo_hash' => $this->photo_hash,
             'email_verified_at' => $this->email_verified_at,
+            'email_verified_at_formatted' => $this->email_verified_at_formatted,
+            'email_verified_at_diff' => $this->email_verified_at_diff,
+            'email_verified_at_timestamp' => $this->email_verified_at_timestamp,
             'mobile_verified_at' => $this->mobile_verified_at,
             'last_login' => $this->last_login,
             'last_login_formatted' => $this->last_login_formatted,
@@ -762,6 +766,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'moodleId' => optional($this->moodleUser)->moodle_id,
             'moodleUsername' => optional($this->moodleUser)->moodle_username,
             'email_verified_at' => $this->email_verified_at,
+            'email_verified_at_formatted' => $this->email_verified_at_formatted,
+            'email_verified_at_diff' => $this->email_verified_at_diff,
+            'email_verified_at_timestamp' => $this->email_verified_at_timestamp,
             'mobile_verified_at' => $this->mobile_verified_at,
             'mobile' => $this->mobile,
             'last_login' => $this->last_login,
@@ -879,5 +886,36 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function routeNotificationForNexmo($notification)
     {
         return $this->mobile;
+    }
+
+    /**
+     * email_verified_at_formatted attribute.
+     *
+     * @return mixed
+     */
+    public function getEmailVerifiedAtFormattedAttribute()
+    {
+        return optional($this->email_verified_at)->format('h:i:sA d-m-Y');
+    }
+
+    /**
+     * email_verified_at_formatted_diff attribute.
+     *
+     * @return mixed
+     */
+    public function getEmailVerifiedAtDiffAttribute()
+    {
+        Carbon::setLocale(config('app.locale'));
+        return optional($this->email_verified_at)->diffForHumans(Carbon::now());
+    }
+
+    /**
+     * email_verified_at_formatted_diff_timestamp attribute.
+     *
+     * @return mixed
+     */
+    public function getEmailVerifiedAtTimestampAttribute()
+    {
+        return optional($this->email_verified_at)->timestamp;
     }
 }

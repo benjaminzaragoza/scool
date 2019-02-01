@@ -28,18 +28,18 @@
                     <v-tooltip left>
                         <h1 slot="activator"
                             class="grey--text text--darken-3 headline font-weight-black"
-                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            Sergi Tur Badenas
+                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                            v-text="user.name">
                         </h1>
-                        <span>Sergi Tur Badenas</span>
+                        <span v-text="user.name"></span>
                     </v-tooltip>
 
                     <h2
                             class="pink--text text--lighten-2 font-weight-bold"
                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <v-tooltip bottom v-if="false">
+                        <v-tooltip bottom v-if="user.email_verified_at">
                             <v-icon slot="activator" color="success">check</v-icon>
-                            <span>Email verificat correctament!</span>
+                            <span>Email verificat correctament el {{}}!</span>
                         </v-tooltip>
                         <v-tooltip bottom v-else>
                             <v-icon slot="activator" color="error">close</v-icon>
@@ -47,8 +47,8 @@
                         </v-tooltip>
 
                         <v-tooltip left>
-                            <span slot="activator">sergiturbadenas@gmail.com</span>
-                            <span>sergiturbadenas@gmail.com</span>
+                            <span slot="activator" v-text="user.email"></span>
+                            <span v-text="user.email"></span>
                         </v-tooltip>
                     </h2>
                     <p class="grey--text mt-2"> (+34) 679 525 437
@@ -76,7 +76,7 @@
 import UserAvatar from '../ui/UserAvatarComponent'
 
 export default {
-  name: 'UserdCard',
+  name: 'UserCard',
   components: {
     'user-avatar': UserAvatar
   },

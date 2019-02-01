@@ -858,6 +858,9 @@ class UserTest extends TestCase
             'mobile' => '654789524'
         ]);
 
+//        $user->email_verified_at = Carbon::now();
+//        $user->save();
+
         Storage::fake('local');
 
         $fakeImage = UploadedFile::fake()->image('avatar.jpg');
@@ -918,6 +921,10 @@ class UserTest extends TestCase
         $this->assertEquals('789',$mappedUser['moodleId']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['moodleUsername']);
         $this->assertNull($mappedUser['email_verified_at']);
+//        dd($mappedUser['email_verified_at_timestamp']);
+        $this->assertNull($mappedUser['email_verified_at_formatted']);
+        $this->assertNull($mappedUser['email_verified_at_diff']);
+        $this->assertNull($mappedUser['email_verified_at_timestamp']);
         $this->assertNull($mappedUser['mobile_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
         $this->assertNull($mappedUser['last_login']);

@@ -6,7 +6,7 @@
             </v-btn>
             <span>Vegeu la fitxa de l'usuari</span>
         </v-tooltip>
-        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
+        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" @keydown.esc="dialog = false">
             <show-user :user="user" :users="users" @close="dialog=false"></show-user>
         </v-dialog>
     </span>
