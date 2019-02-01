@@ -215,6 +215,7 @@
                                         <td class="text-xs-left cell">
                                             <show-user-icon :user="props.item" :users="users"></show-user-icon>
                                             <user-emails :user="props.item"></user-emails>
+                                            <user-personal-data-icon-link :user="props.item"></user-personal-data-icon-link>
                                             <!--<user-send-welcome-email :user="props.item"></user-send-welcome-email>-->
                                             <!--<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>-->
                                             <!--<user-send-confirmation-email :user="props.item"></user-send-confirmation-email>-->
@@ -289,6 +290,7 @@ import UserRolesManageButton from './roles/UserRolesManageButton'
 import UserEditName from './UserEditName'
 import UserEditEmail from './UserEditEmail'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
+import UserPersonalDataIconLink from './UserPersonalDataIconLink'
 
 var filterNames = [
   {
@@ -412,6 +414,7 @@ var filters = {
 export default {
   name: 'UsersList',
   components: {
+    'user-personal-data-icon-link': UserPersonalDataIconLink,
     'user-emails': UserEmails,
     'user-delete': UserDelete,
     'user-send-welcome-email': UserSendWelcomeEmail,
