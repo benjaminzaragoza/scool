@@ -154,7 +154,7 @@
                                         <td class="text-xs-center cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ formatBoolean(props.item.email_verified_at) }}</span>
-                                                <span v-if="props.item.email_verified_at">{{ props.item.email_verified_at }}</span>
+                                                <span v-if="props.item.email_verified_at">{{ props.item.email_verified_at_formatted }}</span>
                                                 <span v-else>{{ formatBoolean(props.item.email_verified_at) }}</span>
                                             </v-tooltip>
                                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -172,7 +172,7 @@
                                         <td class="text-xs-center cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ formatBoolean(props.item.mobile_verified_at) }}</span>
-                                                <span v-if="props.item.mobile_verified_at">{{ props.item.mobile_verified_at }}</span>
+                                                <span v-if="props.item.mobile_verified_at">{{ props.item.mobile_verified_at_formatted }}</span>
                                                 <span v-else>{{ formatBoolean(props.item.mobile_verified_at) }}</span>
                                             </v-tooltip>
                                         </td>

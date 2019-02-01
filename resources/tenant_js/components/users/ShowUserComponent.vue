@@ -13,7 +13,7 @@
             </v-toolbar>
             <v-container grid-list-lg fluid>
                 <v-layout row wrap>
-                    <v-flex xs6>
+                    <v-flex xs4>
                         <user-card :user="internalUser"></user-card>
                     </v-flex>
                      <v-flex xs8>

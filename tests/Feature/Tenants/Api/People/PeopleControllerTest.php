@@ -45,7 +45,7 @@ class PeopleControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
         $this->assertCount(3,$result);
-        dd($result[0]);
+//        dd($result[0]);
         $this->assertEquals('Pepe',$result[0]->givenName);
         $this->assertEquals('Pardo',$result[0]->sn1);
         $this->assertEquals('Jeans',$result[0]->sn2);

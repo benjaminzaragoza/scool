@@ -62,7 +62,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
         'last_login',
         'created_at',
         'updated_at',
-        'email_verified_at'
+        'email_verified_at',
+        'mobile_verified_at'
     ];
 
     /**
@@ -714,8 +715,12 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'email_verified_at_diff' => $this->email_verified_at_diff,
             'email_verified_at_timestamp' => $this->email_verified_at_timestamp,
             'mobile_verified_at' => $this->mobile_verified_at,
+            'mobile_verified_at_formatted' => $this->mobile_verified_at_formatted,
+            'mobile_verified_at_diff' => $this->mobile_verified_at_diff,
+            'mobile_verified_at_timestamp' => $this->mobile_verified_at_timestamp,
             'last_login' => $this->last_login,
             'last_login_formatted' => $this->last_login_formatted,
+            'last_login_diff' => $this->last_login_diff,
             'last_login_ip' => $this->last_login_ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -770,6 +775,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'email_verified_at_diff' => $this->email_verified_at_diff,
             'email_verified_at_timestamp' => $this->email_verified_at_timestamp,
             'mobile_verified_at' => $this->mobile_verified_at,
+            'mobile_verified_at_formatted' => $this->mobile_verified_at_formatted,
+            'mobile_verified_at_diff' => $this->mobile_verified_at_diff,
+            'mobile_verified_at_timestamp' => $this->mobile_verified_at_timestamp,
             'mobile' => $this->mobile,
             'last_login' => $this->last_login,
             'last_login_formatted' => $this->last_login_formatted,
@@ -917,5 +925,36 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function getEmailVerifiedAtTimestampAttribute()
     {
         return optional($this->email_verified_at)->timestamp;
+    }
+
+    /**
+     * mobile_verified_at_formatted attribute.
+     *
+     * @return mixed
+     */
+    public function getMobileVerifiedAtFormattedAttribute()
+    {
+        return optional($this->mobile_verified_at)->format('h:i:sA d-m-Y');
+    }
+
+    /**
+     * mobile_verified_at_formatted_diff attribute.
+     *
+     * @return mixed
+     */
+    public function getMobileVerifiedAtDiffAttribute()
+    {
+        Carbon::setLocale(config('app.locale'));
+        return optional($this->mobile_verified_at)->diffForHumans(Carbon::now());
+    }
+
+    /**
+     * mobile_verified_at_formatted_diff_timestamp attribute.
+     *
+     * @return mixed
+     */
+    public function getMobileVerifiedAtTimestampAttribute()
+    {
+        return optional($this->mobile_verified_at)->timestamp;
     }
 }

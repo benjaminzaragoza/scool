@@ -926,6 +926,9 @@ class UserTest extends TestCase
         $this->assertNull($mappedUser['email_verified_at_diff']);
         $this->assertNull($mappedUser['email_verified_at_timestamp']);
         $this->assertNull($mappedUser['mobile_verified_at']);
+        $this->assertNull($mappedUser['mobile_verified_at_formatted']);
+        $this->assertNull($mappedUser['mobile_verified_at_diff']);
+        $this->assertNull($mappedUser['mobile_verified_at_timestamp']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
         $this->assertNull($mappedUser['last_login']);
         $this->assertNull($mappedUser['last_login_formatted']);
