@@ -21,41 +21,23 @@
                 v-if="dialog"
                 v-model="dialog"
                 width="500"
+                @keydown.esc="dialog=false"
         >
             <v-toolbar color="primary" dense>
                 <v-toolbar-title class="white--text title">Tipus d'usuari</v-toolbar-title>
             </v-toolbar>
-            <v-card>
-              <v-card-text>
-                TODO SELECT TIPUS USUARI
-              </v-card-text>
-
-              <v-divider></v-divider>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                          class="grey--text"
-                          flat
-                          @click="dialog = false"
-                  >
-                  Cancel·lar
-                </v-btn>
-                <v-btn
-                        color="primary"
-                        @click="dialog = false"
-                >
-                  Canviar
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+            <user-type-card-form @close="dialog=false"></user-type-card-form>
+        </v-dialog>
     </span>
 </template>
 
 <script>
+import UserTypeCardForm from './UserTypeCardForm'
 export default {
   name: 'UsersUserTypeManagement',
+  components: {
+    'user-type-card-form': UserTypeCardForm
+  },
   data () {
     return {
       dialog: false
