@@ -1,3 +1,10 @@
+# FOTOS AND AVATARS
+
+- [ ] hi ha fotos i avatars
+- [ ] Cal organitzar les dos coses i quan utilitzar un o altre
+- [ ] no hi ha cap forma modificar photos
+- [ ] Cal afegir Funcionalitat a profile
+
 # USER TYPE
 
 - [ ] Crear el tipus becaris -> Afegir dídac i Sergio a becaris
@@ -941,7 +948,7 @@ un merge amb producció i pujar els canvis.
 
 ## Tipus usuari:
 
-- [ ] Crear Component per editar el tipus usuari inline a partir d'una icona
+- [X] Crear Component per editar el tipus usuari inline a partir d'una icona
 - [ ] Implicacions canviar tipus usuari
   - [ ] Canviar directament sense tenir res més en compte -> Només si es té clar el que es fa
   - [ ] Relació amb els checks pendents
@@ -950,6 +957,11 @@ un merge amb producció i pujar els canvis.
       - [ ] Cal tenir un teacher_id vinculi amb la taula teachers
 
 ## Mòbil usuari
+
+- [ ] Implicacions canviar mòbil
+  - [ ] Falta sistema confirmació/verificació mòbils via SMS
+  - [ ] Un cop es canvia un mòbil s'ha de tornar a posar verificat a false
+  - [ ] Acció enviar SMS per validar mòbil
 
 # FITXA USUARI/ PROFILE
 
@@ -972,14 +984,14 @@ SHOW
     - [X] Editar
     - [X] Tancar
     - [X] Minimitzar    
-- [ ] Crear una user card per mostrar informació NOMÉS usuari (taula user sense cap taula extra suport com person o Google, Moodle, etc)
-  - [X] Mostrar les dades sense labels. Dades: 
+- [X] Crear una user card per mostrar informació NOMÉS usuari (taula user sense cap taula extra suport com person o Google, Moodle, etc)
   - [ ] Photo (photo)
-    - No confondre photo i Avatar (la photo és la associada a l'usuari)
-    - Tooltip mostri nom complet i email
-  - [ ] Mostrar en un tooltip l'identificador d'usuari  
+     - [ ] Ara utilitzem Avatar no photos
+      - No confondre photo i Avatar (la photo és la associada a l'usuari)
+      - Tooltip mostri nom complet i email
+    - [X] Mostrar en un tooltip l'identificador d'usuari  
+  - [X] Mostrar les dades sense labels. Dades: 
   - [X] Nom complet (camp name) -> Mida màxima limitada amb ellipsis
-    - [ ] Tooltip: Dades completes
   - [X] Email
   - [X] email_verified_at
     - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el email ha estat verificat
@@ -989,8 +1001,8 @@ SHOW
       - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el mobil ha estat verificat
       - [X] Una icona cross al costat email de color roif i amb tooltip: verificat si el mobil NO ha estat verificat  
   - [X] Text: vist per el últim cop el Data Humana amb tooltip data formatada (last_login) des de l'adreça IP: last_login_ip
-  - [ ] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
-  - [ ] Tipus usuari: Text Professor | Alumne | Familiar, etc
+  - [X] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
+  - [X] Tipus usuari: Text Professor | Alumne | Familiar, etc
   
 - [ ] Redisseny de l'estil
  - [ ] Potser cal fer sempre dos vistes una de només consultar i l'altre edició

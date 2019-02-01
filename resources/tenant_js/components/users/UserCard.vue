@@ -33,7 +33,7 @@
                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                             v-text="user.name">
                         </h1>
-                        <span v-text="user.name"></span>
+                        <span>  {{ user.id }} - {{ user.name }}</span>
                     </v-tooltip>
 
                     <h2
@@ -67,6 +67,19 @@
                             <span class="ml-2 mr-2" v-if="user.user_type">|</span>
                         </span>
                         <span class="grey--text text--darken-2 mt-2 font-weight-bold" v-text="formatUserType(user.user_type)"></span>
+                    </p>
+                    <p class="grey--text text--darken-2 mt-2" v-if="user.admin">
+                        <v-tooltip bottom>
+                            <span slot="activator" class="font-weight-black">SuperAdmin</span>
+                            <span>L'usuari té tots els permisos i pot realitzar qualsevol acció al sistema</span>
+                        </v-tooltip>
+                    </p>
+                    <p class="grey--text text--darken-2 mt-2" v-if="user.last_login">
+                        Vist/a per últim cop
+                        <v-tooltip bottom>
+                            <span slot="activator">{{ user.last_login_diff }}</span>
+                            <span>{{ user.last_login_formatted }}</span>
+                        </v-tooltip> des de l'adreça IP {{ user.last_login_ip }}
                     </p>
                     <p class="grey--text text--darken-2 mt-2" v-if="user.last_login">
                         Vist/a per últim cop
