@@ -22,7 +22,8 @@
 
 Symfony\Component\Debug\Exception\FatalThrowableError: Class 'App\Models\User' not found in /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesAndRestoresModelIdentifiers.php:84
 Stack trace:
-#0 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesAndRestoresModelIdentifiers.php(55): Illuminate\Notifications\SendQueuedNotifications->restoreModel(Object(Illuminate\Contracts\Database\ModelIdentifier))
+
+#co0 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesAndRestoresModelIdentifiers.php(55): Illuminate\Notifications\SendQueuedNotifications->restoreModel(Object(Illuminate\Contracts\Database\ModelIdentifier))
 #1 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/SerializesModels.php(45): Illuminate\Notifications\SendQueuedNotifications->getRestoredPropertyValue(Object(Illuminate\Contracts\Database\ModelIdentifier))
 #2 [internal function]: Illuminate\Notifications\SendQueuedNotifications->__wakeup()
 #3 /home/sergi/Code/acacha/tasks/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(42): unserialize('O:48:"Illuminat...')
