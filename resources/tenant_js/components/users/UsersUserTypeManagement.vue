@@ -1,5 +1,5 @@
 <template>
-    <a :href="userTypeLink()" target="_blank">{{ formatUserType(props.item.user_type_id) }}</a>
+    <a :href="userTypeLink()" target="_blank">{{ formatUserType() }}</a>
 </template>
 
 <script>
@@ -27,8 +27,8 @@ export default {
       }
       return '#'
     },
-    formatUserType (userType) {
-      if (userType) return this.userTypesTranslation[userType]
+    formatUserType () {
+      if (this.user.user_type_id) return this.userTypesTranslation[this.user.user_type_id]
     }
   },
   created () {
