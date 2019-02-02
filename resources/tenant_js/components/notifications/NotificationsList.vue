@@ -126,10 +126,9 @@
                         </span>
                     </td>
                     <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        Prova: {{ props.item.read_at }}
                         <v-tooltip bottom>
                             <span slot="activator">{{ formatBoolean(props.item.read_at) }}</span>
-                            <span v-if="props.item.read_at_formatted">{{ props.item.read_at_formatted }}</span>
+                            <span v-if="props.item.read_at_formatted">{{ props.item.read_at_diff }} | {{ props.item.read_at_formatted }}</span>
                             <span v-else>{{ formatBoolean(props.item.read_at) }}</span>
                         </v-tooltip>
                     </td>
