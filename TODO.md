@@ -1,3 +1,15 @@
+# PERSONAL DATA
+
+- [ ] Formulari públic de petició d'esborrat de dades personals
+  - [ ] En tots els casos sembla que es demana identificació -> Còpia DNI
+  - [ ] Pot ser un document per imprimir 
+- [ ] Formulari un cop logat
+  - [ ] Poder eliminar les dades personals però mantenir registre de l'usuari -> personal_data
+  - [ ] Email personal que fer?
+  - [ ] Nom d'usuari que fer
+  - [ ] Del saga o similars s'esborren les dades?
+- [ ] Deixar de rebre notificacions: això pot ser una configuració general  
+
 # FOTOS AND AVATARS
 
 - [ ] hi ha fotos i avatars

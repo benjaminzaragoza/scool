@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Web\Notifications;
 
+use App\Models\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -36,19 +37,38 @@ class NotificationsControllerTest extends BaseTenantTest
      */
     public function show_notifications_module()
     {
+        $this->withoutExceptionHandling();
+        factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com'
+        ]);
         $user = $this->loginAsSuperAdmin();
         set_sample_notifications_to_user($user);
+        sample_notifications();
 
         $response = $this->get('/notifications');
         $response->assertSuccessful();
 
         $response->assertViewIs('tenants.notifications.index');
-        $response->assertViewHas('notifications', function ($returnedNotifications) {
+        $response->assertViewHas('userNotifications', function ($returnedUserNotifications) {
             return
-                count($returnedNotifications) === 3 &&
-                $returnedNotifications[0]->data['title'] === 'Notification 1' &&
-                $returnedNotifications[1]->data['title'] === 'Notification 2' &&
-                $returnedNotifications[2]->data['title'] === 'Notification 3';
+                count($returnedUserNotifications) === 3 &&
+                $returnedUserNotifications[0]->data['title'] === 'Notification 1' &&
+                $returnedUserNotifications[1]->data['title'] === 'Notification 2' &&
+                $returnedUserNotifications[2]->data['title'] === 'Notification 3';
+        });
+        $response->assertViewHas('notifications', function ($returnedNotifications) {
+//            dd($returnedNotifications[0]);
+            return
+                count($returnedNotifications) === 5;
+        });
+        $response->assertViewHas('users', function ($returnedUsers) use ($user) {
+            return
+                count($returnedUsers) === 2 &&
+                $returnedUsers[0]['name'] === 'Pepe Pardo Jeans' &&
+                $returnedUsers[0]['email'] === 'pepepardo@jeans.com' &&
+                $returnedUsers[1]['name'] === $user->name &&
+                $returnedUsers[1]['email'] === $user->email;
         });
     }
 

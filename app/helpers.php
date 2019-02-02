@@ -1346,7 +1346,7 @@ if (!function_exists('initialize_menus')) {
         ]);
 
         Menu::firstOrCreate([
-            'icon' => 'build',
+            'icon' => 'notifications',
             'text' => 'Notificacions',
             'href' => '/notifications'
         ]);
@@ -9199,6 +9199,21 @@ if (! function_exists('set_sample_notifications_to_user')) {
         $user->notify(new SampleNotification('Notification 1'));
         $user->notify(new SampleNotification('Notification 2'));
         $user->notify(new SampleNotification('Notification 3'));
+    }
+}
+
+if (! function_exists('sample_notifications')) {
+    function sample_notifications() {
+        $user1 = factory(User::class)->create([
+            'name' => 'Homer Simpson',
+            'email' => 'homer@lossimpsons.com'
+        ]);
+        $user2 = factory(User::class)->create([
+            'name' => 'Bart Simpson',
+            'email' => 'bart@lossimpsons.com'
+        ]);
+        $user1->notify(new SampleNotification('Sample Notification 1'));
+        $user2->notify(new SampleNotification('Sample Notification 2'));
     }
 }
 
