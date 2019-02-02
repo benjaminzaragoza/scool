@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Notifications\NotificationsIndex;
 use App\Http\Controllers\Tenant\Controller;
+use App\Models\DatabaseNotification;
 use App\Models\User;
-use Illuminate\Notifications\DatabaseNotification;
 
 /**
  * Class NotificationController.
@@ -22,7 +22,7 @@ class NotificationController extends Controller
      */
     public function index(NotificationsIndex $request)
     {
-        $notifications = DatabaseNotification::all();
+        $notifications = map_collection(DatabaseNotification::with('notifiable')->get());
         $userNotifications = $request->user()->notifications;
         $users = map_collection(User::all());
         return view('tenants.notifications.index', compact('userNotifications','notifications','users'));

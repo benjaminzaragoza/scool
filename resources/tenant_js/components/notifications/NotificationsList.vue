@@ -184,7 +184,7 @@ export default {
       internalNotifications: this.notifications,
       refreshing: false,
       headers: [
-        { text: 'Id', align: 'left', value: 'id' },
+        { text: 'Uuid', align: 'left', value: 'id' },
         { text: 'Type', value: 'type' },
         { text: 'Notificat a', value: 'notifiable_id' },
         { text: 'Tipus Notificat', value: 'notifiable_type' },

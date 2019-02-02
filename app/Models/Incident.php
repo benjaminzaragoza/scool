@@ -8,6 +8,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
+use App\Models\Role as ScoolRole;
 
 /**
  * Class Incident.
@@ -18,7 +19,7 @@ class Incident extends Model
 {
     use FormattedDates, ApiURI;
 
-    const MANAGER_ROLE = 'IncidentsManager';
+    const MANAGER_ROLE = ScoolRole::INCIDENTS_MANAGER['name'];
 
     protected $guarded = ['user_id'];
 
