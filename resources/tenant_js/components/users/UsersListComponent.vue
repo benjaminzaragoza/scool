@@ -160,6 +160,7 @@
                                                 <span v-if="props.item.email_verified_at">{{ props.item.email_verified_at_formatted }}</span>
                                                 <span v-else>{{ formatBoolean(props.item.email_verified_at) }}</span>
                                             </v-tooltip>
+                                        </td>
                                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <span v-if="props.item.corporativeEmail">
                                                 <v-tooltip bottom>

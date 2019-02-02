@@ -6,6 +6,7 @@ use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Notifications\SimpleNotificationsStore;
 use App\Http\Requests\Notifications\UserNotificationsIndex;
 use App\Models\User;
+use App\Notifications\SimpleNotification;
 
 /**
  * Class SimpleNotificationsController.
@@ -22,7 +23,9 @@ class SimpleNotificationsController extends Controller
      */
     public function store(SimpleNotificationsStore $request)
     {
-        ($user = User::findOrFail($request->user))->notify(new SimpleNotification($request->title));
-        return $user->fresh()->notifications->last();
+        User::findOrFail($request->user)->notify(new SimpleNotification($request->title));
+//        $user = $user->fresh();
+//        dd ($user->notifications);
+//        return $user->fresh()->notifications->last();
     }
 }

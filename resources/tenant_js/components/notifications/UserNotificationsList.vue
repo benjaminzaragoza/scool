@@ -1,5 +1,7 @@
 <template>
-    <span>TODO notifications list: {{ notifications }}</span>
+    <span>
+        User notifications TODO
+    </span>
 </template>
 
 <script>
