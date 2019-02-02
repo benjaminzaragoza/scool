@@ -18,7 +18,7 @@
             <v-spacer></v-spacer>
 
             <v-tooltip bottom>
-                <v-btn slot="activator" id="incidents_help_button" icon class="white--text" href="http://docs.scool.cat/docs/users" target="_blank">
+                <v-btn slot="activator" id="notifications_help_button" icon class="white--text" href="http://docs.scool.cat/docs/users" target="_blank">
                     <v-icon>help</v-icon>
                 </v-btn>
                 <span>Ajuda</span>
@@ -42,16 +42,19 @@
             <v-layout>
                 <v-flex xs9 style="align-self: flex-end;">
                     <v-layout>
-                        <v-flex xs2 class="text-sm-left" style="align-self: center;">
-                            FILTERS HERE TODO
+                        <v-flex xs3 class="text-sm-left" style="align-self: center;">
+                            <notifications-filter-by-type :types="notificationTypes" v-model="selectedType"></notifications-filter-by-type>
                         </v-flex>
-                        <v-flex xs10>
+                        <v-flex xs9>
                             <v-layout>
-                                <v-flex xs4>
-                                    FILTERS HERE TODO 2
+                                <v-flex xs3>
+                                    <notifications-filter-by-notifiable-type :types="notificationNotifiableTypes" v-model="selectedNotifiableType"></notifications-filter-by-notifiable-type>
                                 </v-flex>
-                                <v-flex xs8>
-                                    FILTERS HERE TODO 3
+                                <v-flex xs4>
+                                    <notifications-filter-by-notifiable :notifiables="notificationNotifiables" v-model="selectedNotifiable"></notifications-filter-by-notifiable>
+                                </v-flex>
+                                <v-flex xs5>
+                                    <notifications-filters :filters="filterNames" v-model="selectedFilter"></notifications-filters>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
@@ -107,7 +110,7 @@
                                          :user="props.item.notifiable"
                             ></user-avatar>
                         </span>
-                        <span v-else>{{props.item.notifiable}}</span>
+                        <json-dialog-component btn-class="ma-0" icon="visibility" name="data" title="Veure les dades completes" :json="props.item.notifiable"></json-dialog-component>
                     </td>
                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ props.item.notifiable_type }}
@@ -165,6 +168,10 @@
 import NotificationsDeleteMultiple from './NotificationsDeleteMultiple'
 import UserAvatar from '../ui/UserAvatarComponent'
 import JsonDialogComponent from '../ui/JsonDialogComponent'
+import NotificationsFilterByType from './NotificationsFilterByType'
+import NotificationsFilterByNotifiableType from './NotificationsFilterByNotifiableType'
+import NotificationsFilterByNotifiable from './NotificationsFilterByNotifiable'
+import NotificationsFilters from './NotificationsFilters'
 
 var filterNames = [
   {
@@ -175,14 +182,24 @@ var filterNames = [
 ]
 
 var filters = {
-  all: function (users) {
-    return users
+  all: function (notifications) {
+    return notifications
+  },
+  byType: function (notifications, type) {
+    return notifications ? notifications.filter(function (notification) {
+      return notification.type === type
+    }) : []
+  },
+  byNotifiableType: function (notifications, notifiableType) {
+    return notifications ? notifications.filter(function (notification) {
+      return notification.notifiable_type === notifiableType
+    }) : []
+  },
+  byNotifiable: function (notifications, notifiable) {
+    return notifications ? notifications.filter(function (notification) {
+      return notification.notifiable.id === notifiable
+    }) : []
   }
-  // byUserType: function (users, userType) {
-  //   return users ? users.filter(function (user) {
-  //     return user.user_type_id === userType
-  //   }) : []
-  // }
 }
 
 export default {
@@ -190,11 +207,20 @@ export default {
   components: {
     'notifications-delete-multiple': NotificationsDeleteMultiple,
     'user-avatar': UserAvatar,
-    'json-dialog-component': JsonDialogComponent
+    'json-dialog-component': JsonDialogComponent,
+    'notifications-filter-by-type': NotificationsFilterByType,
+    'notifications-filter-by-notifiable-type': NotificationsFilterByNotifiableType,
+    'notifications-filter-by-notifiable': NotificationsFilterByNotifiable,
+    'notifications-filters': NotificationsFilters
   },
   data () {
     return {
       selected: [],
+      selectedType: null,
+      selectedNotifiableType: null,
+      selectedNotifiable: null,
+      selectedFilters: [],
+      selectedFilter: null,
       search: '',
       internalNotifications: this.notifications,
       refreshing: false,
@@ -220,17 +246,42 @@ export default {
   computed: {
     filteredNotifications: function () {
       let filteredNotifications = this.internalNotifications
-      // if (this.userType) filteredNotifications = filters['byUserType'](this.internalNotifications, this.userType)
-      // if (this.selectedRoles.length > 0) filteredNotifications = filters['byRoles'](this.internalNotifications, this.selectedRoles)
-      // if (this.selectedFilters.length > 0) {
-      //   this.selectedFilters.forEach(filter => {
-      //     filteredNotifications = filters[filter.function](this.internalNotifications)
-      //   })
-      // }
+      if (this.selectedType) filteredNotifications = filters['byType'](this.internalNotifications, this.selectedType)
+      if (this.selectedNotifiableType) filteredNotifications = filters['byNotifiableType'](this.internalNotifications, this.selectedNotifiableType)
+      if (this.selectedNotifiable) filteredNotifications = filters['byNotifiable'](this.internalNotifications, this.selectedNotifiable)
+      if (this.selectedFilters.length > 0) {
+        this.selectedFilters.forEach(filter => {
+          filteredNotifications = filters[filter.function](this.internalNotifications)
+        })
+      }
       return filteredNotifications
+    },
+    notificationTypes () {
+      const notificationTypes = this.internalNotifications ? this.internalNotifications.map(notification => {
+        return notification.type
+      }) : []
+      return [ ...new Set(notificationTypes) ]
+    },
+    notificationNotifiableTypes () {
+      const notificationNotifiableTypes = this.internalNotifications ? this.internalNotifications.map(notification => {
+        return notification.notifiable_type
+      }) : []
+      return [ ...new Set(notificationNotifiableTypes) ]
+    },
+    notificationNotifiables () {
+      let notificationNotifiables = this.internalNotifications ? this.internalNotifications.map(notification => {
+        if (notification.notifiable_type === 'App\\Models\\User') return notification.notifiable
+      }) : []
+      notificationNotifiables = notificationNotifiables.filter(x => x !== undefined)
+      return this.removeDuplicates(notificationNotifiables, 'id')
     }
   },
   methods: {
+    removeDuplicates (myArr, prop) {
+      return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
+      })
+    },
     formatBoolean (boolean) {
       return boolean ? 'Sí' : 'No'
     },
@@ -247,6 +298,9 @@ export default {
     settings () {
       console.log('settings TODO') // TODO
     }
+  },
+  created () {
+    this.filterNames = filterNames
   }
 }
 </script>

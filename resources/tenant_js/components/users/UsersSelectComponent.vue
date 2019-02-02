@@ -6,7 +6,7 @@
             v-model="internalUser"
             item-text="full_search"
             :item-value="itemValue"
-            chips
+            :chips="chips"
             clearable
             @input="input"
             @blur="blur"
@@ -58,6 +58,10 @@ export default {
     event: 'input'
   },
   props: {
+    chips: {
+      type: Boolean,
+      default: true
+    },
     name: {
       type: String,
       default: 'user'
