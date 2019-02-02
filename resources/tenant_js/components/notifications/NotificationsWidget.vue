@@ -8,9 +8,16 @@
         </v-badge>
         <v-list>
             <v-list-tile v-if="dataNotifications.length > 0">
-                <v-list-tile-title>Teniu {{ dataNotifications.length }} notificacions pendents: </v-list-tile-title>
+                <v-list-tile-title>
+                    <span v-if="dataNotifications.length === 1">
+                        Teniu {{ dataNotifications.length }} notificació pendent:
+                    </span>
+                    <span v-else>
+                        Teniu {{ dataNotifications.length }} notificacións pendents:
+                    </span>
+                </v-list-tile-title>
             </v-list-tile>
-            <v-divider></v-divider>
+            <v-divider v-if="dataNotifications.length > 0"></v-divider>
             <v-list-tile v-if="dataNotifications.length > 0"
                     v-for="(notification, index) in dataNotifications"
                     :key="index"
@@ -18,14 +25,16 @@
             >
                 <v-list-tile-title style="max-width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ notification.data.title }}</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile v-else>
+            <v-list-tile v-if="dataNotifications.length === 0">
                 <v-list-tile-title>No hi ha cap notificació pendent de llegir</v-list-tile-title>
             </v-list-tile>
             <v-divider></v-divider>
             <v-list-tile>
                 <v-list-tile-title class="caption">
                     <a href="/notifications">Veure totes</a> |
-                    <a href="#" @click="markAllAsReaded">Marcar totes com a llegides</a> |
+                    <span v-if="dataNotifications.length > 0">
+                        <a href="#" @click="markAllAsReaded">Marcar totes com a llegides</a> |
+                    </span>
                     <a href="#" @click="refresh(true)">Actualitzar</a>
                 </v-list-tile-title>
             </v-list-tile>
@@ -98,7 +107,7 @@ export default {
       this.dataNotifications = this.notifications
     } else {
       this.loading = true
-      window.axios.get('/api/v1/user/notifications').then((response) => {
+      window.axios.get('/api/v1/user/unread_notifications').then((response) => {
         this.dataNotifications = response.data
         this.loading = false
       }).catch(error => {

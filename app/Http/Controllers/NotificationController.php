@@ -24,7 +24,7 @@ class NotificationController extends Controller
     {
         $notifications = map_collection(DatabaseNotification::notifications());
         $userNotifications = $request->user()->notifications;
-        $users = map_collection(User::all());
+        $users = map_simple_collection(User::all());
         return view('tenants.notifications.index', compact('userNotifications','notifications','users'));
     }
 }

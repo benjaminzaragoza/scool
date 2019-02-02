@@ -286,8 +286,9 @@ export default {
     },
     refresh () {
       this.refreshing = true
-      window.axios.get('/api/v1/notifications').then(() => {
+      window.axios.get('/api/v1/notifications').then((response) => {
         this.refreshing = false
+        this.internalNotifications = response.data
         this.$snackbar.showMessage('Notificacions actualitzades correctament')
       }).catch(error => {
         this.refreshing = false

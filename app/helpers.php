@@ -745,6 +745,8 @@ if (!function_exists('notifications_manager_permissions')) {
     {
         return [
             'notifications.index',
+            'notifications.destroy',
+            'notifications.destroyMultiple',
             'notifications.simple.store',
         ];
     }
