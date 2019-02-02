@@ -1,16 +1,19 @@
 <template>
   <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.xsOnly" @keydown.esc="dialog = false">
-      <v-btn v-if="icon"
-              icon
-              :title="title"
-              flat
-              slot="activator"
-              color="blue darken-2"
-              dark
-              :class="btnClass"
-      >
-          <v-icon v-text="icon"></v-icon>
-      </v-btn>
+      <v-tooltip bottom slot="activator" v-if="icon">
+          <v-btn
+                 icon
+                 :title="title"
+                 flat
+                 slot="activator"
+                 color="blue darken-2"
+                 dark
+                 :class="btnClass"
+          >
+              <v-icon v-text="icon"></v-icon>
+          </v-btn>
+          <span v-text="title"></span>
+      </v-tooltip>
       <v-btn v-else
                 :title="title"
                 flat

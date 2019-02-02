@@ -68,6 +68,15 @@ class DatabaseNotificationTest extends TestCase
         $this->assertNotNull($mappedNotification['formatted_updated_at']);
         $this->assertNotNull($mappedNotification['formatted_created_at_diff']);
         $this->assertNotNull($mappedNotification['formatted_updated_at_diff']);
+
+        $notification->markAsRead();
+
+        $notification = $notification->fresh();
+        $mappedNotification = $notification->map();
+        $this->assertNotNull($mappedNotification['read_at']);
+        $this->assertNotNull($mappedNotification['read_at_timestamp']);
+        $this->assertNotNull($mappedNotification['read_at_formatted']);
+        $this->assertNotNull($mappedNotification['read_at_diff']);
     }
 
     /**
@@ -100,6 +109,19 @@ class DatabaseNotificationTest extends TestCase
         $this->assertNotNull($mappedNotification['formatted_updated_at']);
         $this->assertNotNull($mappedNotification['formatted_created_at_diff']);
         $this->assertNotNull($mappedNotification['formatted_updated_at_diff']);
+
+        $this->assertEquals('MX', $mappedNotification['user_hashid']);
+        $this->assertEquals('Pepe Pardo Jeans', $mappedNotification['user_name']);
+
+        $notification->markAsRead();
+
+        $notification = $notification->fresh();
+        $mappedNotification = $notification->map();
+        $this->assertNotNull($mappedNotification['read_at']);
+        $this->assertNotNull($mappedNotification['read_at_timestamp']);
+        $this->assertNotNull($mappedNotification['read_at_formatted']);
+        $this->assertNotNull($mappedNotification['read_at_diff']);
+
     }
 
 }

@@ -101,22 +101,33 @@
                         {{ props.item.type }}
                     </td>
                     <td class="text-xs-left cell">
-                        USER NOTIFICATION AVATAR HERE: {{ props.item.notifiable_id }}
-                        <!--<user-avatar :hash-id="props.item.hashid"-->
-                        <!--:alt="props.item.name"-->
-                        <!--:user="props.item"-->
-                        <!--:editable="true"-->
-                        <!--:removable="true"-->
-                        <!--&gt;</user-avatar>-->
+                        <span v-if="props.item.notifiable_type === 'App\\Models\\User'">
+                            <user-avatar :hash-id="props.item.user_hashid"
+                                         :alt="props.item.user_name"
+                                         :user="props.item.notifiable"
+                            ></user-avatar>
+                        </span>
+                        <span v-else>{{props.item.notifiable}}</span>
                     </td>
                     <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ props.item.notifiable_type }}
                     </td>
                     <td class="text-xs-left cell" style="max-width: 175px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        {{ props.item.data }}
+                        <json-dialog-component btn-class="ma-0" icon="visibility" name="data" title="Veure les dades completes" :json="props.item.data"></json-dialog-component>
+                        <span v-if="props.item.type === 'App\\Notifications\\SimpleNotification'">
+                            <v-tooltip bottom>
+                                <span slot="activator">{{ props.item.data.title }}</span>
+                                <span>{{ props.item.data.title }}</span>
+                            </v-tooltip>
+
+                        </span>
                     </td>
                     <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        {{ props.item.read_at }}
+                        <v-tooltip bottom>
+                            <span slot="activator">{{ formatBoolean(props.item.read_at) }}</span>
+                            <span v-if="props.item.read_at_formatted">{{ props.item.read_at_formatted }}</span>
+                            <span v-else>{{ formatBoolean(props.item.read_at) }}</span>
+                        </v-tooltip>
                     </td>
                     <td class="text-xs-left cell" :title="props.item.formatted_created_at">
                         <v-tooltip bottom>
@@ -152,6 +163,8 @@
 
 <script>
 import NotificationsDeleteMultiple from './NotificationsDeleteMultiple'
+import UserAvatar from '../ui/UserAvatarComponent'
+import JsonDialogComponent from '../ui/JsonDialogComponent'
 
 var filterNames = [
   {
@@ -175,7 +188,9 @@ var filters = {
 export default {
   name: 'NotificationsList',
   components: {
-    'notifications-delete-multiple': NotificationsDeleteMultiple
+    'notifications-delete-multiple': NotificationsDeleteMultiple,
+    'user-avatar': UserAvatar,
+    'json-dialog-component': JsonDialogComponent
   },
   data () {
     return {
@@ -189,7 +204,7 @@ export default {
         { text: 'Notificat a', value: 'notifiable_id' },
         { text: 'Tipus Notificat', value: 'notifiable_type' },
         { text: 'Dades', value: 'data' },
-        { text: 'Llegida', value: 'read_at' },
+        { text: 'Llegida', value: 'read_at_timestamp' },
         { text: 'Data creació', value: 'created_at_timestamp' },
         { text: 'Data actualització', value: 'updated_at_timestamp' },
         { text: 'Accions', sortable: false }
@@ -216,6 +231,9 @@ export default {
     }
   },
   methods: {
+    formatBoolean (boolean) {
+      return boolean ? 'Sí' : 'No'
+    },
     refresh () {
       this.refreshing = true
       window.axios.get('/api/v1/notifications').then(() => {
