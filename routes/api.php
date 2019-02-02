@@ -408,6 +408,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Notifications
             Route::get('/user/notifications','\\' . UserNotificationsController::class . '@index');
             Route::get('/user/unread_notifications','\\' . UserUnreadNotificationsController::class . '@index');
+            Route::delete('/user/unread_notifications/all','\\' . UserUnreadNotificationsController::class . '@destroyAll');
+            Route::delete('/user/unread_notifications/{notification}','\\' . UserUnreadNotificationsController::class . '@destroy');
+
 
             // Simple notifications
             Route::post('/simple_notifications/','\\' . SimpleNotificationsController::class . '@store');
