@@ -851,7 +851,7 @@ Dades extres (mostrar al show):
 API
 - [X] Enviar notificació simple usuari
 - [ ] Test i Controlador operació masiva eliminar database notifications
-- [ ] Refresh de totes les notificacions
+- [X] Refresh de totes les notificacions
 - [X] Marcar totes com a llegides
 - [X] Marcar notificació com a llegida
 

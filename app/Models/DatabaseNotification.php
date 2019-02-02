@@ -23,6 +23,15 @@ class DatabaseNotification extends LaravelDatabaseNotification
     ];
 
     /**
+     * notifications
+     *
+     * @return DatabaseNotification[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function notifications() {
+        return DatabaseNotification::with('notifiable')->get();
+    }
+
+    /**
      * formatted_created_at_date attribute.
      *
      * @return mixed

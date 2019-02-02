@@ -744,6 +744,7 @@ if (!function_exists('notifications_manager_permissions')) {
     function notifications_manager_permissions()
     {
         return [
+            'notifications.index',
             'notifications.simple.store',
         ];
     }

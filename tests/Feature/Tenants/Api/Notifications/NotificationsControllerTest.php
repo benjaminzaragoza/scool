@@ -35,61 +35,21 @@ class NotificationsControllerTest extends BaseTenantTest
      * @test
      * @group notifications
      */
-    public function user_can_get_his_owned_unread_notifications()
+    public function notifications_manager_can_list_all__notifications()
     {
-        $user = $this->login('api');
+        $this->withoutExceptionHandling();
+        $user = $this->loginAsNotificationsManager('api');
         set_sample_notifications_to_user($user);
         $user->notifications[1]->markAsRead();
-        $response = $this->json('GET','/api/v1/user/unread_notifications/');
+        $response = $this->json('GET','/api/v1/notifications');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertCount(2,$result);
+        $this->assertCount(3,$result);
         $this->assertEquals('Notification 1',$result[0]->data->title);
         $this->assertEquals(SampleNotification::class,$result[0]->type);
-        $this->assertEquals('Notification 3',$result[1]->data->title);
+        $this->assertEquals('Notification 2',$result[1]->data->title);
         $this->assertEquals(SampleNotification::class,$result[1]->type);
-    }
-
-    /**
-     * @test
-     * @group notifications
-     */
-    public function guest_user_can_get_his_owned_unread_notifications()
-    {
-        $response = $this->json('GET','/api/v1/user/unread_notifications/');
-        $response->assertStatus(401);
-    }
-
-
-    /**
-     * @test
-     * @group notifications
-     */
-    public function user_can_mark_notification_as_readed()
-    {
-        $user = $this->login('api');
-        set_sample_notifications_to_user($user);
-        $response = $this->json('DELETE','/api/v1/user/unread_notifications/' . $user->notifications[1]->id);
-        $response->assertSuccessful();
-        $result = json_decode($response->getContent());
-        $this->assertCount(2,$result);
-        $this->assertEquals('Notification 1',$result[0]->data->title);
-        $this->assertEquals(SampleNotification::class,$result[0]->type);
-        $this->assertEquals('Notification 3',$result[1]->data->title);
-        $this->assertEquals(SampleNotification::class,$result[1]->type);
-    }
-
-    /**
-     * @test
-     * @group notifications
-     */
-    public function user_can_mark_all_notification_as_readed()
-    {
-        $user = $this->login('api');
-        set_sample_notifications_to_user($user);
-        $response = $this->json('DELETE','/api/v1/user/unread_notifications/all');
-        $response->assertSuccessful();
-        $result = json_decode($response->getContent());
-        $this->assertCount(0,$result);
+        $this->assertEquals('Notification 3',$result[2]->data->title);
+        $this->assertEquals(SampleNotification::class,$result[2]->type);
     }
 }
