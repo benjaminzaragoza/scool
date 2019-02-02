@@ -1,47 +1,54 @@
 <template>
     <v-autocomplete
-            name="filters"
+            v-model="dataSelectedFilters"
+            :items="filters"
+            attach
             label="Altres filtres"
-            :items="dataFilters"
-            v-model="dataFilter"
-            clearable
+            multiple
+            return-object
+            item-text="name"
             @input="input"
             @blur="blur"
             chips
-    ></v-autocomplete>
+    >
+        <template slot="selection" slot-scope="data">{{ data.item.name }}, </template>
+        <template slot="item" slot-scope="data">
+            <v-checkbox v-model="data.tile.props.value"></v-checkbox>
+            {{ data.item.name }}
+        </template>
+    </v-autocomplete>
 </template>
 
 <script>
 export default {
-  name: 'NotificationsFilters',
+  name: 'NotificationFilters',
   data () {
     return {
-      dataFilters: this.filters,
-      dataFilter: this.filter
+      dataSelectedFilters: this.selectedFilters
     }
   },
   model: {
-    prop: 'filter',
+    prop: 'selectedFilters',
     event: 'input'
   },
   props: {
+    selectedFilters: {},
     filters: {
-      filter: Array,
+      type: Array,
       required: true
-    },
-    filter: {}
+    }
   },
   watch: {
-    filter (filter) {
-      this.dataFilter = filter
+    selectedFilters (selectedFilters) {
+      this.dataSelectedFilters = selectedFilters
     }
   },
   methods: {
     input () {
-      this.$emit('input', this.dataFilter)
+      this.$emit('input', this.dataSelectedFilters)
     },
     blur () {
-      this.$emit('blur', this.dataFilter)
+      this.$emit('blur', this.dataSelectedFilters)
     }
   }
 }

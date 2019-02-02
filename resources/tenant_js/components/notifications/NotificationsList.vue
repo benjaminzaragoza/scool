@@ -54,7 +54,7 @@
                                     <notifications-filter-by-notifiable :notifiables="notificationNotifiables" v-model="selectedNotifiable"></notifications-filter-by-notifiable>
                                 </v-flex>
                                 <v-flex xs5>
-                                    <notifications-filters :filters="filterNames" v-model="selectedFilter"></notifications-filters>
+                                    <notifications-filters :filters="filterNames" v-model="selectedFilters"></notifications-filters>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
@@ -144,20 +144,6 @@
                             <span>{{ props.item.formatted_updated_at }}</span>
                         </v-tooltip>
                     </td>
-                    <td class="text-xs-left cell">
-                        ACTIONS TODO
-                        <!--<user-changelog :user="props.item" class="ma-0"></user-changelog>-->
-                        <!--<show-user-icon :user="props.item" :users="users"></show-user-icon>-->
-                        <!--<user-emails :user="props.item"></user-emails>-->
-                        <!--<user-personal-data-icon-link :user="props.item" class="ma-0"></user-personal-data-icon-link>-->
-                        <!--<user-password :user="props.item" class="ma-0"></user-password>-->
-                        <!--&lt;!&ndash; TODO &ndash;&gt;-->
-                        <!--&lt;!&ndash;<user-check :user="props.item"></user-check>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<user-send-welcome-email :user="props.item"></user-send-welcome-email>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<user-send-confirmation-email :user="props.item"></user-send-confirmation-email>&ndash;&gt;-->
-                        <!--<user-delete :user="props.item"></user-delete>-->
-                    </td>
                 </tr>
             </template>
         </v-data-table>
@@ -176,8 +162,13 @@ import NotificationsFilters from './NotificationsFilters'
 var filterNames = [
   {
     id: 1,
-    name: 'Email confirmat',
-    function: 'confirmedEmail'
+    name: 'Llegides',
+    function: 'readNotifications'
+  },
+  {
+    id: 2,
+    name: 'Pendents de llegir',
+    function: 'unreadNotifications'
   }
 ]
 
@@ -198,6 +189,16 @@ var filters = {
   byNotifiable: function (notifications, notifiable) {
     return notifications ? notifications.filter(function (notification) {
       return notification.notifiable.id === notifiable
+    }) : []
+  },
+  readNotifications: function (notifications, type) {
+    return notifications ? notifications.filter(function (notification) {
+      return notification.read_at !== null
+    }) : []
+  },
+  unreadNotifications: function (notifications, type) {
+    return notifications ? notifications.filter(function (notification) {
+      return notification.read_at === null
     }) : []
   }
 }
@@ -220,7 +221,6 @@ export default {
       selectedNotifiableType: null,
       selectedNotifiable: null,
       selectedFilters: [],
-      selectedFilter: null,
       search: '',
       internalNotifications: this.notifications,
       refreshing: false,
@@ -232,8 +232,7 @@ export default {
         { text: 'Dades', value: 'data' },
         { text: 'Llegida', value: 'read_at_timestamp' },
         { text: 'Data creació', value: 'created_at_timestamp' },
-        { text: 'Data actualització', value: 'updated_at_timestamp' },
-        { text: 'Accions', sortable: false }
+        { text: 'Data actualització', value: 'updated_at_timestamp' }
       ]
     }
   },

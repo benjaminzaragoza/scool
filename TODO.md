@@ -848,22 +848,43 @@ Dades extres (mostrar al show):
              
 # NOTIFICATIONS
 
+API
+- [X] Enviar notificació simple usuari
+- [ ] Test i Controlador operació masiva eliminar database notifications
+- [ ] Marcar totes com a llegides
+- [ ] Marcar notificació com a llegida
+
 TODO
-- [ ] Primera línia de la llista notificacions text: Teniu 10 notificacions pendent
-- [ ] Última línia: Veure totes les notificacions | Marcar totes com a llegides
+- [ ] Widget, implementar temps real
+  - [ ] Rebi push notification amb avís quan hi ha una notificació nova
+- [X] Crear mòdul notificacions
+- [X] Crear permisos i rols i controlar accés a notificacions
+- [ ] Card per a enviar notificacions
+  - [X] Formulari per enviar notificació simple a un usuari
+  - [ ] Múltiples usuaris de cop
+- [X] Vista datatables de totes les notififacions de base de dades
+  - [X] Mostrar avatar usuari notificat
+  - [X] Consultar en format json amb un dialeg les dades de les notificació i el notifiable.
+  - [X] Filtres
+  - [X] per tipus de notificació
+  - [X] Per tipus de notifiable
+  - [X] Per usuari notificat
+  - [X] Llegides i no llegides
+  - [X] Interfície eliminació Massiva
+- [X] Primera línia de la llista notificacions text: Teniu 10 notificacions pendent
+- [X] Última línia: Veure totes les notificacions | Marcar totes com a llegides
 - [ ] Widget només mostrar notificacions no llegides
 - [ ] API que permeti marcar una notificació com a llegida
 - [ ] API que permeti marcar totes les notificacins pendents com a llegides
 - [ ] Com marcar una notificació com a llegida ?
    - [ ] Al fer click a la notificació  
-- [ ] Widget opció de navegar/link a veure l'històric de notificacions
-- [ ] Crear component datatables que permeti veure les notificacions
-  - [ ] Els usuaris que no siguin notificationsManager només poden veure les seves pròpies notificacions
-  - [ ] Filtres:
-    - [ ] Per usuari
-    - [ ] Per tipus Notificació
-- [ ] Widget, implementar temps real
-  - [ ] Rebi push notification amb avís quan hi ha una notificació nova
+- [X] Widget opció de navegar/link a veure l'històric de notificacions
+- [X] Crear component datatables que permeti veure les notificacions
+  - [X] Els usuaris que no siguin notificationsManager només poden veure les seves pròpies notificacions
+  - [X] Filtres:
+    - [X] Per usuari
+    - [X] Per tipus Notificació
+    - [X] Llegida/No llegida 
   
 QUE CAL PER SUBSTITUIR E-BANDO/O SIMILAR:
 - [ ] Apartat per enviar notificacions generals

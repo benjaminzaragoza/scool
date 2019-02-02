@@ -7,14 +7,27 @@
             </v-btn>
         </v-badge>
         <v-list>
-            <v-list-tile v-if="dataNotifications.length > 0"
-                    v-for="(dataNotification, index) in dataNotifications"
-                    :key="index"
-            >
-                <v-list-tile-title style="max-width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ dataNotification.data.title }}</v-list-tile-title>
+            <v-list-tile v-if="dataNotifications.length > 0">
+                <v-list-tile-title>Teniu {{ dataNotifications.length }} notificacions pendents: </v-list-tile-title>
             </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile v-if="dataNotifications.length > 0"
+                    v-for="(notification, index) in dataNotifications"
+                    :key="index"
+                    @click="markAsReaded(notification)"
+            >
+                <v-list-tile-title style="max-width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ notification.data.title }}</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-else>
+                <v-list-tile-title>No hi ha cap notificació pendent de llegir</v-list-tile-title>
+            </v-list-tile>
+            <v-divider></v-divider>
             <v-list-tile>
-                <v-list-tile-title>No hi ha cap notificació pendent</v-list-tile-title>
+                <v-list-tile-title class="caption">
+                    <a href="/notifications">Veure totes</a> |
+                    <a href="#" @click="markAllAsReaded">Marcar totes com a llegides</a> |
+                    <a href="#" @click="refresh(true)">Actualitzar</a>
+                </v-list-tile-title>
             </v-list-tile>
         </v-list>
     </v-menu>
@@ -44,6 +57,40 @@ export default {
     amount () {
       if (this.dataNotifications) return this.dataNotifications.length
       return 0
+    }
+  },
+  methods: {
+    refresh (message = false) {
+      this.loading = true
+      window.axios.get('/api/v1/user/unread_notifications/').then((response) => {
+        this.dataNotifications = response.data
+        this.loading = false
+        this.$snackbar.showMessage('Notificacions actualitzades correctament')
+      }).catch(error => {
+        this.loading = false
+        this.$snackbar.showError(error)
+      })
+    },
+    markAsReaded (notification) {
+      this.loading = true
+      window.axios.delete('/api/v1/user/unread_notifications/' + notification.id).then(() => {
+        this.loading = false
+        this.refresh()
+      }).catch(error => {
+        this.loading = false
+        this.$snackbar(error)
+      })
+    },
+    markAllAsReaded () {
+      this.loading = true
+      this.loading = true
+      window.axios.delete('/api/v1/user/unread_notifications/all').then(() => {
+        this.loading = false
+        this.refresh()
+      }).catch(error => {
+        this.loading = false
+        this.$snackbar(error)
+      })
     }
   },
   created () {
