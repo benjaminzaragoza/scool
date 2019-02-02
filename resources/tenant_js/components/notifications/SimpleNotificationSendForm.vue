@@ -4,7 +4,7 @@
     >
         <v-text-field
                 v-model="title"
-                :counter="25"
+                :counter="140"
                 label="Text curt de la notificació"
                 required
                 :error-messages="titleErrors"
@@ -35,7 +35,7 @@ export default {
   },
   mixins: [ validationMixin ],
   validations: {
-    title: { required, maxLength: maxLength(25) },
+    title: { required, maxLength: maxLength(140) },
     user: { required }
   },
   data () {
@@ -68,7 +68,7 @@ export default {
   methods: {
     send () {
       this.sending = true
-      window.axios.post('/api/v1/simple/notifications', {
+      window.axios.post('/api/v1/simple_notifications', {
         'user': this.user,
         'title': this.title
       }).then(() => {

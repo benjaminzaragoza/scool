@@ -13,7 +13,7 @@ use App\Http\Requests\Notifications\UserNotificationsIndex;
 class UserUnreadNotificationsController extends Controller
 {
     /**
-     * Store.
+     * Index.
      *
      * @param UserNotificationsIndex $request
      * @return mixed

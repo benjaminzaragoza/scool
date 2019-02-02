@@ -740,6 +740,15 @@ if (!function_exists('users_manager_permissions')) {
     }
 }
 
+if (!function_exists('notifications_manager_permissions')) {
+    function notifications_manager_permissions()
+    {
+        return [
+            'notifications.simple.store',
+        ];
+    }
+}
+
 if (!function_exists('people_manager_permissions')) {
     function people_manager_permissions()
     {
@@ -883,6 +892,19 @@ if (!function_exists('initialize_users_manager_role')) {
         }
     }
 }
+
+if (!function_exists('initialize_notifications_manager_role')) {
+    function initialize_notifications_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => ScoolRole::NOTIFICATIONS_MANAGER['name']]);
+        $permissions = notifications_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
 
 if (!function_exists('initialize_people_manager_role')) {
     function initialize_people_manager_role()

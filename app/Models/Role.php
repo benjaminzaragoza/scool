@@ -39,6 +39,10 @@ class Role extends SpatieRole
         'name' => 'UsersManager'
     ];
 
+    const NOTIFICATIONS_MANAGER = [
+        'name' => 'NotificationsManager'
+    ];
+
     const STAFF_MANAGER = [
         'name' => 'StaffManager'
     ];
