@@ -409,6 +409,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Notifications
             Route::get('notifications','\\' . NotificationsController::class . '@index');
             Route::post('notifications/multiple','\\' . NotificationsController::class . '@destroyMultiple');
+            Route::delete('notifications/{notification}','\\' . NotificationsController::class . '@destroy');
             Route::get('/user/notifications','\\' . UserNotificationsController::class . '@index');
             Route::get('/user/unread_notifications','\\' . UserUnreadNotificationsController::class . '@index');
             Route::delete('/user/unread_notifications/all','\\' . UserUnreadNotificationsController::class . '@destroyAll');

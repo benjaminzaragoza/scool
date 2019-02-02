@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant\Api\Notifications;
 
 use App\Http\Controllers\Tenant\Controller;
+use App\Http\Requests\Notifications\NotificationsDestroy;
 use App\Http\Requests\Notifications\NotificationsDestroyMultiple;
 use App\Http\Requests\Notifications\NotificationsIndex;
 use App\Models\DatabaseNotification;
@@ -23,6 +24,16 @@ class NotificationsController extends Controller
     public function index(NotificationsIndex $request)
     {
         return map_collection(DatabaseNotification::notifications());
+    }
+
+    /**
+     * destroy
+     * @param NotificationsDestroyMultiple $request
+     * @throws \Exception
+     */
+    public function destroy(NotificationsDestroy $request, $tenant, DatabaseNotification $notification)
+    {
+        $notification->delete();
     }
 
     /**
