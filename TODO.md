@@ -851,8 +851,9 @@ Dades extres (mostrar al show):
 API
 - [X] Enviar notificació simple usuari
 - [ ] Test i Controlador operació masiva eliminar database notifications
-- [ ] Marcar totes com a llegides
-- [ ] Marcar notificació com a llegida
+- [ ] Refresh de totes les notificacions
+- [X] Marcar totes com a llegides
+- [X] Marcar notificació com a llegida
 
 TODO
 - [ ] Widget, implementar temps real

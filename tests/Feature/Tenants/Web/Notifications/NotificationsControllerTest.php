@@ -58,7 +58,6 @@ class NotificationsControllerTest extends BaseTenantTest
                 $returnedUserNotifications[2]->data['title'] === 'Notification 3';
         });
         $response->assertViewHas('notifications', function ($returnedNotifications) {
-//            dd($returnedNotifications[0]);
             return
                 count($returnedNotifications) === 5;
         });

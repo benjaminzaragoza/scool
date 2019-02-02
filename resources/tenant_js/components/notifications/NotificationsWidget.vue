@@ -65,7 +65,7 @@ export default {
       window.axios.get('/api/v1/user/unread_notifications/').then((response) => {
         this.dataNotifications = response.data
         this.loading = false
-        this.$snackbar.showMessage('Notificacions actualitzades correctament')
+        if (message) this.$snackbar.showMessage('Notificacions actualitzades correctament')
       }).catch(error => {
         this.loading = false
         this.$snackbar.showError(error)

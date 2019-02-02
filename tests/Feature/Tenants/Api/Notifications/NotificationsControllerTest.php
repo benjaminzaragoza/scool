@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Tenants\Api\People;
 
-use App\Models\User;
 use App\Notifications\SampleNotification;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,11 +9,11 @@ use Tests\BaseTenantTest;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class UserUnreadNotificationsControllerTest.
+ * Class NotificationsControllerTest.
  *
  * @package Tests\Feature
  */
-class UserUnreadNotificationsControllerTest extends BaseTenantTest
+class NotificationsControllerTest extends BaseTenantTest
 {
     use RefreshDatabase, CanLogin;
 
@@ -84,17 +83,6 @@ class UserUnreadNotificationsControllerTest extends BaseTenantTest
      * @test
      * @group notifications
      */
-    public function guest_user_cannot_mark_notification_as_readed()
-    {
-        sample_notifications();
-        $response = $this->json('DELETE','/api/v1/user/unread_notifications/' . User::first()->unreadNotifications->first()->id);
-        $response->assertStatus(401);
-    }
-
-    /**
-     * @test
-     * @group notifications
-     */
     public function user_can_mark_all_notification_as_readed()
     {
         $user = $this->login('api');
@@ -103,17 +91,5 @@ class UserUnreadNotificationsControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
         $this->assertCount(0,$result);
-    }
-
-    /**
-     * @test
-     * @group notifications
-     */
-    public function guest_user_cannot_mark_all_notification_as_readed()
-    {
-        $user = factory(User::class)->create();
-        set_sample_notifications_to_user($user);
-        $response = $this->json('DELETE','/api/v1/user/unread_notifications/all');
-        $response->assertStatus(401);
     }
 }
