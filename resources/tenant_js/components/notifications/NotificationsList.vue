@@ -14,7 +14,7 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
-            <v-toolbar-title class="white--text title">Notificacions</v-toolbar-title>
+            <v-toolbar-title class="white--text">Notificacions</v-toolbar-title>
             <v-spacer></v-spacer>
 
             <v-tooltip bottom>
@@ -240,6 +240,15 @@ export default {
     notifications: {
       type: Array,
       required: true
+    },
+    forceRefresh: {}
+  },
+  watch: {
+    forceRefresh (forceRefresh) {
+      if (forceRefresh) {
+        this.refresh()
+        this.$emit('refreshed')
+      }
     }
   },
   computed: {

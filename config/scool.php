@@ -91,4 +91,18 @@ return [
     'gsuite_notifications_send_email' => env('GSUITE_NOTIFICATIONS_SEND_EMAIL',true),
     'gsuite_notifications_email' => env('GSUITE_NOTIFICATIONS_EMAIL','stur@iesebre.com'),
 
+
+    /*
+   |--------------------------------------------------------------------------
+   | ROUTEROS
+   |--------------------------------------------------------------------------
+   |
+   | ROUTEROS specific configurations
+   |
+   */
+
+    'routeros_ip' => env('ROUTEROS_IP','192.168.88.1'),
+    'routeros_user' => env('ROUTEROS_USER','admin'),
+    'routeros_password' => env('ROUTEROS_PASSWORD',''),
+
 ];

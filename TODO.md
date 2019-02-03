@@ -1,3 +1,69 @@
+# Seeds 
+
+- [ ] Crear un seed per tal de començar desde zero
+
+# ROUTEROS
+
+- [ ] RouterOS API PROTOCOL: https://wiki.mikrotik.com/wiki/Manual:API
+- [ ] Integració amb aplicació inventari
+- [ ] Client API PHP
+  - https://github.com/pear2/Net_RouterOS
+- [ ] Laravel: https://github.com/jjsquady/mikrotikapi  
+- [ ] Docs: https://mum.mikrotik.com//presentations/NZ15/perkins.pdf
+
+Paquet Laravel (https://github.com/jjsquady/mikrotikapi):
+
+```
+composer require jjsquady/mikrotikapi
+```
+
+Instal·la com a dependència Paquet (https://packagist.org/packages/pear2/net_routeros):
+
+```
+composer require pear2/net_routeros
+```
+
+## DHCP
+
+- [ ] Configuració bàsica de DHCP pot ser fixe
+
+
+## DNS
+
+# EBANDO
+
+- 71.39 €/año (Impuestos incluidos)
+- https://gestor.ebando.co/details
+
+BANDOS/NOTIFICACIONES
+- Borrador/Diferido/Publicar
+- Etiquetas de bandos
+- Titulo
+- Mensaje (eina miniword)
+- Adjuntos
+
+- Crear notificacion
+- Vista Prèvia 
+
+# Backups
+
+## Base de dades
+
+- [ ] Backups de la base de dades a un compte de Google Drive
+- [ ] Dos tipus
+  - [ ] Accés ja configurat existent que ja utilitzem per altres coses
+  - [ ] Aconseguir permisos via OAuth per indicar un altre compte
+- [ ] https://medium.com/@dennissmink/laravel-backup-database-to-your-google-drive-f4728a2b74bd
+- [ ] spatie/laravel-backup
+- [ ] Còpies periodiques
+
+### Fitxers
+
+- [ ] Mantenir sincronitzada semper totes les operacions en fitxers per tal de guardar-los també a 
+  Google Drive
+- [ ] spatie/laravel-backup permet fitxers extres
+  - https://docs.spatie.be/laravel-backup/v4/advanced-usage/adding-extra-files-to-a-backup 
+
 # PERSONAL DATA
 
 - [ ] Formulari públic de petició d'esborrat de dades personals
@@ -858,9 +924,22 @@ QUE CAL PER SUBSTITUIR E-BANDO/O SIMILAR:
       - [ ] icons
       - [ ] Vibrar
 
+ENVIAR NOTIFICACIÓ
+- [ ] Camps extres com description, icon i similars
+ 
+USER NOTIFICATIONS
+- [ ] Toolbar user notifications: switch llegides/no llegides
+  - [ ] Filtre per típus
+- [ ] Vistes show centrades en la presentació sense labels ni datatables
+- [ ] Cal definir un format comú de data per a les notificacions. Que pot tenir data:
+  - [ ] title
+  - [ ] description
+  - [ ] icon
+  - [ ] vibrate sí/no
+  - [ ] Altres
 API
 - [X] Enviar notificació simple usuari
-- [ ] Test i Controlador operació masiva eliminar database notifications
+- [X] Test i Controlador operació masiva eliminar database notifications
   - https://iesebre.scool.test/api/v1/notifications/multiple
 - [X] Refresh de totes les notificacions
 - [X] Marcar totes com a llegides

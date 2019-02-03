@@ -35,7 +35,9 @@ use App\Models\Study;
 use App\Models\User;
 use Illuminate\Broadcasting\BroadcastController;
 
-
+use PEAR2\Net\RouterOS\Client as RouterOSClient;
+use PEAR2\Net\RouterOS\Request as RouterOSRequest;
+use PEAR2\Net\RouterOS\Response as RouterOSResponse;
 
 Route::bind('googleUser', function($value, $route)
 {
@@ -263,4 +265,22 @@ Route::get('push', 'PushController@index');
 //TODO eliminar
 //Route::post('notifications', '\\' . NotificationController::class . '@store');
 
+Route::get('/mikrotik2', function() {
+    try {
+        $client = new RouterOSClient('192.168.111.100', 'api', '1O5xfijsp14WA');
+//        $client = Mikrokit::connect(['192.168.111.100', 'api', '1O5xfijsp14WA']);
 
+        $responses = $client->sendSync(new RouterOSRequest('/ip/arp/print'));
+
+        foreach ($responses as $response) {
+            if ($response->getType() === RouterOSResponse::TYPE_DATA) {
+                echo 'IP: ', $response->getProperty('address'),
+                ' MAC: ', $response->getProperty('mac-address'),
+                "\n";
+            }
+        }
+        echo 'OK';
+    } catch (Exception $e) {
+        die($e);
+    }
+});

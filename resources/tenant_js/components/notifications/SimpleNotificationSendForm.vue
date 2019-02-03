@@ -74,6 +74,7 @@ export default {
       }).then(() => {
         this.sending = false
         this.$snackbar.showMessage('Notificació enviada correctament')
+        this.$emit('sent')
       }).catch(error => {
         this.sending = false
         this.$snackbar.showError(error)

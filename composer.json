@@ -16,6 +16,7 @@
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "hashids/hashids": "^3.0",
+        "jjsquady/mikrotikapi": "^0.3.6",
         "lab404/laravel-impersonate": "^1.2",
         "laravel-notification-channels/webpush": "^3.0",
         "laravel/framework": "5.7.*",
