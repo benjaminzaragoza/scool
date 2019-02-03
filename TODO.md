@@ -865,6 +865,17 @@ Stack trace:
     ]
 }
 
+# BARRA NAVEGACIÓ LATERAL DRETA
+
+- [ ] No mostrar data de creació o al menys no utilitzar Labels sinó calen
+
+# USER PROFILE
+
+- [X] CARD DE DADES D'USUARI
+- [X] CARD de DADES PERSONALS
+Sí és professor:
+- [ ] Dades professionals de professor
+
 # DADES PERSONALS
 
 ## PERSONAL DATA CARD
