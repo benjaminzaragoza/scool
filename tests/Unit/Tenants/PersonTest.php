@@ -5,6 +5,7 @@ namespace Tests\Unit\Tenants;
 use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
+use App\Models\Location;
 use App\Models\Person;
 use App\Models\User;
 use Carbon\Carbon;
@@ -148,21 +149,32 @@ class PersonTest extends TestCase
             'gender' => 'Home',
             'civil_status' => 'Casat/da',
             'phone' => '977504878',
-            'other_phones' => 'Casat/da',
+            'other_phones' => '977854859',
             'mobile' => '678514427',
-            'other_mobiles' => '678514427',
+            'other_mobiles' => '666514412',
             'email' => 'pepepardojeans@gmail.com',
             'other_emails' => 'pepepardojeans@gmail.com',
             'notes' => 'Bla bla bla',
         ]);
         $person->user_id = $user->id;
         $person->save();
+        seed_identifier_types();
+        $identifier = Identifier::create([
+            'value' => '47653688C',
+            'type_id' => 1
+        ]);
+        $person->identifiers()->save($identifier);
 
+        $location = Location::create([
+            'name' => 'Tortosa',
+            'postalcode' => 43500
+        ]);
+        $person->birthplace_id = $location->id;
 
         $mappedPerson = $person->map();
 
         $this->assertEquals(1,$mappedPerson['id']);
-        $this->assertEquals($user->id,$mappedPerson['user_id']);
+        $this->assertEquals($user->id,$mappedPerson['userId']);
         $this->assertEquals('Pepe Pardo Jeans',$mappedPerson['name']);
         $this->assertEquals('Pepe',$mappedPerson['givenName']);
         $this->assertEquals('Pardo',$mappedPerson['sn1']);
@@ -184,17 +196,19 @@ class PersonTest extends TestCase
         $this->assertEquals($mappedPerson['updated_at']->timestamp,$mappedPerson['updated_at_timestamp']);
 
         $this->assertEquals(1, $mappedPerson['identifier_id']);
-        $this->assertEquals('41695258A', $mappedPerson['identifier_value']);
+        $this->assertEquals('47653688C', $mappedPerson['identifier_value']);
 
-        $this->assertEquals('02-03-1978', $mappedPerson['birthdate']);
+        $this->assertEquals('02-03-1978', $mappedPerson['birthdate']->format('d-m-Y'));
         $this->assertEquals(1, $mappedPerson['birthplace_id']);
+        $this->assertEquals('Tortosa', $mappedPerson['birthplace_name']);
+        $this->assertEquals(43500, $mappedPerson['birthplace_postalcode']);
         $this->assertEquals('Casat/da', $mappedPerson['civil_status']);
-        $this->assertEquals('TODO', $mappedPerson['gender']);
-        $this->assertEquals('TODO', $mappedPerson['phone']);
-        $this->assertEquals('TODO', $mappedPerson['other_phones']);
-        $this->assertEquals('TODO', $mappedPerson['mobile']);
-        $this->assertEquals('TODO', $mappedPerson['other_mobiles']);
-        $this->assertEquals('TODO', $mappedPerson['other_emails']);
+        $this->assertEquals('Home', $mappedPerson['gender']);
+        $this->assertEquals('977504878', $mappedPerson['phone']);
+        $this->assertEquals('977854859', $mappedPerson['other_phones']);
+        $this->assertEquals('678514427', $mappedPerson['mobile']);
+        $this->assertEquals('666514412', $mappedPerson['other_mobiles']);
+        $this->assertEquals('pepepardojeans@gmail.com', $mappedPerson['other_emails']);
         $this->assertEquals('Bla bla bla', $mappedPerson['notes']);
 
     }
