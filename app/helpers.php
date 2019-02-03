@@ -9254,7 +9254,7 @@ if (! function_exists('create_sample_people')) {
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
-            'birthdate' => Carbon::createFromFormat('d-m-Y','02-03-1978')->format('d-m-Y'),
+            'birthdate' => Carbon::createFromFormat('d-m-Y','02-03-1978'),
 //            'birthplace_id' => 'Jeans',
             'gender' => 'Home',
             'civil_status' => 'Solter/a',
