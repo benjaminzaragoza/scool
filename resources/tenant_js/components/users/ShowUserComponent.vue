@@ -16,7 +16,10 @@
                     <v-flex xs4>
                         <user-card :user="internalUser"></user-card>
                     </v-flex>
-                     <v-flex xs8>
+                    <v-flex xs8>
+                        <person-card :person="internalUser.person" :person-id="internalUser.person_id"></person-card>
+                    </v-flex>
+                    <v-flex xs8>
                         <personal-data-card :user="internalUser"></personal-data-card>
                     </v-flex>
                     <v-flex xs3>
@@ -260,12 +263,14 @@
 
 <script>
 import PersonalDataCard from '../people/PersonalDataCardComponent'
+import PersonCard from '../people/PersonCard'
 import UserCard from '../users/UserCard'
 
 export default {
   name: 'ShowUser',
   components: {
     'personal-data-card': PersonalDataCard,
+    'person-card': PersonCard,
     'user-card': UserCard
   },
   data () {

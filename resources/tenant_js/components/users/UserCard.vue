@@ -81,14 +81,22 @@
                             <span>{{ user.last_login_formatted }}</span>
                         </v-tooltip> des de l'adreça IP {{ user.last_login_ip }}
                     </p>
-                    <p class="grey--text text--darken-2 mt-2" v-if="user.last_login">
-                        Vist/a per últim cop
-                        <v-tooltip bottom>
-                            <span slot="activator">{{ user.last_login_diff }}</span>
-                            <span>{{ user.last_login_formatted }}</span>
-                        </v-tooltip> des de l'adreça IP {{ user.last_login_ip }}
-                    </p>
                     <p class="grey--text text--darken-2 mt-2" v-else>No ha entrat mai al sistema</p>
+                    <p class="grey--text text--darken-2 mt-2">
+                        <template v-if="user.created_at">
+                            Usuari creat
+                            <v-tooltip bottom>
+                                <span slot="activator" class="font-weight-bold">{{ user.formatted_created_at_diff }}</span>
+                                <span>{{ user.formatted_created_at}}</span>
+                            </v-tooltip>
+                        </template>
+                        <template v-if="user.updated_at"> | Ultima modificació
+                            <v-tooltip bottom>
+                                <span slot="activator" class="font-weight-bold">{{ user.formatted_updated_at_diff }}</span>
+                                <span>{{ user.formatted_updated_at}}</span>
+                            </v-tooltip>
+                        </template>
+                    </p>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -126,38 +134,6 @@ export default {
   methods: {
     edit () {
       console.log('TODO EDIT')
-    },
-    formatDate (date) {
-      if (!date) return null
-      const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
-    },
-    address () {
-      return this.internalUser.address_name + ' ' + this.internalUser.address_number + ' ' + this.internalUser.address_floor + ' ' + this.internalUser.address_floor_number
-    },
-    other_emails () {
-      if (this.internalUser.other_emails) {
-        return JSON.parse(this.internalUser.other_emails).join()
-      }
-    },
-    other_phones () {
-      let result = ''
-      if (this.internalUser.other_phones) {
-        result = JSON.parse(this.internalUser.other_phones).join()
-      }
-      if (this.internalUser.other_mobiles) {
-        result = result + ' ' + JSON.parse(this.internalUser.other_mobiles).join()
-      }
-      return result
-    },
-    hasTIS () {
-      return this.internalUser.tis
-    },
-    hasBirthplace () {
-      return this.internalUser.birthplace
-    },
-    hasCivilStatus () {
-      return this.internalUser.civil_status
     },
     formatUserType (userType) {
       return this.userTypeTranslations[userType]

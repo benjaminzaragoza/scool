@@ -131,7 +131,6 @@
 
 <script>
 import UserAvatar from '../ui/UserAvatarComponent'
-import ConfirmIcon from '../ui/ConfirmIconComponent'
 import PeopleDeleteMultiple from './PeopleDeleteMultiple'
 import PersonShowIcon from './PersonShowIcon'
 import PersonEditIcon from './PersonEditIcon'
@@ -145,7 +144,6 @@ export default {
   name: 'People',
   components: {
     'user-avatar': UserAvatar,
-    'confirm-icon': ConfirmIcon,
     'people-delete-multiple': PeopleDeleteMultiple,
     'person-show-icon': PersonShowIcon,
     'person-edit-icon': PersonEditIcon,

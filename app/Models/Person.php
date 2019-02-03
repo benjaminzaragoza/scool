@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Http\Resources\Tenant\PersonCollection;
 use App\Models\Traits\FormattedDates;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -23,6 +22,10 @@ class Person extends Model implements HasMedia
     protected $appends = [
         'name',
         'fullname'
+    ];
+
+    protected $dates = [
+        'birthdate',
     ];
 
     /**
@@ -78,9 +81,6 @@ class Person extends Model implements HasMedia
      */
     public function getBirthdateFormattedAttribute($value)
     {
-        if(is_string($this->birthdate)) {
-            return Carbon::createFromFormat('Y-m-d',$this->birthdate)->format('d-m-Y');
-        };
         return optional($this->birthdate)->format('d-m-Y');
     }
 

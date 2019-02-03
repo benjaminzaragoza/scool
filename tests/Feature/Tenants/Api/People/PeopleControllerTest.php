@@ -39,6 +39,7 @@ class PeopleControllerTest extends BaseTenantTest
      */
     public function managers_can_list_people()
     {
+        $this->withoutExceptionHandling();
         create_sample_people();
         $this->loginAsUsersManager('api');
         $response = $this->json('GET','/api/v1/people/');

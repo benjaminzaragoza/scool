@@ -76,6 +76,18 @@ BANDOS/NOTIFICACIONES
 - [ ] spatie/laravel-backup permet fitxers extres
   - https://docs.spatie.be/laravel-backup/v4/advanced-usage/adding-extra-files-to-a-backup 
 
+# PERSONAL DATA
+
+- [ ] Formulari públic de petició d'esborrat de dades personals
+  - [ ] En tots els casos sembla que es demana identificació -> Còpia DNI
+  - [ ] Pot ser un document per imprimir 
+- [ ] Formulari un cop logat
+  - [ ] Poder eliminar les dades personals però mantenir registre de l'usuari -> personal_data
+  - [ ] Email personal que fer?
+  - [ ] Nom d'usuari que fer
+  - [ ] Del saga o similars s'esborren les dades?
+- [ ] Deixar de rebre notificacions: això pot ser una configuració general  
+
 # FOTOS AND AVATARS
 
 - [ ] hi ha fotos i avatars
@@ -100,6 +112,7 @@ BANDOS/NOTIFICACIONES
 - [ ] No va la creació d'usuaris, dona error i no crea l'usuari de Moodle (es queda pendent rebre resultat usuari moodle)
  - [ ] Hi ha una petició a l'api: https://iesebre.scool.test/api/v1/users/email/sdaasdnoexisteix@gmail.com que torna 404
   - [ ] no li dona temps
+- [X] Llista usuaris falla Eager Loading 142 queries
 - [ ] No funcionen els filtres de professors a Teachers Management. Hi ha un munt de filtres per crear també
 - [X] sense cuas va correctament! Per tant és un problema del worker
 - [ ] NO van notificacions quan es fan per workers/queues. No troba classe 'App\Models\User'. Error:
@@ -867,59 +880,21 @@ Stack trace:
 
 # DADES PERSONALS
 
-## PERSONAL DATA CARD
+API:
+- [X] Operació refresh de les dades personals 
+  - [X] Crear test i API, assegurar-se dades sincornitzades amb vista web
+- [ ] Delete multiple personal data
 
-Amb labels o alguna forma identificar que és que:
-- Nom
-- Cognom1
-- Cognom2
-Sense labels
-- Identificador amb text petit tipus
-- Home/Dona
-- Estat civil
-- Telèfon
-- Altres Telèfons
-- Mòbil i altres mòbils
-- Email i altres emails
-- Notes
-Naixement:
-- Text: Nàscut el DATA_NAIXEMENT_FORMATADA a LLOC_NAIXEMENT amb tooltip POSTAL CODE
-
-
-
-## LOPD. Demanar esborrar dades locals
-
-- [ ] Formulari públic de petició d'esborrat de dades personals
-  - [ ] En tots els casos sembla que es demana identificació -> Còpia DNI
-  - [ ] Pot ser un document per imprimir 
-- [ ] Formulari un cop logat
-  - [ ] Poder eliminar les dades personals però mantenir registre de l'usuari -> personal_data
-  - [ ] Email personal que fer?
-  - [ ] Nom d'usuari que fer
-  - [ ] Del saga o similars s'esborren les dades?
-- [ ] Deixar de rebre notificacions: això pot ser una configuració general  
-
-## LINK AMB ALTRES MODELS
-
-### Usuaris
-- [ ] Ara hi ha un link d'usuaris a personal data (és un botó accíó que fa de link)
-  - [ ] Si l'usuari no té dades personals que el link ho digui (posar un badge més)
-   -  [ ] Al fer click si no hi ha dades personals s'obre el formulari per afegir dades personals 
-   amb l'associació amb l'usuari ja feta!
-   
-## ACCIONS
-- [ ] Pendent de fer les accions
-
-## VISTA DATATABLES
-- [ ] Limitar ample camps
+- [X] Posar opcions navegació al menú
+- [X] snackbar mixin fora
+- [ ] eliminar els confirm icon
+- [ ] Limitar ampla camps
   - [ ] Usuari local
 - [ ] Formatar dates   
 - [ ] Camp usuari
   - [ ] Podriem mostrar la foto/avatar
 - [ ] Operacions inline:
-  - [ ] Nom, cognom i 2n cognom s'han de modificar en bloc i sempre sincronitzat amb username
-  
-## FILTRES
+  - [ ] Nom, cognom i 2n cognom s'han de modificar en bloc i sempre sincronitzat amb username  
 - Filtres
  - [ ] Amb usuari associat
  - [ ] Sense usuari associat
@@ -930,14 +905,24 @@ Naixement:
  - [ ] Sense mobile
  - [ ] Amb mobile
  - [ ] Per sexe  
- 
-## API:
-- [X] Operació refresh de les dades personals 
-  - [X] Crear test i API, assegurar-se dades sincornitzades amb vista web
+
 Operacions massives:
 - [ ] DELETE
-  - [X] Interfície gràdica preparada
-  - [ ] Falta API             
+  - [ ] Interfície gràdica preparada
+  - [ ] Falta API
+  
+Dades extres (mostrar al show):
+            $table->date('birthdate')->nullable();
+            $table->integer('birthplace_id')->unsigned()->nullable();
+            $table->enum('gender',['Home','Dona'])->nullable();
+            $table->enum('civil_status',['Solter/a','Casat/da','Separat/da','Divorciat/da','Vidu/a'])->nullable();
+            $table->string('phone')->nullable();
+            $table->json('other_phones')->nullable();
+            $table->string('mobile')->nullable();
+            $table->json('other_mobiles')->nullable();
+            $table->string('email')->nullable();
+            $table->json('other_emails')->nullable();
+            $table->string('notes')->nullable();
              
 # NOTIFICATIONS
 
@@ -964,6 +949,13 @@ USER NOTIFICATIONS
   - [ ] icon
   - [ ] vibrate sí/no
   - [ ] Altres
+API
+- [X] Enviar notificació simple usuari
+- [X] Test i Controlador operació masiva eliminar database notifications
+  - https://iesebre.scool.test/api/v1/notifications/multiple
+- [X] Refresh de totes les notificacions
+- [X] Marcar totes com a llegides
+- [X] Marcar notificació com a llegida
 
 TODO
 - [ ] Card per a enviar notificacions
@@ -972,6 +964,31 @@ TODO
   - [ ] Múltiples usuaris de cop
 - [ ] Widget, implementar temps real
   - [ ] Rebi push notification amb avís quan hi ha una notificació nova
+- [X] Crear mòdul notificacions
+- [X] Crear permisos i rols i controlar accés a notificacions
+- [X] Vista datatables de totes les notififacions de base de dades
+  - [X] Mostrar avatar usuari notificat
+  - [X] Consultar en format json amb un dialeg les dades de les notificació i el notifiable.
+  - [X] Filtres
+  - [X] per tipus de notificació
+  - [X] Per tipus de notifiable
+  - [X] Per usuari notificat
+  - [X] Llegides i no llegides
+  - [X] Interfície eliminació Massiva
+- [X] Primera línia de la llista notificacions text: Teniu 10 notificacions pendent
+- [X] Última línia: Veure totes les notificacions | Marcar totes com a llegides
+- [X] Widget només mostrar notificacions no llegides
+- [X] API que permeti marcar una notificació com a llegida
+- [X] API que permeti marcar totes les notificacins pendents com a llegides
+- [X] Com marcar una notificació com a llegida ?
+   - [X] Al fer click a la notificació  
+- [X] Widget opció de navegar/link a veure l'històric de notificacions
+- [X] Crear component datatables que permeti veure les notificacions
+  - [X] Els usuaris que no siguin notificationsManager només poden veure les seves pròpies notificacions
+  - [X] Filtres:
+    - [X] Per usuari
+    - [X] Per tipus Notificació
+    - [X] Llegida/No llegida 
   
 
 
@@ -1001,18 +1018,10 @@ INCIDÈNCIES i NOTIFICACIONS
 Recursos
 - https://laravel.com/docs/5.7/notifications
 
-# INBOUND EMAIL | Correu electrònics Inbound
+# INBOUND EMAIL
 
 MAILGUN:
-- https://documentation.mailgun.com/en/latest/quickstart-receiving.html#add-receiving-mx-records
-- https://www.mailgun.com/inbound-routing
-- https://docs.beyondco.de/laravel-mailbox/1.0/drivers/drivers.html#sendgrid
-
-Idea:
-- [ ] Permetre crear incidències enviant un email
-- [ ] Només els usuaris registrats i amb permisos (Incidents rol i email coincideixi amb el d'un usuari) podran enviar emails
-- [ ] Un cop enviat email es rep un email de confirmació, fins que no es confirma no es crea la incidència
-- [ ] Subject serà el del email i la descripció el contingut
+https://documentation.mailgun.com/en/latest/quickstart-receiving.html#add-receiving-mx-records
 
 ## Configuració DNS del domini
 
@@ -1102,12 +1111,33 @@ EDIT:
 
 
 SHOW
-
+- [X] Toolbar 
+  - [X] Densa
+  - [X] No caldria color de fons, ni title? Només mostrar widgets a la dreta
+  - [X] Widgets: 
+    - [X] Editar
+    - [X] Tancar
+    - [X] Minimitzar    
 - [X] Crear una user card per mostrar informació NOMÉS usuari (taula user sense cap taula extra suport com person o Google, Moodle, etc)
   - [ ] Photo (photo)
      - [ ] Ara utilitzem Avatar no photos
       - No confondre photo i Avatar (la photo és la associada a l'usuari)
       - Tooltip mostri nom complet i email
+    - [X] Mostrar en un tooltip l'identificador d'usuari  
+  - [X] Mostrar les dades sense labels. Dades: 
+  - [X] Nom complet (camp name) -> Mida màxima limitada amb ellipsis
+  - [X] Email
+  - [X] email_verified_at
+    - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el email ha estat verificat
+    - [X] Una icona cross al costat email de color roif i amb tooltip: verificat si el email NO ha estat verificat
+  - [X] Telèfon (mobile)
+    - [X] mobile_verified_at
+      - [X] Una icona checked al costat email de color verd i amb tooltip: verificat si el mobil ha estat verificat
+      - [X] Una icona cross al costat email de color roif i amb tooltip: verificat si el mobil NO ha estat verificat  
+  - [X] Text: vist per el últim cop el Data Humana amb tooltip data formatada (last_login) des de l'adreça IP: last_login_ip
+  - [ ] Text extra BOLD i potser alguna icona si l'user és admin -> Sinó és admin no mostrar res
+  - [X] Tipus usuari: Text Professor | Alumne | Familiar, etc
+  
 - [ ] Redisseny de l'estil
  - [ ] Potser cal fer sempre dos vistes una de només consultar i l'altre edició
  - [ ] Cal parcelar el disseny per parts, no tothom tindrà totes les parts
@@ -1140,7 +1170,6 @@ PERMISOS:
 
      
      
-     
 # LANDING PAGE
 
 Millores interfície
@@ -1161,6 +1190,16 @@ Footer:
 - FAQ
 - Contacte
 - Legal
+
+# Correu electrònics Inbound
+- https://www.mailgun.com/inbound-routing
+- https://docs.beyondco.de/laravel-mailbox/1.0/drivers/drivers.html#sendgrid
+
+Idea:
+- [ ] Permetre crear incidències enviant un email
+- [ ] Només els usuaris registrats i amb permisos (Incidents rol i email coincideixi amb el d'un usuari) podran enviar emails
+- [ ] Un cop enviat email es rep un email de confirmació, fins que no es confirma no es crea la incidència
+- [ ] Subject serà el del email i la descripció el contingut
 
 # Mòdul de tasques
 
@@ -1206,14 +1245,31 @@ Footer:
 - FILTRES:
  - [ ] Amb Avatar
  - [ ] Sense Avatar
+ - [X] Amb usuari local
  - [ ] Sense usuari local NO funciona bé?
+ - [X] Amb email personal
+ - [X] sense email personal
+ - [X] Amb employeeId
+ - [X] Sense employeeId
+ - [X] Amb mòbil
+ - [X] Sense mòbil
+ - [X] Suspesos
+ - [X] No suspesos/Actius
+ - [X] Logats algun cop
+ - [X] Sincronitzat
+ - [X] No sincornitzat
 OPERACIONS MASSIVES:
 - [ ] Delete
-  - [X] Interfície gràfica preparada
+  - [ ] Interfície gràfica preparada
   - [ ] Falta API
  
 - [ ] Crear usuari de Google
+  - [X] employeeId s'omple correctament? COMPROVAT
+  - [X] personalEmail s'omple correctament?
+  - [X] primaryEmail s'omple correctament?
+  - [X] Mobil
   - [ ] Si s'escull no crear usuari de Moodle o de Google o Ldap aleshores al següent pas no mostrar el progress intentant obtenir les dades de Moodle o de Google
+- [X] Mostrar el id de Google a algun lloc. Al posar-se a sobre la foto avatar
 - [ ] Fer el mateix que s'ha fet amb els usuaris de Moodle:
   - [ ] Modificar la llista d'usuaris de Google per afegir camps relacionats amb l'usuari local
     - [ ] IMPORTANT (IGUAL PASSARA A MOODLE) -> Estigui sincronitzada la llista usuaris per web i per API!!!
@@ -1343,9 +1399,107 @@ RELACIONS AMB ALTRES ENTITATS/MODELS
 GOOGLE/GSUITE
 - [ ] Al editar link a les dades de Google d'aquest usuari
  - [ ] POder accedir al show d'un usuari de Google directament via link
+PERSONES:
+- [ ] Altres dades personals que no siguin nom
+- [ ] Link a les dades personals de l'usuari    
+  
+## JA REALITZAT
+  
+Troubleshooting:
+- [X] Botó afegir email corporatiu: executa un search a la api. Si previàment hi ha cache el search és ràpid sinó 
+tarda molt en obrir-se
+  - [X] No hi ha cap indicador que estigui treballant -> sembla que no funcioni
 
+EDIT:
+- [X] Editar el name inline a la llista d'usuaris (datatables). NO inline però si currat per poder mdificar sn1 sn2 i givenName també
+- [X]  Editar l'email name inline a la llsita d'usuaris (datatables). Fet no inline però fet
+  - [X] El email ha de passar a no confirmat -> S'hauria de tornar a enviar el email
+- [X] Modificar el mòbil inline  
+
+USER DELETE:
+- [X] Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+- [X] CONTINUA DONANT ERROR Dona un error que no troba l'usuari local si s'intenta esborrar un usuari de Google del qual ja s'ha esborrar l'usuari
+
+USER ADD WIZARD
+- [X] Crear usuari de Moodle
+  - [X] El nou usuari de Moodle ha de tenir el idnumber igual a l'usuari local del sistema
+- [X] Fase/Step assignar rols
+  - [X] Igual que la opció de modificar rols d'un usuari a la llista però sense dialeg (incrustat)
+- [X] Primer camp tipus usuari
+  -  Segons tipus usuari ajudarem/assistirem en la creació. Exemples:
+    - [X] Crear usuari de Moodle: el personal com conserges i secretaria no necessiten usuari de Moodle
+    - [X] Assignar rol: Hi ha rols predefinits per cada tipus usuari. Assignar rol només serveix per assignar rols extres els predefinits ja estaran assignats 
+- [X] Refrescar la llista d'usuari cada cop que es crea un nou user
+- [X] Refrescar la llista d'usuari cada cop que es crea un nou usuari Google
+- [X] Refrescar la llista d'usuari cada cop que es modifica un avatar
+
+AVATARS:
+- [X] NO es refresquen si ja estaven cachejats
+  - [X] NO FER! Mirar solució de tasques i posar headers HTML per no fer cache de les imatges -> RENDIMENT POBRE
+  - [X] Afegir un hash a la URL del avatar que depengui del contingut de la imatge i així evitar cache
+
+Operacions massives:
+- [X] Eliminar -> FET
+
+FILTRES
+- [ ] Filtres usuaris
+  - [X] Per típus/s d'usuari
+  - [X] Per Rol/s
+    - [ ] No mostrar els usuaris admin al filtrar per Roles (tenen tots els rols i permisos)
+  - [ ] Altres característiques/filtres:
+     - [X] Emails confirmats/verificats (email)
+     - [ ] Mòbils no confirmats/verificats. TODO falta està funcionalitat
+     - [X] Sense email corporatiu
+     - [ ] Sense avatar. TODO -> Falta crear camp (calculat) indiqui usuari no té avatar 
+     - [X] Mai logats al sistema
+     - [ ] Logats desde un periode especific
+- [x] Rendiment: Masses queries 385. aRREGLAT AMB eAGER lOADING
+- [ ] Mobile: de moment camp no obligatori però després podria servir com alternativa al email.
+- [ ] Usuaris no tenen email poder utilitzar el mòbil i SMS per a fer autenticació?
+- [X] Last Login de l'usuari, permetre saber usuaris no s'han logat mai. FET UN FILTRE
+- [X] Esborrat massiu d'usuaris
+  - [ ] Protegir alguns usuaris -> no es puguin esborrar:
+    - [ ] Superadmins
+    - [ ] Configuració: altres usuaris no es puguin esborrar    
   
-  
+RELACIONS AMB ALTRES ENTITATS/MODELS
+
+ROLS:
+- [X] Dialeg que permeti gestionar rols d'un usuaris concret (afegir i treure rols)
+
+PERSONES:
+- Nom:
+  - [X] Edició inline del nom
+    - [X] Un dialeg flotant que permeti canviar sn1, sn2, givenName i recalculi nom usuari automàticament
+USUARI MOODLE
+- [X] Operació sync
+  - [X] Actualitzi també dades personals Moodle? (adreces etc)
+- [X] Fer quelcom similar a Usuari Google poden canviar l'usuari associat, dessasociar o associar i sincronitzar dades
+  - [X] Mostrar l'usuari de moodle associat
+  - [X] Editar/canviar l'usuari de Moodle associat
+  - [X] Sincronitzar l'usuari de Moodle associat
+  - [X] Dessasociar l'usuari de Moodle associat
+  - [X] Implementar l'opció cache a l'api de llista usuaris Moodle com a Google Users
+  - [X] Associar Usuaris Moodle
+    - [X] Al associar un usuari s'hauria de modificar el idnumber de Moodle i posar el id del usuari local associat
+  - [X] Afegir a la relació el username de Moodle
+  - [X] dessasociar usuari de Moodle
+    - [X] Al desassociar un usuari s'hauria de modificar el idnumber de Moodle i posarlo a null
+  - [X] Usuaris de Moodle ha de tenir un link directe a crear un nou usuari de Moodle
+    - [X] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
+USUARI DE GOOGLE
+- [X] Link directe a crear un usuari de Moodle ja indiqui l'usuari local associat per omplir més ràpid el formulari
+- [X] Mostrar acció permeti navegar (link) a l'usuari de Google associat
+  - [X] Show usuaris Google existeix? Crear
+  - [X] FILTRE: Mostrar només (o disabled sinó) els usuaris no tinguin camp user google associat
+- [X] CorporativeEmail
+  - [X] Falta o no funciona operació Afegir usuari corporatiu
+    - [X] És correcte. Hi ha un 404 d'una crida API: https://iesebre.scool.test/api/v1/gsuite/users/search 404
+    - [X] Funcionalitat ajudar a buscar posible usuari Google associat
+  - [X] Dessasociar usuari Google a usuari
+  - [X] Sincronitzar
+  - [X] Editar -> Canviar l'usuari corporatiu associat
+
 # ROLS AND PERMISSIONS MANAGEMENT
 
 ROLS:
@@ -1360,6 +1514,7 @@ ROLS:
 PERMISSIONS:
 - [ ] CRUD DE ROLS
 - [ ] Protegir certs Rols -> NO ES PODEN ESBORRAR
+
 
 # USUARIS ACABATS DE REGISTRAR | SENSE ROLS
 
@@ -1409,19 +1564,6 @@ Si l'usuari vol ser alumne ha de formalitzar una matrícula:
 
 
 # POSITIONS MANAGER
-
-Becaris:
-- [ ] Omplir la taula de posicions amb tots els càrrecs
-- [ ] A initialize_teachers assignar càrrecs a professors.
-
-Positions table i Position Model
-
-- LLista de càrrecs inclou Tutors, Tutors FCT, Caps de departament
-
-Taula
-- name
-- shortname: ???
-- Roles: rols associats al càrrec
 
 - [ ] Dashboard -> pàgina principal usuari normal -> Comprovar si té algún rol assignat-> no? Que pugui demanar un rol
   - [X] Al assignar un càrrec que l'usuari rebi una notificació/email
@@ -2207,6 +2349,9 @@ UsersManagers
   
 # BUGS
 
+- [X] Cal crear el canal App.Logs.Loggable.id i arreglar temps real dels logs per a un item
+- [ ] No funciona Logout amb user Sergi TUr badenas?
+  - [ ] Realment crec que el que passa és que a vegades no mostra correctament la URL /
 - [ ] php artisan route:list s'executa superlent? Alguna operació que realitzem no s'hauria de fer des de consola?
 
 # Laravel Passport
@@ -2231,17 +2376,32 @@ UsersManagers
 
 - [ ] Esdeveniments del mòdul UsersManager
   - [ ] Un usuari ha demanat canviar la paraula de pas -> NO HI HA ESDEVENIMENT!
-  
+  - [X] Esdeveniment s'ha logat un usuari
+  - [X] Esdeveniment un usuari s'ha equivocat al logar-se
+  - [X] NO CAL Esdeveniment un usuari s'ha quedat bloquejat al superar el nombre màxim intents
+  - [X] Esdeveniment s'ha registrat un usuari
+  - [X] Un usuari ha canviat la paraula de pas
+  - [X] Impersonate: un admin s'ha impersonat com a i quan surt també
+  - [X] Un usuari ha estat verificat (correu electrònic)
+Esdeveniments (Illuminate\Auth\Events):
+ - [X] Attempting -> NO FER RES DE MOMENT (només quan és un intent erroni):
+   - [X] Failed
+ - [X] Authenticated | [X] Login són el mateix només un per evitar doble log 
+ - [X] Lockout -> NO CAL!!!!
+ - [X] Logout
+ - [X] PasswordReset
+ - [X] Registered
+ - [X] Verified 
+ - [X] TakeImpersonation is fired when an impersonation is taken.
+ - [X] LeaveImpersonation is fired when an impersonation is leaved.
   
 # Menu
 
-- [] CRUD DE MÒDULS -> poder gestionar mòduls activats/desactivats
+- [X] TODO -> fer links les entrades de menú amb href i no calgui fer clic!
 
 # ChangeLog Module
 
 ## Revisionable vs Custom solution
-
-**IMPORTANT** [ ] JA TENIA MÒDUL????    
 
 https://github.com/VentureCraft/revisionable
 
@@ -2266,6 +2426,10 @@ TODO:
 - [X] Crear entrada de menú i la corresponent entrada a la taula de base de dades
 - [ ] Crear fitxer de settings (config/changelog.php) del mòdul
 
+TEMPS REAL:
+- [X] La vista quan té activat tremps real hauria d'anar actualitzant (amb Javascript) els valors 1 segons abans o similars.
+- [X] Utilitzar vue time ago de Egoist!
+
 Settings:
 - [ ] TODO? Duració dels registres i neteja
 
@@ -2279,11 +2443,26 @@ Idees:
 - [ ] Base de dades o memòria ràpida tipus Redis?
 
 Vista:
+- [X] Utilitzar timeline vuetify
+- [X] Mostrar data en que ha succeït el esdeveniment/canvi (tant human com data i temps normals)
+- [X] Mostrar missatge del esdeveniment/canvi
+- [X] Tipus de registre de canvi: creació/actualització/eliminació
+- [X] Mostrar usuari (avatar i nom usuari amb email al title -hover)
 - [ ] Esdeveniments no associats a cap usuari? -> No donar error pq usuari pot ser opcional
+- [X] Color de l'esdeveniment (nullable)
+- [X] Icona (nullable)
+- [X] Mòdul de l'esdeveniment -> opcional (nullable a base de daes)
 - [ ] Objecte registrable -> Copia persistent de l'estat de l'objecte en aquell moment (camp Json, guardar map() de l'objecte)
+- [X] Botó refresh per forçar refresh del registre
+- [X] Real Time Logging -> Refresh automàtic (utilitzant Laravel echo i esdeveniments push)
+  - [X] Switch que permeti activar/desactivar refresh automàtic
 - [ ] Filtres (només quan es crida el component com ChangelogManager o superadmin):
   - [ ] Filtrar per usuari
   - [ ] Filtrar per mòdul
+  - [X] Poder accedir al mòdul Registre de Canvis directament a un apartat/filtre -> Per exemples canvis només d'un mòdul
+  - [X] Authorizació i filtres: controlar a que pot i que no pot accedir els usuaris
+- [X] Search: tipus datatables buscar qualsevol registre
+
 - [X] Utilitzar Data Iterator amb el registre de canvis?
   - [ ] Aconseguir fer funcionar l'animació que funciona sense data iterator però no amb data-iterator: v-slide-x-transition group
   
@@ -2292,17 +2471,39 @@ WEB:
 - [X] ChangeLogControllerTest:
   - [X] Mostra la vista que correspon amb les dades que pertoquen
   - [] TODO Limitar nombre de dades de la vista
+    
+API:
+- [X] ChangeLogControllerTest
+  - [X] Operacions CRUD:
+    - [X] List
+    - [X] Afegir via API -> No té sentit? sempre anirà associat a un handler/listener d'un esdeveniment
+    - [X] Esborrar/Editar -> No tenen sentit!
 
+**IMPORTANT**    
+- [ ] JA TENIA MÒDUL????    
   
+# Explotació
+
+- [ ] No va https://iesebre.scool.cat/ (sembla utilitza base de dades bàsica i no pas tenant) en canvi https://iesebre.scool.cat/home i altres si
+- [ ] Script actualització explotació branca production (STOP npm run hot before)
+
+# Settings
+
+Config és realitza amb el sistema habitual de fitxers de configuració i variables entorn amb valors per defecte.
+Algunes settings poden ser "sobreescrites" dinàmicament si l'usuari (manager amb permisos) canvia les settings.
+La sobrescritura la fa un ServiceProvider per a cada Mòdul, accedint a una taula Settings (amb keys values).
+Com l'accés a base de dades es farà a cada petició utilitzarem Cache
+Cada cop es modifiquin les settings cal fer un flush de la cache
+
+SettingsServiceProvider:
+- [X] IncidentsServiceProvider: establir els valors de settings de incidencies
+- [X] Sistema de settings amb Cache
+- [X] Component settings per a mòduls 
+
 # Incidents
 
-Changelog d'una incidència a la vista Show:
-- [ ] Barrejar els comentaris i les accions com fa Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
-- [ ] Utilitzar vista vuetify timeline per mostrar tant els comentaris com l'historial
-- [ ] Comentaris i registre de canvis en temps real a la vista show
-
 Changelog:
-- [ ] Filtre extra: Registre de canvis per a un objecte (igual que per User o per a mòdul amb URL propia)
+- [ ] Filtra extra: Registre de canvis per a un objecte (igual que per User o per a mòdul amb URL propia)
 - [ ] Afegir un botó a cada incidència que permeti veure el changelog -> Hi ha un changelog a cada incident i per tant es pot fer amb Dialog
 sense necessitar d'executar nova URL ni fer cap petició extra XHR
 
@@ -2311,6 +2512,7 @@ PUSHER ALGUNS OBJECTES TENEN MASsa INFO I DONEN PROBLEMES:
   - [ ] Repassar objectes a map com per exemple user quan hi ha camps com user_name, user_email. Ocupen MOLT ESPAI!
   - [ ] Camps description -> Enviar un resum 
 - See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
+
 
 Estadístiques:
 - [ ] Temps mig tancament incidències (Auditories)
@@ -2328,12 +2530,53 @@ EXTRES:
 Settings:
 - [ ] TODO fer anar lo d'activar o no el mòdul
   - [ ] Desactiu? Dos formes-> no mostrar o mostrar un missatge que està desactivat temporalment
+- [X] Poder afegir usuaris Manager (IncidentsManager)
+   - [X] ES poden indicar dos rols possibles per accedir al menú en comptes de un. Solucionat mostrant només els usuaris amb Rol Incidents
+   al desplegable per afegir usuaris IncidentsManager. Cal doncs abans donar rol Incidents per ser IncidentsManager
+   - [X] Els IncidentsManager també tenen rol Incidents  
 
 Etiquetes:
 - [ ] CRUD etiquetes per als managers
+
+Changelog d'una incidència a la vista Show:
+- [ ] Barrejar els comentaris i les accions com fa Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
+- [ ] Utilitzar vista vuetify timeline per mostrar tant els comentaris com l'historial
+- [ ] Comentaris i registre de canvis en temps real a la vista show
+
+Changelog:
+- [X] S'ha creat una nova incidència
+- [X] S'ha modificat el títol d'una incidència
+- [X] S'ha modificat la descripció d'una incidència
+- [X] Comentaris
+  - [X] S'ha afegit un comentari a una incidència
+  - [X] S'ha modificat un comentari a una incidència
+  - [X] S'ha esborrat un comentari
+- [X] Etiquetes:
+  - [X] S'ha assignat una etiqueta a una incidència
+  - [X] S'ha tret una etiqueta a una incidència
+- [X] Assigness:
+  - [X] S'ha assignat un usuari a una incidència
+  - [X] S'ha tret una assignat d'una incidència
+- [X] S'ha visualitzat una incidència? Funciona parcialment, només quan se visita directament des de un link no si se visita des de la llista datatables
+- [X] S'ha obert una incidència  
+- [X] S'ha tancat una incidència
+- [X] S'ha eliminat una incidència
   
 BUGS:
 - [ ] OCO changelog a Incidents és una relació que pot provocar Bucle
+- [X] L'autenticació de broadcast no funciona amb Impersonation pq el auth user és null -> SOLVED registering Routes inside tenant at web.php routes file
+  - [X] Sembla que tampoc va sense impersonation
+- [X] Changelog i filtres i temps real
+  - [X] Ara mateix filtro correctament al mostrar incidències per mòdul però si està activat temps real el canal escolta TOTES les incidències i mostra altres mòduls
+  - [X] Oco amb el botó refresh que sempre refresca tots els logs independentment dels permisos -> TODO API
+  - [X] La llista de logs d'un usuari concret no funciona temps real pq no es registra bé el canal privat (dona error 403 to i ser superadmin)
+- [X] Treure el botó Afegir (i deixar només afegir i tancar però només amb text Afegir) per als usuaris que no siguin managers.
+- [ ] Al visitar: https://iesebre.scool.test/incidents/1 The data content of this event exceeds the allowed maximum (10240 bytes). See http://pusher.com/docs/server_api_guide/server_publishing_events for more info
+- [X] Al fer un hover sobre els filtres completades obertes i total s'ha de canviar el cursos a una fletxa per indicar que hi ha una acció possible per filtrar
+- [X] Al mostrar la llista incidències total les obertes no es mostra bé la columna tancada (mostra només text per)
+- [X] Al eliminar una etiqueta assignada (al ser la primera crec ) s'esborren totes (o potser també la segona). nivell base da des ok, al fer f5 torna a estat tot bé
+  - [X] El refresh no actualitza les etiquetes però F5 sí
+- [X] No funciona el autocomplete als filtres (creadors i assignees)
 - [ ] Els botons afegir comentari i afegir comentari i tancar al estar en loading i disabled desapareixent en comptes 
 de mostrar el loading
 
@@ -2349,44 +2592,153 @@ de mostrar el loading
 
 - Funcionalitat PING! Com està la incidència? Ara és pot fer amb un nou comentari però com resaltar-lo?
 
-## Filtres
+# Wizard config incidències:
+
+Rols i flux de treball:
+
+1) Superadmin activa mòdul incidències (es mostri al menú)
+2) Superadmin assigna com a mínim un gestor d'incidències (Rol IncidentsManager)
+3) IncidentsManager executa el wizard (es pot executar tant cops com calgui) de configuració Incidències
+
+Wizard Settings:
+1) Mòdul actiu (pots desactivar mòdul temporalment pel que sigui?)
+2) Assignar usuaris a incidències (assignar Rol Incidents)
+4) Altres settings (email de managers, persones a les que es poden assignar incidències, etc)
+
+Usuaris explotació Sergi Tur:
+- 1) Superadmin: sergitur@iesebre.com
+- 2) Professor: stur@iesebre.com
+
+- [X] Els usuaris no siguin managers incidències no han de poder canviar settings
+- [X] Els usuaris no siguin managers incidències no han de poder veure settings????
+
+Un stepper amb els passos:
+1) Activar o no mòdul incidències
+2) Decidir els usuaris -> assignació roles Incidents i IncidentsManager
+3) Altres settings (email de managers, persones a les que es poden assignar incidències, etc)
+
+# ROLS
+
+A settings o similar:
+- [X] Gestionar la llista usuaris que tindran el rol Incidents
+- [ ] En principi tots els professors
+- [ ] Però també hi ha altres com becaris o altres tercers possibles ()
+- [X] Gestionar els managers d'incidències (Rol Incidents Manager)
+
+**Filtres**:
 
 - [ ] On sóc mencionat. Depèn implementar mencions (@username)
   - https://laracasts.com/series/whatcha-working-on/episodes/33 
 - [X] Buscador -> Full text search field. DE MOMENT NO CAL ES POT BUSCAR PER TOT LO NECESSARI
   - [ ] Permetre buscar per estat oberta/tancada (camp full search amb tots els strings de cerca a actions )
+- [X] Mostrar el total d'incidències obertes i tancades
+- [X] Permetre veure les incidències per estat (obertes/tancades/totes)
+- [X] Per defecte mostrar les incidències obertes
+  - [X] IncidentManagers: mostrar totes les incidències obertes
+  - [X] Usuaris normals: mostrar també totes les incidències obertes
+- [X] Mostrar només les incidències creades per mi. El usuari logat sempre és el primer al desplegable de creadors
+- [X] Mostrar les incidències per autor: desplegable amb llista usuaris (Nom i avatar) tenen incidències.
+- [X] Mostrar per assignees. 
+  - [X] El usuari logat sempre és el primer al desplegable de assignees
+- [X] Assignades a mi. Via:
+   - [X] El usuari logat sempre és el primer al desplegable de assignees
+- [X] Mostrar per labels/tags
 
-## Assignacions
+**Assignacions**
+- [X] Es poden assignar/dessasignar incidències a múltiples usuaris amb el rol Incidents (usuaris d'incidències)
+- [X] S'envia correu electrònic
+- [X] Mostrar els assignees a la vista show d'una incidència concreta
+- [X] Mostrar els assignees als emails 
+- [X] Es pot filtrar incidències per assignacions
 - [ ] Settings: poder indicar les persones a les que és més habitual assignar incidències
   - [ ] Sortiran les primeres a la llista de possibles assignees
+- [X] Només poden assignar incidències els usuaris amb permissos (ara Rol IncidentsManager)
 
-## Etiquetes
+**Etiquetes**
+- [X] Mostrar les etiquetes a la vista show d'una incidència concreta
+- [X] Es poden assignar i dessasignar etiquetes a les incidències
+- [X] Mostrar les etiquetes als emails 
+- [X] Es pot filtrar incidències per etiquetes
+- [X] Només poden assignar etiquetes els usuaris amb permissos (ara Rol IncidentsManager)
+- [X] API Crud etiquetes
 - [ ] Interfície web CRUD per a crear etiquetes integrada al desplegable etiquetes
 
-## Tancament incidències
-
+**Tancament incidències**
 - [ ] Camp solved_by per saber qui l'ha resolt?
+- [X] Camp closed_by per saber qui ha tancat la incidència
+- [ ] Mostrar info de tancat per a:
+  - [X] Llista incidències (com a title del camp tancada)
+  - [X] Al show d'una incidència
+  - [X] Als emails
 
 
-## Notificacions/comunicació**
-
-MENU PRINCIPAL INCIDENCIES:
-- [ ] Mostrar un badge que indiqui las incidència noves (des de l'últim login?)
-ALTRES:
+**Notificacions/comunicació**
+- [X]
+- [X] Establir com un setting configurable el email dels gestors d'incidències
+- [ ] Per correu -> TODO
+  - Creador de la incidència:
+     - [X] Notificació/correu s'ha creat correctament la incidència
+     - [X] Rebre notificació cada cop és modifica la incidència
+     - [X] Rebre correu cada cop s'afegeix un comentari a la incidència
+     - [ ] Mencions?
+  - Correu gestors incidències: (maninfo@iesebre.com)
+    - [X] Settings: permetre indicar quin és el correu
+    - [X] Settings table: key, value, keys poden tenir un prefix per evitar conflictes de noms
+    - [X] Enviar email al crear una nova incidència
+    - [X] Enviar email quan s'actualitza una incidència
+    - [X] Enviar email cada cop hi ha un comentari nou 
+    - [X] Enviar email quan es tanca una incidència    
 - [ ] TODO: a la app o pàgina HTML (permetre notificacions al navegador) -> Service Workers
 - [ ] Com Github tenir un botó que permeti unsubscribe to notifications
 - [ ] Telegram?
 
-## Altres
+
+
+**Altres**
 - [ ] Datatables utilitzar expand per mostrar més info sobre la incidència? Comentaris? Descripció completa?
 
-## RESPONSIVE
+MENU PRINCIPAL INCIDENCIES:
+- [ ] Mostrar un badge que indiqui las incidència noves (des de l'últim login?)
+
+RESPONSIVE:
 - [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
-## Ideas taken from Github
-- [ ] Altres extres interessants: @mencions Links HTTP, etc
-- [ ] Poder fer referència+link a un altre incident/issue amb #numissue
+HISTORIAL:
+- [X] Historial: especialment de les accions tipus esborrar incidència o comentaris
+- [X] https://vuetifyjs.com/en/components/timelines
+
+Ideas taken from Github
+- [X] Textareas: http://miaolz123.github.io/vue-markdown/
+- [X] https://vuejs.org/v2/examples/
+- [X] https://marked.js.org
+- [X] Boto extra al afegir comentari: Afegir i tancar la incidència (només per managers)
+- [X] Suportar markdown als camps tipus textarea:
+  - [ ] Altres extres interessants: @mencions Links HTTP, etc
+  - [ ] Poder fer referència+link a un altre incident/issue amb #numissue
+- [X] Labels/Tags: els managers poden crear etiquetes per classificar les incidències (un crud d'etiquetes és necessari per posar etiquetes es vulguin)
+  - [X] Labels/Tags: tenen nom, descripció, icona i color (es pot fer un preview en directe quan es crea/edita un label)
 - [ ] Apartat participants: gent que participa de la discusió/comentaris
+- [X] Assignar incidències a usuaris (Assignees)  
+
+# USER RESOURCE vs user map (SOLUCIONAT/OBSOLET)
+
+SOLUCIONAT: No puc utilitzar les dos coses pq aleshores inc codi wet i no tinc Single Source of truth
+
+Antic Fitxer resource he eliminat:
+
+https://github.com/acacha/scool/blob/3121765083986b15adc95e618f62f476fcc73e3c/app/Http/Resources/UserResource.php
+
+Té roles i permissions
+
+Map té més info però no té aquesta concreta (roles i permissions)
+
+Hi ha el UserResource del Tenant i el que no és del Tenant:
+
+https://github.com/acacha/scool/blob/3121765083986b15adc95e618f62f476fcc73e3c/app/Http/Resources/Tenant/UserResource.php
+
+Problema: permissos als menus si mostrar o no mostrar les opcions
+
+Cal revisar component Pare App.vue i app.blade.php i l'ús de la funció checkRoles
 
 # CURRICULUM
 
@@ -2435,8 +2787,47 @@ Crear Estudi:
   - [ ] Upload del tríptic
   - [ ] Altres documents?
 
-## CURRICULUM MODULE
+## Gestió del curriculum 
 
+Característiques principals:
+
+- El conceptes siguin el més generics possibles i adaptables a canvis i no pensar només en la FP
+- FP FIRST DEVELOPMENT (com Mobile First però sense oblidar altres dispositius/tipus estudis)
+
+ENTITATS
+
+- CENTRE: Un tenant té un centre per defecte però podria gestionar múltiples centres
+- ESTUDI: (exemples DAM, ASIX, FARMACIA, CURS PONT)
+- SUBDIVISIONS DELS ESTUDIS
+- modules -> firt level (no té pq coincidir) <- veure-les com agrupacions de UFs
+- submodules -> firt level (no té pq coincidir) <- Principal
+- Tercer nivell TODO
+- CURS: UN ESTUDI POT ESTAR DIVIDIT EN UN O MES CURSOS  
+  - CICLE: conjunt de cursos (no teni a la fp)
+- TIPUS_ESTUDI: FP, CURS PONT, ETC -> De fet és com una etiqueta que podem posar a un estudi
+  - LOE/LOGSE o la llei pot ser un altre etiqueta
+  - 1 estudi n etiquetes: LOE i FP per exemple
+- Families: agrupacions d'estudis, es com un tipus d'estudi però OCO pot tenir dades especifiques
+
+TEACHERS MODULE INTERSECCIÓ AMB CURRICULUM
+- ESPECIALITATS:
+  - Una especialitat pot estar associada a un professor però també a una UF
+- Departaments:
+  - Associat a un professor però també a un estudi
+  - Per cada estudi hi ha un departament responsable PRINCIPAL de l'ESTUDI
+  - Hi ha UFS/MÒDULS que poden tenir múltiples departaments, el principal associat a l'estudi i altres (assingatures transversals, Folm, Angles)
+  - Estudis donats per múltiples departaments això pot apareixer aviat com idea d'algun pensador
+
+Rols: Cap estudis
+- Wizard per donar d'alta el currículum d'un centre
+- Possibilitat de repartir la feina amb caps de departament i caps estudis (però sempre podrà fer-la tota)
+
+- Centre: Cada tenant un centre? Múltiples centres possibles?
+
+- ASIX
+- DAM
+
+### CURRICULUM MODULE
 
 - [ ] initialize_fake_subjects hi ha uns studies incorrectes donats d'alta tenen cap law_id. Arreglar
 - [ ] Feature Test web Controller -> CurriculumTest
@@ -2487,77 +2878,8 @@ Vistes secundàries:
   - [ ] Todo similar a estudis tema rols:
     - [ ] Algunes adaptacions com que els professors puguin editar les UFs assignades 
 - [] Vista MPS-MODULES
-
-Tot gira entorn una unitat bàsica d'ensenyament:
-- Actualment aquesta unitat és la Unitat Formativa (abans era el Mòdul Professional)
-
-Dades d'una UF:
-- Hores totals de la UF
-- Número UF (1,2,3)
-- Codi únic
-- Nom
-- Nom llarg
-- Descripció/notes
-- Mòdul professional ID
-- Study al que pertany la UF
-- Course de la UF
-- Tipus: Ordinaries, FCT, Sintesi, Transversals (FOL/Anglès)
-- Datetime inici i datetime fi: això permet canviar l'ordre de les UFS -> valor indicatiu no real (per tema grups)
--- Aquí tenim un problema amb múltiples grups poden tenir petites diferències en les dades d'inici i fi
--- Per tant no va aquí la info fa a les lliçons potencials
-
-CURRICULUM és fix (o canvia poc cada any)
-
-## Classrooms
-
-- [ ]Canvien segons la matrícula. De fet durant la matrícula els alumnes no decideixen grup i sovint no se sap ni els grups que es faran
-- [ ] Evidentment hi ha una planificació o s'esperà una planificació però per molta matrícula es pot amplica nombre grups o reduir
-- [ ] Hi ha assignatures com FOL o Anglès que fan classe a múltiples grups al mateix temps
-- [ ] Al calcular el potencial a omplir cal
-- [ ] Torn matí o tarda?
-
-## Gestió del curriculum 
-
-Característiques principals:
-
-- El conceptes siguin el més generics possibles i adaptables a canvis i no pensar només en la FP
-- FP FIRST DEVELOPMENT (com Mobile First però sense oblidar altres dispositius/tipus estudis)
-
-ENTITATS
-
-- CENTRE: Un tenant té un centre per defecte però podria gestionar múltiples centres
-- ESTUDI: (exemples DAM, ASIX, FARMACIA, CURS PONT)
-- SUBDIVISIONS DELS ESTUDIS
-- modules -> firt level (no té pq coincidir) <- veure-les com agrupacions de UFs
-- submodules -> firt level (no té pq coincidir) <- Principal
-- Tercer nivell TODO
-- CURS: UN ESTUDI POT ESTAR DIVIDIT EN UN O MES CURSOS  
-  - CICLE: conjunt de cursos (no teni a la fp)
-- TIPUS_ESTUDI: FP, CURS PONT, ETC -> De fet és com una etiqueta que podem posar a un estudi
-  - LOE/LOGSE o la llei pot ser un altre etiqueta
-  - 1 estudi n etiquetes: LOE i FP per exemple
-- Families: agrupacions d'estudis, es com un tipus d'estudi però OCO pot tenir dades especifiques
-
-TEACHERS MODULE INTERSECCIÓ AMB CURRICULUM
-- ESPECIALITATS:
-  - Una especialitat pot estar associada a un professor però també a una UF
-- Departaments:
-  - Associat a un professor però també a un estudi
-  - Per cada estudi hi ha un departament responsable PRINCIPAL de l'ESTUDI
-  - Hi ha UFS/MÒDULS que poden tenir múltiples departaments, el principal associat a l'estudi i altres (assingatures transversals, Folm, Angles)
-  - Estudis donats per múltiples departaments això pot apareixer aviat com idea d'algun pensador
-
-Rols: Cap estudis
-- Wizard per donar d'alta el currículum d'un centre
-- Possibilitat de repartir la feina amb caps de departament i caps estudis (però sempre podrà fer-la tota)
-
-- Centre: Cada tenant un centre? Múltiples centres possibles?
-
-- ASIX
-- DAM
     
 ### Wizard (boto add)
-
 0) Desplegable amb els centres: per defecte un sol centre (creat durant la creació del tenant) però podria tenir més centres
 1) [ ] Estudi que es vol modificar o que es vol crear
   - [ ] Mostrar una llista estudis existents-> es pot seleccionar un existent i continuar o refer tot el wizard
@@ -2583,10 +2905,7 @@ Rols: Cap estudis
       - [ ] Start date      
       - [ ] End date
     - [ ] sí Extern associar departament encarregat
-    
-    
-    
-# Passar faltes
+## Passar faltes
 
 Incidencies:
 - Tipus incidencia (Falta, Fata justificada, etc)-> escull el tipus qui posa la falta
@@ -2613,7 +2932,7 @@ Notes:
 -- 3 incidències?
 - Al final lo important és el temps total que data, per tant guardar un dataihora inici i un dataihora fi
 
-# HORARI
+== HORARI ==
 
 - El horari real hauria de ser canviant cada setmana
 - Cert que la majoria tindrem mateix esquema horari desde la perspectiva MPs però desde perpectiva UFS canvia (fins i tot podem canviar d'UF a meitat de setmana)
@@ -2633,7 +2952,7 @@ PERPECTIVA DE L'HORARI
  - Depèn de l'usauri que el mira: Horari de professor, Horari de clase
  - Horari personal alumne: depèn de la matrícula, potser algunes assignatures no les té i per tant no les té a l'horari
 
-# LESSONS
+== LESSONS ===
 
 Una lliço és:
 - Job/Plaça: plaça que realitza la feina (que tindrà associada un professor titular que serà l'habitual que farà la classe però també pot ser el substitut o usuari actiu que pertoqui en cada moment)
@@ -2644,7 +2963,37 @@ Una lliço és:
 - Número de lliço: dubte 33 hores UF són 33 liçons. Lliçons es fan en dos o tres hores seguides o més -> Una sola lliço o divicides en hores
 -- Potser poder escollir
 
-# POTENCIAL
+== Curriculum ==
+
+Tot gira entorn una unitat bàsica d'ensenyament:
+- Actualment aquesta unitat és la Unitat Formativa (abans era el Mòdul Professional)
+
+Dades d'una UF:
+- Hores totals de la UF
+- Número UF (1,2,3)
+- Codi únic
+- Nom
+- Nom llarg
+- Descripció/notes
+- Mòdul professional ID
+- Study al que pertany la UF
+- Course de la UF
+- Tipus: Ordinaries, FCT, Sintesi, Transversals (FOL/Anglès)
+- Datetime inici i datetime fi: això permet canviar l'ordre de les UFS -> valor indicatiu no real (per tema grups)
+-- Aquí tenim un problema amb múltiples grups poden tenir petites diferències en les dades d'inici i fi
+-- Per tant no va aquí la info fa a les lliçons potencials
+
+CURRICULUM és fix (o canvia poc cada any)
+
+=== Classrooms ===
+
+- Canvien segons la matrícula. De fet durant la matrícula els alumnes no decideixen grup i sovint no se sap ni els grups que es faran
+- Evidentment hi ha una planificació o s'esperà una planificació però per molta matrícula es pot amplica nombre grups o reduir
+- Hi ha assignatures com FOL o Anglès que fan classe a múltiples grups al mateix temps
+- Al calcular el potencial a omplir cal
+- Torn matí o tarda?
+
+=== POTENCIAL ===
 
 - S'hauria de calcular automàticament de forma inicial
 - Després podrien fer-se petits canvis sempre evitant/controlant errors (solapaments)
@@ -2669,20 +3018,93 @@ Potencial de lliçons que s'han de realitzar. Qüestions a tenir en compte:
 --- Desdobla 50% i té 33 hores vol dir que el potencial a cobrir és 33 +11,5: problema utilitzar tan per cents
 - Múltiples grups de classe. Per exemples SMXA, SMXB i SMXC:
 -- 33*3: 99h de potencial a omplir
+
+===
+
+Dades
+- Fitxes de professorat de tot el professorat existent? 
+- Obtenir les de secretaria per introduir dades
+- Obtenir copia o copies per veure el format en que està la fitxa i quines dades es pregunten
+- "Cotejar" fitxa de professorat nout amb la fitxa històrica
+
+Substituts:
+- Tenen codi de professor propi per impresores? no crec pq quin li dona codi
+- Serveix per alguna cosa el codi de profe? O l'únic important és codi de plaça
+- Com els gestiono:
+  - Tenen un status administratiu especial: substitut (la resta tenen o funcionari (diversos subtipus) o interins)  
+  - Cal guardar el codi de professor al que substitueixen?
+    - Mateixa plaça (job) la tenen múltiples professors job->user 1an -> camp user_id a job
+    - staff -> user_id treure
+
+job-> places de treball
+user-> usuari    
+staff-> Assignació d'un usuari a una plaça
+- Camps: 
+  - owner: true/false indicant si és el titular
+  - start_date: Per substituts. A la resta null (tot any)
+  - final_date: Per substituts. A la resta null (tot any)
   
-## Fitxers adjunts
+Fitxers adjunts
+================
 
-- [ ] Foto proposada pel professor
-- [ ] Fotocopia del DNI
+- Foto proposada pel professor
+- Fotocopia del DNI
+
+Càrrecs:
+========
+
+Becaris:
+- Omplir la taula de posicions amb tots els càrrecs
+- A initialize_teachers assignar càrrecs a professors.
+
+Positions table i Position Model
+
+- LLista de càrrecs inclou Tutors, Tutors FCT, Caps de departament
+
+Taula
+- name
+- shortname: ???
+- Roles: rols associats al càrrec
     
-## Llençol professors
+Llençol professors
+==================
 
+- Mostrar no llista de professors sinó llista de places
+- Opció extra que indiqui si mostrar professor titular o professor/ substituts 
 
-- [ ] Mostrar no llista de professors sinó llista de places
-- [ ] Opció extra que indiqui si mostrar professor titular o professor/ substituts 
+Càrrecs
+
 
 # Gestió de versions
 
+- [X] Mostrar a l'aplicació un apartat per admins que permeti saber la versió de l'aplicació
+  - [X] Mostrar el commit de github amb link a Github i data del commit
+  - [X] git rev-parse HEAD mostra el hash de la versio
+  - [X] hash curt: git rev-parse --short HEAD
+   - git show --summary | git log -1
+   - git branch mostra les branques
+   - git remote show origin
+- [X] Cache: cada x minuts
+- [X] Boto de flush/refresh de la cache
+- [X] Passar la info a javascript al menu meta:     <meta name="git" content="{{ git() }}">
+- [X] Crear helper git
+- [X] Mostrar la branca actual
+- [X] Mostrar commit larg hash actual
+- [X] Mostrar commit curt hash actual
+- [X] Mostra missatge
+- [X] Mostrar data en diferents formats
+   
 On mostrar-ho:
 - [ ]Footer Welcome Page   
-- [ ] Tags? Mostrar versions 
+- [ ] Toolbar (només per a admins)
+
+Que vull Mostrar:
+ - Un link simple que al fer click mostri un dialeg amb més info i també un title on hover
+ - Format del link: Hash curt del commit que s'està utilitzant i data del commit en format humà
+    - [ ] Exemple: versió: b44f4b6 Fa un minut 
+       - [] Title on hover: b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
+    - Diàleg:
+     - b44f4b6912ecff88da19f65c456f4620ad750471 15:34:23 20/12/2018 Sergi Tur Badenas
+     - Sigui un link als commits del projecte
+     - Link al repositori Github (nom curt tipus acacha/scool amb link)
+     - Tags i commit ?  
