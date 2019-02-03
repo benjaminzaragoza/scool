@@ -23,7 +23,7 @@ class PeopleController extends Controller
      */
     public function index(PeopleIndex $request)
     {
-        return map_collection(Person::all());
+        return Person::getPeople();
     }
 
     /**

@@ -31,7 +31,7 @@ class Person extends Model implements HasMedia
      */
     public static function getPeople()
     {
-        return (new PersonCollection(Person::with(['user','user.googleUser'])->get()))->transform();
+        return (new PersonCollection(Person::with(['user','identifier','identifiers','birthplace','user.googleUser'])->get()))->transform();
     }
 
     /**
