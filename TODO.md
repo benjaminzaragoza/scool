@@ -1304,6 +1304,11 @@ OPERACIONS MASSIVES:
 IMPORTANT:
 - [ ] Centralitzar les operacions de canvi de paraula de pas
 
+Email password reset:
+- [ ] Exemple URL: https://iesebre.scool.test/password/reset/d6350f7774c0d1be132260c1f5d9429c22c8d5bf0e9e7ad9a74a71fa49fc0fe8
+  - [ ] Canviar el formulari per indicar quins password extres es volen sincronitzar?
+  - [ ] Per defecte canviar tots els passwords?
+
 Expiració de password
 - [ ] Camp password_expires_at. Afegir a la migració com a nullable i datetime
 - [ ] Afegir a fillable al Model User

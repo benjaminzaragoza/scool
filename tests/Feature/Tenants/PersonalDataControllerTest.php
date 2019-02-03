@@ -51,9 +51,9 @@ class PersonalDataControllerTest extends BaseTenantTest
         $response->assertViewIs('tenants.people.show');
 
         $response->assertViewHas('people', function ($returnedPeople) {
-//            dd($returnedPeople[0]);
-//            return
-//                count($returnedPeople) === 3 &&
+//            dump(count($returnedPeople));
+            return
+                count($returnedPeople) === 3;
 //                $returnedPositions[0]['name'] === 'Coordinador TIC/TAC' &&
 //                $returnedPositions[0]['shortname'] === 'Coord. TIC' &&
 //                $returnedPositions[0]['api_uri'] === 'positions' &&
