@@ -18,7 +18,7 @@ class PeopleShow extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('people.show');
+        return Auth::user()->can('people.show',$this->person);
     }
 
     /**

@@ -39,6 +39,11 @@ class LoggedUserProfileControllerTest extends BaseTenantTest
     {
         $user = $this->login('web');
         $response = $this->get('/user/profile');
-        $response->assertRedirect('/users/' . $user->id);
+        $response->assertSuccessful();
+        $response->assertViewIs('tenants.users.profile');
+        $response->assertViewHas('user', function($returnedUser) use ($user) {
+            return $returnedUser['id'] === 1 &&
+                $returnedUser['name'] === $user->name;
+        });
     }
 }

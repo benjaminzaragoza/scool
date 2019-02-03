@@ -149,6 +149,9 @@ window.Vue.component('notifications-widget', require('./components/notifications
 // Notifications
 window.Vue.component('notifications', require('./components/notifications/Notifications'))
 
+// User Profile
+window.Vue.component('user-profile', require('./components/users/UserProfile'))
+
 window.Vuetify = Vuetify
 
 // TODO

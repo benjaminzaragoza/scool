@@ -1200,8 +1200,8 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager') || $user->hasRole('TeachersManager');
         });
 
-        Gate::define('users.show', function ($loggedUser, $user) {
-            return $loggedUser->hasRole('UsersManager') || ($loggedUser->id === $user->id);
+        Gate::define('users.show', function ($loggedUser) {
+            return $loggedUser->hasRole('UsersManager');
         });
 
         Gate::define('users.update', function ($user) {
@@ -1334,6 +1334,17 @@ if (!function_exists('initialize_gates')) {
                     if($user->hasRole('Incidents')) return true;
                 }
             }
+            return false;
+        });
+
+        Gate::define('people.show', function($loggedUser,$person) {
+            if ($person) {
+                if ($person->user) {
+                    if ((int) $person->user->id === (int) $loggedUser->id) return true;
+                }
+            }
+            if ($loggedUser->hasRole(ScoolRole::PEOPLE_MANAGER['name'])) return true;
+            if ($loggedUser->hasRole(ScoolRole::USERS_MANAGER['name'])) return true;
             return false;
         });
 

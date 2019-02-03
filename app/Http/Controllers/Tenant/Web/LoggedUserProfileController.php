@@ -6,6 +6,7 @@ use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Changelog\ListChangelog;
 use App\Models\Log;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 /**
@@ -23,6 +24,7 @@ class LoggedUserProfileController extends Controller
      */
     public function show(Request $request)
     {
-        return redirect('/users/' . $request->user()->id);
+        $user = collect(Auth::user()->map());
+        return view('tenants.users.profile',compact('user'));
     }
 }

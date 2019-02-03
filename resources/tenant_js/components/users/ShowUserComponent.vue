@@ -281,10 +281,6 @@ export default {
       type: Object,
       default: () => { return {} }
     },
-    users: {
-      type: Array,
-      default: () => []
-    },
     icon: {
       type: Boolean,
       default: true

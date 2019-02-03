@@ -445,6 +445,60 @@ class PeopleControllerTest extends BaseTenantTest
      * @group people
      *
      */
+    public function regular_user_can_show_his_person()
+    {
+        $this->withoutExceptionHandling();
+        $person = create_sample_person();
+        $this->actingAs($person->user,'api');
+        $response = $this->json('GET','/api/v1/people/' . $person->id);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertEquals(1,$result->id);
+        $this->assertEquals(1,$result->user_id);
+        $this->assertEquals(1,$result->userId);
+        $this->assertEquals('Pepe Pardo Jeans',$result->name);
+        $this->assertEquals('Pardo',$result->sn1);
+        $this->assertEquals('Jeans',$result->sn2);
+        $this->assertEquals('pepepardojeans@gmail.com',$result->email);
+        $this->assertEquals('pepepardojeans@gmail.com',$result->userEmail);
+        $this->assertEquals('pepepardo@iesebre.com',$result->corporativeEmail);
+        $this->assertEquals('89778458778446589798',$result->googleId);
+
+        $this->assertNotNull($result->email_verified_at);
+
+        $this->assertNotNull($result->created_at);
+        $this->assertNotNull($result->formatted_created_at);
+        $this->assertNotNull($result->created_at_timestamp);
+        $this->assertNotNull($result->formatted_created_at_diff);
+        $this->assertNotNull($result->updated_at);
+        $this->assertNotNull($result->formatted_updated_at);
+        $this->assertNotNull($result->updated_at_timestamp);
+        $this->assertNotNull($result->formatted_updated_at_diff);
+
+        $this->assertEquals(0,$result->admin);
+        $this->assertEquals('MX',$result->hash_id);
+        $this->assertEquals(1,$result->identifier_id);
+        $this->assertEquals('14868003K',$result->identifier_value);
+        $this->assertEquals('[]',$result->extra_identifiers);
+        $this->assertEquals('02-03-1978',$result->birthdate_formatted);
+        $this->assertEquals(1,$result->birthplace_id);
+        $this->assertEquals('Tortosa',$result->birthplace_name);
+        $this->assertEquals(43500,$result->birthplace_postalcode);
+        $this->assertEquals('Solter/a',$result->civil_status);
+        $this->assertEquals('Home',$result->gender);
+        $this->assertEquals('977504678',$result->phone);
+        $this->assertEquals('',$result->other_phones);
+        $this->assertEquals('650478758',$result->mobile);
+        $this->assertEquals('',$result->other_mobiles);
+        $this->assertEquals('',$result->other_emails);
+        $this->assertEquals('Bla Bla Bla',$result->notes);
+    }
+
+    /**
+     * @test
+     * @group people
+     *
+     */
     public function regular_user_cannot_show_person()
     {
         $person = create_sample_person();

@@ -89,7 +89,7 @@ export default {
     setSelectedItem () {
       const currentPath = window.location.pathname
       const selected = this.items.indexOf(this.items.find(item => item.href === currentPath))
-      this.items[selected].selected = true
+      if (this.items[selected]) this.items[selected].selected = true
     },
     selectedStyle (item) {
       if (item.selected) {
