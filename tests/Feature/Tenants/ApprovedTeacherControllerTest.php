@@ -153,7 +153,7 @@ class ApprovedTeacherControllerTest extends BaseTenantTest
         $this->assertEquals('Pepe',$person->givenName);
         $this->assertEquals('Pardo',$person->sn1);
         $this->assertEquals('Jeans',$person->sn2);
-        $this->assertEquals('1980-02-04',$person->birthdate);
+        $this->assertEquals('04-02-1980',$person->birthdate->format('d-m-Y'));
         $this->assertEquals('977405689',$person->phone);
         $this->assertEquals('["977854265","9778542456"]',$person->other_phones);
         $this->assertEquals('679852467',$person->mobile);

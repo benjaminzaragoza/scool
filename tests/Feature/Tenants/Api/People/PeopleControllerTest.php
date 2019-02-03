@@ -39,7 +39,6 @@ class PeopleControllerTest extends BaseTenantTest
      */
     public function managers_can_list_people()
     {
-        $this->withoutExceptionHandling();
         create_sample_people();
         $this->loginAsUsersManager('api');
         $response = $this->json('GET','/api/v1/people/');
@@ -386,6 +385,31 @@ class PeopleControllerTest extends BaseTenantTest
             'sn2' => 'Jeans'
         ]);
         $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     * @group people
+     *
+     */
+    public function managers_can_show_person()
+    {
+        $person = create_sample_person();
+        $this->loginAsUsersManager('api');
+        $response = $this->json('GET','/api/v1/people/' . $person->id);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        dump($result);
+        $this->assertEquals(1,$result->id);
+        $this->assertEquals(1,$result->userId);
+        $this->assertEquals('Pepe',$result->name);
+        $this->assertEquals('Pardo',$result->sn1);
+        $this->assertEquals('Jeans',$result->sn2);
+        $this->assertEquals('pepepardojeans@gmail.com',$result->email);
+        $this->assertEquals('Pepe',$result->userEmail);
+        $this->assertEquals('Pepe',$result->corporativeEmail);
+        $this->assertEquals('Pepe',$result->googleId);
+        $this->assertEquals('Pepe',$result->userEmail);
     }
 
 }

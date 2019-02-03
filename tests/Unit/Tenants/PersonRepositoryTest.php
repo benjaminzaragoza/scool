@@ -71,7 +71,7 @@ class PersonRepositoryTest extends TestCase
         $this->assertEquals('Pardo', $personEloquent->sn1);
         $this->assertEquals('Jeans', $personEloquent->sn2);
         $this->assertEquals('Jeans', $personEloquent->sn2);
-        $this->assertEquals('2008-05-25', $personEloquent->birthdate);
+        $this->assertEquals('25-05-2008', $personEloquent->birthdate->format('d-m-Y'));
         $this->assertEquals(1, $personEloquent->birthplace_id);
         $this->assertEquals('Home', $personEloquent->gender);
         $this->assertEquals('Casat/da', $personEloquent->civil_status);

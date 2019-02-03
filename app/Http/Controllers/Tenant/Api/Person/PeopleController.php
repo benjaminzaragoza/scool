@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant\Api\Person;
 
 use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\People\PeopleIndex;
+use App\Http\Requests\People\PeopleShow;
 use App\Http\Requests\People\PeopleStore;
 use App\Http\Requests\People\PeopleUpdate;
 use App\Models\Person;
@@ -24,6 +25,16 @@ class PeopleController extends Controller
     public function index(PeopleIndex $request)
     {
         return Person::getPeople();
+    }
+
+    /**
+     * show.
+     * @param PeopleIndex $request
+     * @return mixed
+     */
+    public function show(PeopleShow $request, $tenant, Person $person)
+    {
+        return $person->map();
     }
 
     /**

@@ -127,10 +127,11 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Available teacher code:
             Route::get('/teacher/available_code', 'Tenant\TeacherAvailableCodeController@show');
 
-            // Persons
+            // People
             Route::get('/people', '\\'. PeopleController::class .'@index');
             Route::post('/people', '\\'. PeopleController::class .'@store');
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
+            Route::get('/people/{person}', '\\'. PeopleController::class .'@show');
 
             // USERS
             Route::get('/users', '\\'. UsersController::class . '@index');

@@ -237,7 +237,7 @@ class PersonTest extends TestCase
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
             'sn2' => 'Jeans',
-            'birthdate' => 'Jeans',
+            'birthdate' => '1978-02-03',
             'birthplace_id' => 'Jeans',
             'gender' => 'Home',
             'civil_status' => 'Casat/da',

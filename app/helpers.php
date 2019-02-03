@@ -734,6 +734,7 @@ if (!function_exists('users_manager_permissions')) {
             'moodle.user.destroy',
             'people.update',
             'people.index',
+            'people.show',
             'people.store',
             'moodle.user.password.update'
         ];
@@ -757,6 +758,7 @@ if (!function_exists('people_manager_permissions')) {
     {
         return [
             'people.index',
+            'people.show',
             'people.store',
             'people.update'
         ];
@@ -9239,6 +9241,43 @@ if (! function_exists('sample_notifications')) {
         ]);
         $user1->notify(new SampleNotification('Sample Notification 1'));
         $user2->notify(new SampleNotification('Sample Notification 2'));
+    }
+}
+
+if (! function_exists('create_sample_person')) {
+    function create_sample_person()
+    {
+        $user = factory(User::class)->create([
+            'email' => 'pepepardojeans@gmail.com',
+            'name' => 'Pepe Pardo Jeans'
+        ]);
+        seed_identifier_types();
+        $identifier = Identifier::create([
+            'value' => '14868003K',
+            'type_id' => 1
+        ]);
+        $location = Location::create([
+            'name' => 'Tortosa',
+            'postalcode' => 43500
+        ]);
+        return Person::create([
+            'user_id' => $user->id,
+            'identifier_id' => $identifier->id,
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'birthdate' => Carbon::createFromFormat('d-m-Y','02-03-1978'),
+            'birthplace_id' => $location->id,
+            'gender' => 'Home',
+            'civil_status' => 'Solter/a',
+            'phone' => '977504678',
+            'other_phones' => '',
+            'mobile' => '650478758',
+            'other_mobiles' => '',
+            'email' => 'pepepardojeans@gmail.com',
+            'other_emails' => '',
+            'notes' => 'Bla Bla Bla'
+        ]);
     }
 }
 
