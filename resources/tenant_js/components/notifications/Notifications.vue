@@ -4,10 +4,10 @@
             <v-flex xs12>
                 <user-notifications-list :notifications="userNotifications"></user-notifications-list>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="users.length > 0">
                 <simple-notification-send-card :users="users" @sent="forceRefresh = true"></simple-notification-send-card>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="notifications.length > 0">
                 <notifications-list :users="users" :notifications="notifications" :force-refresh="forceRefresh" @refreshed="forceRefresh = false"></notifications-list>
             </v-flex>
         </v-layout>
@@ -32,16 +32,14 @@ export default {
   },
   props: {
     notifications: {
-      type: Array,
-      required: true
+      type: Array
     },
     userNotifications: {
       type: Array,
       required: true
     },
     users: {
-      type: Array,
-      required: true
+      type: Array
     }
   }
 }

@@ -22,7 +22,8 @@ const haveRole = (role) => {
     roles = [role]
   }
   if (window.user && window.user.isSuperAdmin) return true
-  const userRoles = window.user && window.user.roles
+  let userRoles = window.user && window.user.roles
+  userRoles = userRoles.map(role => role['name'])
   if (userRoles) {
     return roles.some(role => {
       return userRoles.indexOf(role.trim()) !== -1

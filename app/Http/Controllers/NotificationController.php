@@ -22,9 +22,13 @@ class NotificationController extends Controller
      */
     public function index(NotificationsIndex $request)
     {
-        $notifications = map_collection(DatabaseNotification::notifications());
+        $notifications = collect([]);
+        $users = collect([]);
+        if ($request->user()->can('notifications.index')){
+            $notifications = map_collection(DatabaseNotification::notifications());
+            $users = map_simple_collection(User::all());
+        }
         $userNotifications = $request->user()->notifications;
-        $users = map_simple_collection(User::all());
         return view('tenants.notifications.index', compact('userNotifications','notifications','users'));
     }
 }

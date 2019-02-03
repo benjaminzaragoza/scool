@@ -869,9 +869,15 @@ Stack trace:
 
 - [ ] No mostrar data de creació o al menys no utilitzar Labels sinó calen
 
-# USER PROFILE
+# USER PROFILE/ TEACHER PROFILE
 
-- [ ] Error 403 amb usuaris normals no poden veure el seu propi perfil https://iesebre.scool.test/users/6
+- [ ] Mostrar informació de permisos
+ - [ ] Rols que té l'usuari assignat
+ - [ ] permissions-card 
+- [ ] El link al teacher profile no VA!!
+- [X] Error 403 amb usuaris normals no poden veure el seu propi perfil https://iesebre.scool.test/users/6
+- [ ] Un cop tancat el perfil es mostri la pàgina Home
+- [ ] Mantenir-se a la mateixqa pàgina a la que s'estava al fer click a "més informació" per tal de veure el pèrfil
 - [X] CARD DE DADES D'USUARI
 - [X] CARD de DADES PERSONALS
 Sí és professor:
@@ -959,6 +965,9 @@ Operacions massives:
   - [ ] Falta API             
              
 # NOTIFICATIONS
+
+- [X] Usuaris normals no poden veure mòdul notifications (error 403)
+- [X] Usuaris normals no han de veure la llista de TOTES LES NOTIFICACIONS, només les seves
 
 QUE CAL PER SUBSTITUIR E-BANDO/O SIMILAR:
 - [ ] Apartat per enviar notificacions generals
