@@ -440,4 +440,29 @@ class PeopleControllerTest extends BaseTenantTest
         $this->assertEquals('Bla Bla Bla',$result->notes);
     }
 
+    /**
+     * @test
+     * @group people
+     *
+     */
+    public function regular_user_cannot_show_person()
+    {
+        $person = create_sample_person();
+        $this->login('api');
+        $response = $this->json('GET','/api/v1/people/' . $person->id);
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     * @group people
+     *
+     */
+    public function guest_user_cannot_show_person()
+    {
+        $person = create_sample_person();
+        $response = $this->json('GET','/api/v1/people/' . $person->id);
+        $response->assertStatus(401);
+    }
+
 }
