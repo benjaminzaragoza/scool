@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Resources\Tenant\PersonCollection;
 use App\Models\Traits\FormattedDates;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -67,6 +68,20 @@ class Person extends Model implements HasMedia
     public function getMainIdentifierAttribute($value)
     {
         return optional($this->identifiers)->first();
+    }
+
+    /**
+     * Get the main identifier.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getBirthdateFormattedAttribute($value)
+    {
+        if(is_string($this->birthdate)) {
+            return Carbon::createFromFormat('Y-m-d',$this->birthdate)->format('d-m-Y');
+        };
+        return optional($this->birthdate)->format('d-m-Y');
     }
 
     /**
@@ -190,6 +205,7 @@ class Person extends Model implements HasMedia
             'extra_identifiers' => optional($this->identifiers)->toJson(),
 
             'birthdate' => $this->birthdate,
+            'birthdate_formatted' => $this->birthdate_formatted,
             'birthplace_id' => $this->birthplace_id,
             'birthplace_name' => optional($this->birthplace)->name,
             'birthplace_postalcode' => optional($this->birthplace)->postalcode,

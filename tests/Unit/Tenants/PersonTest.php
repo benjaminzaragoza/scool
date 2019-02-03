@@ -213,6 +213,7 @@ class PersonTest extends TestCase
         $this->assertEquals('47653688C', json_decode($mappedPerson['extra_identifiers'])[0]->value);
 
         $this->assertEquals('02-03-1978', $mappedPerson['birthdate']->format('d-m-Y'));
+        $this->assertEquals('02-03-1978', $mappedPerson['birthdate_formatted']);
         $this->assertEquals(1, $mappedPerson['birthplace_id']);
         $this->assertEquals('Tortosa', $mappedPerson['birthplace_name']);
         $this->assertEquals(43500, $mappedPerson['birthplace_postalcode']);

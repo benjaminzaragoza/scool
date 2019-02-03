@@ -93,7 +93,12 @@
                                             <person-emails :email="props.item.email" :user="props.item"></person-emails>
                                         </td>
                                         <td class="text-xs-left" v-html="props.item.mobile"></td>
-                                        <td class="text-xs-left" v-html="props.item.birthdate"></td>
+                                        <td class="text-xs-left">
+                                            {{ props.item.birthdate_formatted }}
+                                        </td>
+                                        <td class="text-xs-left">
+                                            {{ props.item.birthplace_name }}
+                                        </td>
                                         <td class="text-xs-left" v-html="props.item.gender"></td>
                                         <td class="text-xs-left">
                                             <v-tooltip bottom>
@@ -178,7 +183,8 @@ export default {
       headers.push({ text: 'email', value: 'email' })
       headers.push({ text: 'mobile', value: 'mobile' })
       // if (this.showStatusHeader) headers.push({text: 'Estatus', value: 'administrative_status_code'})
-      headers.push({ text: 'Data i llocs de naixament', value: 'birthdate' })
+      headers.push({ text: 'Data naixement', value: 'birthdate_formatted' })
+      headers.push({ text: 'Lloc de naixement', value: 'birthplace_name' })
       headers.push({ text: 'Sexe', value: 'gender' })
       headers.push({ text: 'Data creació', value: 'formatted_created_at' })
       headers.push({ text: 'Data actualització', value: 'formatted_updated_at' })
