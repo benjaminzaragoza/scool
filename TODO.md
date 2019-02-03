@@ -1292,6 +1292,13 @@ OPERACIONS MASSIVES:
 
 # Users management
 
+## Verificacions
+
+### Verificació email
+
+- [ ] Quan avisar a l'usuari que ha de validar el correu electrònic?
+  - [ ] Al dashboard/Home amb un alert i un CTA clar centrar i el primer que apareix
+
 ## Passwords
 
 IMPORTANT:

@@ -159,11 +159,18 @@ class PersonTest extends TestCase
         $person->user_id = $user->id;
         $person->save();
         seed_identifier_types();
-        $identifier = Identifier::create([
+        $identifier1 = Identifier::create([
+            'value' => '45784578C',
+            'type_id' => 1
+        ]);
+        $person->identifier()->associate($identifier1);
+
+        $identifier2 = Identifier::create([
             'value' => '47653688C',
             'type_id' => 1
         ]);
-        $person->identifiers()->save($identifier);
+
+        $person->identifiers()->save($identifier2);
 
         $location = Location::create([
             'name' => 'Tortosa',
@@ -195,8 +202,12 @@ class PersonTest extends TestCase
         $this->assertEquals($mappedPerson['created_at']->timestamp,$mappedPerson['created_at_timestamp']);
         $this->assertEquals($mappedPerson['updated_at']->timestamp,$mappedPerson['updated_at_timestamp']);
 
-        $this->assertEquals(1, $mappedPerson['identifier_id']);
-        $this->assertEquals('47653688C', $mappedPerson['identifier_value']);
+        $this->assertEquals($identifier1->id, $mappedPerson['identifier_id']);
+        $this->assertEquals('45784578C', $mappedPerson['identifier_value']);
+
+        $this->assertNotNull($mappedPerson['extra_identifiers']);
+        $this->assertEquals($identifier2->id, json_decode($mappedPerson['extra_identifiers'])[0]->id);
+        $this->assertEquals('47653688C', json_decode($mappedPerson['extra_identifiers'])[0]->value);
 
         $this->assertEquals('02-03-1978', $mappedPerson['birthdate']->format('d-m-Y'));
         $this->assertEquals(1, $mappedPerson['birthplace_id']);

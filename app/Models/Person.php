@@ -51,12 +51,20 @@ class Person extends Model implements HasMedia
     }
 
     /**
+     * The identifiers that belong to the person.
+     */
+    public function identifier()
+    {
+        return $this->belongsTo(Identifier::class);
+    }
+
+    /**
      * Get the main identifier.
      *
      * @param  string  $value
      * @return string
      */
-    public function getIdentifierAttribute($value)
+    public function getMainIdentifierAttribute($value)
     {
         return optional($this->identifiers)->first();
     }
@@ -174,6 +182,7 @@ class Person extends Model implements HasMedia
 
             'identifier_id' => optional($this->identifier)->id,
             'identifier_value' => optional($this->identifier)->value,
+            'extra_identifiers' => optional($this->identifiers)->toJson(),
 
             'birthdate' => $this->birthdate,
             'birthplace_id' => $this->birthplace_id,
