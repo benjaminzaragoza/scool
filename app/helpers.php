@@ -1200,8 +1200,8 @@ if (!function_exists('initialize_gates')) {
             return $user->hasRole('UsersManager') || $user->hasRole('TeachersManager');
         });
 
-        Gate::define('users.show', function ($user) {
-            return $user->hasRole('UsersManager');
+        Gate::define('users.show', function ($loggedUser, $user) {
+            return $loggedUser->hasRole('UsersManager') || ($loggedUser->id === $user->id);
         });
 
         Gate::define('users.update', function ($user) {

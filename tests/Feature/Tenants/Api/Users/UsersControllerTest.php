@@ -325,12 +325,7 @@ class UsersControllerTest extends BaseTenantTest
      */
     public function can_get_user_info()
     {
-        $manager = create(User::class);
-        $role = Role::firstOrCreate(['name' => 'UsersManager']);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
-        $this->actingAs($manager,'api');
-
+        $this->loginAsUsersManager('api');
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com',
@@ -363,8 +358,7 @@ class UsersControllerTest extends BaseTenantTest
      */
     public function regular_user_cannot_get_user_info()
     {
-        $regularUser = create(User::class);
-        $this->actingAs($regularUser,'api');
+        $regularUser = $this->login('api');
 
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
@@ -374,5 +368,37 @@ class UsersControllerTest extends BaseTenantTest
 
         $response = $this->get('/api/v1/users/' . $user->id);
         $response->assertStatus(403);
+    }
+
+    /** @test
+     *  @group users
+     */
+    public function regular_user_can_get_his_own_user_info()
+    {
+        $user = $this->login('api');
+        $user->name = 'Pepe Pardo Jeans';
+        $user->email = 'pepepardojeans@gmail.com';
+        $user->mobile = '654789524';
+        $user->save();
+
+        $response = $this->get('/api/v1/users/' . $user->id);
+        $response->assertSuccessful();
+
+        $user = json_decode($response->getContent());
+        $this->assertEquals(1,$user->id);
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $this->assertEquals('pepepardojeans@gmail.com',$user->email);
+        $this->assertNull($user->email_verified_at);
+        $this->assertEquals('654789524',$user->mobile);
+        $this->assertNull($user->last_login);
+        $this->assertNull($user->last_login_ip);
+        $this->assertNotNull($user->created_at);
+        $this->assertNotNull($user->updated_at);
+        $this->assertEmpty($user->roles);
+        $this->assertNotNull($user->formatted_created_at);
+        $this->assertNotNull($user->formatted_updated_at);
+        $this->assertEquals(0,$user->admin);
+        $this->assertEquals('MX',$user->hashid);
     }
 }

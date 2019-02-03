@@ -19,7 +19,7 @@ class ShowUser extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('users.show');
+        return Auth::user()->can('users.show',$this->user);
     }
 
     /**

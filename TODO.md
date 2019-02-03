@@ -871,6 +871,7 @@ Stack trace:
 
 # USER PROFILE
 
+- [ ] Error 403 amb usuaris normals no poden veure el seu propi perfil https://iesebre.scool.test/users/6
 - [X] CARD DE DADES D'USUARI
 - [X] CARD de DADES PERSONALS
 Sí és professor:
