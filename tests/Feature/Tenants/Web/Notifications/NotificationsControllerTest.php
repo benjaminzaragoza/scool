@@ -63,7 +63,7 @@ class NotificationsControllerTest extends BaseTenantTest
         });
         $response->assertViewHas('users', function ($returnedUsers) use ($user) {
             return
-                count($returnedUsers) === 2 &&
+                count($returnedUsers) === 4 &&
                 $returnedUsers[0]['name'] === 'Pepe Pardo Jeans' &&
                 $returnedUsers[0]['email'] === 'pepepardo@jeans.com' &&
                 $returnedUsers[1]['name'] === $user->name &&
