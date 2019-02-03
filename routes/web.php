@@ -38,6 +38,7 @@ use Illuminate\Broadcasting\BroadcastController;
 use PEAR2\Net\RouterOS\Client as RouterOSClient;
 use PEAR2\Net\RouterOS\Request as RouterOSRequest;
 use PEAR2\Net\RouterOS\Response as RouterOSResponse;
+use PEAR2\Net\Transmitter\NetworkStream;
 
 Route::bind('googleUser', function($value, $route)
 {
@@ -267,8 +268,32 @@ Route::get('push', 'PushController@index');
 
 Route::get('/mikrotik2', function() {
     try {
-        $client = new RouterOSClient('192.168.111.100', 'api', '1O5xfijsp14WA');
-//        $client = Mikrokit::connect(['192.168.111.100', 'api', '1O5xfijsp14WA']);
+        $client = new RouterOSClient(
+            config('scool.routeros_ip'),
+            config('scool.routeros_user'),
+            config('scool.routeros_password'));
+
+        $responses = $client->sendSync(new RouterOSRequest('/ip/arp/print'));
+
+        foreach ($responses as $response) {
+            if ($response->getType() === RouterOSResponse::TYPE_DATA) {
+                echo 'IP: ', $response->getProperty('address'),
+                ' MAC: ', $response->getProperty('mac-address'),
+                "\n";
+            }
+        }
+        echo 'OK';
+    } catch (Exception $e) {
+        die($e);
+    }
+});
+
+Route::get('/dhcp', function() {
+    try {
+        $client = new RouterOSClient(
+            config('scool.routeros_ip'),
+            config('scool.routeros_user'),
+            config('scool.routeros_password'));
 
         $responses = $client->sendSync(new RouterOSRequest('/ip/arp/print'));
 

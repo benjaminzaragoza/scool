@@ -4,18 +4,16 @@
 
 # ROUTEROS
 
+- [X] Paquet Laravel descartat no sembla que funcioni
+- [X] Comprovat puc connectar però només sense encriptar:
+  - [X] En local ok no problem no SSL
+  - [] Explotació caldrà posar un tunel SSH 
 - [ ] RouterOS API PROTOCOL: https://wiki.mikrotik.com/wiki/Manual:API
 - [ ] Integració amb aplicació inventari
-- [ ] Client API PHP
+- [X] Client API PHP
   - https://github.com/pear2/Net_RouterOS
-- [ ] Laravel: https://github.com/jjsquady/mikrotikapi  
-- [ ] Docs: https://mum.mikrotik.com//presentations/NZ15/perkins.pdf
-
-Paquet Laravel (https://github.com/jjsquady/mikrotikapi):
-
-```
-composer require jjsquady/mikrotikapi
-```
+- [X] DESCARTAT Laravel: https://github.com/jjsquady/mikrotikapi  
+  - [X] Docs: https://mum.mikrotik.com//presentations/NZ15/perkins.pdf
 
 Instal·la com a dependència Paquet (https://packagist.org/packages/pear2/net_routeros):
 
@@ -27,8 +25,17 @@ composer require pear2/net_routeros
 
 - [ ] Configuració bàsica de DHCP pot ser fixe
 
+Operacions interessants API:
+- [ ] STATIC DHCP LEASES
+  - [ ] Mostrar totes les entrades STATIC DHCP LEASES existents
+  - [ ] Afegir entrada STATIC DHCP LEASE
+  - [ ] Eliminar entrada STATIC DHCP LEASE
+  - [ ] Modificar entrada STATIC DHCP LEASE
+- [ ] Mostrar llista de totes les Leases tant estàtiques com dinàmiques
 
 ## DNS
+
+- [ ] Simplificar les DNS de centre
 
 # EBANDO
 
