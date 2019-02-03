@@ -203,6 +203,8 @@ class Person extends Model implements HasMedia
 
             'identifier_id' => optional($this->identifier)->id,
             'identifier_value' => optional($this->identifier)->value,
+            'identifier_type' => optional(optional($this->identifier)->type)->name,
+            'identifier_type_id' => optional(optional($this->identifier)->type)->id,
             'extra_identifiers' => optional($this->identifiers)->toJson(),
 
             'birthdate' => $this->birthdate,

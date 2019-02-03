@@ -869,22 +869,29 @@ Stack trace:
 
 ## PERSONAL DATA CARD
 
-Amb labels o alguna forma identificar que és que:
-- Nom
-- Cognom1
-- Cognom2
+Amb labels (tooltips) o alguna forma identificar que és que:
+- [X] Nom
+- [X] Cognom1
+- [X] Cognom2
 Sense labels
-- Identificador amb text petit tipus
-- Home/Dona
-- Estat civil
-- Telèfon
-- Altres Telèfons
-- Mòbil i altres mòbils
-- Email i altres emails
-- Notes
-Naixement:
-- Text: Nàscut el DATA_NAIXEMENT_FORMATADA a LLOC_NAIXEMENT amb tooltip POSTAL CODE
+- [X] Identificador amb text petit tipus
+  - [X] Tipus identificador
+- [X] Home/Dona
+- [X] Estat civil
+- [ ] Telèfon
+- [ ] Altres Telèfons
+  - [ ] Icona info que mostri la resta de telefons al fer click o al fer hover
+- [ ] Mòbil 
+ - [ ] Altres mòbils
+- [X] Email
+  - [ ] Altres emails
+- [ ] Notes
 
+Naixement:
+- [X] Text: Nàscut el DATA_NAIXEMENT_FORMATADA a LLOC_NAIXEMENT amb tooltip POSTAL CODE
+
+Adreçes:
+- [ ] On mostrar l'adreça i en quin format
 
 
 ## LOPD. Demanar esborrar dades locals

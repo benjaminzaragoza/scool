@@ -207,6 +207,8 @@ class PersonTest extends TestCase
 
         $this->assertEquals($identifier1->id, $mappedPerson['identifier_id']);
         $this->assertEquals('45784578C', $mappedPerson['identifier_value']);
+        $this->assertEquals('NIF', $mappedPerson['identifier_type']);
+        $this->assertEquals(1, $mappedPerson['identifier_type_id']);
 
         $this->assertNotNull($mappedPerson['extra_identifiers']);
         $this->assertEquals($identifier2->id, json_decode($mappedPerson['extra_identifiers'])[0]->id);
