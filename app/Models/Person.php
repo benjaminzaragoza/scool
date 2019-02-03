@@ -175,6 +175,7 @@ class Person extends Model implements HasMedia
         return [
             'id' => $this->id,
             'userId' => optional($this->user)->id,
+            'user_id' => optional($this->user)->id,
             'givenName' => $this->givenName,
             'sn1' => $this->sn1,
             'sn2' => $this->sn2,

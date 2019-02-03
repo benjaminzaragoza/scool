@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Department;
 use App\Models\Family;
 use App\Models\Force;
+use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
 use App\Models\Incident;
@@ -9249,8 +9250,16 @@ if (! function_exists('create_sample_person')) {
     {
         $user = factory(User::class)->create([
             'email' => 'pepepardojeans@gmail.com',
-            'name' => 'Pepe Pardo Jeans'
+            'name' => 'Pepe Pardo Jeans',
+            'email_verified_at' => Carbon::now(),
+            'last_login' => Carbon::now(),
+            'last_login_ip' => '127.0.0.1'
         ]);
+        $googleUser = GoogleUser::create([
+            'google_id' => '89778458778446589798',
+            'google_email' => 'pepepardo@iesebre.com'
+        ]);
+        $user->assignGoogleUser($googleUser);
         seed_identifier_types();
         $identifier = Identifier::create([
             'value' => '14868003K',
@@ -9260,8 +9269,7 @@ if (! function_exists('create_sample_person')) {
             'name' => 'Tortosa',
             'postalcode' => 43500
         ]);
-        return Person::create([
-            'user_id' => $user->id,
+        $person = Person::create([
             'identifier_id' => $identifier->id,
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -9278,6 +9286,8 @@ if (! function_exists('create_sample_person')) {
             'other_emails' => '',
             'notes' => 'Bla Bla Bla'
         ]);
+        $person->assignUser($user);
+        return $person;
     }
 }
 
@@ -9287,8 +9297,7 @@ if (! function_exists('create_sample_people')) {
             'email' => 'pepepardojeans@gmail.com',
             'name' => 'Pepe Pardo Jeans'
         ]);
-        Person::create([
-            'user_id' => $user->id,
+        $person = Person::create([
 //            'identifier_id' => '',
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -9305,13 +9314,13 @@ if (! function_exists('create_sample_people')) {
             'other_emails' => '',
             'notes' => 'Bla Bla Bla'
         ]);
+        $person->assignUser($user);
 
         $user2 = factory(User::class)->create([
             'email' => 'pepepringao@gmail.com',
             'name' => 'Pepe Pringao'
         ]);
-        Person::create([
-            'user_id' => $user2->id,
+        $person2 = Person::create([
 //            'identifier_id' => '',
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -9327,12 +9336,14 @@ if (! function_exists('create_sample_people')) {
             'other_emails' => '',
             'notes' => 'Bla Bla Bla 1'
         ]);
+        $person2->assignUser($user2);
+
 
         $user3 = factory(User::class)->create([
             'email' => 'homersimpson@gmail.com',
             'name' => 'Homer Simpson'
         ]);
-        Person::create([
+        $person3 = Person::create([
             'user_id' => $user3->id,
 //            'identifier_id' => '',
             'givenName' => 'Homer',
@@ -9349,6 +9360,8 @@ if (! function_exists('create_sample_people')) {
 //            'other_emails' => '',
             'notes' => 'Bla Bla Bla 2'
         ]);
+        $person3->assignUser($user3);
+
     }
 }
 
