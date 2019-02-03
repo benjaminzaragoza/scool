@@ -43,7 +43,7 @@ class PermissionsControllerTest extends BaseTenantTest
         $response->assertSuccessful();
         $response->assertViewIs('tenants.users.permissions.index');
         $response->assertViewHas('permissions', function($permissions) {
-            return count($permissions) === 9 &&
+            return count($permissions) === 10 &&
                 $permissions[0]['id'] === 1 &&
                 $permissions[0]['name'] === 'moodle.index' &&
                 $permissions[0]['guard_name'] === 'web' &&
