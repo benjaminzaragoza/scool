@@ -36,6 +36,7 @@ use App\Models\User;
 use Illuminate\Broadcasting\BroadcastController;
 
 use PEAR2\Net\RouterOS\Client as RouterOSClient;
+use PEAR2\Net\RouterOS\Util as RouterOSUtil;
 use PEAR2\Net\RouterOS\Request as RouterOSRequest;
 use PEAR2\Net\RouterOS\Response as RouterOSResponse;
 use PEAR2\Net\Transmitter\NetworkStream;
@@ -287,6 +288,24 @@ Route::get('/mikrotik2', function() {
         die($e);
     }
 });
+
+Route::get('/arp', function() {
+    $util = new RouterOSUtil(
+        $client = new RouterOSClient(
+            config('scool.routeros_ip'),
+            config('scool.routeros_user'),
+            config('scool.routeros_password'))
+    );
+    $util->setMenu('/ip arp');
+
+    foreach ($util->getAll() as $item) {
+        echo 'IP: ', $item->getProperty('address'),
+        ' MAC: ', $item->getProperty('mac-address'),
+        "</br>";
+    }
+});
+
+
 
 Route::get('/dhcp', function() {
     try {

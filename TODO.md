@@ -23,8 +23,13 @@ composer require pear2/net_routeros
 
 ## DHCP
 
+- [X] Fitxer web.php hi ha exemples directes de com funciona la API.
+- [ ] https://github.com/pear2/Net_RouterOS/wiki/Util-basics
 - [ ] Configuració bàsica de DHCP pot ser fixe
-
+- [ ] Facilitar la gestió d'assignació estàtica de IP per adreça MAC
+- [ ] Podria haver un apartat a l'aplicació que permetes comprovar si el PC desde el que ens connectem
+té assignació estàtica IP (hi ha opció que Javascript obtingui MAC?) i sinó la té els admins poder afegir l'assignació
+- [ ] Integrat amb l'inventari de PCS
 Operacions interessants API:
 - [ ] STATIC DHCP LEASES
   - [ ] Mostrar totes les entrades STATIC DHCP LEASES existents
@@ -1287,6 +1292,28 @@ OPERACIONS MASSIVES:
 
 # Users management
 
+## Passwords
+
+IMPORTANT:
+- [ ] Centralitzar les operacions de canvi de paraula de pas
+
+Expiració de password
+- [ ] Camp password_expires_at. Afegir a la migració com a nullable i datetime
+- [ ] Afegir a fillable al Model User
+- [ ] Crear una URL ('/password/expired') i una vista per mostrar els formulari de canvi de paraula de pas
+  - [ ] Crear entrada API per fer canvi paraula de pas
+- [ ] Al login -> Si el password està expirat mostrar formulari per canviar paraula de pas
+- [ ] https://laraveldaily.com/password-expired-force-change-password-every-30-days/
+- [ ] Middleware password_expired
+
+Gestió de password:
+- [ ] Acció de menú que permeti canviar paraula de pas de l'usuari:
+ - [ ] Aprofitar per també utilitzar-la al perfil de l'usuari
+ - [ ] Switchs si es vol sincronitzar paraules de pas A Ldap/Moodle/Google
+ - [ ] Generador de password aleatori
+ - [ ] Enviar email a l'usuari
+ - [ ] Forçar canvi al pròxim Login
+
 ## PENDENT
 
 EDIT
@@ -1296,13 +1323,7 @@ EDIT
      - [ ] Alumne: té matrícules?
      - [ ] Altres
 
-Gestió de password:
-- [ ] Acció de menú que permeti canviar paraula de pas de l'usuari:
- - [ ] Aprofitar per també utilitzar-la al perfil de l'usuari
- - [ ] Switchs si es vol sincronitzar paraules de pas A Ldap/Moodle/Google
- - [ ] Generador de password aleatori
- - [ ] Enviar email a l'usuari
- - [ ] Forçar canvi al pròxim Login
+
 CHANGELOG:
 - [ ] Igual que incidències logar totes les accions
 
