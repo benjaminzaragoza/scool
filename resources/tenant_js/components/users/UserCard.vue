@@ -1,5 +1,5 @@
 <template>
-    <v-card class="elevation-3" v-if="!closed">
+    <v-card class="elevation-3" v-if="!closed" style="height:100%;">
         <v-toolbar dense color="white" class="elevation-0">
             <v-spacer></v-spacer>
             <v-toolbar-items>

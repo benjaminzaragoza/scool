@@ -1,5 +1,5 @@
 <template>
-    <v-card class="elevation-3" v-if="!closed">
+    <v-card class="elevation-3" v-if="!closed" style="height:100%;">
         <v-toolbar dense color="white" class="elevation-0">
             <v-spacer></v-spacer>
             <v-toolbar-items>
@@ -146,7 +146,8 @@
                     </p>
 
                     <p class="grey--text text--darken-2 mt-2"
-                       style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                       style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                       v-if="internalPerson.notes">
                         Notes:
                         <v-tooltip bottom>
                             <span slot="activator">{{ internalPerson.notes }}</span>
@@ -164,7 +165,14 @@
                         ></v-progress-circular>
                         Obtenint les dades personals de l'usuari
                     </template>
-
+                    <span v-else>
+                        <span v-if="!internalPerson">
+                            <v-btn icon>
+                                <v-icon color="error">close</v-icon>
+                            </v-btn>
+                            L'usuari no té dades personals associades. Feu click al botó <v-btn icon @click="edit"><v-icon color="success" class="mr-2 ml-2">edit</v-icon></v-btn> per afegir les dades personals de l'usuari.
+                        </span>
+                    </span>
                 </v-flex>
             </v-layout>
         </v-container>

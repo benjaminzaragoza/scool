@@ -878,14 +878,14 @@ Sense labels
   - [X] Tipus identificador
 - [X] Home/Dona
 - [X] Estat civil
-- [ ] Telèfon
+- [X] Telèfon
 - [ ] Altres Telèfons
   - [ ] Icona info que mostri la resta de telefons al fer click o al fer hover
-- [ ] Mòbil 
+- [X] Mòbil 
  - [ ] Altres mòbils
 - [X] Email
   - [ ] Altres emails
-- [ ] Notes
+- [X] Notes
 
 Naixement:
 - [X] Text: Nàscut el DATA_NAIXEMENT_FORMATADA a LLOC_NAIXEMENT amb tooltip POSTAL CODE
