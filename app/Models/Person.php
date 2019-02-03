@@ -171,12 +171,17 @@ class Person extends Model implements HasMedia
             'email_verified_at' => optional($this->user)->email_verified_at,
             'last_login' => optional($this->user)->last_login,
             'last_login_ip' => optional($this->user)->last_login_ip,
+
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'formatted_created_at' => $this->formatted_created_at,
-            'formatted_updated_at' => $this->formatted_updated_at,
             'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+
+            'updated_at' => $this->updated_at,
+            'formatted_updated_at' => $this->formatted_updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+
             'admin' => optional($this->user)->admin,
             'hash_id' => optional($this->user)->hash_id,
 

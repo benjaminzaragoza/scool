@@ -196,11 +196,14 @@ class PersonTest extends TestCase
         $this->assertEquals('678514427',$mappedPerson['mobile']);
 
         $this->assertInstanceOf(Carbon::class,$mappedPerson['created_at']);
-        $this->assertInstanceOf(Carbon::class,$mappedPerson['updated_at']);
         $this->assertEquals($mappedPerson['created_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_created_at']);
-        $this->assertEquals($mappedPerson['updated_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_updated_at']);
         $this->assertEquals($mappedPerson['created_at']->timestamp,$mappedPerson['created_at_timestamp']);
+        $this->assertNotNull($mappedPerson['formatted_created_at_diff']);
+
+        $this->assertInstanceOf(Carbon::class,$mappedPerson['updated_at']);
+        $this->assertEquals($mappedPerson['updated_at']->format('h:i:sA d-m-Y'),$mappedPerson['formatted_updated_at']);
         $this->assertEquals($mappedPerson['updated_at']->timestamp,$mappedPerson['updated_at_timestamp']);
+        $this->assertNotNull($mappedPerson['formatted_updated_at_diff']);
 
         $this->assertEquals($identifier1->id, $mappedPerson['identifier_id']);
         $this->assertEquals('45784578C', $mappedPerson['identifier_value']);
