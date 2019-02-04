@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\Tenant\LoginController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Tenant\GoogleUsersController;
 use App\Http\Controllers\Tenant\HomeController;
+use App\Http\Controllers\Tenant\PendingTeachersController;
 use App\Http\Controllers\Tenant\PersonalDataController;
 use App\Http\Controllers\Tenant\UserPhotoController;
 use App\Http\Controllers\Tenant\Web\CurriculumController;
@@ -127,8 +128,8 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
         // TODO remove only needed for testing:
 //        Route::get('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
 
-        Route::get('/add_teacher', 'Tenant\PendingTeachersController@showForm');
-        Route::get('/nou_professor', 'Tenant\PendingTeachersController@showForm');
+        Route::get('/add_teacher', '\\' . PendingTeachersController::class . '@showForm');
+        Route::get('/nou_professor', '\\' . PendingTeachersController::class . '@showForm');
 
         Route::get('/pending_teacher/{teacher}', 'Tenant\PendingTeachersController@show');
 

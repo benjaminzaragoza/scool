@@ -24,4 +24,16 @@ class IdentifierType extends Model
     {
         return self::where('name',$name)->first();
     }
+
+    /**
+     * map
+     * @return array
+     */
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
 }

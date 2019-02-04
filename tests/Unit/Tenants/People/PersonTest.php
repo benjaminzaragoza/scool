@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Tenants;
+namespace Tests\Unit\Tenants\People;
 
 use App\Models\GoogleUser;
 use App\Models\Identifier;

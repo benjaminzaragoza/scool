@@ -32,6 +32,7 @@ use App\Http\Controllers\Tenant\Api\Notifications\SimpleNotificationsController;
 use App\Http\Controllers\Tenant\Api\Notifications\UserNotificationsController;
 use App\Http\Controllers\Tenant\Api\Notifications\UserUnreadNotificationsController;
 use App\Http\Controllers\Tenant\Api\Permissions\PermissionsController;
+use App\Http\Controllers\Tenant\Api\Person\IdentifierTypes\IdentifierTypesController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
@@ -431,6 +432,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/provinces','Tenant\ProvincesController@index');
             Route::get('/localities','Tenant\LocalitiesController@index');
             Route::get('/locations','Tenant\LocalitiesController@index');
+
+            Route::get('/identifier_types','\\'. IdentifierTypesController::class . '@index');
 
             // TODO remove
 //            Route::get('/gsuite/test_connection','Tenant\GoogleSuiteTestConnectionController@index');

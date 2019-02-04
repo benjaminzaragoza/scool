@@ -72,7 +72,7 @@
                             <span v-text="internalPerson.identifier_type"></span>
                         </v-tooltip>
                         <v-tooltip bottom>
-                            <v-btn slot="activator" icon color="pink" flat>
+                            <v-btn slot="activator" icon color="primary" flat>
                                 <v-icon>info</v-icon>
                             </v-btn>
                             <span>Vegeu altres identificadors de l'usuari</span>
@@ -82,7 +82,7 @@
                             <span>Mòbil</span>
                         </v-tooltip>
                         <v-tooltip bottom>
-                            <v-btn slot="activator" icon color="pink" flat>
+                            <v-btn slot="activator" icon color="primary" flat>
                                 <v-icon>info</v-icon>
                             </v-btn>
                             <span>Vegeu altres mòbils de l'usuari</span>
@@ -92,7 +92,7 @@
                             <span>Telèfon</span>
                         </v-tooltip>
                         <v-tooltip bottom>
-                            <v-btn slot="activator" icon color="pink" flat>
+                            <v-btn slot="activator" icon color="primary" flat>
                                 <v-icon>info</v-icon>
                             </v-btn>
                             <span>Vegeu altres telèfons de l'usuari</span>

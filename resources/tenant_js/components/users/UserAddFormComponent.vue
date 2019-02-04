@@ -119,7 +119,7 @@
                 >Crear usuari
             </v-btn>
             <template v-else>
-                <v-btn color="error" @click.native="remove" :disabled="deleting" :loading="deleting">Eliminar</v-btn>
+                <v-btn color="error" @click.native="remove" :disabled="deleting" :loading="deleting" flat>Eliminar</v-btn>
                 <v-btn color="primary" @click.native="$emit('created', this.user)">Continuar</v-btn>
             </template>
         </template>
@@ -167,10 +167,13 @@ export default {
       checkingPersonalEmail: false,
       checkingUsername: false,
       newUser: true,
-      welcomeEmail: true,
-      googleUser: true,
+      welcomeEmail: false,
+      // welcomeEmail: true,
+      // googleUser: true,
+      googleUser: false,
       ldapUser: true,
-      moodleUser: true
+      // moodleUser: true
+      moodleUser: false
     }
   },
   props: {
@@ -244,21 +247,24 @@ export default {
       this.sn2 = ''
       this.email = ''
     },
-    remove () {
-      this.removing = true
-      if (this.user) {
-        this.$store.dispatch(actions.DELETE_USER_PERSON, this.user.id).then(response => {
-          this.removing = false
-          this.user = response.data
-          this.$v.$reset()
-          this.$emit('deleted', this.user)
-          this.$snackbar.showMessage('Usuari eliminat correctament')
-        }).catch(error => {
-          this.removing = false
-          this.$snackbar.showError(error)
-        }).then(() => {
-          this.removing = false
-        })
+    async remove () {
+      let res = await this.$confirm('Esteu segurs que voleu eliminar aquest usuari?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      if (res) {
+        this.removing = true
+        if (this.user) {
+          this.$store.dispatch(actions.DELETE_USER_PERSON, this.user.id).then(response => {
+            this.removing = false
+            this.user = response.data
+            this.$v.$reset()
+            this.$emit('deleted', this.user)
+            this.$snackbar.showMessage('Usuari eliminat correctament')
+          }).catch(error => {
+            this.removing = false
+            this.$snackbar.showError(error)
+          }).then(() => {
+            this.removing = false
+          })
+        }
       }
     },
     inputEmail () {

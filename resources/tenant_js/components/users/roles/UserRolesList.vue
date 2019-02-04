@@ -24,10 +24,7 @@ export default {
       type: Object,
       required: true
     },
-    roles: {
-      type: Array,
-      required: true
-    },
+    roles: {},
     small: {
       type: Boolean,
       default: true

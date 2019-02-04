@@ -18,12 +18,21 @@
                 <v-icon small>close</v-icon> Sortir</v-btn>
         </v-card-actions>
         <v-card-actions v-else>
-            <v-btn color="primary" @click="add" :disabled="loading || this.selectedRoles.length === 0" :loading="loading">
-                <v-icon>add</v-icon> Afegir
+            <v-btn flat @click="close">
+                <v-icon>exit_to_app</v-icon>
+                Tancar
             </v-btn>
-            <v-btn @click="close">Tancar</v-btn>
-            <v-btn color="error" @click="changeStep(step - 1)">Endarrera</v-btn>
-            <v-btn color="error" @click="changeStep(step + 1)">Següent</v-btn>
+            <v-btn flat @click="$emit('back')">
+                <v-icon class="mr-2">arrow_back</v-icon>
+                Endarrera
+            </v-btn>
+            <v-btn flat @click="$emit('forward')" v-if="forwardButton">
+                <v-icon class="mr-2">arrow_forward</v-icon>
+                Següent
+            </v-btn>
+            <v-btn color="primary" @click="add" :disabled="loading || this.selectedRoles.length === 0" :loading="loading">
+                <v-icon>add</v-icon> Assignar rol/s
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -47,6 +56,10 @@ export default {
     }
   },
   props: {
+    forwardButton: {
+      type: Boolean,
+      required: false
+    },
     user: {
       type: Object,
       required: true
@@ -54,16 +67,9 @@ export default {
     dialog: {
       type: Boolean,
       default: true
-    },
-    step: {
-      type: Number,
-      required: false
     }
   },
   methods: {
-    changeStep (step) {
-      this.$emit('step', step)
-    },
     close () {
       this.$emit('close')
     },

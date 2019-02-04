@@ -123,22 +123,30 @@
                             </v-container>
                          </v-card>
                     </template>
-                    <v-btn @click="close">Tancar</v-btn>
-                    <v-btn color="error" @click="step = 1">Endarrera</v-btn>
-                    <v-btn color="error" @click="step = 3">Següent</v-btn>
+                    <v-btn flat @click="close">
+                        <v-icon class="mr-2">exit_to_app</v-icon>Tancar
+                    </v-btn>
+                    <v-btn flat @click="step = 1">
+                        <v-icon class="mr-2">arrow_back</v-icon>Endarrera
+                    </v-btn>
+                    <v-btn color="primary" @click="step = 3">
+                        <v-icon class="mr-2">arrow_forward</v-icon>Següent
+                    </v-btn>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 3" step="3">Dades Personals</v-stepper-step>
                 <v-stepper-content step="3">
-                    TODO Dades personals
-
-                    <v-btn @click="close">Tancar</v-btn>
-                    <v-btn color="error" @click="step = 2">Endarrera</v-btn>
-                    <v-btn color="error" @click="step = 4">Següent</v-btn>
+                    <user-add-person-form
+                            :user="this.user"
+                            @close="close"
+                            @back="step=2"
+                            @forward="step=4"></user-add-person-form>
                 </v-stepper-content>
                 <v-stepper-step :complete="step > 4" step="4">Assignar rol</v-stepper-step>
 
                 <v-stepper-content step="4">
-                    <user-roles-manage v-if="user" :user="user" @step="changeStep" :step="4" @close="close" :dialog="false"></user-roles-manage>
+                    <user-roles-manage v-if="user" :user="user"
+                                       @back="step=3"
+                                       :step="4" @close="close" :dialog="false"></user-roles-manage>
                 </v-stepper-content>
 
             </v-stepper>
@@ -151,19 +159,24 @@
 import UserAddForm from './UserAddFormComponent'
 import UserAvatar from '../ui/UserAvatarComponent'
 import UserRolesManage from './roles/UserRolesManage'
-
+import UserAddPersonForm from '../people/UserAddPersonForm'
 export default {
   name: 'UserAddComponent',
   components: {
     'user-add-form': UserAddForm,
     'user-avatar': UserAvatar,
-    'user-roles-manage': UserRolesManage
+    'user-roles-manage': UserRolesManage,
+    'user-add-person-form': UserAddPersonForm
   },
   data () {
     return {
       dialog: false,
-      step: 1,
-      user: null,
+      step: 3,
+      // user: null,
+      user: {
+        'id': 1,
+        'person_id': 1
+      },
       googleUser: null,
       moodleUser: null
     }
