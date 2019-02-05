@@ -150,61 +150,8 @@
                             v-model="floor_number"
                     ></v-text-field>
                 </v-flex>
-                <v-flex md1>
-                    <v-combobox
-                            name="postal_code"
-                            label="Codi postal"
-
-                            :loading="loadingPostalCode"
-                            cache-items
-                            required
-                            autocomplete
-                            clearable
-                            :error-messages="postalCodeErrors"
-                            @input="$v.postal_code.$touch()"
-                            @blur="$v.postal_code.$touch()"
-                            :items="postalCodes"
-                            :search-input.sync="searchPostalCodes"
-                            v-model="postal_code"
-                    ></v-combobox>
-                </v-flex>
-                <v-flex md3>
-                    <v-combobox
-                            name="locality"
-                            label="Localitat"
-                            tabindex = "-1"
-                            item-text="name"
-                            :loading="loadingLocality"
-                            cache-items
-                            required
-                            autocomplete
-                            clearable
-                            :items="localities"
-                            :search-input.sync="searchLocalities"
-                            :error-messages="localityErrors"
-                            v-model="locality"
-                            @input="$v.locality.$touch()"
-                            @blur="$v.locality.$touch()"
-                    ></v-combobox>
-                </v-flex>
-                <v-flex md2>
-                    <v-combobox
-                            name="province"
-                            label="Província"
-                            tabindex = "-1"
-                            item-text="name"
-                            autocomplete
-                            :loading="loadingProvince"
-                            cache-items
-                            required
-                            clearable
-                            :items="provinces"
-                            :search-input.sync="searchProvinces"
-                            v-model="province"
-                            :error-messages="provinceErrors"
-                            @input="$v.province.$touch()"
-                            @blur="$v.province.$touch()"
-                    ></v-combobox>
+                <v-flex md6>
+                    <locality-complex-field v-model="locality"></locality-complex-field>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -538,7 +485,7 @@ import UploadCardComponent from '../ui/UploadCardComponent.vue'
 import ProposedUser from '../users/ProposedUserComponent.vue'
 import JobsSelectForPendingTeacher from '../jobs/JobsSelectForPendingTeacher.vue'
 import SpecialtySelect from '../specialties/SpecialtySelectComponent'
-
+import LocalityComplexField from '../people/fields/address/LocalityComplexField'
 export default {
   name: 'PendingTeacherForm',
   components: {
@@ -546,7 +493,8 @@ export default {
     'teacher-select': TeacherSelect,
     'proposed-user': ProposedUser,
     'jobs-select-for-pendingteacher': JobsSelectForPendingTeacher,
-    'specialty-select': SpecialtySelect
+    'specialty-select': SpecialtySelect,
+    'locality-complex-field': LocalityComplexField
   },
   mixins: [validationMixin, withSnackbar, PendingTeacher],
   data () {
@@ -573,19 +521,6 @@ export default {
     birthdateMenu (val) {
       val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
-    searchPostalCodes (val) {
-      val && (val.length > 1) && this.queryPostalCodes(val)
-    },
-    searchLocalities (val) {
-      val && (val.length > 1) && this.queryLocalities(val)
-    },
-    searchProvinces (val) {
-      val && (val.length > 1) && this.queryProvinces(val)
-    },
-    postal_code: function (newPostalCode) {
-      this.setLocality(newPostalCode)
-      this.setProvince(newPostalCode)
-    },
     specialty: function (newSpecialty) {
       this.setForce(newSpecialty)
     }
@@ -602,28 +537,6 @@ export default {
         if (foundForce) this.force = foundForce
       }
     },
-    setLocality (postalCode) {
-      if (postalCode) {
-        let foundLocality = this.allLocalities.find(locality => {
-          return locality.postalcode === postalCode
-        })
-        if (foundLocality) {
-          this.localities.push(foundLocality)
-          this.locality = foundLocality
-        }
-      }
-    },
-    setProvince (postalCode) {
-      if (postalCode) {
-        let foundProvince = this.allProvinces.find(province => {
-          return postalCode.startsWith(province.postal_code_prefix)
-        })
-        if (foundProvince) {
-          this.provinces.push(foundProvince)
-          this.province = foundProvince
-        }
-      }
-    },
     getSpecialty (specialtyId) {
       return this.specialties.find(specialty => specialty.id === specialtyId)
     },
@@ -635,21 +548,6 @@ export default {
     },
     getTeacher (teacherId) {
       return this.teachers.find(teacher => teacher.teacher_id === teacherId)
-    },
-    queryPostalCodes (v) {
-      this.postalCodes = this.allPostalCodes.filter(postalCode => {
-        return (postalCode || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-      })
-    },
-    queryLocalities (v) {
-      this.localities = this.allLocalities.filter(locality => {
-        return (locality.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-      })
-    },
-    queryProvinces (v) {
-      this.provinces = this.allProvinces.filter(province => {
-        return (province.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-      })
     },
     validateDNI (dni) {
       let numero, lt, letra
@@ -719,11 +617,10 @@ export default {
         number: this.number,
         floor: this.floor,
         floor_number: this.floor_number,
-        postal_code: this.postal_code,
         locality_id: this.locality.id,
-        locality: this.locality.name,
-        province_id: this.province.id,
-        province: this.province.name,
+        locality: this.locality && this.locality.locality && this.locality.locality.name,
+        province_id: this.locality && this.locality.province && this.locality.province.id,
+        province: this.locality && this.locality.province && this.locality.province.name,
         email: this.email,
         other_emails: this.other_emails.join(),
         mobile: this.mobile,
@@ -763,9 +660,7 @@ export default {
       this.number = ''
       this.floor = ''
       this.floor_number = ''
-      this.postal_code = ''
-      this.locality = ''
-      this.province = ''
+      this.locality = {}
       this.email = ''
       this.other_emails = []
       this.mobile = ''
@@ -790,41 +685,6 @@ export default {
     saveBirthdate (date) {
       this.$refs.menu.save(date)
     },
-    fetchAllProvinces () {
-      return new Promise((resolve, reject) => {
-        this.loadingProvince = true
-        axios.get('/api/v1/provinces').then(response => {
-          this.allProvinces = response.data
-          this.loadingProvince = false
-          resolve(response)
-        }).catch(error => {
-          this.loadingProvince = false
-          this.showError(error)
-          reject(error)
-        })
-      })
-    },
-    fetchAllLocalities () {
-      return new Promise((resolve, reject) => {
-        this.loadingLocality = true
-        axios.get('/api/v1/localities').then(response => {
-          this.allLocalities = response.data
-          this.allPostalCodes = [...new Set(this.allLocalities.map(locality => locality['postalcode']))] // Remove duplicates
-          this.loadingLocality = false
-          this.fillTipicalLocaties()
-          resolve(response)
-        }).catch(error => {
-          this.loadingLocality = false
-          this.showError(error)
-          reject(error)
-        })
-      })
-    },
-    fillTipicalLocaties () {
-      this.localities = this.allLocalities.filter(locality => {
-        return locality.postalcode.startsWith('43')
-      })
-    },
     mapTeacher (pendingTeacher) {
       this.name = pendingTeacher.name
       this.sn1 = pendingTeacher.sn1
@@ -835,7 +695,7 @@ export default {
       this.number = pendingTeacher.number
       this.floor = pendingTeacher.floor
       this.floor_number = pendingTeacher.floor_number
-      this.postal_code = pendingTeacher.postal_code
+      this.postal_code = pendingTeacher.locality && pendingTeacher.locality.postalcode
       this.locality = pendingTeacher.locality
       this.province = pendingTeacher.province
       this.email = pendingTeacher.email
@@ -861,11 +721,8 @@ export default {
     }
   },
   created () {
-    this.fetchAllProvinces().then(response => {
-      this.fetchAllLocalities().then(response => {
-        if (this.pendingTeacher) this.mapTeacher(this.pendingTeacher)
-      })
-    })
+    // TODO
+    if (this.pendingTeacher) this.mapTeacher(this.pendingTeacher)
   }
 }
 </script>

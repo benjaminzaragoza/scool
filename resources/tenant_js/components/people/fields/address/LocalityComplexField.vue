@@ -130,6 +130,12 @@ export default {
       this.setLocality(postalcode)
       this.setProvince(postalcode)
       this.setLocalityObject()
+    },
+    province: function () {
+      this.setLocalityObject()
+    },
+    locality: function () {
+      this.setLocalityObject()
     }
   },
   methods: {
