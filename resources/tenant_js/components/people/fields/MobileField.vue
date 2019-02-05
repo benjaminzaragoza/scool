@@ -1,15 +1,16 @@
 <template>
-    <span>
-        <v-text-field
-                name="mobile"
-                label="Mòbil"
-                v-model="dataMobile"
-                :error-messages="mobileErrors"
-                @input="input"
-                @blur="blur"
-                required
-        ></v-text-field>
-    </span>
+    <v-text-field
+            label="Telèfon mòbil"
+            v-model="dataMobile"
+            required
+            :tabindex="tabIndex"
+            mask="+34 ###-###-###"
+            placeholder="+34 666777888"
+            hint="9 números seguits sense codi de país"
+            :return-masked-value="false"
+            @input="input"
+            @blur="blur"
+    ></v-text-field>
 </template>
 
 <script>
@@ -20,7 +21,7 @@ export default {
   'name': 'MobileField',
   mixins: [validationMixin],
   validations: {
-    mobile: { required }
+    dataMobile: { required }
   },
   data () {
     return {
@@ -28,19 +29,26 @@ export default {
       loading: false
     }
   },
-  model: {
-    prop: 'mobile',
-    event: 'input'
-  },
+  // model: {
+  //   prop: 'mobile',
+  //   event: 'input'
+  // },
   props: {
     mobile: {},
-    invalid: {}
+    invalid: {},
+    tabIndex: {
+      default: null
+    },
+    required: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     mobileErrors () {
       const errors = []
-      if (!this.$v.mobile.$dirty) return errors
-      !this.$v.mobile.required && errors.push('El mòbil és obligatori.')
+      if (!this.$v.dataMobile.$dirty) return errors
+      !this.$v.dataMobile.required && errors.push('El mòbil és obligatori.')
       return errors
     },
     invalidForm () {
@@ -54,11 +62,11 @@ export default {
   },
   methods: {
     input () {
-      this.$v.mobile.$touch()
+      this.$v.dataMobile.$touch()
       this.$emit('input', this.dataMobile)
     },
     blur () {
-      this.$v.mobile.$touch()
+      this.$v.dataMobile.$touch()
       this.$emit('blur', this.dataMobile)
     }
   }

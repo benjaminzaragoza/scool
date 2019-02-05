@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Tenants\Changelog;
+namespace Tests\Unit\Tenants\Notifications;
 
 use App\Console\Kernel;
 use App\Events\Incidents\IncidentReplyAdded;

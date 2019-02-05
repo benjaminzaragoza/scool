@@ -70,16 +70,7 @@
                     ></v-text-field>
                 </v-flex>
                 <v-flex md1>
-                    <v-text-field
-                            label="Telèfon mòbil"
-                            v-model="mobile"
-                            required
-                            tabindex="6"
-                            mask="###-###-###"
-                            placeholder="666777888"
-                            hint="9 números seguits sense codi de país"
-                            :return-masked-value="false"
-                    ></v-text-field>
+                    <mobile-field v-model="mobile" tab-index="6"></mobile-field>
                 </v-flex>
                 <v-flex md2>
                     <v-switch
@@ -134,13 +125,15 @@ import * as actions from '../../store/action-types'
 import SelectUser from './UsersSelectComponent'
 import UserTypesSelect from './UserTypesSelect'
 import hasTenantInfo from '../mixins/hasTenantInfo'
+import MobileField from '../people/fields/MobileField'
 
 export default {
   name: 'UserAddForm',
   mixins: [validationMixin, hasTenantInfo, SendsWelcomeEmail],
   components: {
     'user-types-select': UserTypesSelect,
-    'select-user': SelectUser
+    'select-user': SelectUser,
+    'mobile-field': MobileField
   },
   validations: {
     dataUserType: { required },

@@ -138,12 +138,16 @@ export default {
     },
     civilStatus () {
       this.updateDataForm()
+    },
+    identifier () {
+      this.updateDataForm()
     }
   },
   methods: {
     updateDataForm () {
       this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
       this.civilStatus ? (this.dataForm['civilStatus'] = this.civilStatus) : delete this.dataForm['civilStatus']
+      this.identifier ? (this.dataForm['identifier'] = this.identifier) : delete this.dataForm['identifier']
     },
     save () {
       console.log('TODO SAVE')

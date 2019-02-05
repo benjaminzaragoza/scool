@@ -35,15 +35,9 @@ import { validationMixin } from 'vuelidate'
 import helpers from '../../../utils/helpers'
 
 function dniValidator (value) {
-  console.log('prova')
-  console.log(value)
   if (value) return helpers.validateDNI(value)
   return false
 }
-//
-// export default {
-//   data () { return { name: '' } },
-//   validations: { name: { myCustomValidator, } } }
 
 export default {
   name: 'FullIdentifierField',
@@ -57,7 +51,8 @@ export default {
       loading: false,
       dataIdentifierTypes: [],
       dataIdentifierType: null,
-      dataIdentifier: null
+      dataIdentifier: null,
+      dataIdentifierObject: {}
     }
   },
   model: {
@@ -86,17 +81,25 @@ export default {
       const errors = []
       if (!this.$v.dataIdentifier.$dirty) return errors
       !this.$v.dataIdentifier.required && errors.push('El identificador és obligatori.')
-      !this.$v.dataIdentifier.dniValidator && errors.push('El dni és incorrecte!')
-
+      if (this.dataIdentifierType === 'NIF') !this.$v.dataIdentifier.dniValidator && errors.push('El DNI és incorrecte!')
       return errors
     }
   },
   watch: {
     dataIdentifierType (dataIdentifierType) {
       if (!dataIdentifierType) this.$v.$reset()
+      this.setIdentifierObject()
+    },
+    dataIdentifier () {
+      this.setIdentifierObject()
     }
   },
   methods: {
+    setIdentifierObject () {
+      this.dataIdentifierType ? (this.dataIdentifierObject['identifierType'] = this.dataIdentifierType) : delete this.dataIdentifierObject['identifierType']
+      this.dataIdentifier ? (this.dataIdentifierObject['identifier'] = this.dataIdentifier) : delete this.dataIdentifierObject['identifier']
+      this.$emit('input', this.dataIdentifierObject)
+    },
     fetchIdentifierTypes () {
       this.loading = true
       window.axios.get('/api/v1/identifier_types').then((response) => {
