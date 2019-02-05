@@ -129,6 +129,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
 //        Route::get('/gsuite/notifications','Tenant\GoogleUsersPushNotificationController@store');
 
         Route::get('/add_teacher', '\\' . PendingTeachersController::class . '@showForm');
+        Route::get('/new_teacher', '\\' . PendingTeachersController::class . '@showForm');
         Route::get('/nou_professor', '\\' . PendingTeachersController::class . '@showForm');
 
         Route::get('/pending_teacher/{teacher}', 'Tenant\PendingTeachersController@show');

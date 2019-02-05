@@ -18,6 +18,9 @@ import { validationMixin } from 'vuelidate'
 export default {
   name: 'StreetField',
   mixins: [validationMixin],
+  validations: {
+    street: { required }
+  },
   data () {
     return {
       street: null

@@ -34,7 +34,7 @@ import LocalityField from './address/LocalityField'
 import ProvinceField from './address/ProvinceField'
 
 export default {
-  'name': 'AddressFields',
+  name: 'AddressFields',
   components: {
     'street-field': StreetField,
     'street-number-field': StreetNumberField,
@@ -73,7 +73,8 @@ export default {
   },
   computed: {
     invalidForm () {
-      return this.$v.$invalid
+      // TODO
+      // return this.$v.$invalid
     }
   },
   watch: {

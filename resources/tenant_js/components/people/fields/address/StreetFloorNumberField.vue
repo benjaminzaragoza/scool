@@ -8,6 +8,11 @@
 
 <script>
 export default {
-  name: 'StreetFloorNumberField'
+  name: 'StreetFloorNumberField',
+  data () {
+    return {
+      floor_number: null
+    }
+  }
 }
 </script>

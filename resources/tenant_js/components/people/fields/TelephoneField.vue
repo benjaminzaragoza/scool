@@ -1,17 +1,17 @@
 <template>
     <v-text-field
-            name="floor"
-            label="Pis"
-            v-model="floor"
+            name="phone"
+            label="Telèfon"
+            v-model="phone"
     ></v-text-field>
 </template>
 
 <script>
 export default {
-  name: 'StreetFloorField',
+  name: 'TelephoneField',
   data () {
     return {
-      floor: null
+      phone: null
     }
   }
 }
