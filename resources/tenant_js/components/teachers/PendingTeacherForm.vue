@@ -416,7 +416,7 @@
             </div>
         </h1>
 
-        <v-container fluid grid-list-md fluid>
+        <v-container fluid grid-list-md>
             <v-layout row wrap>
                 <v-flex md3>
                     <upload-card
@@ -477,8 +477,6 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import withSnackbar from '../mixins/withSnackbar'
-import axios from 'axios'
 import PendingTeacher from './Mixins/PendingTeacher'
 import TeacherSelect from './TeacherSelectComponent.vue'
 import UploadCardComponent from '../ui/UploadCardComponent.vue'
@@ -486,6 +484,7 @@ import ProposedUser from '../users/ProposedUserComponent.vue'
 import JobsSelectForPendingTeacher from '../jobs/JobsSelectForPendingTeacher.vue'
 import SpecialtySelect from '../specialties/SpecialtySelectComponent'
 import LocalityComplexField from '../people/fields/address/LocalityComplexField'
+
 export default {
   name: 'PendingTeacherForm',
   components: {
@@ -496,7 +495,7 @@ export default {
     'specialty-select': SpecialtySelect,
     'locality-complex-field': LocalityComplexField
   },
-  mixins: [validationMixin, withSnackbar, PendingTeacher],
+  mixins: [validationMixin, PendingTeacher],
   data () {
     return {
       ready: false,
@@ -571,16 +570,16 @@ export default {
     createTeacher (teacher) {
       if (!this.$v.$invalid) {
         if (this.identifierType === 'NIF' && !this.validateDNI(this.identifier)) {
-          this.showError('El DNI no és vàlid')
+          this.$snackbar.showError('El DNI no és vàlid')
           return
         }
         let postData = { ...this.getPostTeacher(), username: this.username, job_id: this.job.id, pending_teacher_id: this.pendingTeacher.id }
         this.creating = true
-        axios.post('/api/v1/approved_teacher', postData).then(response => {
+        window.axios.post('/api/v1/approved_teacher', postData).then(response => {
           this.creating = false
         }).catch(error => {
           this.creating = false
-          this.showError(error)
+          this.$snackbar.showError(error)
         })
       } else {
         this.$v.$touch()
@@ -591,15 +590,15 @@ export default {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         if (this.identifierType === 'NIF' && !this.validateDNI(this.identifier)) {
-          this.showError('El DNI no és vàlid')
+          this.$snackbar.showError('El DNI no és vàlid')
           return
         }
-        axios.post('api/v1/add_teacher', this.getPostTeacher()).then(response => {
-          this.showMessage('Dades enviades correctament')
+        window.axios.post('api/v1/add_teacher', this.getPostTeacher()).then(response => {
+          this.$snackbar.showMessage('Dades enviades correctament')
           this.clear()
           this.$v.$reset()
         }).catch(error => {
-          this.showError(error)
+          this.$snackbar.showError(error)
         })
       } else {
         this.$v.$touch()
