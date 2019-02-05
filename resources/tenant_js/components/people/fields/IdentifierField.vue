@@ -1,15 +1,13 @@
 <template>
-    <span>
-        <v-text-field
-                name="identifier"
-                label="DNI/NIE/Passaport"
-                v-model="dataIdentifier"
-                :error-messages="identifierErrors"
-                @input="input"
-                @blur="blur"
-                required
-        ></v-text-field>
-    </span>
+    <v-text-field
+            name="identifier"
+            label="DNI/NIE/Passaport"
+            v-model="dataIdentifier"
+            :error-messages="identifierErrors"
+            @input="input"
+            @blur="blur"
+            required
+    ></v-text-field>
 </template>
 
 <script>
@@ -17,7 +15,7 @@ import { required } from 'vuelidate/lib/validators'
 import { validationMixin } from 'vuelidate'
 
 export default {
-  'name': 'IdentifierTypeField',
+  'name': 'IdentifierField',
   mixins: [validationMixin],
   validations: {
     dataIdentifier: { required }

@@ -9,10 +9,10 @@
                     <identifier-field v-model="identifier" :invalid.sync="identifierInvalid"></identifier-field>
                 </v-flex>
                 <v-flex md2>
-                    MÒBIL | ALTRES MÒBILS
+                    <mobile-field v-model="mobile" :invalid.sync="mobileInvalid"></mobile-field>
                 </v-flex>
                 <v-flex md2>
-                    ADREÇA
+                    <address-fields v-model="address" :invalid.sync="addressInvalid"></address-fields>
                 </v-flex>
                 <v-flex md3>
                     DATA DE NAIXEMENT
@@ -56,11 +56,16 @@
 <script>
 import IdentifierTypeField from './fields/IdentifierTypeField'
 import IdentifierField from './fields/IdentifierField'
+import MobileField from './fields/MobileField'
+import AddressField from './fields/AddressFields'
+
 export default {
   name: 'UserAddPersonForm',
   components: {
     'identifier-type-field': IdentifierTypeField,
-    'identifier-field': IdentifierField
+    'identifier-field': IdentifierField,
+    'mobile-field': MobileField,
+    'address-field': AddressField
   },
   data () {
     return {
@@ -68,6 +73,10 @@ export default {
       identifierTypeInvalid: true,
       identifier: null,
       identifierInvalid: true,
+      mobile: null,
+      mobileInvalid: true,
+      address: null,
+      addressInvalid: true,
       saving: false
     }
   },
@@ -81,7 +90,8 @@ export default {
     invalid () {
       if (
         (!this.identifierTypeInvalid && this.identifierType) &&
-        (!this.identifierInvalid && this.identifier)
+        (!this.identifierInvalid && this.identifier) &&
+        (!this.mobileInvalid && this.mobile)
       ) {
         return false
       }

@@ -1,19 +1,17 @@
 <template>
-    <span>
-        <v-select
-                name="identifierType"
-                label="Tipus id"
-                required
-                clearable
-                :error-messages="identifierTypeErrors"
-                @input="input"
-                @blur="blur"
-                :items="dataIdentifierTypes"
-                v-model="dataIdentifierType"
-                :loading="loading"
-                item-text="name"
-        ></v-select>
-    </span>
+    <v-select
+            name="identifierType"
+            label="Tipus id"
+            required
+            clearable
+            :error-messages="identifierTypeErrors"
+            @input="input"
+            @blur="blur"
+            :items="dataIdentifierTypes"
+            v-model="dataIdentifierType"
+            :loading="loading"
+            item-text="name"
+    ></v-select>
 </template>
 
 <script>
