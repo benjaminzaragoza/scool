@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap>
-        <v-flex md3>
+        <v-flex md4>
             <street-field v-model="street" :invalid.sync="streetInvalid"></street-field>
         </v-flex>
         <v-flex md1>
@@ -12,14 +12,8 @@
         <v-flex md1>
             <street-floor-number-field v-model="streetFloorNumber" :invalid.sync="streetFloorNumberInvalid"></street-floor-number-field>
         </v-flex>
-        <v-flex md1>
-            <postalcode-field v-model="postalcode" :invalid.sync="postalcodeInvalid"></postalcode-field>
-        </v-flex>
-        <v-flex md3>
-            <locality-field v-model="locality" :invalid.sync="localityInvalid"></locality-field>
-        </v-flex>
-        <v-flex md2>
-            <province-field v-model="province" :invalid.sync="provinceInvalid"></province-field>
+        <v-flex md5>
+            <locality-complex-field v-model="locality"></locality-complex-field>
         </v-flex>
     </v-layout>
 </template>
@@ -29,9 +23,7 @@ import StreetField from './address/StreetField'
 import StreetNumberField from './address/StreetNumberField'
 import StreetFloorField from './address/StreetFloorField'
 import StreetFloorNumberField from './address/StreetFloorNumberField'
-import PostalcodeField from './address/PostalcodeField'
-import LocalityField from './address/LocalityField'
-import ProvinceField from './address/ProvinceField'
+import LocalityComplexField from './address/LocalityComplexField'
 
 export default {
   name: 'AddressFields',
@@ -40,9 +32,7 @@ export default {
     'street-number-field': StreetNumberField,
     'street-floor-field': StreetFloorField,
     'street-floor-number-field': StreetFloorNumberField,
-    'postalcode-field': PostalcodeField,
-    'locality-field': LocalityField,
-    'province-field': ProvinceField
+    'locality-complex-field': LocalityComplexField
   },
   data () {
     return {

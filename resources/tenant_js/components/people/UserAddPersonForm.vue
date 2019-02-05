@@ -12,10 +12,10 @@
                     <mobile-field v-model="mobile" :invalid.sync="mobileInvalid"></mobile-field>
                 </v-flex>
                 <v-flex md1>
-                    <birthdate-field></birthdate-field>
+                    <birthdate-field v-model="birthdate"></birthdate-field>
                 </v-flex>
                 <v-flex md1>
-                    <birthplace-field></birthplace-field>
+                    <birthplace-field v-model="birthplace"></birthplace-field>
                 </v-flex>
                 <v-flex md1>
                     <gender-field v-model="gender"></gender-field>
@@ -24,15 +24,15 @@
                     <civil-status-field v-model="civilStatus"></civil-status-field>
                 </v-flex>
                 <v-flex md1>
-                    <telephone-field></telephone-field>
-                    <other-telephones-field></other-telephones-field>
+                    <telephone-field v-model="telephone"></telephone-field>
+                    <other-telephones-field v-model="otherTelephones"></other-telephones-field>
                 </v-flex>
                 <v-flex md1>
-                    <mobile-field></mobile-field>
-                    <other-mobiles-field></other-mobiles-field>
+                    <mobile-field v-model="mobile"></mobile-field>
+                    <other-mobiles-field v-model="otherMobiles"></other-mobiles-field>
                 </v-flex>
                 <v-flex md1>
-                    <person-notes-field></person-notes-field>
+                    <person-notes-field v-model="notes"></person-notes-field>
                 </v-flex>
             </v-layout>
             <address-fields v-model="address" :invalid.sync="addressInvalid"></address-fields>
@@ -90,12 +90,18 @@ export default {
       identifierTypeInvalid: true,
       identifier: null,
       identifierInvalid: true,
+      gender: null,
+      notes: null,
+      civilStatus: null,
+      telephone: null,
+      otherTelephones: null,
       mobile: null,
       mobileInvalid: true,
-      gender: null,
-      civilStatus: null,
+      otherMobiles: null,
       address: null,
       addressInvalid: true,
+      birthdate: null,
+      birthplace: null,
       saving: false
     }
   },
