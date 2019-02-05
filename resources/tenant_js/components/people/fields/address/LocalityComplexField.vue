@@ -81,10 +81,16 @@ export default {
       searchLocalities: null,
       province: null,
       provinces: [],
-      searchProvinces: null
+      searchProvinces: null,
+      dataLocalityObject: null
     }
   },
+  model: {
+    prop: 'localityObject',
+    event: 'input'
+  },
   props: {
+    localityObject: {},
     required: {
       type: Boolean,
       default: false
@@ -123,9 +129,18 @@ export default {
     postalcode: function (postalcode) {
       this.setLocality(postalcode)
       this.setProvince(postalcode)
+      this.setLocalityObject()
     }
   },
   methods: {
+    setLocalityObject () {
+      this.dataLocalityObject = {
+        postalcode: this.postalcode,
+        locality: this.locality,
+        province: this.province
+      }
+      this.$emit('input', this.dataLocalityObject)
+    },
     setLocality (postalCode) {
       if (postalCode) {
         let foundLocality = this.allLocalities.find(locality => {
