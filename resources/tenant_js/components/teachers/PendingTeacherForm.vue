@@ -151,7 +151,7 @@
                     ></v-text-field>
                 </v-flex>
                 <v-flex md6>
-                    <locality-complex-field v-model="locality"></locality-complex-field>
+                    <locality-complex-field v-model="locality" required></locality-complex-field>
                 </v-flex>
             </v-layout>
         </v-container>

@@ -13,7 +13,7 @@
             <street-floor-number-field v-model="streetFloorNumber" :invalid.sync="streetFloorNumberInvalid"></street-floor-number-field>
         </v-flex>
         <v-flex md5>
-            <locality-complex-field v-model="locality"></locality-complex-field>
+            <locality-complex-field v-model="locality" :required="required"></locality-complex-field>
         </v-flex>
     </v-layout>
 </template>
@@ -59,7 +59,11 @@ export default {
   },
   props: {
     mobile: {},
-    invalid: {}
+    invalid: {},
+    required: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     invalidForm () {

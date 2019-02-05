@@ -1,12 +1,21 @@
 <template>
     <form>
+        <span style="display:inline-flex;">
+            <v-switch
+                    label="Activar validació"
+                    v-model="validate"
+                    class="mr-4"
+            ></v-switch>
+            <v-switch
+                    label="Camps requirits"
+                    v-model="required"
+            ></v-switch>
+        </span>
+
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
-                <v-flex md1>
-                    <identifier-type-field v-model="identifierType" :invalid.sync="identifierTypeInvalid"></identifier-type-field>
-                </v-flex>
-                <v-flex md1>
-                    <identifier-field v-model="identifier" :invalid.sync="identifierInvalid"></identifier-field>
+                <v-flex md2>
+                    <full-identifier-field v-model="identifier" :required="required"></full-identifier-field>
                 </v-flex>
                 <v-flex md1>
                     <mobile-field v-model="mobile" :invalid.sync="mobileInvalid"></mobile-field>
@@ -35,7 +44,7 @@
                     <person-notes-field v-model="notes"></person-notes-field>
                 </v-flex>
             </v-layout>
-            <address-fields v-model="address" :invalid.sync="addressInvalid"></address-fields>
+            <address-fields v-model="address" :invalid.sync="addressInvalid" :required="validate"></address-fields>
         </v-container>
 
         <v-btn flat @click="$emit('close')">
@@ -50,13 +59,14 @@
         <v-btn color="primary" @click="save" :loading="saving" :disabled="saving || invalid">
             <v-icon class="mr-2">save</v-icon>Guardar
         </v-btn>
+        Data Form:
+        {{ dataForm }}
     </form>
 </template>
 
 <script>
 
-import IdentifierTypeField from './fields/IdentifierTypeField'
-import IdentifierField from './fields/IdentifierField'
+import FullIdentifierField from './fields/FullIdentifierField'
 import MobileField from './fields/MobileField'
 import AddressFields from './fields/AddressFields'
 import BirthdateField from './fields/BirthdateField'
@@ -71,8 +81,7 @@ import PersonNotesField from './fields/PersonNotesField'
 export default {
   name: 'UserAddPersonForm',
   components: {
-    'identifier-type-field': IdentifierTypeField,
-    'identifier-field': IdentifierField,
+    'full-identifier-field': FullIdentifierField,
     'address-fields': AddressFields,
     'birthdate-field': BirthdateField,
     'birthplace-field': BirthplaceField,
@@ -86,6 +95,9 @@ export default {
   },
   data () {
     return {
+      dataForm: {},
+      validate: true,
+      required: false,
       identifierType: null,
       identifierTypeInvalid: true,
       identifier: null,
@@ -120,7 +132,19 @@ export default {
       return true
     }
   },
+  watch: {
+    gender () {
+      this.updateDataForm()
+    },
+    civilStatus () {
+      this.updateDataForm()
+    }
+  },
   methods: {
+    updateDataForm () {
+      this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
+      this.civilStatus ? (this.dataForm['civilStatus'] = this.civilStatus) : delete this.dataForm['civilStatus']
+    },
     save () {
       console.log('TODO SAVE')
       const personalData = {
