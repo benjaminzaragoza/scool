@@ -34,6 +34,7 @@ use App\Http\Controllers\Tenant\Api\Notifications\UserUnreadNotificationsControl
 use App\Http\Controllers\Tenant\Api\Permissions\PermissionsController;
 use App\Http\Controllers\Tenant\Api\Person\IdentifierTypes\IdentifierTypesController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
+use App\Http\Controllers\Tenant\Api\Person\UserPeopleController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsCodeController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsController;
 use App\Http\Controllers\Tenant\Api\Positions\PositionsNameController;
@@ -133,6 +134,11 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/people', '\\'. PeopleController::class .'@store');
             Route::put('/people/{person}', '\\'. PeopleController::class .'@update');
             Route::get('/people/{person}', '\\'. PeopleController::class .'@show');
+
+            // User People
+            Route::post('/user/{user}/people', '\\'. UserPeopleController::class .'@store');
+            Route::post('/user/{user}/person', '\\'. UserPeopleController::class .'@store');
+
 
             // USERS
             Route::get('/users', '\\'. UsersController::class . '@index');

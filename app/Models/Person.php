@@ -236,4 +236,17 @@ class Person extends Model implements HasMedia
         $this->user_id = $user;
         $this->save();
     }
+
+    /**
+     * Assign address.
+     *
+     * @param Address $address
+     * @return $this
+     */
+    public function assignAddress(Address $address)
+    {
+        $address->person_id = $this->person->id;
+        $address->save();
+        return $this;
+    }
 }

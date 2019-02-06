@@ -14,6 +14,9 @@
             <person-notes-field v-model="notes"></person-notes-field>
             <other-mobiles-field v-model="otherMobiles" :required="required" :validate="validate"></other-mobiles-field>
             <other-telephones-field v-model="otherTelephones" :required="required" :validate="validate"></other-telephones-field>
+            TODO Altres emails
+            Email principal = email personal
+            TODO Altres identificadors
         </span>
 
         <v-container fluid grid-list-md text-xs-center>
