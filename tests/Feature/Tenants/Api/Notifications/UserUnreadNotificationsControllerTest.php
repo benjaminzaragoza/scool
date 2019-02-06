@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\People;
+namespace Tests\Feature\Tenants\Api\Notifications;
 
 use App\Models\User;
 use App\Notifications\SampleNotification;
