@@ -1,31 +1,34 @@
 <template>
     <v-menu
-            ref="menu"
-            lazy
-            :close-on-content-click="false"
-            v-model="menu"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-right="40"
-            min-width="290px"
-    >
+                ref="birthdateMenu"
+                lazy
+                :close-on-content-click="false"
+                v-model="menu"
+                transition="scale-transition"
+                offset-y
+                full-width
+                :nudge-right="40"
+                min-width="290px"
+                :return-value.sync="dataBirthdate"
+        >
         <v-text-field
                 name="formattedBirthdate"
-                hint="format DD/MM/AAAA"
+                hint="DD-MM-AAAA. Ex: 02-03-1978"
                 persistent-hint
+                mask="##-##-####"
                 slot="activator"
                 label="Data de naixement"
                 :value="formattedBirthdate" @change.native="formattedBirthdate = $event.target.value"
-                :error-messages="birthdateErrors"
-                @input="$v.birthdate.$touch()"
-                @blur="$v.birthdate.$touch()"
                 prepend-icon="event"
+                :error-messages="dataBirthdateErrors"
+                @input="input"
+                @blur="blur"
         ></v-text-field>
         <v-date-picker
                 ref="picker"
                 locale="ca"
-                :value="birthdate" @change.native="birthdate = $event.target.value"
+                :first-day-of-week="1"
+                :value="dataBirthdate" @change.native="dataBirthdate = $event.target.value"
                 @change="saveBirthdate"
                 min="1900-01-01"
                 :max="new Date().toISOString().substr(0, 10)"
@@ -41,27 +44,38 @@ export default {
   name: 'BirthdateField',
   mixins: [validationMixin],
   validations: {
-    birthdate: { required }
+    dataBirthdate: { required }
   },
   data () {
     return {
-      birthdate: '',
+      dataBirthdate: '',
       menu: false
+    }
+  },
+  model: {
+    prop: 'birthdate',
+    event: 'input'
+  },
+  props: {
+    birthdate: {},
+    required: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
     formattedBirthdate: {
-      get: () => {
-        return helpers.formatDate(this.birthdate)
+      get: function () {
+        return helpers.formatDate(this.dataBirthdate)
       },
-      set: (value) =>  {
-        this.birthdate = helpers.unformatDate(value)
+      set: function (value) {
+        this.dataBirthdate = helpers.unformatDate(value)
       }
     },
-    birthdateErrors () {
+    dataBirthdateErrors () {
       const errors = []
-      if (!this.$v.birthdate.$dirty) return errors
-      !this.$v.birthdate.required && errors.push('La data de naixement és obligatòria.')
+      if (!this.$v.dataBirthdate.$dirty) return errors
+      !this.$v.dataBirthdate.required && errors.push('La data de naixement és obligatòria.')
       return errors
     }
   },
@@ -72,7 +86,15 @@ export default {
   },
   methods: {
     saveBirthdate (date) {
-      this.$refs.menu.save(date)
+      this.$refs.birthdateMenu.save(date)
+    },
+    input () {
+      if (this.required) this.$v.dataBirthdate.$touch()
+      this.$emit('input', this.dataBirthdate)
+    },
+    blur () {
+      if (this.required) this.$v.dataBirthdate.$touch()
+      this.$emit('blur', this.dataBirthdate)
     }
   }
 }

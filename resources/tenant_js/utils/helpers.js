@@ -1,18 +1,18 @@
 export default {
-  formatDate (date) {
+  formatDate (date, separator = '-') {
     if (!date) return null
     try {
-      const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
+      const [year, month, day] = date.split(separator)
+      return `${day}${separator}${month}${separator}${year}`
     } catch (error) {
       return null
     }
   },
-  unformatDate (date) {
+  unformatDate (date, separator = '-') {
     if (!date) return null
     try {
-      const [day, month, year] = date.split('/')
-      return `${year}-${month}-${day}`
+      const [day, month, year] = date.split(separator)
+      return `${year}${separator}${month}${separator}${day}`
     } catch (error) {
       return null
     }

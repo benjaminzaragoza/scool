@@ -1,16 +1,19 @@
 <template>
-    <v-text-field
-            label="Telèfon mòbil"
-            v-model="dataMobile"
-            required
-            :tabindex="tabIndex"
-            mask="+34 ###-###-###"
-            placeholder="+34 666777888"
-            hint="9 números seguits sense codi de país"
-            :return-masked-value="false"
-            @input="input"
-            @blur="blur"
-    ></v-text-field>
+    <span style="display: inline-flex;align-items: baseline;">
+        <span class="subheading font-weight-bold mr-2" >+34</span>
+        <v-text-field
+                label="Telèfon mòbil"
+                v-model="dataMobile"
+                required
+                :tabindex="tabIndex"
+                mask="###-###-###"
+                placeholder="666777888"
+                hint="9 números seguits sense codi de país"
+                :return-masked-value="false"
+                @input="input"
+                @blur="blur"
+        ></v-text-field>
+    </span>
 </template>
 
 <script>
@@ -29,10 +32,6 @@ export default {
       loading: false
     }
   },
-  // model: {
-  //   prop: 'mobile',
-  //   event: 'input'
-  // },
   props: {
     mobile: {},
     invalid: {},

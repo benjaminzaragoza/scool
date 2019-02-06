@@ -20,7 +20,7 @@
                 <v-flex md1>
                     <mobile-field v-model="mobile" :invalid.sync="mobileInvalid"></mobile-field>
                 </v-flex>
-                <v-flex md1>
+                <v-flex md2>
                     <birthdate-field v-model="birthdate"></birthdate-field>
                 </v-flex>
                 <v-flex md1>
@@ -37,7 +37,6 @@
                     <other-telephones-field v-model="otherTelephones"></other-telephones-field>
                 </v-flex>
                 <v-flex md1>
-                    <mobile-field v-model="mobile"></mobile-field>
                     <other-mobiles-field v-model="otherMobiles"></other-mobiles-field>
                 </v-flex>
                 <v-flex md1>
@@ -141,6 +140,12 @@ export default {
     },
     identifier () {
       this.updateDataForm()
+    },
+    mobile () {
+      this.updateDataForm()
+    },
+    birthdate () {
+      this.updateDataForm()
     }
   },
   methods: {
@@ -148,6 +153,8 @@ export default {
       this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
       this.civilStatus ? (this.dataForm['civilStatus'] = this.civilStatus) : delete this.dataForm['civilStatus']
       this.identifier ? (this.dataForm['identifier'] = this.identifier) : delete this.dataForm['identifier']
+      this.mobile ? (this.dataForm['mobile'] = this.mobile) : delete this.dataForm['mobile']
+      this.birthdate ? (this.dataForm['birthdate'] = this.birthdate) : delete this.dataForm['birthdate']
     },
     save () {
       console.log('TODO SAVE')
