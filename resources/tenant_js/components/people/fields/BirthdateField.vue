@@ -40,11 +40,15 @@ import { required } from 'vuelidate/lib/validators'
 import helpers from '../../../utils/helpers'
 import { validationMixin } from 'vuelidate'
 
+function dateValidator (value) {
+  return helpers.validateDate(value)
+}
+
 export default {
   name: 'BirthdateField',
   mixins: [validationMixin],
   validations: {
-    dataBirthdate: { required }
+    dataBirthdate: { required, dateValidator }
   },
   data () {
     return {
@@ -76,6 +80,7 @@ export default {
       const errors = []
       if (!this.$v.dataBirthdate.$dirty) return errors
       !this.$v.dataBirthdate.required && errors.push('La data de naixement és obligatòria.')
+      !this.$v.dataBirthdate.dateValidator && errors.push('El format de la data no és correcta')
       return errors
     }
   },

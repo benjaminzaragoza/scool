@@ -1,15 +1,17 @@
 <template>
     <span style="display: inline-flex;align-items: baseline;">
+        <v-icon style="align-self: normal;">smartphone</v-icon>
         <span class="subheading font-weight-bold mr-2" >+34</span>
         <v-text-field
                 label="Telèfon mòbil"
                 v-model="dataMobile"
-                required
+                :required="required"
                 :tabindex="tabIndex"
                 mask="###-###-###"
                 placeholder="666777888"
                 hint="9 números seguits sense codi de país"
                 :return-masked-value="false"
+                :error-messages="mobileErrors"
                 @input="input"
                 @blur="blur"
         ></v-text-field>
@@ -61,11 +63,11 @@ export default {
   },
   methods: {
     input () {
-      this.$v.dataMobile.$touch()
+      if (this.required) this.$v.dataMobile.$touch()
       this.$emit('input', this.dataMobile)
     },
     blur () {
-      this.$v.dataMobile.$touch()
+      if (this.required) this.$v.dataMobile.$touch()
       this.$emit('blur', this.dataMobile)
     }
   }

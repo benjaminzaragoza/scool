@@ -1,4 +1,8 @@
+import moment from 'moment'
 export default {
+  validateDate (date) {
+    return moment(date, 'YYYY-MM-DD', true).isValid()
+  },
   formatDate (date, separator = '-') {
     if (!date) return null
     try {

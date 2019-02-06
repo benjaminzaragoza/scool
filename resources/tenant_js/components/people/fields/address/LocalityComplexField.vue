@@ -2,9 +2,12 @@
     <v-layout row wrap>
         <v-flex md3>
             <v-combobox
+                    prepend-icon="location_on"
                     name="postalcode"
-                    label="Codi postal"
+                    :label="postalCodeLabel"
                     :loading="loading"
+                    placeholder="43500"
+                    hint="Codi postal 5 dígits"
                     cache-items
                     required
                     autocomplete
@@ -17,10 +20,11 @@
                     v-model="postalcode"
             ></v-combobox>
         </v-flex>
-        <v-flex md3>
+        <v-flex md6>
             <v-combobox
+                    prepend-icon="location_city"
                     name="locality"
-                    label="Localitat"
+                    :label="localityLabel"
                     tabindex = "-1"
                     item-text="name"
                     :loading="loading"
@@ -36,10 +40,10 @@
                     @blur="touchLocality"
             ></v-combobox>
         </v-flex>
-        <v-flex md6>
+        <v-flex md3>
             <v-combobox
                     name="province"
-                    label="Província"
+                    :label="provinceLabel"
                     tabindex = "-1"
                     item-text="name"
                     autocomplete
@@ -94,6 +98,18 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    postalCodeLabel: {
+      type: String,
+      default: 'Codi Postal'
+    },
+    localityLabel: {
+      type: String,
+      default: 'Localitat'
+    },
+    provinceLabel: {
+      type: String,
+      default: 'Província'
     }
   },
   computed: {

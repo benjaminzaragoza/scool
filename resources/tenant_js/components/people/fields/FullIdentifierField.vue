@@ -17,6 +17,7 @@
         </v-flex>
         <v-flex md6>
             <v-text-field
+                    prepend-icon="credit_card"
                     name="identifier"
                     label="DNI/NIE/Passaport"
                     v-model="dataIdentifier"
