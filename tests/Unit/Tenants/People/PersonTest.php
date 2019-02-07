@@ -219,6 +219,7 @@ class PersonTest extends TestCase
         $this->assertEquals(1, $mappedPerson['birthplace_id']);
         $this->assertEquals('Tortosa', $mappedPerson['birthplace_name']);
         $this->assertEquals(43500, $mappedPerson['birthplace_postalcode']);
+        $this->assertEquals('Tarragona', $mappedPerson['birthplace_province']);
         $this->assertEquals('Casat/da', $mappedPerson['civil_status']);
         $this->assertEquals('Home', $mappedPerson['gender']);
         $this->assertEquals('977504878', $mappedPerson['phone']);

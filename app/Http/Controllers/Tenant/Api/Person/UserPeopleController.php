@@ -41,6 +41,7 @@ class UserPeopleController extends Controller
             if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
             if ($request->birthdate) $personData['birthdate'] = $request->birthdate;
             if ($request->birthplace_id) $personData['birthplace_id'] = $request->birthplace_id;
+            if ($request->birthplace) $personData['birthplace'] = $this->formatLocation($request->birthplace);
             if ($request->gender) $personData['gender'] = $request->gender;
             if ($request->civil_status) $personData['civil_status'] = $request->civil_status;
             if ($request->phone) $personData['phone'] = $request->phone;
@@ -58,6 +59,15 @@ class UserPeopleController extends Controller
         if ($request->other_identifiers) $this->setOtherIdentifiers($person, $request->other_identifiers);
         if ($request->address) $this->setAddress($person, $request->address);
         return collect($person->map());
+    }
+
+    protected function formatLocation($location)
+    {
+        $formattedLocation = '';
+        if ($location['location']) $formattedLocation = $location['location'];
+        if ($location['postalcode']) $formattedLocation = $formattedLocation . ' ' . $location['postalcode'];
+        if ($location['province']) $formattedLocation = $formattedLocation . ' ' . $location['province'];
+        return $formattedLocation;
     }
 
     /**

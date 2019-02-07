@@ -23,4 +23,18 @@ class Location extends Model
     {
         return self::where('name',$name)->first();
     }
+
+    /**
+     * Province.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getProvinceAttribute($value)
+    {
+        if (!$this->postalcode) return null;
+        $province = Province::where('postal_code_prefix',substr($this->postalcode, 0, 2))->first();
+        if ($province) return $province->name;
+        return null;
+    }
 }

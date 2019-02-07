@@ -40,9 +40,35 @@ class UserPeopleControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function user_manager_can_add_personal_data_to_existing_user()
+    public function user_manager_can_add_personal_data_to_existing_user_birthplace()
     {
         $this->withoutExceptionHandling();
+        $this->loginAsUsersManager('api');
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@iesebre.com'
+        ]);
+        $dataForm = [
+            'birthplace' => [
+                'postalcode' => '43501',
+                'location' => 'SpringField',
+                'province' => 'Massachussets',
+            ],
+        ];
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/person',$dataForm);
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+//        dump($result);
+        $this->assertNull($result->birthplace_id);
+        $this->assertEquals('SpringField 43501 Massachussets',$result->birthplace);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function user_manager_can_add_personal_data_to_existing_user()
+    {
         seed_identifier_types();
         $this->loginAsUsersManager('api');
         $user = factory(User::class)->create([
@@ -148,8 +174,6 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('666555444,666999888',$result->other_mobiles);
         $this->assertEquals('pepepardo@gmail.com,pepepardo@xtec.cat',$result->other_emails);
         $this->assertEquals('Bla bla bla',$result->notes);
-
-
 
         $user = $user->fresh();
         $this->assertnotNull($resultPerson = $user->person);

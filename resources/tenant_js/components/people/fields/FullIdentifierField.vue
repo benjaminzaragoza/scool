@@ -13,6 +13,7 @@
                     v-model="dataIdentifierType"
                     :loading="loading"
                     item-text="name"
+                    return-object
             ></v-select>
         </v-flex>
         <v-flex md6>
@@ -97,8 +98,8 @@ export default {
   },
   methods: {
     setIdentifierObject () {
-      this.dataIdentifierType ? (this.dataIdentifierObject['identifierType'] = this.dataIdentifierType) : delete this.dataIdentifierObject['identifierType']
-      this.dataIdentifier ? (this.dataIdentifierObject['identifier'] = this.dataIdentifier) : delete this.dataIdentifierObject['identifier']
+      this.dataIdentifierType ? (this.dataIdentifierObject['type_id'] = this.dataIdentifierType.id) : delete this.dataIdentifierObject['identifierType']
+      this.dataIdentifier ? (this.dataIdentifierObject['value'] = this.dataIdentifier) : delete this.dataIdentifierObject['identifier']
       this.$emit('input', this.dataIdentifierObject)
     },
     fetchIdentifierTypes () {

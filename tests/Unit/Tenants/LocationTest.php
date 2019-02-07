@@ -4,6 +4,7 @@ namespace Tests\Unit\Tenants;
 
 use App\Models\Location;
 use App\Models\User;
+use Artisan;
 use Config;
 use Illuminate\Contracts\Console\Kernel;
 use Tests\TestCase;
@@ -49,6 +50,20 @@ class LocationTest extends TestCase
         ]);
 
         $this->assertTrue($tortosa->is(Location::findByName('TORTOSA')));
+    }
+
+    /**
+     * @test
+     * @slow
+     */
+    public function province()
+    {
+        seed_provinces();
+        Artisan::call('db:seed', [
+            '--class' => 'LocationsTableSeeder'
+        ]);
+        $location = Location::findByName('TORTOSA');
+        $this->assertEquals('Tarragona',$location->province);
     }
 
 }

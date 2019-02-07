@@ -25,6 +25,7 @@ class CreateTenantPeopleTable extends Migration
             $table->string('sn2')->nullable();
             $table->date('birthdate')->nullable();
             $table->integer('birthplace_id')->unsigned()->nullable();
+            $table->integer('birthplace')->nullable();
             $table->enum('gender',['Home','Dona'])->nullable();
             $table->enum('civil_status',['Solter/a','Casat/da','Separat/da','Divorciat/da','Vidu/a'])->nullable();
             $table->string('phone')->nullable();

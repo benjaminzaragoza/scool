@@ -172,6 +172,7 @@ class Person extends Model implements HasMedia
 
     public function map()
     {
+        dd($this->birthplace);
         return [
             'id' => $this->id,
             'userId' => optional($this->user)->id,
@@ -212,6 +213,8 @@ class Person extends Model implements HasMedia
             'birthplace_id' => $this->birthplace_id,
             'birthplace_name' => optional($this->birthplace)->name,
             'birthplace_postalcode' => optional($this->birthplace)->postalcode,
+
+            'birthplace_province' => optional($this->birthplace)->province,
 
             'civil_status' => $this->civil_status,
             'gender' => $this->gender,
