@@ -27,6 +27,14 @@
     <meta property="og:title" content="L'App de l'Institut de l'Ebre">
     <meta property="og:url" content="https://iesebre.scool.cat/">
     <meta property="og:image" content="https://iesebre.scool.cat/img/iesebre/cellular-education-classroom-159844.jpeg">
+    <meta property="og:sitename" content="iesebre.scool.cat" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@acachawiki" />
+    <meta name="twitter:creator" content="@acacha1" />
+    
+    <meta name="description" content="Aplicació per a tota la comunitat educativa de l'Institut de l'Ebre">
+    <meta name="author" content="Sergi Tur Badenas - scool.cat">
 </head>
 <body>
 <v-app id="app" v-cloak style="background: #F0F4F8;background: -webkit-linear-gradient(to right, #F0F4F8, #D9E2EC, #BCCCDC);
