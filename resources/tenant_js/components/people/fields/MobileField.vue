@@ -34,6 +34,10 @@ export default {
       loading: false
     }
   },
+  model: {
+    prop: 'mobile',
+    event: 'input'
+  },
   props: {
     mobile: {},
     invalid: {},
@@ -59,6 +63,9 @@ export default {
   watch: {
     invalidForm (invalidForm) {
       this.$emit('update:invalid', invalidForm)
+    },
+    mobile (mobile) {
+      this.dataMobile = mobile
     }
   },
   methods: {

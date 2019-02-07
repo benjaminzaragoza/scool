@@ -171,7 +171,7 @@ export default {
   data () {
     return {
       dialog: false,
-      step: 1,
+      step: 3,
       user: null,
       googleUser: null,
       moodleUser: null

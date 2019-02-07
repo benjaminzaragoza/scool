@@ -11,6 +11,7 @@
                     v-model="required"
                     class="mr-4"
             ></v-switch>
+            <v-btn flat class="grey--text" @click="clean">Buidar camps</v-btn>
             <person-notes-field v-model="notes"></person-notes-field>
             <other-mobiles-field v-model="otherMobiles" :required="required" :validate="validate"></other-mobiles-field>
             <other-telephones-field v-model="otherTelephones" :required="required" :validate="validate"></other-telephones-field>
@@ -57,8 +58,11 @@
         <v-btn color="primary" @click="save" :loading="saving" :disabled="saving">
             <v-icon class="mr-2">save</v-icon>Guardar
         </v-btn>
+        address : {{ address }}
         Data Form:
         {{ dataForm }}
+        this.birthplace:
+        {{ this.birthplace }}
     </form>
 </template>
 
@@ -111,7 +115,12 @@ export default {
       birthdate: null,
       birthplace: null,
       civilStatus: null,
-      address: null,
+      address: {
+        street: 'Alcanyiz',
+        number: '26',
+        floor: '4t',
+        floorNumber: '2a'
+      },
       notes: null,
       saving: false,
       identifierInvalid: true,
@@ -165,6 +174,7 @@ export default {
       this.updateDataForm()
     },
     address () {
+      console.log('address changed at UserAddPersonForm!')
       this.updateDataForm()
     },
     notes () {
@@ -172,6 +182,23 @@ export default {
     }
   },
   methods: {
+    clean () {
+      this.identifier = null
+      this.otherEmails = null
+      this.otherIdentifiers = null
+      this.mobile = null
+      this.otherMobiles = null
+      this.telephone = null
+      this.otherTelephones = null
+      this.gender = null
+      this.birthdate = null
+      this.birthplace = null
+      this.civilStatus = null
+      this.address = null
+      console.log('clean 10')
+      this.notes = null
+      this.dataForm = {}
+    },
     updateDataForm () {
       this.user ? (this.dataForm['email'] = this.user.email) : delete this.dataForm['email']
       this.otherEmails ? (this.dataForm['other_emails'] = this.otherEmails) : delete this.dataForm['other_emails']
@@ -183,9 +210,30 @@ export default {
       this.otherTelephones ? (this.dataForm['other_phones'] = this.otherTelephones) : delete this.dataForm['other_phones']
       this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
       this.birthdate ? (this.dataForm['birthdate'] = this.birthdate) : delete this.dataForm['birthdate']
-      this.birthplace ? (this.dataForm['birthplace'] = this.birthplace) : delete this.dataForm['birthplace']
+
+      if (this.birthplace) {
+        if (this.birthplace.locality) {
+          if ((typeof this.birthplace.locality) === 'string') {
+            this.dataForm['birthplace'] = this.birthplace
+            delete this.dataForm['birthplace_id']
+          } else {
+            this.dataForm['birthplace_id'] = this.birthplace.locality.id
+            delete this.dataForm['birthplace']
+          }
+        } else {
+          delete this.dataForm['birthplace_id']
+          this.dataForm['birthplace'] = this.birthplace
+        }
+        if ((!this.birthplace.locality) && (!this.birthplace.postalcode) && (!this.birthplace.province)) {
+          delete this.dataForm['birthplace']
+        }
+      } else {
+        delete this.dataForm['birthplace']
+      }
+
       this.civilStatus ? (this.dataForm['civil_status'] = this.civilStatus) : delete this.dataForm['civil_status']
       this.address ? (this.dataForm['address'] = this.address) : delete this.dataForm['address']
+      this.notes ? (this.dataForm['notes'] = this.notes) : delete this.dataForm['notes']
     },
     isValid () {
       return true

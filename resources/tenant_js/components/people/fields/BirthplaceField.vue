@@ -1,11 +1,13 @@
 <template>
     <locality-complex-field
-            v-model="dataBirthdate"
+            v-model="dataBirthplace"
             :required="required"
             postal-code-label="Codi Postal Naixement"
             locality-label="Localitat de Naixement"
             province-label="Província de Naixement"
-            @input="input"></locality-complex-field>
+            @input="input"
+            @blur="blur"
+    ></locality-complex-field>
 </template>
 
 <script>
@@ -17,22 +19,31 @@ export default {
   },
   data () {
     return {
-      dataBirthdate: null
+      dataBirthplace: null
     }
   },
   model: {
-    prop: 'birthdate',
+    prop: 'birthplace',
     event: 'input'
   },
   props: {
+    birthplace: {},
     required: {
       type: Boolean,
       default: false
     }
   },
+  watch: {
+    birthplace (birthplace) {
+      this.dataBirthplace = birthplace
+    }
+  },
   methods: {
     input () {
-      this.$emit('input', this.dataBirthdate)
+      this.$emit('input', this.dataBirthplace)
+    },
+    blur () {
+      this.$emit('blur', this.dataBirthplace)
     }
   }
 }

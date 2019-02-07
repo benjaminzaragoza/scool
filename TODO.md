@@ -6,6 +6,18 @@
 - [ ] Alinemanet de pa icona prepend de camp telèfon mòbil no surt ben alineada quan estem introiduint mòbil
 - [ ]
 
+# FORMULARI DADES PERSONALS
+
+- [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
+- [ ] Camps que no s'esborren al BUIDAR CAMPS
+  - [X] Data de naixement
+  - [X] Codi postal naixement
+  - [X] Localitat de Naixement
+  - [X] Procíncia de naixement
+  - [X] Estat cívil
+  - [ ] Adreça -street
+  - [ ] tota la resta de camps adreça
+
 # ROUTEROS
 
 - [X] Paquet Laravel descartat no sembla que funcioni

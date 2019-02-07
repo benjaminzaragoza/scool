@@ -2,7 +2,7 @@
     <v-text-field
             name="floor_number"
             label="# pis"
-            v-model="floor_number"
+            v-model="dataFloorNumber"
     ></v-text-field>
 </template>
 
@@ -11,7 +11,19 @@ export default {
   name: 'StreetFloorNumberField',
   data () {
     return {
-      floor_number: null
+      dataFloorNumber: this.floorNumber
+    }
+  },
+  model: {
+    prop: 'floorNumber',
+    event: 'input'
+  },
+  props: {
+    floorNumber: {}
+  },
+  watch: {
+    floorNumber (floorNumber) {
+      this.dataFloorNumber = floorNumber
     }
   }
 }

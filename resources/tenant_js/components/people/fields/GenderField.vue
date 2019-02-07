@@ -1,5 +1,5 @@
 <template>
-    <v-select
+    <v-autocomplete
             name="gender"
             label="Sexe"
             :required="required"
@@ -9,7 +9,7 @@
             @blur="blur"
             :items="dataGenders"
             v-model="dataGender"
-    ></v-select>
+    ></v-autocomplete>
 </template>
 
 <script>
@@ -48,6 +48,11 @@ export default {
       if (!this.$v.dataGender.$dirty) return errors
       !this.$v.dataGender.required && errors.push('El sexe és obligatori.')
       return errors
+    }
+  },
+  watch: {
+    gender (gender) {
+      this.dataGender = gender
     }
   },
   methods: {

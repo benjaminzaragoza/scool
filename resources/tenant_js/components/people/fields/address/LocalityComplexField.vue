@@ -152,6 +152,14 @@ export default {
     },
     locality: function () {
       this.setLocalityObject()
+    },
+    localityObject (localityObject) {
+      this.dataLocalityObject = localityObject
+      if (localityObject === null) {
+        this.locality = null
+        this.postalcode = null
+        this.province = null
+      }
     }
   },
   methods: {

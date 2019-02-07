@@ -2,7 +2,7 @@
     <v-text-field
             name="floor"
             label="Pis"
-            v-model="floor"
+            v-model="dataFloor"
     ></v-text-field>
 </template>
 
@@ -11,7 +11,31 @@ export default {
   name: 'StreetFloorField',
   data () {
     return {
-      floor: null
+      dataFloor: this.floor
+    }
+  },
+  model: {
+    prop: 'floor',
+    event: 'input'
+  },
+  props: {
+    floor: {},
+    required: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    floor (floor) {
+      this.dataFloor = floor
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.dataFloor)
+    },
+    blur () {
+      this.$emit('blur', this.dataFloor)
     }
   }
 }

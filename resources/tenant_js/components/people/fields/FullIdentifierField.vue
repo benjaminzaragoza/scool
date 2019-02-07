@@ -41,6 +41,25 @@ function dniValidator (value) {
   return false
 }
 
+const identifierTypes = [
+  {
+    id: 1,
+    name: 'NIF'
+  },
+  {
+    id: 2,
+    name: 'Passaport'
+  },
+  {
+    id: 3,
+    name: 'NIE'
+  },
+  {
+    id: 4,
+    name: 'TIS'
+  }
+]
+
 export default {
   name: 'FullIdentifierField',
   mixins: [validationMixin],
@@ -53,16 +72,15 @@ export default {
       loading: false,
       dataIdentifierTypes: [],
       dataIdentifierType: null,
-      dataIdentifier: null,
-      dataIdentifierObject: {}
+      dataIdentifier: null
     }
   },
   model: {
-    prop: 'identifierObject',
+    prop: 'identifier',
     event: 'input'
   },
   props: {
-    identifierObject: {},
+    identifier: {},
     invalid: {},
     identifierTypes: {
       type: Array
@@ -83,35 +101,61 @@ export default {
       const errors = []
       if (!this.$v.dataIdentifier.$dirty) return errors
       !this.$v.dataIdentifier.required && errors.push('El identificador és obligatori.')
-      if (this.dataIdentifierType === 'NIF') !this.$v.dataIdentifier.dniValidator && errors.push('El DNI és incorrecte!')
+      if (this.dataIdentifierType && this.dataIdentifierType.name === 'NIF') !this.$v.dataIdentifier.dniValidator && errors.push('El DNI és incorrecte!')
       return errors
     }
   },
   watch: {
     dataIdentifierType (dataIdentifierType) {
       if (!dataIdentifierType) this.$v.$reset()
-      this.setIdentifierObject()
+      this.emitIdentifier()
     },
     dataIdentifier () {
-      this.setIdentifierObject()
+      this.emitIdentifier()
+    },
+    identifier (identifier) {
+      if (identifier) {
+        this.selectIdentifierType()
+        this.dataIdentifier = identifier.value
+      } else {
+        this.dataIdentifierType = null
+        this.dataIdentifier = null
+      }
     }
   },
   methods: {
-    setIdentifierObject () {
-      this.dataIdentifierType ? (this.dataIdentifierObject['type_id'] = this.dataIdentifierType.id) : delete this.dataIdentifierObject['identifierType']
-      this.dataIdentifier ? (this.dataIdentifierObject['value'] = this.dataIdentifier) : delete this.dataIdentifierObject['identifier']
-      this.$emit('input', this.dataIdentifierObject)
+    selectIdentifierType () {
+      if (this.identifier) {
+        this.dataIdentifierType = this.dataIdentifierTypes.find(type => {
+          return type.id === this.identifier.type_id
+        })
+      } else this.dataIdentifierType = null
     },
-    fetchIdentifierTypes () {
-      this.loading = true
-      window.axios.get('/api/v1/identifier_types').then((response) => {
-        this.dataIdentifierTypes = response.data
-        this.loading = false
-      }).catch(error => {
-        this.loading = false
-        this.$snackbar.showError(error)
-      })
+    emitIdentifier (typeId = null, value = null) {
+      if (this.dataIdentifierType) typeId = this.dataIdentifierType.id
+      if (this.dataIdentifier) value = this.dataIdentifier
+      if ((value === null) || (typeId === null && value === null)) {
+        this.$emit('input', null)
+      } else {
+        var identifier = {
+          type_id: typeId,
+          value: value
+        }
+        this.$emit('input', identifier)
+      }
     },
+    // Millor utilitzar valors estàtics ja que realment la llista d'identificadors no canvia gairebé mai
+    // fetchIdentifierTypes () {
+    //   this.loading = true
+    //   window.axios.get('/api/v1/identifier_types').then((response) => {
+    //     this.dataIdentifierTypes = response.data
+    //     this.selectIdentifierType()
+    //     this.loading = false
+    //   }).catch(error => {
+    //     this.loading = false
+    //     this.$snackbar.showError(error)
+    //   })
+    // },
     inputIdentifierType () {
       if (this.required) this.$v.dataIdentifierType.$touch()
       this.$emit('input', this.dataIdentifierType)
@@ -131,7 +175,16 @@ export default {
   },
   created () {
     if (this.identifierTypes) this.dataIdentifierTypes = this.identifierTypes
-    else this.fetchIdentifierTypes()
+    else this.dataIdentifierTypes = identifierTypes
+
+    if (this.identifier) {
+      this.dataIdentifier = this.identifier.value
+      this.dataIdentifierType = {
+        id: this.identifier.type_id
+      }
+    } else {
+      this.dataIdentifier = null
+    }
   }
 }
 </script>

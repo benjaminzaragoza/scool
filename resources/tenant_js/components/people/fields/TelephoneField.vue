@@ -24,11 +24,15 @@ export default {
   },
   data () {
     return {
-      dataPhone: null
+      dataPhone: this.phone
     }
   },
+  model: {
+    prop: 'phone',
+    event: 'input'
+  },
   props: {
-    mobile: {},
+    phone: {},
     invalid: {},
     tabIndex: {
       default: null
@@ -46,6 +50,11 @@ export default {
       !this.$v.dataPhone.maxLength && errors.push('El número màxim de números és 9')
       if (this.required) !this.$v.dataPhone.required && errors.push('El mòbil és obligatori.')
       return errors
+    }
+  },
+  watch: {
+    phone (phone) {
+      this.dataPhone = phone
     }
   },
   methods: {

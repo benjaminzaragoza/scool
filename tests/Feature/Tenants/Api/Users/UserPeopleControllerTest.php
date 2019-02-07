@@ -5,9 +5,7 @@ namespace Tests\Feature\Tenants\Api\Users;
 use App\Models\Address;
 use App\Models\Identifier;
 use App\Models\Location;
-use App\Models\Person;
 use App\Models\User;
-use App\Models\UserType;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -42,7 +40,6 @@ class UserPeopleControllerTest extends BaseTenantTest
      */
     public function user_manager_can_add_personal_data_to_existing_user_birthplace()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsUsersManager('api');
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',

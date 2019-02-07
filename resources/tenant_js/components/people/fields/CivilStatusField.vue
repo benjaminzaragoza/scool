@@ -1,5 +1,5 @@
 <template>
-    <v-select
+    <v-autocomplete
             name="civilStatus"
             label="Estat cívil"
             :required="required"
@@ -9,7 +9,7 @@
             @blur="blur"
             :items="dataCivilStatuses"
             v-model="dataCivilStatus"
-    ></v-select>
+    ></v-autocomplete>
 </template>
 
 <script>
@@ -48,6 +48,11 @@ export default {
       if (!this.$v.dataCivilStatus.$dirty) return errors
       !this.$v.dataCivilStatus.required && errors.push('El esta cívil és obligatori.')
       return errors
+    }
+  },
+  watch: {
+    civilStatus (civilStatus) {
+      this.dataCivilStatus = civilStatus
     }
   },
   methods: {

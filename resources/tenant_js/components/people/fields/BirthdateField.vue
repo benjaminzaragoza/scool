@@ -87,6 +87,9 @@ export default {
   watch: {
     menu (val) {
       val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
+    },
+    birthdate (birthdate) {
+      this.dataBirthdate = birthdate
     }
   },
   methods: {
