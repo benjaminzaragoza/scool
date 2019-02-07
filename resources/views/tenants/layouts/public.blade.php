@@ -19,6 +19,13 @@
     <link href="/tenant/css/app.css" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2680C2"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:image:width" content="1125">
+    <meta property="og:image:height" content="750">
+    <meta property="og:description" content="Aplicació per a tota la comunitat educativa de l'Institut de l'Ebre">
+    <meta property="og:title" content="L'App de l'Institut de l'Ebre">
+    <meta property="og:url" content="https://iesebre.scool.cat/">
+    <meta property="og:image" content="https://iesebre.scool.cat/img/iesebre/cellular-education-classroom-159844.jpeg">
 </head>
 <body>
 <v-app id="app" v-cloak>
