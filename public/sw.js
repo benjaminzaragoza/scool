@@ -1,6 +1,14 @@
 (() => {
   'use strict'
 
+  const AddToHomeScreen = {
+    init () {
+      self.addEventListener('fetch', function (event) {
+        console.log('WORKER: fetch event in progress.')
+      })
+    }
+  }
+
   const WebPush = {
     init () {
       self.addEventListener('push', this.notificationPush.bind(this))
@@ -97,4 +105,5 @@
   }
 
   WebPush.init()
+  AddToHomeScreen.init()
 })()
