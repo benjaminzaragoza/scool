@@ -42,7 +42,7 @@ class Identifier extends Model
      */
     public function getTypeNameAttribute()
     {
-        return $this->type->name;
+        return optional($this->type)->name;
     }
 
     /**

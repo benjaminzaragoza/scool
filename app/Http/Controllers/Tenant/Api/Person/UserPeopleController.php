@@ -23,21 +23,22 @@ class UserPeopleController extends Controller
     /**
      * Store.
      *
-     * @param PeopleStore $request
+     * @param UserPeopleStore $request
+     * @param $tenant
+     * @param User $user
      * @return mixed
      */
     public function store(UserPeopleStore $request, $tenant, User $user)
     {
         $person = null;
-        if ($user->person) {
-            dump(1);
-            $person = $user->person;
-        }
+        if ($user->person) $person = $user->person;
         else {
             $personData = [];
             if ($request->givenName) $personData['givenName'] = $request->givenName;
             if ($request->sn1) $personData['sn1'] = $request->sn1;
             if ($request->sn2) $personData['sn2'] = $request->sn2;
+            if ($request->email) $personData['email'] = $request->email;
+            if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
             if ($request->birthdate) $personData['birthdate'] = $request->birthdate;
             if ($request->birthplace_id) $personData['birthplace_id'] = $request->birthplace_id;
             if ($request->gender) $personData['gender'] = $request->gender;
@@ -54,7 +55,9 @@ class UserPeopleController extends Controller
             $person->save();
         }
         if ($request->identifier) $this->setIdentifier($person, $request->identifier);
+        if ($request->other_identifiers) $this->setOtherIdentifiers($person, $request->other_identifiers);
         if ($request->address) $this->setAddress($person, $request->address);
+        return collect($person->map());
     }
 
     /**
@@ -72,6 +75,24 @@ class UserPeopleController extends Controller
 
         $person->identifier_id = $identifier->id;
         $person->save();
+    }
+
+    /**
+     * setIdentifier.
+     *
+     * @param $user
+     * @param $identifier
+     */
+    protected function setOtherIdentifiers(Person $person, $other_identifiers)
+    {
+        foreach ($other_identifiers as $identifier) {
+            $person->identifiers()->save(
+                Identifier::create([
+                    'type_id' => $identifier['type_id'],
+                    'value' => $identifier['value']
+                ])
+            );
+        }
     }
 
     /**
