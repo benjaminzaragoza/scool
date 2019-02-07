@@ -58,9 +58,8 @@ class UserPeopleControllerTest extends BaseTenantTest
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/person',$dataForm);
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-//        dump($result);
         $this->assertNull($result->birthplace_id);
-        $this->assertEquals('SpringField 43501 Massachussets',$result->birthplace);
+        $this->assertEquals('SpringField 43501 Massachussets',$result->birthlocation);
     }
 
     /**

@@ -128,6 +128,7 @@ class PersonTest extends TestCase
      */
     public function map()
     {
+        seed_provinces();
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com',
@@ -191,7 +192,6 @@ class PersonTest extends TestCase
         $this->assertEquals(1,$mappedPerson['userId']);
         $this->assertEquals('pepepardo@iesebre.com',$mappedPerson['corporativeEmail']);
         $this->assertEquals('123125634',$mappedPerson['googleId']);
-
 
         $this->assertEquals('678514427',$mappedPerson['mobile']);
 
