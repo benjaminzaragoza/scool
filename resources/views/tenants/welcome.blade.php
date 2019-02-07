@@ -92,8 +92,9 @@
                     >
                         <h1 class="white--text text--ligthen-2 mb-2 display-4 text-xs-center font-weight-bold"
                             style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .4);font-family: 'Montserrat', sans-serif !important; z-index: 10;"
+                            :class="{'display-1': $vuetify.breakpoint.xs}"
                         >Estudiar més fàcil que mai</h1>
-                        <div class="display-1 mb-3 text-xs-center"
+                        <div class="display-1 mb-3 text-xs-center" :class="{'title': $vuetify.breakpoint.xs}"
                              style="text-shadow: 0 0 50px hsla(0, 0%, 0%, .6)">Benvinguts a la web de l'Institut de l'Ebre</div>
                         <v-btn
                                 class="accent darken-1 mt-5 pl-5 pr-5 pt-4 pb-4 headline elevation-5"
