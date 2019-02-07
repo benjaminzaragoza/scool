@@ -4,7 +4,7 @@
                 width="500"
         >
             <v-tooltip bottom slot="activator">
-                <v-btn icon small color="primary" slot="activator">
+                <v-btn icon small color="secondary" slot="activator">
                     <v-icon small>smartphone</v-icon>
                 </v-btn>
                 <span>Afegir altres telèfons mòbils</span>

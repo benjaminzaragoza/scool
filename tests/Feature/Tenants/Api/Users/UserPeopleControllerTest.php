@@ -126,7 +126,6 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals(1,$address->location_id);
         $this->assertEquals(1,$address->province_id);
 
-        // Address TODO
     }
 
     /**

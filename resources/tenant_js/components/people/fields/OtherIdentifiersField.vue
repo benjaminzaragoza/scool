@@ -4,14 +4,14 @@
             width="500"
     >
         <v-tooltip bottom slot="activator">
-            <v-btn icon small color="error" slot="activator">
-                <v-icon small>phone</v-icon>
+            <v-btn icon small color="accent" slot="activator">
+                <v-icon small>credit_card</v-icon>
             </v-btn>
-            <span>Afegir altres telèfons fixes</span>
+            <span>Afegir altres identificadors personals</span>
         </v-tooltip>
         <v-card>
             <v-toolbar dense color="primary">
-                <v-toolbar-title class="white--text">Altres telèfons fixes</v-toolbar-title>
+                <v-toolbar-title class="white--text">Altres identificadors personals</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon class="white--text" @click="dialog=false">
                     <v-icon>close</v-icon>
@@ -19,10 +19,10 @@
             </v-toolbar>
             <v-card-text>
                 <v-text-field
-                        label="Altres telèfons mòbils"
-                        v-model="dataOtherTelephones"
-                        placeholder="977405253, 977524548"
-                        hint="Altres telèfons fixes, separats per comes"
+                        label="Altres identificadors personals"
+                        v-model="dataOtherIdentifiers"
+                        placeholder="TODO"
+                        hint="Altres identificadors personals"
                         @input="input"
                         @blur="blur"
                 ></v-text-field>
@@ -36,43 +36,42 @@
                         color="primary"
                         @click="dialog = false"
                 >
-                Tancar
+                    Tancar
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
-                color="primary"
-                @click="dialog = false"
+                        color="primary"
+                        @click="dialog = false"
                 >
-                Guardar
+                    Guardar
                 </v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
-
 </template>
 
 <script>
 export default {
-  name: 'OtherTelephonesField',
+  name: 'OtherIdentifiersField',
   data () {
     return {
       dialog: false,
-      dataOtherTelephones: null
+      dataOtherIdentifiers: null
     }
   },
   model: {
-    prop: 'otherTelephones',
+    prop: 'otherIdentifiers',
     event: 'input'
   },
   props: {
-    otherTelephones: ''
+    otherIdentifiers: ''
   },
   methods: {
     input () {
-      this.$emit('input', this.dataOtherTelephones)
+      this.$emit('input', this.dataOtherIdentifiers)
     },
     blur () {
-      this.$emit('blur', this.dataOtherTelephones)
+      this.$emit('blur', this.dataOtherIdentifiers)
     }
   }
 }

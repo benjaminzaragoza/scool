@@ -14,9 +14,8 @@
             <person-notes-field v-model="notes"></person-notes-field>
             <other-mobiles-field v-model="otherMobiles" :required="required" :validate="validate"></other-mobiles-field>
             <other-telephones-field v-model="otherTelephones" :required="required" :validate="validate"></other-telephones-field>
-            TODO Altres emails
-            Email principal = email personal
-            TODO Altres identificadors
+            <other-emails-field v-model="otherEmails" :required="required" :validate="validate"></other-emails-field>
+            <other-identifiers-field v-model="otherIdentifiers" :required="required" :validate="validate"></other-identifiers-field>
         </span>
 
         <v-container fluid grid-list-md text-xs-center>
@@ -76,6 +75,8 @@ import TelephoneField from './fields/TelephoneField'
 import OtherTelephonesField from './fields/OtherTelephonesField'
 import OtherMobilesField from './fields/OtherMobilesField'
 import PersonNotesField from './fields/PersonNotesField'
+import OtherEmailsField from './fields/OtherEmailsField'
+import OtherIdentifiersField from './fields/OtherIdentifiersField'
 
 export default {
   name: 'UserAddPersonForm',
@@ -83,6 +84,8 @@ export default {
     'full-identifier-field': FullIdentifierField,
     'telephone-field': TelephoneField,
     'other-telephones-field': OtherTelephonesField,
+    'other-emails-field': OtherEmailsField,
+    'other-identifiers-field': OtherIdentifiersField,
     'mobile-field': MobileField,
     'other-mobiles-field': OtherMobilesField,
     'gender-field': GenderField,
@@ -102,6 +105,8 @@ export default {
       otherMobiles: null,
       telephone: null,
       otherTelephones: null,
+      otherEmails: null,
+      otherIdentifiers: null,
       gender: null,
       birthdate: null,
       birthplace: null,
@@ -142,6 +147,9 @@ export default {
       this.updateDataForm()
     },
     otherTelephones () {
+      this.updateDataForm()
+    },
+    otherEmails () {
       this.updateDataForm()
     },
     gender () {
