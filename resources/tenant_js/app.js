@@ -152,6 +152,9 @@ window.Vue.component('notifications', require('./components/notifications/Notifi
 // User Profile
 window.Vue.component('user-profile', require('./components/users/UserProfile'))
 
+// share-fab
+window.Vue.component('share-fab', require('./components/ui/ShareFab'))
+
 window.Vuetify = Vuetify
 
 // TODO

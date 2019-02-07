@@ -53,6 +53,9 @@
 <div id="app">
     <v-app light v-cloak>
         <snackbar></snackbar>
+
+        <share-fab></share-fab>
+
         <v-toolbar class="white">
             <img src="/img/iesebre/logo.png" alt="Institut de l'Ebre" height="50">
             <v-toolbar-title>{{ config('app.name') }}</v-toolbar-title>

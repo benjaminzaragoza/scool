@@ -32,7 +32,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@acachawiki" />
     <meta name="twitter:creator" content="@acacha1" />
-    
+
     <meta name="description" content="Aplicació per a tota la comunitat educativa de l'Institut de l'Ebre">
     <meta name="author" content="Sergi Tur Badenas - scool.cat">
 </head>

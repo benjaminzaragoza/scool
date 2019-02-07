@@ -3,8 +3,15 @@
 - [ ] Crear un seed per tal de començar desde zero
 
 # BUGS
-- [ ] Alinemanet de pa icona prepend de camp telèfon mòbil no surt ben alineada quan estem introiduint mòbil
+- [ ] Alineament de pa icona prepend de camp telèfon mòbil no surt ben alineada quan estem introiduint mòbil
 - [ ]
+
+# SHARE
+
+- [ ] Només mostrar el botó de compartir en entorns que ho suportin
+- [ ] Compartir incidències
+- [ ] Compartir Landing Page
+- https://whatwebcando.today/app-communication.html
 
 # FORMULARI DADES PERSONALS
 
