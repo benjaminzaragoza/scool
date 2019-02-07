@@ -26,6 +26,12 @@
     <meta property="og:title" content="L'App de l'Institut de l'Ebre">
     <meta property="og:url" content="https://iesebre.scool.cat/">
     <meta property="og:image" content="https://iesebre.scool.cat/img/iesebre/cellular-education-classroom-159844.jpeg">
+    <meta property="og:sitename" content="iesebre.scool.cat" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@acachawiki" />
+    <meta name="twitter:creator" content="@acacha1" />
+
 </head>
 <body>
 <v-app id="app" v-cloak>
