@@ -6,11 +6,18 @@
 - [ ] Alineament de pa icona prepend de camp telèfon mòbil no surt ben alineada quan estem introiduint mòbil
 - [ ]
 
+# CREDENTIALS JAVASCRIPT API/ MOBILE
+
+PWA:
+- [ ] Facilitar que l'usuari pugui guardar les seves credencials a eina de sistema operatiu Android
+- https://whatwebcando.today/credentials.html
+
 # SHARE
 
-- [ ] Només mostrar el botó de compartir en entorns que ho suportin
+- [X] Només mostrar el botó de compartir en entorns que ho suportin
+  - [X] Pàgina de Landing
 - [ ] Compartir incidències
-- [ ] Compartir Landing Page
+- [X] Compartir Landing Page
 - https://whatwebcando.today/app-communication.html
 
 # FORMULARI DADES PERSONALS
@@ -20,10 +27,13 @@
   - [X] Data de naixement
   - [X] Codi postal naixement
   - [X] Localitat de Naixement
-  - [X] Procíncia de naixement
+  - [X] Província de naixement
   - [X] Estat cívil
   - [ ] Adreça -street
   - [ ] tota la resta de camps adreça
+  
+- [ ] Widget altres identificadors:
+  - [ ] Falta el formulari altres identificadors  
 
 # ROUTEROS
 
