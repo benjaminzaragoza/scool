@@ -173,9 +173,12 @@ export default {
     civilStatus () {
       this.updateDataForm()
     },
-    address () {
-      console.log('address changed at UserAddPersonForm!')
-      this.updateDataForm()
+    address: {
+      handler: function () {
+        console.log('address watch!!!!!!!!!!!!!!!!')
+        this.updateDataForm()
+      },
+      deep: true
     },
     notes () {
       this.updateDataForm()
@@ -195,7 +198,6 @@ export default {
       this.birthplace = null
       this.civilStatus = null
       this.address = null
-      console.log('clean 10')
       this.notes = null
       this.dataForm = {}
     },
@@ -230,7 +232,6 @@ export default {
       } else {
         delete this.dataForm['birthplace']
       }
-
       this.civilStatus ? (this.dataForm['civil_status'] = this.civilStatus) : delete this.dataForm['civil_status']
       this.address ? (this.dataForm['address'] = this.address) : delete this.dataForm['address']
       this.notes ? (this.dataForm['notes'] = this.notes) : delete this.dataForm['notes']

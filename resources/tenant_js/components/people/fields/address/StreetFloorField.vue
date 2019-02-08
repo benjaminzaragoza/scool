@@ -2,7 +2,10 @@
     <v-text-field
             name="floor"
             label="Pis"
+            hint="P.ex. 3r o 4 o Àtic o buit"
             v-model="dataFloor"
+            @input="input"
+            @blur="blur"
     ></v-text-field>
 </template>
 

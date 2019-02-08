@@ -4,8 +4,8 @@
             label="Número"
             v-model="dataNumber"
             :error-messages="errors"
-            @input="$v.dataNumber.$touch()"
-            @blur="$v.dataNumber.$touch()"
+            @input="input"
+            @blur="blur"
             :required="required"
     ></v-text-field>
 </template>

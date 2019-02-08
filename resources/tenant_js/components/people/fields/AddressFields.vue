@@ -24,6 +24,7 @@ import StreetNumberField from './address/StreetNumberField'
 import StreetFloorField from './address/StreetFloorField'
 import StreetFloorNumberField from './address/StreetFloorNumberField'
 import LocalityComplexField from './address/LocalityComplexField'
+import Vue from 'vue'
 
 export default {
   name: 'AddressFields',
@@ -69,7 +70,6 @@ export default {
   computed: {
     invalidForm () {
       // TODO
-      // return this.$v.$invalid
       return false
     }
   },
@@ -90,22 +90,54 @@ export default {
       this.$emit('update:invalid', invalidForm)
     },
     address (address) {
-      console.log('address wath at AdressFields:')
-      console.log(address)
-      this.dataAddress = address
+      if (!address) this.clean()
+      else this.dataAddress = address
     }
   },
   methods: {
-    updateDataAddress () {
-      if (this.dataAddress) {
-        this.street ? (this.dataAddress['street'] = this.street) : delete this.dataAddress['street']
-        this.number ? (this.dataAddress['number'] = this.number) : delete this.dataAddress['number']
-        this.floor ? (this.dataAddress['floor'] = this.floor) : delete this.dataAddress['floor']
-        this.floorNumber ? (this.dataAddress['floorNumber'] = this.floorNumber) : delete this.dataAddress['floorNumber']
-        this.$emit('input', this.dataAddress)
+    clean () {
+      this.dataAddress = null
+      this.street = null
+      this.number = null
+      this.floor = null
+      this.floorNumber = null
+    },
+    dirty () {
+      if (this.street != null) return true
+      if (this.number != null) return true
+      if (this.floor != null) return true
+      if (this.floorNumber != null) return true
+      return false
+    },
+    set (item) {
+      if (this[item]) {
+        if (!this.dataAddress) this.dataAddress = {}
+        // this.dataAddress[item] = this[item]
+        // https://vuejs.org/v2/api/#Vue-set
+        // https://vuejs.org/v2/guide/reactivity.html
+        // this.$set(this.someObject, 'b', 2)
+        Vue.set(this.dataAddress, item, this[item])
       } else {
-        this.$emit('input', null)
+        if (this.dataAddress) {
+          Vue.set(this.dataAddress, item, null)
+          delete this.dataAddress[item]
+        }
       }
+    },
+    checkDataAddress () {
+      if (!this.dataAddress) return false
+      if (this.dataAddress) {
+        if (window._.isEmpty(this.dataAddress)) return false
+      }
+      return true
+    },
+    updateDataAddress () {
+      this.set('street')
+      this.set('number')
+      this.set('floor')
+      this.set('floorNumber')
+      if (!this.checkDataAddress()) this.$emit('input', null)
+      else this.$emit('input', this.dataAddress)
     },
     input () {
       this.$emit('input', this.dataAddress)
