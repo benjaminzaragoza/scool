@@ -8,6 +8,7 @@ use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Models\Incident;
 use App\Models\IncidentTag;
+use Cache;
 
 /**
  * Class IncidentsController.
@@ -24,7 +25,11 @@ class IncidentsController extends Controller{
      */
     public function index(ListIncidents $request)
     {
-        $incidents = Incident::getIncidents();
+//        $incidents = Incident::getIncidents();
+        $incidents = Cache::rememberForever(Incident::INCIDENTS_CACHE_KEY, function () {
+            return Incident::getIncidents();
+        });
+
         $incident_users = Incident::usersWithIncidentsRoles();
         $manager_users = Incident::userWithRoleIncidentsManager();
         $tags = IncidentTag::all();

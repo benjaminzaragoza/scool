@@ -21,6 +21,8 @@ class Incident extends Model
 
     const MANAGER_ROLE = ScoolRole::INCIDENTS_MANAGER['name'];
 
+    const INCIDENTS_CACHE_KEY = 'tasks.sergitur.scool.cat.user';
+
     protected $guarded = ['user_id'];
 
     /**

@@ -5,6 +5,7 @@ namespace Tests\Feature\Tenants;
 use App\Events\Incidents\IncidentShowed;
 use App\Models\Incident;
 use App\Models\User;
+use Cache;
 use Config;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -40,11 +41,32 @@ class IncidentsControllerTest extends BaseTenantTest {
      */
     public function can_see_incidents()
     {
+//        dd(Incident::INCIDENTS_CACHE_KEY);
+        $this->withoutExceptionHandling();
+
+        // Si el que executeu acaba executant altres caches -> PETARÀ
         $user = factory(User::class)->create();
+
+        // TODO
+//        Cache::shouldReceive('rememberForever')
+//            ->once()
+//            ->with('user_all_permissions' ,\Closure::class)
+//            ->andReturn($user->getAllPermissions());
+
         $role = Role::firstOrCreate(['name' => 'Incidents']);
         Config::set('auth.providers.users.model', User::class);
         $user->assignRole($role);
         $this->actingAs($user);
+
+//        Cache::shouldReceive('remember')
+//            ->once()
+//            ->with('git_info',5,\Closure::class)
+//            ->andReturn(collect([]));
+//        Cache::shouldReceive('rememberForever')
+//            ->once()
+//            ->with('tasks.sergitur.scool.cat.user', \Closure::class)
+//            ->andReturn(Incident::getIncidents());
+
         $response = $this->get('/incidents');
         $response->assertSuccessful();
         $response->assertViewIs('tenants.incidents.index');

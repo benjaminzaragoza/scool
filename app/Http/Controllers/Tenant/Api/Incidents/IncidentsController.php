@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Tenant\Api\Incidents;
 use App\Events\Incidents\IncidentDeleted;
 use App\Events\Incidents\IncidentShowed;
 use App\Events\Incidents\IncidentStored;
+use App\Events\Moodle\MoodleUserCreated;
 use App\Http\Requests\Incidents\DeleteIncident;
 use App\Http\Requests\Incidents\ListIncidents;
 use App\Http\Requests\Incidents\ShowIncident;
 use App\Http\Requests\Incidents\StoreIncident;
 use App\Models\Incident;
 use App\Http\Controllers\Controller;
+use Cache;
 
 /**
  * Class IncidentsController.
@@ -28,6 +30,9 @@ class IncidentsController extends Controller
     public function index(ListIncidents $request)
     {
         return Incident::getIncidents();
+//        return Cache::rememberForever(Incident::INCIDENTS_CACHE_KEY, function () {
+//            return Incident::getIncidents();
+//        });
     }
 
     /**

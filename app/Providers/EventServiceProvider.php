@@ -33,6 +33,7 @@ use App\Listeners\Authentication\LogRegisteredUser;
 use App\Listeners\Authentication\LogTakeImpersonation;
 use App\Listeners\Authentication\LogVerifiedUser;
 use App\Listeners\CreateTenantDatabase;
+use App\Listeners\ForgetIncidentsCache;
 use App\Listeners\Incidents\LogIncidentAssigned;
 use App\Listeners\Incidents\LogIncidentClosed;
 use App\Listeners\Incidents\LogIncidentDeleted;
@@ -125,16 +126,19 @@ class EventServiceProvider extends ServiceProvider
         IncidentStored::class => [
             SendIncidentCreatedEmail::class,
             LogIncidentStored::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentClosed::class => [
             SendIncidentClosedEmail::class,
             LogIncidentClosed::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentOpened::class => [
             SendIncidentOpenedEmail::class,
             LogIncidentOpened::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentShowed::class => [
@@ -144,50 +148,60 @@ class EventServiceProvider extends ServiceProvider
         IncidentDeleted::class => [
             SendIncidentDeletedEmail::class,
             LogIncidentDeleted::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentDescriptionUpdated::class => [
             SendIncidentDescriptionUpdateEmail::class,
             LogIncidentDescriptionUpdated::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentSubjectUpdated::class => [
             SendIncidentSubjectUpdateEmail::class,
             LogIncidentSubjectUpdated::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentReplyAdded::class => [
             NotifyIncidentReplyAdded::class,
             SendIncidentReplyAddedEmail::class,
-            LogIncidentReplyAdded::class
+            LogIncidentReplyAdded::class,
+            ForgetIncidentsCache::class
         ],
 
         StudyTagAdded::class => [
             SendIncidentTagAddedEmail::class,
             LogIncidentTagAdded::class,
+            ForgetIncidentsCache::class
         ],
 
         StudyTagRemoved::class => [
             SendIncidentTagRemovedEmail::class,
             LogIncidentTagRemoved::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentReplyUpdated::class => [
-            LogIncidentReplyUpdated::class
+            LogIncidentReplyUpdated::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentReplyRemoved::class => [
-            LogIncidentReplyRemoved::class
+            LogIncidentReplyRemoved::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentAssigned::class => [
             SendIncidentAssignedEmail::class,
             LogIncidentAssigned::class,
+            ForgetIncidentsCache::class
         ],
 
         IncidentDesassigned::class => [
             SendIncidentDesassignedEmail::class,
             LogIncidentDesassigned::class,
+            ForgetIncidentsCache::class
         ],
 
         // POSITIONS
