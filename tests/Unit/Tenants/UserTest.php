@@ -792,6 +792,8 @@ class UserTest extends TestCase
     /** @test */
     public function map_roles_and_permissions_in_admin()
     {
+        Cache::shouldReceive('put');
+        Cache::shouldReceive('has');
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com',
@@ -1018,6 +1020,8 @@ class UserTest extends TestCase
     /** @test */
     public function mapSimple()
     {
+        Cache::shouldReceive('put');
+        Cache::shouldReceive('has');
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com',
