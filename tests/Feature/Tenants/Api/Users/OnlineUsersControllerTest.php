@@ -42,19 +42,19 @@ class OnlineUsersControllerTest extends BaseTenantTest
      */
     public function user_can_see_online_users()
     {
-        $this->login('api');
+        $user = $this->login('api');
         $user1 = factory(User::class)->create();
         $user2 = factory(User::class)->create();
         factory(User::class)->create();
 
         $expiresAt = Carbon::now()->addMinutes(5);
-        Cache::put(User::USERS_CACHE_KEY. '-user-is-online-' . $user1->id, true, $expiresAt);
-        Cache::put(User::USERS_CACHE_KEY. '-user-is-online-' . $user2->id, true, $expiresAt);
+        Cache::put(User::USERS_CACHE_KEY. '-user-is-online-' . $user1->id, Carbon::now(), $expiresAt);
+        Cache::put(User::USERS_CACHE_KEY. '-user-is-online-' . $user2->id, Carbon::now(), $expiresAt);
 
         $response = $this->json('GET','/api/v1/users/online');
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
-        $this->assertCount(2,$result);
+        $this->assertCount(3,$result);
     }
 
     /**
@@ -84,7 +84,7 @@ class OnlineUsersControllerTest extends BaseTenantTest
         $this->login('api');
         $response = $this->json('GET','/api/v1/users/online');
         $response->assertSuccessful();
-        $this->assertCount(0,json_decode($response->getContent()));
+        $this->assertCount(1,json_decode($response->getContent()));
     }
 
     /**

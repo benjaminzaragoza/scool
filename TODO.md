@@ -5,6 +5,7 @@ FRONTEND:
  - [ ] Opció refresh
 
 BACKEND:
+- [X] Crear Middleware
 - [X] Utilitza cache per indicar activitat usuari
 - [X] Adaptar tests user
 - [ ] Comprovar també loca activitat tipus API

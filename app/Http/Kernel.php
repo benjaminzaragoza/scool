@@ -59,6 +59,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \App\Http\Middleware\LogLastUserActivity::class,
             'throttle:60,1',
             'bindings',
         ],
