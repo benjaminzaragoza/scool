@@ -34,7 +34,7 @@ class CreateTenantPeopleTable extends Migration
             $table->json('other_mobiles')->nullable();
             $table->string('email')->nullable();
             $table->json('other_emails')->nullable();
-            $table->string('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
 

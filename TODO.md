@@ -20,47 +20,6 @@ PWA:
 - [X] Compartir Landing Page
 - https://whatwebcando.today/app-communication.html
 
-# FORMULARI DADES PERSONALS
-
-Submit:
-- [X] Tancament de la finestra afegir usuari neteja camps personals
-- [X] Comprovar l'adreça afegida té correcte el person_id. Test actualitzat
-- [X] Comprovar el identifier_id és correcte
-- [X] civil_status no va no es guarda a la base de dades
-- [X] Mòbil de l'usuari i mòbil personal 
-  - [ ] Omplir el camp mòbil amb el mòbil de l'usuari si s'ha proporcionat
-- [X] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
-- [X] otheremails comprovar
-- [X] notes comprovar
-- [X] other_phones i other_mobiles i other_emails
-- [ ] Detecció de DNI duplicat
-  - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
-  - [ ] Ara el formulari dona un error de duplicate key al fer submit
-- [ ] Evitar que es pugui crear un nou registre a la taula person amb tots els camps buits (menys user_id)
-  - [ ] Validació Javascript
-  - [X] Validació backend/PHP/Laravel
-Altres
-- [ ] Comprovar/implementar switch validació
-- [ ] Comprovar/implementar switch camps requerits
-- [X] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
-- [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
-- [X] Camps que no s'esborren al BUIDAR CAMPS
-  - [X] Data de naixement
-  - [X] Codi postal naixement
-  - [X] Localitat de Naixement
-  - [X] Província de naixement
-  - [X] Estat cívil
-  - [X] Adreça -street
-  - [X] Adreça - number
-  - [X] Adreça - Pis
-  - [X] Adreça - # pis
-  - [X] Codi postal adreça
-  - [X] Localitat adreça
-  - [X] Provincia adreça 
-  
-- [ ] Widget altres identificadors:
-  - [ ] Falta el formulari altres identificadors  
-
 # ROUTEROS
 
 - [X] Paquet Laravel descartat no sembla que funcioni
@@ -1321,7 +1280,72 @@ OPERACIONS MASSIVES:
   - [ ] Quan té compte local associada
   - [ ] Mostrar warning té compte local associada. Si desitja tirar endavant s'eliminara l'associació
 
-# Users management
+# PEOPLE MANAGEMENT. PERSONS MANAGEMENT
+
+## Vista dades personals
+
+- [ ] Mostrar notes
+- [X] Mostrar taula en mode compacte
+- [X] Mostrar Status civil
+- [ ] Mostrar lloc de naixement tenin en compte birthlocation (si birthplace_id és null utilitzar birthlocation)
+- [X] Mostrar identificador (el valor no el ID)
+  - [X] Mostrar el tipus identificador
+  - [X] Mostrar el id del identificador amb v-tooltip
+  - [] Mostrar altres identificadors
+- [ ] Mostrar usuari associat a les dades personals
+  -  [ ] Mostrar el avatar (o en el seu defecte la imatge per defecte)
+- [ ] Mostrar altres mòbils
+- [ ] Mostrar altres emails
+- [ ] Mostrar altres telèfons
+- [ ] Mostrar l'usuari corporatiu?
+
+# Users management. Gestió d'usuaris
+
+## SUBFOMULARI CANVIAR AVATAR
+
+- [ ] TODO. No es canvia avatart
+  - [ ] Hi ha tot un tema pendent sobre photos i avatars
+
+## FORMULARI DADES PERSONALS
+
+Submit:
+- [X] Tancament de la finestra afegir usuari neteja camps personals
+- [X] Comprovar l'adreça afegida té correcte el person_id. Test actualitzat
+- [X] Comprovar el identifier_id és correcte
+- [X] civil_status no va no es guarda a la base de dades
+- [X] Mòbil de l'usuari i mòbil personal 
+  - [ ] Omplir el camp mòbil amb el mòbil de l'usuari si s'ha proporcionat
+- [X] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
+- [X] otheremails comprovar
+- [X] notes comprovar
+- [X] other_phones i other_mobiles i other_emails
+- [ ] Detecció de DNI duplicat
+  - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
+  - [ ] Ara el formulari dona un error de duplicate key al fer submit
+- [ ] Evitar que es pugui crear un nou registre a la taula person amb tots els camps buits (menys user_id)
+  - [ ] Validació Javascript
+  - [X] Validació backend/PHP/Laravel
+Altres
+- [ ] Comprovar/implementar switch validació
+- [ ] Comprovar/implementar switch camps requerits
+- [X] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
+- [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
+- [X] Camps que no s'esborren al BUIDAR CAMPS
+  - [X] Data de naixement
+  - [X] Codi postal naixement
+  - [X] Localitat de Naixement
+  - [X] Província de naixement
+  - [X] Estat cívil
+  - [X] Adreça -street
+  - [X] Adreça - number
+  - [X] Adreça - Pis
+  - [X] Adreça - # pis
+  - [X] Codi postal adreça
+  - [X] Localitat adreça
+  - [X] Provincia adreça 
+  
+- [ ] Widget altres identificadors:
+  - [ ] Falta el formulari altres identificadors  
 
 ## Verificacions
 
@@ -1356,8 +1380,13 @@ Gestió de password:
  - [ ] Generador de password aleatori
  - [ ] Enviar email a l'usuari
  - [ ] Forçar canvi al pròxim Login
+ 
+## CHANGELOG:
+- [ ] Igual que incidències logar totes les accions 
 
 ## PENDENT
+
+- [ ] Eliminar tots els links i valors hardcoded de Javascript apuntant a iesebre.com i agafar-los del tenant
 
 EDIT
 - [X] Modificar el tipus usuari
@@ -1365,12 +1394,6 @@ EDIT
      - [ ] Era professor: avisar? o que fer si té assignada una plaça
      - [ ] Alumne: té matrícules?
      - [ ] Altres
-
-
-CHANGELOG:
-- [ ] Igual que incidències logar totes les accions
-
-
 
 USER DELETE:
 - [ ] Preguntar si també es vol eliminar usuari de Google, usuari de Ldap i usuari de Moodle
@@ -1381,10 +1404,10 @@ USER ADD WIZARD
   - [ ] Moodle no permet passar hash del password -> S'ha de canviar password de Moodle en el moment es canvia password local
   - [ ] Com gestionar-lo?
   - [ ] Lligar amb el dialeg pendent que permetra canviar paraules de pas
-- [ ] Eliminar tots els links i valors hardcoded de Javascript apuntant a iesebre.com i agafar-los del tenant
-- [ ] Estils:
-  - [ ] Botons rojos no!
-  - [ ] Aplicar jerarquia! Quina botons són més important i quins secundaris
+
+- [X] Estils:
+  - [X] Botons rojos no!
+  - [X] Aplicar jerarquia! Quina botons són més important i quins secundaris
 
 OPERACIONS MASSIVES:
 - [X] Eliminar -> FET
@@ -1425,11 +1448,13 @@ ALTRES
     - [ ] Superadmins
     - [ ] Configuració: altres usuaris no es puguin esborrar     
 
-RELACIONS AMB ALTRES ENTITATS/MODELS
+## RELACIONS AMB ALTRES ENTITATS/MODELS
 
-GOOGLE/GSUITE
+### GOOGLE/GSUITE
 - [ ] Al editar link a les dades de Google d'aquest usuari
  - [ ] POder accedir al show d'un usuari de Google directament via link
+ 
+### PEOPLE/PERSON
 
   
   

@@ -75,44 +75,64 @@
                                                     hide-details
                                             ></v-checkbox>
                                         </td>
-                                        <td class="text-xs-left" v-html="props.item.id"></td>
-                                        <td class="text-xs-left" v-html="props.item.identifier_id"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.id"></td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ props.item.identifier_type }}</span>
+                                                <span>{{ props.item.identifier_type_id }} | {{ props.item.identifier_type }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ props.item.identifier_value }}</span>
+                                                <span>{{ props.item.identifier_id }} | {{ props.item.identifier_value }}</span>
+                                            </v-tooltip>
+                                        </td>
                                         <td class="text-xs">
+                                            <user-avatar v-if="props.item.user"
+                                                         :hash-id="props.item.user.hashid"
+                                                         :alt="props.item.user.name"
+                                                         :user="props.item.user"
+                                                         :editable="true"
+                                                         :removable="true"
+                                            ></user-avatar>
+                                            user: {{props.item.user}} |
                                             <a target="_blank" :href="'/users?action=show&id=' + props.item.userId">{{ props.item.userEmail }}</a>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <person-edit-name :value="props.item.givenName" :user="props.item"></person-edit-name>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <person-edit-name :value="props.item.sn1" :user="props.item"></person-edit-name>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <person-edit-name :value="props.item.sn2" :user="props.item"></person-edit-name>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <person-emails :email="props.item.email" :user="props.item"></person-emails>
                                         </td>
-                                        <td class="text-xs-left" v-html="props.item.mobile"></td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell" v-html="props.item.mobile"></td>
+                                        <td class="text-xs-left cell">
                                             {{ props.item.birthdate_formatted }}
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             {{ props.item.birthplace_name }}
                                         </td>
-                                        <td class="text-xs-left" v-html="props.item.gender"></td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell" v-html="props.item.gender"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.civil_status"></td>
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ props.item.formatted_created_at_diff }}</span>
                                                 <span>{{ props.item.formatted_created_at }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ props.item.formatted_updated_at_diff }}</span>
                                                 <span>{{ props.item.formatted_updated_at }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell">
                                             <json-dialog-component btn-class="ma-0" icon="info" name="Actual" title="Tota la informació en format Json" :json="props.item"></json-dialog-component>
                                             <person-show-icon :person="props.item" :people="people"></person-show-icon>
                                             <person-edit-icon :person="props.item" :people="people"></person-edit-icon>
@@ -172,7 +192,8 @@ export default {
     headers () {
       let headers = []
       headers.push({ text: 'Id', align: 'left', value: 'id' })
-      headers.push({ text: 'Identifier', value: 'identifier_id' })
+      headers.push({ text: 'Tipus id', value: 'identifier_type' })
+      headers.push({ text: 'Identificador', value: 'identifier_value' })
       headers.push({ text: 'Usuari', value: 'userEmail' })
       // headers.push({text: 'Foto', value: 'full_search', sortable: false})
       headers.push({ text: 'Nom', value: 'givenName' })
@@ -184,6 +205,7 @@ export default {
       headers.push({ text: 'Data naixement', value: 'birthdate_formatted' })
       headers.push({ text: 'Lloc de naixement', value: 'birthplace_name' })
       headers.push({ text: 'Sexe', value: 'gender' })
+      headers.push({ text: 'Estat cívil', value: 'civil_status' })
       headers.push({ text: 'Data creació', value: 'formatted_created_at' })
       headers.push({ text: 'Data actualització', value: 'formatted_updated_at' })
       headers.push({ text: 'Accions', sortable: false })
@@ -211,3 +233,15 @@ export default {
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 3px 3px !important;
+    }
+    .cell {
+        padding: 3px 3px !important;
+    }
+    table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child) {
+        padding: 0 5px !important;
+    }
+</style>

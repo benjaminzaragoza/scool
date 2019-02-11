@@ -190,6 +190,11 @@ class PersonTest extends TestCase
         $this->assertEquals('pepepardojeans@gmail.com',$mappedPerson['email']);
         $this->assertEquals('pepepardojeans@gmail.com',$mappedPerson['userEmail']);
         $this->assertEquals(1,$mappedPerson['userId']);
+
+        $this->assertEquals('Pepe Pardo Jeans',$mappedPerson['user']['name']);
+        $this->assertEquals(1,$mappedPerson['user']['id']);
+        $this->assertEquals('pepepardojeans@gmail.com',$mappedPerson['user']['email']);
+
         $this->assertEquals('pepepardo@iesebre.com',$mappedPerson['corporativeEmail']);
         $this->assertEquals('123125634',$mappedPerson['googleId']);
 
