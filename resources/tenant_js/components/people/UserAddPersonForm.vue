@@ -58,11 +58,6 @@
         <v-btn color="primary" @click="save" :loading="saving" :disabled="saving">
             <v-icon class="mr-2">save</v-icon>Guardar
         </v-btn>
-        address : {{ address }}
-        Data Form:
-        {{ dataForm }}
-        this.birthplace:
-        {{ this.birthplace }}
     </form>
 </template>
 

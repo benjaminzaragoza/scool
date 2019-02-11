@@ -160,13 +160,10 @@ export default {
       checkingPersonalEmail: false,
       checkingUsername: false,
       newUser: true,
-      welcomeEmail: false,
-      // welcomeEmail: true,
-      // googleUser: true,
-      googleUser: false,
+      welcomeEmail: true,
+      googleUser: true,
       ldapUser: true,
-      // moodleUser: true
-      moodleUser: false
+      moodleUser: true
     }
   },
   props: {

@@ -23,11 +23,12 @@ PWA:
 # FORMULARI DADES PERSONALS
 
 Submit:
-- [ ] Tancament de la finestra afegir usuari neteja camps personals
+- [X] Tancament de la finestra afegir usuari neteja camps personals
 - [X] Comprovar l'adreça afegida té correcte el person_id. Test actualitzat
 - [X] Comprovar el identifier_id és correcte
 - [X] civil_status no va no es guarda a la base de dades
-- [ ] Mòbil de l'usuari i mòbil personal 
+- [X] Mòbil de l'usuari i mòbil personal 
+  - [ ] Omplir el camp mòbil amb el mòbil de l'usuari si s'ha proporcionat
 - [X] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
 - [X] otheremails comprovar
 - [X] notes comprovar
