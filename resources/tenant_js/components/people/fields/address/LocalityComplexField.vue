@@ -264,6 +264,7 @@ export default {
     }
   },
   created () {
+    this.dataLocalityObject = this.localityObject
     this.fetchAllProvinces().then(() => {
       this.fetchAllLocalities().then(() => {})
     })

@@ -31,26 +31,13 @@ class UserPeopleController extends Controller
     public function store(UserPeopleStore $request, $tenant, User $user)
     {
         $person = null;
-        if ($user->person) $person = $user->person;
+        $personData = $this->formatPersonData($request);
+        if (count($personData) === 0) abort('422',"No s'ha proporcionat cap dada personal!");
+        if ($user->person) {
+            $person = $user->person;
+            $user->person->update($personData);
+        }
         else {
-            $personData = [];
-            if ($request->givenName) $personData['givenName'] = $request->givenName;
-            if ($request->sn1) $personData['sn1'] = $request->sn1;
-            if ($request->sn2) $personData['sn2'] = $request->sn2;
-            if ($request->email) $personData['email'] = $request->email;
-            if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
-            if ($request->birthdate) $personData['birthdate'] = $request->birthdate;
-            if ($request->birthplace_id) $personData['birthplace_id'] = $request->birthplace_id;
-            if ($request->birthplace) $personData['birthlocation'] = $this->formatLocation($request->birthplace);
-            if ($request->gender) $personData['gender'] = $request->gender;
-            if ($request->civil_status) $personData['civil_status'] = $request->civil_status;
-            if ($request->phone) $personData['phone'] = $request->phone;
-            if ($request->other_phones) $personData['other_phones'] = $request->other_phones;
-            if ($request->mobile) $personData['mobile'] = $request->mobile;
-            if ($request->other_mobiles) $personData['other_mobiles'] = $request->other_mobiles;
-            if ($request->email) $personData['email'] = $request->email;
-            if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
-            if ($request->notes) $personData['notes'] = $request->notes;
             $person = Person::create($personData);
             $person->user_id = $user->id;
             $person->save();
@@ -59,6 +46,29 @@ class UserPeopleController extends Controller
         if ($request->other_identifiers) $this->setOtherIdentifiers($person, $request->other_identifiers);
         if ($request->address) $this->setAddress($person, $request->address);
         return collect($person->map());
+    }
+
+    protected function formatPersonData($request)
+    {
+        $personData = [];
+        if ($request->givenName) $personData['givenName'] = $request->givenName;
+        if ($request->sn1) $personData['sn1'] = $request->sn1;
+        if ($request->sn2) $personData['sn2'] = $request->sn2;
+        if ($request->email) $personData['email'] = $request->email;
+        if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
+        if ($request->birthdate) $personData['birthdate'] = $request->birthdate;
+        if ($request->birthplace_id) $personData['birthplace_id'] = $request->birthplace_id;
+        if ($request->birthplace) $personData['birthlocation'] = $this->formatLocation($request->birthplace);
+        if ($request->gender) $personData['gender'] = $request->gender;
+        if ($request->civil_status) $personData['civil_status'] = $request->civil_status;
+        if ($request->phone) $personData['phone'] = $request->phone;
+        if ($request->other_phones) $personData['other_phones'] = $request->other_phones;
+        if ($request->mobile) $personData['mobile'] = $request->mobile;
+        if ($request->other_mobiles) $personData['other_mobiles'] = $request->other_mobiles;
+        if ($request->email) $personData['email'] = $request->email;
+        if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
+        if ($request->notes) $personData['notes'] = $request->notes;
+        return $personData;
     }
 
     protected function formatLocation($location)

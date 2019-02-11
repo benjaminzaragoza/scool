@@ -115,12 +115,7 @@ export default {
       birthdate: null,
       birthplace: null,
       civilStatus: null,
-      address: {
-        street: 'Alcanyiz',
-        number: '26',
-        floor: '4t',
-        floorNumber: '2a'
-      },
+      address: null,
       notes: null,
       saving: false,
       identifierInvalid: true,
@@ -252,19 +247,6 @@ export default {
       this.updateBirthplace()
       this.set('address')
       this.set('notes')
-      // this.user ? (this.dataForm['email'] = this.user.email) : delete this.dataForm['email']
-      // this.otherEmails ? (this.dataForm['other_emails'] = this.otherEmails) : delete this.dataForm['other_emails']
-      // this.identifier ? (this.dataForm['identifier'] = this.identifier) : delete this.dataForm['identifier']
-      // this.otherIdentifiers ? (this.dataForm['other_identifiers'] = this.otherIdentifiers) : delete this.dataForm['other_identifiers']
-      // this.mobile ? (this.dataForm['mobile'] = this.mobile) : delete this.dataForm['mobile']
-      // this.otherMobiles ? (this.dataForm['otherMobiles'] = this.otherMobiles) : delete this.dataForm['otherMobiles']
-      // this.telephone ? (this.dataForm['phone'] = this.telephone) : delete this.dataForm['phone']
-      // this.otherTelephones ? (this.dataForm['other_phones'] = this.otherTelephones) : delete this.dataForm['other_phones']
-      // this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
-      // this.birthdate ? (this.dataForm['birthdate'] = this.birthdate) : delete this.dataForm['birthdate']
-      // this.civilStatus ? (this.dataForm['civil_status'] = this.civilStatus) : delete this.dataForm['civil_status']
-      // this.address ? (this.dataForm['address'] = this.address) : delete this.dataForm['address']
-      // this.notes ? (this.dataForm['notes'] = this.notes) : delete this.dataForm['notes']
     },
     isValid () {
       return true

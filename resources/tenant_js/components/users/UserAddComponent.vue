@@ -172,7 +172,9 @@ export default {
     return {
       dialog: false,
       step: 3,
-      user: null,
+      user: {
+        id: 1
+      },
       googleUser: null,
       moodleUser: null
     }

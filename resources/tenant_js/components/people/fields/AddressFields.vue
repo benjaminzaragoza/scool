@@ -49,9 +49,7 @@ export default {
       postalcode: null,
       postalcodeInvalid: true,
       locality: null,
-      localityInvalid: true,
-      province: null,
-      provinceInvalid: true
+      localityInvalid: true
     }
   },
   model: {
@@ -86,6 +84,9 @@ export default {
     floorNumber () {
       this.updateDataAddress()
     },
+    locality () {
+      this.updateDataAddress()
+    },
     invalidForm (invalidForm) {
       this.$emit('update:invalid', invalidForm)
     },
@@ -101,6 +102,7 @@ export default {
       this.number = null
       this.floor = null
       this.floorNumber = null
+      this.locality = null
     },
     dirty () {
       if (this.street != null) return true
@@ -136,6 +138,7 @@ export default {
       this.set('number')
       this.set('floor')
       this.set('floorNumber')
+      this.set('locality')
       if (!this.checkDataAddress()) this.$emit('input', null)
       else this.$emit('input', this.dataAddress)
     },
@@ -153,6 +156,7 @@ export default {
       if (this.address.number) this.number = this.address.number
       if (this.address.floor) this.floor = this.address.floor
       if (this.address.floorNumber) this.floorNumber = this.address.floorNumber
+      if (this.address.locality) this.locality = this.address.locality
     }
   }
 }

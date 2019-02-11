@@ -22,11 +22,16 @@ PWA:
 
 # FORMULARI DADES PERSONALS
 
+Submit:
+- [ ] Evitar que es pugui crear un nou registre a la taula person amb tots els camps buits (menys user_id)
+  - [ ] Validació Javascript
+  - [ ] Validació backend
+Altres
 - [ ] Comprovar/implementar switch validació
 - [ ] Comprovar/implementar switch camps requerits
-- [ ] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
+- [X] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
 - [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
-- [ ] Camps que no s'esborren al BUIDAR CAMPS
+- [X] Camps que no s'esborren al BUIDAR CAMPS
   - [X] Data de naixement
   - [X] Codi postal naixement
   - [X] Localitat de Naixement
@@ -36,9 +41,9 @@ PWA:
   - [X] Adreça - number
   - [X] Adreça - Pis
   - [X] Adreça - # pis
-  - [ ] Codi postal adreça
-  - [ ] Localitat adreça
-  - [ ] Provincia adreça 
+  - [X] Codi postal adreça
+  - [X] Localitat adreça
+  - [X] Provincia adreça 
   
 - [ ] Widget altres identificadors:
   - [ ] Falta el formulari altres identificadors  
