@@ -163,11 +163,21 @@ export default {
     }
   },
   methods: {
+    checkIsVoid () {
+      if (!this.postalcode && !this.locality && !this.province) {
+        return true
+      }
+      return false
+    },
     setLocalityObject () {
-      this.dataLocalityObject = {
-        postalcode: this.postalcode,
-        locality: this.locality,
-        province: this.province
+      if (this.checkIsVoid()) {
+        this.dataLocalityObject = null
+      } else {
+        this.dataLocalityObject = {
+          postalcode: this.postalcode,
+          locality: this.locality,
+          province: this.province
+        }
       }
       this.$emit('input', this.dataLocalityObject)
     },

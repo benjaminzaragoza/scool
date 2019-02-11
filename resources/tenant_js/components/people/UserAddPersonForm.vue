@@ -133,6 +133,7 @@ export default {
   },
   computed: {
     invalid () {
+      // TODO
       if (
         (!this.identifierInvalid && this.identifier) &&
         (!this.mobileInvalid && this.mobile)
@@ -175,7 +176,6 @@ export default {
     },
     address: {
       handler: function () {
-        console.log('address watch!!!!!!!!!!!!!!!!')
         this.updateDataForm()
       },
       deep: true
@@ -201,18 +201,7 @@ export default {
       this.notes = null
       this.dataForm = {}
     },
-    updateDataForm () {
-      this.user ? (this.dataForm['email'] = this.user.email) : delete this.dataForm['email']
-      this.otherEmails ? (this.dataForm['other_emails'] = this.otherEmails) : delete this.dataForm['other_emails']
-      this.identifier ? (this.dataForm['identifier'] = this.identifier) : delete this.dataForm['identifier']
-      this.otherIdentifiers ? (this.dataForm['other_identifiers'] = this.otherIdentifiers) : delete this.dataForm['other_identifiers']
-      this.mobile ? (this.dataForm['mobile'] = this.mobile) : delete this.dataForm['mobile']
-      this.otherMobiles ? (this.dataForm['otherMobiles'] = this.otherMobiles) : delete this.dataForm['otherMobiles']
-      this.telephone ? (this.dataForm['phone'] = this.telephone) : delete this.dataForm['phone']
-      this.otherTelephones ? (this.dataForm['other_phones'] = this.otherTelephones) : delete this.dataForm['other_phones']
-      this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
-      this.birthdate ? (this.dataForm['birthdate'] = this.birthdate) : delete this.dataForm['birthdate']
-
+    updateBirthplace () {
       if (this.birthplace) {
         if (this.birthplace.locality) {
           if ((typeof this.birthplace.locality) === 'string') {
@@ -232,9 +221,50 @@ export default {
       } else {
         delete this.dataForm['birthplace']
       }
-      this.civilStatus ? (this.dataForm['civil_status'] = this.civilStatus) : delete this.dataForm['civil_status']
-      this.address ? (this.dataForm['address'] = this.address) : delete this.dataForm['address']
-      this.notes ? (this.dataForm['notes'] = this.notes) : delete this.dataForm['notes']
+    },
+    set (item) {
+      if (this[item]) {
+        if (!this.dataForm) this.dataForm = {}
+        // this.dataForm[item] = this[item]
+        // https://vuejs.org/v2/api/#Vue-set
+        // https://vuejs.org/v2/guide/reactivity.html
+        // this.$set(this.someObject, 'b', 2)
+        this.$set(this.dataForm, item, this[item])
+      } else {
+        if (this.dataForm) {
+          this.$set(this.dataForm, item, null)
+          delete this.dataForm[item]
+        }
+      }
+    },
+    updateDataForm () {
+      this.set('email')
+      this.set('other_emails')
+      this.set('identifier')
+      this.set('other_identifiers')
+      this.set('mobile')
+      this.set('otherMobiles')
+      this.set('phone')
+      this.set('other_phones')
+      this.set('gender')
+      this.set('birthdate')
+      this.set('civil_status')
+      this.updateBirthplace()
+      this.set('address')
+      this.set('notes')
+      // this.user ? (this.dataForm['email'] = this.user.email) : delete this.dataForm['email']
+      // this.otherEmails ? (this.dataForm['other_emails'] = this.otherEmails) : delete this.dataForm['other_emails']
+      // this.identifier ? (this.dataForm['identifier'] = this.identifier) : delete this.dataForm['identifier']
+      // this.otherIdentifiers ? (this.dataForm['other_identifiers'] = this.otherIdentifiers) : delete this.dataForm['other_identifiers']
+      // this.mobile ? (this.dataForm['mobile'] = this.mobile) : delete this.dataForm['mobile']
+      // this.otherMobiles ? (this.dataForm['otherMobiles'] = this.otherMobiles) : delete this.dataForm['otherMobiles']
+      // this.telephone ? (this.dataForm['phone'] = this.telephone) : delete this.dataForm['phone']
+      // this.otherTelephones ? (this.dataForm['other_phones'] = this.otherTelephones) : delete this.dataForm['other_phones']
+      // this.gender ? (this.dataForm['gender'] = this.gender) : delete this.dataForm['gender']
+      // this.birthdate ? (this.dataForm['birthdate'] = this.birthdate) : delete this.dataForm['birthdate']
+      // this.civilStatus ? (this.dataForm['civil_status'] = this.civilStatus) : delete this.dataForm['civil_status']
+      // this.address ? (this.dataForm['address'] = this.address) : delete this.dataForm['address']
+      // this.notes ? (this.dataForm['notes'] = this.notes) : delete this.dataForm['notes']
     },
     isValid () {
       return true
