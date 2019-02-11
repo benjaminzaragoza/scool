@@ -245,7 +245,7 @@ class Person extends Model implements HasMedia
      */
     public function assignAddress(Address $address)
     {
-        $address->person_id = $this->person->id;
+        $address->person_id = $this->id;
         $address->save();
         return $this;
     }

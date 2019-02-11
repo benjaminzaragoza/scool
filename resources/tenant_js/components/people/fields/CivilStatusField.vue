@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-            name="civilStatus"
+            name="civil_status"
             label="Estat cívil"
             :required="required"
             clearable
@@ -28,18 +28,18 @@ export default {
     }
   },
   model: {
-    prop: 'civilStatus',
+    prop: 'civil_status',
     event: 'input'
   },
   props: {
-    civilStatuses: {
+    civil_statuses: {
       type: Array
     },
     required: {
       type: Boolean,
       default: false
     },
-    civilStatus: {},
+    civil_status: {},
     invalid: {}
   },
   computed: {
@@ -51,7 +51,7 @@ export default {
     }
   },
   watch: {
-    civilStatus (civilStatus) {
+    civil_status (civilStatus) {
       this.dataCivilStatus = civilStatus
     }
   },
@@ -69,7 +69,7 @@ export default {
     }
   },
   created () {
-    if (this.civilStatus) this.dataCivilStatuses = this.civilStatus
+    if (this.civil_status) this.dataCivilStatuses = this.civil_status
     else this.dataCivilStatuses = ['Solter/a', 'Casat/da', 'Separat/da', 'Divorciat/da', 'Vidu/a']
   }
 }

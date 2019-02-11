@@ -40,7 +40,7 @@
                     <birthplace-field v-model="birthplace" :required="required" :validate="validate"></birthplace-field>
                 </v-flex>
                 <v-flex md1>
-                    <civil-status-field v-model="civilStatus" :required="required" :validate="validate"></civil-status-field>
+                    <civil-status-field v-model="civil_status" :required="required" :validate="validate"></civil-status-field>
                 </v-flex>
             </v-layout>
             <address-fields v-model="address" :invalid.sync="addressInvalid" :required="required" :validate="validate"></address-fields>
@@ -114,7 +114,7 @@ export default {
       gender: null,
       birthdate: null,
       birthplace: null,
-      civilStatus: null,
+      civil_status: null,
       address: null,
       notes: null,
       saving: false,
@@ -166,7 +166,7 @@ export default {
     birthplace () {
       this.updateDataForm()
     },
-    civilStatus () {
+    civil_status () {
       this.updateDataForm()
     },
     address: {
@@ -191,7 +191,7 @@ export default {
       this.gender = null
       this.birthdate = null
       this.birthplace = null
-      this.civilStatus = null
+      this.civil_status = null
       this.address = null
       this.notes = null
       this.dataForm = {}

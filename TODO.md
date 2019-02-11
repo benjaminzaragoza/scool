@@ -23,12 +23,15 @@ PWA:
 # FORMULARI DADES PERSONALS
 
 Submit:
-- [ ] civil_status no va no es guarda a la base de dades
-- [ ] birthplace tampoc es guarda
-- [ ] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
-- [ ] otheremails comprovar
+- [ ] Tancament de la finestra afegir usuari neteja camps personals
+- [X] Comprovar l'adreça afegida té correcte el person_id. Test actualitzat
+- [X] Comprovar el identifier_id és correcte
+- [X] civil_status no va no es guarda a la base de dades
+- [ ] Mòbil de l'usuari i mòbil personal 
+- [X] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
+- [X] otheremails comprovar
 - [X] notes comprovar
-- [ ] other_phones i other_mobiles
+- [X] other_phones i other_mobiles i other_emails
 - [ ] Detecció de DNI duplicat
   - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
   - [ ] Ara el formulari dona un error de duplicate key al fer submit
