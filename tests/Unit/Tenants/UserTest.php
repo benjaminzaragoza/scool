@@ -850,6 +850,20 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function mapOnline()
+    {
+        $user = factory(User::class)->create();
+        Cache::shouldReceive('rememberForever')
+            ->andReturn(Permission::all());
+        Cache::shouldReceive('has')
+            ->andReturn(true);
+
+        $mappedUser = $user->map();
+
+        $this->assertEquals(true, $mappedUser['online']);
+    }
+
+    /** @test */
     public function map()
     {
         $user = factory(User::class)->create([
@@ -898,6 +912,8 @@ class UserTest extends TestCase
         $this->assertEquals('Pepe Pardo Jeans',$mappedUser['name']);
         $this->assertEquals('Pepe',$mappedUser['givenName']);
         $this->assertFalse($mappedUser['isSuperAdmin']);
+
+        $this->assertEquals(false, $mappedUser['online']);
 
         $this->assertEquals($user->photo,'tenant_test/user_photos/1_pepe-pardo-jeans_pepepardojeans-at-gmailcom.jpeg');
         $this->assertEquals($user->photo_hash,'3728b0e69b303b6613e9986e3202c3bb');
@@ -962,6 +978,10 @@ class UserTest extends TestCase
 
         Cache::shouldReceive('rememberForever')
             ->andReturn(Permission::all());
+        $user = factory(User::class)->create();
+
+        Cache::shouldReceive('has')
+            ->andReturn(false);
         $user = factory(User::class)->create();
 
         $user->givePermissionTo('task.store');

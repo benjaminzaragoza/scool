@@ -41,6 +41,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
 
     protected $guard_name = 'web';
 
+    const USERS_CACHE_KEY = 'iesebre.scool.cat.user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -730,7 +732,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'hashid' => $this->hashid,
             'full_search' => $this->full_search,
-            'api_uri' => $this->api_uri
+            'api_uri' => $this->api_uri,
+
+            'online' => $this->online
         ];
     }
 
@@ -797,7 +801,9 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
             'hashid' => $this->hashid,
             'full_search' => $this->full_search,
             'all_permissions' => $this->all_permissions,
-            'api_uri' => $this->api_uri
+            'api_uri' => $this->api_uri,
+
+            'online' => $this->online
         ];
 
         // Teacher users
@@ -956,5 +962,20 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function getMobileVerifiedAtTimestampAttribute()
     {
         return optional($this->mobile_verified_at)->timestamp;
+    }
+
+    /**
+     * mobile_verified_at_formatted_diff_timestamp attribute.
+     *
+     * @return mixed
+     */
+    public function getOnlineAttribute()
+    {
+        return $this->isOnline();
+    }
+
+    public function isOnline()
+    {
+        return Cache::has(User::USERS_CACHE_KEY . '-user-is-online-' . $this->id);
     }
 }
