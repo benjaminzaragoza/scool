@@ -22,6 +22,9 @@ PWA:
 
 # FORMULARI DADES PERSONALS
 
+- [ ] Comprovar/implementar switch validació
+- [ ] Comprovar/implementar switch camps requerits
+- [ ] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
 - [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
 - [ ] Camps que no s'esborren al BUIDAR CAMPS
   - [X] Data de naixement
@@ -29,8 +32,13 @@ PWA:
   - [X] Localitat de Naixement
   - [X] Província de naixement
   - [X] Estat cívil
-  - [ ] Adreça -street
-  - [ ] tota la resta de camps adreça
+  - [X] Adreça -street
+  - [X] Adreça - number
+  - [X] Adreça - Pis
+  - [X] Adreça - # pis
+  - [ ] Codi postal adreça
+  - [ ] Localitat adreça
+  - [ ] Provincia adreça 
   
 - [ ] Widget altres identificadors:
   - [ ] Falta el formulari altres identificadors  
