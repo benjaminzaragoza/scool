@@ -32,7 +32,6 @@ class UserPeopleController extends Controller
     {
         $person = null;
         $personData = $this->formatPersonData($request);
-        if (count($personData) === 0) abort('422',"No s'ha proporcionat cap dada personal!");
         if ($user->person) {
             $person = $user->person;
             $user->person->update($personData);
@@ -68,6 +67,7 @@ class UserPeopleController extends Controller
         if ($request->email) $personData['email'] = $request->email;
         if ($request->other_emails) $personData['other_emails'] = $request->other_emails;
         if ($request->notes) $personData['notes'] = $request->notes;
+        if (count($personData) === 0) abort('422',"No s'ha proporcionat cap dada personal!");
         return $personData;
     }
 
