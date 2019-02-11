@@ -76,7 +76,6 @@ class NotificationsControllerTest extends BaseTenantTest
      */
     public function regular_user_can_show_notifications_module()
     {
-        $this->withoutExceptionHandling();
         factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardo@jeans.com'
