@@ -77,27 +77,30 @@
                                         </td>
                                         <td class="text-xs-left cell" v-html="props.item.id"></td>
                                         <td class="text-xs-left cell">
-                                            <v-tooltip bottom>
+                                            <v-tooltip bottom v-if="props.item.identifier_type">
                                                 <span slot="activator">{{ props.item.identifier_type }}</span>
                                                 <span>{{ props.item.identifier_type_id }} | {{ props.item.identifier_type }}</span>
                                             </v-tooltip>
+                                            <span v-else>---</span>
                                         </td>
                                         <td class="text-xs-left cell">
-                                            <v-tooltip bottom>
+                                            <v-tooltip bottom v-if="props.item.identifier_value">
                                                 <span slot="activator">{{ props.item.identifier_value }}</span>
                                                 <span>{{ props.item.identifier_id }} | {{ props.item.identifier_value }}</span>
                                             </v-tooltip>
+                                            <span v-else>Cap</span>
                                         </td>
-                                        <td class="text-xs">
+                                        <td class="text-xs-left cell">
                                             <user-avatar v-if="props.item.user"
                                                          :hash-id="props.item.user.hashid"
                                                          :alt="props.item.user.name"
                                                          :user="props.item.user"
-                                                         :editable="true"
-                                                         :removable="true"
                                             ></user-avatar>
-                                            user: {{props.item.user}} |
-                                            <a target="_blank" :href="'/users?action=show&id=' + props.item.userId">{{ props.item.userEmail }}</a>
+                                            <span v-else>Sense usuari associat</span>
+                                            <v-tooltip bottom v-if="props.item.identifier_value">
+                                                <a slot="activator" target="_blank" :href="'/users?action=show&id=' + props.item.userId">{{ props.item.userEmail }}</a>
+                                                <span>{{ props.item.notes }}</span>
+                                            </v-tooltip>
                                         </td>
                                         <td class="text-xs-left cell">
                                             <person-edit-name :value="props.item.givenName" :user="props.item"></person-edit-name>
@@ -109,9 +112,14 @@
                                             <person-edit-name :value="props.item.sn2" :user="props.item"></person-edit-name>
                                         </td>
                                         <td class="text-xs-left cell">
-                                            <person-emails :email="props.item.email" :user="props.item"></person-emails>
+                                            <person-emails :email="props.item.email" :person="props.item"></person-emails>
                                         </td>
-                                        <td class="text-xs-left cell" v-html="props.item.mobile"></td>
+                                        <td class="text-xs-left cell">
+                                            <person-mobiles :mobile="props.item.mobile" :person="props.item"></person-mobiles>
+                                        </td>
+                                        <td class="text-xs-left cell">
+                                            <person-phones :phone="props.item.phone" :person="props.item"></person-phones>
+                                        </td>
                                         <td class="text-xs-left cell">
                                             {{ props.item.birthdate_formatted }}
                                         </td>
@@ -157,6 +165,7 @@ import PersonEditIcon from './PersonEditIcon'
 import PersonDeleteIcon from './PersonDeleteIcon'
 import PersonEmails from './PersonEmails'
 import PersonMobiles from './PersonMobiles'
+import PersonPhones from './PersonPhones'
 import PersonEditName from './PersonEditName'
 import JsonDialogComponent from '../ui/JsonDialogComponent'
 
@@ -170,6 +179,7 @@ export default {
     'person-delete-icon': PersonDeleteIcon,
     'person-emails': PersonEmails,
     'person-mobiles': PersonMobiles,
+    'person-phones': PersonPhones,
     'person-edit-name': PersonEditName,
     'json-dialog-component': JsonDialogComponent
 
@@ -199,8 +209,9 @@ export default {
       headers.push({ text: 'Nom', value: 'givenName' })
       headers.push({ text: '1r Cognom', value: 'sn1' })
       headers.push({ text: '2n Cognom', value: 'sn2' })
-      headers.push({ text: 'email', value: 'email' })
-      headers.push({ text: 'mobile', value: 'mobile' })
+      headers.push({ text: 'Correu electrònic', value: 'email' })
+      headers.push({ text: 'Mòbil', value: 'mobile' })
+      headers.push({ text: 'Telèfon', value: 'phone' })
       // if (this.showStatusHeader) headers.push({text: 'Estatus', value: 'administrative_status_code'})
       headers.push({ text: 'Data naixement', value: 'birthdate_formatted' })
       headers.push({ text: 'Lloc de naixement', value: 'birthplace_name' })

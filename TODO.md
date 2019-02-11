@@ -1282,9 +1282,16 @@ OPERACIONS MASSIVES:
 
 # PEOPLE MANAGEMENT. PERSONS MANAGEMENT
 
+## Vista dades personals | INLINE MODIFICATIONS
+
+Tots els camps són especials
+- [ ] Botó edit per fer la modificació 
+ 
 ## Vista dades personals
 
 - [ ] Mostrar notes
+ - [X] Mostrar com a tooltip del email del usuari
+ - [ ] Posar una acció per veure les notes (i de pas que les permeti editar)
 - [X] Mostrar taula en mode compacte
 - [X] Mostrar Status civil
 - [ ] Mostrar lloc de naixement tenin en compte birthlocation (si birthplace_id és null utilitzar birthlocation)
@@ -1292,12 +1299,14 @@ OPERACIONS MASSIVES:
   - [X] Mostrar el tipus identificador
   - [X] Mostrar el id del identificador amb v-tooltip
   - [] Mostrar altres identificadors
-- [ ] Mostrar usuari associat a les dades personals
-  -  [ ] Mostrar el avatar (o en el seu defecte la imatge per defecte)
-- [ ] Mostrar altres mòbils
-- [ ] Mostrar altres emails
-- [ ] Mostrar altres telèfons
+- [X] Mostrar usuari associat a les dades personals
+  - [X] Mostrar el avatar (o en el seu defecte la imatge per defecte)
+  - [X] Mostrar també email del usuari
+- [X] Mostrar altres mòbils
+- [X] Mostrar altres emails
+- [X] Mostrar altres telèfons
 - [ ] Mostrar l'usuari corporatiu?
+ - [ ] Sinó té usuari corporatiu nostrar cap
 
 # Users management. Gestió d'usuaris
 

@@ -1,20 +1,17 @@
 <template>
     <span style="display: flex;align-items: center;">
         <json-dialog-component
-                v-if="person.other_emails"
+                v-if="person.other_phones"
                 small
-                title="Altres correus electrònics"
+                title="Altres telefòns"
                 btn-class="ma-0"
                 icon="info"
                 icon-color="success"
-                :json="person.other_emails">
+                :json="person.other_phones">
         </json-dialog-component>
         <v-tooltip bottom style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            <a
-                    slot="activator"
-                    target="_blank" :href="'https://mail.google.com/mail/?view=cm&fs=1&to=' + email"
-                    v-text="email"></a>
-            <span>{{ email }}</span>
+            <span slot="activator">{{ phone }}</span>
+            <span>{{ phone }}</span>
         </v-tooltip>
     </span>
 </template>
@@ -23,12 +20,12 @@
 import JsonDialogComponent from '../ui/JsonDialogComponent'
 
 export default {
-  name: 'PersonEmails',
+  name: 'PersonPhones',
   components: {
     'json-dialog-component': JsonDialogComponent
   },
   props: {
-    email: {},
+    phone: {},
     person: {
       type: Object,
       required: true

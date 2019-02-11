@@ -2,15 +2,16 @@
   <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.xsOnly" @keydown.esc="dialog = false">
       <v-tooltip bottom slot="activator" v-if="icon">
           <v-btn
+                 :small="small"
                  icon
                  :title="title"
                  flat
                  slot="activator"
-                 color="blue darken-2"
+                 :color="iconColor"
                  dark
                  :class="btnClass"
           >
-              <v-icon v-text="icon"></v-icon>
+              <v-icon :small="small" v-text="icon"></v-icon>
           </v-btn>
           <span v-text="title"></span>
       </v-tooltip>
@@ -53,6 +54,12 @@ export default {
     }
   },
   props: {
+    small: {
+      default: false
+    },
+    iconColor: {
+      default: 'primary'
+    },
     btnClass: {
       type: String,
       default: ''
