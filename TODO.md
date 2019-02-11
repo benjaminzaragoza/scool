@@ -1,3 +1,9 @@
+# ONLINE USERS
+
+- [X] Crear api que permeti obtenir la llista usuaris online
+  - [X] Crear test
+  - [X] Usuaris no logats no poden accedir
+  - [X] No donar massa info sobre els usuaris online -> mapSimple
 # Seeds 
 
 - [ ] Crear un seed per tal de començar desde zero

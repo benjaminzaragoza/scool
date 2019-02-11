@@ -40,7 +40,7 @@ class OnlineUsersControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function user_manager_can_see_online_users()
+    public function user_can_see_online_users()
     {
         $this->login('api');
         $user1 = factory(User::class)->create();
@@ -61,7 +61,25 @@ class OnlineUsersControllerTest extends BaseTenantTest
      * @test
      * @group users
      */
-    public function user_manager_can_see_online_users_empty()
+    public function regular_user_cannot_see_online_users()
+    {
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        factory(User::class)->create();
+
+        $expiresAt = Carbon::now()->addMinutes(5);
+        Cache::put(User::USERS_CACHE_KEY. '-user-is-online-' . $user1->id, true, $expiresAt);
+        Cache::put(User::USERS_CACHE_KEY. '-user-is-online-' . $user2->id, true, $expiresAt);
+
+        $response = $this->json('GET','/api/v1/users/online');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function user_can_see_online_users_empty()
     {
         $this->login('api');
         $response = $this->json('GET','/api/v1/users/online');

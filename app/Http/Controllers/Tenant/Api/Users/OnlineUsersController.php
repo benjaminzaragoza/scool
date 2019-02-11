@@ -22,7 +22,7 @@ class OnlineUsersController extends Controller
         $onlineUsers = User::all()->filter(function ($user) {
             return $user['online'];
         });
-        return map_collection($onlineUsers->values());
+        return map_simple_collection($onlineUsers->values());
     }
 
 }
