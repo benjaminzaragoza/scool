@@ -1,9 +1,9 @@
 <template>
     <v-text-field
-            name="street"
+            name="street_name"
             label="Adreça"
             hint="P.ex. C/ Alcanyiz o Avg/ Generalitat"
-            v-model="dataStreet"
+            v-model="dataStreetName"
             :error-messages="errors"
             @input="input"
             @blur="blur"
@@ -15,22 +15,22 @@
 import { required } from 'vuelidate/lib/validators'
 import { validationMixin } from 'vuelidate'
 export default {
-  name: 'StreetField',
+  name: 'StreetNameField',
   mixins: [validationMixin],
   validations: {
-    dataStreet: { required }
+    dataStreetName: { required }
   },
   data () {
     return {
-      dataStreet: this.street
+      dataStreetName: this.streetName
     }
   },
   model: {
-    prop: 'street',
+    prop: 'streetName',
     event: 'input'
   },
   props: {
-    street: {},
+    streetName: {},
     required: {
       type: Boolean,
       default: false
@@ -39,24 +39,24 @@ export default {
   computed: {
     errors () {
       const errors = []
-      if (!this.$v.dataStreet.$dirty) return errors
-      if (this.required) !this.$v.dataStreet.required && errors.push('El carrer és obligatòri.')
+      if (!this.$v.dataStreetName.$dirty) return errors
+      if (this.required) !this.$v.dataStreetName.required && errors.push('El carrer és obligatòri.')
       return errors
     }
   },
   watch: {
-    street (street) {
-      this.dataStreet = street
+    streetName (streetName) {
+      this.dataStreetName = streetName
     }
   },
   methods: {
     input () {
-      this.$v.dataStreet.$touch()
-      this.$emit('input', this.dataStreet)
+      this.$v.dataStreetName.$touch()
+      this.$emit('input', this.dataStreetName)
     },
     blur () {
-      this.$v.dataStreet.$touch()
-      this.$emit('blur', this.dataStreet)
+      this.$v.dataStreetName.$touch()
+      this.$emit('blur', this.dataStreetName)
     }
   }
 }

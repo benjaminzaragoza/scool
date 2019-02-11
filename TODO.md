@@ -23,9 +23,18 @@ PWA:
 # FORMULARI DADES PERSONALS
 
 Submit:
+- [ ] civil_status no va no es guarda a la base de dades
+- [ ] birthplace tampoc es guarda
+- [ ] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
+- [ ] otheremails comprovar
+- [X] notes comprovar
+- [ ] other_phones i other_mobiles
+- [ ] Detecció de DNI duplicat
+  - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
+  - [ ] Ara el formulari dona un error de duplicate key al fer submit
 - [ ] Evitar que es pugui crear un nou registre a la taula person amb tots els camps buits (menys user_id)
   - [ ] Validació Javascript
-  - [ ] Validació backend
+  - [X] Validació backend/PHP/Laravel
 Altres
 - [ ] Comprovar/implementar switch validació
 - [ ] Comprovar/implementar switch camps requerits

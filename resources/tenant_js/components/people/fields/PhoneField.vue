@@ -17,7 +17,7 @@ import { required, numeric, maxLength } from 'vuelidate/lib/validators'
 import { validationMixin } from 'vuelidate'
 
 export default {
-  name: 'TelephoneField',
+  name: 'PhoneField',
   mixins: [validationMixin],
   validations: {
     dataPhone: { required, numeric, maxLength: maxLength(9) }

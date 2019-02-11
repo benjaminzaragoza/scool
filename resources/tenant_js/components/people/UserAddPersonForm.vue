@@ -13,10 +13,10 @@
             ></v-switch>
             <v-btn flat class="grey--text" @click="clean">Buidar camps</v-btn>
             <person-notes-field v-model="notes"></person-notes-field>
-            <other-mobiles-field v-model="otherMobiles" :required="required" :validate="validate"></other-mobiles-field>
-            <other-telephones-field v-model="otherTelephones" :required="required" :validate="validate"></other-telephones-field>
-            <other-emails-field v-model="otherEmails" :required="required" :validate="validate"></other-emails-field>
-            <other-identifiers-field v-model="otherIdentifiers" :required="required" :validate="validate"></other-identifiers-field>
+            <other-mobiles-field v-model="other_mobiles" :required="required" :validate="validate"></other-mobiles-field>
+            <other-phones-field v-model="other_phones" :required="required" :validate="validate"></other-phones-field>
+            <other-emails-field v-model="other_emails" :required="required" :validate="validate"></other-emails-field>
+            <other-identifiers-field v-model="other_identifiers" :required="required" :validate="validate"></other-identifiers-field>
         </span>
 
         <v-container fluid grid-list-md text-xs-center>
@@ -28,7 +28,7 @@
                     <mobile-field v-model="mobile" :invalid.sync="mobileInvalid" :required="required" :validate="validate"></mobile-field>
                 </v-flex>
                 <v-flex md1>
-                    <telephone-field v-model="telephone" :required="required" :validate="validate"></telephone-field>
+                    <phone-field v-model="phone" :required="required" :validate="validate"></phone-field>
                 </v-flex>
                 <v-flex md1>
                     <gender-field v-model="gender" :required="required" :validate="validate"></gender-field>
@@ -75,8 +75,8 @@ import BirthdateField from './fields/BirthdateField'
 import BirthplaceField from './fields/BirthplaceField'
 import GenderField from './fields/GenderField'
 import CivilStatusField from './fields/CivilStatusField'
-import TelephoneField from './fields/TelephoneField'
-import OtherTelephonesField from './fields/OtherTelephonesField'
+import PhoneField from './fields/PhoneField'
+import OtherPhonesField from './fields/OtherPhonesField'
 import OtherMobilesField from './fields/OtherMobilesField'
 import PersonNotesField from './fields/PersonNotesField'
 import OtherEmailsField from './fields/OtherEmailsField'
@@ -86,8 +86,8 @@ export default {
   name: 'UserAddPersonForm',
   components: {
     'full-identifier-field': FullIdentifierField,
-    'telephone-field': TelephoneField,
-    'other-telephones-field': OtherTelephonesField,
+    'phone-field': PhoneField,
+    'other-phones-field': OtherPhonesField,
     'other-emails-field': OtherEmailsField,
     'other-identifiers-field': OtherIdentifiersField,
     'mobile-field': MobileField,
@@ -106,11 +106,11 @@ export default {
       required: false,
       identifier: null,
       mobile: null,
-      otherMobiles: null,
-      telephone: null,
-      otherTelephones: null,
-      otherEmails: null,
-      otherIdentifiers: null,
+      other_mobiles: null,
+      phone: null,
+      other_phones: null,
+      other_emails: null,
+      other_identifiers: null,
       gender: null,
       birthdate: null,
       birthplace: null,
@@ -145,16 +145,16 @@ export default {
     mobile () {
       this.updateDataForm()
     },
-    otherMobiles () {
+    other_mobiles () {
       this.updateDataForm()
     },
-    telephone () {
+    phone () {
       this.updateDataForm()
     },
-    otherTelephones () {
+    other_phones () {
       this.updateDataForm()
     },
-    otherEmails () {
+    other_emails () {
       this.updateDataForm()
     },
     gender () {
@@ -182,12 +182,12 @@ export default {
   methods: {
     clean () {
       this.identifier = null
-      this.otherEmails = null
-      this.otherIdentifiers = null
+      this.other_emails = null
+      this.other_identifiers = null
       this.mobile = null
-      this.otherMobiles = null
-      this.telephone = null
-      this.otherTelephones = null
+      this.other_mobiles = null
+      this.phone = null
+      this.other_phones = null
       this.gender = null
       this.birthdate = null
       this.birthplace = null
@@ -238,7 +238,7 @@ export default {
       this.set('identifier')
       this.set('other_identifiers')
       this.set('mobile')
-      this.set('otherMobiles')
+      this.set('other_mobiles')
       this.set('phone')
       this.set('other_phones')
       this.set('gender')

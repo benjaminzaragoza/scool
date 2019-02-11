@@ -20,7 +20,7 @@
             <v-card-text>
                 <v-text-field
                         label="Altres telèfons mòbils"
-                        v-model="dataOtherTelephones"
+                        v-model="dataOtherPhones"
                         placeholder="977405253, 977524548"
                         hint="Altres telèfons fixes, separats per comes"
                         @input="input"
@@ -53,26 +53,26 @@
 
 <script>
 export default {
-  name: 'OtherTelephonesField',
+  name: 'OtherPhonesField',
   data () {
     return {
       dialog: false,
-      dataOtherTelephones: null
+      dataOtherPhones: null
     }
   },
   model: {
-    prop: 'otherTelephones',
+    prop: 'otherPhones',
     event: 'input'
   },
   props: {
-    otherTelephones: ''
+    otherPhones: ''
   },
   methods: {
     input () {
-      this.$emit('input', this.dataOtherTelephones)
+      this.$emit('input', this.dataOtherPhones)
     },
     blur () {
-      this.$emit('blur', this.dataOtherTelephones)
+      this.$emit('blur', this.dataOtherPhones)
     }
   }
 }

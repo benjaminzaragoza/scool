@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap>
         <v-flex md4>
-            <street-field v-model="street" :invalid.sync="streetInvalid" :required="required"></street-field>
+            <street-name-field v-model="name" :invalid.sync="streetInvalid" :required="required"></street-name-field>
         </v-flex>
         <v-flex md1>
             <street-number-field v-model="number" :invalid.sync="numberInvalid" :required="required"></street-number-field>
@@ -10,7 +10,7 @@
             <street-floor-field v-model="floor" :invalid.sync="floorInvalid"></street-floor-field>
         </v-flex>
         <v-flex md1>
-            <street-floor-number-field v-model="floorNumber" :invalid.sync="floorNumberInvalid"></street-floor-number-field>
+            <street-floor-number-field v-model="floor_number" :invalid.sync="floor_numberInvalid"></street-floor-number-field>
         </v-flex>
         <v-flex md5>
             <locality-complex-field v-model="locality" :required="required"></locality-complex-field>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import StreetField from './address/StreetField'
+import StreetNameField from './address/StreetNameField'
 import StreetNumberField from './address/StreetNumberField'
 import StreetFloorField from './address/StreetFloorField'
 import StreetFloorNumberField from './address/StreetFloorNumberField'
@@ -29,7 +29,7 @@ import Vue from 'vue'
 export default {
   name: 'AddressFields',
   components: {
-    'street-field': StreetField,
+    'street-name-field': StreetNameField,
     'street-number-field': StreetNumberField,
     'street-floor-field': StreetFloorField,
     'street-floor-number-field': StreetFloorNumberField,
@@ -38,14 +38,14 @@ export default {
   data () {
     return {
       dataAddress: {},
-      street: null,
+      name: null,
       streetInvalid: true,
       number: null,
       numberInvalid: true,
       floor: null,
       floorInvalid: true,
-      floorNumber: null,
-      floorNumberInvalid: true,
+      floor_number: null,
+      floor_numberInvalid: true,
       postalcode: null,
       postalcodeInvalid: true,
       locality: null,
@@ -72,7 +72,7 @@ export default {
     }
   },
   watch: {
-    street () {
+    name () {
       this.updateDataAddress()
     },
     number () {
@@ -81,7 +81,7 @@ export default {
     floor () {
       this.updateDataAddress()
     },
-    floorNumber () {
+    floor_number () {
       this.updateDataAddress()
     },
     locality () {
@@ -98,17 +98,17 @@ export default {
   methods: {
     clean () {
       this.dataAddress = null
-      this.street = null
+      this.name = null
       this.number = null
       this.floor = null
-      this.floorNumber = null
+      this.floor_number = null
       this.locality = null
     },
     dirty () {
-      if (this.street != null) return true
+      if (this.name != null) return true
       if (this.number != null) return true
       if (this.floor != null) return true
-      if (this.floorNumber != null) return true
+      if (this.floor_number != null) return true
       return false
     },
     set (item) {
@@ -118,10 +118,10 @@ export default {
         // https://vuejs.org/v2/api/#Vue-set
         // https://vuejs.org/v2/guide/reactivity.html
         // this.$set(this.someObject, 'b', 2)
-        Vue.set(this.dataAddress, item, this[item])
+        this.$set(this.dataAddress, item, this[item])
       } else {
         if (this.dataAddress) {
-          Vue.set(this.dataAddress, item, null)
+          this.$set(this.dataAddress, item, null)
           delete this.dataAddress[item]
         }
       }
@@ -133,12 +133,29 @@ export default {
       }
       return true
     },
+    setLocationId () {
+      if (this.locality) {
+        if (this.locality.locality) {
+          this.$set(this.dataAddress, 'location_id', this.locality.locality.id)
+        }
+      } else this.$set(this.dataAddress, 'location_id', null)
+    },
+    setProvinceId () {
+      if (this.locality) {
+        if (this.locality.province) {
+          this.$set(this.dataAddress, 'province_id', this.locality.province.id)
+        }
+      } else this.$set(this.dataAddress, 'province_id', null)
+    },
     updateDataAddress () {
-      this.set('street')
+      this.set('name')
       this.set('number')
       this.set('floor')
-      this.set('floorNumber')
+      this.set('floor_number')
       this.set('locality')
+      this.setLocationId()
+      this.setLocationId()
+      this.setProvinceId()
       if (!this.checkDataAddress()) this.$emit('input', null)
       else this.$emit('input', this.dataAddress)
     },
@@ -152,10 +169,10 @@ export default {
   created () {
     if (this.address) {
       this.dataAddress = this.address
-      if (this.address.street) this.street = this.address.street
+      if (this.address.name) this.name = this.address.name
       if (this.address.number) this.number = this.address.number
       if (this.address.floor) this.floor = this.address.floor
-      if (this.address.floorNumber) this.floorNumber = this.address.floorNumber
+      if (this.address.floor_number) this.floor_number = this.address.floor_number
       if (this.address.locality) this.locality = this.address.locality
     }
   }

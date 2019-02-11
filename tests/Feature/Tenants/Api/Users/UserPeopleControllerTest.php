@@ -66,6 +66,7 @@ class UserPeopleControllerTest extends BaseTenantTest
      */
     public function user_manager_can_add_personal_data_to_existing_user()
     {
+        $this->withoutExceptionHandling();
         seed_identifier_types();
         $this->loginAsUsersManager('api');
         $user = factory(User::class)->create([
@@ -136,7 +137,7 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('NIF',$result->identifier_type);
         $this->assertEquals('977405026',$result->phone);
         $this->assertEquals('679545789',$result->mobile);
-        $this->assertEquals('666555444,666999888',$result->other_mobiles);
+        $this->assertEquals('["666555444","666999888"]',$result->other_mobiles);
         $this->assertEquals('Bla bla bla',$result->notes);
         $this->assertNotNull($result->updated_at);
         $this->assertNotNull($result->created_at);
@@ -166,10 +167,10 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('Casat/da',$result->civil_status);
         $this->assertEquals('Home',$result->gender);
         $this->assertEquals('977405026',$result->phone);
-        $this->assertEquals('977554478,9774554874',$result->other_phones);
+        $this->assertEquals('["977554478","9774554874"]',$result->other_phones);
         $this->assertEquals('679545789',$result->mobile);
-        $this->assertEquals('666555444,666999888',$result->other_mobiles);
-        $this->assertEquals('pepepardo@gmail.com,pepepardo@xtec.cat',$result->other_emails);
+        $this->assertEquals('["666555444","666999888"]',$result->other_mobiles);
+        $this->assertEquals('["pepepardo@gmail.com","pepepardo@xtec.cat"]',$result->other_emails);
         $this->assertEquals('Bla bla bla',$result->notes);
 
         $user = $user->fresh();
@@ -188,15 +189,15 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('3',$resultPerson->identifiers[1]->type_id);
 
         $this->assertEquals('pepepardo@jeans.com',$resultPerson->email);
-        $this->assertEquals('pepepardo@gmail.com,pepepardo@xtec.cat',$resultPerson->other_emails);
+        $this->assertEquals('["pepepardo@gmail.com","pepepardo@xtec.cat"]',$resultPerson->other_emails);
 
         $this->assertEquals('Pepe',$resultPerson->givenName);
         $this->assertEquals('Pardo',$resultPerson->sn1);
         $this->assertEquals('Jeans',$resultPerson->sn2);
         $this->assertEquals('679545789',$resultPerson->mobile);
-        $this->assertEquals('666555444,666999888',$resultPerson->other_mobiles);
+        $this->assertEquals('["666555444","666999888"]',$resultPerson->other_mobiles);
         $this->assertEquals('977405026',$resultPerson->phone);
-        $this->assertEquals('977554478,9774554874',$resultPerson->other_phones);
+        $this->assertEquals('["977554478","9774554874"]',$resultPerson->other_phones);
         $this->assertEquals('Home',$resultPerson->gender);
         $this->assertEquals('Illuminate\Support\Carbon',get_class($resultPerson->birthdate));
         $this->assertEquals('1978-03-02',$resultPerson->birthdate->format('Y-m-d'));
@@ -302,7 +303,7 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('NIF',$result->identifier_type);
         $this->assertEquals('977405026',$result->phone);
         $this->assertEquals('679545789',$result->mobile);
-        $this->assertEquals('666555444,666999888',$result->other_mobiles);
+        $this->assertEquals('["666555444","666999888"]',$result->other_mobiles);
         $this->assertEquals('Bla bla bla',$result->notes);
         $this->assertNotNull($result->updated_at);
         $this->assertNotNull($result->created_at);
@@ -332,10 +333,10 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('Casat/da',$result->civil_status);
         $this->assertEquals('Home',$result->gender);
         $this->assertEquals('977405026',$result->phone);
-        $this->assertEquals('977554478,9774554874',$result->other_phones);
+        $this->assertEquals('["977554478","9774554874"]',$result->other_phones);
         $this->assertEquals('679545789',$result->mobile);
-        $this->assertEquals('666555444,666999888',$result->other_mobiles);
-        $this->assertEquals('pepepardo@gmail.com,pepepardo@xtec.cat',$result->other_emails);
+        $this->assertEquals('["666555444","666999888"]',$result->other_mobiles);
+        $this->assertEquals('["pepepardo@gmail.com","pepepardo@xtec.cat"]',$result->other_emails);
         $this->assertEquals('Bla bla bla',$result->notes);
 
         $user = $user->fresh();
@@ -354,15 +355,15 @@ class UserPeopleControllerTest extends BaseTenantTest
         $this->assertEquals('3',$resultPerson->identifiers[1]->type_id);
 
         $this->assertEquals('pepepardo@jeans.com',$resultPerson->email);
-        $this->assertEquals('pepepardo@gmail.com,pepepardo@xtec.cat',$resultPerson->other_emails);
+        $this->assertEquals('["pepepardo@gmail.com","pepepardo@xtec.cat"]',$resultPerson->other_emails);
 
         $this->assertEquals('Pepe',$resultPerson->givenName);
         $this->assertEquals('Pardo',$resultPerson->sn1);
         $this->assertEquals('Jeans',$resultPerson->sn2);
         $this->assertEquals('679545789',$resultPerson->mobile);
-        $this->assertEquals('666555444,666999888',$resultPerson->other_mobiles);
+        $this->assertEquals('["666555444","666999888"]',$resultPerson->other_mobiles);
         $this->assertEquals('977405026',$resultPerson->phone);
-        $this->assertEquals('977554478,9774554874',$resultPerson->other_phones);
+        $this->assertEquals('["977554478","9774554874"]',$resultPerson->other_phones);
         $this->assertEquals('Home',$resultPerson->gender);
         $this->assertEquals('Illuminate\Support\Carbon',get_class($resultPerson->birthdate));
         $this->assertEquals('1978-03-02',$resultPerson->birthdate->format('Y-m-d'));
