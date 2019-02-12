@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class NotificationsIndex.
+ * Class NotificationsWebIndex.
  *
  * @package App\Http\Requests
  */
-class NotificationsIndex extends FormRequest
+class NotificationsWebIndex extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class NotificationsIndex extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('notifications.index');
+        return true;
     }
 
     /**

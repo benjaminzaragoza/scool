@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Notifications\NotificationsIndex;
 use App\Http\Controllers\Tenant\Controller;
+use App\Http\Requests\Notifications\NotificationsWebIndex;
 use App\Models\DatabaseNotification;
 use App\Models\User;
 
@@ -17,10 +17,10 @@ class NotificationController extends Controller
     /**
      * NotificationsIndex.
      *
-     * @param NotificationsIndex $request
+     * @param NotificationsWebIndex $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(NotificationsIndex $request)
+    public function index(NotificationsWebIndex $request)
     {
         $notifications = collect([]);
         $users = collect([]);
