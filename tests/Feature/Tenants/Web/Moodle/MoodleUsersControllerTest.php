@@ -32,7 +32,10 @@ class MoodleUsersControllerTest extends BaseTenantTest
         $this->app[Kernel::class]->setArtisan(null);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     */
     public function superadmin_can_show_moodle()
     {
         $this->loginAsSuperAdmin();
@@ -72,7 +75,10 @@ class MoodleUsersControllerTest extends BaseTenantTest
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     */
     public function users_manager_can_show_moodle()
     {
         $this->loginAsUsersManager();
@@ -100,7 +106,10 @@ class MoodleUsersControllerTest extends BaseTenantTest
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     */
     public function moodle_users_manager_can_show_moodle()
     {
         $this->loginAsMoodleManager();
@@ -128,14 +137,20 @@ class MoodleUsersControllerTest extends BaseTenantTest
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     */
     public function guest_cannot_show_moodle()
     {
         $response = $this->get('/moodle/users');
         $response->assertRedirect('/login');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group moodle
+     */
     public function regular_user_cannot_show_changelog()
     {
         $user = factory(User::class)->create();
