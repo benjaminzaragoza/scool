@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\GoogleGSuite\GoogleDirectory;
-use App\Http\Requests\WatchGoogleSuiteUsers;
+use App\Http\Requests\Google\WatchGoogleSuiteUsers;
 use App\Jobs\WatchGoogleUsers;
 
 /**

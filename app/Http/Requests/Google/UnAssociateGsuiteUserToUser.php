@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Google;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class EditGoogleUsers.
+ * Class UnAssociateGsuiteUserToUser
  *
  * @package App\Http\Requests
  */
-class EditGoogleUsers extends FormRequest
+class UnAssociateGsuiteUserToUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class EditGoogleUsers extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('edit-gsuite-users');
+        return Auth::user()->can('users.store');
     }
 
     /**

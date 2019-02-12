@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Google;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class WatchGoogleSuiteUsers.
+ * Class ListGoogleGroups.
  *
  * @package App\Http\Requests
  */
-class WatchGoogleSuiteUsers extends FormRequest
+class ListGoogleGroups extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,8 +19,7 @@ class WatchGoogleSuiteUsers extends FormRequest
      */
     public function authorize()
     {
-        Auth::shouldUse('api');
-        return Auth::user()->can('watch-gsuite-users');
+        return Auth::user()->can('list-gsuite-groups');
     }
 
     /**
@@ -31,7 +30,7 @@ class WatchGoogleSuiteUsers extends FormRequest
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }

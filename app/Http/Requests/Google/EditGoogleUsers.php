@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Google;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListGoogleSuiteGroupMembers.
+ * Class EditGoogleUsers.
  *
  * @package App\Http\Requests
  */
-class ListGoogleSuiteGroupMembers extends FormRequest
+class EditGoogleUsers extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,8 +19,7 @@ class ListGoogleSuiteGroupMembers extends FormRequest
      */
     public function authorize()
     {
-        if (! Auth::user()) return false;
-        return Auth::user()->can('list-gsuite-groups');
+        return Auth::user()->can('edit-gsuite-users');
     }
 
     /**
@@ -30,8 +29,6 @@ class ListGoogleSuiteGroupMembers extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\GoogleGSuite\GoogleDirectory;
-use App\Http\Requests\EditGoogleUsers;
-use App\Http\Requests\UnAssociateGsuiteUserToUser;
+use App\Http\Requests\Google\EditGoogleUsers;
+use App\Http\Requests\Google\UnAssociateGsuiteUserToUser;
 use App\Models\GoogleUser;
 use App\Http\Requests\AssociateGsuiteUserToUser;
-use App\Http\Requests\GetUser;
 use App\Models\User;
 use Google_Service_Exception;
 

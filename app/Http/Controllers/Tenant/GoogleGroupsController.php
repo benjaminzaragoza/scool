@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\GoogleGSuite\GoogleDirectory;
-use App\Http\Requests\DestroyGoogleGroups;
-use App\Http\Requests\ListGoogleGroups;
-use App\Http\Requests\StoreGoogleGroups;
+use App\Http\Requests\Google\DestroyGoogleGroups;
+use App\Http\Requests\Google\ListGoogleGroups;
+use App\Http\Requests\Google\StoreGoogleGroups;
+use Google_Service_Exception;
 
 /**
  * Class GoogleGroupsController.
- * 
+ *
  * @package App\Http\Controllers\Tenant
  */
 class GoogleGroupsController extends Controller
