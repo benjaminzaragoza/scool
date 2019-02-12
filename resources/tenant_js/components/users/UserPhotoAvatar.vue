@@ -87,7 +87,7 @@
         <v-btn flat @click="$emit('back')">
             <v-icon class="mr-2">arrow_back</v-icon>Endarrera
         </v-btn>
-        <v-btn flat @click="$emit('forward')">
+        <v-btn color="primary" @click="$emit('forward')">
             <v-icon class="mr-2">arrow_forward</v-icon>Següent
         </v-btn>
     </span>

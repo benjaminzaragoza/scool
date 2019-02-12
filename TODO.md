@@ -21,6 +21,7 @@ BACKEND:
   - [X] Usuaris no logats no poden accedir
   - [X] No donar massa info sobre els usuaris online -> mapSimple
   
+  
 # Seeds 
 
 - [ ] Crear un seed per tal de començar desde zero
@@ -1333,6 +1334,11 @@ Tots els camps són especials
 
 # Users management. Gestió d'usuaris
 
+## USER ADD WIZARD
+
+### USUARI LDAP
+- [ ] TOT PER FER
+
 ## LLISTA DATATABLES
 
 - [ ] Llista d'usuaris -> mostrar columna online de l'usuari
@@ -1344,33 +1350,38 @@ Tots els camps són especials
 
 ## SUBFOMULARI CANVIAR AVATAR
 
+- [ ] Boto seguent amb jerarquia primaria
+- [ ] Mo mostrar progress bars MoodleUser, ldapUser i GoogleUser si s'ha indicat no crear aquests usuaris
 - [ ] TODO. No es canvia avatart
   - [ ] Hi ha tot un tema pendent sobre photos i avatars
 
 ## FORMULARI DADES PERSONALS
 
+- [ ] Widget altres identificadors:
+  - [ ] Falta el formulari altres identificadors  
+
 Submit:
-- [X] Tancament de la finestra afegir usuari neteja camps personals
-- [X] Comprovar l'adreça afegida té correcte el person_id. Test actualitzat
-- [X] Comprovar el identifier_id és correcte
-- [X] civil_status no va no es guarda a la base de dades
-- [X] Mòbil de l'usuari i mòbil personal 
-  - [ ] Omplir el camp mòbil amb el mòbil de l'usuari si s'ha proporcionat
-- [X] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
-- [X] otheremails comprovar
-- [X] notes comprovar
-- [X] other_phones i other_mobiles i other_emails
 - [ ] Detecció de DNI duplicat
   - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
   - [ ] Ara el formulari dona un error de duplicate key al fer submit
 - [ ] Evitar que es pugui crear un nou registre a la taula person amb tots els camps buits (menys user_id)
   - [ ] Validació Javascript
   - [X] Validació backend/PHP/Laravel
+- [X] Mòbil de l'usuari i mòbil personal 
+  - [ ] Omplir el camp mòbil amb el mòbil de l'usuari si s'ha proporcionat
+- [X] Tancament de la finestra afegir usuari neteja camps personals
+- [X] Comprovar l'adreça afegida té correcte el person_id. Test actualitzat
+- [X] Comprovar el identifier_id és correcte
+- [X] civil_status no va no es guarda a la base de dades
+- [X] email -> NO EL PROPORCIONEM! Proporcionar el email del user!
+- [X] otheremails comprovar
+- [X] notes comprovar
+- [X] other_phones i other_mobiles i other_emails
 Altres
 - [ ] Comprovar/implementar switch validació
 - [ ] Comprovar/implementar switch camps requerits
-- [X] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
 - [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
+- [X] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
 - [X] Camps que no s'esborren al BUIDAR CAMPS
   - [X] Data de naixement
   - [X] Codi postal naixement
@@ -1384,9 +1395,6 @@ Altres
   - [X] Codi postal adreça
   - [X] Localitat adreça
   - [X] Provincia adreça 
-  
-- [ ] Widget altres identificadors:
-  - [ ] Falta el formulari altres identificadors  
 
 ## Verificacions
 
