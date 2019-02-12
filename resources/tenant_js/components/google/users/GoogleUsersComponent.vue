@@ -485,7 +485,8 @@ export default {
       return boolean ? 'Sí' : 'No'
     },
     formatMessages (messages) {
-      return messages.join('<br/>')
+      if (messages) return messages.join('<br/>')
+      return ''
     },
     formatOrgUnitPath (orgUnitPath) {
       if (orgUnitPath.length > 17) {

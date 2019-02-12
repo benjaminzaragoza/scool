@@ -67,6 +67,7 @@ class MoodleUsersController extends Controller
      * Destroy.
      *
      * @param MoodleUserDestroyMultiple $request
+     * @return int
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function destroyMultiple(MoodleUserDestroyMultiple $request)
@@ -75,6 +76,7 @@ class MoodleUsersController extends Controller
             MoodleUser::destroy($user);
         }
         Cache::forget('scool_moodle_users');
+        return count($request->users);
     }
 
 }

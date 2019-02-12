@@ -80,6 +80,7 @@ class GoogleUsersController extends Controller
 
     /**
      * @param DestroyGoogleUsersMultiple $request
+     * @return int
      */
     public function destroyMultiple(DestroyGoogleUsersMultiple $request)
     {
@@ -91,5 +92,6 @@ class GoogleUsersController extends Controller
             abort('422',$e);
         }
         Cache::forget('google_users');
+        return count($request->users);
     }
 }

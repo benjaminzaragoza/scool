@@ -233,7 +233,7 @@ class GoogleUsersControllerTest extends BaseTenantTest
      * @group google
      * @group slow
      */
-    public function delete_multipe_user()
+    public function delete_multiple_user()
     {
         config_google_api();
         tune_google_client();
@@ -269,6 +269,8 @@ class GoogleUsersControllerTest extends BaseTenantTest
         sleep(5);
 
         $response->assertSuccessful();
+        $result = $response->getContent();
+        $this->assertEquals(2,$result);
         $this->assertFalse(google_user_exists('provaborrar777@iesebre.com'));
         $this->assertFalse(google_user_exists('provaborrar888@iesebre.com'));
     }

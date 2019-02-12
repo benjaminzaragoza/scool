@@ -32,9 +32,4 @@ class GoogleUsersController extends Controller
 
         return view('tenants.google_users.index', compact('users','localUsers','action'));
     }
-
-    public function show()
-    {
-        dd('TODO');
-    }
 }

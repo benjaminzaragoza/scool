@@ -259,6 +259,7 @@ class MoodleUsersControllerTest extends BaseTenantTest {
         ]);
 
         $response->assertSuccessful();
+        $this->assertEquals(2,$response->getContent());
         $this->assertNull(MoodleUser::get($user1->username));
         $this->assertNull(MoodleUser::get($user2->username));
     }
