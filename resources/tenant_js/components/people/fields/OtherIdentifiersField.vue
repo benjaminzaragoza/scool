@@ -30,7 +30,7 @@
                 <v-list class="elevation-2" v-if="dataOtherIdentifiers && dataOtherIdentifiers.length > 0">
                     <v-list-tile v-for="identifier in dataOtherIdentifiers" :key="identifier.value">
                         <v-list-tile-content>
-                            <v-list-tile-title>{{ identifier.type_id }} - {{ identifier.value }}</v-list-tile-title>
+                            <v-list-tile-title>{{ type(identifier.type_id) }} - {{ identifier.value }}</v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
                             <v-tooltip bottom>
@@ -81,18 +81,28 @@ export default {
     otherIdentifiers: ''
   },
   methods: {
+    type (type) {
+      return this.types[type]
+    },
     remove (identifier) {
       this.dataOtherIdentifiers.splice(this.dataOtherIdentifiers.indexOf(identifier), 1)
+      this.input()
     },
     add () {
       if (!this.dataOtherIdentifiers) this.dataOtherIdentifiers = []
       this.dataOtherIdentifiers.push(this.identifier)
+      this.input()
     },
     input () {
       this.$emit('input', this.dataOtherIdentifiers)
-    },
-    blur () {
-      this.$emit('blur', this.dataOtherIdentifiers)
+    }
+  },
+  created () {
+    this.types = {
+      1: 'NIF',
+      2: 'Passaport',
+      3: 'NIE',
+      4: 'TIS'
     }
   }
 }
