@@ -94,7 +94,12 @@ export default {
       this.input()
     },
     input () {
-      this.$emit('input', this.dataOtherIdentifiers)
+      if (this.dataOtherIdentifiers) {
+        if (this.dataOtherIdentifiers.length > 0) this.$emit('input', this.dataOtherIdentifiers)
+        else this.$emit('input', null)
+      } else {
+        this.$emit('input', null)
+      }
     }
   },
   created () {

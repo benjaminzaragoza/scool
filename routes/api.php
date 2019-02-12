@@ -32,6 +32,7 @@ use App\Http\Controllers\Tenant\Api\Notifications\SimpleNotificationsController;
 use App\Http\Controllers\Tenant\Api\Notifications\UserNotificationsController;
 use App\Http\Controllers\Tenant\Api\Notifications\UserUnreadNotificationsController;
 use App\Http\Controllers\Tenant\Api\Permissions\PermissionsController;
+use App\Http\Controllers\Tenant\Api\Person\Identifiers\CheckIdentifierController;
 use App\Http\Controllers\Tenant\Api\Person\IdentifierTypes\IdentifierTypesController;
 use App\Http\Controllers\Tenant\Api\Person\PeopleController;
 use App\Http\Controllers\Tenant\Api\Person\UserPeopleController;
@@ -432,7 +433,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // Simple notifications
             Route::post('/simple_notifications/','\\' . SimpleNotificationsController::class . '@store');
 
-
+            Route::post('/identifier/check', '\\' . CheckIdentifierController::class . '@store' );
         });
 
         Route::group(['prefix' => 'v1'], function () {

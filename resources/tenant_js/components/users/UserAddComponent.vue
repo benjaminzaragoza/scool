@@ -88,7 +88,7 @@ export default {
   data () {
     return {
       dialog: false,
-      step: 3,
+      step: 1,
       user: null,
       googleUser: null,
       moodleUser: null

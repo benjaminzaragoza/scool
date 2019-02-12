@@ -58,6 +58,8 @@
         <v-btn color="primary" @click="save" :loading="saving" :disabled="saving">
             <v-icon class="mr-2">save</v-icon>Guardar
         </v-btn>
+        Data Form:
+        {{ dataForm }}
     </form>
 </template>
 
@@ -172,6 +174,12 @@ export default {
     },
     notes () {
       this.updateDataForm()
+    },
+    other_identifiers: {
+      handler: function () {
+        this.updateDataForm()
+      },
+      deep: true
     }
   },
   methods: {

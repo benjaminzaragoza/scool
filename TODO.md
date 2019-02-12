@@ -1357,9 +1357,10 @@ Tots els camps són especials
 
 ## FORMULARI DADES PERSONALS
 
-- [ ] Widget altres identificadors:
-  - [ ] Falta el formulari altres identificadors  
-
+- [X] Widget altres identificadors:
+  - [X] Falta el formulari altres identificadors  
+  - [X] Provar es guarden els altres identificadors al fer el submit
+  
 Submit:
 - [ ] Detecció de DNI duplicat
   - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!

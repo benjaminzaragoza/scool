@@ -25,6 +25,7 @@
                     :error-messages="identifierErrors"
                     @input="inputIdentifier"
                     @blur="blurIdentifier"
+                    :loading="checking"
                     required
             ></v-text-field>
         </v-flex>
@@ -69,6 +70,7 @@ export default {
   },
   data () {
     return {
+      checking: false,
       loading: false,
       dataIdentifierTypes: [],
       dataIdentifierType: null,
@@ -170,7 +172,21 @@ export default {
     },
     blurIdentifier () {
       if (this.required || this.dataIdentifierType) this.$v.dataIdentifier.$touch()
+      this.checkIdentifier()
       this.$emit('blur', this.dataIdentifier)
+    },
+    checkIdentifier () {
+      this.checking = true
+      window.axios.post('/api/v1/identifier/check', {
+        identifier_type_id: this.dataIdentifier.type_id,
+        identifier_value: this.dataIdentifier.value
+      }).then((response) => {
+        if (response.data === false) this.$snackbar.showError('El identificador ja existeix')
+        this.checking = false
+      }).catch((error) => {
+        this.$snackbar.showError(error)
+        this.checking = false
+      })
     }
   },
   created () {
