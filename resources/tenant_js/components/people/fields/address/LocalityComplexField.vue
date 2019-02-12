@@ -160,6 +160,9 @@ export default {
         this.postalcode = null
         this.province = null
       }
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

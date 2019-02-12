@@ -53,6 +53,9 @@ export default {
   watch: {
     gender (gender) {
       this.dataGender = gender
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

@@ -47,6 +47,9 @@ export default {
   watch: {
     streetName (streetName) {
       this.dataStreetName = streetName
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

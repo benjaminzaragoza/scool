@@ -24,7 +24,6 @@ import StreetNumberField from './address/StreetNumberField'
 import StreetFloorField from './address/StreetFloorField'
 import StreetFloorNumberField from './address/StreetFloorNumberField'
 import LocalityComplexField from './address/LocalityComplexField'
-import Vue from 'vue'
 
 export default {
   name: 'AddressFields',
@@ -65,12 +64,6 @@ export default {
       default: false
     }
   },
-  computed: {
-    invalidForm () {
-      // TODO
-      return false
-    }
-  },
   watch: {
     name () {
       this.updateDataAddress()
@@ -86,9 +79,6 @@ export default {
     },
     locality () {
       this.updateDataAddress()
-    },
-    invalidForm (invalidForm) {
-      this.$emit('update:invalid', invalidForm)
     },
     address (address) {
       if (!address) this.clean()

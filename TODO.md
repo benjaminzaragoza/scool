@@ -1341,6 +1341,9 @@ Tots els camps són especials
 
 ## LLISTA DATATABLES
 
+- [ ] Poder buscar usuaris:
+  - [ ] Nom
+  - [ ] Identificador
 - [ ] Llista d'usuaris -> mostrar columna online de l'usuari
 - [ ] Acció -> Enviar notificació a l'usuari
 - [ ] Link amb dades personals
@@ -1351,7 +1354,7 @@ Tots els camps són especials
 ## SUBFOMULARI CANVIAR AVATAR
 
 - [ ] Boto seguent amb jerarquia primaria
-- [ ] Mo mostrar progress bars MoodleUser, ldapUser i GoogleUser si s'ha indicat no crear aquests usuaris
+- [ ] NO mostrar progress bars MoodleUser, ldapUser i GoogleUser si s'ha indicat no crear aquests usuaris
 - [ ] TODO. No es canvia avatart
   - [ ] Hi ha tot un tema pendent sobre photos i avatars
 
@@ -1362,9 +1365,10 @@ Tots els camps són especials
   - [X] Provar es guarden els altres identificadors al fer el submit
   
 Submit:
-- [ ] Detecció de DNI duplicat
-  - [ ] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
-  - [ ] Ara el formulari dona un error de duplicate key al fer submit
+- [X] Detecció de DNI duplicat
+  - [X] Que sigui el propi camp DNI que comprovi al escriure un DNI que és un DNI ja existent!
+  - [X] Ara el formulari dona un error de duplicate key al fer submit
+  - [ ] Mostrar informació de l'usuari que té assignat l'identificador
 - [ ] Evitar que es pugui crear un nou registre a la taula person amb tots els camps buits (menys user_id)
   - [ ] Validació Javascript
   - [X] Validació backend/PHP/Laravel
@@ -1379,9 +1383,10 @@ Submit:
 - [X] notes comprovar
 - [X] other_phones i other_mobiles i other_emails
 Altres
-- [ ] Comprovar/implementar switch validació
-- [ ] Comprovar/implementar switch camps requerits
 - [ ] Dates de naixement amb la màscara correcta però dates incorrectes -> Error a la consola
+- [ ] Comprovar/implementar switch validació
+- [X] Comprovar/implementar switch camps requerits
+  - [X] Problema al passar d'estat requerit a no requerit. Alguns camps continuen sent requerits
 - [X] Al esborrar tots els camps de birthplace no s'esborra birthplace (és un objecte amb postalcode buit i province i localiltat null)
 - [X] Camps que no s'esborren al BUIDAR CAMPS
   - [X] Data de naixement

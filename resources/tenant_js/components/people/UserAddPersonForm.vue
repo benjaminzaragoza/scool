@@ -2,48 +2,43 @@
     <form>
         <span style="display:inline-flex;">
             <v-switch
-                    label="Activar validació"
-                    v-model="validate"
-                    class="mr-4"
-            ></v-switch>
-            <v-switch
                     label="Camps requerits"
                     v-model="required"
                     class="mr-4"
             ></v-switch>
             <v-btn flat class="grey--text" @click="clean">Buidar camps</v-btn>
             <person-notes-field v-model="notes"></person-notes-field>
-            <other-mobiles-field v-model="other_mobiles" :required="required" :validate="validate"></other-mobiles-field>
-            <other-phones-field v-model="other_phones" :required="required" :validate="validate"></other-phones-field>
-            <other-emails-field v-model="other_emails" :required="required" :validate="validate"></other-emails-field>
-            <other-identifiers-field v-model="other_identifiers" :required="required" :validate="validate"></other-identifiers-field>
+            <other-mobiles-field v-model="other_mobiles" :required="required"></other-mobiles-field>
+            <other-phones-field v-model="other_phones" :required="required"></other-phones-field>
+            <other-emails-field v-model="other_emails" :required="required"></other-emails-field>
+            <other-identifiers-field v-model="other_identifiers" :required="required"></other-identifiers-field>
         </span>
 
         <v-container fluid grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex md2>
-                    <full-identifier-field v-model="identifier" :required="required" :validate="validate"></full-identifier-field>
+                    <full-identifier-field v-model="identifier" :required="required"></full-identifier-field>
                 </v-flex>
                 <v-flex md1>
-                    <mobile-field v-model="mobile" :invalid.sync="mobileInvalid" :required="required" :validate="validate"></mobile-field>
+                    <mobile-field v-model="mobile" :invalid.sync="mobileInvalid" :required="required"></mobile-field>
                 </v-flex>
                 <v-flex md1>
-                    <phone-field v-model="phone" :required="required" :validate="validate"></phone-field>
+                    <phone-field v-model="phone" :required="required"></phone-field>
                 </v-flex>
                 <v-flex md1>
-                    <gender-field v-model="gender" :required="required" :validate="validate"></gender-field>
+                    <gender-field v-model="gender" :required="required"></gender-field>
                 </v-flex>
                 <v-flex md1>
-                    <birthdate-field v-model="birthdate" :required="required" :validate="validate"></birthdate-field>
+                    <birthdate-field v-model="birthdate" :required="required"></birthdate-field>
                 </v-flex>
                 <v-flex md5>
-                    <birthplace-field v-model="birthplace" :required="required" :validate="validate"></birthplace-field>
+                    <birthplace-field v-model="birthplace" :required="required"></birthplace-field>
                 </v-flex>
                 <v-flex md1>
-                    <civil-status-field v-model="civil_status" :required="required" :validate="validate"></civil-status-field>
+                    <civil-status-field v-model="civil_status" :required="required"></civil-status-field>
                 </v-flex>
             </v-layout>
-            <address-fields v-model="address" :invalid.sync="addressInvalid" :required="required" :validate="validate"></address-fields>
+            <address-fields v-model="address" :invalid.sync="addressInvalid" :required="required"></address-fields>
         </v-container>
 
         <v-btn flat @click="$emit('close')">
@@ -58,8 +53,6 @@
         <v-btn color="primary" @click="save" :loading="saving" :disabled="saving">
             <v-icon class="mr-2">save</v-icon>Guardar
         </v-btn>
-        Data Form:
-        {{ dataForm }}
     </form>
 </template>
 

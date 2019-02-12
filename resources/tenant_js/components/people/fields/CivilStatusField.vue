@@ -53,6 +53,9 @@ export default {
   watch: {
     civil_status (civilStatus) {
       this.dataCivilStatus = civilStatus
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

@@ -66,6 +66,9 @@ export default {
     },
     mobile (mobile) {
       this.dataMobile = mobile
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

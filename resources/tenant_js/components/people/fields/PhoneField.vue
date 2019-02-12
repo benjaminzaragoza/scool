@@ -55,6 +55,9 @@ export default {
   watch: {
     phone (phone) {
       this.dataPhone = phone
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

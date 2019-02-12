@@ -19,7 +19,7 @@
             </v-toolbar>
             <v-card-text>
                 <span style="display: flex">
-                    <full-identifier-field v-model="identifier" required validate></full-identifier-field>
+                    <full-identifier-field v-model="identifier" required></full-identifier-field>
                     <v-tooltip bottom>
                         <v-btn slot="activator" icon color="success" @click="add">
                             <v-icon>add</v-icon>

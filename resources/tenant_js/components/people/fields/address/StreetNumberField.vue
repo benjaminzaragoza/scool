@@ -46,6 +46,9 @@ export default {
   watch: {
     number (number) {
       this.dataNumber = number
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {

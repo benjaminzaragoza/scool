@@ -123,6 +123,9 @@ export default {
         this.dataIdentifierType = null
         this.dataIdentifier = null
       }
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {
@@ -176,17 +179,19 @@ export default {
       this.$emit('blur', this.dataIdentifier)
     },
     checkIdentifier () {
-      this.checking = true
-      window.axios.post('/api/v1/identifier/check', {
-        identifier_type_id: this.dataIdentifier.type_id,
-        identifier_value: this.dataIdentifier.value
-      }).then((response) => {
-        if (response.data === false) this.$snackbar.showError('El identificador ja existeix')
-        this.checking = false
-      }).catch((error) => {
-        this.$snackbar.showError(error)
-        this.checking = false
-      })
+      if (this.identifier) {
+        this.checking = true
+        window.axios.post('/api/v1/identifier/check', {
+          identifier_type_id: this.identifier.type_id,
+          identifier_value: this.identifier.value
+        }).then((response) => {
+          if (response.data === true) this.$snackbar.showError('El identificador ja existeix')
+          this.checking = false
+        }).catch((error) => {
+          this.$snackbar.showError(error)
+          this.checking = false
+        })
+      }
     }
   },
   created () {

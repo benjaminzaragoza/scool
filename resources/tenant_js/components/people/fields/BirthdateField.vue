@@ -90,6 +90,9 @@ export default {
     },
     birthdate (birthdate) {
       this.dataBirthdate = birthdate
+    },
+    required (required) {
+      if (!required) this.$v.$reset()
     }
   },
   methods: {
