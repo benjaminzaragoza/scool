@@ -46,6 +46,9 @@
                             @close="close"
                             @back="step=1"
                             @forward="step=3"
+                            :google="true"
+                            :moodle="true"
+                            :ldap="true"
                             :google-user="googleUser"
                             :moodle-user="moodleUser"
                             ></user-photo-avatar>

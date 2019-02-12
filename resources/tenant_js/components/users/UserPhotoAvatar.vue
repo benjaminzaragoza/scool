@@ -48,7 +48,7 @@
                                     <v-list-tile-title>
                                         <a v-if="this.googleUser" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + this.googleUser.id"> {{ this.googleUser.primaryEmail }}</a>
                                         <template v-else>
-                                            <v-progress-circular indeterminate color="primary"
+                                            <v-progress-circular :size="15" indeterminate color="primary"
                                             ></v-progress-circular>
                                             Esperant les dades de l'usuari de Google
                                         </template>
@@ -66,13 +66,13 @@
                             </v-list-tile>
                             <v-list-tile>
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-if="this.moodleUser">
-                                        <a target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + this.moodleUser.id"> {{ this.moodleUser.id }}</a>
-                                    </v-list-tile-title>
-                                    <template v-else>
-                                        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                                    <v-list-tile-title >
+                                        <a v-if="this.moodleUser" target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + this.moodleUser.id"> {{ this.moodleUser.id }}</a>
+                                        <template v-else>
+                                        <v-progress-circular :size="15" indeterminate color="primary"></v-progress-circular>
                                         Esperant les dades de l'usuari de Moodle
                                     </template>
+                                    </v-list-tile-title>
                                     <v-list-tile-sub-title>Usuari de moodle</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
