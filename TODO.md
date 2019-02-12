@@ -1,9 +1,16 @@
+# Error page 404
+
+NO és correcte surt la de AdminLTE, vegeu:
+- https://iesebre.scool.test/users/99999
+
 # ONLINE USERS
 
 FRONTEND:
 - [ ] Crear component per mostrar els usuaris que estan online
  - [ ] Opció refresh
-
+- [ ] Mostrar al perfil d'un usuari si està online o no
+- [ ] Llista d'usuaris -> mostrar columna online
+ 
 BACKEND:
 - [X] Crear Middleware
 - [X] Utilitza cache per indicar activitat usuari
@@ -1326,6 +1333,15 @@ Tots els camps són especials
 
 # Users management. Gestió d'usuaris
 
+## LLISTA DATATABLES
+
+- [ ] Llista d'usuaris -> mostrar columna online de l'usuari
+- [ ] Acció -> Enviar notificació a l'usuari
+- [ ] Link amb dades personals
+  - [ ] Sinó hi ha dades personals no és un link és un diàleg flotant que mostrar el formulari 3 (el de dades personals)
+    - [ ] Petita modificació al formulari tres -> incloure Sn1, Sn2 i Givenname
+
+
 ## SUBFOMULARI CANVIAR AVATAR
 
 - [ ] TODO. No es canvia avatart
@@ -1481,6 +1497,8 @@ ALTRES
  
 ### PEOPLE/PERSON
 
+  
+  
   
   
 # ROLS AND PERMISSIONS MANAGEMENT
@@ -2143,9 +2161,13 @@ HELPERS I SEEDERS
 - [ ] Assignar durant la creació del registre usuari (al registrar o crear l'usuari de qalsevol altre manera)
 - [ ] Es fa una proposta de nom usuari però es comprova si algú ja la té
 
-# Moodle
+# Moodle . MOODLE USERS
 
-Relació amb USERS:
+## Moodle users Lists
+
+- [ ] Eliminació massiva d'usuaris
+
+## Relació amb USERS:
 - idnumber: camp de moodle s'hauria d'utilitzar per a relacionar amb usuaris locals
 - TEMA EMAIL: QUIN UTILITZAR?
 - Sincronitzar: 
@@ -2332,6 +2354,13 @@ Llista usuaris Moodle:
   - [ ] Al menu opcional de tres punts es podria afegir un apartat per mostrar alertes/inconsistències:
     - [ ] Usuaris que tenen un idnumber però després no coincideixen els dades del Moodle i el usuari local amb id =idnumber
   - [ ] De fet podria apareixer una icona campana o similar en roig indicant quan hi han alertes
+  
+## BUGS
+  GESTIÓ USUARIS MOODLE
+  
+  - [X] "Error de xarxa" al esborrar usuari de Moodle
+  - [X] Refresh dona error: ' Cannot read property 'join' of undefined"'
+
 
 # Permisos
 

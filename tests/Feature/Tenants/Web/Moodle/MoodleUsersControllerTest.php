@@ -35,7 +35,6 @@ class MoodleUsersControllerTest extends BaseTenantTest
     /** @test */
     public function superadmin_can_show_moodle()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin();
         Cache::shouldReceive('put');
         Cache::shouldReceive('has');

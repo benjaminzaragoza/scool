@@ -107,6 +107,7 @@ class UsersControllerTest extends BaseTenantTest
         $this->assertNull($user2);
         $this->assertNull($user3);
     }
+
     /**
      * @test
      * @group users

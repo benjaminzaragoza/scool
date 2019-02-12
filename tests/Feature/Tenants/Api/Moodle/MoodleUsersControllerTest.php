@@ -53,6 +53,25 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     * @group slow
+     */
+    public function manager_can_list_moodle_users()
+    {
+        $this->loginAsMoodleManager('api');
+        $response =  $this->json('GET','/api/v1/moodle/users');
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+        $this->assertTrue(is_array($result));
+        $this->assertNotNull($result[0]->id);
+        $this->assertNotNull($result[0]->username);
+        $this->assertNotNull($result[0]->email);
+    }
+
+    /**
+     * @test
+     * @group moodle
+     *
      */
     public function regular_user_cannot_list_moodle_users()
     {
@@ -65,6 +84,8 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     *
      */
     public function guest_user_cannot_list_moodle_users()
     {
@@ -74,6 +95,8 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     * @group slow
      */
     public function superadmin_can_create_moodle_users()
     {
@@ -104,6 +127,40 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     * @group slow
+     */
+    public function manager_can_create_moodle_users()
+    {
+        $this->loginAsMoodleManager('api');
+        $moddleUser = MoodleUser::get('usuariesborrar18@gmail.com');
+        if ($moddleUser) MoodleUser::destroy($moddleUser->id);
+        $params = [
+            'user' => [
+                'username' => 'usuariesborrar18',
+                'firstname' => 'usuari',
+                'lastname' => 'esborrar',
+                'email' => 'usuariesborrar18@gmail.com',
+                'password' => '123456'
+            ]
+        ];
+        Event::fake();
+        $response =  $this->json('POST','/api/v1/moodle/users', $params);
+        $response->assertSuccessful();
+        Event::assertDispatched(MoodleUserCreated::class, function ($e) use ($params) {
+            return $e->moodleUser->username === $params['user']['username'];
+        });
+        $result = json_decode($response->getContent());
+        $moddleUser = MoodleUser::get('usuariesborrar18@gmail.com');
+        $this->assertNotNull($moddleUser);
+        $this->assertEquals($result->username,'usuariesborrar18');
+        if ($moddleUser) MoodleUser::destroy($moddleUser->id);
+    }
+
+    /**
+     * @test
+     * @group moodle
+     *
      */
     public function regular_user_cannot_create_moodle_users()
     {
@@ -122,6 +179,8 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     *
      */
     public function guest_user_cannot_create_moodle_users()
     {
@@ -138,6 +197,8 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     *
      */
     public function superadmin_can_destroy_moodle_users()
     {
@@ -150,6 +211,8 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     *
      */
     public function regular_user_cannot_destroy_moodle_users()
     {
@@ -161,10 +224,80 @@ class MoodleUsersControllerTest extends BaseTenantTest {
 
     /**
      * @test
+     * @group moodle
+     *
      */
     public function guest_user_cannot_destroy_moodle_users()
     {
         $response =  $this->json('DELETE','/api/v1/moodle/users/1');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
+    public function manager_can_delete_multiple_users()
+    {
+        $this->loginAsMoodleManager('api');
+        $user1 = MoodleUser::get('usuariesborrar@gmail.com');
+        if ($user1) MoodleUser::destroy($user1->id);
+        $user2 = MoodleUser::get('usuari2esborrar2@gmail.com');
+        if ($user2) MoodleUser::destroy($user2->id);
+        $user1 = create_sample_moodle_user();
+        $user2 = create_sample_moodle_user( [
+            'username' => 'usuariesborrar2',
+            'firstname' => 'usuari2',
+            'lastname' => 'esborrar2',
+            'email' => 'usuari2esborrar2@gmail.com',
+            'password' => '123456'
+        ]);
+
+        $response = $this->json('POST','/api/v1/moodle/users/multiple', [
+            'users' => [ $user1->id, $user2->id ]
+        ]);
+
+        $response->assertSuccessful();
+        $this->assertNull(MoodleUser::get($user1->username));
+        $this->assertNull(MoodleUser::get($user2->username));
+    }
+
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
+    public function manager_can_delete_multiple_users_validation()
+    {
+        $this->loginAsMoodleManager('api');
+
+
+        $response = $this->json('POST','/api/v1/moodle/users/multiple');
+
+        $response->assertStatus(422);
+    }
+
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
+    public function regular_user_cannot_delete_multiple_users_validation()
+    {
+        $this->login('api');
+        $response = $this->json('POST','/api/v1/moodle/users/multiple');
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     * @group moodle
+     * @group slow
+     */
+    public function guest_user_cannot_delete_multiple_users_validation()
+    {
+        $response = $this->json('POST','/api/v1/moodle/users/multiple');
         $response->assertStatus(401);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Api\Moodle\Users;
 use App\Events\Moodle\MoodleUserCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Moodle\Users\MoodleUserDestroy;
+use App\Http\Requests\Moodle\Users\MoodleUserDestroyMultiple;
 use App\Http\Requests\Moodle\Users\MoodleUserIndex;
 use App\Http\Requests\Moodle\Users\MoodleUserStore;
 use App\Models\MoodleUser;
@@ -61,4 +62,19 @@ class MoodleUsersController extends Controller
         MoodleUser::destroy($moodleuser);
         Cache::forget('scool_moodle_users');
     }
+
+    /**
+     * Destroy.
+     *
+     * @param MoodleUserDestroyMultiple $request
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function destroyMultiple(MoodleUserDestroyMultiple $request)
+    {
+        foreach ($request->users as $user) {
+            MoodleUser::destroy($user);
+        }
+        Cache::forget('scool_moodle_users');
+    }
+
 }

@@ -222,7 +222,7 @@
                                             <user-changelog :user="props.item" class="ma-0"></user-changelog>
                                             <show-user-icon :user="props.item" :users="users"></show-user-icon>
                                             <user-emails :user="props.item"></user-emails>
-                                            <user-personal-data-icon-link :user="props.item" class="ma-0"></user-personal-data-icon-link>
+                                            <user-personal-data-icon :user="props.item" class="ma-0"></user-personal-data-icon>
                                             <user-password :user="props.item" class="ma-0"></user-password>
                                             <!-- TODO -->
                                             <!--<user-check :user="props.item"></user-check>-->
@@ -301,7 +301,7 @@ import UserRolesManageButton from './roles/UserRolesManageButton'
 import UserEditName from './UserEditName'
 import UserEditEmail from './UserEditEmail'
 import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
-import UserPersonalDataIconLink from './UserPersonalDataIconLink'
+import UserPersonalDataIcon from './UserPersonalDataIcon'
 import UserChangeLog from './UserChangeLog'
 import UserPassword from './UserPassword'
 
@@ -427,7 +427,7 @@ var filters = {
 export default {
   name: 'UsersList',
   components: {
-    'user-personal-data-icon-link': UserPersonalDataIconLink,
+    'user-personal-data-icon': UserPersonalDataIcon,
     'user-emails': UserEmails,
     'user-delete': UserDelete,
     'user-send-welcome-email': UserSendWelcomeEmail,

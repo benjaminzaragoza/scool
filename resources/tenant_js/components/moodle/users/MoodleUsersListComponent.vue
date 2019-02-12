@@ -156,7 +156,7 @@
                         <td class="text-xs-left cell">
                             <json-dialog-component btn-class="ma-0" icon="visibility" name="Actual" title="Tota la informació de l'usuari" :json="props.item"></json-dialog-component>
                             <moodle-user-edit-link :user="props.item" class="ma-0"></moodle-user-edit-link>
-                            <moodle-user-remove :user="props.item" class="ma-0"></moodle-user-remove>
+                            <moodle-user-remove :user="props.item" class="ma-0" @removed="remove"></moodle-user-remove>
                             <moodle-user-change-password :user="props.item"></moodle-user-change-password>
                         </td>
                     </tr>
@@ -360,6 +360,9 @@ export default {
     }
   },
   methods: {
+    remove (user) {
+      this.dataUsers.splice(this.dataUsers.indexOf(user), 1)
+    },
     formatDateTime (date) {
       return moment(new Date(date * 1000)).format('hh:mm a DD-MM-YYYY')
     },
@@ -378,7 +381,8 @@ export default {
       return boolean ? 'Sí' : 'No'
     },
     formatMessages (messages) {
-      return messages.join('<br/>')
+      if (messages) return messages.join('<br/>')
+      return ''
     }
   },
   created () {

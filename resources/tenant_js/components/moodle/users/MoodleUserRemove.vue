@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'moodleUserRemove',
+  name: 'MoodleUserRemove',
   data () {
     return {
       removing: false
@@ -36,7 +36,7 @@ export default {
       if (res) {
         this.removing = user.id
         window.axios.delete('/api/v1/moodle/users/' + user.id).then(() => {
-          this.dataUsers.splice(this.dataUsers.indexOf(user), 1)
+          this.$emit('removed', user)
           this.$snackbar.showMessage('Usuari esborrat correctament')
           this.removing = null
         }).catch(error => {

@@ -8933,16 +8933,15 @@ if (! function_exists('sample_google_user_array')) {
 }
 
 if (! function_exists('create_sample_moodle_user')) {
-    function create_sample_moodle_user() {
-        $user = [
-            'username' => 'usuariesborrar',
-            'firstname' => 'usuari',
-            'lastname' => 'esborrar',
-            'email' => 'usuariesborrar@gmail.com',
-            'password' => '123456'
-        ];
+    function create_sample_moodle_user( $data = [
+        'username' => 'usuariesborrar',
+        'firstname' => 'usuari',
+        'lastname' => 'esborrar',
+        'email' => 'usuariesborrar@gmail.com',
+        'password' => '123456'
+    ]) {
         try {
-            return MoodleUser::store($user);
+            return MoodleUser::store($data);
         } catch(\Exception $e) {
             return MoodleUser::get('usuariesborrar@gmail.com');
         }
