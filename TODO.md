@@ -2165,7 +2165,7 @@ HELPERS I SEEDERS
 
 ## Moodle users Lists
 
-- [ ] Eliminació massiva d'usuaris
+- [X] Eliminació massiva d'usuaris
 
 ## Relació amb USERS:
 - idnumber: camp de moodle s'hauria d'utilitzar per a relacionar amb usuaris locals

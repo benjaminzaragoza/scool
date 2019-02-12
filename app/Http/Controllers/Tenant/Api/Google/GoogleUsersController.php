@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Tenant\Api\Google;
 
 use App\GoogleGSuite\GoogleDirectory;
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\DestroyGoogleUsers;
-use App\Http\Requests\ListGoogleUsers;
-use App\Http\Requests\StoreGoogleUsers;
+use App\Http\Requests\Google\DestroyGoogleUsers;
+use App\Http\Requests\Google\DestroyGoogleUsersMultiple;
+use App\Http\Requests\Google\ListGoogleUsers;
+use App\Http\Requests\Google\StoreGoogleUsers;
 use App\Models\GoogleUser;
 use Cache;
 use Google_Service_Exception;
@@ -71,6 +72,21 @@ class GoogleUsersController extends Controller
     {
         try {
             (new GoogleDirectory())->removeUser($user);
+        } catch (Google_Service_Exception $e) {
+            abort('422',$e);
+        }
+        Cache::forget('google_users');
+    }
+
+    /**
+     * @param DestroyGoogleUsersMultiple $request
+     */
+    public function destroyMultiple(DestroyGoogleUsersMultiple $request)
+    {
+        try {
+            foreach ($request->users as $user) {
+                (new GoogleDirectory())->removeUser($user);
+            }
         } catch (Google_Service_Exception $e) {
             abort('422',$e);
         }

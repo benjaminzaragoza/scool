@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Google;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListGoogleUsers.
+ * Class StoreGoogleUsers.
  *
  * @package App\Http\Requests
  */
-class ListGoogleUsers extends FormRequest
+class StoreGoogleUsers extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class ListGoogleUsers extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('list-gsuite-users');
+        return Auth::user()->can('store-gsuite-users');
     }
 
     /**
@@ -29,8 +29,12 @@ class ListGoogleUsers extends FormRequest
      */
     public function rules()
     {
+        //optional
+        // path | changePasswordAtNextLogin | hashFunction | password | secondaryEmail | mobile | id
         return [
-
+            'givenName' => 'required',
+            'familyName' => 'required',
+            'primaryEmail' => 'required|email'
         ];
     }
 }

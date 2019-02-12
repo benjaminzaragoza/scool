@@ -261,6 +261,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Google Apps/GSuite users
             Route::get('/gsuite/users', '\\' . GoogleUsersController::class . '@index');
             Route::post('/gsuite/users', '\\' . GoogleUsersController::class . '@store');
+            Route::post('/gsuite/users/multiple', '\\' . GoogleUsersController::class . '@destroyMultiple');
             Route::delete('/gsuite/users/{user}', '\\' . GoogleUsersController::class . '@destroy');
 
             //Associate Gsuite user to user

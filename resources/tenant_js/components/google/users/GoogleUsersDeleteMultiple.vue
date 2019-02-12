@@ -27,7 +27,7 @@ export default {
     },
     removeUsers () {
       this.loading = true
-      window.axios.post('/api/v1/google/users/multiple', { users: this.users.map(user => user.id) }).then(response => {
+      window.axios.post('/api/v1/gsuite/users/multiple', { users: this.users.map(user => user.id) }).then(response => {
         this.$snackbar.showMessage("S'han esborrat correctament " + response.data + ' usuaris')
         this.$emit('deleted', response.data)
         this.loading = false
