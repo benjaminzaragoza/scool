@@ -155,6 +155,9 @@ window.Vue.component('user-profile', require('./components/users/UserProfile'))
 // share-fab
 window.Vue.component('share-fab', require('./components/ui/ShareFab'))
 
+// Service workers
+window.Vue.component('service-worker', require('./components/serviceworker/ServiceWorker'))
+
 window.Vuetify = Vuetify
 
 // TODO

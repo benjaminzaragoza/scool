@@ -24,13 +24,11 @@
 </style>
 
 <script>
-import axios from 'axios'
-
 export default {
-  name: 'name',
+  name: 'PushComponent',
   data () {
     return {
-      data: 'example',
+      data: 'example', // TODO
       loading: false,
       isPushEnabled: false,
       pushButtonDisabled: true
@@ -43,7 +41,7 @@ export default {
     sendNotification () {
       this.loading = true
 
-      axios.post('/notifications')
+      window.axios.post('/notifications')
         .catch(error => console.log(error))
         .then(() => { this.loading = false })
     },
@@ -95,7 +93,7 @@ export default {
 
       this.loading = true
 
-      axios.post('/subscriptions', data)
+      window.axios.post('/subscriptions', data)
         .then(() => { this.loading = false })
     },
     /**
@@ -155,7 +153,7 @@ export default {
     deleteSubscription (subscription) {
       this.loading = true
 
-      axios.post('/subscriptions/delete', { endpoint: subscription.endpoint })
+      window.axios.post('/subscriptions/delete', { endpoint: subscription.endpoint })
         .then(() => { this.loading = false })
     },
 

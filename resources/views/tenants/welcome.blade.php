@@ -53,7 +53,7 @@
 <div id="app">
     <v-app light v-cloak>
         <snackbar></snackbar>
-
+        <service-worker></service-worker>
         <share-fab></share-fab>
 
         <v-toolbar class="white">
