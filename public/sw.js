@@ -5,6 +5,8 @@
     init () {
       self.addEventListener('fetch', function (event) {
         console.log('WORKER: fetch event in progress.')
+        // PLEASE DO NOT REMOVE THIS FETCH HABDLER BECAUSE IS NEEDED FOR ADD TO HOME SCREEN
+        // TODO -> OFFLINE
       })
     }
   }
@@ -104,6 +106,6 @@
     }
   }
 
-  WebPush.init()
+  // WebPush.init()
   AddToHomeScreen.init()
 })()
