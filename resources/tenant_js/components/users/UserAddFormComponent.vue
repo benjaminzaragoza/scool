@@ -339,11 +339,6 @@ export default {
           'idnumber': this.user.id
         }
       }).then((response) => {
-        console.log('LOG!!!!!!!!!!!!')
-        console.log('response:')
-        console.log(response)
-        console.log('response.data:')
-        console.log(response.data)
         this.associateMoodleUserToLocalUser(response.data)
       }).catch(error => {
         this.$snackbar.showError(error)

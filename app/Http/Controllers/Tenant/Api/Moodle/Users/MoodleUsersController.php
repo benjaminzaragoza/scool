@@ -44,7 +44,7 @@ class MoodleUsersController extends Controller
     {
         $result = MoodleUser::store($request->user);
         Cache::forget('scool_moodle_users');
-        $moodleUser = MoodleUser::get($result->username);
+        $moodleUser = MoodleUser::get($result->id);
         event(new MoodleUserCreated($moodleUser));
         return json_encode($moodleUser);
     }

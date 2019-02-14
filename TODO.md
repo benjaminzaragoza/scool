@@ -1371,9 +1371,9 @@ Tots els camps són especials
 ## SUBFOMULARI CANVIAR AVATAR
 
 - [X] Esperant les dades de Google -> però un cop s'ha crear l'usuari no s'atura l'spinner
-- [ ] No funciona la creació usuari Moodle
- - [ ] De fet si funciona (petició API crea l'usuari) però la interfície/frontend Javascript de Vue dona error
- - [ ] Surt snackbar donant error: "Error de xarxa"
+- [X] No funciona la creació usuari Moodle
+ - [X] De fet si funciona (petició API crea l'usuari) però la interfície/frontend Javascript de Vue dona error
+ - [X] Surt snackbar donant error: "Error de xarxa"
 - [X] Boto seguent amb jerarquia primaria
 - [X] NO mostrar progress bars MoodleUser, ldapUser i GoogleUser si s'ha indicat no crear aquests usuaris
   - [X] HA d'haver-hi comunicació entre el component del primer step i el del segon via el pare o Vuex?

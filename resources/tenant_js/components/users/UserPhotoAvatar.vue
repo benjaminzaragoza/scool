@@ -73,7 +73,7 @@
                                             </template>
                                         </template>
                                         <template v-else>
-                                            Sense usuari Google
+                                            Sense usuari Ldap
                                         </template>
                                     </v-list-tile-title>
                                     <v-list-tile-sub-title>Usuari de Ldap</v-list-tile-sub-title>
@@ -137,11 +137,6 @@ export default {
     ldapUser: {},
     moodleUser: {}
   },
-  computed: {
-    moodleUserExists () {
-
-    }
-  },
   watch: {
     googleUser (googleUser) {
       this.dataGoogleUser = googleUser
@@ -149,8 +144,8 @@ export default {
     ldapUser (ldapUser) {
       this.dataLdapUser = ldapUser
     },
-    moodleUser (googleUser) {
-      this.dataGoogleUser = googleUser
+    moodleUser (moodleUser) {
+      this.dataMoodleUser = moodleUser
     }
   },
   methods: {
