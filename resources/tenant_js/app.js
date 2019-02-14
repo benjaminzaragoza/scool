@@ -23,7 +23,70 @@ import Vuetify from 'vuetify'
 import VueTimeago from 'vue-timeago'
 import './bootstrap'
 import TreeView from 'vue-json-tree-view'
-
+import LoginButtonComponent from './components/LoginButtonComponent.vue'
+import RegisterButtonComponent from './components/RegisterButtonComponent.vue'
+import RememberPasswordComponent from './components/RememberPasswordComponent.vue'
+import ResetPasswordComponent from './components/ResetPasswordComponent.vue'
+import SnackBarComponent from './components/ui/SnackBarComponent.vue'
+import GravatarComponent from './components/GravatarComponent.vue'
+import UsersDashboardComponent from './components/users/UsersDashboardComponent.vue'
+import UsersComponent from './components/users/UsersComponent.vue'
+import RolesComponent from './components/users/roles/RolesComponent.vue'
+import PermissionsComponent from './components/users/permissions/PermissionsComponent.vue'
+import UserProfile from './components/users/UserProfile.vue'
+import JobsListComponent from './components/jobs/JobsListComponent.vue'
+import JobAddComponent from './components/jobs/JobAddComponent.vue'
+import JobsListByFamilyComponent from './components/jobs/JobsListByFamilyComponent.vue'
+import JobsListBySpecialtyComponent from './components/jobs/JobsListBySpecialtyComponent.vue'
+import JobsSheetComponent from './components/jobs/JobsSheetComponent.vue'
+import JobsSheetHoldersComponent from './components/jobs/JobsSheetHoldersComponent.vue'
+import PendingTeacherForm from './components/teachers/PendingTeacherForm.vue'
+import PendingTeacherAddWarningsComponent from './components/teachers/PendingTeacherAddWarningsComponent.vue'
+import PendingTeachersComponent from './components/teachers/PendingTeachersComponent.vue'
+import TeachersComponent from './components/teachers/TeachersComponent.vue'
+import TeacherAddComponent from './components/teachers/TeacherAddComponent.vue'
+import TeachersPhotosComponent from './components/teachers/TeachersPhotosComponent.vue'
+import ShowTeacherIconComponent from './components/teachers/ShowTeacherIconComponent.vue'
+import TeacherProfileComponent from './components/teachers/TeacherProfileComponent.vue'
+import TeachersWelcome from './components/welcome/TeachersWelcome.vue'
+import ImpersonateUserComponent from './components/admin/ImpersonateUserComponent.vue'
+import AuditLogComponent from './components/auditlog/AuditLogComponent.vue'
+import LogoutButtonComponent from './components/auth/LogoutButtonComponent.vue'
+import DonutComponent from './components/charts/DonutComponent.vue'
+import BarComponent from './components/charts/BarComponent.vue'
+import LessonsManagerComponent from './components/lessons/LessonsManagerComponent.vue'
+import ModelDocsComponent from './components/docs/ModelDocsComponent.vue'
+import PeopleComponent from './components/people/PeopleComponent.vue'
+import GoogleGroupsComponent from './components/google/groups/GoogleGroupsComponent.vue'
+import GoogleGroupAddComponent from './components/google/groups/GoogleGroupAddComponent.vue'
+import GoogleUsersComponent from './components/google/users/GoogleUsersComponent.vue'
+import GoogleUserAddComponent from './components/google/users/GoogleUserAddComponent.vue'
+import MoodleUsersComponent from './components/moodle/users/MoodleUsersComponent'
+import LdapUsersComponent from './components/ldap/users/LdapUsersComponent.vue'
+import LdapUserAddComponent from './components/ldap/users/LdapUserAddComponent.vue'
+import IncidentsComponent from './components/incidents/IncidentsComponent.vue'
+import IncidentsListComponent from './components/incidents/IncidentsListComponent.vue'
+import IncidentAddComponent from './components/incidents/IncidentAddComponent.vue'
+import ChangelogComponent from './components/changelog/ChangelogComponent.vue'
+import FloatingAddComponent from './components/ui/FloatingAddComponent.vue'
+import CurriculumComponent from './components/curriculum/CurriculumComponent.vue'
+import CurriculumPublicComponent from './components/curriculum/CurriculumPublicComponent.vue'
+import CurriculumStudyPublic from './components/curriculum/CurriculumStudyPublic.vue'
+import SubjectsComponent from './components/curriculum/subjects/SubjectsComponent.vue'
+import SubjectGroupsComponent from './components/curriculum/subjectGroups/SubjectGroupsComponent.vue'
+import PositionsComponent from './components/positions/PositionsComponent.vue'
+import DashboardPositions from './components/positions/DashboardPositions.vue'
+import MaterialStatsCard from './components/ui/MaterialStatsCard.vue'
+import MaterialCard from './components/ui/MaterialCard.vue'
+import Offset from './components/helper/Offset.vue'
+import Welcome from './components/welcome/Welcome.vue'
+import Nagigation from './components/ui/Nagigation.vue'
+import NotificationsWidget from './components/notifications/NotificationsWidget.vue'
+import Notifications from './components/notifications/Notifications.vue'
+import ShareFab from './components/ui/ShareFab.vue'
+import ServiceWorker from './components/serviceworker/ServiceWorker.vue'
+import GitInfoComponent from './components/git/GitInfoComponent'
+import DateFnsLocalCa from 'date-fns/locale/ca'
 window.Vue = Vue
 window.Vue.use(snackbar)
 window.Vue.use(permissions)
@@ -32,7 +95,7 @@ window.Vue.use(TreeView)
 window.Vue.use(VueTimeago, {
   locale: 'ca', // Default locale
   locales: {
-    'ca': require('date-fns/locale/ca')
+    'ca': DateFnsLocalCa
   }
 })
 
@@ -42,121 +105,120 @@ window.Vue.use(VueTimeago, {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-window.Vue.component('login-button', require('./components/LoginButtonComponent.vue'))
-window.Vue.component('register-button', require('./components/RegisterButtonComponent.vue'))
-window.Vue.component('remember-password', require('./components/RememberPasswordComponent.vue'))
-window.Vue.component('reset-password', require('./components/ResetPasswordComponent.vue'))
-window.Vue.component('snackbar', require('./components/ui/SnackBarComponent.vue'))
-window.Vue.component('gravatar', require('./components/GravatarComponent.vue'))
-window.Vue.component('users-dashboard', require('./components/users/UsersDashboardComponent.vue'))
+window.Vue.component('login-button', LoginButtonComponent)
+window.Vue.component('register-button', RegisterButtonComponent)
+window.Vue.component('remember-password', RememberPasswordComponent)
+window.Vue.component('reset-password', ResetPasswordComponent)
+window.Vue.component('snackbar', SnackBarComponent)
+window.Vue.component('gravatar', GravatarComponent)
+window.Vue.component('users-dashboard', UsersDashboardComponent)
 
-window.Vue.component('users', require('./components/users/UsersComponent.vue'))
+window.Vue.component('users', UsersComponent)
 
-window.Vue.component('roles', require('./components/users/roles/RolesComponent.vue'))
-window.Vue.component('permissions', require('./components/users/permissions/PermissionsComponent.vue'))
+window.Vue.component('roles', RolesComponent)
+window.Vue.component('permissions', PermissionsComponent)
 
-window.Vue.component('jobs-list', require('./components/jobs/JobsListComponent.vue'))
-window.Vue.component('job-add', require('./components/jobs/JobAddComponent.vue'))
-window.Vue.component('jobs-list-by-family', require('./components/jobs/JobsListByFamilyComponent.vue'))
-window.Vue.component('jobs-list-by-specialty', require('./components/jobs/JobsListBySpecialtyComponent.vue'))
-window.Vue.component('pending-teacher-form', require('./components/teachers/PendingTeacherForm.vue'))
-window.Vue.component('pending-teacher-add-warnings', require('./components/teachers/PendingTeacherAddWarningsComponent.vue'))
-window.Vue.component('pending-teachers', require('./components/teachers/PendingTeachersComponent.vue'))
+window.Vue.component('jobs-list', JobsListComponent)
+window.Vue.component('job-add', JobAddComponent)
+window.Vue.component('jobs-list-by-family', JobsListByFamilyComponent)
+window.Vue.component('jobs-list-by-specialty', JobsListBySpecialtyComponent)
+window.Vue.component('pending-teacher-form', PendingTeacherForm)
+window.Vue.component('pending-teacher-add-warnings', PendingTeacherAddWarningsComponent)
+window.Vue.component('pending-teachers', PendingTeachersComponent)
 
-window.Vue.component('teachers', require('./components/teachers/TeachersComponent.vue'))
-window.Vue.component('teacher-add', require('./components/teachers/TeacherAddComponent.vue'))
+window.Vue.component('teachers', TeachersComponent)
+window.Vue.component('teacher-add', TeacherAddComponent)
 
-window.Vue.component('teachers-photos', require('./components/teachers/TeachersPhotosComponent.vue'))
+window.Vue.component('teachers-photos', TeachersPhotosComponent)
 
-window.Vue.component('impersonate-user', require('./components/admin/ImpersonateUserComponent.vue'))
+window.Vue.component('impersonate-user', ImpersonateUserComponent)
 
-window.Vue.component('logout-button', require('./components/auth/LogoutButtonComponent.vue'))
-window.Vue.component('teacher-profile', require('./components/teachers/TeacherProfileComponent.vue'))
+window.Vue.component('logout-button', LogoutButtonComponent)
 
-window.Vue.component('teacher-profile', require('./components/teachers/TeacherProfileComponent.vue'))
+window.Vue.component('teacher-profile', TeacherProfileComponent)
 
-window.Vue.component('show-teacher-icon', require('./components/teachers/ShowTeacherIconComponent.vue'))
+window.Vue.component('show-teacher-icon', ShowTeacherIconComponent)
 
-window.Vue.component('audit-log', require('./components/auditlog/AuditLogComponent.vue'))
+window.Vue.component('audit-log', AuditLogComponent)
 
-window.Vue.component('jobs-sheet', require('./components/jobs/JobsSheetComponent.vue'))
-window.Vue.component('jobs-sheet-holder', require('./components/jobs/JobsSheetHoldersComponent.vue'))
+window.Vue.component('jobs-sheet', JobsSheetComponent)
+window.Vue.component('jobs-sheet-holder', JobsSheetHoldersComponent)
 
-window.Vue.component('donut', require('./components/charts/DonutComponent.vue'))
-window.Vue.component('bar', require('./components/charts/BarComponent.vue'))
+window.Vue.component('donut', DonutComponent)
+window.Vue.component('bar', BarComponent)
 
 // Lessons
-window.Vue.component('lessons-manager', require('./components/lessons/LessonsManagerComponent.vue'))
+window.Vue.component('lessons-manager', LessonsManagerComponent)
 
 // Docs/media
-window.Vue.component('model-docs', require('./components/docs/ModelDocsComponent.vue'))
+window.Vue.component('model-docs', ModelDocsComponent)
 
 // People/Personal data (person)
-window.Vue.component('people', require('./components/people/PeopleComponent.vue'))
+window.Vue.component('people', PeopleComponent)
 
 // Google groups
-window.Vue.component('google-groups', require('./components/google/groups/GoogleGroupsComponent.vue'))
-window.Vue.component('google-group-add', require('./components/google/groups/GoogleGroupAddComponent.vue'))
+window.Vue.component('google-groups', GoogleGroupsComponent)
+window.Vue.component('google-group-add', GoogleGroupAddComponent)
 
 // Google users
-window.Vue.component('google-users', require('./components/google/users/GoogleUsersComponent.vue'))
-window.Vue.component('google-user-add', require('./components/google/users/GoogleUserAddComponent.vue'))
+window.Vue.component('google-users', GoogleUsersComponent)
+window.Vue.component('google-user-add', GoogleUserAddComponent)
 
 // Ldap users
-window.Vue.component('ldap-users', require('./components/ldap/users/LdapUsersComponent.vue'))
-window.Vue.component('ldap-user-add', require('./components/ldap/users/LdapUserAddComponent.vue'))
+window.Vue.component('ldap-users', LdapUsersComponent)
+window.Vue.component('ldap-user-add', LdapUserAddComponent)
 
 // Moodle users
-window.Vue.component('moodle-users', require('./components/moodle/users/MoodleUsersComponent.vue'))
+window.Vue.component('moodle-users', MoodleUsersComponent)
 
 // Incidents
-window.Vue.component('incidents', require('./components/incidents/IncidentsComponent.vue'))
-window.Vue.component('incidents-list', require('./components/incidents/IncidentsListComponent.vue'))
-window.Vue.component('incident-add', require('./components/incidents/IncidentAddComponent.vue'))
+window.Vue.component('incidents', IncidentsComponent)
+window.Vue.component('incidents-list', IncidentsListComponent)
+window.Vue.component('incident-add', IncidentAddComponent)
 
 // Changelog
-window.Vue.component('changelog', require('./components/changelog/ChangelogComponent.vue'))
+window.Vue.component('changelog', ChangelogComponent)
 
 // UI
-window.Vue.component('floating-add', require('./components/ui/FloatingAddComponent'))
+window.Vue.component('floating-add', FloatingAddComponent)
 
 // GIT
-window.Vue.component('git-info', require('./components/git/GitInfoComponent'))
+window.Vue.component('git-info', GitInfoComponent)
 
 // Curriculum
-window.Vue.component('curriculum', require('./components/curriculum/CurriculumComponent'))
-window.Vue.component('curriculum-public', require('./components/curriculum/CurriculumPublicComponent'))
-window.Vue.component('curriculum-study-public', require('./components/curriculum/CurriculumStudyPublic'))
-window.Vue.component('subjects', require('./components/curriculum/subjects/SubjectsComponent'))
-window.Vue.component('subject-groups', require('./components/curriculum/subjectGroups/SubjectGroupsComponent'))
+window.Vue.component('curriculum', CurriculumComponent)
+window.Vue.component('curriculum-public', CurriculumPublicComponent)
+window.Vue.component('curriculum-study-public', CurriculumStudyPublic)
+window.Vue.component('subjects', SubjectsComponent)
+window.Vue.component('subject-groups', SubjectGroupsComponent)
 
 // Positions
-window.Vue.component('positions', require('./components/positions/PositionsComponent'))
-window.Vue.component('dashboard-positions', require('./components/positions/DashboardPositions'))
+window.Vue.component('positions', PositionsComponent)
+window.Vue.component('dashboard-positions', DashboardPositions)
 
 //
-window.Vue.component('material-stats-card', require('./components/ui/MaterialStatsCard'))
-window.Vue.component('material-card', require('./components/ui/MaterialCard'))
-window.Vue.component('helper-offset', require('./components/helper/Offset'))
+window.Vue.component('material-stats-card', MaterialStatsCard)
+window.Vue.component('material-card', MaterialCard)
+window.Vue.component('helper-offset', Offset)
 
-window.Vue.component('welcome', require('./components/welcome/Welcome'))
-window.Vue.component('teachers-welcome', require('./components/welcome/TeachersWelcome'))
+window.Vue.component('welcome', Welcome)
+window.Vue.component('teachers-welcome', TeachersWelcome)
 
 // MAIN WIDGETS
-window.Vue.component('navigation', require('./components/ui/Nagigation'))
-window.Vue.component('notifications-widget', require('./components/notifications/NotificationsWidget'))
+window.Vue.component('navigation', Nagigation)
+window.Vue.component('notifications-widget', NotificationsWidget)
 
 // Notifications
-window.Vue.component('notifications', require('./components/notifications/Notifications'))
+window.Vue.component('notifications', Notifications)
 
 // User Profile
-window.Vue.component('user-profile', require('./components/users/UserProfile'))
+window.Vue.component('user-profile', UserProfile)
 
 // share-fab
-window.Vue.component('share-fab', require('./components/ui/ShareFab'))
+window.Vue.component('share-fab', ShareFab)
 
 // Service workers
-window.Vue.component('service-worker', require('./components/serviceworker/ServiceWorker'))
+window.Vue.component('service-worker', ServiceWorker)
 
 window.Vuetify = Vuetify
 

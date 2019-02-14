@@ -1,3 +1,8 @@
+# UPGRADE TO LARAVEL MIX 4.0
+
+- https://laravel-mix.com/docs/4.0/upgrade
+- https://laravel-news.com/laravel-mix-4-released
+
 # Error page 404
 
 NO és correcte surt la de AdminLTE, vegeu:
