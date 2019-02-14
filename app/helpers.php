@@ -286,7 +286,8 @@ if (! function_exists('create_other_tenant_admin_users')) {
                 'email' => config('scool.admin_user_email_on_tenant1'),
                 'name' => config('scool.admin_user_name_on_tenant1'),
                 'password' => config('scool.admin_username_password_on_tenant1'),
-                'admin' => true
+                'admin' => true,
+                'user_type_id' => UserType::findByName('Becari')->id
             ]);
         }
     }
@@ -1573,6 +1574,7 @@ if (!function_exists('initialize_administrative_assistants')) {
             'email' => 'cintatomas@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
+            'user_type_id' => UserType::findByName('Administratiu/va')->id
         ])->addRole(Role::findByName('AdministrativeAssistant'))
             ->assignFullName([
                 'givenName' => 'Cinta',
@@ -1592,6 +1594,7 @@ if (!function_exists('initialize_administrative_assistants')) {
             'email' => 'lluisagarcia@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
+            'user_type_id' => UserType::findByName('Administratiu/va')->id
         ])->addRole(Role::findByName('AdministrativeAssistant'))
             ->assignFullName([
                 'givenName' => 'Lluisa',
@@ -1611,6 +1614,7 @@ if (!function_exists('initialize_administrative_assistants')) {
             'email' => 'soniaalegria@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
+            'user_type_id' => UserType::findByName('Administratiu/va')->id
         ])->addRole(Role::findByName('AdministrativeAssistant'))
             ->assignFullName([
                 'givenName' => 'Sonia',
@@ -1635,6 +1639,7 @@ if (!function_exists('initialize_janitors')) {
             'email' => 'jaumebenaiges@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret using SHA1 (blames Gsuite) instead of bcrypt
             'remember_token' => str_random(10),
+            'user_type_id' => UserType::findByName('Conserge')->id
         ])->addRole(Role::findByName('Janitor'))
             ->assignFullName([
                 'givenName' => 'Jaume',
@@ -1654,6 +1659,7 @@ if (!function_exists('initialize_janitors')) {
             'email' => 'jordicaudet@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
+            'user_type_id' => UserType::findByName('Conserge')->id
         ])->addRole(Role::findByName('Janitor'))
             ->assignFullName([
                 'givenName' => 'Jordi',
@@ -1673,6 +1679,7 @@ if (!function_exists('initialize_janitors')) {
             'email' => 'leonoragramunt@iesebre.com',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
+            'user_type_id' => UserType::findByName('Conserge')->id
         ])->addRole(Role::findByName('Janitor'))
             ->assignFullName([
                 'givenName' => 'Leonor',
@@ -4885,6 +4892,10 @@ if (!function_exists('initialize_user_types')) {
 
         UserType::firstOrCreate([
             'name' => 'Conserge'
+        ]);
+
+        UserType::firstOrCreate([
+            'name' => 'Becari'
         ]);
 
         UserType::firstOrCreate([

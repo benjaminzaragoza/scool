@@ -1,3 +1,10 @@
+# USER TYPE
+
+- [X] Crear el tipus becaris -> Afegir dídac i Sergio a becaris
+- [X] Posar el tipus conserges als conserges als helpers
+- [X] Posar el tipus administrative a les administratives
+- [X] Posar el user type profe a tots els professors (esta fet)
+
 # UPGRADE TO LARAVEL MIX 4.0
 
 - https://laravel-mix.com/docs/4.0/upgrade
@@ -9,6 +16,7 @@
 
 NO és correcte surt la de AdminLTE, vegeu:
 - https://iesebre.scool.test/users/99999
+- [ ] Com es pot fer una custom Error Page per a cada tenant?
 
 # ONLINE USERS
 
@@ -16,7 +24,8 @@ FRONTEND:
 - [ ] Crear component per mostrar els usuaris que estan online
  - [ ] Opció refresh
 - [ ] Mostrar al perfil d'un usuari si està online o no
-- [ ] Llista d'usuaris -> mostrar columna online
+- [X] Llista d'usuaris -> mostrar columna online
+  - [ ] Millor presentació amb un punt roig o verd depenen estat
  
 BACKEND:
 - [X] Crear Middleware
@@ -34,8 +43,7 @@ BACKEND:
 - [ ] Crear un seed per tal de començar desde zero
 
 # BUGS
-- [ ] Alineament de pa icona prepend de camp telèfon mòbil no surt ben alineada quan estem introiduint mòbil
-- [ ]
+- [ ] Alineament de la icona prepend de camp telèfon mòbil no surt ben alineada quan estem introduint mòbil
 
 # CREDENTIALS JAVASCRIPT API/ MOBILE
 
@@ -45,9 +53,9 @@ PWA:
 
 # SHARE
 
+- [ ] Compartir incidències
 - [X] Només mostrar el botó de compartir en entorns que ho suportin
   - [X] Pàgina de Landing
-- [ ] Compartir incidències
 - [X] Compartir Landing Page
 - https://whatwebcando.today/app-communication.html
 
@@ -132,11 +140,7 @@ BANDOS/NOTIFICACIONES
 - [ ] no hi ha cap forma modificar photos
 - [ ] Cal afegir Funcionalitat a profile
 
-# USER TYPE
 
-- [ ] Crear el tipus becaris -> Afegir dídac i Sergio a becaris
-- [ ] Posar el tipus conserges als conserges als helpers
-- [ ] Posar el tipus administrative a les administratives
 
 # COLORS
 
