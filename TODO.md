@@ -3,6 +3,7 @@
 - https://laravel-mix.com/docs/4.0/upgrade
 - https://laravel-news.com/laravel-mix-4-released
 - [X] a app.js canviats tots els requires per imporst
+- [X] Canviar la primera línia del fitxer webpack.mix.js a const mix = require('laravel-mix');
 
 # Error page 404
 

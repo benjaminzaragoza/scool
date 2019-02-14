@@ -1,8 +1,8 @@
 {
-    "/tenant/js/app.js": "/tenant/js/app.js",
     "/js/app.js": "/js/app.js",
     "/tenant/css/app.css": "/tenant/css/app.css",
     "/js/app-landing.js": "/js/app-landing.js",
+    "/tenant/js/app.js": "/tenant/js/app.js",
     "/css/all.css": "/css/all.css",
     "/css/all-landing.css": "/css/all-landing.css",
     "/img/app-bg.png": "/img/app-bg.png",
@@ -57,14 +57,5 @@
     "/css/skins/skin-yellow.css": "/css/skins/skin-yellow.css",
     "/css/skins/skin-yellow.min.css": "/css/skins/skin-yellow.min.css",
     "/css/blue.png": "/css/blue.png",
-    "/css/blue@2x.png": "/css/blue@2x.png",
-    "/0.30b1ac9333a9b7ce5fe2.hot-update.js": "/0.30b1ac9333a9b7ce5fe2.hot-update.js",
-    "/1.30b1ac9333a9b7ce5fe2.hot-update.js": "/1.30b1ac9333a9b7ce5fe2.hot-update.js",
-    "/2.30b1ac9333a9b7ce5fe2.hot-update.js": "/2.30b1ac9333a9b7ce5fe2.hot-update.js",
-    "/0.d527a4ea48d487372083.hot-update.js": "/0.d527a4ea48d487372083.hot-update.js",
-    "/1.d527a4ea48d487372083.hot-update.js": "/1.d527a4ea48d487372083.hot-update.js",
-    "/2.d527a4ea48d487372083.hot-update.js": "/2.d527a4ea48d487372083.hot-update.js",
-    "/0.f5fbd8880ef06a054d34.hot-update.js": "/0.f5fbd8880ef06a054d34.hot-update.js",
-    "/1.f5fbd8880ef06a054d34.hot-update.js": "/1.f5fbd8880ef06a054d34.hot-update.js",
-    "/2.f5fbd8880ef06a054d34.hot-update.js": "/2.f5fbd8880ef06a054d34.hot-update.js"
+    "/css/blue@2x.png": "/css/blue@2x.png"
 }
