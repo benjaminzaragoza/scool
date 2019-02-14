@@ -8,10 +8,12 @@
 import store from './store'
 import * as mutations from './store/mutation-types'
 import * as actions from './store/action-types'
+import './bootstrap'
+import Vue from 'vue'
+import TenantsComponent from './components/TenantsComponent.vue'
+import Push from './components/PushComponent.vue'
 
-require('./bootstrap')
-
-window.Vue = require('vue')
+window.Vue = Vue
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -19,8 +21,8 @@ window.Vue = require('vue')
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-window.Vue.component('tenants', require('./components/TenantsComponent.vue'))
-window.Vue.component('push', require('./components/PushComponent.vue'))
+window.Vue.component('tenants', TenantsComponent)
+window.Vue.component('push', Push)
 
 if (window.user) {
   store.commit(mutations.LOGGED_USER, window.user)
