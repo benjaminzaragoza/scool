@@ -45,35 +45,55 @@
                             <v-subheader>Comptes externes</v-subheader>
                             <v-list-tile>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>
-                                        <a v-if="this.googleUser" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + this.googleUser.id"> {{ this.googleUser.primaryEmail }}</a>
+                                    <v-list-tile-title >
+                                        <template v-if="dataGoogleUser">
+                                            <a v-if="!is_empty(dataGoogleUser)" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + dataGoogleUser.id"> {{ dataGoogleUser.primaryEmail }}</a>
+                                            <template v-else>
+                                                <v-progress-circular :size="15" indeterminate color="primary"></v-progress-circular>
+                                                Esperant les dades de l'usuari de Google
+                                            </template>
+                                        </template>
                                         <template v-else>
-                                            <v-progress-circular :size="15" indeterminate color="primary"
-                                            ></v-progress-circular>
-                                            Esperant les dades de l'usuari de Google
+                                            Sense usuari Google
                                         </template>
                                     </v-list-tile-title>
-                                    <v-list-tile-sub-title>Email corporatiu (Google)</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>
-                                        cn=Bla bla bla,dc=iesebre,dc=com()TODO
-                                    </v-list-tile-title>
-                                    <v-list-tile-sub-title>Ldap cn(TODO)</v-list-tile-sub-title>
+                                    <v-list-tile-sub-title>Usuari de Google</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-list-tile>
                                 <v-list-tile-content>
                                     <v-list-tile-title >
-                                        <a v-if="this.moodleUser" target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + this.moodleUser.id"> {{ this.moodleUser.id }}</a>
+                                        <template v-if="dataLdapUser">
+                                            <span v-if="!is_empty(dataLdapUser)">
+                                                LDAP CN TODO
+                                            </span>
+                                            <template v-else>
+                                                <v-progress-circular :size="15" indeterminate color="primary"></v-progress-circular>
+                                                Esperant les dades de l'usuari Ldap
+                                            </template>
+                                        </template>
                                         <template v-else>
-                                        <v-progress-circular :size="15" indeterminate color="primary"></v-progress-circular>
-                                        Esperant les dades de l'usuari de Moodle
-                                    </template>
+                                            Sense usuari Google
+                                        </template>
                                     </v-list-tile-title>
-                                    <v-list-tile-sub-title>Usuari de moodle</v-list-tile-sub-title>
+                                    <v-list-tile-sub-title>Usuari de Ldap</v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title >
+                                        <template v-if="dataMoodleUser">
+                                            <a v-if="!is_empty(dataMoodleUser)" target="_blank" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + dataMoodleUser.id"> {{ dataMoodleUser.id }}</a>
+                                            <template v-else>
+                                                <v-progress-circular :size="15" indeterminate color="primary"></v-progress-circular>
+                                                Esperant les dades de l'usuari de Moodle
+                                            </template>
+                                        </template>
+                                        <template v-else>
+                                            Sense usuari Moodle
+                                        </template>
+                                    </v-list-tile-title>
+                                    <v-list-tile-sub-title>Usuari de Moodle</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -95,26 +115,50 @@
 
 <script>
 import UserAvatar from '../ui/UserAvatarComponent'
+import helpers from '../../utils/helpers'
 export default {
   name: 'UserPhotoAvatar',
   components: {
     'user-avatar': UserAvatar
+  },
+  data () {
+    return {
+      dataGoogleUser: this.googleUser,
+      dataLdapUser: this.ldapUser,
+      dataMoodleUser: this.moodleUser
+    }
   },
   props: {
     user: {
       type: Object,
       required: true
     },
-    googleUser: {
-      type: Object
+    googleUser: {},
+    ldapUser: {},
+    moodleUser: {}
+  },
+  computed: {
+    moodleUserExists () {
+
+    }
+  },
+  watch: {
+    googleUser (googleUser) {
+      this.dataGoogleUser = googleUser
     },
-    moodleUser: {
-      type: Object
+    ldapUser (ldapUser) {
+      this.dataLdapUser = ldapUser
+    },
+    moodleUser (googleUser) {
+      this.dataGoogleUser = googleUser
     }
   },
   methods: {
     avatarSaved (path) {
       this.$emit('avatarSaved', path)
+    },
+    is_empty (object) {
+      return helpers.is_empty(object)
     }
   }
 }

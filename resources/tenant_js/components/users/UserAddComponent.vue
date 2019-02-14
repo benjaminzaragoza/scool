@@ -34,6 +34,7 @@
                               @created="userCreated"
                               @googleUserCreated="googleUserCreated"
                               @moodleUserCreated="moodleUserCreated"
+                              @ldapUserCreated="ldapUserCreated"
                               :users="users"
                               :userTypes="userTypes"></user-add-form>
                   </v-card>
@@ -94,7 +95,8 @@ export default {
       step: 1,
       user: null,
       googleUser: null,
-      moodleUser: null
+      moodleUser: null,
+      ldapUser: null
     }
   },
   props: {
@@ -127,6 +129,10 @@ export default {
     moodleUserCreated (user) {
       this.moodleUser = user
       this.$emit('moodleUsercreated', user)
+    },
+    ldapUserCreated  (user) {
+      this.ldapUser = user
+      this.$emit('ldapUsercreated', user)
     }
   }
 }

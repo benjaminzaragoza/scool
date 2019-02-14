@@ -339,6 +339,11 @@ export default {
           'idnumber': this.user.id
         }
       }).then((response) => {
+        console.log('LOG!!!!!!!!!!!!')
+        console.log('response:')
+        console.log(response)
+        console.log('response.data:')
+        console.log(response.data)
         this.associateMoodleUserToLocalUser(response.data)
       }).catch(error => {
         this.$snackbar.showError(error)
@@ -404,8 +409,18 @@ export default {
           this.user = response.data
           this.$v.$reset()
           this.welcomeEmail && this.sendWelcomeEmail(this.user)
-          this.googleUser && this.createGoogleUser()
-          this.moodleUser && this.createMoodleUser()
+          if (this.googleUser) {
+            this.$emit('googleUserCreated', {})
+            this.createGoogleUser()
+          } else {
+            this.$emit('googleUserCreated', null)
+          }
+          if (this.moodleUser) {
+            this.$emit('moodleUserCreated', {})
+            this.createMoodleUser()
+          } else {
+            this.$emit('moodleUserCreated', null)
+          }
           this.ldapUser && this.createLdapUser(this.user)
           this.$emit('created', this.user)
         }).catch(error => {

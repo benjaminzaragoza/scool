@@ -39,5 +39,8 @@ export default {
       if (letra !== lt) return false
       else return true
     } else return false
+  },
+  is_empty (object) {
+    return _.isEmpty(object)
   }
 }

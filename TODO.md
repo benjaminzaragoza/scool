@@ -1304,6 +1304,10 @@ OPERACIONS MASSIVES:
   - [ ] Quan té compte local associada
   - [ ] Mostrar warning té compte local associada. Si desitja tirar endavant s'eliminara l'associació
 
+# SERVICE WORKERS
+
+- [X] Afecten npm run hot?: https://medium.com/@sergiturbadenas/how-to-solve-problems-using-hmr-hot-module-replacement-with-laravel-mix-or-webpack-dev-server-fe6c34ae76b6
+
 # PEOPLE MANAGEMENT. PERSONS MANAGEMENT
 
 ## Vista dades personals | INLINE MODIFICATIONS
@@ -1341,6 +1345,11 @@ Tots els camps són especials
 
 ## LLISTA DATATABLES
 
+- [ ] Usuari online
+- [ ] Columna ldap
+- [ ] Poder fer que un usuari sigui admin:
+ - [ ] només els superadmins poden afegir altres admins
+ - [ ] Certs superadmins (fitxer de config) no es poden eliminar
 - [ ] Poder buscar usuaris:
   - [ ] Nom
   - [ ] Identificador
@@ -1350,12 +1359,25 @@ Tots els camps són especials
   - [ ] Sinó hi ha dades personals no és un link és un diàleg flotant que mostrar el formulari 3 (el de dades personals)
     - [ ] Petita modificació al formulari tres -> incloure Sn1, Sn2 i Givenname
 
+## SUBFOMULARI AFEGIR USUARI
+
+- [ ] Component per cercar usuaris ja existents
+  - [ ] Cercar per identificadors. També per noms. Fuzzy search? mostrar casos no coincidents però molt semblants
+  - [ ] Laravel Scout? Algolia? o manual
+  - [ ] Ha d'evitar donar d'alta varios cops el mateix usuari. Com integrar
+  - [ ] uuid com a id d'usuaris? podria facilitar migracions i treball amb múltiples taules
+- [ ] Tema telefòn mòbil i enviar confirmació SMS (Nexmo)
 
 ## SUBFOMULARI CANVIAR AVATAR
 
-- [ ] Boto seguent amb jerarquia primaria
-- [ ] NO mostrar progress bars MoodleUser, ldapUser i GoogleUser si s'ha indicat no crear aquests usuaris
-- [ ] TODO. No es canvia avatart
+- [X] Esperant les dades de Google -> però un cop s'ha crear l'usuari no s'atura l'spinner
+- [ ] No funciona la creació usuari Moodle
+ - [ ] De fet si funciona (petició API crea l'usuari) però la interfície/frontend Javascript de Vue dona error
+ - [ ] Surt snackbar donant error: "Error de xarxa"
+- [X] Boto seguent amb jerarquia primaria
+- [X] NO mostrar progress bars MoodleUser, ldapUser i GoogleUser si s'ha indicat no crear aquests usuaris
+  - [X] HA d'haver-hi comunicació entre el component del primer step i el del segon via el pare o Vuex?
+- [ ] TODO. No es canvia avatar
   - [ ] Hi ha tot un tema pendent sobre photos i avatars
 
 ## FORMULARI DADES PERSONALS

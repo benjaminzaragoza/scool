@@ -154,6 +154,12 @@
                                                 <span>{{ props.item.email }}</span>
                                             </v-tooltip>
                                         </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ props.item.online }}</span>
+                                                <span>{{ props.item.online }}</span>
+                                            </v-tooltip>
+                                        </td>
                                         <td class="text-xs-center cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ formatBoolean(props.item.email_verified_at) }}</span>
@@ -464,6 +470,7 @@ export default {
         { text: 'Avatar', value: 'photo', sortable: false },
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' },
+        { text: 'Online', value: 'online' },
         { text: 'Verificat', value: 'email_verified_at' },
         { text: 'Email corporatiu', value: 'corporativeEmail' },
         { text: 'Mòbil', value: 'mobile' },
