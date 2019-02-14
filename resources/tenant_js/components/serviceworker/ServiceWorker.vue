@@ -11,6 +11,7 @@ export default {
   name: 'ServiceWorker',
   methods: {
     registerServiceWorker () {
+      // PWA Progressive
       if (!('serviceWorker' in navigator)) {
         console.log('Service workers aren\'t supported in this browser.')
         return
