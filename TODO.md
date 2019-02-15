@@ -2522,7 +2522,8 @@ WEB:
 - [ ] Els usuaris normals d'incidències poden veure el botó assignar usuaris. NO HAURIEN
 
 ## RESPONSIVE
-- [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
+- [ ] Capçalera amb filtres i cerques no cap tot a mòbil!!!! Layout responsive. Treure alguna opció?
+- [X] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
 ## CHANGELOG
 
