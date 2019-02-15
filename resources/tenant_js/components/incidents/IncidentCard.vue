@@ -75,9 +75,9 @@
                             <v-tooltip bottom>
                                 <span slot="activator" class="font-weight-bold">{{ dataIncident.formatted_created_at_diff }}</span>
                                 <span>{{ dataIncident.formatted_created_at}}</span>
-                            </v-tooltip>
+                            </v-tooltip> per {{ dataIncident.user_name }}.
                         </template>
-                        <template v-if="dataIncident.updated_at"> | Ultima modificació
+                        <template v-if="dataIncident.updated_at"> Ultima modificació
                             <v-tooltip bottom>
                                 <span slot="activator" class="font-weight-bold">{{ dataIncident.formatted_updated_at_diff }}</span>
                                 <span>{{ dataIncident.formatted_updated_at}}</span>
