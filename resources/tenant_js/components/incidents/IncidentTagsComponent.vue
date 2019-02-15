@@ -9,9 +9,13 @@
                 indeterminate
                 color="primary"
         ></v-progress-circular>
-        <v-btn v-role="'IncidentsManager'" v-if="pendingTags.length > 0" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
-          <v-icon>add</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+            <v-btn slot="activator" v-role="'IncidentsManager'" v-if="pendingTags.length > 0" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
+              <v-icon>add</v-icon>
+            </v-btn>
+            <span>Afegir una etiqueta</span>
+        </v-tooltip>
+
         <v-dialog v-model="tagAddDialog" max-width="500px">
           <v-card>
             <v-card-text>

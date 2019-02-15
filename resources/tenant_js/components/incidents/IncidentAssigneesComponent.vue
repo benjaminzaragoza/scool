@@ -11,12 +11,18 @@
                 indeterminate
                 color="primary"
         ></v-progress-circular>
-        <v-btn v-role="'IncidentsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
-          <v-icon>add</v-icon>
-        </v-btn>
-        <v-btn v-role="'IncidentsManager'" icon flat color="error" class="text--white ma-0" @click="showRemoveDialog" v-if="assignees.length > 0">
-          <v-icon>remove</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+            <v-btn slot="activator" v-role="'IncidentsManager'" icon flat color="teal" class="text--white ma-0" @click="showAddDialog">
+              <v-icon>add</v-icon>
+            </v-btn>
+            <span>Assignar la incidència a un usuari</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+            <v-btn v-role="'IncidentsManager'" icon flat color="error" class="text--white ma-0" @click="showRemoveDialog" v-if="assignees.length > 0">
+                <v-icon>remove</v-icon>
+            </v-btn>
+            <span>Desassignar la incidència a un usuari</span>
+        </v-tooltip>
         <v-dialog v-model="assigneeAddDialog" max-width="500px">
           <v-card>
             <v-card-text>

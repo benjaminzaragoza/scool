@@ -1,3 +1,11 @@
+# CREDENTIALS API
+
+- https://medium.com/dev-channel/sign-in-on-the-web-credential-management-api-and-best-practices-d21aed14b6fe
+- https://developers.google.com/web/fundamentals/security/credential-management/
+- app exemple: https://credential-management-sample.appspot.com/
+- https://developers.google.com/web/fundamentals/security/credential-management/retrieve-credentials
+- https://polykart-credential-payment.appspot.com/account
+
 # USER TYPE
 
 - [X] Crear el tipus becaris -> Afegir dídac i Sergio a becaris
@@ -2507,7 +2515,16 @@ WEB:
   - [] TODO Limitar nombre de dades de la vista
 
   
-# Incidents
+# Incidents Manager. Gestor d'incidències
+
+# Permisos
+- [ ] Els usuaris normals d'incidències poden veure el botó assignar etiquetes. NO HAURIEN
+- [ ] Els usuaris normals d'incidències poden veure el botó assignar usuaris. NO HAURIEN
+
+## RESPONSIVE
+- [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
+
+## CHANGELOG
 
 Changelog d'una incidència a la vista Show:
 - [ ] Barrejar els comentaris i les accions com fa Github i mostrar missatges intercalats (i ordenats per temps) amb operacions com usuari tal a tancat la incideència
@@ -2593,8 +2610,6 @@ ALTRES:
 ## Altres
 - [ ] Datatables utilitzar expand per mostrar més info sobre la incidència? Comentaris? Descripció completa?
 
-## RESPONSIVE
-- [ ] Versió Mobile: Datatables canviar per un Data Iterator de Cards (una incidència un card)
 
 ## Ideas taken from Github
 - [ ] Altres extres interessants: @mencions Links HTTP, etc

@@ -73,8 +73,9 @@
 <script>
 import * as actions from '../store/action-types'
 import withSnackbar from './mixins/withSnackbar'
+import interactsWithGravatar from './mixins/interactsWithGravatar'
 export default {
-  mixins: [withSnackbar],
+  mixins: [ withSnackbar, interactsWithGravatar ],
   data () {
     return {
       errors: [],
@@ -120,6 +121,33 @@ export default {
     }
   },
   methods: {
+    requestCredential () {
+      if (!navigator.credentials) return
+      let mediationValue = document.getElementById('credential-form').mediation.value
+      navigator.credentials.get({ password: true, mediation: mediationValue })
+        .then(credential => {
+          let result = 'none'
+          if (credential) {
+            result = credential.id + ', ' + credential.password.replace(/./g, '*')
+          }
+          console.log('Credential read: <b>' + result + '</b>')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    storeCredentials () {
+      if (!navigator.credentials) return
+      const credentials = {
+        id: this.email,
+        iconURL: this.gravatarURL(this.email),
+        password: this.password
+      }
+      let credential = new PasswordCredential(credentials)
+      navigator.credentials.store(credential).catch(err => {
+        console.log(err)
+      })
+    },
     login () {
       if (this.$refs.loginForm.validate()) {
         this.loginLoading = true
@@ -130,6 +158,7 @@ export default {
         this.$store.dispatch(actions.LOGIN, credentials).then(response => {
           this.loginLoading = false
           this.showLogin = false
+          this.storeCredentials()
           window.location = this.redirect
         }).catch(error => {
           this.loginLoading = false

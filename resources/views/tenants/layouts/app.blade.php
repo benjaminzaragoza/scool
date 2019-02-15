@@ -33,6 +33,11 @@
     <meta name="twitter:site" content="@acachawiki" />
     <meta name="twitter:creator" content="@acacha1" />
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/appIcon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/appIcon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/appIcon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/appIcon/favicon-16x16.png">
+
     <meta name="description" content="Aplicació per a tota la comunitat educativa de l'Institut de l'Ebre">
     <meta name="author" content="Sergi Tur Badenas - scool.cat">
 </head>

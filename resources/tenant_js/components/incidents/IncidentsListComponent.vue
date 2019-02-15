@@ -127,7 +127,30 @@
                     @keydown.esc.stop.prevent="showIncident=false">
                 <incident-show :incident="getShowIncident()" v-role="'Incidents'" @close="showIncident = false" :tags="dataTags" :incident-users="incidentUsers"></incident-show>
             </v-dialog>
-
+            <v-data-iterator
+                    class="hidden-md-and-up"
+                    :items="filteredIncidents"
+                    :rows-per-page-items="rowsPerPageItems"
+                    :pagination.sync="pagination"
+                    content-tag="v-layout"
+                    row
+                    wrap
+                    >
+                <v-flex
+                        slot="item"
+                        slot-scope="{item: incident}"
+                        xs12
+                        sm6
+                >
+                    <incident-card class="ml-1 mr-1"
+                           :incident="incident"
+                           :tags="dataTags"
+                           :incident-users="incidentUsers"
+                           @refresh="refresh"
+                    >
+                    </incident-card>
+                </v-flex>
+            </v-data-iterator>
             <v-data-table
                     class="px-0 mb-5 hidden-sm-and-down"
                     :headers="headers"
@@ -137,7 +160,7 @@
                     no-results-text="No s'ha trobat cap registre coincident"
                     no-data-text="No hi han dades disponibles"
                     rows-per-page-text="Incidències per pàgina"
-                    :rows-per-page-items="[5,10,25,50,100,200,{'text':'Tots','value':-1}]"
+                    :rows-per-page-items="rowsPerPageItems"
                     :pagination.sync="pagination"
                     :loading="refreshing"
             >
@@ -229,7 +252,7 @@ import InlineTextAreaEditDialog from '../ui/InlineTextAreaEditDialog'
 import UserSelect from '../users/UsersSelectComponent.vue'
 import UserAvatar from '../ui/UserAvatarComponent'
 import ChangelogLoggable from '../changelog/ChangelogLoggable'
-
+import IncidentCard from './IncidentCard'
 var filters = {
   all: function (incidents) {
     return incidents
@@ -249,6 +272,7 @@ var filters = {
 export default {
   name: 'IncidentsList',
   components: {
+    'incident-card': IncidentCard,
     'incident-show': IncidentShowComponent,
     'incident-show-icon': IncidentShowIconComponent,
     'incident-comments-show': IncidentCommentsShowComponent,
@@ -265,6 +289,7 @@ export default {
   },
   data () {
     return {
+      rowsPerPageItems: [5, 10, 25, 50, 100, 200, { 'text': 'Tots', 'value': -1 }],
       search: '',
       refreshing: false,
       pagination: {

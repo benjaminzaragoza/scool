@@ -95,6 +95,7 @@ export default {
     submit () {
       this.form.post('/login')
         .then(response => {
+
           var component = this
           setTimeout(function () {
             component.redirect(response)

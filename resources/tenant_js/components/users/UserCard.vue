@@ -111,7 +111,7 @@ import UserAvatar from '../ui/UserAvatarComponent'
 export default {
   name: 'UserCard',
   components: {
-    'user-avatar': UserAvatar
+    'user-avatar': UserAvatar,
   },
   data () {
     return {
