@@ -39,6 +39,10 @@ class Role extends SpatieRole
         'name' => 'UsersManager'
     ];
 
+    const LDAP_MANAGER = [
+        'name' => 'LdapManager'
+    ];
+
     const NOTIFICATIONS_MANAGER = [
         'name' => 'NotificationsManager'
     ];

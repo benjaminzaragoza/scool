@@ -743,6 +743,15 @@ if (!function_exists('users_manager_permissions')) {
     }
 }
 
+if (!function_exists('ldap_manager_permissions')) {
+    function ldap_manager_permissions()
+    {
+        return [
+            'ldap.users.index'
+        ];
+    }
+}
+
 if (!function_exists('notifications_manager_permissions')) {
     function notifications_manager_permissions()
     {
@@ -812,6 +821,7 @@ if (!function_exists('scool_roles_permissions')) {
         return [
             'MoodleManager' => moodle_manager_permissions(),
             'UsersManager' => users_manager_permissions(),
+            'LdapManager' => ldap_manager_permissions(),
             'PeopleManager' => people_manager_permissions(),
             'Curriculum' => curriculum_permissions(),
             'CurriculumManager' => curriculum_manager_permissions(),
@@ -893,6 +903,18 @@ if (!function_exists('initialize_users_manager_role')) {
     {
         $role = Role::firstOrCreate(['name' => ScoolRole::USERS_MANAGER['name']]);
         $permissions = users_manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_ldap_manager_role')) {
+    function initialize_ldap_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => ScoolRole::LDAP_MANAGER['name']]);
+        $permissions = ldap_manager_permissions();
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
             $role->givePermissionTo($permission);

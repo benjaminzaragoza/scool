@@ -23,6 +23,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsShortnameController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersController;
+use App\Http\Controllers\Tenant\Api\Ldap\LdapUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
@@ -274,9 +275,8 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
 
             //Ldap users
-            Route::get('/ldap/users', 'Tenant\LdapUsersController@index');
-            Route::post('/ldap/users', 'Tenant\LdapUsersController@store');
-//            Route::delete('/ldap/users/{user}', 'Tenant\LdapUsersController@destroy');
+            Route::get('/ldap/users', '\\' . LdapUsersController::class . '@index');
+            Route::post('/ldap/users', '\\' . LdapUsersController::class . '@store');
 
             //Google Suite watch users TODO
             Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');

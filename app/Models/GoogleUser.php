@@ -20,7 +20,7 @@ class GoogleUser extends Model
     protected $guarded = [];
 
     /**
-     * Get the user that owns the phone.
+     * Get the local user associated to Google User.
      */
     public function user()
     {

@@ -47,6 +47,12 @@ trait CanLogin
         return $this->loginAsUsingRole($guard, ScoolRole::NOTIFICATIONS_MANAGER['name']);
     }
 
+    public function loginAsLdapManager($guard = 'web')
+    {
+        initialize_ldap_manager_role();
+        return $this->loginAsUsingRole($guard, ScoolRole::LDAP_MANAGER['name']);
+    }
+
     public function loginAsUsersManager($guard = 'web')
     {
         initialize_users_manager_role();

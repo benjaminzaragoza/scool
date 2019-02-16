@@ -1,14 +1,11 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\Api\Ldap;
 
-use App\Models\User;
-use App\Models\UserType;
-use Config;
-use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
+use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
  * Class LdapusersControllerTest.
@@ -17,7 +14,7 @@ use Tests\BaseTenantTest;
  */
 class LdapusersControllerTest extends BaseTenantTest
 {
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /**
      * Refresh the in-memory database.
@@ -40,11 +37,7 @@ class LdapusersControllerTest extends BaseTenantTest
      */
     public function list_ldap_users()
     {
-        $usersManager = create(User::class);
-        $this->actingAs($usersManager,'api');
-        $role = Role::firstOrCreate(['name' => 'UsersManager','guard_name' => 'web']);
-        Config::set('auth.providers.users.model', User::class);
-        $usersManager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $response = $this->json('GET','/api/v1/ldap/users');
 
@@ -57,33 +50,26 @@ class LdapusersControllerTest extends BaseTenantTest
 
     /**
      * @test
-     * @group slow
-     * @group google
+     * @group ldap
      */
     public function regular_user_cannot_list_ldap_users()
     {
-        $user = create(User::class);
-        $this->actingAs($user,'api');
-
+        $this->login('api');
         $response = $this->json('GET','/api/v1/ldap/users');
-
         $response->assertStatus(403);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     * @group ldap
+     */
     public function user_manager_can_see_ldap_users()
     {
         // TODO
         $this->markTestSkipped('TODO adldap2-laravel');
         $this->withoutExceptionHandling();
-        $manager = create(User::class);
-        $this->actingAs($manager);
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $response = $this->json('GET','/ldap_users');
         $response->assertSuccessful();
@@ -118,14 +104,17 @@ class LdapusersControllerTest extends BaseTenantTest
 //        $this->assertCount(3,json_decode($response->getContent()));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group ldap
+     */
     public function regular_user_cannot_see_ldap_users()
     {
         // TODO
         $this->markTestSkipped('TODO package Ldap adladap2');
         $this->withoutExceptionHandling();
-        $user = create(User::class);
-        $this->actingAs($user);
+        $this->login('api');
+
 
         $response = $this->json('GET','/ldap_users');
 
@@ -133,20 +122,17 @@ class LdapusersControllerTest extends BaseTenantTest
 
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group slow
+     * @group ldap
+     */
     public function user_manager_can_create_ldap_users()
     {
         $this->withoutExceptionHandling();
         // TODO
         $this->markTestSkipped('TODO adldap2');
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $response = $this->json('POST', '/api/v1/ldap/users', [
 
@@ -154,20 +140,16 @@ class LdapusersControllerTest extends BaseTenantTest
         $response->assertSuccessful();
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group ldap
+     */
     public function user_manager_can_create_ldap_users_validation()
     {
         // TODO
         $this->markTestSkipped('TODO package Ldap adladap2');
         $this->withoutExceptionHandling();
-        $manager = create(User::class);
-        $this->actingAs($manager,'api');
-        $role = Role::firstOrCreate([
-            'name' => 'UsersManager',
-            'guard_name' => 'web'
-        ]);
-        Config::set('auth.providers.users.model', User::class);
-        $manager->assignRole($role);
+        $this->loginAsUsersManager('api');
 
         $response = $this->json('POST', '/api/v1/ldap/users', [
 
@@ -175,14 +157,15 @@ class LdapusersControllerTest extends BaseTenantTest
         $response->assertStatus(422);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group ldap
+     */
     public function regular_user_cannot_create_ldap_users()
     {
         // TODO
         $this->markTestSkipped('TODO package Ldap adladap2');
-
-        $user = create(User::class);
-        $this->actingAs($user,'api');
+        $this->login('api');
 
         $response = $this->json('POST', '/api/v1/ldap/users');
         $response->assertStatus(403);

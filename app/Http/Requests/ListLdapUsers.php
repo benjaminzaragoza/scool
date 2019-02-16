@@ -19,7 +19,7 @@ class ListLdapUsers extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('list-ldap-users');
+        return Auth::user()->can('ldap.users.index');
     }
 
     /**

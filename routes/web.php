@@ -15,7 +15,7 @@ use App\Http\Controllers\Auth\Tenant\LoginController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Tenant\GoogleUsersController;
 use App\Http\Controllers\Tenant\HomeController;
-use App\Http\Controllers\Tenant\LdapUsersController;
+use App\Http\Controllers\Tenant\Web\LdapUsersController;
 use App\Http\Controllers\Tenant\PendingTeachersController;
 use App\Http\Controllers\Tenant\PersonalDataController;
 use App\Http\Controllers\Tenant\UserPhotoController;
@@ -165,7 +165,7 @@ Route::domain('{tenant}.' . config('app.domain'))->group(function () {
             Route::get('/google_users/{googleUser}','\\' . GoogleUsersController::class . '@show');
 
             // Ldap users
-            Route::get('/ldap_users','\\' . LdapUsersController::class . '@show');
+            Route::get('/ldap_users','\\' . LdapUsersController::class . '@index');
 
             // ******* Emails ********
             Route::get('/mail/teacher_welcome','Tenant\TeacherWelcomeEmailController@show');
