@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Tenant;
 
 use Adldap\Laravel\Facades\Adldap;
-use App\Http\Requests\ListGoogleUsers;
 use App\Http\Requests\ListLdapUsers;
 use Adldap\AdldapInterface;
 use App\Http\Requests\StoreLdapUsers;
 use App\Ldap\LdapUser;
 use App\Ldap\OpenLdapSchema;
-use Cache;
 
 /**
  * Class LdapUsersController.
- * 
+ *
  * @package App\Http\Controllers\Tenant
  */
 class LdapUsersController extends Controller
@@ -78,7 +76,7 @@ class LdapUsersController extends Controller
 //        dd(get_class($users = $this->ldap->search()));
 //        dd($users = $this->ldap->search()->users()->getUnescapedQuery());
         $users = $this->ldap->search()->users()->get();
-        dd($users);
+//        dd($users);
         $users = $this->ldap->search()->users()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->limit(100)->get();
 //        dd($users);
 //        dd($users[10]);

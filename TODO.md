@@ -1,3 +1,15 @@
+# Bug a npm run hot
+
+- [ ] Pendent de que aquesta opció es resolgui: https://github.com/webpack/webpack-dev-server/issues/1604
+- [X] Aplicat petit canvi configuració Laravel mix: https://github.com/JeffreyWay/laravel-mix/issues/1590
+  -  [ ] Canviar web línia package.json: "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js --disableHostCheck=true"
+
+# LLIBRERIES JAVASCRIPT/ NPM
+
+- Filepond cal o és una prova?
+- sweetalert?
+- Altres
+
 # CREDENTIALS API
 
 - https://medium.com/dev-channel/sign-in-on-the-web-credential-management-api-and-best-practices-d21aed14b6fe
@@ -1360,7 +1372,7 @@ Tots els camps són especials
 ## USER ADD WIZARD
 
 ### USUARI LDAP
-- [ ] TOT PER FER
+- HI ha un TODO propi a la carpeta docs sobre LDap
 
 ## LLISTA DATATABLES
 

@@ -1,3 +1,11 @@
+# Adlap2 | Adldap2-laravel
+
+## Configuració. Fitxer config/ldap.php
+
+## Documentació
+
+- https://adldap2.github.io/Adldap2-Laravel
+
 # Questions a tenir en compte
 
 - SIDS:

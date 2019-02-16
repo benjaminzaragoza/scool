@@ -273,7 +273,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
 
 
-            //Google Ldap users
+            //Ldap users
             Route::get('/ldap/users', 'Tenant\LdapUsersController@index');
             Route::post('/ldap/users', 'Tenant\LdapUsersController@store');
 //            Route::delete('/ldap/users/{user}', 'Tenant\LdapUsersController@destroy');
