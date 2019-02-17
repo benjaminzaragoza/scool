@@ -132,7 +132,19 @@ class LdapUser extends Model
             'creatorsName' => $user->getAttribute('creatorsName')[0],
             'modifiersName' => $user->getAttribute('modifiersName')[0],
             'modifyTimestamp' => $user->getAttribute('modifyTimestamp')[0],
+//            'jpegphoto' => $user->getAttribute('jpegphoto')[0], DOES NOT WORK -> ENCODING ERROR
+            'jpegphoto' => $user->getJpegPhotoEncoded()
 //            'attributes' => $user->getAttributes()
         ];
+    }
+
+    public static function findByEmail($email)
+    {
+        return Adldap::search()->where('email', '=', $email)->first();
+    }
+
+    public static function findByUid($uid)
+    {
+        return Adldap::search()->where('uid', '=', $uid)->first();
     }
 }

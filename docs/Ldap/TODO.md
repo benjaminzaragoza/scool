@@ -20,11 +20,54 @@ employeeID -> guardi el id de l'usuari
 
 A partir d'un usuari local; $user
 
-
-
+TRES FASES:
+- [ ] Primera: a partir d'un user simple (no té dades personals ni dades de rols)
+  - [ ] Info disponible: tipus usuari, Nom, sn1, sn2, username?, email personal, tlf 
+  - [ ] Email corporatiu?
+  - [ ] Que cal crear a ldap
+    - [ ] cn: Sergi Tur Badenas
+    - [ ] gidNumber: 513
+    - [ ] highscooluserId is mandatory però amb quin esquema? Cal?
+    - [ ] homeDirectory: /home/stur
+    - [ ] sambaSID: S-1-5-21-4045161930-1404234508-1517741366- AFEGIR RELATIVE NUMBER -> Evitar duplicats
+       - [ ] sambaAcctFlags: [UX    ]
+       - [ ] sambaBadPasswordCount: 0
+       - [ ] sambaBadPasswordTime: 0
+       - [ ] sambaDomainName: INSEBRE
+       - [ ] sambaHomeDrive: U
+       - [ ] sambaHomePath: \\samba02\stur
+       - [ ] sambaLMPassword
+       - [ ] sambaNTPassword
+       - [ ] sambaPasswordHistory: 000000000000000000000000000000
+       - [ ] sambaPrimaryGroupSID: S-1-5-21-4045161930-1404234508-1517741366-5761
+       - [ ] sambaLogoffTime: ????
+       - [ ] sambaLogonScript: professorat.bat
+       - [ ] sambaLogonTime: 0
+       - [ ] sambaMungedDial: ???
+       - [ ] sambaMungedDial: ???
+       - [ ] sambaMungedDial: ???
+       - [ ] 
+    - [ ] sn: Tur Badenas
+    - [ ] uid: stur
+    - [ ] uidnumber: 
+    - [ ] employeeNumber: $user->id 
+    - [ ] employeeType: profe o millor el id? $user->type_id
+    - [ ] givenName: Sergi
+    - [ ] sn1: Tur
+    - [ ] sn2: Badenas
+    - [ ] loginshell: /bin/bash
+    - [ ] mobile: mobil si s'ha proporcionat
+    
+    - [ ] o i ou ?
+    - [ ] userPassword ????
+FOTO LDAP
+    - [ ] Segona fase, segon step del wizard creació usuaris i opcional    
+    - [ ] jpegPhoto
 ## LIST, DATATABLES
 
 Camps a mostrar:
+- [X] jpegPhoto
+ - [X] getThumbnailEncoded() method a user.
 - POSIX INFO
   - [ ] gidNumber
   - [ ] homeDirectory

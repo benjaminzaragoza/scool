@@ -92,6 +92,14 @@
                                                     hide-details
                                             ></v-checkbox>
                                         </td>
+                                        <td>
+                                            <v-avatar v-if="props.item.jpegphoto"
+                                                    size="45"
+                                                    color="grey lighten-4"
+                                            >
+                                                <img  :src="props.item.jpegphoto" :alt="props.item.cn"/>
+                                            </v-avatar>
+                                        </td>
                                         <td class="text-xs-left" v-html="props.item.dn"></td>
                                         <td class="text-xs-left">
                                             <v-tooltip bottom>
@@ -115,7 +123,7 @@
                                         <td class="text-xs-left" v-html="props.item.modifiersName"></td>
                                         <td class="text-xs-left" v-html="props.item.modifyTimestamp"></td>
                                         <td class="text-xs-left">
-                                            <show-ldap-user-icon :user="user" :users="users"></show-ldap-user-icon>
+                                            <show-ldap-user-icon :user="props.item" :users="users"></show-ldap-user-icon>
                                             <v-btn icon class="mx-0" @click="">
                                                 <v-icon color="teal">edit</v-icon>
                                             </v-btn>
@@ -123,7 +131,7 @@
                                                     icon="delete"
                                                     color="accent"
                                                     :working="removing"
-                                                    @confirmed="remove(user)"
+                                                    @confirmed="remove(props.item)"
                                                     tooltip="Eliminar"
                                                     message="Esteu segurs que voleu eliminar l'usuari?"
                                             ></confirm-icon>
@@ -176,6 +184,7 @@ export default {
     },
     headers () {
       let headers = []
+      headers.push({ text: 'Foto', value: 'photo', sortable: false })
       headers.push({ text: 'DN', value: 'dn' })
       headers.push({ text: 'CN', value: 'cn' })
       headers.push({ text: 'uid', value: 'uid' })

@@ -5,13 +5,11 @@ namespace Tests\Unit\Tenants;
 use App\Models\Address;
 use App\Models\Identifier;
 use App\Models\LdapUser;
-
 use App\Models\User;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 use Illuminate\Contracts\Console\Kernel;
 
@@ -45,6 +43,38 @@ class LdapUserTest extends TestCase
         ]);
 
         $this->app[Kernel::class]->setArtisan(null);
+    }
+
+    /**
+     * findByEmail
+     *
+     * @test
+     * @group slow
+     * @group ldap
+     */
+    public function findByEmail()
+    {
+        $result = LdapUser::findByEmail('nonexistingemail@impossible.com');
+        $this->assertNull($result);
+
+        $result = LdapUser::findByEmail('stur@iesebre.com');
+        $this->assertEquals('stur@iesebre.com',$result->email[0]);
+    }
+
+    /**
+     * findByEmail
+     *
+     * @test
+     * @group slow
+     * @group ldap
+     */
+    public function findByUid()
+    {
+        $result = LdapUser::findByUid('nonexistinuid');
+        $this->assertNull($result);
+
+        $result = LdapUser::findByUid('stur');
+        $this->assertEquals('stur',$result->uid[0]);
     }
 
     /**
@@ -124,6 +154,7 @@ class LdapUserTest extends TestCase
         $this->assertTrue(property_exists($users[0],'creatorsName'));
         $this->assertTrue(property_exists($users[0],'modifiersName'));
         $this->assertTrue(property_exists($users[0],'modifyTimestamp'));
+        $this->assertTrue(property_exists($users[0],'jpegphoto'));
     }
 
 }
