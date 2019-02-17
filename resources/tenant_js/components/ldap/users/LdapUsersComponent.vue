@@ -30,7 +30,7 @@
                         </v-list>
                     </v-card>
                 </v-dialog>
-                <v-toolbar color="blue darken-3">
+                <v-toolbar color="primary" dense>
                     <v-menu bottom>
                         <v-btn slot="activator" icon dark>
                             <v-icon>more_vert</v-icon>
@@ -52,7 +52,7 @@
                     </v-btn>
                 </v-toolbar>
                 <v-card>
-                    <v-card-text class="px-0 mb-2">
+                    <v-card-text class="px-0 mb-5">
                         <v-card>
                             <v-card-title>
                                 TODO Filter here?
@@ -65,8 +65,15 @@
                                         v-model="search"
                                 ></v-text-field>
                             </v-card-title>
+
+                            <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
+                                <ldap-users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></ldap-users-delete-multiple>
+                            </div>
+
                             <v-data-table
-                                    class="px-0 mb-2 hidden-sm-and-down"
+                                    v-model="selected"
+                                    select-all
+                                    class="px-0 mb-5 hidden-sm-and-down"
                                     :headers="headers"
                                     :items="filteredUsers"
                                     :search="search"
@@ -76,25 +83,37 @@
                                     no-data-text="No hi han dades disponibles"
                                     rows-per-page-text="Grups per pàgina"
                             >
-                                <template slot="items" slot-scope="{ item: user }">
+                                <template slot="items" slot-scope="props">
                                     <tr>
-                                        <td class="text-xs-left" v-html="user.dn"></td>
-                                        <td class="text-xs-left" v-html="user.cn"></td>
-                                        <td class="text-xs-left" v-html="user.uid"></td>
-                                        <td class="text-xs-left" v-html="user.uidnumber"></td>
-                                        <td class="text-xs-left" v-html="user.userpassword"></td>
-                                        <td class="text-xs-left">
-                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
+                                        <td>
+                                            <v-checkbox
+                                                    v-model="props.selected"
+                                                    primary
+                                                    hide-details
+                                            ></v-checkbox>
                                         </td>
-                                        <td class="text-xs-left" v-html="user.sn1"></td>
-                                        <td class="text-xs-left" v-html="user.sn2"></td>
-                                        <td class="text-xs-left" v-html="user.givenname"></td>
-                                        <td class="text-xs-left" v-html="user.suspensionReason"></td>
-                                        <td class="text-xs-left" v-html="user.lastLoginTime"></td>
-                                        <td class="text-xs-left" v-html="user.createtimestamp"></td>
-                                        <td class="text-xs-left" v-html="user.creatorsName"></td>
-                                        <td class="text-xs-left" v-html="user.modifiersName"></td>
-                                        <td class="text-xs-left" v-html="user.modifyTimestamp"></td>
+                                        <td class="text-xs-left" v-html="props.item.dn"></td>
+                                        <td class="text-xs-left">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.cn"></span>
+                                                <span>GivenName: {{props.item.givenname}} Sn1: {{props.item.sn1}} Sn2: {{props.item.sn2}} </span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left" v-html="props.item.uid"></td>
+                                        <td class="text-xs-left" v-html="props.item.uidnumber"></td>
+                                        <td class="text-xs-left" v-html="props.item.userpassword"></td>
+                                        <td class="text-xs-left">
+                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + props.item.id">{{ props.item.primaryEmail }}</a>
+                                        </td>
+                                        <td class="text-xs-left" v-html="props.item.sn1"></td>
+                                        <td class="text-xs-left" v-html="props.item.sn2"></td>
+                                        <td class="text-xs-left" v-html="props.item.givenname"></td>
+                                        <td class="text-xs-left" v-html="props.item.suspensionReason"></td>
+                                        <td class="text-xs-left" v-html="props.item.lastLoginTime"></td>
+                                        <td class="text-xs-left" v-html="props.item.createtimestamp"></td>
+                                        <td class="text-xs-left" v-html="props.item.creatorsName"></td>
+                                        <td class="text-xs-left" v-html="props.item.modifiersName"></td>
+                                        <td class="text-xs-left" v-html="props.item.modifyTimestamp"></td>
                                         <td class="text-xs-left">
                                             <show-ldap-user-icon :user="user" :users="users"></show-ldap-user-icon>
                                             <v-btn icon class="mx-0" @click="">
@@ -102,7 +121,7 @@
                                             </v-btn>
                                             <confirm-icon
                                                     icon="delete"
-                                                    color="pink"
+                                                    color="accent"
                                                     :working="removing"
                                                     @confirmed="remove(user)"
                                                     tooltip="Eliminar"
@@ -128,16 +147,19 @@ import withSnackbar from '../../mixins/withSnackbar'
 import axios from 'axios'
 import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import ShowLdapUserIconComponent from './ShowLdapUserIconComponent'
+import LdapUsersDeleteMultiple from './LdapUsersDeleteMultiple'
 
 export default {
   name: 'LdapUsersComponent',
   mixins: [withSnackbar],
   components: {
     'confirm-icon': ConfirmIcon,
-    'show-ldap-user-icon': ShowLdapUserIconComponent
+    'show-ldap-user-icon': ShowLdapUserIconComponent,
+    'ldap-users-delete-multiple': LdapUsersDeleteMultiple
   },
   data () {
     return {
+      selected: [],
       search: '',
       removing: false,
       refreshing: false,
@@ -154,8 +176,8 @@ export default {
     },
     headers () {
       let headers = []
-      headers.push({ text: 'Nom1', value: 'fullName' })
-      headers.push({ text: 'Nom2', value: 'fullName' })
+      headers.push({ text: 'DN', value: 'dn' })
+      headers.push({ text: 'CN', value: 'cn' })
       headers.push({ text: 'uid', value: 'uid' })
       headers.push({ text: 'uidnumber', value: 'uidnumber' })
       headers.push({ text: 'userpassword', value: 'userpassword' })

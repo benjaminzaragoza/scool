@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Ldap\OpenLdapSchema;
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 use Adldap\Laravel\Facades\Adldap;
 
@@ -12,6 +14,8 @@ use Adldap\Laravel\Facades\Adldap;
  */
 class LdapUser extends Model
 {
+    const CACHE_KEY = 'ldap_users';
+
     protected $guarded = [];
 
     /**
@@ -33,7 +37,54 @@ class LdapUser extends Model
 //// Running an operation under a different connection:
 //$users = Adldap::getProvider('other-connection')->search()->users()->get();
 //
-//// Creating a user:
+
+
+// TODO EXAMPLES
+//        dd($users = Adldap::search()->users()->getUnescapedQuery());
+// LIMITING         $users = Adldap::search()->users()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->limit($limit)->get();
+
+
+    public static function createUser(User $user) {
+        dump('createUser');
+//        $ldapUser = Adldap::make()->setSchema(new OpenLdapSchema())->user([
+////            'objectClass' => 'sambaSamAccount',
+//            'cn' => 'Doe2',
+//            'sn' => 'Doe2',
+//            'uid' => 'foo1',
+//            'uidNumber' => 9999455,
+//            'gidNumber' => 9999455,
+//            'homeDirectory' => '/home/asdasd',
+//
+//        ]);
+
+//        $ldapUser->save();
+        // ObjectClasses:
+        // top
+        // person
+        // organizationalPerson
+        // inetOrgPerson
+//        dd(get_class(Adldap::make()));
+        $ldapUser = Adldap::make()->setSchema(new OpenLdapSchema())->user([
+            'objectclass' => [
+                'posixaccount'
+            ],
+            'prova' => 'HEY',
+            'cn' => 'PEPITOPALOTES1',
+//            'sn' => 'PALOTES1'
+        ]);
+
+
+//        dump('createUser 2');
+
+//        dd($ldapUser->getCreatableAttributes());
+        if (!$ldapUser->save()) {
+            dd('error');
+        }
+        dump('createUser 3');
+
+        return $ldapUser;
+
+        //// Creating a user:
 //$user = Adldap::make()->user([
 //'cn' => 'John Doe',
 //]);
@@ -42,32 +93,23 @@ class LdapUser extends Model
 //$user->cn = 'Jane Doe';
 //
 //// Saving a user:
-//$user->save();
-
+//
+    }
 
     public static function getLdapUsers($limit = null)
     {
-//        dd(get_class($users = Adldap::search()));
 //        dd($users = Adldap::search()->users()->getUnescapedQuery());
-        //TODO
-        $limit = 100;
-        $users = Adldap::search()->users()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->limit($limit)->get();
-//        dd($users[0]);
-//        $users = Adldap::search()->users()->limit(10)->get()->take($limit);
-//        dd($users[0]);
-//        dd($users);
-//        return $users->values();
-        return $users->map(function ($user) {
-            return LdapUser::convert($user);
-        })->values();
-//        return Cache::rememberForever('ldap_users', function() use ($users){
-//            return $users->map(function ($user) {
-//                return LdapUser::convert($user);
-//            })->values();
-//        });
+        $cacheKey = tenant_from_current_url() . '_' . self::CACHE_KEY;
+
+        return Cache::rememberForever($cacheKey, function() use ($limit) {
+            $users = Adldap::search()->users()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->limit($limit)->get();
+            return $users->map(function ($user) {
+                return LdapUser::adapt($user);
+            })->values();
+        });
     }
 
-    public static function convert($user)
+    public static function adapt($user)
     {
         return (object)[
             'cn' => $user->getAttribute('cn')[0],
@@ -87,6 +129,9 @@ class LdapUser extends Model
             'mobile' => $user->getAttribute('mobile')[0],
             'postalCode' => $user->getAttribute('postalCode')[0],
             'createtimestamp' => $user->getAttribute('createtimestamp')[0],
+            'creatorsName' => $user->getAttribute('creatorsName')[0],
+            'modifiersName' => $user->getAttribute('modifiersName')[0],
+            'modifyTimestamp' => $user->getAttribute('modifyTimestamp')[0],
 //            'attributes' => $user->getAttributes()
         ];
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Tenant\Web;
 
-use Adldap\Laravel\Facades\Adldap;
 use App\Http\Requests\ListLdapUsers;
 use App\Http\Controllers\Tenant\Controller;
 use App\Models\LdapUser;

@@ -270,6 +270,16 @@ Route::get('push', 'PushController@index');
 //TODO eliminar
 //Route::post('notifications', '\\' . NotificationController::class . '@store');
 
+Route::get('/prova_ldap', function() {
+    $ldapUser = Adldap::make()->user([
+        'cn' => 'PEPITOPALOTES',
+        'sn' => 'PALOTES'
+    ]);
+    if (!$ldapUser->save()) {
+        dd('error');
+    }
+});
+
 Route::get('/mikrotik2', function() {
     try {
         $client = new RouterOSClient(
