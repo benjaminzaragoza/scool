@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Web;
 use App\Http\Requests\ListLdapUsers;
 use App\Http\Controllers\Tenant\Controller;
 use App\Models\LdapUser;
+use App\Models\User;
 
 /**
  * Class LdapUsersController.
@@ -22,7 +23,14 @@ class LdapUsersController extends Controller
     public function index(ListLdapUsers $request)
     {
         $users = LdapUser::getLdapUsers(100);
-//        dd($users[5]);
-        return view('tenants.ldap_users.index', compact('users'));
+
+        $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
+
+        $users = $users->map(function($user) use ($localUsers) {
+            return LdapUser::adapt($user, $localUsers);
+        });
+
+        return view('tenants.ldap_users.index', compact('users','localUsers'));
+
     }
 }

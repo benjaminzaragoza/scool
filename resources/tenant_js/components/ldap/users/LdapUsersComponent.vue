@@ -122,7 +122,7 @@
                                                 <span v-text="props.item.sambasid"></span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left cell" v-html="props.item.userpassword"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.passwordtype"></td>
                                         <td class="text-xs-left cell" v-html="props.item.highschooluserid"></td>
                                         <td class="text-xs-left cell" v-html="props.item.highschoolpersonalemail"></td>
                                         <td class="text-xs-left cell" v-html="props.item.email">
@@ -223,7 +223,7 @@ export default {
       headers.push({ text: 'gidnumber', value: 'gidnumber' })
       headers.push({ text: 'homedirectory', value: 'homedirectory' })
       headers.push({ text: 'sambasid', value: 'sambarid' })
-      headers.push({ text: 'userpassword', value: 'userpassword' })
+      headers.push({ text: 'passwordtype', value: 'passwordtype' })
       headers.push({ text: 'highschooluserid', value: 'highschooluserid' })
       headers.push({ text: 'highschoolpersonalemail', value: 'highschoolpersonalemail' })
       headers.push({ text: 'email', value: 'email' })

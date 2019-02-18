@@ -21,6 +21,14 @@ class LdapUser extends Model
 
     protected $guarded = [];
 
+    private static function passwordType($password)
+    {
+        if (Str::startsWith($password, '{MD5}')) return 'MD5';
+        if (Str::startsWith($password, '{SSHA}')) return 'SSHA';
+        if (Str::startsWith($password, '{SHA1}')) return 'SHA1';
+        return '';
+    }
+
     /**
      * Get the local user associated to ldap user.
      */
@@ -107,12 +115,12 @@ class LdapUser extends Model
         return Cache::rememberForever($cacheKey, function() use ($limit) {
             $users = Adldap::search()->users()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->limit($limit)->get();
             return $users->map(function ($user) {
-                return LdapUser::adapt($user);
+                return LdapUser::map($user);
             })->values();
         });
     }
 
-    public static function adapt($user)
+    public static function map($user)
     {
         $base_dn = config('ldap.connections.default.settings.base_dn');
         $ldap_base = config('scool.ldap_base');
@@ -137,6 +145,8 @@ class LdapUser extends Model
         $modifiersName = $user->getAttribute('modifiersName')[0];
         $modifiersNameRDN = Str::replaceLast(',','',Str::replaceFirst($ldap_base, '', $modifiersName));
 
+        $password = $user->getAttribute('userpassword')[0];
+        $passwordType = self::passwordType($password);
         return (object)[
             'objectClass' => $user->objectclass,
             'base_dn' => $base_dn,
@@ -144,7 +154,8 @@ class LdapUser extends Model
             'cn' => $user->getAttribute('cn')[0],
             'dn' => $dn,
             'uid' => $user->getAttribute('uid')[0],
-            'userpassword' => $user->getAttribute('userpassword')[0],
+            'userpassword' => $password,
+            'passwordtype' => $passwordType,
             'uidnumber' => $user->getAttribute('uidnumber')[0],
             'gidnumber' => $user->getAttribute('gidnumber')[0],
             'homedirectory' => $user->getAttribute('homedirectory')[0],

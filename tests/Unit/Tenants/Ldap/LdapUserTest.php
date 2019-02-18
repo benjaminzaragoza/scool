@@ -140,6 +140,7 @@ class LdapUserTest extends TestCase
         $this->assertEquals('uid=root,ou=All,dc=iesebre,dc=com',$users[0]->dn);
         $this->assertEquals('root',$users[0]->uid);
         $this->assertTrue(starts_with($users[0]->userpassword,'{SSHA}'));
+        $this->assertEquals('SSHA',$users[0]->passwordtype);
         $this->assertEquals(0,$users[0]->uidnumber);
         $this->assertEquals(0,$users[0]->gidnumber);
         $this->assertTrue(property_exists($users[0],'givenname'));
@@ -165,11 +166,11 @@ class LdapUserTest extends TestCase
      * @group slow
      * @group ldap
      */
-    public function adapt()
+    public function map()
     {
         $originalUser = LdapUser::findByUid('stur');
         $this->assertEquals('stur',$originalUser->uid[0]);
-        $user = LdapUser::adapt($originalUser);
+        $user = LdapUser::map($originalUser);
 
 //        dd($user->objectClass);
 
@@ -193,7 +194,10 @@ class LdapUserTest extends TestCase
         $this->assertEquals('Sergi Tur Badenas',$user->cn);
         $this->assertEquals('cn=Sergi Tur Badenas,ou=people,ou=Informatica,ou=Profes,ou=All,dc=iesebre,dc=com',$user->dn);
         $this->assertEquals('stur',$user->uid);
+
         $this->assertTrue(starts_with($user->userpassword,'{MD5}'));
+        $this->assertEquals('MD5',$user->passwordtype);
+
         $this->assertEquals(2374,$user->uidnumber);
         $this->assertEquals(513,$user->gidnumber);
         $this->assertEquals('/samba/homes/stur',$user->homedirectory);
@@ -242,6 +246,30 @@ class LdapUserTest extends TestCase
         $this->assertTrue(property_exists($user,'modifiersName'));
         $this->assertTrue(property_exists($user,'modifyTimestamp'));
         $this->assertTrue(property_exists($user,'jpegphoto'));
+    }
+
+    /**
+     * @test
+     */
+    public function adapt()
+    {
+        $scoolUser = factory(User::class)->create();
+        $scoolUser->assignLdapUser(LdapUser::create([
+            'cn' => 'uid=prova,dc=iesebre,dc=com'
+        ]));
+        $user = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
+        $user = LdapUser::initializeUser($user);
+        $this->assertFalse(array_key_exists('localUser', $user));
+        $localUsers = User::all();
+
+        $adaptedUser = LdapUser::adapt($user, $localUsers);
+
+        $this->assertCount(0, $adaptedUser->errorMessages);
+        $this->assertCount(0, $adaptedUser->flags);
+        $this->assertTrue($adaptedUser->inSync);
+        $this->assertNotNull($adaptedUser->localUser);
+        $this->assertEquals($scoolUser->name, $adaptedUser->localUser['name']);
+        $this->assertEquals($scoolUser->id, $adaptedUser->localUser['id']);
     }
 
 }

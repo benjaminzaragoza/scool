@@ -2,11 +2,17 @@
 
 - [ ] Problemes per afegir objectClasses to users: https://github.com/Adldap2/Adldap2/issues/639
 
+## ldap_users table an Model:
+
+- [ ] Similar al que fem amb Moodle_users i google_users
+- [X] Crear migració. Camps
+  - id, user_id, cn?
+- [ ] Permet relacionar local user amb usuari Ldap  
 ## DELETE
 
 - [X] Delete multiple
   - [X] Interfície/frontend preparada
-  - [ ] FAlta API/backend
+  - [ ] Falta API/backend
 
 ## GET
 
@@ -108,8 +114,14 @@ $result->getDnBuilder()->getComponents();
 
 Camps a mostrar:
 - [ ] ObjectClasses
+ - [] Acció que mostri totes les object classes
+   - [ ] Poder filtrar per objectClasses    
+ - [ ] En un sol camp mostrar el tipus/tipus d'usuaris
+   - [ ] Poder filtrar com si fossin tags
  - [ ] Usuaris Linux (tenen posixAccount)
+    - [ ] Icona linux
  - [ ] Usuaris Windows (tenent sambaSamAccount)
+   - [ ] Icona Windows
  - [ ] Usuaris ebre-escool: highSchoolUser
 - [X] jpegPhoto
  - [X] getThumbnailEncoded() method a user.
@@ -151,7 +163,7 @@ ALTRES:
 - [ ] Tipus de password (password hash)
 
 ACCIONS
-- [ ] Comprovar la paraula de pas (es pregunta a l'usuri per una paraula de pas, es fa el tipus hash pertoqui i es compara si és ok)
+- [ ] Comprovar la paraula de pas (es pregunta a l'usuari per una paraula de pas, es fa el tipus hash pertoqui i es compara si és ok)
 
 # Can't contact LDAP server
 

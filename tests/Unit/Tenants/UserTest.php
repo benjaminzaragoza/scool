@@ -10,6 +10,7 @@ use App\Models\Force;
 use App\Models\GoogleUser;
 use App\Models\Identifier;
 use App\Models\IdentifierType;
+use App\Models\LdapUser;
 use App\Models\Location;
 use App\Models\MoodleUser;
 use App\Models\Person;
@@ -1094,15 +1095,32 @@ class UserTest extends TestCase
     public function assignGoogleUser()
     {
         $user = factory(User::class)->create();
+        $this->assertNull($user->googleUser);
 
         $user->assignGoogleUser(GoogleUser::create([
             'google_id' => 231312312,
             'google_email' => 'prova@iesebre.com'
         ]));
-
+        $user = $user->fresh();
         $this->assertNotNull($user->googleUser);
         $this->assertEquals('231312312',$user->googleUser->google_id);
         $this->assertEquals('prova@iesebre.com',$user->googleUser->google_email);
+    }
+
+    /** @test */
+    public function assignLdapUser()
+    {
+        $user = factory(User::class)->create();
+        $this->assertNull($user->ldapUser);
+
+        $user->assignLdapUser(LdapUser::create([
+            'cn' => 'uid=prova,dc=iesebre,dc=com'
+        ]));
+        $user = $user->fresh();
+
+        $this->assertNotNull($user->ldapUser);
+        $this->assertEquals('uid=prova,dc=iesebre,dc=com',$user->ldapUser->cn);
+
     }
 
     /** @test */

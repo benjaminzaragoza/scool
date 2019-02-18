@@ -561,6 +561,15 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     }
 
     /**
+     * @param LdapUser $ldapUser
+     */
+    public function assignLdapUser(LdapUser $ldapUser)
+    {
+        $ldapUser->user_id = $this->id;
+        $ldapUser->save();
+    }
+
+    /**
      * Assign teacher data.
      *
      * @param $data
@@ -694,6 +703,14 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmailContract
     public function moodleUser()
     {
         return $this->hasOne(MoodleUser::class);
+    }
+
+    /**
+     * Get the moodle user record associated with the user.
+     */
+    public function ldapUser()
+    {
+        return $this->hasOne(LdapUser::class);
     }
 
     /**
