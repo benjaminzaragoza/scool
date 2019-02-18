@@ -45,6 +45,24 @@ class LdapUserTest extends TestCase
         $this->app[Kernel::class]->setArtisan(null);
     }
 
+//$record = LdapUser::search()->findByDn('cn=John Doe,dc=corp,dc=org');
+
+    /**
+     * findByDn
+     *
+     * @test
+     * @group slow
+     * @group ldap
+     */
+    public function findByDn()
+    {
+        $result = LdapUser::findByDn('uid=nonexisting,ou=All,dc=iesebre,dc=com');
+        $this->assertFalse($result);
+
+        $result = LdapUser::findByDn('uid=root,ou=All,dc=iesebre,dc=com');
+        $this->assertEquals('root',$result->uid[0]);
+    }
+
     /**
      * findByEmail
      *
@@ -251,20 +269,102 @@ class LdapUserTest extends TestCase
     /**
      * @test
      */
+    public function userInSync()
+    {
+        $scoolUser = factory(User::class)->create([
+            'email' => 'pepepardojeans@gmail.com'
+        ]);
+        $scoolUser->assignLdapUser(LdapUser::create([
+            'cn' => 'uid=prova,dc=iesebre,dc=com'
+        ]));
+        $user = sample_ldap_user_array($scoolUser->id);
+        $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com');
+
+        $user = LdapUser::initializeUser($user);
+
+        $this->assertTrue(array_key_exists('errorMessages',$user));
+        $this->assertTrue(array_key_exists('inSync',$user));
+        $this->assertTrue(array_key_exists('flags',$user));
+        $this->assertCount(0,$user->errorMessages);
+        $user = LdapUser::userInSync($user, $scoolUser);
+        $this->assertCount(0,$user->errorMessages);
+        $this->assertCount(0,$user->flags);
+        $this->assertTrue($user->inSync);
+    }
+
+    /**
+     * @test
+     */
+    public function userNotInSync()
+    {
+        $scoolUser = factory(User::class)->create();
+        $scoolUser->assignLdapUser(LdapUser::create([
+            'cn' => 'uid=prova,dc=iesebre,dc=com'
+        ]));
+        $user = sample_ldap_user_array();
+        $user = LdapUser::initializeUser($user);
+        $this->assertTrue(array_key_exists('errorMessages',$user));
+        $this->assertTrue(array_key_exists('inSync',$user));
+        $this->assertTrue(array_key_exists('flags',$user));
+        $this->assertCount(0,$user->errorMessages);
+        $user = LdapUser::userInSync($user, $scoolUser);
+        $this->assertCount(2,$user->errorMessages);
+        $this->assertEquals(
+            'Employeenumber no vàlid. No hi ha cap usuari local amb aquest id',
+            $user->errorMessages[0]
+        );
+        // TODO ESBORRAR
+//        $this->assertEquals(
+//            'primaryEmail no vàlid. No hi ha cap usuari local amb aquest email corporatiu',
+//            $user->errorMessages[1]
+//        );
+        $this->assertEquals(
+            'personalEmail no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[2]
+        );
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
+        //TODO
+//        $this->assertEquals(LdapUser::PRIMARY_EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+//        $this->assertEquals(LdapUser::PERSONAL_EMAIL_CAN_BE_SYNCED, $user->flags[2]);
+    }
+
+    /**
+     * @test
+     */
+    public function addLocalUser()
+    {
+        $scoolUser = factory(User::class)->create();
+        $scoolUser->assignLdapUser(LdapUser::create([
+            'cn' => 'uid=prova,dc=iesebre,dc=com'
+        ]));
+        $user = sample_ldap_user_array();
+        $user = LdapUser::initializeUser($user);
+
+        $user = LdapUser::addLocalUser($user, $scoolUser);
+        $this->assertTrue($scoolUser->id === $user->localUser['id']);
+        $this->assertTrue($user->inSync);
+        $this->assertCount(0,$user->errorMessages);
+        $this->assertCount(0,$user->flags);
+    }
+
+    /**
+     * @test
+     */
     public function adapt()
     {
         $scoolUser = factory(User::class)->create();
         $scoolUser->assignLdapUser(LdapUser::create([
             'cn' => 'uid=prova,dc=iesebre,dc=com'
         ]));
-        $user = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
+        $user = sample_ldap_user_array();
         $user = LdapUser::initializeUser($user);
+
         $this->assertFalse(array_key_exists('localUser', $user));
 
         $localUsers = User::all();
-
         $adaptedUser = LdapUser::adapt($user, $localUsers);
-
+        dd($adaptedUser);
         $this->assertCount(0, $adaptedUser->errorMessages);
         $this->assertCount(0, $adaptedUser->flags);
         $this->assertTrue($adaptedUser->inSync);

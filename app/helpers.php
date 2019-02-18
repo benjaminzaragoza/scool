@@ -8938,7 +8938,10 @@ if (! function_exists('sample_moodle_user_array')) {
 }
 
 if (! function_exists('sample_ldap_user_array')) {
-    function sample_ldap_user_array() {
+    function sample_ldap_user_array($employeeNumber = null, $email = null) {
+        $employeeNumber = $employeeNumber ? $employeeNumber : 689;
+        $email = $email ? $email : 'marimar1@iesebre.com';
+
         return $user = (object) [
             'objectClass' => [
                 "top",
@@ -8970,10 +8973,10 @@ if (! function_exists('sample_ldap_user_array')) {
             'sn2' => 'Forcada',
             'irispersonaluniqueid' => '48293270D',
             'highschooluserid' => '201112-1047',
-            'highschoolpersonalemail' => 'marimar1@hotmail.com','
-            email' => 'marimar1@iesebre.com',
+            'highschoolpersonalemail' => 'marimar1@hotmail.com',
+            'email' => $email,
             'employeetype' => 'profe',
-            'employeenumber' => '79',
+            'employeenumber' => $employeeNumber,
             'l' => 'Ontinyent',
             'st' => 'València',
             'telephonenumber' => '977500949',

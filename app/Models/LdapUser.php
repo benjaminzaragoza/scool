@@ -18,6 +18,8 @@ use Illuminate\Support\Str;
 class LdapUser extends Model
 {
     const CACHE_KEY = 'ldap_users';
+    const EMPLOYEE_NUMBER_CAN_BE_SYNCED = 1;
+    const EMAIL_CAN_BE_SYNCED = 2;
 
     protected $guarded = [];
 
@@ -196,6 +198,12 @@ class LdapUser extends Model
         ];
     }
 
+    public static function findByDn($dn)
+    {
+        return Adldap::search()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->
+            findByDn($dn);
+    }
+
     public static function findByEmail($email)
     {
         return Adldap::search()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->where('email', '=', $email)->first();
@@ -214,13 +222,29 @@ class LdapUser extends Model
         return $user;
     }
 
+    /**
+     * addLocalUser.
+     *
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function addLocalUser($user,$scoolUser)
+    {
+        if ($scoolUser) {
+            $user->localUser = $scoolUser;
+        }
+        $user = self::userInSync($user, $scoolUser);
+        return $user;
+    }
+
     public static function adapt($user, $localUsers)
     {
         $user = LdapUser::initializeUser($user);
-//        if (isset($user->employeeId) && $user->employeeId ) {
-//            $user = self::addLocalUser($user, self::findByEmployeeId($localUsers, $user));
-//            return $user;
-//        }
+        if (isset($user->dn)) {
+            $user = self::addLocalUser($user, self::findByDn($user->dn));
+            return $user;
+        }
 //        if (isset($user->primaryEmail) && $user->primaryEmail ) {
 //            $user = self::addLocalUser($user, self::findByPrimaryEmail($localUsers, $user));
 //            return $user;
@@ -229,6 +253,30 @@ class LdapUser extends Model
 //            $user = self::addLocalUser($user, self::findByPersonalEmail($localUsers, $user));
 //            return $user;
 //        }
+    }
+
+    /**
+     * userInSync.
+     *
+     * @param $user
+     * @param $scoolUser
+     * @return mixed
+     */
+    public static function userInSync($user,$scoolUser)
+    {
+        $errors = false;
+        if (intval($user->employeenumber) !== intval($scoolUser['id'])) {
+            $user->errorMessages->push("Employeenumber no vàlid. No hi ha cap usuari local amb aquest id");
+            $user->flags->push(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        if (!$errors) $user->inSync = true;
+        if ($user->email !== $scoolUser['email']) {
+            $user->errorMessages->push('Email no vàlid. No hi ha cap usuari local amb aquest email personal');
+            $user->flags->push(GoogleUser::EMAIL_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        return $user;
     }
 
 }
