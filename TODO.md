@@ -3,6 +3,7 @@
 - [X] Modificar la migració usuaris, afegir uid com a nullable
 - [ ] Create user, es proposa ara mateix un uid per a calcular el corporative email però no es guarda
   - [ ] Guardar el uid durant el procés de creació usuari
+- [ ] Seed de professors afegir el uid
 
 # Bug a npm run hot
 

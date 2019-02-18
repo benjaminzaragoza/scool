@@ -872,7 +872,8 @@ class UserTest extends TestCase
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com',
-            'mobile' => '654789524'
+            'mobile' => '654789524',
+            'uid' => 'pepepardo'
         ]);
 
 //        $user->email_verified_at = Carbon::now();
@@ -949,6 +950,7 @@ class UserTest extends TestCase
         $this->assertNull($mappedUser['mobile_verified_at_diff']);
         $this->assertNull($mappedUser['mobile_verified_at_timestamp']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
+        $this->assertEquals('pepepardo',$mappedUser['uid']);
         $this->assertNull($mappedUser['last_login']);
         $this->assertNull($mappedUser['last_login_formatted']);
         $this->assertNull($mappedUser['last_login_diff']);
@@ -1026,7 +1028,8 @@ class UserTest extends TestCase
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com',
-            'mobile' => '654789524'
+            'mobile' => '654789524',
+            'uid' => 'pepepardo'
         ]);
 
         $mappedUser = $user->mapSimple();
@@ -1038,6 +1041,7 @@ class UserTest extends TestCase
         $this->assertNull($mappedUser['email_verified_at']);
         $this->assertNull($mappedUser['mobile_verified_at']);
         $this->assertEquals('654789524',$mappedUser['mobile']);
+        $this->assertEquals('pepepardo',$mappedUser['uid']);
         $this->assertNull($mappedUser['last_login']);
         $this->assertNull($mappedUser['last_login_ip']);
         $this->assertInstanceOf(Carbon::class,$mappedUser['created_at']);
