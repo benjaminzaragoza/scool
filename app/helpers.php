@@ -8938,9 +8938,10 @@ if (! function_exists('sample_moodle_user_array')) {
 }
 
 if (! function_exists('sample_ldap_user_array')) {
-    function sample_ldap_user_array($employeeNumber = null, $email = null) {
+    function sample_ldap_user_array($employeeNumber = null, $email = null, $uid = null) {
         $employeeNumber = $employeeNumber ? $employeeNumber : 689;
         $email = $email ? $email : 'marimar1@iesebre.com';
+        $uid = $uid ? $uid : 'marimar1';
 
         return $user = (object) [
             'objectClass' => [
@@ -8960,7 +8961,7 @@ if (! function_exists('sample_ldap_user_array')) {
             'rdn' => 'cn=Mar Imar,ou=people,ou=Sanitat,ou=Profes',
             'cn' => 'Mar Imar',
             'dn' => 'cn=Mar Ferrero,ou=people,ou=Sanitat,ou=Profes,ou=All,dc=iesebre,dc=com',
-            'uid' => 'marferrero',
+            'uid' => $uid,
             'userpassword' => "{MD5}jB5Dpewr34fFFHCDSnrvOuOg==",
             'passwordtype' => 'MD5',
             'uidnumber' => '4618',

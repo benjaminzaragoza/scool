@@ -20,6 +20,7 @@ class LdapUser extends Model
     const CACHE_KEY = 'ldap_users';
     const EMPLOYEE_NUMBER_CAN_BE_SYNCED = 1;
     const EMAIL_CAN_BE_SYNCED = 2;
+    const UID_CAN_BE_SYNCED = 2;
 
     protected $guarded = [];
 
@@ -198,6 +199,48 @@ class LdapUser extends Model
         ];
     }
 
+    /**
+     * findByUidInLocalUsers
+     *
+     * @param $localUsers
+     * @param $ldapUser
+     * @return
+     */
+    public static function findByUidInLocalUsers($localUsers, $ldapUser)
+    {
+        return $localUsers->filter(function($user) use ($ldapUser) {
+            return $user['uid'] == $ldapUser->uid;
+        })->first();
+    }
+
+    /**
+     * findByEmployeeNumberInLocalUsers.
+     *
+     * @param $localUsers
+     * @param $ldapUser
+     * @return
+     */
+    public static function findByEmployeeNumberInLocalUsers($localUsers, $ldapUser)
+    {
+        return $localUsers->filter(function($user) use ($ldapUser) {
+            return $user['id'] == $ldapUser->employeenumber;
+        })->first();
+    }
+
+    /**
+     * findByEmailInLocalUsers.
+     *
+     * @param $localUsers
+     * @param $ldapUser
+     * @return
+     */
+    public static function findByEmailInLocalUsers($localUsers, $ldapUser)
+    {
+        return $localUsers->filter(function($user) use ($ldapUser) {
+            return $user['email'] == $ldapUser->email;
+        })->first();
+    }
+
     public static function findByDn($dn)
     {
         return Adldap::search()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->
@@ -241,18 +284,37 @@ class LdapUser extends Model
     public static function adapt($user, $localUsers)
     {
         $user = LdapUser::initializeUser($user);
-        if (isset($user->dn)) {
-            $user = self::addLocalUser($user, self::findByDn($user->dn));
+        if (isset($user->employeenumber) && $user->employeenumber ) {
+            $user = self::addLocalUser($user, self::findByEmployeeNumberInLocalUsers($localUsers, $user));
             return $user;
         }
-//        if (isset($user->primaryEmail) && $user->primaryEmail ) {
-//            $user = self::addLocalUser($user, self::findByPrimaryEmail($localUsers, $user));
-//            return $user;
+        if (isset($user->email) && $user->email ) {
+            $user = self::addLocalUser($user, self::findByEmailInLocalUsers($localUsers, $user));
+            return $user;
+        }
+        if (isset($user->uid) && $user->uid ) {
+            $user = self::addLocalUser($user, self::findByUidInLocalUsers($localUsers, $user));
+            return $user;
+        }
+
+//
+//        if (intval($user->employeenumber) !== intval($scoolUser['id'])) {
+//            $user->errorMessages->push("Employeenumber no vàlid. No hi ha cap usuari local amb aquest id");
+//            $user->flags->push(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED);
+//            $errors = true;
 //        }
-//        if (isset($user->personalEmail) && $user->personalEmail ) {
-//            $user = self::addLocalUser($user, self::findByPersonalEmail($localUsers, $user));
-//            return $user;
+//        if ($user->email !== $scoolUser['email']) {
+//            $user->errorMessages->push('Email no vàlid. No hi ha cap usuari local amb aquest email personal');
+//            $user->flags->push(LdapUser::EMAIL_CAN_BE_SYNCED);
+//            $errors = true;
 //        }
+//        if ($user->uid !== $scoolUser['uid']) {
+//            $user->errorMessages->push('Uid no vàlid. No hi ha cap usuari local amb aquest uid');
+//            $user->flags->push(LdapUser::UID_CAN_BE_SYNCED);
+//            $errors = true;
+//        }
+
+
     }
 
     /**
@@ -270,12 +332,17 @@ class LdapUser extends Model
             $user->flags->push(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED);
             $errors = true;
         }
-        if (!$errors) $user->inSync = true;
         if ($user->email !== $scoolUser['email']) {
             $user->errorMessages->push('Email no vàlid. No hi ha cap usuari local amb aquest email personal');
-            $user->flags->push(GoogleUser::EMAIL_CAN_BE_SYNCED);
+            $user->flags->push(LdapUser::EMAIL_CAN_BE_SYNCED);
             $errors = true;
         }
+        if ($user->uid !== $scoolUser['uid']) {
+            $user->errorMessages->push('Uid no vàlid. No hi ha cap usuari local amb aquest uid');
+            $user->flags->push(LdapUser::UID_CAN_BE_SYNCED);
+            $errors = true;
+        }
+        if (!$errors) $user->inSync = true;
         return $user;
     }
 

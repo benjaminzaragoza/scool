@@ -25,6 +25,7 @@ class CreateTenantUsersTable extends Migration
             $table->string('last_login_ip')->nullable();
             $table->string('mobile')->unique()->nullable();
             $table->timestamp('mobile_verified_at')->nullable();
+            $table->string('uid')->unique()->nullable();
             $table->string('password');
             $table->string('photo')->nullable();
             $table->string('photo_hash')->nullable();

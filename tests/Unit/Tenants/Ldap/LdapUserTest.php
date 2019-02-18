@@ -272,13 +272,13 @@ class LdapUserTest extends TestCase
     public function userInSync()
     {
         $scoolUser = factory(User::class)->create([
-            'email' => 'pepepardojeans@gmail.com'
+            'email' => 'pepepardojeans@gmail.com',
+            'uid' => 'pepepardo'
         ]);
         $scoolUser->assignLdapUser(LdapUser::create([
             'cn' => 'uid=prova,dc=iesebre,dc=com'
         ]));
-        $user = sample_ldap_user_array($scoolUser->id);
-        $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com');
+        $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');
 
         $user = LdapUser::initializeUser($user);
 
@@ -308,25 +308,81 @@ class LdapUserTest extends TestCase
         $this->assertTrue(array_key_exists('flags',$user));
         $this->assertCount(0,$user->errorMessages);
         $user = LdapUser::userInSync($user, $scoolUser);
-        $this->assertCount(2,$user->errorMessages);
+        $this->assertCount(3,$user->errorMessages);
         $this->assertEquals(
             'Employeenumber no vàlid. No hi ha cap usuari local amb aquest id',
             $user->errorMessages[0]
         );
-        // TODO ESBORRAR
-//        $this->assertEquals(
-//            'primaryEmail no vàlid. No hi ha cap usuari local amb aquest email corporatiu',
-//            $user->errorMessages[1]
-//        );
         $this->assertEquals(
-            'personalEmail no vàlid. No hi ha cap usuari local amb aquest email personal',
+            'Email no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[1]
+        );
+        $this->assertEquals(
+            'Uid no vàlid. No hi ha cap usuari local amb aquest uid',
             $user->errorMessages[2]
         );
         $this->assertFalse($user->inSync);
         $this->assertEquals(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
-        //TODO
-//        $this->assertEquals(LdapUser::PRIMARY_EMAIL_CAN_BE_SYNCED, $user->flags[1]);
-//        $this->assertEquals(LdapUser::PERSONAL_EMAIL_CAN_BE_SYNCED, $user->flags[2]);
+        $this->assertEquals(LdapUser::EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+        $this->assertEquals(LdapUser::UID_CAN_BE_SYNCED, $user->flags[2]);
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function adapt()
+    {
+        $scoolUser = factory(User::class)->create([
+            'email' => 'pepepardojeans@gmail.com',
+            'uid' => 'pepepardo'
+        ]);
+        $scoolUser->assignLdapUser(LdapUser::create([
+            'cn' => 'uid=prova,dc=iesebre,dc=com'
+        ]));
+        $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');
+        $user = LdapUser::initializeUser($user);
+
+        $this->assertFalse(array_key_exists('localUser', $user));
+
+        $localUsers = User::all();
+        $adaptedUser = LdapUser::adapt($user, $localUsers);
+        $this->assertCount(0, $adaptedUser->errorMessages);
+        $this->assertCount(0, $adaptedUser->flags);
+        $this->assertTrue($adaptedUser->inSync);
+        $this->assertNotNull($adaptedUser->localUser);
+        $this->assertEquals($scoolUser->name, $adaptedUser->localUser['name']);
+        $this->assertEquals($scoolUser->id, $adaptedUser->localUser['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function addLocalUserError()
+    {
+        $scoolUser = null;
+        $user = sample_ldap_user_array();
+        $user = LdapUser::initializeUser($user);
+        $this->assertCount(0, $user->errorMessages);
+        $user = LdapUser::addLocalUser($user, $scoolUser);
+        $this->assertCount(3, $user->errorMessages);
+        $this->assertEquals(
+            'Employeenumber no vàlid. No hi ha cap usuari local amb aquest id',
+            $user->errorMessages[0]
+        );
+        $this->assertEquals(
+            'Email no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[1]
+        );
+        $this->assertEquals(
+            'Uid no vàlid. No hi ha cap usuari local amb aquest uid',
+            $user->errorMessages[2]
+        );
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
+        $this->assertEquals(LdapUser::EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+        $this->assertEquals(LdapUser::UID_CAN_BE_SYNCED, $user->flags[2]);
     }
 
     /**
@@ -334,11 +390,14 @@ class LdapUserTest extends TestCase
      */
     public function addLocalUser()
     {
-        $scoolUser = factory(User::class)->create();
+        $scoolUser = factory(User::class)->create([
+            'email' => 'pepepardojeans@gmail.com',
+            'uid' => 'pepepardo'
+        ]);
         $scoolUser->assignLdapUser(LdapUser::create([
             'cn' => 'uid=prova,dc=iesebre,dc=com'
         ]));
-        $user = sample_ldap_user_array();
+        $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');
         $user = LdapUser::initializeUser($user);
 
         $user = LdapUser::addLocalUser($user, $scoolUser);
@@ -351,26 +410,31 @@ class LdapUserTest extends TestCase
     /**
      * @test
      */
-    public function adapt()
+    public function addLocalUserButNotSync()
     {
         $scoolUser = factory(User::class)->create();
-        $scoolUser->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com'
-        ]));
         $user = sample_ldap_user_array();
         $user = LdapUser::initializeUser($user);
 
-        $this->assertFalse(array_key_exists('localUser', $user));
-
-        $localUsers = User::all();
-        $adaptedUser = LdapUser::adapt($user, $localUsers);
-        dd($adaptedUser);
-        $this->assertCount(0, $adaptedUser->errorMessages);
-        $this->assertCount(0, $adaptedUser->flags);
-        $this->assertTrue($adaptedUser->inSync);
-        $this->assertNotNull($adaptedUser->localUser);
-        $this->assertEquals($scoolUser->name, $adaptedUser->localUser['name']);
-        $this->assertEquals($scoolUser->id, $adaptedUser->localUser['id']);
+        $user = LdapUser::addLocalUser($user,$scoolUser);
+        $this->assertTrue($scoolUser->id === $user->localUser['id']);
+        $this->assertCount(3,$user->errorMessages);
+        $this->assertEquals(
+            'Employeenumber no vàlid. No hi ha cap usuari local amb aquest id',
+            $user->errorMessages[0]
+        );
+        $this->assertEquals(
+            'Email no vàlid. No hi ha cap usuari local amb aquest email personal',
+            $user->errorMessages[1]
+        );
+        $this->assertEquals(
+            'Uid no vàlid. No hi ha cap usuari local amb aquest uid',
+            $user->errorMessages[2]
+        );
+        $this->assertFalse($user->inSync);
+        $this->assertEquals(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
+        $this->assertEquals(LdapUser::EMAIL_CAN_BE_SYNCED, $user->flags[1]);
+        $this->assertEquals(LdapUser::UID_CAN_BE_SYNCED, $user->flags[2]);
     }
 
 }

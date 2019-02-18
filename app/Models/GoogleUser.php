@@ -198,7 +198,7 @@ class GoogleUser extends Model
      * findByEmployeeId
      *
      * @param $localUsers
-     * @param $moodleUser
+     * @param $googleUser
      * @return
      */
     public static function findByEmployeeId($localUsers, $googleUser)
@@ -212,7 +212,7 @@ class GoogleUser extends Model
      * findByPrimaryEmail
      *
      * @param $localUsers
-     * @param $moodleUser
+     * @param $googleUser
      * @return
      */
     public static function findByPrimaryEmail($localUsers, $googleUser)
@@ -226,7 +226,7 @@ class GoogleUser extends Model
      * findByPersonalEmail
      *
      * @param $localUsers
-     * @param $moodleUser
+     * @param $googleUser
      * @return
      */
     public static function findByPersonalEmail($localUsers, $googleUser)

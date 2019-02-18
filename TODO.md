@@ -1,3 +1,9 @@
+# USER UID
+
+- [X] Modificar la migració usuaris, afegir uid com a nullable
+- [ ] Create user, es proposa ara mateix un uid per a calcular el corporative email però no es guarda
+  - [ ] Guardar el uid durant el procés de creació usuari
+
 # Bug a npm run hot
 
 - [ ] Pendent de que aquesta opció es resolgui: https://github.com/webpack/webpack-dev-server/issues/1604
