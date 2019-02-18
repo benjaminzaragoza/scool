@@ -260,6 +260,7 @@ class LdapUserTest extends TestCase
         $user = sample_google_user_array(231312312,$scoolUser->id,$scoolUser->email,'prova@iesebre.com');
         $user = LdapUser::initializeUser($user);
         $this->assertFalse(array_key_exists('localUser', $user));
+
         $localUsers = User::all();
 
         $adaptedUser = LdapUser::adapt($user, $localUsers);

@@ -205,4 +205,30 @@ class LdapUser extends Model
     {
         return Adldap::search()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->where('uid', '=', $uid)->first();
     }
+
+    public static function initializeUser($user)
+    {
+        $user->errorMessages = collect([]);
+        $user->inSync = false;
+        $user->flags = collect([]);
+        return $user;
+    }
+
+    public static function adapt($user, $localUsers)
+    {
+        $user = LdapUser::initializeUser($user);
+//        if (isset($user->employeeId) && $user->employeeId ) {
+//            $user = self::addLocalUser($user, self::findByEmployeeId($localUsers, $user));
+//            return $user;
+//        }
+//        if (isset($user->primaryEmail) && $user->primaryEmail ) {
+//            $user = self::addLocalUser($user, self::findByPrimaryEmail($localUsers, $user));
+//            return $user;
+//        }
+//        if (isset($user->personalEmail) && $user->personalEmail ) {
+//            $user = self::addLocalUser($user, self::findByPersonalEmail($localUsers, $user));
+//            return $user;
+//        }
+    }
+
 }
