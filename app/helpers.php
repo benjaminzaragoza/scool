@@ -804,6 +804,7 @@ if (!function_exists('scool_permissions')) {
         $permissions = array_merge($permissions,people_manager_permissions());
         $permissions = array_merge($permissions,curriculum_manager_permissions());
         $permissions = array_merge($permissions,positions_manager_permissions());
+        $permissions = array_merge($permissions,ldap_manager_permissions());
         return $permissions;
     }
 }

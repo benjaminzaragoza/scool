@@ -104,6 +104,7 @@ class Role extends SpatieRole
         Role::ADMINISTRATIVE_ASSISTANT,
         Role::FAMILIAR,
         Role::USERS_MANAGER,
+        Role::LDAP_MANAGER,
         Role::STAFF_MANAGER,
         Role::TEACHERS_MANAGER,
         Role::PHOTO_TEACHERS_MANAGER,
