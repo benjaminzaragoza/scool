@@ -153,6 +153,13 @@
                                                 <span>{{ props.item.modifyFormatted }} | {{ props.item.modifyTimestamp }}</span>
                                             </v-tooltip>
                                         </td>
+                                        <td>
+                                            <v-tooltip bottom>
+                                                <span slot="activator">{{ formatBoolean(props.item.inSync) }}</span>
+                                                <span v-if="props.item.inSync">Tot sembla correcte</span>
+                                                <span v-else v-html="formatMessages(props.item.errorMessages)"></span>
+                                            </v-tooltip>
+                                        </td>
                                         <td class="text-xs-left cell">
                                             <show-ldap-user-icon :user="props.item" :users="users"></show-ldap-user-icon>
                                             <v-btn icon class="mx-0" @click="">
@@ -231,6 +238,7 @@ export default {
       headers.push({ text: 'Usuari creació', value: 'creatorsName' })
       headers.push({ text: 'modifiersName', value: 'modifiersName' })
       headers.push({ text: 'modifyTimestamp', value: 'modifyTimestamp' })
+      headers.push({ text: 'Sincronitzat', align: 'left', value: 'inSync' })
       headers.push({ text: 'Accions', sortable: false })
       return headers
     }
@@ -274,6 +282,13 @@ export default {
         this.removing = false
         this.showError(error)
       })
+    },
+    formatBoolean (boolean) {
+      return boolean ? 'Sí' : 'No'
+    },
+    formatMessages (messages) {
+      if (messages) return messages.join('<br/>')
+      return ''
     }
   },
   created () {
