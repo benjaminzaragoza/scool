@@ -66,7 +66,7 @@
         <share-fab></share-fab>
 
         <v-toolbar class="white">
-            <img src="/img/iesebre/logo.png" alt="Institut de l'Ebre" height="50">
+            <img-webp src="/img/iesebre/logo.webp" alt="Institut de l'Ebre" height="50" alt-format="png"></img-webp>
             <v-toolbar-title>{{ config('app.name') }}</v-toolbar-title>
             @if (Route::has('login') && ! Auth::check() )
                 <v-spacer></v-spacer>
@@ -191,7 +191,8 @@
             </section>
 
             <section>
-                <v-parallax src="/img/tenant/section.jpg" height="380">
+
+                <v-parallax src="/img/tenant/section.webp" height="380">
                     <v-layout column align-center justify-center>
                         <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                         <em>Kick-start your application today</em>
