@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/tenant/css/app.css": "/tenant/css/app.css",
     "/js/app-landing.js": "/js/app-landing.js",
     "/tenant/js/app.js": "/tenant/js/app.js",
     "/css/all.css": "/css/all.css",
@@ -56,8 +57,5 @@
     "/css/skins/skin-yellow.css": "/css/skins/skin-yellow.css",
     "/css/skins/skin-yellow.min.css": "/css/skins/skin-yellow.min.css",
     "/css/blue.png": "/css/blue.png",
-    "/css/blue@2x.png": "/css/blue@2x.png",
-    "/tenant/js/app.0ae728212906d48d1963.hot-update.js": "/tenant/js/app.0ae728212906d48d1963.hot-update.js",
-    "/tenant/js/app.414733a77bf6a1231d89.hot-update.js": "/tenant/js/app.414733a77bf6a1231d89.hot-update.js",
-    "/tenant/js/app.9d7dc5478ce8b6fa8ed7.hot-update.js": "/tenant/js/app.9d7dc5478ce8b6fa8ed7.hot-update.js"
+    "/css/blue@2x.png": "/css/blue@2x.png"
 }
