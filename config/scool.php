@@ -105,4 +105,6 @@ return [
     'routeros_user' => env('ROUTEROS_USER','admin'),
     'routeros_password' => env('ROUTEROS_PASSWORD',''),
 
+
+    'ldap_base' => env('LDAP_BASE','dc=iesebre,dc=com'),
 ];

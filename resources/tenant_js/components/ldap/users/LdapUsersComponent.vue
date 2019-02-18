@@ -100,29 +100,60 @@
                                                 <img  :src="props.item.jpegphoto" :alt="props.item.cn"/>
                                             </v-avatar>
                                         </td>
-                                        <td class="text-xs-left" v-html="props.item.dn"></td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.rdn"></span>
+                                                <span v-text="props.item.dn"></span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator" v-text="props.item.cn"></span>
                                                 <span>GivenName: {{props.item.givenname}} Sn1: {{props.item.sn1}} Sn2: {{props.item.sn2}} </span>
                                             </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left" v-html="props.item.uid"></td>
-                                        <td class="text-xs-left" v-html="props.item.uidnumber"></td>
-                                        <td class="text-xs-left" v-html="props.item.userpassword"></td>
-                                        <td class="text-xs-left">
-                                            <a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + props.item.id">{{ props.item.primaryEmail }}</a>
+                                        <td class="text-xs-left cell" v-html="props.item.uid"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.uidnumber"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.gidnumber"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.homedirectory"></td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.sambarid"></span>
+                                                <span v-text="props.item.sambasid"></span>
+                                            </v-tooltip>
                                         </td>
-                                        <td class="text-xs-left" v-html="props.item.sn1"></td>
-                                        <td class="text-xs-left" v-html="props.item.sn2"></td>
-                                        <td class="text-xs-left" v-html="props.item.givenname"></td>
-                                        <td class="text-xs-left" v-html="props.item.suspensionReason"></td>
-                                        <td class="text-xs-left" v-html="props.item.lastLoginTime"></td>
-                                        <td class="text-xs-left" v-html="props.item.createtimestamp"></td>
-                                        <td class="text-xs-left" v-html="props.item.creatorsName"></td>
-                                        <td class="text-xs-left" v-html="props.item.modifiersName"></td>
-                                        <td class="text-xs-left" v-html="props.item.modifyTimestamp"></td>
-                                        <td class="text-xs-left">
+                                        <td class="text-xs-left cell" v-html="props.item.userpassword"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.highschooluserid"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.highschoolpersonalemail"></td>
+                                        <td class="text-xs-left cell" v-html="props.item.email">
+                                            <!--// TODO-->
+                                            <!--<a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + props.item.id">{{ props.item.email }}</a>-->
+                                        </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.createHuman"></span>
+                                                <span>{{ props.item.createFormatted }} | {{ props.item.createTimestamp }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.creatorsNameRDN"></span>
+                                                <span v-text="props.item.creatorsName"></span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.modifiersNameRDN"></span>
+                                                <span v-text="props.item.modifiersName"></span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom>
+                                                <span slot="activator" v-text="props.item.modifyHuman"></span>
+                                                <span>{{ props.item.modifyFormatted }} | {{ props.item.modifyTimestamp }}</span>
+                                            </v-tooltip>
+                                        </td>
+                                        <td class="text-xs-left cell">
                                             <show-ldap-user-icon :user="props.item" :users="users"></show-ldap-user-icon>
                                             <v-btn icon class="mx-0" @click="">
                                                 <v-icon color="teal">edit</v-icon>
@@ -189,13 +220,13 @@ export default {
       headers.push({ text: 'CN', value: 'cn' })
       headers.push({ text: 'uid', value: 'uid' })
       headers.push({ text: 'uidnumber', value: 'uidnumber' })
+      headers.push({ text: 'gidnumber', value: 'gidnumber' })
+      headers.push({ text: 'homedirectory', value: 'homedirectory' })
+      headers.push({ text: 'sambasid', value: 'sambarid' })
       headers.push({ text: 'userpassword', value: 'userpassword' })
-      headers.push({ text: 'Correu electrònic', value: 'primaryEmail' })
-      headers.push({ text: 'Path', value: 'orgUnitPath' })
-      headers.push({ text: 'Administrador', value: 'isAdmin' })
-      headers.push({ text: 'Suspès?', value: 'suspended' })
-      headers.push({ text: 'Raó suspensió', value: 'suspensionReason' })
-      headers.push({ text: 'Últim login', value: 'lastLoginTime' })
+      headers.push({ text: 'highschooluserid', value: 'highschooluserid' })
+      headers.push({ text: 'highschoolpersonalemail', value: 'highschoolpersonalemail' })
+      headers.push({ text: 'email', value: 'email' })
       headers.push({ text: 'Data creació', value: 'createtimestamp' })
       headers.push({ text: 'Usuari creació', value: 'creatorsName' })
       headers.push({ text: 'modifiersName', value: 'modifiersName' })
@@ -250,3 +281,15 @@ export default {
   }
 }
 </script>
+
+<style>
+    .column {
+        padding: 3px 3px !important;
+    }
+    .cell {
+        padding: 3px 3px !important;
+    }
+    table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child) {
+        padding: 0 5px !important;
+    }
+</style>

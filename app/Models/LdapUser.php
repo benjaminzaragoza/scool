@@ -4,8 +4,11 @@ namespace App\Models;
 
 use App\Ldap\OpenLdapSchema;
 use Cache;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Adldap\Laravel\Facades\Adldap;
+use Illuminate\Support\Str;
 
 /**
  * Class LdapUser.
@@ -111,27 +114,71 @@ class LdapUser extends Model
 
     public static function adapt($user)
     {
+        $base_dn = config('ldap.connections.default.settings.base_dn');
+        $ldap_base = config('scool.ldap_base');
+        $dn = $user->getAttribute('dn')[0];
+        $rdn = Str::replaceLast(',','',Str::replaceFirst($base_dn, '', $dn));
+        $sambasid = $user->getAttribute('sambasid')[0];
+        $sambarid = Str::replaceFirst('-','',Str::replaceFirst(config('samba.sid'),'',$sambasid));
+
+        $modifyTimestamp = $user->getAttribute('modifyTimestamp')[0];
+        $modifyTimestampDateTime = DateTime::createFromFormat( 'YmdHisZ', $modifyTimestamp);
+        $modifyFormatted = $modifyTimestampDateTime->format('H:i:s d-m-Y');
+        Carbon::setLocale(config('app.locale'));
+        $modifyHuman = (new Carbon($modifyTimestampDateTime->format(DATE_ISO8601)))->diffForHumans(Carbon::now());
+
+        $createTimestamp = $user->getAttribute('createTimestamp')[0];
+        $createTimestampDateTime = DateTime::createFromFormat( 'YmdHisZ', $createTimestamp);
+        $createFormatted = $createTimestampDateTime->format('H:i:s d-m-Y');
+        Carbon::setLocale(config('app.locale'));
+        $createHuman = (new Carbon($createTimestampDateTime->format(DATE_ISO8601)))->diffForHumans(Carbon::now());
+        $creatorsName = $user->getAttribute('creatorsName')[0];
+        $creatorsNameRDN = Str::replaceLast(',','',Str::replaceFirst($ldap_base, '', $creatorsName));
+        $modifiersName = $user->getAttribute('modifiersName')[0];
+        $modifiersNameRDN = Str::replaceLast(',','',Str::replaceFirst($ldap_base, '', $modifiersName));
+
         return (object)[
+            'objectClass' => $user->objectclass,
+            'base_dn' => $base_dn,
+            'rdn' => $rdn,
             'cn' => $user->getAttribute('cn')[0],
-            'dn' => $user->getAttribute('dn')[0],
+            'dn' => $dn,
             'uid' => $user->getAttribute('uid')[0],
             'userpassword' => $user->getAttribute('userpassword')[0],
             'uidnumber' => $user->getAttribute('uidnumber')[0],
+            'gidnumber' => $user->getAttribute('gidnumber')[0],
+            'homedirectory' => $user->getAttribute('homedirectory')[0],
+
+            'sambasid' => $sambasid,
+            'sambarid' => $sambarid,
+
             'givenname' => $user->getAttribute('givenname')[0],
             'sn' => $user->getAttribute('sn')[0],
             'sn1' => $user->getAttribute('sn1')[0],
             'sn2' => $user->getAttribute('sn2')[0],
             'irispersonaluniqueid' => $user->getAttribute('irispersonaluniqueid')[0],
+            'highschooluserid' => $user->getAttribute('highschooluserid')[0],
+            'highschoolpersonalemail' => $user->getAttribute('highschoolpersonalemail')[0],
+            'email' => $user->getAttribute('email')[0],
+
             'employeetype' => $user->getAttribute('employeetype')[0],
+            'employeenumber' => $user->getAttribute('employeenumber')[0],
             'l' => $user->getAttribute('l')[0],
             'st' => $user->getAttribute('st')[0],
             'telephonenumber' => $user->getAttribute('telephonenumber')[0],
             'mobile' => $user->getAttribute('mobile')[0],
             'postalCode' => $user->getAttribute('postalCode')[0],
             'createtimestamp' => $user->getAttribute('createtimestamp')[0],
-            'creatorsName' => $user->getAttribute('creatorsName')[0],
-            'modifiersName' => $user->getAttribute('modifiersName')[0],
-            'modifyTimestamp' => $user->getAttribute('modifyTimestamp')[0],
+            'creatorsName' => $creatorsName,
+            'creatorsNameRDN' => $creatorsNameRDN,
+            'modifiersName' => $modifiersName,
+            'modifiersNameRDN' => $modifiersNameRDN,
+            'modifyTimestamp' => $modifyTimestamp,
+            'modifyFormatted' => $modifyFormatted,
+            'modifyHuman' => $modifyHuman,
+            'createTimestamp' => $createTimestamp,
+            'createFormatted' => $createFormatted,
+            'createHuman' => $createHuman,
 //            'jpegphoto' => $user->getAttribute('jpegphoto')[0], DOES NOT WORK -> ENCODING ERROR
             'jpegphoto' => $user->getJpegPhotoEncoded()
 //            'attributes' => $user->getAttributes()
@@ -140,11 +187,11 @@ class LdapUser extends Model
 
     public static function findByEmail($email)
     {
-        return Adldap::search()->where('email', '=', $email)->first();
+        return Adldap::search()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->where('email', '=', $email)->first();
     }
 
     public static function findByUid($uid)
     {
-        return Adldap::search()->where('uid', '=', $uid)->first();
+        return Adldap::search()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->where('uid', '=', $uid)->first();
     }
 }

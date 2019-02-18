@@ -10,11 +10,10 @@
 
 ## GET
 
-### BY USER->ID
-
-employeeID -> guardi el id de l'usuari
-
-### BY DNI o altres identificadors
+- [ ] BY USER->ID employeeID -> guardi el id de l'usuari
+- [ ] BY DNI o altres identificadors
+- [X] By email
+- [X] By uid
 
 ## CREATE
 
@@ -63,29 +62,79 @@ TRES FASES:
 FOTO LDAP
     - [ ] Segona fase, segon step del wizard creació usuaris i opcional    
     - [ ] jpegPhoto
+
+## UIDS i GIDNUMBERS
+
+http://acacha.org/mediawiki/Proposta_de_gesti%C3%B3_del_uid_i_gid_numbers#.XGp3N7r0k5k    
+
+Grups per a Samba:
+
+- 512: domadmin. Els usuaris d'aquest grup són administradors de domini de Samba. Lo important és el gidnumber no el nom que se li doni (el nom podria contenir espais i dir-se Domain Admin o quelcom similar però aleshores dona problemes a aplicacions com Gosa al gestionar els grups)
+- 513: Usuaris de domini. Nota: No tic clar que sigui imprescindible que els usuaris siguin d'aquest grup.
+- 514: DomainGuests
+- 515: DomainComputers. El grup de les comptes de màquina de domini Samba. És el grup primari (i normalment l'únic grup) dels comptes de màquina, per això si mireu l'objecte Ldap del grup semblarà que no hi ha cap membre del grup, i no és així ja que els grups primaris no apareixen (formen part de la propia compte d'usuari i no pas del grup)
+- 548: domaccountoperators ???
+- 550: printoperators. Important per a la gestió d'impressores per xarxa (vegeu Cups)
+- 551: dombackupoperators ???
+- 552: replicators ??
+    
 ## LIST, DATATABLES
 
+O i OU i components:
+
+```
+$result = App\Models\LdapUser::findByUid('stur')
+$result->getDnBuilder();
+Adldap\Models\Attributes\DistinguishedName {#4520}
+$result->getDnBuilder()->getComponents();
+=> [
+     "cn" => [
+       "Sergi Tur Badenas",
+     ],
+     "uid" => [],
+     "ou" => [
+       "people",
+       "Informatica",
+       "Profes",
+       "All",
+     ],
+     "dc" => [
+       "iesebre",
+       "com",
+     ],
+     "o" => [],
+   ]
+```
+
 Camps a mostrar:
+- [ ] ObjectClasses
+ - [ ] Usuaris Linux (tenen posixAccount)
+ - [ ] Usuaris Windows (tenent sambaSamAccount)
+ - [ ] Usuaris ebre-escool: highSchoolUser
 - [X] jpegPhoto
  - [X] getThumbnailEncoded() method a user.
 - POSIX INFO
-  - [ ] gidNumber
+  - [ ] gidNumber: 
+    - [ ] 512: Domain admin
+    - [ ] 513: Usuari de domini
+    - [ ] Nobody?
   - [ ] homeDirectory
 - Samba info
  - [ ] sambaSID
- - [ ]
+ - [ ] gidNumber: 513
 EMAILS
  - [ ] carLicense???
- - [ ] email 
+ - [X] email 
  - [ ] highSchoolPersonalEmail
-- [ ] EBRE-ESCOOL
-  - irisPersonalUniqueid: DNI
-  -  highSchoolUserId: 201213-343
-  -  highSchoolPersonalEmail: email personal
-  -  highSchoolTSI: TSI
-- [ ] Mostrar employee type
-- [ ] employeeType?
-- [ ] employeeNumber
+- [X] EBRE-ESCOOL
+  - [X] irisPersonalUniqueid: DNI
+  - [X] highSchoolUserId: 201213-343
+  - [X] highSchoolPersonalEmail: email personal
+  - [ ] highSchoolTSI: TSI
+- [X] Mostrar employee type
+- [X] employeeType?
+- [X] employeeNumber
+DADES PERSONALS CAL?
 - [ ] Identifier: irisPersonalUniqueid
 - [ ] gender
 - [ ] Address: postalcode,l, st, homePostalAddress
@@ -95,9 +144,9 @@ TELEFONS:
 - [ ] telephoneNumber
 - [ ] facsimileTelephoneNumber
 ALTRES:
-- [ ] Mostrar els timestamps en format hum+a i amb dates formates en l'idioma nostre
-  - [ ] Camps calculats per la funció adapt i fet al server side amb PHP
-- [ ] Als tooltips mostrar els path complets (amb suffix dc=iesebre,dc=com) però no als camps
+- [X] Mostrar els timestamps en format hum+a i amb dates formates en l'idioma nostre
+  - [X] Camps calculats per la funció adapt i fet al server side amb PHP
+- [X] Als tooltips mostrar els path complets (amb suffix dc=iesebre,dc=com) però no als camps
 - [X] Mostrar sn1, sn2 i givenName al tooltip del CN
 - [ ] Tipus de password (password hash)
 

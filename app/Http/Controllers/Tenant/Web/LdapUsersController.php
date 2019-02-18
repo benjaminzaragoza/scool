@@ -21,7 +21,7 @@ class LdapUsersController extends Controller
      */
     public function index(ListLdapUsers $request)
     {
-        $users = LdapUser::getLdapUsers(10);
+        $users = LdapUser::getLdapUsers(100);
 //        dd($users[5]);
         return view('tenants.ldap_users.index', compact('users'));
     }

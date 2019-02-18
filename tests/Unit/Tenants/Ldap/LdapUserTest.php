@@ -70,7 +70,7 @@ class LdapUserTest extends TestCase
      */
     public function findByUid()
     {
-        $result = LdapUser::findByUid('nonexistinuid');
+        $result = LdapUser::findByUid('nonexistinguid');
         $this->assertNull($result);
 
         $result = LdapUser::findByUid('stur');
@@ -134,11 +134,14 @@ class LdapUserTest extends TestCase
 
 //        dd($users[3]);
 //        dd($users[0]->cn);
+        $this->assertEquals('ou=All,dc=iesebre,dc=com',$users[0]->base_dn);
+        $this->assertEquals('uid=root',$users[0]->rdn);
         $this->assertEquals('root',$users[0]->cn);
         $this->assertEquals('uid=root,ou=All,dc=iesebre,dc=com',$users[0]->dn);
         $this->assertEquals('root',$users[0]->uid);
         $this->assertTrue(starts_with($users[0]->userpassword,'{SSHA}'));
         $this->assertEquals(0,$users[0]->uidnumber);
+        $this->assertEquals(0,$users[0]->gidnumber);
         $this->assertTrue(property_exists($users[0],'givenname'));
         $this->assertTrue(property_exists($users[0],'sn'));
         $this->assertTrue(property_exists($users[0],'sn1'));
@@ -155,6 +158,90 @@ class LdapUserTest extends TestCase
         $this->assertTrue(property_exists($users[0],'modifiersName'));
         $this->assertTrue(property_exists($users[0],'modifyTimestamp'));
         $this->assertTrue(property_exists($users[0],'jpegphoto'));
+    }
+
+    /**
+     * @test
+     * @group slow
+     * @group ldap
+     */
+    public function adapt()
+    {
+        $originalUser = LdapUser::findByUid('stur');
+        $this->assertEquals('stur',$originalUser->uid[0]);
+        $user = LdapUser::adapt($originalUser);
+
+//        dd($user->objectClass);
+
+        $this->assertTrue(is_array($user->objectClass));
+        $this->assertCount(12, $user->objectClass);
+        $this->assertEquals('top',$user->objectClass[0]);
+        $this->assertEquals('person',$user->objectClass[1]);
+        $this->assertEquals('organizationalPerson',$user->objectClass[2]);
+        $this->assertEquals('inetOrgPerson',$user->objectClass[3]);
+        $this->assertEquals('gosaAccount',$user->objectClass[4]);
+        $this->assertEquals('extensibleObject',$user->objectClass[5]);
+        $this->assertEquals('irisPerson',$user->objectClass[6]);
+        $this->assertEquals('posixAccount',$user->objectClass[7]);
+        $this->assertEquals('shadowAccount',$user->objectClass[8]);
+        $this->assertEquals('gotoEnvironment',$user->objectClass[9]);
+        $this->assertEquals('sambaSamAccount',$user->objectClass[10]);
+        $this->assertEquals('highSchoolUser',$user->objectClass[11]);
+
+        $this->assertEquals('ou=All,dc=iesebre,dc=com',$user->base_dn);
+        $this->assertEquals('cn=Sergi Tur Badenas,ou=people,ou=Informatica,ou=Profes',$user->rdn);
+        $this->assertEquals('Sergi Tur Badenas',$user->cn);
+        $this->assertEquals('cn=Sergi Tur Badenas,ou=people,ou=Informatica,ou=Profes,ou=All,dc=iesebre,dc=com',$user->dn);
+        $this->assertEquals('stur',$user->uid);
+        $this->assertTrue(starts_with($user->userpassword,'{MD5}'));
+        $this->assertEquals(2374,$user->uidnumber);
+        $this->assertEquals(513,$user->gidnumber);
+        $this->assertEquals('/samba/homes/stur',$user->homedirectory);
+        $this->assertEquals('S-1-5-21-4045161930-1404234508-1517741366-7090',$user->sambasid);
+        $this->assertEquals('7090',$user->sambarid);
+
+        $this->assertEquals('Sergi',$user->givenname);
+        $this->assertEquals('Tur Badenas',$user->sn);
+        $this->assertEquals('Tur',$user->sn1);
+        $this->assertEquals('Badenas',$user->sn2);
+
+        $this->assertEquals('profe',$user->employeetype);
+        $this->assertEquals(41,$user->employeenumber);
+
+        $this->assertEquals('201112-1005',$user->highschooluserid);
+        $this->assertEquals('acacha@gmail.com',$user->highschoolpersonalemail);
+        $this->assertEquals('stur@iesebre.com',$user->email);
+
+
+        $this->assertEquals('20130929223451Z',$user->modifyTimestamp);
+        $this->assertEquals('22:34:51 29-09-2013',$user->modifyFormatted);
+        $this->assertTrue(property_exists($user,'modifyHuman'));
+
+        $this->assertEquals('20110907064243Z',$user->createTimestamp);
+        $this->assertEquals('06:42:43 07-09-2011',$user->createFormatted);
+        $this->assertTrue(property_exists($user,'createHuman'));
+
+        $this->assertEquals('cn=admin,dc=iesebre,dc=com',$user->creatorsName);
+        $this->assertEquals('cn=admin',$user->creatorsNameRDN);
+
+        $this->assertEquals('cn=admin,dc=iesebre,dc=com',$user->modifiersName);
+        $this->assertEquals('cn=admin',$user->modifiersNameRDN);
+
+//        dd($user->creatorsName);
+
+        $this->assertTrue(property_exists($user,'irispersonaluniqueid'));
+        $this->assertTrue(property_exists($user,'l'));
+        $this->assertTrue(property_exists($user,'st'));
+        $this->assertTrue(property_exists($user,'telephonenumber'));
+        $this->assertTrue(property_exists($user,'mobile'));
+        $this->assertTrue(property_exists($user,'postalCode'));
+        $this->assertTrue(property_exists($user,'createtimestamp'));
+
+        $this->assertTrue(property_exists($user,'creatorsName'));
+
+        $this->assertTrue(property_exists($user,'modifiersName'));
+        $this->assertTrue(property_exists($user,'modifyTimestamp'));
+        $this->assertTrue(property_exists($user,'jpegphoto'));
     }
 
 }
