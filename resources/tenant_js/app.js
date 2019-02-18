@@ -86,6 +86,7 @@ import Notifications from './components/notifications/Notifications.vue'
 import ShareFab from './components/ui/ShareFab.vue'
 import ServiceWorker from './components/serviceworker/ServiceWorker.vue'
 import ImgWebp from './components/ui/ImgWebp.vue'
+import VParallaxWebp from './components/ui/VParallaxWebp.vue'
 import GitInfoComponent from './components/git/GitInfoComponent'
 import DateFnsLocalCa from 'date-fns/locale/ca'
 window.Vue = Vue
@@ -223,6 +224,8 @@ window.Vue.component('service-worker', ServiceWorker)
 
 // Images
 window.Vue.component('img-webp', ImgWebp)
+window.Vue.component('v-parallax-webp', VParallaxWebp)
+
 
 window.Vuetify = Vuetify
 

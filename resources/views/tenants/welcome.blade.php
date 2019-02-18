@@ -81,8 +81,7 @@
         </v-toolbar>
         <v-content>
             <section>
-                <v-parallax src="/img/iesebre/cellular-education-classroom-159844.jpeg" height="600">
-                </v-parallax>
+                <v-parallax-webp src="/img/iesebre/cellular-education-classroom-159844.webp" height="600" alt-format="jpeg"></v-parallax-webp>
                 <div class="overlay" style="
                     position:absolute;
                     left:0;
@@ -191,8 +190,7 @@
             </section>
 
             <section>
-
-                <v-parallax src="/img/tenant/section.webp" height="380">
+                <v-parallax-webp src="/img/tenant/section.webp" height="600" alt-format="jpg">
                     <v-layout column align-center justify-center>
                         <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                         <em>Kick-start your application today</em>
@@ -205,7 +203,7 @@
                             Get Started
                         </v-btn>
                     </v-layout>
-                </v-parallax>
+                </v-parallax-webp>
             </section>
 
             <section>
