@@ -6,7 +6,7 @@ module.exports = {
     "images/*.{png,jpg,jpeg,gif,bmp}",
   ],
 
-  swDest: "public\\sw-toolbox.js",
+  swDest: "public/sw-toolbox.js",
   // Define runtime caching rules.
   runtimeCaching: [
     {
