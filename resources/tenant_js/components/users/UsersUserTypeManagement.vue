@@ -76,10 +76,11 @@ export default {
   created () {
     this.userTypesTranslation = {
       1: 'Professor',
-      2: 'Estudiant',
+      2: 'Alumne/a',
       3: 'Conserge',
-      4: 'Administratiu',
-      5: 'Familiar'
+      4: 'Becari',
+      5: 'Administratiu/va',
+      6: 'Familiars'
     }
     this.userTypeLinksPrefix = {
       1: '/teachers/',

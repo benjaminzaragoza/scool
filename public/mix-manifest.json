@@ -1,6 +1,5 @@
 {
     "/js/app.js": "/js/app.js",
-    "/tenant/css/app.css": "/tenant/css/app.css",
     "/js/app-landing.js": "/js/app-landing.js",
     "/tenant/js/app.js": "/tenant/js/app.js",
     "/css/all.css": "/css/all.css",
@@ -57,5 +56,21 @@
     "/css/skins/skin-yellow.css": "/css/skins/skin-yellow.css",
     "/css/skins/skin-yellow.min.css": "/css/skins/skin-yellow.min.css",
     "/css/blue.png": "/css/blue.png",
-    "/css/blue@2x.png": "/css/blue@2x.png"
+    "/css/blue@2x.png": "/css/blue@2x.png",
+    "/tenant/js/app.7c9c455d46a951dbb966.hot-update.js": "/tenant/js/app.7c9c455d46a951dbb966.hot-update.js",
+    "/tenant/js/app.42599845856534771695.hot-update.js": "/tenant/js/app.42599845856534771695.hot-update.js",
+    "/tenant/js/app.4680323beffb689ba8c5.hot-update.js": "/tenant/js/app.4680323beffb689ba8c5.hot-update.js",
+    "/tenant/js/app.65918e19f538065824e9.hot-update.js": "/tenant/js/app.65918e19f538065824e9.hot-update.js",
+    "/tenant/js/app.53c00f68302e489623dd.hot-update.js": "/tenant/js/app.53c00f68302e489623dd.hot-update.js",
+    "/tenant/js/app.bdcbb33f6a7bc6bb03fe.hot-update.js": "/tenant/js/app.bdcbb33f6a7bc6bb03fe.hot-update.js",
+    "/tenant/js/app.50fa22c39607121a7111.hot-update.js": "/tenant/js/app.50fa22c39607121a7111.hot-update.js",
+    "/tenant/js/app.d62822cbca3059054541.hot-update.js": "/tenant/js/app.d62822cbca3059054541.hot-update.js",
+    "/tenant/js/app.e23b3d9d61e7aeec27c2.hot-update.js": "/tenant/js/app.e23b3d9d61e7aeec27c2.hot-update.js",
+    "/tenant/js/app.6fb99a87929901c2ad8c.hot-update.js": "/tenant/js/app.6fb99a87929901c2ad8c.hot-update.js",
+    "/tenant/js/app.6c862971243242031f67.hot-update.js": "/tenant/js/app.6c862971243242031f67.hot-update.js",
+    "/tenant/js/app.d1934621b7b9b48bb770.hot-update.js": "/tenant/js/app.d1934621b7b9b48bb770.hot-update.js",
+    "/tenant/js/app.4657d7a0cee4b0ff637c.hot-update.js": "/tenant/js/app.4657d7a0cee4b0ff637c.hot-update.js",
+    "/tenant/js/app.aa71bd02076adc23e3b2.hot-update.js": "/tenant/js/app.aa71bd02076adc23e3b2.hot-update.js",
+    "/tenant/js/app.8aed170bc9abe52239a8.hot-update.js": "/tenant/js/app.8aed170bc9abe52239a8.hot-update.js",
+    "/tenant/js/app.fb56225bcdba1f6b1e72.hot-update.js": "/tenant/js/app.fb56225bcdba1f6b1e72.hot-update.js"
 }

@@ -230,11 +230,6 @@
                                             <user-emails :user="props.item"></user-emails>
                                             <user-personal-data-icon :user="props.item" class="ma-0"></user-personal-data-icon>
                                             <user-password :user="props.item" class="ma-0"></user-password>
-                                            <!-- TODO -->
-                                            <!--<user-check :user="props.item"></user-check>-->
-                                            <!--<user-send-welcome-email :user="props.item"></user-send-welcome-email>-->
-                                            <!--<user-send-reset-password-email :user="props.item"></user-send-reset-password-email>-->
-                                            <!--<user-send-confirmation-email :user="props.item"></user-send-confirmation-email>-->
                                             <user-delete :user="props.item"></user-delete>
                                         </td>
                                     </tr>

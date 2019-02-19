@@ -138,6 +138,7 @@ class MoodleUser extends Model
      */
     public static function map($user) {
         return [
+            // TODO
 //            'id' => $user->id,
 //            'employeeId' => optional($user->externalIds)[0]['value'],
 //            'mobile' => self::getMobile($user),
