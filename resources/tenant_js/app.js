@@ -17,6 +17,9 @@ import 'font-awesome/css/font-awesome.min.css'
 // import { library } from '@fortawesome/fontawesome-svg-core'
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import { fas } from '@fortawesome/free-solid-svg-icons'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'typeface-roboto/index.css'
+import 'typeface-montserrat/index.css'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -226,7 +229,6 @@ window.Vue.component('service-worker', ServiceWorker)
 window.Vue.component('img-webp', ImgWebp)
 window.Vue.component('v-parallax-webp', VParallaxWebp)
 
-
 window.Vuetify = Vuetify
 
 // TODO
@@ -317,7 +319,7 @@ window.Vue.use(window.Vuetify, {
 })
 window.Vue.use(FullCalendar)
 window.Vue.use(Vuetify, {
-  iconfont: 'fa4'
+  iconfont: ['fa4', 'md']
 })
 // Vue.component('font-awesome-icon', FontAwesomeIcon) // Register component globally
 // library.add(fas) // Include needed icons.

@@ -7,8 +7,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="user" content="{{ json_encode( [ 'name' => 'guest']) }}">
     <meta name="Laravel" content="{{ json_encode([ 'app' => config('app')]) }}">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,800,900" rel="stylesheet">
+    {{--<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">--}}
+    {{--<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel="stylesheet">--}}
+    {{--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">--}}
+    {{--<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,800,900" rel="stylesheet">--}}
     <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <style>
         [v-cloak] > * { display:none; }
