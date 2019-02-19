@@ -1,3 +1,71 @@
+# PWA
+
+## Estatistics: 
+- Load 1.45s
+- 1.3M transfered
+- 35 requests
+- section image 291KB
+
+## OFFLINE SUPPORT
+
+- [ ] Desactivar service workers (o una part/cache potser? en local)
+  - [ ] Detecció environment a PHP: @if (App::environment(‘production’, ‘staging’))
+  - [ ] Detecció environment a Javascript                                  
+    - [ ] Laravel mix: Les variables del fitxer .env que comencen per MIX_VARIABLENAME estan disponibles com process.env.MIX_VARIABLENAME 
+    - https://laravel.com/docs/5.7/mix#environment-variables
+    - package.json: cross-env NODE_ENV=development i per tant tenim el tipus d'entorn accessible amb: process.env.NODE_ENV
+  - Dos service workers: 
+    - [ ] Un local (sense offline?). Si install to home screen, manifest i push notifications
+    - [ ] Explotació: amb tot incloss offline   
+- https://blog.niftybit.co.za/2018/09/13/laravel-pwa-using-workbox-tips/
+- [ ] Cal marcar al nginx o Apache no faci cache de sw.js? :
+  - https://github.com/w3c/ServiceWorker/issues/893#issuecomment-223960460
+  
+  navigator.serviceWorker.register('/sw.js', {
+    useCache: true
+  });
+  
+Nginx:
+
+https://gist.github.com/osvaldasvalutis/ec9ab616aab11d60eba2e80fd062f77b
+
+server {
+  location ~* (serviceworker\.js)$ {
+    add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    expires off;
+    proxy_no_cache 1;
+  }
+}
+
+```
+location = /service-worker.js {
+    expires off;
+    add_header Cache-Control no-cache;
+    access_log off;
+}
+```
+
+```
+ <Files sw.js>
+     FileETag None
+     Header unset ETag
+     Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+     Header set Pragma "no-cache"
+     Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+ </Files>
+```
+
+LANDING PAGE
+Recursos:
+- [ ] iesebre.scool.cat
+- [ ] app.js
+- [ ] Spinner SVG incrustat (cloak to avoid FUOC)
+- [ ] manifest.json
+- [ ] extra.js chunks (1.js, 2.js etc...)
+- [ ] three wep images
+- [ ] Fonts
+- [ ] favicon-32x32.png
+  - [ ] Android chrome 134x134
 # USER UID
 
 - [X] Modificar la migració usuaris, afegir uid com a nullable
