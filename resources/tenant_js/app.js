@@ -12,17 +12,15 @@ import * as mutations from './store/mutation-types'
 import snackbar from './plugins/snackbar'
 import permissions from './plugins/permissions'
 import confirm from './plugins/confirm/index.js'
-import 'font-awesome/css/font-awesome.min.css'
-// TODO
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { fas } from '@fortawesome/free-solid-svg-icons'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'typeface-roboto/index.css'
 import 'typeface-montserrat/index.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'font-awesome/css/font-awesome.min.css'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 import VueTimeago from 'vue-timeago'
 import './bootstrap'
 import TreeView from 'vue-json-tree-view'
@@ -315,17 +313,11 @@ window.Vue.use(window.Vuetify, {
       darken3: '#243B53',
       darken4: '#102A43'
     }
-  }
+  },
+  iconfont: ['fa', 'fa4', 'md']
 })
 window.Vue.use(FullCalendar)
-window.Vue.use(Vuetify, {
-  iconfont: ['fa4', 'md']
-})
-// Vue.component('font-awesome-icon', FontAwesomeIcon) // Register component globally
-// library.add(fas) // Include needed icons.
-// Vue.use(Vuetify, {
-//   iconfont: 'faSvg'
-// })
+
 if (window.user) {
   store.commit(mutations.USER, window.user)
   store.commit(mutations.LOGGED, true)

@@ -12,9 +12,6 @@
     <meta name="env" content="{{ public_env() }}">
     <link rel="manifest" href="/manifest.json">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
-    {{--<link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">--}}
-    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-corner-indicator.min.css" rel="stylesheet">
     <link href="/tenant/css/app.css" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
