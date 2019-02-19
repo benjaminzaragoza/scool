@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Incidents;
+namespace Tests\Feature\Tenants\Api\Moodle;
 
 use App\Moodle\Clients\Adapters\RestClient;
 use App\Moodle\Connection;

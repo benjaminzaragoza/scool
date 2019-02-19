@@ -43,6 +43,8 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
+     *
      */
     public function findByEmployeeId()
     {
@@ -57,6 +59,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function findByPrimaryEmail()
     {
@@ -75,6 +78,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function findByPersonalEmail()
     {
@@ -89,6 +93,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function adapt()
     {
@@ -114,6 +119,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function initializeUser()
     {
@@ -132,6 +138,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function userNotInSync()
     {
@@ -168,6 +175,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function userInSync()
     {
@@ -192,6 +200,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function addLocalUserError()
     {
@@ -221,6 +230,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function addLocalUser()
     {
@@ -242,6 +252,7 @@ class GoogleUserTest extends TestCase
 
     /**
      * @test
+     * @group google
      */
     public function addLocalUserButNotSync()
     {
@@ -268,6 +279,33 @@ class GoogleUserTest extends TestCase
         $this->assertEquals(GoogleUser::EMPLOYEE_ID_NUMBER_CAN_BE_SYNCED, $user->flags[0]);
         $this->assertEquals(GoogleUser::PRIMARY_EMAIL_CAN_BE_SYNCED, $user->flags[1]);
         $this->assertEquals(GoogleUser::PERSONAL_EMAIL_CAN_BE_SYNCED, $user->flags[2]);
+    }
+
+    /**
+     * @test
+     * @group google
+     * @group slow
+     */
+    public function destroy()
+    {
+        config_google_api();
+        tune_google_client();
+
+        try {
+            google_user_create([
+                'givenName' =>  'Nom',
+                'familyName' =>  'Cognom',
+                'primaryEmail' =>  'provaborrar444@iesebre.com'
+            ]);
+        } catch (\Exception $e) {
+
+        }
+        sleep(5);
+        $user = google_user_get('provaborrar444@iesebre.com');
+
+        GoogleUser::destroy($user->id);
+
+        $this->assertFalse(google_user_exists('provaborrar444@iesebre.com'));
     }
 
 }

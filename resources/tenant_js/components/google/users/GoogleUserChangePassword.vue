@@ -1,52 +1,61 @@
 <template>
     <span>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
-          @keydown.esc.stop.prevent="close">
+                  @keydown.esc.stop.prevent="close">
             <v-toolbar color="primary">
                 <v-btn icon dark @click.native="close">
                     <v-icon>close</v-icon>
                 </v-btn>
-                <v-toolbar-title class="white--text title">Canviar paraula de pas usuari Moodle</v-toolbar-title>
+                <v-toolbar-title class="white--text title">Canviar paraula de pas usuari Google</v-toolbar-title>
             </v-toolbar>
             <v-card>
                     <v-card-text class="px-0 mb-2">
                         <v-container fluid grid-list-md text-xs-center>
                             <v-layout row wrap>
                                 <v-flex xs12>
-                                     Usuari de Moodle: <v-avatar color="primary" :title="user.fullname">
-                              <img :src="user.profileimageurlsmall" alt="avatar">
-                            </v-avatar>
-                                     <a :title="user.description" v-text="user.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + user.id" target="_blank"></a>
+                                     Usuari de Google:
+                                    <v-tooltip bottom>
+                                        <v-avatar size="32" slot="activator">
+                                                    <img v-if="user.thumbnailPhotoUrl" :src="user.thumbnailPhotoUrl">
+                                                    <img v-else src="/img/default.png" alt="photo per defecte">
+                                                </v-avatar>
+                                        <span>{{ user.id }}</span>
+                                    </v-tooltip>
+                                    <v-tooltip bottom>
+                                        <a slot="activator" target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + user.id">{{ user.primaryEmail }}</a>
+                                        <span>{{ user.primaryEmail }}</span>
+                                    </v-tooltip>
                                      <form>
                                         <v-text-field
-                                                      v-model="password"
-                                                      type="password"
-                                                      name="password"
-                                                      label="Paraula de pas"
-                                                      :error-messages="passwordErrors"
-                                                      @input="$v.password.$touch()"
-                                                      @blur="$v.password.$touch()"
+                                                v-model="password"
+                                                :append-icon="showPassword ? 'visibility_off' : 'visibility'"
+                                                :type="showPassword ? 'text' : 'password'"
+                                                name="password"
+                                                label="Paraula de pas"
+                                                :error-messages="passwordErrors"
+                                                @input="$v.password.$touch()"
+                                                @blur="$v.password.$touch()"
+                                                @click:append="showPassword = !showPassword"
                                         ></v-text-field>
                                          <v-btn @click="changePassword"
-                                                id="change_moodle_user_password_button"
+                                                id="change_google_user_password_button"
                                                 color="primary"
                                                 class="white--text"
                                                 :loading="loading"
-                                                :disabled="loading || invalid">Canviar paraula de pas a Moodle</v-btn>
+                                                :disabled="loading || invalid">Canviar paraula de pas a Google</v-btn>
                                         <v-btn @click="close()"
                                                id="close_button"
                                                color="error"
                                                class="white--text"
                                         >Tancar</v-btn>
                                      </form>
-                                     <a :href="'https://www.iesebre.com/moodle/login/index.php?username=' + user.username" target="_blank">Login de Moodle</a>
                                 </v-flex>
                             </v-layout>
                         </v-container>
                     </v-card-text>
                 </v-card>
         </v-dialog>
-        <v-btn icon title="Canviar paraula de pas" flat color="teal" @click="dialog=true">
+        <v-btn icon title="Canviar paraula de pas" flat color="teal" @click="dialog=true" class="ma-0">
             <v-icon>vpn_key</v-icon>
         </v-btn>
     </span>
@@ -58,7 +67,7 @@ import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
 export default {
-  name: 'MoodleUserChangePassword',
+  name: 'GoogleUserChangePassword',
   components: {
     'fullscreen-dialog': FullScreenDialog
   },
@@ -70,7 +79,8 @@ export default {
     return {
       loading: false,
       dialog: false,
-      password: ''
+      password: '',
+      showPassword: false
     }
   },
   props: {
@@ -98,7 +108,7 @@ export default {
     },
     changePassword () {
       this.loading = true
-      window.axios.put('/api/v1/moodle/users/' + this.user.id + '/password', {
+      window.axios.put('/api/v1/gsuite/users/' + this.user.primaryEmail + '/password', {
         'password': this.password
       }).then(() => {
         this.$snackbar.showMessage('Paraula de pas canviada correctament')

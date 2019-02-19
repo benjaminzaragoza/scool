@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Incidents;
+namespace Tests\Feature\Tenants\Api\Moodle;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -40,7 +40,7 @@ class MoodleUsersPasswordControllerTest extends BaseTenantTest {
         $this->loginAsSuperAdmin('api');
         $moodleuser = create_sample_moodle_user();
         $response =  $this->json('PUT','/api/v1/moodle/users/' . $moodleuser->id . '/password', [
-            'topsecret'
+            'password' => 'topsecret'
         ]);
         $response->assertSuccessful();
     }

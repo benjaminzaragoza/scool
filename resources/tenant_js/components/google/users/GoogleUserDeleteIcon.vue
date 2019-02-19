@@ -55,7 +55,7 @@ export default {
           } else {
             this.$snackbar.showMessage('Usuari esborrat correctament')
             this.removing = false
-            this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
+            this.$store.commit(mutations.DELETE_GOOGLE_USER, this.user)
           }
           this.$snackbar.showMessage('Usuari esborrat correctament')
         }).catch(error => {

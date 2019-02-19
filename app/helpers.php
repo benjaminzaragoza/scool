@@ -5236,6 +5236,19 @@ if (! function_exists('tune_google_client')) {
     }
 }
 
+if (! function_exists('create_sample_google_user')) {
+    function create_sample_google_user( $data = [
+        'givenName' => 'Usuari',
+        'familyName' => 'Esborrar',
+        'primaryEmail' => 'usuariesborrar@iesebre.com'
+    ]) {
+        if (google_user_exists($data['primaryEmail'])) {
+            return GoogleUser::get($data['primaryEmail']);
+        }
+        return GoogleUser::store($data);
+    }
+}
+
 if (! function_exists('google_user_exists')) {
     function google_user_exists($user)
     {
@@ -5292,7 +5305,6 @@ if (! function_exists('google_user_create')) {
         } catch (Google_Service_Exception $e) {
             dump('Error creating google user. ' . $e->getMessage());
         }
-
     }
 }
 

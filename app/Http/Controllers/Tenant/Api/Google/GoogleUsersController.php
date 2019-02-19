@@ -70,12 +70,7 @@ class GoogleUsersController extends Controller
      */
     public function destroy(DestroyGoogleUsers $request, $tenant, $user)
     {
-        try {
-            (new GoogleDirectory())->removeUser($user);
-        } catch (Google_Service_Exception $e) {
-            abort('422',$e);
-        }
-        Cache::forget('google_users');
+        GoogleUser::destroy($user);
     }
 
     /**
@@ -86,7 +81,7 @@ class GoogleUsersController extends Controller
     {
         try {
             foreach ($request->users as $user) {
-                (new GoogleDirectory())->removeUser($user);
+                GoogleUser::destroy($user,false);
             }
         } catch (Google_Service_Exception $e) {
             abort('422',$e);
