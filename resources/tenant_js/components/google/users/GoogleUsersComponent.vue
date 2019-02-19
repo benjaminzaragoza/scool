@@ -206,6 +206,7 @@
                                             <google-user-delete-icon :user="props.item"></google-user-delete-icon>
                                             <google-user-active-icon v-if="props.item.suspended" :user="props.item"></google-user-active-icon>
                                             <google-user-suspend-icon v-else :user="props.item"></google-user-suspend-icon>
+                                            <google-user-change-password :user="props.item"></google-user-change-password>
                                         </td>
                                     </tr>
                                 </template>
@@ -230,6 +231,7 @@ import GoogleUserFiltersSelect from './GoogleUserFiltersSelect'
 import GoogleUsersDeleteMultiple from './GoogleUsersDeleteMultiple'
 import GoogleUserDeleteIcon from './GoogleUserDeleteIcon'
 import GoogleUserSuspendIcon from './GoogleUserSuspendIcon'
+import GoogleUserChangePassword from './GoogleUserChangePassword'
 import GoogleUserActiveIcon from './GoogleUserActiveIcon'
 
 var filterNames = [
@@ -407,6 +409,7 @@ export default {
     'show-google-user-icon': showGoogleUserIcon,
     'google-user-delete-icon': GoogleUserDeleteIcon,
     'google-user-suspend-icon': GoogleUserSuspendIcon,
+    'google-user-change-password': GoogleUserChangePassword,
     'google-user-active-icon': GoogleUserActiveIcon,
     'user-show-link': UserShowLink,
     'google-user-local-user': GoogleUserLocalUser,

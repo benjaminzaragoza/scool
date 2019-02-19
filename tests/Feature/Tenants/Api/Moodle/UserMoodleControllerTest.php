@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants;
+namespace Tests\Feature\Tenants\Moodle;
 
 use App\Events\Moodle\MoodleUserAssociated;
 use App\Events\Moodle\MoodleUserUnAssociated;

@@ -19,6 +19,7 @@
 
 # CREDENTIALS API
 
+- [ ] Ara està a mitges i provoca un error de login (el login es fa ok però hi ha un error Javascript a una promise que provoca un catch)
 - https://medium.com/dev-channel/sign-in-on-the-web-credential-management-api-and-best-practices-d21aed14b6fe
 - https://developers.google.com/web/fundamentals/security/credential-management/
 - app exemple: https://credential-management-sample.appspot.com/
@@ -36,7 +37,7 @@
 
 - https://laravel-mix.com/docs/4.0/upgrade
 - https://laravel-news.com/laravel-mix-4-released
-- [X] a app.js canviats tots els requires per imporst
+- [X] a app.js canviats tots els requires per imports
 - [X] Canviar la primera línia del fitxer webpack.mix.js a const mix = require('laravel-mix');
 
 # Error page 404
@@ -58,12 +59,11 @@ BACKEND:
 - [X] Crear Middleware
 - [X] Utilitza cache per indicar activitat usuari
 - [X] Adaptar tests user
-- [ ] Comprovar també loca activitat tipus API
+- [ ] Comprovar també activitat local tipus API???
 - [X] Crear api que permeti obtenir la llista usuaris online
   - [X] Crear test
   - [X] Usuaris no logats no poden accedir
   - [X] No donar massa info sobre els usuaris online -> mapSimple
-  
   
 # Seeds 
 
@@ -1470,6 +1470,52 @@ Altres
   - [ ] Al dashboard/Home amb un alert i un CTA clar centrar i el primer que apareix
 
 ## Passwords
+
+### PASSWORD RESET DE LARAVEL
+
+- Link obtingut per email
+- Exemple: https://iesebre.scool.test/password/reset/007854ab8bbe140c0416ce5824c8cabe48e8c498be6668f88ed5cf4f06b0852a
+- Canvis que cal fer
+  - [ ] Opció de mostrar la paraula de pas a l'usuari (Vuetify té exemples de camps password a la seva doc)
+  - [ ] Sincronització amb plataformes externes (tasques en segon terme i amb procesos)
+    - [ ] Avisar a l'usuari que es sincronitzaran les paraules de pas per altres plataformes
+      - [ ] Opció per desactivar la sincronització 
+    - [ ] Hi ha Event? Sinó crear-lo i disparar-lo
+    - [ ] Moodle
+    - [ ] Google
+    - [ ] Ldap
+
+### Comentaris
+
+Email de benvinguda:
+- [ ] Aprofitar i també porti link per verificar email
+  - [ ] O encara millor al fer click al link de restaurar/establir paraula de pas el email ja es verifica?!
+
+Llocs on canviar la paraula de pas:
+- [ ] Email de benvinguda. Link per establir password (password/reset): https://iesebre.scool.test/password/reset/007854ab8bbe140c0416ce5824c8cabe48e8c498be6668f88ed5cf4f06b0852a
+- [ ] Al crear l'usuari sense email de benvinguda
+- [ ] A la llista usuaris amb el menú de canviar paraula de pas
+- [ ] Email de restabliment paraula de pas
+- [ ] Perfil: opció d'enviar-se el email anterior
+- [ ] Perfil: opció de canviar-se la paraula de pas
+- [ ] Per SMS?
+
+CANVI/ESTABLIMENT PARAULA DE PAS:
+- [ ] Cal preguntar per confirmar paraula de pas?
+- [ ] Opció de mostrar la paraula de pas a l'usuari
+- [ ] Autogenerar paraula de pas
+- [ ] Forçar canvi de password al següent login
+- [ ] Sincronitzar Moodle
+- [ ] Sincronitzar Ldap
+- [ ] Sincronitzar Google
+- [ ] Enviar email
+
+DOS FORMES CANVIAR PASSWORD
+- [ ] Canvi fet pel propi usuari
+  - [ ] NOOOO Forçar canvi de password al següent login
+  - [ ] Informar del canvi de password a plataformes extersns Moodle, Ldap, Google
+  - [ ] NO cal enviar email
+- [ ] Canvi fet per un administrador usuaris
 
 IMPORTANT:
 - [ ] Centralitzar les operacions de canvi de paraula de pas

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\GoogleGSuite\GoogleDirectory;
 use Cache;
+use Google_Service_Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +26,25 @@ class GoogleUser extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function get($user)
+    {
+        return (new GoogleDirectory())->user($user);
+    }
+
+    /**
+     * store.
+     *
+     * @param $user
+     */
+    public static function store($user)
+    {
+        try {
+            (new GoogleDirectory())->user($user);
+        } catch (Google_Service_Exception $e) {
+            dump('Error creating google user. ' . $e->getMessage());
+        }
     }
 
     /**
@@ -278,5 +298,35 @@ class GoogleUser extends Model
         }
         if (!$errors) $user->inSync = true;
         return $user;
+    }
+
+    /**
+     * changePassword.
+     *
+     * @param $user
+     * @param $password
+     * @return mixed
+     */
+    public static function changePassword($user,$password)
+    {
+        $password = is_sha1($password) ? $password : sha1($password);
+        return (new GoogleDirectory())->changePassword($user,$password);
+    }
+
+    /**
+     * Destroy.
+     *
+     * @param array|\Illuminate\Support\Collection|int $user
+     * @param bool $forget
+     * @return int|void
+     */
+    public static function destroy($user,$forget = true)
+    {
+        try {
+            (new GoogleDirectory())->removeUser($user);
+        } catch (Google_Service_Exception $e) {
+            abort('422',$e);
+        }
+        if ($forget) Cache::forget('google_users');
     }
 }

@@ -73,11 +73,6 @@ class GoogleDirectory
 
     public function editUser($user)
     {
-//        dump($user->name);
-//        dump($user->email);
-//        dump($user->googleUser->google_email);
-//        dd($this->directory->users);
-
         $googleUser = new Google_Service_Directory_User();
         $this->prepareGoogleUser($user, $googleUser);
         return $this->directory->users->update($user['primaryEmail'], $googleUser);
@@ -149,6 +144,30 @@ class GoogleDirectory
     {
         $r = $this->directory->groups->get($group);
         return $r;
+    }
+
+    /**
+     * Change password.
+     *
+     * @param $user
+     * @return mixed
+     */
+    public function changePassword($user,$password)
+    {
+        $email = $user;
+        $user = $this->directory->users->get($email);
+
+        // Just change what you need to
+        // Adding $user->changePasswordAtNextLogin will force a password change at the next login
+        // and could be used to create expiring passwords
+        $user->password = $password;
+        $user->hashFunction = 'SHA-1';
+        // Find based on page views in the last week
+        $response = $this->directory->users->patch(
+            $email,
+            $user
+        );
+        return $response;
     }
 
     /**
@@ -277,4 +296,6 @@ class GoogleDirectory
             $googleUser->setExternalIds([$id]);
         }
     }
+
+
 }

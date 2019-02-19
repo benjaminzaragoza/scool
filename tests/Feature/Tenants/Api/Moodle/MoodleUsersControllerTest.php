@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Incidents;
+namespace Tests\Feature\Tenants\Api\Moodle;
 
 use App\Events\Moodle\MoodleUserCreated;
 use App\Models\User;

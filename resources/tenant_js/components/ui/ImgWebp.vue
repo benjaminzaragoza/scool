@@ -5,7 +5,6 @@
 <script>
 import helpers from '../../utils/helpers'
 export default {
-  name: ' ImgWebp',
   data () {
     return {
       dataSrc: null

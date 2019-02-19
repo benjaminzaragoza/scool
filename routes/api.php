@@ -23,6 +23,7 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsNameController;
 use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsShortnameController;
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersController;
+use App\Http\Controllers\Tenant\Api\Google\GoogleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Ldap\LdapUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
@@ -256,7 +257,6 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::get('/gsuite/groups', 'Tenant\GoogleGroupsController@index');
             Route::post('/gsuite/groups', 'Tenant\GoogleGroupsController@store');
             Route::delete('/gsuite/groups/{group}', 'Tenant\GoogleGroupsController@destroy');
-
             // Group members
             Route::get('/gsuite/groups/{group}/members', 'Tenant\GoogleGroupMembersController@index');
 
@@ -273,8 +273,12 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
 
             Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
 
+            Route::delete('/gsuite/users/{user}', '\\' . GoogleUsersController::class . '@destroy');
 
-            //Ldap users
+            // GoogleUsersPasswordController
+            Route::put('/gsuite/users/{user}/password', '\\'. GoogleUsersPasswordController::class. '@update');
+
+                //Ldap users
             Route::get('/ldap/users', '\\' . LdapUsersController::class . '@index');
             Route::post('/ldap/users', '\\' . LdapUsersController::class . '@store');
 

@@ -2,7 +2,7 @@
     <span>
         <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
           @keydown.esc.stop.prevent="close">
-            <v-toolbar color="blue darken-3">
+            <v-toolbar color="primary">
                 <v-btn icon dark @click.native="close">
                     <v-icon>close</v-icon>
                 </v-btn>
@@ -18,11 +18,7 @@
                             </v-avatar>
                                      <a :title="user.description" v-text="user.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + user.id" target="_blank"></a>
                                      <form>
-                                        <v-checkbox
-                                                :label="'Crear password local, sincronitzar amb Moodle i enviar per correu electrònic a ' + user.email + '.'"
-                                                v-model="createpassword"
-                                        ></v-checkbox>
-                                        <v-text-field v-if="!createpassword"
+                                        <v-text-field
                                                       v-model="password"
                                                       type="password"
                                                       name="password"
@@ -36,7 +32,7 @@
                                                 color="primary"
                                                 class="white--text"
                                                 :loading="loading"
-                                                :disabled="loading || invalid" v-text="submitButtonText">submitButtonText</v-btn>
+                                                :disabled="loading || invalid">Canviar paraula de pas a Moodle</v-btn>
                                         <v-btn @click="close()"
                                                id="close_button"
                                                color="error"
@@ -74,7 +70,6 @@ export default {
     return {
       loading: false,
       dialog: false,
-      createpassword: true,
       password: ''
     }
   },
@@ -85,11 +80,8 @@ export default {
     }
   },
   computed: {
-    submitButtonText () {
-      return this.createpassword ? 'Crear nou password i enviar' : 'Canviar paraula de pas a Moodle'
-    },
     invalid () {
-      if (this.createpassword === false && !this.password) return true
+      if (!this.password) return true
       return false
     },
     passwordErrors () {
@@ -105,24 +97,17 @@ export default {
       this.$emit('close')
     },
     changePassword () {
-      console.log('TODO change password')
-      if (this.createpassword) this.createPassword()
-      else this.changeMoodlePassword()
-    },
-    changeMoodlePassword () {
       this.loading = true
       window.axios.put('/api/v1/moodle/users/' + this.user.id + '/password', {
         'password': this.password
       }).then(() => {
         this.$snackbar.showMessage('Paraula de pas canviada correctament')
         this.loading = false
+        this.close()
       }).catch(error => {
         this.$snackbar.showError(error)
         this.loading = false
       })
-    },
-    createPassword () {
-      console.log('TODO CREATE PASSWORD')
     }
   }
 }

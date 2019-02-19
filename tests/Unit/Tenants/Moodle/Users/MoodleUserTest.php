@@ -369,6 +369,8 @@ class MoodleUserTest extends TestCase
      * Can change password.
      *
      * @test
+     * @group moodle
+     * @group slow
      * @throws \Exception
      */
     public function can_change_password()
@@ -376,5 +378,18 @@ class MoodleUserTest extends TestCase
         $user = create_sample_moodle_user();
         MoodleUser::change_password($user->id, 'topsecret');
         $this->assertTrue(true);
+    }
+
+    /**
+     * getByIdNumber.
+     *
+     * @test
+     * @group moodle
+     * @group slow
+     */
+    public function getByIdNumber()
+    {
+        $user = MoodleUser::getByIdNumber(99999999)[0];
+        $this->assertEquals('stur',$user->username);
     }
 }
