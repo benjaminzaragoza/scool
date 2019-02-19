@@ -12,11 +12,6 @@ import * as mutations from './store/mutation-types'
 import snackbar from './plugins/snackbar'
 import permissions from './plugins/permissions'
 import confirm from './plugins/confirm/index.js'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import 'typeface-roboto/index.css'
-import 'typeface-montserrat/index.css'
-import '@fortawesome/fontawesome-free/css/all.css'
-import 'font-awesome/css/font-awesome.min.css'
 import AppComponent from './components/App.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -90,6 +85,13 @@ import ImgWebp from './components/ui/ImgWebp.vue'
 import VParallaxWebp from './components/ui/VParallaxWebp.vue'
 import GitInfoComponent from './components/git/GitInfoComponent'
 import DateFnsLocalCa from 'date-fns/locale/ca'
+// https://github.com/JeffreyWay/laravel-mix/issues/1249
+import (/* webpackPrefetch: true */  'typeface-montserrat/index.css') // eslint-disable-line
+import (/* webpackPrefetch: true */  'typeface-roboto/index.css') // eslint-disable-line
+import (/* webpackPrefetch: true */  'material-design-icons-iconfont/dist/material-design-icons.css') // eslint-disable-line
+import (/* webpackPrefetch: true */  '@fortawesome/fontawesome-free/css/all.css') // eslint-disable-line
+import (/* webpackPrefetch: true */  'font-awesome/css/font-awesome.min.css') // eslint-disable-line
+
 window.Vue = Vue
 window.Vue.use(snackbar)
 window.Vue.use(permissions)
