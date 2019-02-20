@@ -18,13 +18,11 @@
                             <v-subheader>General</v-subheader>
                             <v-list-tile avatar>
                                 <v-list-tile-action>
-                                    <v-checkbox v-model="googleWatch"></v-checkbox>
                                 </v-list-tile-action>
                                 <v-list-tile-content>
                                     <!--// TODO-->
-                                    <v-list-tile-title>TODO Observar canvis d'usuaris Ldap (Watch)</v-list-tile-title>
-                                    <v-list-tile-sub-title>Activar les notificacions push de Ldap per tal de registrar/observar els canvis d'usuaris.
-                                        <a href="https://developers.google.com/admin-sdk/directory/v1/guides/push" target="_blank">Documentació</a></v-list-tile-sub-title>
+                                    <v-list-tile-title>TODO</v-list-tile-title>
+                                    <v-list-tile-sub-title>TODO</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -37,8 +35,23 @@
                         </v-btn>
 
                         <v-list>
+                            <v-list-tile href="/users" target="_blank">
+                                <v-list-tile-title>Usuaris locals</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/permissions" target="_blank">
+                                <v-list-tile-title>Gestionar Permisos</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/users/roles" target="_blank">
+                                <v-list-tile-title>Gestionar Rols</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/moodle/users" target="_blank">
+                                <v-list-tile-title>Usuaris Moodle</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile href="/google_users" target="_blank">
+                                <v-list-tile-title>Usuaris Google</v-list-tile-title>
+                            </v-list-tile>
                             <v-list-tile>
-                                <v-list-tile-title><a target="_blank" href="https://admin.google.com/u/3/ac/users">Panell administració Ldap</a></v-list-tile-title>
+                                <v-list-tile-title><a target="_blank" href="https://admin.google.com/u/3/ac/users">Panell administració Google</a></v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -73,7 +86,7 @@
                             <v-data-table
                                     v-model="selected"
                                     select-all
-                                    class="px-0 mb-5 hidden-sm-and-down"
+                                    class="px-0 mb-5"
                                     :headers="headers"
                                     :items="filteredUsers"
                                     :search="search"
@@ -81,7 +94,9 @@
                                     disable-initial-sort
                                     no-results-text="No s'ha trobat cap registre coincident"
                                     no-data-text="No hi han dades disponibles"
-                                    rows-per-page-text="Grups per pàgina"
+                                    rows-per-page-text="Usuaris per pàgina"
+                                    :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
+                                    :pagination.sync="pagination"
                             >
                                 <template slot="items" slot-scope="props">
                                     <tr>
@@ -122,13 +137,17 @@
                                                 <span v-text="props.item.sambasid"></span>
                                             </v-tooltip>
                                         </td>
+                                        <td class="text-xs-left cell">
+                                            <v-tooltip bottom v-if="props.item.sambapwdlastset != 0">
+                                                <span slot="activator" v-text="props.item.sambapwdlastset_human"></span>
+                                                <span>{{ props.item.sambapwdlastset_formatted }} | {{ props.item.sambapwdlastset }}</span>
+                                            </v-tooltip>
+                                            <span v-else>Sense valor</span>
+                                        </td>
                                         <td class="text-xs-left cell" v-html="props.item.passwordtype"></td>
                                         <td class="text-xs-left cell" v-html="props.item.highschooluserid"></td>
                                         <td class="text-xs-left cell" v-html="props.item.highschoolpersonalemail"></td>
-                                        <td class="text-xs-left cell" v-html="props.item.email">
-                                            <!--// TODO-->
-                                            <!--<a target="_blank" :href="'https://admin.google.com/u/3/ac/users/' + props.item.id">{{ props.item.email }}</a>-->
-                                        </td>
+                                        <td class="text-xs-left cell" v-html="props.item.email"></td>
                                         <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator" v-text="props.item.createHuman"></span>
@@ -153,7 +172,7 @@
                                                 <span>{{ props.item.modifyFormatted }} | {{ props.item.modifyTimestamp }}</span>
                                             </v-tooltip>
                                         </td>
-                                        <td>
+                                        <td class="text-xs-left cell">
                                             <v-tooltip bottom>
                                                 <span slot="activator">{{ formatBoolean(props.item.inSync) }}</span>
                                                 <span v-if="props.item.inSync">Tot sembla correcte</span>
@@ -162,17 +181,8 @@
                                         </td>
                                         <td class="text-xs-left cell">
                                             <show-ldap-user-icon :user="props.item" :users="users"></show-ldap-user-icon>
-                                            <v-btn icon class="mx-0" @click="">
-                                                <v-icon color="teal">edit</v-icon>
-                                            </v-btn>
-                                            <confirm-icon
-                                                    icon="delete"
-                                                    color="accent"
-                                                    :working="removing"
-                                                    @confirmed="remove(props.item)"
-                                                    tooltip="Eliminar"
-                                                    message="Esteu segurs que voleu eliminar l'usuari?"
-                                            ></confirm-icon>
+                                            <ldap-user-change-password :user="props.item"></ldap-user-change-password>
+                                            <ldap-user-delete-icon :user="props.item"></ldap-user-delete-icon>
                                         </td>
                                     </tr>
                                 </template>
@@ -186,22 +196,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import * as mutations from '../../../store/mutation-types'
-
-import withSnackbar from '../../mixins/withSnackbar'
-import axios from 'axios'
-import ConfirmIcon from '../../ui/ConfirmIconComponent'
 import ShowLdapUserIconComponent from './ShowLdapUserIconComponent'
 import LdapUsersDeleteMultiple from './LdapUsersDeleteMultiple'
+import LdapUsersDeleteIcon from './LdapUsersDeleteIcon'
+import LdapUserChangePassword from './LdapUserChangePassword'
 
 export default {
   name: 'LdapUsersComponent',
-  mixins: [withSnackbar],
   components: {
-    'confirm-icon': ConfirmIcon,
     'show-ldap-user-icon': ShowLdapUserIconComponent,
-    'ldap-users-delete-multiple': LdapUsersDeleteMultiple
+    'ldap-users-delete-multiple': LdapUsersDeleteMultiple,
+    'ldap-user-delete-icon': LdapUsersDeleteIcon,
+    'ldap-user-change-password': LdapUserChangePassword
   },
   data () {
     return {
@@ -210,19 +216,19 @@ export default {
       removing: false,
       refreshing: false,
       settingsDialog: false,
-      googleWatch: false
+      internalUsers: this.users,
+      pagination: {
+        rowsPerPage: 25
+      }
     }
   },
   computed: {
-    ...mapGetters({
-      internalUsers: 'googleUsers'
-    }),
     filteredUsers: function () {
       return this.internalUsers
     },
     headers () {
       let headers = []
-      headers.push({ text: 'Foto', value: 'photo', sortable: false })
+      headers.push({ text: 'Foto', value: 'jpegphoto', sortable: false })
       headers.push({ text: 'DN', value: 'dn' })
       headers.push({ text: 'CN', value: 'cn' })
       headers.push({ text: 'uid', value: 'uid' })
@@ -230,6 +236,7 @@ export default {
       headers.push({ text: 'gidnumber', value: 'gidnumber' })
       headers.push({ text: 'homedirectory', value: 'homedirectory' })
       headers.push({ text: 'sambasid', value: 'sambarid' })
+      headers.push({ text: 'sambapwdlastset', value: 'sambapwdlastset' })
       headers.push({ text: 'passwordtype', value: 'passwordtype' })
       headers.push({ text: 'highschooluserid', value: 'highschooluserid' })
       headers.push({ text: 'highschoolpersonalemail', value: 'highschoolpersonalemail' })
@@ -243,18 +250,6 @@ export default {
       return headers
     }
   },
-  watch: {
-    googleWatch (newValue) {
-      console.log('googleWatch changed to : ' + newValue)
-      if (newValue) {
-        axios.get('/api/v1/gsuite/users/watch').then(response => {
-          console.log(response)
-        }).catch(error => {
-          console.log(error)
-        })
-      }
-    }
-  },
   props: {
     users: {
       type: Array,
@@ -264,23 +259,11 @@ export default {
   methods: {
     refresh () {
       this.refreshing = true
-      axios.get('/api/v1/gsuite/users').then(response => {
+      window.axios.get('/api/v1/ldap/users').then(response => {
         this.refreshing = false
-        this.$store.commit(mutations.SET_GOOGLE_USERS, response.data)
       }).catch(error => {
         this.refreshing = false
-        console.log(error)
-      })
-    },
-    remove (user) {
-      this.removing = true
-      axios.delete('/api/v1/gsuite/users/' + user.id).then(response => {
-        this.removing = false
-        this.$store.commit(mutations.DELETE_GOOGLE_USER, user)
-        this.showMessage('Usuari esborrat correctament')
-      }).catch(error => {
-        this.removing = false
-        this.showError(error)
+        this.$snackbar.showError(error)
       })
     },
     formatBoolean (boolean) {
@@ -290,9 +273,6 @@ export default {
       if (messages) return messages.join('<br/>')
       return ''
     }
-  },
-  created () {
-    this.$store.commit(mutations.SET_GOOGLE_USERS, this.users)
   }
 }
 </script>

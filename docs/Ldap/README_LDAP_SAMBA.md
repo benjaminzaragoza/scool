@@ -1,5 +1,60 @@
 # Adlap2 | Adldap2-laravel
 
+##
+
+### Error : Class 'Crypt_CHAP_MSv1' not found
+
+Cal instal·lar Crypt/CHAP
+
+```
+sudo apt-get install libcrypt-smbhash-perl php-fpdf php-pear php5-ldap
+sudo pear install Crypt_CHAP
+```
+
+I posar a composer.json:
+
+```
+        "files": [
+            "app/helpers.php",
+            "app/private_helpers.php",
+            "/usr/share/php/Crypt/CHAP.php"
+        ]
+```
+
+I executar:
+
+```
+composer dumpautoload
+```
+
+- http://acacha.org/mediawiki/Crypt/CHAP
+
+### Call to undefined function mcrypt_module_open() i Function mcrypt_module_open() is deprecated
+
+Potser amb:
+
+```
+composer require phpseclib/mcrypt_compat
+```
+
+és suficient?
+
+TODO: https://github.com/slimphp/Slim/issues/2362
+
+```
+sudo apt-get -y install gcc make autoconf libc-dev pkg-config
+sudo apt-get -y install php7.2-dev
+sudo apt-get -y install libmcrypt-dev
+```
+
+Once the dependencies have been installed, you can install mcrypt with the command:
+
+```
+sudo pecl install mcrypt-1.0.1
+composer require phpseclib/mcrypt_compat
+
+- https://www.techrepublic.com/article/how-to-install-mcrypt-for-php-7-2/
+
 ## Configuració. Fitxer config/ldap.php
 
 ## Documentació

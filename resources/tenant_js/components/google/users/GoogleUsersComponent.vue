@@ -104,7 +104,7 @@
                                 <google-users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></google-users-delete-multiple>
                             </div>
                             <v-data-table
-                                    class="px-0 mb-2 hidden-sm-and-down"
+                                    class="px-0 mb-5 hidden-sm-and-down"
                                     v-model="selected"
                                     select-all
                                     :headers="headers"
@@ -116,6 +116,7 @@
                                     no-data-text="No hi han dades disponibles"
                                     rows-per-page-text="Usuaris per pàgina"
                                     :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
+                                    :pagination.sync="pagination"
                             >
                                 <template slot="items" slot-scope="props">
                                     <tr>
@@ -423,7 +424,10 @@ export default {
       refreshing: false,
       settingsDialog: false,
       googleWatch: false,
-      selectedFilters: []
+      selectedFilters: [],
+      pagination: {
+        rowsPerPage: 25
+      }
     }
   },
   props: {
