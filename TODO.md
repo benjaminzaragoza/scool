@@ -97,14 +97,253 @@ Recursos:
 - sweetalert?
 - Altres
 
+# Workflow de Login/Register
+
+## AUTOLOGIN
+
+- A la welcome Page detectar si està logat a domini xxxx@iesebre.com i utilitzar aquest compte (o millor el de l'usuari tingui aquesta compte corporativa associada)
+  - Hi ha un primer cop que s'ha d'acceptar utilitzar aquest compte. La resta de cops és automàtic
+- Altres emails (emails personals)
+  - Ok utilitzar per registrar -> usuari sense permissos sense compte corporativa
+  - Permetre tant login d'usuari amb compte Google corporativa o personal associada   
+https://iesebre.scool.cat/
+
+## Professors:
+- [ ] La gran majoria NO es registren mai, són professors cada any i simplement rebran un email invitació primer cop
+  - [ ] Utilitzar Google Yolo seria lo ideal -> autologin
+     - [ ] Compte corporativa de centre
+  - [ ] Sempre s'ha de poder utilitzar l'alternativa
+- [ ] Nous professors/substituts:
+  - [ ] Quasi Igual que la resta de professors
+     - [ ] Welcome email: seria interessant que avises quina és la compte corporativa de l'usuari i usuari fes Login abans al compte? 
+  - [ ] Opcio 1: omplen petició per ser professors
+    - [ ] Cap estudis valida i es crear usuari -> S'envia invitació
+
+## ALUMNES
+- [ ] Via sistema de matrícula
+
+## ALTRES
+- [ ] Es registren a la web del centre    
+ - [ ] NO se'ls assignà cap rol -> Es mostra assistent quin tipus usuaris volen ser?
+   - [ ] Professor: se'l redirigeix al workflow de professor
+   - [ ] Alumnes: se'ls redirigeix a matrícula o se'ls posa a una llista d'interessats en la matrícula
+   
+## ALTRES APLICACIONS/BOLETS ETC
+
+- [ ] Wizard inicial incloure opcions com:
+  - [ ] Lan party?
+  - [ ] Altres events
+  - [ ] Altres apps: Borsa de treball    
+
 # CREDENTIALS API
 
+- [ ] Com integrar amb Google Yolo?
 - [ ] Ara està a mitges i provoca un error de login (el login es fa ok però hi ha un error Javascript a una promise que provoca un catch)
 - https://medium.com/dev-channel/sign-in-on-the-web-credential-management-api-and-best-practices-d21aed14b6fe
 - https://developers.google.com/web/fundamentals/security/credential-management/
 - app exemple: https://credential-management-sample.appspot.com/
 - https://developers.google.com/web/fundamentals/security/credential-management/retrieve-credentials
 - https://polykart-credential-payment.appspot.com/account
+
+## Signin with Google
+
+Autologin (aka One tap sign-up and automatic sign-in): 
+- Alternativa a Google Signin: https://developers.google.com/identity/sign-in/web/ 
+- Llibreria de Google (no és Javascript standard): https://developers.google.com/identity/one-tap/web/overview
+- Hi ha llibreries Vue
+- https://github.com/phanan/vue-google-signin-button
+- https://medium.com/@pongsatt/how-to-use-google-one-tap-sign-up-with-vuejs-d308f4604a41
+- Vist a/exemple: https://polykart-credential-payment.appspot.co
+- https://developers.google.com/identity/one-tap/web/retrieve-credentials
+- Google Yolo (You Only Login Once):
+  - https://github.com/zapier/google-yolo-inline
+  - https://www.genbeta.com/herramientas/yolo-el-proyecto-abierto-de-google-que-quiere-que-te-olvides-de-las-contrasenas
+Tots (o gairebé tots) tindran compte de Google de centre
+- [ ] Poder logar-se/auntenticar-se amb aquesta compte
+  - [ ] Més interessant encara Login automàtic si tinc obert correu de Google del centre
+- Login amb comptes personals de Google:
+  - [ ] Ummm per tal d'associar emails personals i altres dades potser si però no per logar ?
+- [ ] Tenir en compte els usuaris que no tenen compte de Google associada
+-  
+
+### YOLO CREDENTIALS
+
+DOS CREDENCIALS CALEN:
+
+UNA "Pública" pq anirà al codi Javascript similar a:
+GOOGLE_YOLO_CLIENT_ID=789449709752-5ao88l8ojcklrsp4uqqgqls4eou899u0.apps.googleusercontent.com
+
+Un altre secreta que és per a PHP/BAckend similar a:
+
+GOOGLE_YOLO_CLIENT_SECRET=OEyDeOnyY-23321da-yarZxYVSr-
+
+COM OBTENIR?
+
+- https://console.developers.google.com/apis/credentials?project=_
+- Get your Google API client ID
+- Open the Credentials page of the Google APIs console.
+Create or select a Google APIs project. If you already have a Google Sign-In button you should use the existing project and web client ID.
+If your project does not have a Web application type client ID, click Create credentials > OAuth client ID to create one. Be sure to include your site's domain in the Authorized JavaScript origins field.
+Take note of the client ID string displayed in the console. A client ID looks like the following example:
+
+1234567890-abc123def456.apps.googleusercontent.com
+You will need this value when you make credential and hint requests, and when you verify ID tokens on your backend./
+
+### Com funciona?
+
+- Utilitzar defer o async a script?
+  - https://flaviocopes.com/javascript-async-defer/#the-position-matters
+  - FUOC?
+  - https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup/24070373#24070373
+
+Cal posar el seguent a la welcome page i a les pàgines de Login i registre (oco tinc dialogs, que cal fer?):
+```
+<script src="https://smartlock.google.com/client"></script>
+window.onGoogleYoloLoad = (googleyolo) => {
+  // The 'googleyolo' object is ready for use.
+};
+```
+
+googleyolo.retrieve() és una promesa que ens permet obtenir les credencials de l'usuari (amb la seva autorització)
+
+Es pot detectar si l'usuari no vol utilitzar Yolo i procedir al login normal amb:
+
+```
+googleyolo.cancelLastOperation().then(() => {
+  // Credential selector closed. -> Login normal
+});
+```
+
+TRES POSSIBILITATS:
+- LOGIN AUTOMÀTIC: Usuari té comptes de Google oberts al navegador i actius i prèviament a permés el login a l'aplicació -> https://developers.google.com/identity/one-tap/web/retrieve-credentials
+- LOGIN AMB UN SOL TAP/CLICK: Usuari té comptes de Google oberts al navegador però és primer cop/registre https://developers.google.com/identity/one-tap/web/retrieve-hints
+- LOGIN NORMAL: per la resta de casos
+
+Exemple:
+
+```
+const retrievePromise = googleyolo.retrieve({
+  supportedAuthMethods: [
+    "https://accounts.google.com",
+    "googleyolo://id-and-password"
+  ],
+  supportedIdTokenProviders: [
+    {
+      uri: "https://accounts.google.com",
+      clientId: "YOUR_GOOGLE_CLIENT_ID"
+    }
+  ]
+});
+retrievePromise.then((credential) => {
+  if (credential.password) {
+    // An ID (usually email address) and password credential was retrieved.
+    // Sign in to your backend using the password.
+    // PETICIó AJAX PER FER EL LOGIN
+    signInWithEmailAndPassword(credential.id, credential.password);
+  } else {
+    // A Google Account is retrieved. Since Google supports ID token responses,
+    // you can use the token to sign in instead of initiating the Google sign-in
+    // flow.
+    useGoogleIdTokenForAuth(credential.idToken);
+  }
+}, (error) => {
+  // Credentials could not be retrieved. In general, if the user does not
+  // need to be signed in to use the page, you can just fail silently; or,
+  // you can also examine the error object to handle specific error cases.
+
+  // If retrieval failed because there were no credentials available, and
+  // signing in might be useful or is required to proceed from this page,
+  // you can call `hint()` to prompt the user to select an account to sign
+  // in or sign up with.
+  if (error.type === 'noCredentialsAvailable') {
+    googleyolo.hint(...).then(...);
+  }
+});
+```
+
+LOGOUT:
+
+Executar també:
+
+```
+disableAutoSignIn().then(() => {
+  // Auto sign-in disabled.
+});
+```
+
+HINT
+
+```
+const hintPromise = googleyolo.hint({
+  supportedAuthMethods: [
+    "https://accounts.google.com"
+  ],
+  supportedIdTokenProviders: [
+    {
+      uri: "https://accounts.google.com",
+      clientId: "YOUR_GOOGLE_CLIENT_ID"
+    }
+  ]
+});
+```
+
+```
+hintPromise.then((credential) => {
+  if (credential.idToken) {
+    // Send the token to your auth backend.
+    useGoogleIdTokenForAuth(credential.idToken);
+  }
+}, (error) => {
+  switch (error.type) {
+    case "userCanceled":
+      // The user closed the hint selector. Depending on the desired UX,
+      // request manual sign up or do nothing.
+      break;
+    case "noCredentialsAvailable":
+      // No hint available for the session. Depending on the desired UX,
+      // request manual sign up or do nothing.
+      break;
+    case "requestFailed":
+      // The request failed, most likely because of a timeout.
+      // You can retry another time if necessary.
+      break;
+    case "operationCanceled":
+      // The operation was programmatically canceled, do nothing.
+      break;
+    case "illegalConcurrentRequest":
+      // Another operation is pending, this one was aborted.
+      break;
+    case "initializationError":
+      // Failed to initialize. Refer to error.message for debugging.
+      break;
+    case "configurationError":
+      // Configuration error. Refer to error.message for debugging.
+      break;
+    default:
+      // Unknown error, do nothing.
+  }
+});
+```
+
+BACKEND PHP:
+
+```
+composer require google/apiclient
+Then, call the verifyIdToken() function. For example:
+require_once 'vendor/autoload.php';
+
+// Get $id_token via HTTPS POST.
+
+$client = new Google_Client(['client_id' => $CLIENT_ID]);  // Specify the CLIENT_ID of the app that accesses the backend
+$payload = $client->verifyIdToken($id_token);
+if ($payload) {
+  $userid = $payload['sub'];
+  // If request specified a G Suite domain:
+  //$domain = $payload['hd'];
+} else {
+  // Invalid ID token
+}
+```
 
 # USER TYPE
 
