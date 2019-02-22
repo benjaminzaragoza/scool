@@ -55,6 +55,22 @@ npm install workbox-webpack-plugin --save-dev
           ]
       })
 ```  
+- [ ] Error amb els paths a laravel mix: https://github.com/JeffreyWay/laravel-mix/issues/1717
+
+```
+const replace = require( 'replace-in-file' );
+const path = require( 'path' );
+const publicDir = 'public/html';
+...
+mix.js( 'resources/js/app.js', 'js' )
+ ...
+        .then( () => replace.sync( {
+            // FIXME:   Workaround for laravel-mix placeing '//*.js' at the begining of JS filesystem
+            files: path.normalize( `${publicDir}/precache-manifest.js` ),
+            from:  /\/\//gu,
+            to:    '/',
+        } ) )
+```
   
 Recursos:
 - https://ctf0.wordpress.com/2018/07/14/laravel-and-pwa/
@@ -81,21 +97,7 @@ create a route for the offline fallback view
 1
 Route::view('offline', 'offline');
 next create the offline view
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,44 +113,9 @@ next create the offline view
     </div>
 </body>
 </html>
+```
 and lastly add the “magic” logic to the sw-offline.js file
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
+```
 // pre-cache pages
 workbox.precaching.precacheAndRoute([
   {
@@ -156,7 +123,8 @@ workbox.precaching.precacheAndRoute([
      revision: Date.now()
   }
 ])
- 
+
+
 /**
 * save pages to cache on visit & serve when offline
 * or if not cached then serve the "offline view"
@@ -186,6 +154,8 @@ const navigationRoute = new workbox.routing.NavigationRoute(customHandler, {
 })
  
 workbox.routing.registerRoute(navigationRoute)
+```
+
 now each page the user visits will be cached but only after we fetch it from the server so the user can ALWAYS get an updated content & in case he/she dont have an internet connection then the cached item will be served.
 
 also in case the page wasnt cached and no connection, then we fall back to the offline page which simply tells him to go online in order to view it.

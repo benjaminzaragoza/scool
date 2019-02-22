@@ -62,6 +62,7 @@
     "laravel-echo": "^1.5.2",
     "material-design-icons-iconfont": "^4.0.5",
     "pusher-js": "^4.3.1",
+    "replace-in-file": "^3.4.3",
     "sweetalert": "^2.1.2",
     "typeface-montserrat": "0.0.54",
     "typeface-roboto": "0.0.54",

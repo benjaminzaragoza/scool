@@ -2,6 +2,11 @@
 
 - [X] FUOC a la intranet. SOLVED
 
+# NETEJAR SERVICE WORKERS
+
+- [ ] Esborrar tots els fitxers que són exemple o moure a la carpeta docs
+- [ ] Carpeta public: fitxer tenen obsolet al nom
+
 # PWA
 
 ## Estatistics: 

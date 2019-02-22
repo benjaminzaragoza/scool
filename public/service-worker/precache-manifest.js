@@ -273,18 +273,18 @@ self.__precacheManifest = [
   },
   {
     "revision": "42732ced2d0dbc658f44",
-    "url": "//tenant/js/app.js"
+    "url": "/tenant/js/app.js"
   },
   {
     "revision": "42732ced2d0dbc658f44",
-    "url": "//tenant/css/app.css"
+    "url": "/tenant/css/app.css"
   },
   {
     "revision": "7958c5feffb497e1ceb4",
-    "url": "//js/app.js"
+    "url": "/js/app.js"
   },
   {
     "revision": "ca57cd8785e2eaba7cdf",
-    "url": "//js/app-landing.js"
+    "url": "/js/app-landing.js"
   }
 ];
