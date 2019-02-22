@@ -1,8 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
+    "/tenant/css/app.css": "/tenant/css/app.css",
     "/js/app-landing.js": "/js/app-landing.js",
     "/tenant/js/app.js": "/tenant/js/app.js",
-    "/tenant/css/app.css": "/tenant/css/app.css",
     "/css/all.css": "/css/all.css",
     "/css/all-landing.css": "/css/all-landing.css",
     "/img/app-bg.png": "/img/app-bg.png",

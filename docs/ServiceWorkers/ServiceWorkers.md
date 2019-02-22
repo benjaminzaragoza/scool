@@ -49,7 +49,7 @@ npm install workbox-webpack-plugin --save-dev
           plugins: [
               new workboxPlugin.InjectManifest({
                   swSrc: 'public/sw-offline.js', // more control over the caching
-                  swDest: 'public/sw.js', // the service-worker file name
+                  swDest: 'sw.js', // the service-worker file name NO CAL POSAR public/ ja es fa per defecte!
                   importsDirectory: 'service-worker' // have a dedicated folder for sw files
               })
           ]
