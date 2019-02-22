@@ -1,6 +1,6 @@
 # BUGS
 
-- [ ] FUOC a la intranet
+- [X] FUOC a la intranet. SOLVED
 
 # PWA
 
@@ -20,6 +20,7 @@ curl -I -L https://workbox-demos.firebaseapp.com/demo/workbox-core/sw.js | grep 
 cache-control: no-cache
 ```
 
+- [ ] Utilitzar onload per registrar el webservice: https://developers.google.com/web/tools/workbox/guides/service-worker-checklist
 - [ ] Desactivar service workers (o una part/cache potser? en local)
   - [ ] Detecció environment a PHP: @if (App::environment(‘production’, ‘staging’))
   - [ ] Detecció environment a Javascript                                  

@@ -11,11 +11,19 @@ export default {
   name: 'ServiceWorker',
   methods: {
     registerServiceWorker () {
-      // PWA Progressive
       if (!('serviceWorker' in navigator)) {
         console.log('Service workers aren\'t supported in this browser.')
         return
       }
+      if (document.readyState === 'complete') {
+        window.addEventListener('load', () => {
+          this.register()
+        })
+      } else {
+        this.register()
+      }
+    },
+    register () {
       navigator.serviceWorker.register('/sw.js')
         .then(function (registration) {
           console.log('Registration successful, scope is:', registration.scope)

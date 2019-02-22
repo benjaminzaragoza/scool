@@ -1,3 +1,4 @@
+const workboxPlugin = require('workbox-webpack-plugin')
 const mix = require('laravel-mix');
 
 /*
@@ -45,4 +46,18 @@ if (mix.config.inProduction) {
   mix.version();
   mix.minify();
 }
+
+// if (mix.inProduction()) {
+  mix.webpackConfig({
+    plugins: [
+      // Options: https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
+      new workboxPlugin.InjectManifest({
+        swSrc: 'public/src-sw.js', // more control over the caching
+        swDest: 'public/sw.js', // the service-worker file name
+        importsDirectory: 'service-worker' // have a dedicated folder for sw files
+      })
+    ]
+  })
+// }
+
 

@@ -1,6 +1,8 @@
 (() => {
   'use strict'
 
+  // DIVERSOS PROBLEMES -> Mantenir aquesta llista no és senzill. Mnatenir les versions també té el seu que
+    // SOLUCIó: WORKBOX QUE s'encarregui de tota la feina
   const CACHE = 'scool-cache-' + Math.floor(Date.now() / 1000)
   const ITEMS_TO_CACHE = [
     '/',
