@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Tenants\Api\Incidents;
+namespace Tests\Feature\Tenants\Api\Google;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;

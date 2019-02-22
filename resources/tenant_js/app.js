@@ -86,6 +86,7 @@ import VParallaxWebp from './components/ui/VParallaxWebp.vue'
 import GitInfoComponent from './components/git/GitInfoComponent'
 import DateFnsLocalCa from 'date-fns/locale/ca'
 // https://github.com/JeffreyWay/laravel-mix/issues/1249
+// Lighthouse performance audit
 import (/* webpackPrefetch: true */  'typeface-montserrat/index.css') // eslint-disable-line
 import (/* webpackPrefetch: true */  'typeface-roboto/index.css') // eslint-disable-line
 import (/* webpackPrefetch: true */  'material-design-icons-iconfont/dist/material-design-icons.css') // eslint-disable-line

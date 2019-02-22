@@ -2,12 +2,84 @@
 
 - [ ] Problemes per afegir objectClasses to users: https://github.com/Adldap2/Adldap2/issues/639
 
+## Altres
+
+- Poder canviar el base DN (ara està all però poder veure altres anys?)
+
+## REFRESH
+
+- [ ] El refresh per api refresqui tots els usuaris (força forget de cache)
+
+## FILTRES i altres
+
+- [ ] Mostrar usuari Linux
+- [ ] Mostrar usuari Windows
+- [ ] Los dos tipus anteriors
+- [ ] Ni Linux ni Windows
+- [ ] Opció mostrar camps ebre-escool (highschooluserid i email i similars)
+  - [ ] No marcada per defecte (al futur no caldrà)
+
+- Filtrar per baseDN -> Un arbre
+ - ou=All,dc=iesebre,dc=com
+   - subcarpetes?
+- Aconseguit tots els baseDN que existeixen -> Guardar-los a una estructura tipus arbre
+- [ ] Una opció inicial més senzilla: no cal sigui arbre simplement array amb tots els basedn
+
+## INLINE
+
+- Canviar nom (sn1, sn2 i givenName)
+- uidnumber si fos incorrecte o repetit?
+- Canviar grup Windows (permetria indicar administradors de domini?)
+- Canviar la home
+- Emails?
+
+## CAMPS:
+
+- [ ] Passwords sincronitzades?
+  - [ ] Comparara hash md5
+  - [ ] a ebre-escool hi ha un lm calculated i es compara amb real per saber si està sync
+  - [ ] Permet saber si els windows passwords estàn ok
+
+## ACCIONS
+
+
+- [ ] Sincronitzar amb usuari local
+  - [ ] JpegPhoto
+  - [ ] Altres dades: sn1, sn2, givenName
+  - [ ] Emails???
+  - [ ] Password no es pot!!! Cal preguntar/establir un nou password per sincronitzar???
+  - [ ] uid no es pot sincronitzar (és el que determina la relació user local i user Ldap)
+- [ ] Check/Filtres
+  - [ ] NO hi ha uids repetits
+  - [ ] No hi ha sambasids repetits
+  - [ ] No hi ha ningú amb un sambasid prefix no correcte
+  - [ ] No hi ha ningú sense uidnumber
+  - [ ] No hi ha ningú sense uid
+  - [ ] No hi ha ningú sense gidnumber (roo gidnumber 0 | nobody: 65534)
+- [X] Canviar paraula de pas
+- [ ] Suspendre usuari (acctFlags)
+- [ ] Temes canvi password van? Fer alguna prova
+- [ ] Esborrar
+- [ ] Veure tots els camps
+- [ ] Verificar paraula de pas:
+  - [ ] S'escriu la paraula de pas i es compara amb els hashes:
+    - [ ] userPassword (Linux)
+    - [ ] lmpassword i ntpassword
+
 ## ldap_users table an Model:
 
-- [ ] Similar al que fem amb Moodle_users i google_users
+- [X] Similar al que fem amb Moodle_users i google_users
 - [X] Crear migració. Camps
   - id, user_id, cn?
-- [ ] Permet relacionar local user amb usuari Ldap  
+- [X] Permet relacionar local user amb usuari Ldap  
+- [ ] Falta fer proves com funciona un cop es puguin crear usuaris Ldap
+
+# Change password
+
+- [ ] Mostrar informació només canvia usuari Ldap i posar link a canviar usuari local
+- [ ] validació mínima 6 caràcters 
+- [ ] Ara es fa amb MD5 -> Poder indicar un altre tipus (SHA1). Config? o al formulari
+
 ## DELETE
 
 - [X] Delete multiple
@@ -165,7 +237,9 @@ ALTRES:
 ACCIONS
 - [ ] Comprovar la paraula de pas (es pregunta a l'usuari per una paraula de pas, es fa el tipus hash pertoqui i es compara si és ok)
 
-# Can't contact LDAP server
+# TROUBLESHOOTING
+
+## Can't contact LDAP server
 
 Faltaven ok dades de contacte
 
@@ -175,7 +249,7 @@ LDAP_BASE_DN="ou=All,dc=iesebre,dc=com"
 LDAP_USERNAME="cn=admin,dc=iesebre,dc=com"
 LDAP_PASSWORD=PASSWORD HERE
 
-# LDAP no mostra cap usuari
+## LDAP no mostra cap usuari
 
 Si:
 

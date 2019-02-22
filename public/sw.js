@@ -1,126 +1,91 @@
-(() => {
-  'use strict'
+importScripts("/service-worker/precache-manifest.19f6ac3233ffc09c8a158eb6180b6a6a.js", "https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
-  const AddToHomeScreen = {
-    init () {
-      self.addEventListener('fetch', function (event) {
-        // console.log('PROVA')
-        // console.log('WORKER: fetch event in progress.')
-        // PLEASE DO NOT REMOVE THIS FETCH HABDLER BECAUSE IS NEEDED FOR ADD TO HOME SCREEN
-        // TODO -> OFFLINE
+workbox.skipWaiting()
+workbox.clientsClaim()
 
-        // console.log('Request -->', event.request.url)
-        if (event.request.method != 'GET') return
+// workbox.routing.registerRoute(
+//   new RegExp('https://hacker-news.firebaseio.com'),
+//   workbox.strategies.staleWhileRevalidate()
+// );
 
-        // To tell browser to evaluate the result of event
-        // event.respondWith(
-        //   caches.match(event.request) //To match current request with cached request it
-        //     .then(function(response) {
-        //       //If response found return it, else fetch again.
-        //       return response || fetch(event.request);
-        //     })
-        //     .catch(function(error) {
-        //       console.error("Error: ", error);
-        //     })
-      })
-    }
+self.addEventListener('push', (event) => {
+  const title = 'Get Started With Workbox'
+  const options = {
+    body: event.data.text()
   }
+  event.waitUntil(self.registration.showNotification(title, options))
+})
 
-  const WebPush = {
-    init () {
-      self.addEventListener('push', this.notificationPush.bind(this))
-      self.addEventListener('notificationclick', this.notificationClick.bind(this))
-      self.addEventListener('notificationclose', this.notificationClose.bind(this))
-    },
+workbox.precaching.precacheAndRoute(self.__precacheManifest)
+// workbox.precaching.precacheAndRoute([]) També funciona i workbox substitueix pel que pertoca -> placeholder
 
-    /**
-     * Handle notification push event.
-     *
-     * https://developer.mozilla.org/en-US/docs/Web/Events/push
-     *
-     * @param {NotificationEvent} event
-     */
-    notificationPush (event) {
-      console.log(event)
-      if (!(self.Notification && self.Notification.permission === 'granted')) {
-        return
-      }
+// static
+workbox.routing.registerRoute(
+  new RegExp('.(?:ico)$'),
+  workbox.strategies.networkFirst({
+    cacheName: 'icons'
+  })
+)
 
-      // https://developer.mozilla.org/en-US/docs/Web/API/PushMessageData
-      if (event.data) {
-        event.waitUntil(
-          this.sendNotification(event.data.json())
-        )
-      }
-    },
-
-    /**
-     * Handle notification click event.
-     *
-     * https://developer.mozilla.org/en-US/docs/Web/Events/notificationclick
-     *
-     * @param {NotificationEvent} event
-     */
-    notificationClick (event) {
-      // console.log(event.notification)
-
-      if (event.action === 'some_action') {
-        // Do something...
-        // self.clients.openWindow(event.action)
-      } else {
-        self.clients.openWindow('/')
-      }
-    },
-
-    /**
-     * Handle notification close event (Chrome 50+, Firefox 55+).
-     *
-     * https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/onnotificationclose
-     *
-     * @param {NotificationEvent} event
-     */
-    notificationClose (event) {
-      self.registration.pushManager.getSubscription().then(subscription => {
-        if (subscription) {
-          this.dismissNotification(event, subscription)
-        }
+// images
+workbox.routing.registerRoute(
+  new RegExp('.(?:jpg|jpeg|png|gif|svg|webp)$'),
+  workbox.strategies.cacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 20,
+        purgeOnQuotaError: true
       })
-    },
+    ]
+  })
+)
 
-    /**
-     * Send notification to the user.
-     *
-     * https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
-     *
-     * @param {PushMessageData|Object} data
-     */
-    sendNotification (data) {
-      return self.registration.showNotification(data.title, data)
-    },
+workbox.routing.registerRoute(
+  new RegExp('/'),
+  workbox.strategies.staleWhileRevalidate({ cacheName: 'landing' })
+)
 
-    /**
-     * Send request to server to dismiss a notification.
-     *
-     * @param  {NotificationEvent} event
-     * @param  {String} subscription.endpoint
-     * @return {Response}
-     */
-    dismissNotification ({ notification }, { endpoint }) {
-      if (!notification.data || !notification.data.id) {
-        return
-      }
+// NO ENS CAL PQ LES TENIM INTEGRADES EN LOCAL VIA WEBPACK i NMP IMPORTS
+// // fonts
+// workbox.routing.registerRoute(
+//   new RegExp('https://fonts.*'),
+//   workbox.strategies.cacheFirst({
+//     cacheName: 'fonts',
+//     plugins: [
+//       new workbox.cacheableResponse.Plugin({
+//         statuses: [0, 200]
+//       })
+//     ]
+//   })
+// )
+//
+// // google stuff
+// workbox.routing.registerRoute(
+//   new RegExp('.*(?:googleapis|gstatic).com.*$'),
+//   workbox.strategies.networkFirst({
+//     cacheName: 'google'
+//   })
+// )
+//
+// // static
+// workbox.routing.registerRoute(
+//   new RegExp('.(?:js|css|ico)$'),
+//   workbox.strategies.networkFirst({
+//     cacheName: 'static'
+//   }),
+// )
+//
+// // images
+// workbox.routing.registerRoute(
+//   new RegExp('.(?:jpg|png|gif|svg)$'),
+//   workbox.strategies.cacheFirst({
+//     cacheName: 'images',
+//     plugins: [
+//       new workbox.expiration.Plugin({
+//         maxEntries: 20,
+//         purgeOnQuotaError: true,
+//       })
+//     ]
+//   })
 
-      const data = new FormData()
-      data.append('endpoint', endpoint)
-
-      // Send a request to the server to mark the notification as read.
-      fetch(`/notifications/${notification.data.id}/dismiss`, {
-        method: 'POST',
-        body: data
-      })
-    }
-  }
-
-  // WebPush.init()
-  AddToHomeScreen.init()
-})()

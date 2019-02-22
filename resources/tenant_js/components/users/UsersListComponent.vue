@@ -119,6 +119,7 @@
                                 no-data-text="No hi han dades disponibles"
                                 rows-per-page-text="Usuaris per pàgina"
                                 :rows-per-page-items="[5,10,25,50,100,200,500,1000,{'text':'Tots','value':-1}]"
+                                :pagination.sync="pagination"
                             >
                                 <template slot="items" slot-scope="props">
                                     <tr>
@@ -460,6 +461,9 @@ export default {
       userType: null,
       selectedRoles: [],
       selectedFilters: [],
+      pagination: {
+        rowsPerPage: 25
+      },
       headers: [
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Avatar', value: 'photo', sortable: false },

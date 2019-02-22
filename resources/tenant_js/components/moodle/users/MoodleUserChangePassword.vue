@@ -53,15 +53,11 @@
 </template>
 
 <script>
-import FullScreenDialog from '../../ui/FullScreenDialog'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'MoodleUserChangePassword',
-  components: {
-    'fullscreen-dialog': FullScreenDialog
-  },
   validations: {
     password: { required }
   },

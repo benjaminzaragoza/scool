@@ -7,9 +7,6 @@
                   @avatarSaved="refresh"></user-add>
 
         <users-list :users="users" :user="user" :user-types="userTypes" :roles="roles"></users-list>
-
-        <!--TODO-->
-        <!--<users-dashboard></users-dashboard>-->
     </span>
 </template>
 <script>

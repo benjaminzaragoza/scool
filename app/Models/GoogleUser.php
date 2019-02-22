@@ -212,6 +212,7 @@ class GoogleUser extends Model
             $user = self::addLocalUser($user, self::findByPersonalEmail($localUsers, $user));
             return $user;
         }
+        return $user;
     }
 
     /**

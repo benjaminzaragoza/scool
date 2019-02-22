@@ -117,9 +117,12 @@ class LdapUser extends Model
 
         return Cache::rememberForever($cacheKey, function() use ($limit) {
             $users = Adldap::search()->users()->select(['*','createTimestamp','creatorsName','modifiersName','modifyTimestamp'])->limit($limit)->get();
-            return $users->map(function ($user) {
+            $result = $users->map(function ($user) {
                 return LdapUser::map($user);
             })->values();
+            return $result->filter(function ($value) {
+                return $value !== null;
+            });
         });
     }
 
@@ -150,6 +153,13 @@ class LdapUser extends Model
 
         $password = $user->getAttribute('userpassword')[0];
         $passwordType = self::passwordType($password);
+
+        $sambapwdlastset = $user->getAttribute('sambapwdlastset')[0];
+        $carbonsambapwdlastset = Carbon::createFromTimestamp($sambapwdlastset);
+        Carbon::setLocale(config('app.locale'));
+        $sambapwdlastset_human = $carbonsambapwdlastset->diffForHumans(Carbon::now());
+        $sambapwdlastset_formatted = $carbonsambapwdlastset->format('h:i:sA d-m-Y');;
+
         return (object)[
             'objectClass' => $user->objectclass,
             'base_dn' => $base_dn,
@@ -165,6 +175,9 @@ class LdapUser extends Model
 
             'sambasid' => $sambasid,
             'sambarid' => $sambarid,
+            'sambapwdlastset' => $sambapwdlastset,
+            'sambapwdlastset_human' => $sambapwdlastset_human,
+            'sambapwdlastset_formatted' => $sambapwdlastset_formatted,
 
             'givenname' => $user->getAttribute('givenname')[0],
             'sn' => $user->getAttribute('sn')[0],
@@ -296,25 +309,7 @@ class LdapUser extends Model
             $user = self::addLocalUser($user, self::findByUidInLocalUsers($localUsers, $user));
             return $user;
         }
-
-//
-//        if (intval($user->employeenumber) !== intval($scoolUser['id'])) {
-//            $user->errorMessages->push("Employeenumber no vàlid. No hi ha cap usuari local amb aquest id");
-//            $user->flags->push(LdapUser::EMPLOYEE_NUMBER_CAN_BE_SYNCED);
-//            $errors = true;
-//        }
-//        if ($user->email !== $scoolUser['email']) {
-//            $user->errorMessages->push('Email no vàlid. No hi ha cap usuari local amb aquest email personal');
-//            $user->flags->push(LdapUser::EMAIL_CAN_BE_SYNCED);
-//            $errors = true;
-//        }
-//        if ($user->uid !== $scoolUser['uid']) {
-//            $user->errorMessages->push('Uid no vàlid. No hi ha cap usuari local amb aquest uid');
-//            $user->flags->push(LdapUser::UID_CAN_BE_SYNCED);
-//            $errors = true;
-//        }
-
-
+        return $user;
     }
 
     /**
@@ -343,6 +338,17 @@ class LdapUser extends Model
             $errors = true;
         }
         if (!$errors) $user->inSync = true;
+        return $user;
+    }
+
+    public static function changePassword($user,$password)
+    {
+        $user = LdapUser::findByUid($user);
+        $user->userPassword = ldap_md5_hash($password);
+        $user->sambantpassword = ldap_nt_password($password);
+        $user->sambalmpassword = ldap_lm_password($password);
+        $user->sambapwdlastset = time();
+        $user->save();
         return $user;
     }
 

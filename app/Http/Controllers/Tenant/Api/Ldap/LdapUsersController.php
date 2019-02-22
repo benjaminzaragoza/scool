@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Tenant\Api\Ldap;
 
 use Adldap\Laravel\Facades\Adldap;
-use App\Http\Requests\ListLdapUsers;
-use App\Http\Requests\StoreLdapUsers;
+use App\Http\Requests\Ldap\ListLdapUsers;
+use App\Http\Requests\Ldap\StoreLdapUsers;
 use App\Ldap\OpenLdapSchema;
 use App\Http\Controllers\Tenant\Controller;
 

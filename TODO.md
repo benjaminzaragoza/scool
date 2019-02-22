@@ -1,3 +1,89 @@
+# BUGS
+
+- [X] FUOC a la intranet. SOLVED
+
+# NETEJAR SERVICE WORKERS
+
+- [ ] Esborrar tots els fitxers que són exemple o moure a la carpeta docs
+- [ ] Carpeta public: fitxer tenen obsolet al nom
+
+# PWA
+
+## Estatistics: 
+- Load 1.45s
+- 1.3M transfered
+- 35 requests
+- section image 291KB
+
+## OFFLINE SUPPORT
+
+```
+curl -I -L https://workbox-demos.firebaseapp.com/demo/workbox-core/sw.js | grep cache-control
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0  1185    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+cache-control: no-cache
+```
+
+- [ ] Utilitzar onload per registrar el webservice: https://developers.google.com/web/tools/workbox/guides/service-worker-checklist
+- [ ] Desactivar service workers (o una part/cache potser? en local)
+  - [ ] Detecció environment a PHP: @if (App::environment(‘production’, ‘staging’))
+  - [ ] Detecció environment a Javascript                                  
+    - [ ] Laravel mix: Les variables del fitxer .env que comencen per MIX_VARIABLENAME estan disponibles com process.env.MIX_VARIABLENAME 
+    - https://laravel.com/docs/5.7/mix#environment-variables
+    - package.json: cross-env NODE_ENV=development i per tant tenim el tipus d'entorn accessible amb: process.env.NODE_ENV
+  - Dos service workers: 
+    - [ ] Un local (sense offline?). Si install to home screen, manifest i push notifications
+    - [ ] Explotació: amb tot incloss offline   
+- https://blog.niftybit.co.za/2018/09/13/laravel-pwa-using-workbox-tips/
+- [ ] Cal marcar al nginx o Apache no faci cache de sw.js? :
+  - https://github.com/w3c/ServiceWorker/issues/893#issuecomment-223960460
+  
+  navigator.serviceWorker.register('/sw.js', {
+    useCache: true
+  });
+  
+Nginx:
+
+https://gist.github.com/osvaldasvalutis/ec9ab616aab11d60eba2e80fd062f77b
+
+server {
+  location ~* (serviceworker\.js)$ {
+    add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+    expires off;
+    proxy_no_cache 1;
+  }
+}
+
+```
+location = /service-worker.js {
+    expires off;
+    add_header Cache-Control no-cache;
+    access_log off;
+}
+```
+
+```
+ <Files sw.js>
+     FileETag None
+     Header unset ETag
+     Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+     Header set Pragma "no-cache"
+     Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+ </Files>
+```
+
+LANDING PAGE
+Recursos:
+- [ ] iesebre.scool.cat
+- [ ] app.js
+- [ ] Spinner SVG incrustat (cloak to avoid FUOC)
+- [ ] manifest.json
+- [ ] extra.js chunks (1.js, 2.js etc...)
+- [ ] three wep images
+- [ ] Fonts
+- [ ] favicon-32x32.png
+  - [ ] Android chrome 134x134
 # USER UID
 
 - [X] Modificar la migració usuaris, afegir uid com a nullable
@@ -17,14 +103,253 @@
 - sweetalert?
 - Altres
 
+# Workflow de Login/Register
+
+## AUTOLOGIN
+
+- A la welcome Page detectar si està logat a domini xxxx@iesebre.com i utilitzar aquest compte (o millor el de l'usuari tingui aquesta compte corporativa associada)
+  - Hi ha un primer cop que s'ha d'acceptar utilitzar aquest compte. La resta de cops és automàtic
+- Altres emails (emails personals)
+  - Ok utilitzar per registrar -> usuari sense permissos sense compte corporativa
+  - Permetre tant login d'usuari amb compte Google corporativa o personal associada   
+https://iesebre.scool.cat/
+
+## Professors:
+- [ ] La gran majoria NO es registren mai, són professors cada any i simplement rebran un email invitació primer cop
+  - [ ] Utilitzar Google Yolo seria lo ideal -> autologin
+     - [ ] Compte corporativa de centre
+  - [ ] Sempre s'ha de poder utilitzar l'alternativa
+- [ ] Nous professors/substituts:
+  - [ ] Quasi Igual que la resta de professors
+     - [ ] Welcome email: seria interessant que avises quina és la compte corporativa de l'usuari i usuari fes Login abans al compte? 
+  - [ ] Opcio 1: omplen petició per ser professors
+    - [ ] Cap estudis valida i es crear usuari -> S'envia invitació
+
+## ALUMNES
+- [ ] Via sistema de matrícula
+
+## ALTRES
+- [ ] Es registren a la web del centre    
+ - [ ] NO se'ls assignà cap rol -> Es mostra assistent quin tipus usuaris volen ser?
+   - [ ] Professor: se'l redirigeix al workflow de professor
+   - [ ] Alumnes: se'ls redirigeix a matrícula o se'ls posa a una llista d'interessats en la matrícula
+   
+## ALTRES APLICACIONS/BOLETS ETC
+
+- [ ] Wizard inicial incloure opcions com:
+  - [ ] Lan party?
+  - [ ] Altres events
+  - [ ] Altres apps: Borsa de treball    
+
 # CREDENTIALS API
 
+- [ ] Com integrar amb Google Yolo?
 - [ ] Ara està a mitges i provoca un error de login (el login es fa ok però hi ha un error Javascript a una promise que provoca un catch)
 - https://medium.com/dev-channel/sign-in-on-the-web-credential-management-api-and-best-practices-d21aed14b6fe
 - https://developers.google.com/web/fundamentals/security/credential-management/
 - app exemple: https://credential-management-sample.appspot.com/
 - https://developers.google.com/web/fundamentals/security/credential-management/retrieve-credentials
 - https://polykart-credential-payment.appspot.com/account
+
+## Signin with Google
+
+Autologin (aka One tap sign-up and automatic sign-in): 
+- Alternativa a Google Signin: https://developers.google.com/identity/sign-in/web/ 
+- Llibreria de Google (no és Javascript standard): https://developers.google.com/identity/one-tap/web/overview
+- Hi ha llibreries Vue
+- https://github.com/phanan/vue-google-signin-button
+- https://medium.com/@pongsatt/how-to-use-google-one-tap-sign-up-with-vuejs-d308f4604a41
+- Vist a/exemple: https://polykart-credential-payment.appspot.co
+- https://developers.google.com/identity/one-tap/web/retrieve-credentials
+- Google Yolo (You Only Login Once):
+  - https://github.com/zapier/google-yolo-inline
+  - https://www.genbeta.com/herramientas/yolo-el-proyecto-abierto-de-google-que-quiere-que-te-olvides-de-las-contrasenas
+Tots (o gairebé tots) tindran compte de Google de centre
+- [ ] Poder logar-se/auntenticar-se amb aquesta compte
+  - [ ] Més interessant encara Login automàtic si tinc obert correu de Google del centre
+- Login amb comptes personals de Google:
+  - [ ] Ummm per tal d'associar emails personals i altres dades potser si però no per logar ?
+- [ ] Tenir en compte els usuaris que no tenen compte de Google associada
+-  
+
+### YOLO CREDENTIALS
+
+DOS CREDENCIALS CALEN:
+
+UNA "Pública" pq anirà al codi Javascript similar a:
+GOOGLE_YOLO_CLIENT_ID=789449709752-5ao88l8ojcklrsp4uqqgqls4eou899u0.apps.googleusercontent.com
+
+Un altre secreta que és per a PHP/BAckend similar a:
+
+GOOGLE_YOLO_CLIENT_SECRET=OEyDeOnyY-23321da-yarZxYVSr-
+
+COM OBTENIR?
+
+- https://console.developers.google.com/apis/credentials?project=_
+- Get your Google API client ID
+- Open the Credentials page of the Google APIs console.
+Create or select a Google APIs project. If you already have a Google Sign-In button you should use the existing project and web client ID.
+If your project does not have a Web application type client ID, click Create credentials > OAuth client ID to create one. Be sure to include your site's domain in the Authorized JavaScript origins field.
+Take note of the client ID string displayed in the console. A client ID looks like the following example:
+
+1234567890-abc123def456.apps.googleusercontent.com
+You will need this value when you make credential and hint requests, and when you verify ID tokens on your backend./
+
+### Com funciona?
+
+- Utilitzar defer o async a script?
+  - https://flaviocopes.com/javascript-async-defer/#the-position-matters
+  - FUOC?
+  - https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup/24070373#24070373
+
+Cal posar el seguent a la welcome page i a les pàgines de Login i registre (oco tinc dialogs, que cal fer?):
+```
+<script src="https://smartlock.google.com/client"></script>
+window.onGoogleYoloLoad = (googleyolo) => {
+  // The 'googleyolo' object is ready for use.
+};
+```
+
+googleyolo.retrieve() és una promesa que ens permet obtenir les credencials de l'usuari (amb la seva autorització)
+
+Es pot detectar si l'usuari no vol utilitzar Yolo i procedir al login normal amb:
+
+```
+googleyolo.cancelLastOperation().then(() => {
+  // Credential selector closed. -> Login normal
+});
+```
+
+TRES POSSIBILITATS:
+- LOGIN AUTOMÀTIC: Usuari té comptes de Google oberts al navegador i actius i prèviament a permés el login a l'aplicació -> https://developers.google.com/identity/one-tap/web/retrieve-credentials
+- LOGIN AMB UN SOL TAP/CLICK: Usuari té comptes de Google oberts al navegador però és primer cop/registre https://developers.google.com/identity/one-tap/web/retrieve-hints
+- LOGIN NORMAL: per la resta de casos
+
+Exemple:
+
+```
+const retrievePromise = googleyolo.retrieve({
+  supportedAuthMethods: [
+    "https://accounts.google.com",
+    "googleyolo://id-and-password"
+  ],
+  supportedIdTokenProviders: [
+    {
+      uri: "https://accounts.google.com",
+      clientId: "YOUR_GOOGLE_CLIENT_ID"
+    }
+  ]
+});
+retrievePromise.then((credential) => {
+  if (credential.password) {
+    // An ID (usually email address) and password credential was retrieved.
+    // Sign in to your backend using the password.
+    // PETICIó AJAX PER FER EL LOGIN
+    signInWithEmailAndPassword(credential.id, credential.password);
+  } else {
+    // A Google Account is retrieved. Since Google supports ID token responses,
+    // you can use the token to sign in instead of initiating the Google sign-in
+    // flow.
+    useGoogleIdTokenForAuth(credential.idToken);
+  }
+}, (error) => {
+  // Credentials could not be retrieved. In general, if the user does not
+  // need to be signed in to use the page, you can just fail silently; or,
+  // you can also examine the error object to handle specific error cases.
+
+  // If retrieval failed because there were no credentials available, and
+  // signing in might be useful or is required to proceed from this page,
+  // you can call `hint()` to prompt the user to select an account to sign
+  // in or sign up with.
+  if (error.type === 'noCredentialsAvailable') {
+    googleyolo.hint(...).then(...);
+  }
+});
+```
+
+LOGOUT:
+
+Executar també:
+
+```
+disableAutoSignIn().then(() => {
+  // Auto sign-in disabled.
+});
+```
+
+HINT
+
+```
+const hintPromise = googleyolo.hint({
+  supportedAuthMethods: [
+    "https://accounts.google.com"
+  ],
+  supportedIdTokenProviders: [
+    {
+      uri: "https://accounts.google.com",
+      clientId: "YOUR_GOOGLE_CLIENT_ID"
+    }
+  ]
+});
+```
+
+```
+hintPromise.then((credential) => {
+  if (credential.idToken) {
+    // Send the token to your auth backend.
+    useGoogleIdTokenForAuth(credential.idToken);
+  }
+}, (error) => {
+  switch (error.type) {
+    case "userCanceled":
+      // The user closed the hint selector. Depending on the desired UX,
+      // request manual sign up or do nothing.
+      break;
+    case "noCredentialsAvailable":
+      // No hint available for the session. Depending on the desired UX,
+      // request manual sign up or do nothing.
+      break;
+    case "requestFailed":
+      // The request failed, most likely because of a timeout.
+      // You can retry another time if necessary.
+      break;
+    case "operationCanceled":
+      // The operation was programmatically canceled, do nothing.
+      break;
+    case "illegalConcurrentRequest":
+      // Another operation is pending, this one was aborted.
+      break;
+    case "initializationError":
+      // Failed to initialize. Refer to error.message for debugging.
+      break;
+    case "configurationError":
+      // Configuration error. Refer to error.message for debugging.
+      break;
+    default:
+      // Unknown error, do nothing.
+  }
+});
+```
+
+BACKEND PHP:
+
+```
+composer require google/apiclient
+Then, call the verifyIdToken() function. For example:
+require_once 'vendor/autoload.php';
+
+// Get $id_token via HTTPS POST.
+
+$client = new Google_Client(['client_id' => $CLIENT_ID]);  // Specify the CLIENT_ID of the app that accesses the backend
+$payload = $client->verifyIdToken($id_token);
+if ($payload) {
+  $userid = $payload['sub'];
+  // If request specified a G Suite domain:
+  //$domain = $payload['hd'];
+} else {
+  // Invalid ID token
+}
+```
 
 # USER TYPE
 
@@ -1469,10 +1794,185 @@ Altres
 - [ ] Quan avisar a l'usuari que ha de validar el correu electrònic?
   - [ ] Al dashboard/Home amb un alert i un CTA clar centrar i el primer que apareix
 
+## Samba
+- https://www.samba.org/samba/docs/Samba3-HOWTO.pdf
+- https://en.wikipedia.org/wiki/Year_2038_problem: 2147483647
+- http://pdbsql.sourceforge.net/field-descriptions-passdb.txt
+- sambaLMPassword: The LanMan password 16-byte hash stored as a character representation of a hexadecimal string.
+- sambaNTPassword The NT password 16-byte hash stored as a character representation of a hexadecimal string.
+- sambaPwdLastSet The integer time in seconds since 1970 when the sambaLMPassword and sambaNTPassword attributes were last set.
+- sambaAcctFlags String of 11 characters surrounded by square brackets [ ] representing account flags such as:
+  Exemples:
+   - sambaAcctFlags: 
+   - [UX          ] -> User no expire password
+   - [NUD        ] -> User disabled no password needed
+   - [W          ] -> Workstation
+  - U(user), 
+  - W (workstation), 
+  - X (no password expiration), 
+  - I (domain trust account), 
+  - H (home dir required), 
+  - S (server trust account), 
+  - T Temporary account
+  - M MNS logon user account
+  - N: No password required
+  - L: Locked account
+  - X: No expire on password
+  - and D (disabled).
+- sambaLogonTime: Integer value currently unused. Valor màxim: 2147483647 timestamp linux (time())
+  - No s'actualitza a Samba per ell sol, es pot fer un script: http://acacha.org/mediawiki/Samba_amb_Ldap#sambaLogonTime
+- sambaLogoffTime: Integer value currently unused.
+- sambaKickoffTime: expiration date 
+  - Specifies the time (UNIX time format) when the user will be locked down and cannot login any longer. 
+  - If this attribute is omitted, then the account will never expire. Using this attribute together with shadowExpire of the 
+  shadowAccount ObjectClass will enable accounts to expire completely on an exact date.
+- sambaPwdCanChange:
+  - Specifies the time (UNIX time format) after which the user is allowed to change his password. 
+  - If this attribute is not set, the user will be free to change his password whenever he wants.
+- sambaPwdMustChange: 0 o 2147483647 per no canviar mai
+  - Specifies the time (UNIX time format) when the user is forced to change his password. 
+  - If this value is set to 0, the user will have to change his password at first login. I
+  - f this attribute is not set, then the password will never expire.
+- sambaHomeDrive Specifies the drive letter to which to map the UNC path specified by sambaHomePath. The drive letter must be specified in the form “X:” where X is the letter of the drive to map. Refer to the “logon drive” parameter in the smb.conf(5) man page for more information.
+- sambaLogonScript The sambaLogonScript property specifies the path of the user’s logon script, .CMD, .EXE, or .BAT file. The string can be null. The path is relative to the netlogon share. Refer to the logon script parameter in the smb.conf man page for more information.
+- sambaProfilePath Specifies a path to the user’s profile. This value can be a null string, a local absolute path, or a UNC path. Refer to the logon path parameter in the smb.conf man page for more information. sambaHomePath The sambaHomePath property specifies the path of the home directory for the user. The string can be null. If sambaHomeDrive is set and specifies a drive letter, sambaHomePath should be a UNC path. The path must be a network UNC path of the form \\server\share\directory. This value can be a null string. Refer to the logon home parameter in the smb.conf man page for more information.
+- sambaUserWorkstations Here you can give a comma-separated list of machines on which the user is allowed to login. You may observe problems when you try to connect to a Samba domain member. Because domain members are not in this list, the domain controllers will reject them. Where this attribute is omitted, the default implies no restrictions.
+- sambaSID The security identifier(SID) of the user. The Windows equivalent of UNIX UIDs.
+- sambaPrimaryGroupSID The security identifier (SID) of the primary group of the user.
+- sambaDomainName Domain the user is part of.
+
 ## Passwords
 
+#### Ldap
+
+- [X] Adldap/Connections/ConnectionException with message 'You must be connected to your LDAP server with TLS or SSL to perform this operation.'
+  - [X] NO Importa realment? A ebre-escool no hi ha connexió TLS i el password es canvia correctament
+- Tres camps a canviar amb el password  
+  - [X] sambaLMPassword: 
+  - [X] sambaNTPassword: 
+  - [X] userPassword:: 
+  - [X] sambaPwdLastSet: Funció PHP time() -> Ex: 1550675023
+- Camps indirectes relacionats:
+- [X] sambaPwdLastSet: Funció PHP time() -> Ex: 1550675023
+- [ ] shadowLastChange:
+- [X] create helpers per fer els hash de userPassword i samba passwords
+- [X] Create Test changePassword
+- [X] Create changePassword
+- [X] APi i test
+- [X] Component Vue/acció
+ 
+##### sambaPwdLastSet
+
+???
+
+#####  sambaLMPassword i sambaNTPassword
+
+```
+$cr = new Crypt_CHAP_MSv1();
+$user_data_array["sambaNTPassword"]=strtoupper(bin2hex($cr->ntPasswordHash($user_data->password)));
+$user_data_array["sambaLMPassword"]=strtoupper(bin2hex($cr->lmPasswordHash($user_data->password)));
+```
+
+```
+protected function generate_smb_nt_hash($password)	{
+	
+		$password = addcslashes($password, '$'); // <- Escape $ twice for transport from PHP to console-process.
+		$password = addcslashes($password, '$'); 
+		$password = addcslashes($password, '$'); // <- And again once, to be able to use it as parameter for the perl script.
+		
+		$command='perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen %password), $/;"';
+		$tmp = $command ;
+		$tmp = preg_replace("/%userPassword/", escapeshellarg($password), $tmp);
+		$tmp = preg_replace("/%password/", escapeshellarg($password), $tmp);
+		
+		exec($tmp, $ar);
+		reset($ar);
+		$hash= current($ar);
+	
+		if ($hash == "") {
+			show_error("Configuration error: " . sprintf("Generating SAMBA hash by running %s failed: check %s!", $command, "sambaHashHook"));
+			return(array());
+		}
+		
+		list($lm,$nt)= explode(":", trim($hash));
+		
+		$attrs['sambaLMPassword']= $lm;
+		$attrs['sambaNTPassword']= $nt;
+		$attrs['sambaPwdLastSet']= "2147483647";
+		$attrs['sambaBadPasswordCount']= "0";
+		$attrs['sambaBadPasswordTime']= "0";
+		return($attrs);
+	}
+```
+ 
+- https://github.com/acacha/ebre-escool/blob/2c44f729b1eb47bd2df01990b77876e0804bf55d/application/libraries/ebre_escool_ldap.php#L211
+
+#### sambaBadPasswordCount: 0 i sambaBadPasswordTime: 0
+
+##### shadowLastChange
+
+$user_data_array["shadowLastChange"]= floor(time()/86400);
+
+- https://github.com/acacha/ebre-escool/blob/ada3d7500132735514d4fc8b35511f759f067357/application/modules/enrollment/models/enrollment_model.php#L331
+- https://github.com/acacha/ebre-escool/blob/2c44f729b1eb47bd2df01990b77876e0804bf55d/application/libraries/ebre_escool_ldap.php#L224
+
+##### userPassword
+
+How to hash to MD5:
+
+```
+"{MD5}".base64_encode(pack("H*",md5($user_data->password)));
+
+protected function generate_md5_hash($pwd)	{
+    return  "{MD5}".base64_encode( pack('H*', md5($pwd)));
+}
+```
+
+### EBRE_ESCOOL
+
+addLdapUser:
+https://github.com/acacha/ebre-escool/blob/ada3d7500132735514d4fc8b35511f759f067357/application/modules/enrollment/models/enrollment_model.php#L228
+
+
+```
+            $user_data_array["objectClass"][7]="extensibleObject";
+            $user_data_array["objectClass"][6]="inetOrgPerson";
+            $user_data_array["objectClass"][5]="irisPerson";
+            $user_data_array["objectClass"][4]="sambaSAMAccount";
+            $user_data_array["objectClass"][3]="shadowAccount";
+            $user_data_array["objectClass"][2]="posixAccount";
+            $user_data_array["objectClass"][1]="person";
+            $user_data_array["objectClass"][0]="top";
+```
+
+objectClass: extensibleObject
+objectClass: inetOrgPerson
+objectClass: irisPerson
+objectClass: sambaSamAccount
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: person
+objectClass: top
+
+### Canvi de paraula de pas
+
+
+- [ ] Individual per sistemes externs:
+ - [X] Canvi paraula de pas només Moodle
+   - [ ] Validació password mínim 6 caràcters: Javascript i Backend
+   - [ ] Explicar només canvia password de Moodle. Posar link porti canvi paraula de pas usuari local associat
+ - [X] Canvi paraula de pas només Google
+   - [ ] Validació password mínim 6 caràcters: Javascript i Backend
+   - [ ] Explicar només canvia password de Google. Posar link porti canvi paraula de pas usuari local associat
+ - [X] Canvi paraula de pas només Ldap
+   - [ ] Validació password mínim 6 caràcters: Javascript 
+   - [X] Validació password mínim 6 caràcters: Backend
+   - [ ] Explicar només canvia password de Ldap. Posar link porti canvi paraula de pas usuari local associat
+    
 ### PASSWORD RESET DE LARAVEL
 
+- [ ] Usuari va després de cn=Abderrazak Benyazid,ou=Alumnes	22 de 25
+  - 1175 + 22 = 1197
 - Link obtingut per email
 - Exemple: https://iesebre.scool.test/password/reset/007854ab8bbe140c0416ce5824c8cabe48e8c498be6668f88ed5cf4f06b0852a
 - Canvis que cal fer

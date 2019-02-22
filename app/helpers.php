@@ -747,7 +747,8 @@ if (!function_exists('ldap_manager_permissions')) {
     function ldap_manager_permissions()
     {
         return [
-            'ldap.users.index'
+            'ldap.users.index',
+            'ldap.users.update'
         ];
     }
 }
@@ -5249,6 +5250,20 @@ if (! function_exists('create_sample_google_user')) {
     }
 }
 
+if (! function_exists('create_sample_ldap_user')) {
+    function create_sample_ldap_user( $data = [
+        'givenName' => 'Usuari',
+        'familyName' => 'Esborrar',
+        'primaryEmail' => 'usuariesborrar@iesebre.com'
+    ]) {
+        // TODO
+//        if (google_user_exists($data['primaryEmail'])) {
+//            return GoogleUser::get($data['primaryEmail']);
+//        }
+//        return GoogleUser::store($data);
+    }
+}
+
 if (! function_exists('google_user_exists')) {
     function google_user_exists($user)
     {
@@ -9523,4 +9538,28 @@ if (! function_exists('is_valid_uuid')) {
     }
 }
 
+if (! function_exists('ldap_md5_hash')) {
+    function ldap_md5_hash($password)	{
+        return  "{MD5}".base64_encode( pack('H*', md5($password)));
+    }
+}
 
+if (! function_exists('ldap_sha1_hash')) {
+    function ldap_sha1_hash($password)	{
+        return  "{SHA}" . base64_encode(pack("H*",sha1($password)));
+    }
+}
+
+if (! function_exists('ldap_nt_password')) {
+    function ldap_nt_password($password)	{
+        $cr = new Crypt_CHAP_MSv2();
+        return strtoupper(bin2hex($cr->ntPasswordHash($password)));
+    }
+}
+
+if (! function_exists('ldap_lm_password')) {
+    function ldap_lm_password($password)	{
+        $cr = new Crypt_CHAP_MSv2();
+        return strtoupper(bin2hex($cr->lmPasswordHash($password)));
+    }
+}

@@ -54,6 +54,8 @@
 
     <meta name="description" content="Aplicació per a tota la comunitat educativa de l'Institut de l'Ebre">
     <meta name="author" content="Sergi Tur Badenas - scool.cat">
+
+    <script defer async src="{{ url (mix('/tenant/js/app.js')) }}" type="text/javascript"></script>
 </head>
 <body>
 <div id="app">
@@ -333,6 +335,5 @@
         </v-content>
     </v-app>
 </div>
-<script src="{{ url (mix('/tenant/js/app.js')) }}" type="text/javascript"></script>
 </body>
 </html>

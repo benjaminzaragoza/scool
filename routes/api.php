@@ -25,6 +25,7 @@ use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Ldap\LdapUsersController;
+use App\Http\Controllers\Tenant\Api\Ldap\LdapUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
@@ -278,11 +279,14 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             // GoogleUsersPasswordController
             Route::put('/gsuite/users/{user}/password', '\\'. GoogleUsersPasswordController::class. '@update');
 
-                //Ldap users
+            //Ldap users
             Route::get('/ldap/users', '\\' . LdapUsersController::class . '@index');
             Route::post('/ldap/users', '\\' . LdapUsersController::class . '@store');
 
-            //Google Suite watch users TODO
+            // Ldap Users password
+            Route::put('/ldap/users/{user}/password', '\\' . LdapUsersPasswordController::class . '@update');
+
+                //Google Suite watch users TODO
             Route::post('/gsuite/users/watch', 'Tenant\GoogleUsersWatchController@store');
 
             //Resend user email verification email
