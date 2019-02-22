@@ -67,10 +67,6 @@ if (mix.config.inProduction) {
         swSrc: 'public/src-sw.js', // more control over the caching
         swDest: 'sw.js', // the service-worker file name
         importsDirectory: 'service-worker', // have a dedicated folder for sw files
-        globPatterns: ['**/*.{php}'],
-        // templatedUrls: {
-        //   '/': ['index.php']
-        // }
       })
     ]
   })

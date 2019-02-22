@@ -19,6 +19,34 @@ self.addEventListener('push', (event) => {
 workbox.precaching.precacheAndRoute(self.__precacheManifest)
 // workbox.precaching.precacheAndRoute([]) També funciona i workbox substitueix pel que pertoca -> placeholder
 
+// static
+workbox.routing.registerRoute(
+  new RegExp('.(?:ico)$'),
+  workbox.strategies.networkFirst({
+    cacheName: 'icons'
+  })
+)
+
+// images
+workbox.routing.registerRoute(
+  new RegExp('.(?:jpg|jpeg|png|gif|svg|webp)$'),
+  workbox.strategies.cacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 20,
+        purgeOnQuotaError: true
+      })
+    ]
+  })
+)
+
+workbox.routing.registerRoute(
+  new RegExp('/'),
+  workbox.strategies.staleWhileRevalidate({ cacheName: 'landing' })
+)
+
+// NO ENS CAL PQ LES TENIM INTEGRADES EN LOCAL VIA WEBPACK i NMP IMPORTS
 // // fonts
 // workbox.routing.registerRoute(
 //   new RegExp('https://fonts.*'),

@@ -1,4 +1,42 @@
+# CONCEPTES
 
+## PRECACHE:
+
+- Static assets:
+ - HTML
+ - CSS
+ - JS
+ - Images
+ - Videos i altres
+ - JSON
+ 
+Alguns recursos es coneixen en temps de compilació i són fixes per a tot el nostre projecte i es poden gestionar amb webpack:
+
+- app.js bundle
+- css
+- Tots els css importat via css-loader amb webpack
+- Totes les fonts importades via webpack
+- Javascript chunks
+
+Altres recursos depenen de cada pàgina:
+- Imatges
+- Favicons
+- SVG
+- Altres icones app (manifest.json)
+
+DUBTE:
+- manifest.json?
+
+IMPORTANT: 
+- npm run hot no detectarà canvis en els assets només codi JS -> Cal npm run dev per reconstruir el service worker
+
+## RUNTIME CACHE:
+- Resultats que s'obtenen només en temps real
+ - PHP: Els fitxers PHP NO TÉ sentit cachejar. El fitxer PHP en sí no té sentit per al navegador però si el resultat
+ generat pel fitxer al executar-se en runtime al backend (servidor) i normalment tornar un PHP
+ - Crides a API
+ - ....
+ 
 # Workbox
 
 ## Passos previs
