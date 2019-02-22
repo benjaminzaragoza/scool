@@ -7,7 +7,7 @@
 Cal instal·lar Crypt/CHAP
 
 ```
-sudo apt-get install libcrypt-smbhash-perl php-fpdf php-pear php5-ldap
+sudo apt-get install libcrypt-smbhash-perl php-fpdf php-pear php7.2-ldap
 sudo pear install Crypt_CHAP
 ```
 
