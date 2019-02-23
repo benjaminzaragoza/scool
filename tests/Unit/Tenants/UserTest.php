@@ -902,6 +902,11 @@ class UserTest extends TestCase
             'moodle_username' => $user->email
         ]);
 
+        LdapUser::create([
+            'user_id' => $user->id,
+            'dn' => 'cn=pepe,dc=iesebre,dc=com'
+        ]);
+
         $person = Person::create([
             'givenName' => 'Pepe',
             'sn1' => 'Pardo',
@@ -939,6 +944,8 @@ class UserTest extends TestCase
         $this->assertEquals('pepepardo@iesebre.com',$mappedUser['corporativeEmail']);
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);
         $this->assertEquals('789',$mappedUser['moodleId']);
+        $this->assertEquals('cn=pepe,dc=iesebre,dc=com',$mappedUser['ldapDn']);
+
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['moodleUsername']);
         $this->assertNull($mappedUser['email_verified_at']);
 //        dd($mappedUser['email_verified_at_timestamp']);

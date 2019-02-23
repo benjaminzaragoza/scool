@@ -1765,27 +1765,29 @@ Tots els camps són especials
   - [X] Ara tenim corporativeEmail i permet associar Google user amb local user
   - [X] Es podria comprovar la sincronització de passwords? NO
 - [ ] Columna ldap
-  - [ ] Relació de l'usuari amb usuari extern Ldap. Taula ldap_users
-  - [ ] Crear les relacions entre els models
-  - [ ] Crear funció user que permet associar usuari ldap
-  - [ ] Incloure al map d'usuaris la relació amb ldap -> camp cn
+  - [X] Relació de l'usuari amb usuari extern Ldap. Taula ldap_users. Relació creada
+  - [X] Funció assignar usuari Ldap creada  itest
+  - [X] Crear funció user que permet associar usuari ldap
+  - [X] Incloure al map d'usuaris la relació amb ldap -> camp cn
   - [ ] Widget: 
     - [ ] Mostrar el cn associat a l'usuari local (si existeix)
       - [ ] Els cn són molt llargs. Posar un límit amb ellipsis. NO mostrar part fixe dc=iesebre,dc=com
         - [ ] Tooltip que permeti veure CN complet
-    - [ ] Sinó hi ha CN associat mostrar un boto més per afegir
-      - [ ] Mostrar un dialeg: llista/select/autocomplete amb la llista usuaris ldap. Permet associar usuari Ldap  
-- [ ] Columna Moodle
- - [ ] Relació de l'usuari amb usuari extern Moodle. Taula moodle_users
-   - [ ] Crear les relacions entre els models
-   - [ ] Crear funció user que permet associar usuari moodle
-   - [ ] Incloure al map d'usuaris la relació amb ldap -> moodle_id -> moodle_username
-   - [ ] Widget: 
-     - [ ] Mostrar el moodle_id i username associat a l'usuari local (si existeix)
-       - [ ] Els usernames/emails són molt llargs. Posar un límit amb ellipsis.
-         - [ ] Tooltip que permeti veure informació completa
-     - [ ] Sinó hi ha moodle_id associat mostrar un boto més per afegir-lo
-       - [ ] Mostrar un dialeg: llista/select/autocomplete amb la llista usuaris Moodle. Permet associar usuari Moodle  
+    - [X] Sinó hi ha CN associat mostrar un boto més per afegir
+      - [X] Mostrar un dialeg: llista/select/autocomplete amb la llista usuaris ldap. Permet associar usuari Ldap  
+      - [X] API associar/desassociar u sincronitzar
+      - [X] Tests
+- [X] Columna Moodle
+ - [X] Relació de l'usuari amb usuari extern Moodle. Taula moodle_users
+   - [X] Crear les relacions entre els models
+   - [X] Crear funció user que permet associar usuari moodle
+   - [X] Incloure al map d'usuaris la relació amb ldap -> moodle_id -> moodle_username
+   - [X] Widget: 
+     - [X] Mostrar el moodle_id i username associat a l'usuari local (si existeix)
+       - [X] Els usernames/emails són molt llargs. Posar un límit amb ellipsis.
+         - [X] Tooltip que permeti veure informació completa
+     - [X] Sinó hi ha moodle_id associat mostrar un boto més per afegir-lo
+       - [X] Mostrar un dialeg: llista/select/autocomplete amb la llista usuaris Moodle. Permet associar usuari Moodle  
 - [ ] Poder fer que un usuari sigui admin:
  - [ ] només els superadmins poden afegir altres admins
  - [ ] Certs superadmins (fitxer de config) no es poden eliminar
