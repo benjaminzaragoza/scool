@@ -17,6 +17,18 @@ use Spatie\Permission\Models\Role;
 class UsersController extends Controller
 {
     /**
+     * @param ShowUsersManagement $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(ShowUsersManagement $request)
+    {
+        $users = User::getUsers();
+        $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
+        $roles = Role::all();
+        return view('tenants.users.index',compact('users','userTypes','roles'));
+    }
+
+    /**
      * show
      * @param ShowUsersManagement $request
      * @param $tenant
@@ -30,15 +42,5 @@ class UsersController extends Controller
         $roles = Role::all();
         return view('tenants.users.show',compact('users','user','userTypes','roles'));
     }
-    /**
-     * @param ShowUsersManagement $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(ShowUsersManagement $request)
-    {
-        $users = User::getUsers();
-        $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
-        $roles = Role::all();
-        return view('tenants.users.index',compact('users','userTypes','roles'));
-    }
+
 }

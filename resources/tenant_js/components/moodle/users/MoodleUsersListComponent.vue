@@ -116,9 +116,11 @@
                             <v-avatar color="primary" :title="props.item.fullname" size="32">
                               <img :src="props.item.profileimageurlsmall" alt="avatar">
                             </v-avatar>
-                            <a
-                                    :title="props.item.description" v-text="props.item.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + props.item.id"
-                                    target="_blank"></a>
+                            <v-tooltip bottom>
+                                <a slot="activator" v-text="props.item.username" :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + props.item.id"
+                                        target="_blank"></a>
+                                <span> {{ props.item.id }} | {{ props.item.username }} | {{ props.item.description }}</span>
+                            </v-tooltip>
                         </td>
                         <td class="text-xs-left cell" style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                              <v-tooltip bottom>

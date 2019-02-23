@@ -180,6 +180,21 @@
                                             </span>
                                             <manage-corporative-email-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-corporative-email-icon>
                                         </td>
+                                        <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <span v-if="props.item.moodle_username">
+                                                <v-tooltip bottom>
+                                                    <span slot="activator">
+                                                        <a v-text="props.item.moodle_username"
+                                                           :href="'https://www.iesebre.com/moodle/user/profile.php?id=' + props.item.moodle_id"
+                                                           target="_blank"></a>
+                                                    </span>
+                                                    <span>{{ props.item.moodle_id }} | {{ props.item.moodle_username }}</span>
+                                                </v-tooltip>
+                                            </span>
+                                        </td>
+                                        <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            LDAP
+                                        </td>
                                         <td class="text-xs-left cell">
                                             <inline-text-field-edit-dialog mask="###-###-###" placeholder="666777895" hint="9 números seguits sense codi de país" v-model="props.item" field="mobile" label="Mòbil" @save="refresh"></inline-text-field-edit-dialog>
                                         </td>
@@ -478,6 +493,8 @@ export default {
         { text: 'Online', value: 'online' },
         { text: 'Verificat', value: 'email_verified_at' },
         { text: 'Email corporatiu', value: 'corporativeEmail' },
+        { text: 'Moodle', value: 'moodle_username' },
+        { text: 'Ldap', value: 'cn' },
         { text: 'Mòbil', value: 'mobile' },
         { text: 'Verificat', value: 'mobile_verified_at' },
         { text: 'Moodle', value: 'moodle' },

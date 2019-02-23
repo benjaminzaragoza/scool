@@ -1488,13 +1488,13 @@ if (!function_exists('initialize_menus')) {
         ]);
 
         Menu::firstOrCreate([
-            'text' => 'Grups de google',
+            'text' => 'Grups de Google',
             'href' => '/google_groups',
             'role' => 'UsersManager'
         ]);
 
         Menu::firstOrCreate([
-            'text' => 'Usuaris de google',
+            'text' => 'Usuaris de Google',
             'href' => '/google_users',
             'role' => 'UsersManager'
         ]);
