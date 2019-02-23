@@ -207,7 +207,7 @@ class LdapUser extends Model
             'createFormatted' => $createFormatted,
             'createHuman' => $createHuman,
 //            'jpegphoto' => $user->getAttribute('jpegphoto')[0], DOES NOT WORK -> ENCODING ERROR
-            'jpegphoto' => $user->getJpegPhotoEncoded()
+//            'jpegphoto' => $user->getJpegPhotoEncoded()
 //            'attributes' => $user->getAttributes()
         ];
     }

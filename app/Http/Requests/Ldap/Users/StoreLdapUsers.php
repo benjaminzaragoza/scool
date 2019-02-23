@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Ldap;
+namespace App\Http\Requests\Ldap\Users;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ListLdapUsers.
+ * Class StoreLdapUsers.
  *
  * @package App\Http\Requests
  */
-class ListLdapUsers extends FormRequest
+class StoreLdapUsers extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class ListLdapUsers extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('ldap.users.index');
+        return Auth::user()->can('store-ldap-users');
     }
 
     /**
@@ -29,8 +29,12 @@ class ListLdapUsers extends FormRequest
      */
     public function rules()
     {
+        //optional
+        // path | changePasswordAtNextLogin | hashFunction | password | secondaryEmail | mobile | id
         return [
-
+//            'givenName' => 'required',
+//            'familyName' => 'required',
+//            'primaryEmail' => 'required|email'
         ];
     }
 }

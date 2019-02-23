@@ -11,6 +11,7 @@
             item-text="fullname"
             return-object
             @change="$emit('selected',moodleUser)"
+            :loading="loading"
     >
         <template
                 slot="selection"
@@ -59,7 +60,8 @@ export default {
     return {
       isEditing: true,
       moodleUser: null,
-      moodleUsers: []
+      moodleUsers: [],
+      loading: false
     }
   },
   props: {
@@ -71,6 +73,7 @@ export default {
   methods: {
     remove () {
       this.moodleUser = null
+      this.$emit('selected', this.moodleUser)
     },
     refresh () {
       this.getMoodleUsers(true)
@@ -85,16 +88,15 @@ export default {
     },
     getMoodleUsers (refresh) {
       refresh = refresh || false
-      this.refreshing = true
+      this.loading = true
       let url = '/api/v1/moodle/users'
       if (!refresh) url = url + '?cache=true'
       axios.get(url).then(response => {
-        this.refreshing = false
+        this.loading = false
         this.moodleUsers = response.data
         this.selectCurrentUser()
       }).catch(error => {
-        this.refreshing = false
-        console.log(error)
+        this.loading = false
         this.$snackbar.showError(error)
       })
     }

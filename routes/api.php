@@ -24,8 +24,8 @@ use App\Http\Controllers\Tenant\Api\Curriculum\Subjects\SubjectsShortnameControl
 use App\Http\Controllers\Tenant\Api\Git\GitController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersPasswordController;
-use App\Http\Controllers\Tenant\Api\Ldap\LdapUsersController;
-use App\Http\Controllers\Tenant\Api\Ldap\LdapUsersPasswordController;
+use App\Http\Controllers\Tenant\Api\Ldap\Users\LdapUsersController;
+use App\Http\Controllers\Tenant\Api\Ldap\Users\LdapUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;
@@ -194,10 +194,15 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Moodle users check
             Route::post('/moodle/users/check', '\\'. MoodleUsersCheckController::class .'@store');
 
-            //Associate Gsuite user to user
+            //Associate Moodle user to user
             Route::post('/user/{user}/moodle','\\' . UserMoodleController::class .'@store');
             Route::put('/user/{user}/moodle','\\' . UserMoodleController::class .'@update');
             Route::delete('/user/{userid}/moodle','\\' . UserMoodleController::class .'@destroy');
+
+            //Associate Ldap user to user
+            Route::post('/user/{user}/ldap','\\' . UserLdapController::class .'@store');
+            Route::put('/user/{user}/ldap','\\' . UserLdapController::class .'@update');
+            Route::delete('/user/{userid}/moodle','\\' . UserLdapController::class .'@destroy');
 
             // Available users
             // TODO: UMMMMM

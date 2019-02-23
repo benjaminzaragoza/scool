@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Tenants\Moodle;
+namespace Tests\Feature\Tenants\Lap;
 
-use App\Events\Moodle\MoodleUserAssociated;
-use App\Events\Moodle\MoodleUserUnAssociated;
-use App\Models\MoodleUser;
+use App\Events\Lap\LapUserAssociated;
+use App\Events\Lap\LapUserUnAssociated;
+use App\Models\LapUser;
 use App\Models\User;
 use Event;
 use Illuminate\Contracts\Console\Kernel;
@@ -13,11 +13,11 @@ use Tests\BaseTenantTest;
 use Tests\Feature\Tenants\Traits\CanLogin;
 
 /**
- * Class UserMoodleControllerTest.
+ * Class UserLdapControllerTest.
  *
  * @package Tests\Feature
  */
-class UserMoodleControllerTest extends BaseTenantTest
+class UserLdapControllerTest extends BaseTenantTest
 {
     use RefreshDatabase,CanLogin;
 
@@ -36,8 +36,9 @@ class UserMoodleControllerTest extends BaseTenantTest
     }
 
     /** @test */
-    public function can_associate_moodle_user_to_user()
+    public function can_associate_ldap_user_to_user()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsUsersManager('api');
 
         $user = factory(User::class)->create([
@@ -45,23 +46,23 @@ class UserMoodleControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
         Event::fake();
-        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/moodle', [
-            'moodle_id' => 89
+        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/ldap', [
+            'ldap_dn' => 89
         ]);
 
         $response->assertSuccessful();
-        Event::assertDispatched(MoodleUserAssociated::class, function ($e) use ($user) {
+        Event::assertDispatched(LapUserAssociated::class, function ($e) use ($user) {
             return $e->user->id === $user->id &&
-                $e->moodleUser->moodle_id === 89;
+                $e->ldapUser->ldap_id === 89;
         });
 
         $user = $user->fresh();
-        $this->assertEquals($user->id, $user->moodleUser->user_id);
-        $this->assertEquals(89, $user->moodleUser->moodle_id);
+        $this->assertEquals($user->id, $user->ldapUser->user_id);
+        $this->assertEquals(89, $user->ldapUser->ldap_id);
     }
 
     /** @test */
-    public function can_associate_moodle_user_to_user_validation()
+    public function can_associate_ldap_user_to_user_validation()
     {
         $this->loginAsUsersManager('api');
 
@@ -71,30 +72,30 @@ class UserMoodleControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/moodle');
+        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/ldap');
 
         $response->assertStatus(422);
     }
 
     /** @test */
-    public function regular_user_cannot_associate_moodle_user_to_user()
+    public function regular_user_cannot_associate_ldap_user_to_user()
     {
         $this->login('api');
         $user = factory(User::class)->create();
-        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/moodle');
+        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/ldap');
         $response->assertStatus(403);
     }
 
     /** @test */
-    public function guest_user_cannot_associate_moodle_user_to_user()
+    public function guest_user_cannot_associate_ldap_user_to_user()
     {
         $user = factory(User::class)->create();
-        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/moodle');
+        $response = $this->json('POST', '/api/v1/user/' . $user->id . '/ldap');
         $response->assertStatus(401);
     }
 
     /** @test */
-    public function can_unassociate_moodle_user_to_user()
+    public function can_unassociate_ldap_user_to_user()
     {
         $this->loginAsUsersManager('api');
 
@@ -103,27 +104,27 @@ class UserMoodleControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        MoodleUser::create([
+        LapUser::create([
             'user_id' => $user->id,
-            'moodle_id' => 89,
-            'moodle_username' => $user->email
+            'ldap_id' => 89,
+            'ldap_username' => $user->email
         ]);
 
-        $this->assertEquals(89,$user->moodleUser->moodle_id);
+        $this->assertEquals(89,$user->ldapUser->ldap_id);
         Event::fake();
-        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/moodle');
+        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/ldap');
 
         $response->assertSuccessful();
-        Event::assertDispatched(MoodleUserUnAssociated::class, function ($e) use ($user) {
+        Event::assertDispatched(LapUserUnAssociated::class, function ($e) use ($user) {
             return $e->user->id === $user->id &&
-                intval($e->moodleUser) === 89;
+                intval($e->ldapUser) === 89;
         });
         $user = $user->fresh();
-        $this->assertNull($user->moodleUser);
+        $this->assertNull($user->ldapUser);
     }
 
     /** @test */
-    public function regular_user_cannot_unassociate_moodle_user_to_user()
+    public function regular_user_cannot_unassociate_ldap_user_to_user()
     {
         $this->login('api');
 
@@ -132,36 +133,36 @@ class UserMoodleControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        MoodleUser::create([
+        LapUser::create([
             'user_id' => $user->id,
-            'moodle_id' => 89,
-            'moodle_username' => $user->email
+            'ldap_id' => 89,
+            'ldap_username' => $user->email
         ]);
 
-        $this->assertEquals(89,$user->moodleUser->moodle_id);
+        $this->assertEquals(89,$user->ldapUser->ldap_id);
 
-        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/moodle');
+        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/ldap');
 
         $response->assertStatus(403);
     }
 
     /** @test */
-    public function guest_user_cannot_unassociate_moodle_user_to_user()
+    public function guest_user_cannot_unassociate_ldap_user_to_user()
     {
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        MoodleUser::create([
+        LapUser::create([
             'user_id' => $user->id,
-            'moodle_id' => 89,
-            'moodle_username' => $user->email
+            'ldap_id' => 89,
+            'ldap_username' => $user->email
         ]);
 
-        $this->assertEquals(89,$user->moodleUser->moodle_id);
+        $this->assertEquals(89,$user->ldapUser->ldap_id);
 
-        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/moodle');
+        $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/ldap');
 
         $response->assertStatus(401);
     }

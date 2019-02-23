@@ -1,5 +1,16 @@
 # BUGS
 
+- Assignació usuari Ldap a usuari local:
+  - [ ] Mostrar només els usuaris no tenen employeeNumber (sense usuari local assignat)
+  - [ ] Altres incoherències: email personal i emailCorporatiu coincideixin
+
+- RENDIMENT LDAP USERS
+  - [ ] jpegphoto -> 21MB /ldap_users
+  - [ ] Sense jpegphoto 672K
+  - [ ] Implementar un lazy loading -> UNA URL per mostrar la photo: 
+     - [ ] NO enviar la FOTO ni per API ni per web -> Treure del map
+     - [ ] A la vista mostrar una imatge /ldap/{user}/jpegphoto
+     - [ ] Està nova URL que no faci consulta a Ldap que utilitzi la cache per obtenir les dades -> Crear una cache per les imatges
 - [ ] Uncaught (in promise) DOMException
   - [ ] Ara he capturar la excepció pq no peti però apareix missatge a la consola
   - [ ] Quan demanar permissos per rebre notificacions? TODO https://developers.google.com/web/fundamentals/push-notifications/permission-ux
@@ -12,7 +23,8 @@
   - [X] Al posar bypass network a pestanya application funciona correctament
   - [X] Quan a la pestanya network les peticions tenen un COG (crec vol dir ha intervingut service worker) no va bé el refresh
 - [ ] Ldap users a vegades no apareix bé la pàgina? Service workers? 
-  - [ ] No sembla cosa dels service workers pq ja he arreglat expressió regular ho estava capturant/cachejant TOT. 
+  - [ ] No sembla cosa dels service workers pq ja he arreglat expressió regular ho estava capturant/cachejant TOT.
+  - [ ] Amb un nombre limitat usuaris Ldap (10) funciona i amb 1000 també i 2000 i 2250 2300 2325 2335 2338 2339 2345 2346
 - [X] FUOC a la intranet. SOLVED
 - [ ] FUOC amb les icones material!!
 - [ ] FUOC de les fonts ROBOTO!!!!

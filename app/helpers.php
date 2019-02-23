@@ -738,7 +738,9 @@ if (!function_exists('users_manager_permissions')) {
             'people.index',
             'people.show',
             'people.store',
-            'moodle.user.password.update'
+            'moodle.user.password.update',
+            'ldap.users.index',
+            'ldap.users.update'
         ];
     }
 }

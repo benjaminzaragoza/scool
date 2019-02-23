@@ -22,20 +22,11 @@ class LdapUsersController extends Controller
      */
     public function index(ListLdapUsers $request)
     {
-        $users = LdapUser::getLdapUsers(10);
-        // TODO ELIMINAR
-//        $users = LdapUser::getLdapUsers()->forPage(48, 25)->values();
-//        dd($users->forPage(24, 50));
+        $users = LdapUser::getLdapUsers();
         $localUsers = map_collection(User::with(['roles','permissions','googleUser','person'])->get());
-        // TODO ELIMINAR
-//        dd(LdapUser::adapt($users[22], $localUsers));
-//        dd($users[22]); // ou=All,dc=iesebre,dc=com" +"rdn": "cn=PEPITOPALOTES"
-
         $users = $users->map(function($user) use ($localUsers) {
             return LdapUser::adapt($user, $localUsers);
         });
-
         return view('tenants.ldap_users.index', compact('users','localUsers'));
-
     }
 }

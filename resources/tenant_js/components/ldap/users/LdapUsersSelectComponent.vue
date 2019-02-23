@@ -1,16 +1,16 @@
 <template>
     <v-autocomplete
-            :items="googleUsers"
-            v-model="googleUser"
+            :items="ldapUsers"
+            v-model="ldapUser"
             hint="Utilitzeu la funcionalitat autocompletar per buscar usuaris..."
-            label="Escolliu un usuari de Google"
+            label="Escolliu un usuari de Ldap"
             persistent-hint
             prepend-icon="mdi-city"
             clearable
             chips
-            item-text="fullName"
+            item-text="fullname"
             return-object
-            @change="$emit('selected',googleUser)"
+            @change="$emit('selected', ldapUser)"
             :loading="loading"
     >
         <template
@@ -24,10 +24,10 @@
                     @input="remove(data.item)"
             >
                 <v-avatar>
-                    <img v-if="data.item.thumbnailPhotoUrl" :src="data.item.thumbnailPhotoUrl">
+                    <img v-if="data.item.profileimageurl" :src="data.item.profileimageurl">
                     <img v-else src="/img/default.png" alt="photo per defecte">
                 </v-avatar>
-                {{ data.item.primaryEmail }}
+                {{ data.item.dn }}| {{ data.item.email }}
             </v-chip>
         </template>
         <template
@@ -37,14 +37,14 @@
             <template v-if="typeof data.item !== 'object'">
                 <v-list-tile-content v-text="data.item"></v-list-tile-content>
             </template>
-            <template v-else>
+            <template>
                 <v-list-tile-avatar>
-                    <img v-if="data.item.thumbnailPhotoUrl" :src="data.item.thumbnailPhotoUrl">
+                    <img v-if="data.item.profileimageurl" :src="data.item.profileimageurl">
                     <img v-else src="/img/default.png" alt="photo per defecte">
                 </v-list-tile-avatar>
                 <v-list-tile-content>
-                    <v-list-tile-title v-html="data.item.fullName"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.primaryEmail"></v-list-tile-sub-title>
+                    <v-list-tile-title v-html="data.item.dn"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
                 </v-list-tile-content>
             </template>
         </template>
@@ -55,12 +55,12 @@
 import axios from 'axios'
 
 export default {
-  name: 'GoogleUsersSelectComponent',
+  name: 'LdapUsersSelectComponent',
   data () {
     return {
       isEditing: true,
-      googleUser: null,
-      googleUsers: [],
+      ldapUser: null,
+      ldapUsers: [],
       loading: false
     }
   },
@@ -72,38 +72,37 @@ export default {
   },
   methods: {
     remove () {
-      this.googleUser = null
-      this.$emit('selected', this.googleUser)
+      this.ldapUser = null
+      this.$emit('selected', this.ldapUser)
     },
     refresh () {
-      this.getGoogleUsers(true)
+      this.getLdapUsers(true)
     },
     selectCurrentUser () {
-      if (this.user.corporativeEmail) {
-        this.googleUser = this.googleUsers.find(googleUser => {
-          return googleUser.primaryEmail === this.user.corporativeEmail
+      if (this.user.ldapId) {
+        this.ldapUser = this.ldapUsers.find(ldapUser => {
+          return parseInt(ldapUser.id) === parseInt(this.user.ldapId)
         })
-        if (!this.googleUser) this.$snackbar.showError('El compte ' + this.user.corporativeEmail + ' no existeix a Google')
+        if (!this.ldapUser) this.$snackbar.showError('El compte ' + this.user.ldapId + ' no existeix a Ldap')
       }
     },
-    getGoogleUsers (refresh) {
+    getLdapUsers (refresh) {
       refresh = refresh || false
       this.loading = true
-      let url = '/api/v1/gsuite/users'
+      let url = '/api/v1/ldap/users'
       if (!refresh) url = url + '?cache=true'
       axios.get(url).then(response => {
         this.loading = false
-        this.googleUsers = response.data
+        this.ldapUsers = response.data
         this.selectCurrentUser()
       }).catch(error => {
         this.loading = false
-        console.log(error)
         this.$snackbar.showError(error)
       })
     }
   },
   created () {
-    this.googleUsers = this.getGoogleUsers()
+    this.ldapUsers = this.getLdapUsers()
   }
 }
 </script>

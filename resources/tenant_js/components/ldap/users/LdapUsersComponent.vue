@@ -261,6 +261,8 @@ export default {
       this.refreshing = true
       window.axios.get('/api/v1/ldap/users').then(response => {
         this.refreshing = false
+        this.internalUsers = response.data
+        this.$snackbar.showMessage('Usuaris actualitzats correctament')
       }).catch(error => {
         this.refreshing = false
         this.$snackbar.showError(error)

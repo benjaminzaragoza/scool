@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Ldap;
+namespace App\Http\Requests\Moodle\Users;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateLdapUserPassword.
+ * Class AssociateLdapUserToUser
  *
  * @package App\Http\Requests
  */
-class UpdateLdapUserPassword extends FormRequest
+class AssociateLdapUserToUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class UpdateLdapUserPassword extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('ldap.users.update');
+        return Auth::user()->can('users.store');
     }
 
     /**
@@ -30,7 +30,7 @@ class UpdateLdapUserPassword extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required|min:6'
+            'cn' => 'required|unique:ldap_users',
         ];
     }
 }

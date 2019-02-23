@@ -16,7 +16,7 @@ class CreateTenantLdapUsersTable extends Migration
         Schema::create('ldap_users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable()->unique();
-            $table->string('cn')->unique();
+            $table->string('dn')->unique();
             $table->timestamps();
         });
     }

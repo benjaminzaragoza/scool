@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Tenant\Api\Ldap;
+namespace App\Http\Controllers\Tenant\Api\Ldap\Users;
 
 use App\Http\Controllers\Tenant\Controller;
-use App\Http\Requests\Ldap\UpdateLdapUserPassword;
+use App\Http\Requests\Ldap\Users\UpdateLdapUserPassword;
 use App\Models\LdapUser;
 
 /**
