@@ -35,12 +35,11 @@ class UserLdapController extends Controller
         if  ($existing = LdapUser::where('user_id',$user->id)->first()) {
             LdapUser::destroy($existing->id);
         }
-        $moodleUser = LdapUser::create([
+        $ldapUser = LdapUser::create([
             'user_id' => $user->id,
-            'moodle_id' => $request->moodle_id,
-            'moodle_username' => $user->email,
+            'dn' => $request->dn
         ]);
-        event(new LdapUserAssociated($user, $moodleUser));
+        event(new LdapUserAssociated($user, $ldapUser));
     }
 
     /**
@@ -53,8 +52,8 @@ class UserLdapController extends Controller
      */
     public function update(LdapUserUpdate $request, $tenant, User $user)
     {
-        if (!$user->moodleUser) abort (422, "L'usuari $user->name no té un compte de Ldap associat");
-        LdapUser::sync($user->moodleUser->moodle_id, $user);
+        if (!$user->ldapUser) abort (422, "L'usuari $user->name no té un compte de Ldap associat");
+        LdapUser::sync($user->ldapUser->ldap_id, $user);
     }
 
     /**
@@ -66,8 +65,8 @@ class UserLdapController extends Controller
      */
     public function destroy(UnassociateLdapUserToUser $request, $tenant, $userId)
     {
-        $moodleUser = LdapUser::where('user_id', $userId)->firstOrFail();
-        $moodleUser->delete();
-        event(new LdapUserUnAssociated(User::findOrFail($userId), $moodleUser->moodle_id));
+        $ldapUser = LdapUser::where('user_id', $userId)->firstOrFail();
+        $ldapUser->delete();
+        event(new LdapUserUnAssociated(User::findOrFail($userId), $ldapUser->ldap_id));
     }
 }

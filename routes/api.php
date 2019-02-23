@@ -26,6 +26,7 @@ use App\Http\Controllers\Tenant\Api\Google\GoogleUsersController;
 use App\Http\Controllers\Tenant\Api\Google\GoogleUsersPasswordController;
 use App\Http\Controllers\Tenant\Api\Ldap\Users\LdapUsersController;
 use App\Http\Controllers\Tenant\Api\Ldap\Users\LdapUsersPasswordController;
+use App\Http\Controllers\Tenant\Api\Ldap\Users\UserLdapController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersCheckController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersController;
 use App\Http\Controllers\Tenant\Api\Moodle\Users\MoodleUsersPasswordController;

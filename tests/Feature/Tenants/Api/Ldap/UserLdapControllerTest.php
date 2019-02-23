@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Tenants\Lap;
+namespace Tests\Feature\Tenants\Ldap;
 
-use App\Events\Lap\LapUserAssociated;
-use App\Events\Lap\LapUserUnAssociated;
-use App\Models\LapUser;
+use App\Events\Ldap\LdapUserAssociated;
+use App\Events\Ldap\LdapUserUnAssociated;
+use App\Models\LdapUser;
 use App\Models\User;
 use Event;
 use Illuminate\Contracts\Console\Kernel;
@@ -47,18 +47,18 @@ class UserLdapControllerTest extends BaseTenantTest
         ]);
         Event::fake();
         $response = $this->json('POST', '/api/v1/user/' . $user->id . '/ldap', [
-            'ldap_dn' => 89
+            'dn' => 'cn=Pepe,dc=iesebre,dc=com'
         ]);
 
         $response->assertSuccessful();
-        Event::assertDispatched(LapUserAssociated::class, function ($e) use ($user) {
-            return $e->user->id === $user->id &&
-                $e->ldapUser->ldap_id === 89;
+        Event::assertDispatched(LdapUserAssociated::class, function ($event) use ($user) {
+            return $event->user->id === $user->id &&
+                $event->ldapUser->dn === 'cn=Pepe,dc=iesebre,dc=com';
         });
 
         $user = $user->fresh();
         $this->assertEquals($user->id, $user->ldapUser->user_id);
-        $this->assertEquals(89, $user->ldapUser->ldap_id);
+        $this->assertEquals('cn=Pepe,dc=iesebre,dc=com', $user->ldapUser->dn);
     }
 
     /** @test */
@@ -104,7 +104,7 @@ class UserLdapControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        LapUser::create([
+        LdapUser::create([
             'user_id' => $user->id,
             'ldap_id' => 89,
             'ldap_username' => $user->email
@@ -115,7 +115,7 @@ class UserLdapControllerTest extends BaseTenantTest
         $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/ldap');
 
         $response->assertSuccessful();
-        Event::assertDispatched(LapUserUnAssociated::class, function ($e) use ($user) {
+        Event::assertDispatched(LdapUserUnAssociated::class, function ($e) use ($user) {
             return $e->user->id === $user->id &&
                 intval($e->ldapUser) === 89;
         });
@@ -133,7 +133,7 @@ class UserLdapControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        LapUser::create([
+        LdapUser::create([
             'user_id' => $user->id,
             'ldap_id' => 89,
             'ldap_username' => $user->email
@@ -154,7 +154,7 @@ class UserLdapControllerTest extends BaseTenantTest
             'email' => 'pepepardojeans@gmail.com'
         ]);
 
-        LapUser::create([
+        LdapUser::create([
             'user_id' => $user->id,
             'ldap_id' => 89,
             'ldap_username' => $user->email

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Moodle\Users;
+namespace App\Http\Requests\Ldap\Users;
 
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,7 +30,7 @@ class AssociateLdapUserToUser extends FormRequest
     public function rules()
     {
         return [
-            'cn' => 'required|unique:ldap_users',
+            'dn' => 'required|unique:ldap_users',
         ];
     }
 }
