@@ -356,22 +356,9 @@ class MoodleUserTest extends TestCase
         $this->assertNull($result);
     }
 
-//    /**
-//     * @test
-//     * @throws \GuzzleHttp\Exception\GuzzleException
-//     */
-//    public function send_password_change_email()
-//    {
-//      TODO -> not possible using Moodle webservice -> RESET SCOOL PASSWORD AND SET SAME PASSWORD TO MOODLE
-//    }
-
     /**
-     * Can change password.
-     *
-     * @test
-     * @group moodle
-     * @group slow
-     * @throws \Exception
+     * can change password.
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function can_change_password()
     {

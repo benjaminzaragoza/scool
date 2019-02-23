@@ -52,8 +52,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'LdapUsersSelectComponent',
   data () {
@@ -79,11 +77,11 @@ export default {
       this.getLdapUsers(true)
     },
     selectCurrentUser () {
-      if (this.user.ldapId) {
+      if (this.user.ldapDn) {
         this.ldapUser = this.ldapUsers.find(ldapUser => {
-          return parseInt(ldapUser.id) === parseInt(this.user.ldapId)
+          return ldapUser.dn === this.user.ldapDn
         })
-        if (!this.ldapUser) this.$snackbar.showError('El compte ' + this.user.ldapId + ' no existeix a Ldap')
+        if (!this.ldapUser) this.$snackbar.showError('El compte ' + this.user.ldapDn + ' no existeix a Ldap')
       }
     },
     getLdapUsers (refresh) {
@@ -91,7 +89,7 @@ export default {
       this.loading = true
       let url = '/api/v1/ldap/users'
       if (!refresh) url = url + '?cache=true'
-      axios.get(url).then(response => {
+      window.axios.get(url).then(response => {
         this.loading = false
         this.ldapUsers = response.data
         this.selectCurrentUser()

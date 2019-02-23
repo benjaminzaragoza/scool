@@ -200,10 +200,10 @@
                                             <manage-moodle-user-icon :user="props.item" @unassociated="refresh(false)" @associated="refresh(false)"></manage-moodle-user-icon>
                                         </td>
                                         <td class="text-xs-left cell" style="max-width: 125px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            <span v-if="props.item.ldapCn">
+                                            <span v-if="props.item.ldapDn">
                                                 <v-tooltip bottom>
-                                                    <span slot="activator" v-text="props.item.ldap_cn"></span>
-                                                    <span>{{ props.item.ldap_cn }}</span>
+                                                    <span slot="activator" v-text="props.item.ldapDn"></span>
+                                                    <span>{{ props.item.ldapDn }}</span>
                                                 </v-tooltip>
                                             </span>
                                             <manage-ldap-user-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-ldap-user-icon>

@@ -52,8 +52,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'MoodleUsersSelectComponent',
   data () {
@@ -91,7 +89,7 @@ export default {
       this.loading = true
       let url = '/api/v1/moodle/users'
       if (!refresh) url = url + '?cache=true'
-      axios.get(url).then(response => {
+      window.axios.get(url).then(response => {
         this.loading = false
         this.moodleUsers = response.data
         this.selectCurrentUser()

@@ -352,4 +352,72 @@ class LdapUser extends Model
         return $user;
     }
 
+    /**
+     * Sync.
+     *
+     * @param $dn
+     * @param User $user
+     * @return string
+     * @throws \Exception
+     */
+    public static function sync($dn, User $user)
+    {
+
+        // GOOGLE
+
+        if (!$user->ldapUser) abort (422, "L'usuari $user->name no té un compte de Ldap associat");
+
+        // UPDATE LDAP --> TODO!!
+
+
+//        if (!google_user_exists($googleEmail = $user->googleUser->google_email)) abort('422',
+//            "No existeix el compte de Google $googleEmail");
+//        try {
+//            $nameArray = explode(" ", $user->name);
+//            $givenName = $nameArray[0];
+//            if ($user->person) $givenName =  $user->person->givenName;
+//            $familyName = implode(" ",array_splice($nameArray,1,count($nameArray)-1));
+//            if ($user->person) $familyName = fullsurname($user->person->sn1,$user->person->sn2);
+//            return get_object_vars ((new GoogleDirectory())->editUser([
+//                'primaryEmail' => $user->googleUser->google_email,
+//                'givenName' => $givenName ,
+//                'familyName' => $familyName,
+//                'fullName' => $user->name,
+//                'hashFunction' => 'SHA-1',
+//                'password' => $user->password,
+//                'secondaryEmail' => $user->email,
+//                'mobile' => $user->mobile,
+//                'id' => $user->id
+//            ]));
+//        } catch (Google_Service_Exception $e) {
+//            abort('422',$e);
+//        }
+
+
+        /// MOODLE
+
+//        dd($user);
+//        $functionname = 'core_user_update_users';
+//        $serverurl = config('moodle.url') . config('moodle.uri') .  '?wstoken=' . config('moodle.token') . '&wsfunction='.$functionname . '&moodlewsrestformat=json';
+//        $client = new Client();
+//        $email = $user->corporativeEmail ? $user->corporativeEmail : $user->email;
+//        $user = [
+//            'id' => $dn,
+//            'username' => $user->email,
+//            'firstname' => optional($user->person)->givenName,
+//            'lastname' => $user->lastname(),
+//            'email' => $email,
+//            'idnumber' => $user->id
+//        ];
+//        $params = [
+//            'users' => [ $user ]
+//        ];
+//        $res = $client->request('POST', $serverurl, [
+//            'form_params' => $params
+//        ]);
+//        $result = (string) $res->getBody();
+//        if (str_contains($result,'"exception"')) throw new \Exception($result);
+//        return $result;
+    }
+
 }

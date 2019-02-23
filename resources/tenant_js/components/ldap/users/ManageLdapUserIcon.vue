@@ -1,6 +1,6 @@
 <template>
     <span class="ma-0 pa-0">
-        <template v-if="user.ldapId">
+        <template v-if="user.ldapDn">
             <div class="mt-0 mb-0 pa-0" style="width: fit-content;">
                 <v-btn icon class="ma-0 pa-0" title="Editar correu electrònic corporatiu" @click.native.stop="openDialog">
                     <v-icon small color="teal">edit</v-icon>

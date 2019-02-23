@@ -43,17 +43,16 @@ class UserLdapController extends Controller
     }
 
     /**
-     * Update. (sync)
-     *
+     * Update (sync)
      * @param LdapUserUpdate $request
      * @param $tenant
      * @param User $user
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     public function update(LdapUserUpdate $request, $tenant, User $user)
     {
         if (!$user->ldapUser) abort (422, "L'usuari $user->name no té un compte de Ldap associat");
-        LdapUser::sync($user->ldapUser->cn, $user);
+        LdapUser::sync($user->ldapUser->dn, $user);
     }
 
     /**

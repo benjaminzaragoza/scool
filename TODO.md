@@ -1755,24 +1755,37 @@ Tots els camps són especials
 
 ## LLISTA DATATABLES
 
+- [ ] Usuari online
+- [ ] Llista d'usuaris -> mostrar columna online de l'usuari
+- [ ] Columna ldap
+  - [ ] LdapUser:sync i test PENDENT EDITAR USUARIS!!!!!!!!!!!!!!!!!!
+- [ ] Poder fer que un usuari sigui admin:
+ - [ ] només els superadmins poden afegir altres admins
+ - [ ] Certs superadmins (fitxer de config) no es poden eliminar
+- [ ] Poder buscar usuaris:
+  - [ ] Nom
+  - [ ] Identificador
+- [ ] Acció -> Enviar notificació a l'usuari
+- [ ] Link amb dades personals
+  - [ ] Sinó hi ha dades personals no és un link és un diàleg flotant que mostrar el formulari 3 (el de dades personals)
+    - [ ] Petita modificació al formulari tres -> incloure Sn1, Sn2 i Givenname
 - [X] Acció: comprovar password
  - [X] Escriure el password i comparar-ho amb els hashs -> DESCARTAT -> Només serviria per LDAP i no és imprescindible -> potser com a check
    - [X] Ldap: tenim els hashes de unix i els de samba no problem per comparar
    - [X] Moodle: no tenim els hashses -> DESCARTAT
    - [X] Google: TAMPOC. DESCARTAT
-- [ ] Usuari online
-- [ ] Columna Google
+- [X] Columna Google
   - [X] Ara tenim corporativeEmail i permet associar Google user amb local user
   - [X] Es podria comprovar la sincronització de passwords? NO
-- [ ] Columna ldap
+- [X] Columna ldap
   - [X] Relació de l'usuari amb usuari extern Ldap. Taula ldap_users. Relació creada
   - [X] Funció assignar usuari Ldap creada  itest
   - [X] Crear funció user que permet associar usuari ldap
   - [X] Incloure al map d'usuaris la relació amb ldap -> camp cn
   - [ ] Widget: 
-    - [ ] Mostrar el cn associat a l'usuari local (si existeix)
-      - [ ] Els cn són molt llargs. Posar un límit amb ellipsis. NO mostrar part fixe dc=iesebre,dc=com
-        - [ ] Tooltip que permeti veure CN complet
+    - [X] Mostrar el cn associat a l'usuari local (si existeix)
+      - [X] Els cn són molt llargs. Posar un límit amb ellipsis. NO mostrar part fixe dc=iesebre,dc=com
+        - [X] Tooltip que permeti veure CN complet
     - [X] Sinó hi ha CN associat mostrar un boto més per afegir
       - [X] Mostrar un dialeg: llista/select/autocomplete amb la llista usuaris ldap. Permet associar usuari Ldap  
       - [X] API associar/desassociar u sincronitzar
@@ -1788,18 +1801,6 @@ Tots els camps són especials
          - [X] Tooltip que permeti veure informació completa
      - [X] Sinó hi ha moodle_id associat mostrar un boto més per afegir-lo
        - [X] Mostrar un dialeg: llista/select/autocomplete amb la llista usuaris Moodle. Permet associar usuari Moodle  
-- [ ] Poder fer que un usuari sigui admin:
- - [ ] només els superadmins poden afegir altres admins
- - [ ] Certs superadmins (fitxer de config) no es poden eliminar
-- [ ] Poder buscar usuaris:
-  - [ ] Nom
-  - [ ] Identificador
-- [ ] Llista d'usuaris -> mostrar columna online de l'usuari
-- [ ] Acció -> Enviar notificació a l'usuari
-- [ ] Link amb dades personals
-  - [ ] Sinó hi ha dades personals no és un link és un diàleg flotant que mostrar el formulari 3 (el de dades personals)
-    - [ ] Petita modificació al formulari tres -> incloure Sn1, Sn2 i Givenname
-
 ## SUBFOMULARI AFEGIR USUARI
 
 - [ ] Component per cercar usuaris ja existents

@@ -51,7 +51,6 @@ class UserGsuiteController extends Controller
     public function update(EditGoogleUsers $request, $tenant, User $user)
     {
         if (!$user->googleUser) abort (422, "L'usuari $user->name no té un compte de Google associat");
-        dd($user->googleUser->google_email);
         if (!google_user_exists($googleEmail = $user->googleUser->google_email)) abort('422',
             "No existeix el compte de Google $googleEmail");
         try {
@@ -72,7 +71,6 @@ class UserGsuiteController extends Controller
                 'id' => $user->id
             ]));
         } catch (Google_Service_Exception $e) {
-            dd($e);
             abort('422',$e);
         }
     }
