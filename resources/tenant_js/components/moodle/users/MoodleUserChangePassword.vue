@@ -46,8 +46,14 @@
                                             type="warning"
                                             dismissible
                                     >
-                                        Aquesta operació NOMÉS canviarà la paraula de pas a Moodle. Per canviar la resta de paraules de pas (usuari local, Google, Ldap...) cal anar al
-                                    <a target="_blank" href="/users">Mòdul de gestió d'usuaris</a>
+                                        Aquesta operació NOMÉS canviarà la paraula de pas a Moodle. Per canviar la resta de paraules de pas (usuari local, Google, Ldap...) cal anar a:
+                                        <span v-if="user.employeeId">
+                                            <a target="_blank" :href="'/users/password/' + user.employeeId">Mòdul de gestió d'usuaris</a>
+                                        </span>
+                                        <span v-else>
+                                            <a target="_blank" href="/users">Mòdul de gestió d'usuaris</a>.
+                                        Aquest usuari Moodle no té usuari local associat.
+                                        </span>
                                   </v-alert>
                                 </v-flex>
                             </v-layout>

@@ -3,6 +3,7 @@
 - [ ] Ldap users a vegades no apareix bé la pàgina? Service workers? 
 - [X] FUOC a la intranet. SOLVED
 - [ ] FUOC amb les icones material!!
+- [ ] FUOC de les fonts ROBOTO!!!!
 - [ ] Data de naixement a dades personals: es penja el seu estat si es posa data mal formatada? No es pot omplir formulari
 
 # NETEJAR SERVICE WORKERS
@@ -1949,7 +1950,7 @@ objectClass: top
 
 ### Canvi de paraula de pas
 
-- [ ] Link directe (ara hi ha link a gestió usuaris però no a l'usuari concret) a canvi de password de l'usuari local a tots els sistemes externs (Ldap, Moodle, Google)
+- [X] Link directe (ara hi ha link a gestió usuaris però no a l'usuari concret) a canvi de password de l'usuari local a tots els sistemes externs (Ldap, Moodle, Google)
 - [X] Opció de mostrar la paraula de pas a l'usuari (Vuetify té exemples de camps password a la seva doc)
 - [X] Individual per sistemes externs:
  - [X] Canvi paraula de pas només Moodle
