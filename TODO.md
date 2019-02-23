@@ -2,7 +2,7 @@
 
 - [ ] Ldap users a vegades no apareix bé la pàgina? Service workers? 
 - [X] FUOC a la intranet. SOLVED
-- [ ] FUOC del tipus de lletra?
+- [ ] FUOC amb les icones material!!
 - [ ] Data de naixement a dades personals: es penja el seu estat si es posa data mal formatada? No es pot omplir formulari
 
 # NETEJAR SERVICE WORKERS
@@ -1949,26 +1949,25 @@ objectClass: top
 
 ### Canvi de paraula de pas
 
-
-- [ ] Individual per sistemes externs:
+- [ ] Link directe (ara hi ha link a gestió usuaris però no a l'usuari concret) a canvi de password de l'usuari local a tots els sistemes externs (Ldap, Moodle, Google)
+- [X] Opció de mostrar la paraula de pas a l'usuari (Vuetify té exemples de camps password a la seva doc)
+- [X] Individual per sistemes externs:
  - [X] Canvi paraula de pas només Moodle
    - [X] Validació password mínim 6 caràcters: Javascript i Backend
-   - [X] Explicar només canvia password de Moodle. Posar link porti canvi paraula de pas usuari local associat
-     - [ ] Link directa a canvi de password de l'usuari local
+   - [X] Explicar només canvia password de Moodle. Posar link porti canvi paraula de pas usuari local associat     
  - [X] Canvi paraula de pas només Google
-   - [ ] Validació password mínim 6 caràcters: Javascript i Backend
-   - [ ] Explicar només canvia password de Google. Posar link porti canvi paraula de pas usuari local associat
+   - [X] Validació password mínim 6 caràcters: Javascript i Backend
+   - [X] Explicar només canvia password de Google. Posar link porti canvi paraula de pas usuari local associat
  - [X] Canvi paraula de pas només Ldap
-   - [ ] Validació password mínim 6 caràcters: Javascript 
+   - [X] Validació password mínim 6 caràcters: Javascript 
    - [X] Validació password mínim 6 caràcters: Backend
-   - [ ] Explicar només canvia password de Ldap. Posar link porti canvi paraula de pas usuari local associat
+   - [X] Explicar només canvia password de Ldap. Posar link porti canvi paraula de pas usuari local associat
     
 ### PASSWORD RESET DE LARAVEL
 
-- [ ] Usuari va després de cn=Abderrazak Benyazid,ou=Alumnes	22 de 25
-  - 1175 + 22 = 1197
-- Link obtingut per email
-- Exemple: https://iesebre.scool.test/password/reset/007854ab8bbe140c0416ce5824c8cabe48e8c498be6668f88ed5cf4f06b0852a
+Iniciat pel propi usuari:
+
+- Link canvia paraula de pas obtingut per email: Exemple: https://iesebre.scool.test/password/reset/007854ab8bbe140c0416ce5824c8cabe48e8c498be6668f88ed5cf4f06b0852a
 - Canvis que cal fer
   - [ ] Opció de mostrar la paraula de pas a l'usuari (Vuetify té exemples de camps password a la seva doc)
   - [ ] Sincronització amb plataformes externes (tasques en segon terme i amb procesos)
@@ -1978,8 +1977,12 @@ objectClass: top
     - [ ] Moodle
     - [ ] Google
     - [ ] Ldap
+- [X] NUll values. Usuari va després de cn=Abderrazak Benyazid,ou=Alumnes 22 de 25 1175 + 22 = 1197
 
-### Comentaris
+Iniciat per un admin o gestor d'usuaris
+- [ ] TODO
+
+### Comentaris sobre els passwords
 
 Email de benvinguda:
 - [ ] Aprofitar i també porti link per verificar email
@@ -1995,7 +1998,7 @@ Llocs on canviar la paraula de pas:
 - [ ] Per SMS?
 
 CANVI/ESTABLIMENT PARAULA DE PAS:
-- [ ] Cal preguntar per confirmar paraula de pas?
+- [X] Cal preguntar per confirmar paraula de pas? Pels usuaris ho deixo amb confirmació. Altres llocs (admins) no confirmem
 - [ ] Opció de mostrar la paraula de pas a l'usuari
 - [ ] Autogenerar paraula de pas
 - [ ] Forçar canvi de password al següent login
@@ -2012,7 +2015,7 @@ DOS FORMES CANVIAR PASSWORD
 - [ ] Canvi fet per un administrador usuaris
 
 IMPORTANT:
-- [ ] Centralitzar les operacions de canvi de paraula de pas
+- [ ] Centralitzar/repassar les operacions de canvi de paraula de pas -> Evitar codi WET
 
 Email password reset:
 - [ ] Exemple URL: https://iesebre.scool.test/password/reset/d6350f7774c0d1be132260c1f5d9429c22c8d5bf0e9e7ad9a74a71fa49fc0fe8

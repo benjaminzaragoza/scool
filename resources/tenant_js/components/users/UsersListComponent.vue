@@ -231,7 +231,7 @@
                                             <user-emails :user="props.item"></user-emails>
                                             <user-personal-data-icon :user="props.item" class="ma-0"></user-personal-data-icon>
                                             <user-password :user="props.item" class="ma-0"></user-password>
-                                            <user-delete :user="props.item"></user-delete>
+                                            <user-delete :user="props.item" class="ma-0"></user-delete>
                                         </td>
                                     </tr>
                                 </template>

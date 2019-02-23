@@ -76,6 +76,11 @@ class GoogleUsersPasswordControllerTest extends BaseTenantTest {
         $this->loginAsSuperAdmin('api');
         $response =  $this->json('PUT','/api/v1/gsuite/users/1051231434574456692166/password', []);
         $response->assertStatus(422);
+
+        $response =  $this->json('PUT','/api/v1/gsuite/users/1051231434574456692166/password', [
+            'password' => 'curt'
+        ]);
+        $response->assertStatus(422);
     }
 
     /**

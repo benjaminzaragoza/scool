@@ -1,6 +1,8 @@
 <template>
     <span>
-        <v-dialog v-if="dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition"
+        <v-dialog v-if="dialog" v-model="dialog"
+                  :fullscreen="$vuetify.breakpoint.smAndDown" :hide-overlay="$vuetify.breakpoint.smAndDown"
+                  transition="dialog-bottom-transition"
                   @keydown.esc.stop.prevent="close">
             <v-toolbar color="primary">
                 <v-btn icon dark @click.native="close">
@@ -9,7 +11,7 @@
                 <v-toolbar-title class="white--text title">Canviar paraula de pas usuari Google</v-toolbar-title>
             </v-toolbar>
             <v-card>
-                    <v-card-text class="px-0 mb-2">
+                    <v-card-text class="px-0">
                         <v-container fluid grid-list-md text-xs-center>
                             <v-layout row wrap>
                                 <v-flex xs12>
@@ -49,6 +51,14 @@
                                                class="white--text"
                                         >Tancar</v-btn>
                                      </form>
+                                    <v-alert
+                                            :value="true"
+                                            type="warning"
+                                            dismissible
+                                    >
+                                        Aquesta operació NOMÉS canviarà la paraula de pas a Google. Per canviar la resta de paraules de pas (usuari local, Google, Ldap...) cal anar al
+                                    <a target="_blank" href="/users">Mòdul de gestió d'usuaris</a>
+                                  </v-alert>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -63,12 +73,12 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'GoogleUserChangePassword',
   validations: {
-    password: { required }
+    password: { required, minLength: minLength(6) }
   },
   mixins: [validationMixin],
   data () {
@@ -93,6 +103,7 @@ export default {
     passwordErrors () {
       const passwordErrors = []
       if (!this.$v.password.$dirty) return passwordErrors
+      !this.$v.password.minLength && passwordErrors.push('El password ha de tenir com a mínim 6 caràcters.')
       !this.$v.password.required && passwordErrors.push('La paraula de pas és obligatòria.')
       return passwordErrors
     }

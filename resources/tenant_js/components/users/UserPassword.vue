@@ -1,7 +1,7 @@
 <template>
     <span>
         <v-tooltip bottom>
-            <v-btn slot="activator" flat icon color="secondary" @click="dialog=true">
+            <v-btn slot="activator" flat icon color="secondary" @click="dialog=true" class="ma-0">
                 <v-icon>vpn_key</v-icon>
             </v-btn>
             <span>Canviar la paraula de pas</span>
@@ -11,6 +11,8 @@
                 v-model="dialog"
                 width="750"
                 @keydown.esc="dialog=false"
+                :fullscreen="$vuetify.breakpoint.smAndDown"
+                :hide-overlay="$vuetify.breakpoint.smAndDown"
         >
             <v-toolbar color="primary" dense>
                 <v-toolbar-title class="white--text">Canviar paraula de pas de
