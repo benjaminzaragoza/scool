@@ -203,7 +203,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //Associate Ldap user to user
             Route::post('/user/{user}/ldap','\\' . UserLdapController::class .'@store');
             Route::put('/user/{user}/ldap','\\' . UserLdapController::class .'@update');
-            Route::delete('/user/{userid}/moodle','\\' . UserLdapController::class .'@destroy');
+            Route::delete('/user/{userid}/ldap','\\' . UserLdapController::class .'@destroy');
 
             // Available users
             // TODO: UMMMMM

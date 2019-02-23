@@ -67,6 +67,6 @@ class UserLdapController extends Controller
     {
         $ldapUser = LdapUser::where('user_id', $userId)->firstOrFail();
         $ldapUser->delete();
-        event(new LdapUserUnAssociated(User::findOrFail($userId), $ldapUser->ldap_id));
+        event(new LdapUserUnAssociated(User::findOrFail($userId), $ldapUser));
     }
 }
