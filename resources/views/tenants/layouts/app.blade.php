@@ -27,7 +27,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-corner-indicator.min.css" rel="stylesheet">
     <link href="/tenant/css/app.css" rel="stylesheet">
-    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2680C2"/>
     <meta property="og:type" content="website" />
     <meta property="og:image:width" content="1125">

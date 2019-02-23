@@ -1,18 +1,52 @@
 # BUGS
 
 - [ ] Uncaught (in promise) DOMException
+  - [ ] Ara he capturar la excepció pq no peti però apareix missatge a la consola
+  - [ ] Quan demanar permissos per rebre notificacions? TODO https://developers.google.com/web/fundamentals/push-notifications/permission-ux
+  - [ ] Ho provoca afegir PushManager a ServiceWorker.vue: registration.pushManager.subscribe({ userVisibleOnly: true })
   - [ ] ServiceWorker.vue?9b59:30 Uncaught (in promise) DOMException
-- [ ] Service workers intercepta TOTES LES PETICIONS?
-  -  [ ] HI HA problemes amb certes peticions com l'actualització llista usuaris quan s'ha afegit o eliminat un correu corporatiu
-  - [ ] Al posar bypass network a pestanya application funciona correctament
-  - [ ] Quan a la pestanya network les peticions tenen un COG (crec vol dir ha intervingut service worker) no va bé el refresh
+  - [ ]https://stackoverflow.com/questions/54215921/uncaught-in-promise-domexception-when-initiating-pushmanager-subscribe
+  - Sempbla cal aseurar-se service worker is ready/acive abans de fer la subscripció
+- [X] Service workers intercepta TOTES LES PETICIONS? SOLUCIONAT HAVIA UNA EXPRESSIÓ REGULAR MAL POSADA
+  -  [X] HI HA problemes amb certes peticions com l'actualització llista usuaris quan s'ha afegit o eliminat un correu corporatiu
+  - [X] Al posar bypass network a pestanya application funciona correctament
+  - [X] Quan a la pestanya network les peticions tenen un COG (crec vol dir ha intervingut service worker) no va bé el refresh
 - [ ] Ldap users a vegades no apareix bé la pàgina? Service workers? 
+  - [ ] No sembla cosa dels service workers pq ja he arreglat expressió regular ho estava capturant/cachejant TOT. 
 - [X] FUOC a la intranet. SOLVED
 - [ ] FUOC amb les icones material!!
 - [ ] FUOC de les fonts ROBOTO!!!!
 - [ ] Pacer/Spinner de carrega de pàgina a vegades no s'atura mai!
 - [ ] Data de naixement a dades personals: es penja el seu estat si es posa data mal formatada? No es pot omplir formulari
 
+## Registrar permisos Push Notifications des de un botó:
+
+- https://stackoverflow.com/questions/35847393/wait-for-serviceworker-to-complete-registering-before-subscribing
+
+```javascript
+function subscribe() {
+  var subscribeButton = document.querySelector('.js-subscribe-button');
+  subscribeButton.disabled = false;
+
+  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    serviceWorkerRegistration.pushManager.subscribe()
+      .then(function(subscription) {
+        // The subscription was successful
+        subscribeButton.disabled = true;
+        return sendSubscriptionToServer(subscription);
+      })
+      .catch(function(error) {
+        if (Notification.permission === 'denied') {
+          console.log('Permission for Notifications was denied');
+          subscribeButton.disabled = true;
+        } else {
+          console.log('Unable to subscribe to push.', error);
+          subscribeButton.disabled = false;
+        }
+      });
+  });
+}
+```
 # NETEJAR SERVICE WORKERS
 
 - [ ] Esborrar tots els fitxers que són exemple o moure a la carpeta docs

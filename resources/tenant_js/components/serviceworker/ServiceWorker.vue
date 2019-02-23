@@ -27,7 +27,41 @@ export default {
       navigator.serviceWorker.register('/sw.js')
         .then(function (registration) {
           console.log('Registration successful, scope is:', registration.scope)
-          // registration.pushManager.subscribe({ userVisibleOnly: true })
+
+          navigator.serviceWorker.ready
+            .then(function (serviceWorkerRegistration) {
+              return serviceWorkerRegistration.pushManager.subscribe({
+                userVisibleOnly: true
+              })
+            })
+            // .then(function (subscription) { console.log(subscription.endpoint) })
+            .catch(function (error) {
+              if (Notification.permission === 'denied') {
+                console.log('Permission for Notifications was denied')
+                // subscribeButton.disabled = true
+              } else {
+                console.log('TODO ################################ Unable to subscribe to push.', error)
+                // subscribeButton.disabled = false
+              }
+            })
+
+          // navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+          //   serviceWorkerRegistration.pushManager.subscribe()
+          //     .then(function (subscription) {
+          //       // The subscription was successful
+          //       // subscribeButton.disabled = true
+          //       // return sendSubscriptionToServer(subscription)
+          //     })
+          //     .catch(function (error) {
+          //       if (Notification.permission === 'denied') {
+          //         console.log('Permission for Notifications was denied')
+          //         // subscribeButton.disabled = true
+          //       } else {
+          //         console.log('Unable to subscribe to push.', error)
+          //         // subscribeButton.disabled = false
+          //       }
+          //     })
+          // })
         })
         .catch(function (error) {
           console.log('Service worker registration failed, error:', error)

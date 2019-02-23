@@ -1,4 +1,4 @@
-importScripts("/service-worker/precache-manifest.ae2b44f93baf5943ac784d4e0def5217.js", "https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
+importScripts("/service-worker/precache-manifest.fc21ecfebb4853d725aa822e2382fb14.js", "https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 workbox.skipWaiting()
 workbox.clientsClaim()
@@ -8,8 +8,9 @@ workbox.clientsClaim()
 //   workbox.strategies.staleWhileRevalidate()
 // );
 
+// TODO cal utilitzar PushManager al registrar el service worker
 self.addEventListener('push', (event) => {
-  const title = 'Get Started With Workbox'
+  const title = 'TODO CANVIAR TITOL'
   const options = {
     body: event.data.text()
   }
@@ -42,7 +43,7 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
-  new RegExp('/'),
+  '/',
   workbox.strategies.staleWhileRevalidate({ cacheName: 'landing' })
 )
 

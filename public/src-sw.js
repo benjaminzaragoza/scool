@@ -8,7 +8,7 @@ workbox.clientsClaim()
 
 // TODO cal utilitzar PushManager al registrar el service worker
 self.addEventListener('push', (event) => {
-  const title = 'Get Started With Workbox'
+  const title = 'TODO CANVIAR TITOL'
   const options = {
     body: event.data.text()
   }
@@ -41,7 +41,7 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
-  new RegExp('/'),
+  '/',
   workbox.strategies.staleWhileRevalidate({ cacheName: 'landing' })
 )
 
