@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\Http\Requests\ListGoogleUsers;
+use App\Http\Requests\Google\ListGoogleUsers;
 use App\Models\GoogleUser;
 
 /**
  * Class GoogleUsersSearchController.
- * 
+ *
  * @package App\Http\Controllers\Tenant
  */
 class GoogleUsersSearchController extends Controller

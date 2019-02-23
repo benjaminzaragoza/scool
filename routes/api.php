@@ -56,6 +56,7 @@ use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
 use App\Http\Controllers\Tenant\Api\Users\UserPersonController;
 use App\Http\Controllers\Tenant\Api\Users\UsersController;
 use App\Http\Controllers\Tenant\Api\UserType\UserTypeController;
+use App\Http\Controllers\Tenant\GoogleUsersSearchController;
 use App\Http\Controllers\Tenant\UserGsuiteController;
 use App\Http\Controllers\Tenant\UserPhotoController;
 use Illuminate\Http\Request;
@@ -272,7 +273,7 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             Route::put('/user/{user}/gsuite','\\' . UserGsuiteController::class .'@update');
             Route::delete('/user/{userid}/gsuite','\\' . UserGsuiteController::class .'@destroy');
 
-            Route::post('/gsuite/users/search','Tenant\GoogleUsersSearchController@search');
+            Route::post('/gsuite/users/search','\\' . GoogleUsersSearchController::class . '@search');
 
             Route::delete('/gsuite/users/{user}', '\\' . GoogleUsersController::class . '@destroy');
 
