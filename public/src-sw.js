@@ -6,6 +6,7 @@ workbox.clientsClaim()
 //   workbox.strategies.staleWhileRevalidate()
 // );
 
+// TODO cal utilitzar PushManager al registrar el service worker
 self.addEventListener('push', (event) => {
   const title = 'Get Started With Workbox'
   const options = {

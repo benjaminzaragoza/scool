@@ -112,7 +112,7 @@ class GoogleUser extends Model
     {
         if (!$users) $users = self::getGoogleUsers();
         foreach ($users as $user) {
-            if ( $user['employeeId'] != null && $user['employeeId']== $employeeId) return $user;
+            if ( $user->employeeId != null && $user->employeeId == $employeeId) return $user;
         }
         return null;
     }
@@ -128,7 +128,7 @@ class GoogleUser extends Model
     {
         if (!$users) $users = self::getGoogleUsers();
         foreach ($users as $user) {
-            if ( array_key_exists('personalEmail',$user) && $user['personalEmail'] != null && $user['personalEmail']== $personalEmail) return $user;
+            if ( array_key_exists('personalEmail',$user) && $user->personalEmail != null && $user->personalEmail== $personalEmail) return $user;
         }
         return null;
     }
@@ -137,7 +137,7 @@ class GoogleUser extends Model
     {
         if (!$users) $users = self::getGoogleUsers();
         foreach ($users as $user) {
-            if ( array_key_exists('mobile',$user) && $user['mobile'] != null && $user['mobile']== $mobile) return $user;
+            if ( array_key_exists('mobile',$user) && $user->mobile != null && $user->mobile== $mobile) return $user;
         }
         return null;
     }

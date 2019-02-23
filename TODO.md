@@ -1,5 +1,11 @@
 # BUGS
 
+- [ ] Uncaught (in promise) DOMException
+  - [ ] ServiceWorker.vue?9b59:30 Uncaught (in promise) DOMException
+- [ ] Service workers intercepta TOTES LES PETICIONS?
+  -  [ ] HI HA problemes amb certes peticions com l'actualització llista usuaris quan s'ha afegit o eliminat un correu corporatiu
+  - [ ] Al posar bypass network a pestanya application funciona correctament
+  - [ ] Quan a la pestanya network les peticions tenen un COG (crec vol dir ha intervingut service worker) no va bé el refresh
 - [ ] Ldap users a vegades no apareix bé la pàgina? Service workers? 
 - [X] FUOC a la intranet. SOLVED
 - [ ] FUOC amb les icones material!!

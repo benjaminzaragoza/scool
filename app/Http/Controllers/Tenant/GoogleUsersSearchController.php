@@ -17,7 +17,6 @@ class GoogleUsersSearchController extends Controller
      */
     protected function search(ListGoogleUsers $request)
     {
-//        dump($request->all());
         $user = GoogleUser::search([
             'employeeId' => $request->employeeId,
             'personalEmail' => $request->personalEmail,
