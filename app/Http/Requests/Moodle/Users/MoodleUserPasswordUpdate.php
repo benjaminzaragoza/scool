@@ -30,7 +30,7 @@ class MoodleUserPasswordUpdate extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required'
+            'password' => 'required|min:6'
         ];
     }
 }

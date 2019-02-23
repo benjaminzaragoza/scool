@@ -22,7 +22,7 @@ class LdapUsersController extends Controller
      */
     public function index(ListLdapUsers $request)
     {
-        $users = LdapUser::getLdapUsers();
+        $users = LdapUser::getLdapUsers(10);
         // TODO ELIMINAR
 //        $users = LdapUser::getLdapUsers()->forPage(48, 25)->values();
 //        dd($users->forPage(24, 50));

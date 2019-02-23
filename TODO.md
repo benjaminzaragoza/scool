@@ -1,6 +1,9 @@
 # BUGS
 
+- [ ] Ldap users a vegades no apareix bé la pàgina? Service workers? 
 - [X] FUOC a la intranet. SOLVED
+- [ ] FUOC del tipus de lletra?
+- [ ] Data de naixement a dades personals: es penja el seu estat si es posa data mal formatada? No es pot omplir formulari
 
 # NETEJAR SERVICE WORKERS
 
@@ -72,18 +75,7 @@ location = /service-worker.js {
      Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
  </Files>
 ```
-
-LANDING PAGE
-Recursos:
-- [ ] iesebre.scool.cat
-- [ ] app.js
-- [ ] Spinner SVG incrustat (cloak to avoid FUOC)
-- [ ] manifest.json
-- [ ] extra.js chunks (1.js, 2.js etc...)
-- [ ] three wep images
-- [ ] Fonts
-- [ ] favicon-32x32.png
-  - [ ] Android chrome 134x134
+  
 # USER UID
 
 - [X] Modificar la migració usuaris, afegir uid com a nullable
@@ -360,6 +352,7 @@ if ($payload) {
 
 # UPGRADE TO LARAVEL MIX 4.0
 
+- X DONE
 - https://laravel-mix.com/docs/4.0/upgrade
 - https://laravel-news.com/laravel-mix-4-released
 - [X] a app.js canviats tots els requires per imports
@@ -1863,7 +1856,7 @@ Altres
  
 ##### sambaPwdLastSet
 
-???
+- [X] és un timestamp Linux. Funció time
 
 #####  sambaLMPassword i sambaNTPassword
 
@@ -1959,8 +1952,9 @@ objectClass: top
 
 - [ ] Individual per sistemes externs:
  - [X] Canvi paraula de pas només Moodle
-   - [ ] Validació password mínim 6 caràcters: Javascript i Backend
-   - [ ] Explicar només canvia password de Moodle. Posar link porti canvi paraula de pas usuari local associat
+   - [X] Validació password mínim 6 caràcters: Javascript i Backend
+   - [X] Explicar només canvia password de Moodle. Posar link porti canvi paraula de pas usuari local associat
+     - [ ] Link directa a canvi de password de l'usuari local
  - [X] Canvi paraula de pas només Google
    - [ ] Validació password mínim 6 caràcters: Javascript i Backend
    - [ ] Explicar només canvia password de Google. Posar link porti canvi paraula de pas usuari local associat

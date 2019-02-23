@@ -56,6 +56,10 @@ class MoodleUsersPasswordControllerTest extends BaseTenantTest {
         $moodleuser = create_sample_moodle_user();
         $response =  $this->json('PUT','/api/v1/moodle/users/' . $moodleuser->id . '/password' );
         $response->assertStatus(422);
+        $response =  $this->json('PUT','/api/v1/moodle/users/' . $moodleuser->id . '/password', [
+            'password' => 'curt'
+        ]);
+        $response->assertStatus(422);
     }
 
     /**

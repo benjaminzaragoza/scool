@@ -202,7 +202,7 @@ import LdapUsersDeleteIcon from './LdapUsersDeleteIcon'
 import LdapUserChangePassword from './LdapUserChangePassword'
 
 export default {
-  name: 'LdapUsersComponent',
+  name: 'LdapUsers',
   components: {
     'show-ldap-user-icon': ShowLdapUserIconComponent,
     'ldap-users-delete-multiple': LdapUsersDeleteMultiple,
