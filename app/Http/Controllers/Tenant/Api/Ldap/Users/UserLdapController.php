@@ -53,7 +53,7 @@ class UserLdapController extends Controller
     public function update(LdapUserUpdate $request, $tenant, User $user)
     {
         if (!$user->ldapUser) abort (422, "L'usuari $user->name no té un compte de Ldap associat");
-        LdapUser::sync($user->ldapUser->ldap_id, $user);
+        LdapUser::sync($user->ldapUser->cn, $user);
     }
 
     /**
