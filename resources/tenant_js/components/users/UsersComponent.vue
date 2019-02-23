@@ -6,7 +6,7 @@
                   @moodleUserCreated="refresh"
                   @avatarSaved="refresh"></user-add>
 
-        <users-list :users="users" :user="user" :user-types="userTypes" :roles="roles"></users-list>
+        <users-list :users="users" :user="user" :password="password" :user-types="userTypes" :roles="roles"></users-list>
     </span>
 </template>
 <script>
@@ -21,6 +21,10 @@ export default {
   },
   props: {
     user: {
+      type: Object,
+      required: false
+    },
+    password: {
       type: Object,
       required: false
     },

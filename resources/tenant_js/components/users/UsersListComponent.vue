@@ -92,6 +92,7 @@
                                     </v-flex>
                                 </v-layout>
                             </v-card-title>
+
                             <div id="massive_actions" v-if="selected.length > 0" style="text-align: left;">
                                 <users-delete-multiple :users="selected" @deleted="selected=[];refresh(false)"></users-delete-multiple>
                             </div>
@@ -105,6 +106,8 @@
                                     @keydown.esc.stop.prevent="showUser=false">
                                 <show-user :user="user" :users="users" @close="showUser=false"></show-user>
                             </v-dialog>
+
+                            <user-password-dialog v-if="showUserPassword" :user="password" v-model="showUserPassword"></user-password-dialog>
 
                             <v-data-table
                                 v-model="selected"
@@ -306,6 +309,7 @@ import InlineTextFieldEditDialog from '../ui/InlineTextFieldEditDialog'
 import UserPersonalDataIcon from './UserPersonalDataIcon'
 import UserChangeLog from './UserChangeLog'
 import UserPassword from './UserPassword'
+import UserPasswordDialog from './UserPasswordDialog'
 
 var filterNames = [
   {
@@ -450,11 +454,13 @@ export default {
     'user-edit-email': UserEditEmail,
     'inline-text-field-edit-dialog': InlineTextFieldEditDialog,
     'user-changelog': UserChangeLog,
-    'user-password': UserPassword
+    'user-password': UserPassword,
+    'user-password-dialog': UserPasswordDialog
   },
   data () {
     return {
       showUser: false,
+      showUserPassword: false,
       selected: [],
       search: '',
       refreshing: false,
@@ -499,6 +505,10 @@ export default {
       required: false
     },
     user: {
+      type: Object,
+      required: false
+    },
+    password: {
       type: Object,
       required: false
     }
@@ -546,6 +556,9 @@ export default {
     this.filterNames = filterNames
     if (this.user) {
       this.showUser = true
+    }
+    if (this.password) {
+      this.showUserPassword = true
     }
   }
 }

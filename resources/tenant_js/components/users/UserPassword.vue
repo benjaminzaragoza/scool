@@ -6,29 +6,16 @@
             </v-btn>
             <span>Canviar la paraula de pas</span>
         </v-tooltip>
-        <v-dialog
-                v-if="dialog"
-                v-model="dialog"
-                width="750"
-                @keydown.esc="dialog=false"
-                :fullscreen="$vuetify.breakpoint.smAndDown"
-                :hide-overlay="$vuetify.breakpoint.smAndDown"
-        >
-            <v-toolbar color="primary" dense>
-                <v-toolbar-title class="white--text">Canviar paraula de pas de
-                    <span>{{ user.name }}</span> </v-toolbar-title>
-            </v-toolbar>
-            <user-password-card-form :user="user" @close="dialog=false"></user-password-card-form>
-        </v-dialog>
+        <user-password-dialog v-if="dialog" :user="user" v-model="dialog"></user-password-dialog>
     </span>
 </template>
 
 <script>
-import UserPasswordCardForm from './UserPasswordCardForm'
+import UserPasswordDialog from './UserPasswordDialog'
 export default {
   name: 'UserPassword',
   components: {
-    'user-password-card-form': UserPasswordCardForm
+    'user-password-dialog': UserPasswordDialog
   },
   props: {
     user: {

@@ -43,7 +43,7 @@ class UserPasswordControllerTest extends BaseTenantTest
         $response = $this->get('/users/password/' . $user->id );
 
         $response->assertSuccessful();
-        $response->assertViewIs('tenants.users.index');
+        $response->assertViewIs('tenants.users.password.show');
         $response->assertViewHas('users', function($returnedUsers) use ($manager) {
             return $returnedUsers[0]['id'] === $manager->id;
         });

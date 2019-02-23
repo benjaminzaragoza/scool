@@ -28,6 +28,6 @@ class UserPasswordController extends Controller
         $users = User::getUsers();
         $userTypes = (new UserTypesCollection(UserType::with('roles')->get()))->transform();
         $roles = Role::all();
-        return view('tenants.user.password.show',compact('users','user','userTypes','roles'));
+        return view('tenants.users.password.show',compact('users','user','userTypes','roles'));
     }
 }
