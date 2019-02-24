@@ -422,7 +422,7 @@ class LdapUserTest extends TestCase
             'uid' => 'pepepardo'
         ]);
         $scoolUser->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com',
+            'dn' => 'uid=prova,dc=iesebre,dc=com',
             'uid' => 'uidprova'
         ]));
         $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');

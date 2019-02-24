@@ -132,7 +132,8 @@ export default {
     associate () {
       this.associating = true
       window.axios.post('/api/v1/user/' + this.user.id + '/ldap', {
-        dn: this.selectedLdapuser.dn
+        dn: this.selectedLdapuser.dn,
+        uid: this.selectedLdapuser.uid
       }).then(response => {
         this.$snackbar.showMessage('Usuari Ldap associat correctament')
         this.$emit('associated', response.data)

@@ -157,6 +157,7 @@ class UserLdapControllerTest extends BaseTenantTest
         LdapUser::create([
             'user_id' => $user->id,
             'dn' => 'cn=pepe,dc=iesebre,dc=com',
+            'uid' => 'pepepardo'
         ]);
 
         $this->assertEquals('cn=pepe,dc=iesebre,dc=com',$user->ldapUser->dn);

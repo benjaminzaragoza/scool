@@ -203,16 +203,16 @@ class MoodleUser extends Model
         // NOTA: BE CAREFUL! username could be and email so this cannot work as you expected!
         if (filter_var($user, FILTER_VALIDATE_EMAIL)) {
             $results = self::all([['key' => 'email', 'value' => $user]]);
-            return empty($results) ? null : $results[0];
+            return empty($results) || count($results) === 0 ? null : $results[0];
         }
         if (intval($user) != 0) {
             if (is_integer(intval($user))) {
                 $results = self::all([['key' => 'id', 'value' => $user]]);
-                return empty($results) ? null : $results[0];
+                return empty($results) || count($results) ? null : $results[0];
             }
         }
         $results = self::all([['key' => 'username', 'value' => $user]]);
-        return empty($results) ? null : $results[0];
+        return empty($results) || count($results) === 0 ? null : $results[0];
     }
 
     /**

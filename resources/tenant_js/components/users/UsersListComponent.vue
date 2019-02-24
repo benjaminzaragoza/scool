@@ -206,7 +206,7 @@
                                             <span v-if="props.item.ldapDn">
                                                 <v-tooltip bottom>
                                                     <span slot="activator" v-text="props.item.ldapDn"></span>
-                                                    <span>{{ props.item.ldapDn }}</span>
+                                                    <span>{{ props.item.ldapUid }} | {{ props.item.ldapDn }}</span>
                                                 </v-tooltip>
                                             </span>
                                             <manage-ldap-user-icon :user="props.item" @unassociated="refresh" @associated="refresh" @added="refresh"></manage-ldap-user-icon>

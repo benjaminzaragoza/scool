@@ -29,7 +29,7 @@ class MoodleUsersCheckController extends Controller
         if ($foundUsers) {
             $error=true;
             $message[]="S'han trobat usuari/s amb idnumber coincident";
-            $users = array_merge($users,$foundUsers);
+            $users = array_merge($users,$foundUsers->toArray());
         }
         $foundUsersEmail = MoodleUser::get($request->user['email']);
         if ($foundUsersEmail) {

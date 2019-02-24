@@ -50,7 +50,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
         $result = json_decode($response->getContent());
         $this->assertEquals($result->status,'Error');
         $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
-        $this->assertCount(2,$result->users);
+        $this->assertCount(1,$result->users);
     }
 
     /**
@@ -71,7 +71,8 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
         $this->assertEquals($result->status,'Error');
-        $this->assertEquals($result->message[0],"S'han trobat usuari/s amb email coincident");
+        $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
+        $this->assertEquals($result->message[1],"S'han trobat usuari/s amb email coincident");
         $this->assertCount(1,$result->users);
     }
 
@@ -94,7 +95,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
         $result = json_decode($response->getContent());
         $this->assertEquals($result->status,'Error');
         $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
-        $this->assertCount(2,$result->users);
+        $this->assertCount(1,$result->users);
     }
 
     /**
@@ -117,7 +118,7 @@ class MoodleUsersCheckControllerTest extends BaseTenantTest {
         $result = json_decode($response->getContent());
         $this->assertEquals($result->status,'Error');
         $this->assertEquals($result->message[0],"S'han trobat usuari/s amb idnumber coincident");
-        $this->assertCount(2,$result->users);
+        $this->assertCount(1,$result->users);
     }
 
     /**
