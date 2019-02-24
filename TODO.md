@@ -1768,7 +1768,25 @@ Tots els camps són especials
 
 
 ## LLISTA DATATABLES
-
+- [ ] Acció afegir dades personals pendent de fer
+- [ ] Show
+  - [ ] Mostrar més targetes personals
+    - [ ] Targeta dades comptes externs
+    - [ ] Targeta dades personals
+    - [ ] Targeta incidències/dashboard?
+- [ ] Eliminar
+  - [ ] Assistir en la eliminació:
+    - [ ] Avís si hi ha:
+      - [ ] Dades personals associades
+      - [ ] Rols associats?
+      - [ ] Incidències associades
+        - [ ] En el futur:
+      - [ ] Usuari Ldap associat
+        - [ ] Voleu esborrar l'usuari Ldap també i l'associació?
+      - [ ] Usuari Moodle associat
+        - [ ] Voleu esborrar també l'usuari Moodle i l'associació?
+      - [ ] Usuari Google associat
+        - [ ] Voleu esborrar també l'usuari Google i l'associació?
 - [ ] UI/UX
   - [ ] Interfície mòbil simplificada/tablet
      -  [ ] rendiment?
