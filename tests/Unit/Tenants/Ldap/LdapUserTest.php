@@ -99,6 +99,7 @@ class LdapUserTest extends TestCase
      * @test
      * @group slow
      * @group ldap
+     * @group working
      */
     public function createUser()
     {
@@ -136,7 +137,7 @@ class LdapUserTest extends TestCase
         'province_id' => 3,
     ]));
         $result = LdapUser::createUser($user);
-        dd($result);
+//        dd($result);
 
     }
 
@@ -295,7 +296,8 @@ class LdapUserTest extends TestCase
             'uid' => 'pepepardo'
         ]);
         $scoolUser->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com'
+            'dn' => 'uid=prova,dc=iesebre,dc=com',
+            'uid' => 'uidprova'
         ]));
         $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');
 
@@ -319,7 +321,8 @@ class LdapUserTest extends TestCase
     {
         $scoolUser = factory(User::class)->create();
         $scoolUser->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com'
+            'dn' => 'uid=prova,dc=iesebre,dc=com',
+            'uid' => 'uidprova'
         ]));
         $user = sample_ldap_user_array();
         $user = LdapUser::initializeUser($user);
@@ -360,7 +363,8 @@ class LdapUserTest extends TestCase
             'uid' => 'pepepardo'
         ]);
         $scoolUser->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com'
+            'dn' => 'uid=prova,dc=iesebre,dc=com',
+            'uid' => 'uidprova'
         ]));
         $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');
         $user = LdapUser::initializeUser($user);
@@ -418,7 +422,8 @@ class LdapUserTest extends TestCase
             'uid' => 'pepepardo'
         ]);
         $scoolUser->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com'
+            'cn' => 'uid=prova,dc=iesebre,dc=com',
+            'uid' => 'uidprova'
         ]));
         $user = sample_ldap_user_array($scoolUser->id,'pepepardojeans@gmail.com','pepepardo');
         $user = LdapUser::initializeUser($user);
@@ -472,13 +477,7 @@ class LdapUserTest extends TestCase
         $oldSambantpassword= $user->sambantpassword[0];
         $oldSambalmpassword= $user->sambalmpassword[0];
         $oldSambaPwdlastset= $user->sambapwdlastset[0];
-//        dd($oldSambaPwdlastset);
-//        dump('$oldUserPassword:');
-//        dump($oldUserPassword);
-//        dump('$sambantpassword:');
-//        dump($sambantpassword);
-//        dump('sambalmpassword:');
-//        dump($sambalmpassword);
+
         LdapUser::changePassword($user->uid[0],$password = str_random());
 
         $changedUser = LdapUser::findByUid('stur');
@@ -490,7 +489,7 @@ class LdapUserTest extends TestCase
         $this->assertNotEquals($oldSambantpassword,$sambantpassword);
         $this->assertNotEquals($oldSambalmpassword,$sambalmpassword);
         $this->assertNotEquals($oldSambaPwdlastset,$sambapwdlastset);
-//        $this->assertNotEquals($sambalmpassword2,$sambalmpassword);
+
         LdapUser::changePassword($user->uid[0],$oldUserPassword);
     }
 

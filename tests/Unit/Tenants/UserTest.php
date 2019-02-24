@@ -904,7 +904,8 @@ class UserTest extends TestCase
 
         LdapUser::create([
             'user_id' => $user->id,
-            'dn' => 'cn=pepe,dc=iesebre,dc=com'
+            'dn' => 'cn=pepe,dc=iesebre,dc=com',
+            'uid' => 'pepepardo'
         ]);
 
         $person = Person::create([
@@ -945,6 +946,7 @@ class UserTest extends TestCase
         $this->assertEquals('87781322135468787',$mappedUser['googleId']);
         $this->assertEquals('789',$mappedUser['moodleId']);
         $this->assertEquals('cn=pepe,dc=iesebre,dc=com',$mappedUser['ldapDn']);
+        $this->assertEquals('pepepardo',$mappedUser['ldapUid']);
 
         $this->assertEquals('pepepardojeans@gmail.com',$mappedUser['moodleUsername']);
         $this->assertNull($mappedUser['email_verified_at']);
@@ -1125,12 +1127,14 @@ class UserTest extends TestCase
         $this->assertNull($user->ldapUser);
 
         $user->assignLdapUser(LdapUser::create([
-            'cn' => 'uid=prova,dc=iesebre,dc=com'
+            'dn' => 'uid=prova,dc=iesebre,dc=com',
+            'uid' => 'uidprova'
         ]));
         $user = $user->fresh();
 
         $this->assertNotNull($user->ldapUser);
-        $this->assertEquals('uid=prova,dc=iesebre,dc=com',$user->ldapUser->cn);
+        $this->assertEquals('uid=prova,dc=iesebre,dc=com',$user->ldapUser->dn);
+        $this->assertEquals('uidprova',$user->ldapUser->uid);
 
     }
 

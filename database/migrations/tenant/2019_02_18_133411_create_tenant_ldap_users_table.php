@@ -17,6 +17,7 @@ class CreateTenantLdapUsersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable()->unique();
             $table->string('dn')->unique();
+            $table->string('uid')->unique();
             $table->timestamps();
         });
     }

@@ -31,6 +31,7 @@ class AssociateLdapUserToUser extends FormRequest
     {
         return [
             'dn' => 'required|unique:ldap_users',
+            'uid' => 'required|unique:ldap_users',
         ];
     }
 }

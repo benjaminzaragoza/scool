@@ -46,7 +46,8 @@ class UserLdapControllerTest extends BaseTenantTest
         ]);
         Event::fake();
         $response = $this->json('POST', '/api/v1/user/' . $user->id . '/ldap', [
-            'dn' => 'cn=Pepe,dc=iesebre,dc=com'
+            'dn' => 'cn=Pepe,dc=iesebre,dc=com',
+            'uid' => 'pepepardo'
         ]);
 
         $response->assertSuccessful();
@@ -58,6 +59,7 @@ class UserLdapControllerTest extends BaseTenantTest
         $user = $user->fresh();
         $this->assertEquals($user->id, $user->ldapUser->user_id);
         $this->assertEquals('cn=Pepe,dc=iesebre,dc=com', $user->ldapUser->dn);
+        $this->assertEquals('pepepardo', $user->ldapUser->uid);
     }
 
     /** @test */
@@ -103,9 +105,11 @@ class UserLdapControllerTest extends BaseTenantTest
         LdapUser::create([
             'user_id' => $user->id,
             'dn' => 'cn=pepe,dc=iesebre,dc=com',
+            'uid' => 'pepepardo'
         ]);
 
         $this->assertEquals('cn=pepe,dc=iesebre,dc=com',$user->ldapUser->dn);
+        $this->assertEquals('pepepardo',$user->ldapUser->uid);
         Event::fake();
         $response = $this->json('DELETE', '/api/v1/user/' . $user->id . '/ldap');
 
@@ -131,6 +135,7 @@ class UserLdapControllerTest extends BaseTenantTest
         LdapUser::create([
             'user_id' => $user->id,
             'dn' => 'cn=pepe,dc=iesebre,dc=com',
+            'uid' => 'pepepardo'
         ]);
 
         $this->assertEquals('cn=pepe,dc=iesebre,dc=com',$user->ldapUser->dn);
@@ -145,7 +150,8 @@ class UserLdapControllerTest extends BaseTenantTest
     {
         $user = factory(User::class)->create([
             'name' => 'Pepe Pardo Jeans',
-            'email' => 'pepepardojeans@gmail.com'
+            'email' => 'pepepardojeans@gmail.com',
+            'uid' => 'pepepardo'
         ]);
 
         LdapUser::create([

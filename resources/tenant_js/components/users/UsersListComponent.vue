@@ -144,6 +144,9 @@
                                                          :removable="true"
                                             ></user-avatar>
                                         </td>
+                                        <td class="text-xs-left cell">
+                                            {{ props.item.uid }}
+                                        </td>
                                         <td class="text-xs-left cell" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             <user-edit-name :user="props.item" @saved="refresh(false)"></user-edit-name>
                                             <v-tooltip bottom>
@@ -484,6 +487,7 @@ export default {
       headers: [
         { text: 'Id', align: 'left', value: 'id' },
         { text: 'Avatar', value: 'photo', sortable: false },
+        { text: 'Uid', value: 'uid' },
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' },
         { text: 'Online', value: 'online' },

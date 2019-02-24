@@ -37,7 +37,8 @@ class UserLdapController extends Controller
         }
         $ldapUser = LdapUser::create([
             'user_id' => $user->id,
-            'dn' => $request->dn
+            'dn' => $request->dn,
+            'uid' => $request->uid
         ]);
         event(new LdapUserAssociated($user, $ldapUser));
     }

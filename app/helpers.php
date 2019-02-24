@@ -1728,6 +1728,7 @@ if (!function_exists('initialize_teachers_ppas')) {
         $dolors = User::createIfNotExists([
             'name' => 'Dolors Sanjuan Aubà',
             'email' => 'dolorssanjuanauba@iesebre.com',
+            'uid' => 'dsanjuan',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
         ])->addRole(Role::findByName('Teacher'))
@@ -3711,6 +3712,7 @@ if (!function_exists('initialize_teachers_informatica')) {
         User::createIfNotExists([
             'name' => 'Sergi Tur Badenas',
             'email' => 'stur@iesebre.com',
+            'uid' => 'stur',
             'password' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4', // secret
             'remember_token' => str_random(10),
         ])->addRole(Role::findByName('Teacher'))
