@@ -50,7 +50,8 @@ class MoodleUserTest extends TestCase
     public function all()
     {
         $users = MoodleUser::all();
-        $this->assertTrue(is_array($users));
+        $this->assertEquals('Illuminate\Support\Collection',get_class($users));
+        $this->assertEquals('1 guest Guest user   Guest user   root@localhost',$users[0]->fullsearch);
     }
 
     /**

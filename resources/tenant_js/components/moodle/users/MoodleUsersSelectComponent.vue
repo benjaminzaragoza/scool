@@ -8,7 +8,7 @@
             prepend-icon="mdi-city"
             clearable
             chips
-            item-text="fullname"
+            item-text="fullsearch"
             return-object
             @change="$emit('selected',moodleUser)"
             :loading="loading"

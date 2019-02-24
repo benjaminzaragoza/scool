@@ -5,6 +5,14 @@
   - [ ] Altres incoherències: email personal i emailCorporatiu coincideixin
 
 - RENDIMENT LDAP USERS
+  - [ ] https://caniuse.com/#feat=lazyload DESCARTAT PER ESTAR ABANDONAT
+    - <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet" lazyload>
+      - Posar al body i no al header? CREC ESTA ABANDONAT!!!
+  - [ ] <link rel="preload" href="mystyles.css" as="style" onload="this.rel='stylesheet'">
+    - https://www.filamentgroup.com/lab/async-css.html
+  - [ ] Lazy load images: https://www.sitepoint.com/five-techniques-lazy-load-images-website-performance/
+    - [ ] Intersection observer API
+    - https://github.com/verlok/lazyload
   - [ ] jpegphoto -> 21MB /ldap_users
   - [ ] Sense jpegphoto 672K
   - [ ] Implementar un lazy loading -> UNA URL per mostrar la photo: 
@@ -28,6 +36,11 @@
 - [X] FUOC a la intranet. SOLVED
 - [ ] FUOC amb les icones material!!
 - [ ] FUOC de les fonts ROBOTO!!!!
+- [ ] FUOT -> Flash Of Unstyled Text -> Es carrega abans lletra que la font
+- [ ] FOIT -> Flash of Invisible Text
+  - https://jonsuh.com/blog/font-loading-with-font-events/
+  - https://stackoverflow.com/questions/48118300/how-to-catch-when-was-loaded-my-material-icons
+- https://css-tricks.com/fout-foit-foft/
 - [ ] Pacer/Spinner de carrega de pàgina a vegades no s'atura mai!
 - [ ] Data de naixement a dades personals: es penja el seu estat si es posa data mal formatada? No es pot omplir formulari
 
@@ -1753,10 +1766,22 @@ Tots els camps són especials
 ### USUARI LDAP
 - HI ha un TODO propi a la carpeta docs sobre LDap
 
+
 ## LLISTA DATATABLES
 
-- [ ] Usuari online
-- [ ] Llista d'usuaris -> mostrar columna online de l'usuari
+- [ ] UI/UX
+  - [ ] Interfície mòbil simplificada/tablet
+     -  [ ] rendiment?
+  - [ ] Dialegs que caL que siguin fullscreen (només per sm o inferior)
+    - [ ] Tipus usuari
+  - [ ] Dialegs que no cal que siguin fullscreen (només per sm o inferior)
+    - [ ] Canvi email
+    - [ ] Canvi nom de l'usuari
+    - [ ] Assignació de rols
+    - [ ] Ajustar l'ampla del desplegable
+-  [ ] Usuari online
+- [X] Llista d'usuaris -> mostrar columna online de l'usuari
+  - [ ] Millorar el format -> Ara és true/false -> Mostrar un botó verd o un boto roig
 - [ ] Columna ldap
   - [ ] LdapUser:sync i test PENDENT EDITAR USUARIS!!!!!!!!!!!!!!!!!!
 - [ ] Poder fer que un usuari sigui admin:
@@ -1769,6 +1794,15 @@ Tots els camps són especials
 - [ ] Link amb dades personals
   - [ ] Sinó hi ha dades personals no és un link és un diàleg flotant que mostrar el formulari 3 (el de dades personals)
     - [ ] Petita modificació al formulari tres -> incloure Sn1, Sn2 i Givenname
+- [X] Relació amb Google
+  - [X] El autocomplete de ldap no cerca/autocompleta correctament
+    - [X] Afegir i utilitzar camp fullsearch a MoodleUser
+- [X] Relació amb Moodle
+  - [X] El autocomplete de ldap no cerca/autocompleta correctament
+    - [X] Afegir i utilitzar camp fullsearch a MoodleUser
+- [X] Relació amb Ldap
+  - [X] El autocomplete de ldap no cerca/autocompleta correctament
+    - [X] Afegir i utilitzar camp fullsearch a LdapUSer      
 - [X] Acció: comprovar password
  - [X] Escriure el password i comparar-ho amb els hashs -> DESCARTAT -> Només serviria per LDAP i no és imprescindible -> potser com a check
    - [X] Ldap: tenim els hashes de unix i els de samba no problem per comparar

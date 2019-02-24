@@ -179,8 +179,22 @@ class GoogleUser extends Model
             return collect($directory->users());
         });
         return $users->map(function($user) {
-            return (object) $user;
+            $user = (object) $user;
+            $user->fullsearch = GoogleUser::fullSearch($user);
+            return $user;
         });
+    }
+
+    /**
+     * fullSearch.
+     *
+     * @param $user
+     * @return mixed
+     */
+    public static function fullSearch($user)
+    {
+        return $user->employeeId . ' ' . $user->familyName . ' ' . $user->givenName .
+            ' ' . $user->fullName . ' ' . $user->primaryEmail;
     }
 
     /**

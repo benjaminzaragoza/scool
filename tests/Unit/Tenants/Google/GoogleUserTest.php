@@ -44,6 +44,35 @@ class GoogleUserTest extends TestCase
     /**
      * @test
      * @group google
+     * @group slow
+     */
+    public function getGoogleUsers()
+    {
+        config_google_api();
+        tune_google_client();
+        $users = GoogleUser::getGoogleUsers();
+        $this->assertEquals('Illuminate\Support\Collection',get_class($users));
+        $this->assertTrue(property_exists($users[0],'id'));
+        $this->assertTrue(property_exists($users[0],'employeeId'));
+        $this->assertTrue(property_exists($users[0],'mobile'));
+        $this->assertTrue(property_exists($users[0],'personalEmail'));
+        $this->assertTrue(property_exists($users[0],'primaryEmail'));
+        $this->assertTrue(property_exists($users[0],'isAdmin'));
+        $this->assertTrue(property_exists($users[0],'familyName'));
+        $this->assertTrue(property_exists($users[0],'fullName'));
+        $this->assertTrue(property_exists($users[0],'suspended'));
+        $this->assertTrue(property_exists($users[0],'suspensionReason'));
+        $this->assertTrue(property_exists($users[0],'thumbnailPhotoUrl'));
+        $this->assertTrue(property_exists($users[0],'orgUnitPath'));
+        $this->assertTrue(property_exists($users[0],'organizations'));
+        $this->assertTrue(property_exists($users[0],'json'));
+        $this->assertTrue(property_exists($users[0],'fullsearch'));
+
+    }
+
+    /**
+     * @test
+     * @group google
      *
      */
     public function findByEmployeeId()

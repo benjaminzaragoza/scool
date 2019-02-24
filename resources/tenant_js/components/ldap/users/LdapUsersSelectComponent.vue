@@ -8,7 +8,7 @@
             prepend-icon="mdi-city"
             clearable
             chips
-            item-text="fullname"
+            item-text="fullsearch"
             return-object
             @change="$emit('selected', ldapUser)"
             :loading="loading"
@@ -44,7 +44,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                     <v-list-tile-title v-html="data.item.dn"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.email"></v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{ data.item.email }} | {{ data.item.uid }} | {{ data.item.irispersonaluniqueid }} | {{ data.item.employeenumber }} </v-list-tile-sub-title>
                 </v-list-tile-content>
             </template>
         </template>

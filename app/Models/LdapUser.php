@@ -126,6 +126,13 @@ class LdapUser extends Model
         });
     }
 
+    public static function fullSearch($user)
+    {
+        return $user->cn[0] . ' ' . $user->email[0] . ' ' . $user->uid[0] . ' ' . $user->givenname[0] . ' ' .
+            $user->sn1[0] . ' ' . $user->sn2[0] . ' ' . $user->irispersonaluniqueid[0] .
+            ' ' . $user->employeenumber[0] ;
+    }
+
     public static function map($user)
     {
         $base_dn = config('ldap.connections.default.settings.base_dn');
@@ -173,6 +180,8 @@ class LdapUser extends Model
             'gidnumber' => $user->getAttribute('gidnumber')[0],
             'homedirectory' => $user->getAttribute('homedirectory')[0],
 
+            'fullsearch' => LdapUser::fullSearch($user),
+
             'sambasid' => $sambasid,
             'sambarid' => $sambarid,
             'sambapwdlastset' => $sambapwdlastset,
@@ -208,6 +217,8 @@ class LdapUser extends Model
             'createHuman' => $createHuman,
 //            'jpegphoto' => $user->getAttribute('jpegphoto')[0], DOES NOT WORK -> ENCODING ERROR
 //            'jpegphoto' => $user->getJpegPhotoEncoded()
+        // TODO optimitzar performance
+            'jpegphoto' => ''
 //            'attributes' => $user->getAttributes()
         ];
     }
@@ -362,6 +373,7 @@ class LdapUser extends Model
      */
     public static function sync($dn, User $user)
     {
+        // TODO
 
         // GOOGLE
 

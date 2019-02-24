@@ -133,33 +133,6 @@ class MoodleUser extends Model
     }
 
     /**
-     * @param $user
-     * @return array
-     */
-    public static function map($user) {
-        return [
-            // TODO
-//            'id' => $user->id,
-//            'employeeId' => optional($user->externalIds)[0]['value'],
-//            'mobile' => self::getMobile($user),
-//            'personalEmail' => self::getPersonalEmail($user),
-//            'primaryEmail' => $user->primaryEmail,
-//            'isAdmin' => $user->isAdmin,
-//            'familyName' => $user->name->familyName,
-//            'fullName' => $user->name->fullName,
-//            'givenName' => $user->name->givenName,
-//            'lastLoginTime' => $user->lastLoginTime,
-//            'creationTime' => $user->creationTime,
-//            'suspended' => $user->suspended,
-//            'suspensionReason' => $user->suspensionReason,
-//            'thumbnailPhotoUrl' => $user->thumbnailPhotoUrl,
-//            'orgUnitPath' => $user->orgUnitPath,
-//            'organizations' => $user->organizations,
-//            'json' => json_encode($user)
-        ];
-    }
-
-    /**
      * All.
      *
      * @param array $criteria
@@ -176,7 +149,12 @@ class MoodleUser extends Model
             'form_params' => $params
         ]);
         $result = json_decode($res->getBody());
-        return $result->users;
+        $users = collect($result->users)->map(function ($user, $key) {
+            $user->fullsearch = $user->id . ' ' . $user->username . ' ' . $user->firstname . ' '  .
+                $user->lastname . ' '  . $user->fullname . ' '  . $user->email;
+            return $user;
+        });
+        return $users;
     }
 
     /**

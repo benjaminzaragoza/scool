@@ -184,15 +184,23 @@ class LdapUserTest extends TestCase
      * @group slow
      * @group ldap
      */
+    public function fullSearch()
+    {
+        $this->assertEquals('Sergi Tur Badenas stur@iesebre.com stur Sergi Tur Badenas 14268002K 41',
+            LdapUser::fullSearch(LdapUser::findByUid('stur')));
+    }
+
+    /**
+     * @test
+     * @group slow
+     * @group ldap
+     */
     public function map()
     {
         $originalUser = LdapUser::findByUid('stur');
-//        dd($originalUser->getAttributes());
-//        dd($originalUser->sambapwdlastset[0]);
+
         $this->assertEquals('stur',$originalUser->uid[0]);
         $user = LdapUser::map($originalUser);
-
-//        dd($user->objectClass);
 
         $this->assertTrue(is_array($user->objectClass));
         $this->assertCount(12, $user->objectClass);
@@ -209,6 +217,7 @@ class LdapUserTest extends TestCase
         $this->assertEquals('sambaSamAccount',$user->objectClass[10]);
         $this->assertEquals('highSchoolUser',$user->objectClass[11]);
 
+        $this->assertEquals('Sergi Tur Badenas stur@iesebre.com stur Sergi Tur Badenas 14268002K 41',$user->fullsearch);
         $this->assertEquals('ou=All,dc=iesebre,dc=com',$user->base_dn);
         $this->assertEquals('cn=Sergi Tur Badenas,ou=people,ou=Informatica,ou=Profes',$user->rdn);
         $this->assertEquals('Sergi Tur Badenas',$user->cn);
