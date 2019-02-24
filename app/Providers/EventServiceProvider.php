@@ -24,6 +24,7 @@ use App\Events\Studies\StudyTagRemoved;
 use App\Events\TeacherPhotosZipUploaded;
 use App\Events\TenantCreated;
 use App\Events\UserEmailUpdated;
+use App\Events\Users\Password\UserPasswordChangedByManager;
 use App\Listeners\Authentication\LogAttemptLoginUser;
 use App\Listeners\Authentication\LogLeaveImpersonation;
 use App\Listeners\Authentication\LogLogedOutUser;
@@ -237,6 +238,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         MoodleUserUnAssociated::class => [
             UnsetMoodleUserIdNumber::class
+        ],
+
+        UserPasswordChangedByManager::class => [
+            ChangeLdapPassword::class,
+            ChangeMoodlePassword::class,
+            ChangeGooglePassword::class,
+            SendPasswordChangedEmail::class,
         ]
     ];
 

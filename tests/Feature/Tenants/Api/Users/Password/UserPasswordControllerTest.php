@@ -58,6 +58,7 @@ class UserPasswordControllerTest extends BaseTenantTest
         ]);
         Event::assertDispatched(UserPasswordChangedByManager::class, function ($event) use ($user, $options) {
             return $event->user->id === $user->id &&
+                $event->password === 'NEWPASSWORD' &&
                 $event->options['force'] === true &&
                 $event->options['email'] === true &&
                 $event->options['ldap'] === true &&

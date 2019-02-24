@@ -20,6 +20,7 @@ class UserPasswordChangedByManager
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $user;
+    public $password;
     public $options;
 
     /**
@@ -27,9 +28,10 @@ class UserPasswordChangedByManager
      * @param $user
      * @param $options
      */
-    public function __construct(User $user, array $options)
+    public function __construct(User $user, $password, array $options)
     {
         $this->user = $user;
+        $this->password = $password;
         $this->options = $options;
     }
 

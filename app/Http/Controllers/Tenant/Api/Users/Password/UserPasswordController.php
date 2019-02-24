@@ -28,7 +28,7 @@ class UserPasswordController extends Controller
         $user->save();
         $options = [];
         if ($request->options) $options = $request->options;
-        event(new UserPasswordChangedByManager($user,$options));
+        event(new UserPasswordChangedByManager($user,$request->password, $options));
         return $user->mapSimple();
     }
 }
