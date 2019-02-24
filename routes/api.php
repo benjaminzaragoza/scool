@@ -51,6 +51,7 @@ use App\Http\Controllers\Tenant\Api\Roles\UserRoleController;
 use App\Http\Controllers\Tenant\Api\Teachers\TeachersController;
 use App\Http\Controllers\Tenant\Api\Users\LoggedUserController;
 use App\Http\Controllers\Tenant\Api\Users\OnlineUsersController;
+use App\Http\Controllers\Tenant\Api\Users\Password\UserPasswordController;
 use App\Http\Controllers\Tenant\Api\Users\UserEmailsController;
 use App\Http\Controllers\Tenant\Api\Users\UserMobileController;
 use App\Http\Controllers\Tenant\Api\Users\UserNamesController;
@@ -249,6 +250,9 @@ Route::domain('{tenant}.' . env('APP_DOMAIN'))->group(function () {
             //User photos
             Route::post('/user/{user}/photo','\\' . UserPhotoController::class. '@store');
             Route::delete('/user/{user}/photo','\\' . UserPhotoController::class. '@destroy');
+
+            // User Password
+            Route::put('/user/{user}/password', '\\' . UserPasswordController::class . '@update');
 
             //Jobs
             Route::get('/jobs', 'Tenant\JobsController@index');
