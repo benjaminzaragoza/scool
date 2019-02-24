@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Adldap\Models\ModelNotFoundException;
 use App\Ldap\OpenLdapSchema;
 use Cache;
 use Carbon\Carbon;
@@ -352,9 +353,17 @@ class LdapUser extends Model
         return $user;
     }
 
+    /**
+     * changePassword
+     * @param $user
+     * @param $password
+     * @return \Adldap\Models\Model|array|null
+     * @throws ModelNotFoundException
+     */
     public static function changePassword($user,$password)
     {
         $user = LdapUser::findByUid($user);
+        if (!$user) throw new ModelNotFoundException();
         $user->userPassword = ldap_md5_hash($password);
         $user->sambantpassword = ldap_nt_password($password);
         $user->sambalmpassword = ldap_lm_password($password);

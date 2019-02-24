@@ -2,16 +2,13 @@
 
 namespace App\Listeners\Users\Password;
 
-use App\Models\Incident;
-use Cache;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
  * Class ChangeGooglePassword
  * @package App\Listeners
  */
-class ChangeGooglePassword
+class ChangeGooglePassword implements ShouldQueue
 {
     /**
      * Create the event listener.

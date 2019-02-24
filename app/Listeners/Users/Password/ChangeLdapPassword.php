@@ -2,17 +2,14 @@
 
 namespace App\Listeners\Users\Password;
 
-use App\Models\Incident;
 use App\Models\LdapUser;
-use Cache;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
  * Class ChangeLdapPassword
  * @package App\Listeners
  */
-class ChangeLdapPassword
+class ChangeLdapPassword implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -27,8 +24,8 @@ class ChangeLdapPassword
     /**
      * Handle the event.
      *
-     * @param  object  $event
-     * @return void
+     * @param $event
+     * @throws \Adldap\Models\ModelNotFoundException
      */
     public function handle($event)
     {
@@ -47,11 +44,15 @@ class ChangeLdapPassword
     }
 
     /**
-     * changeLdapPassword
+     * changeLdapPassword.
+     *
      * @param $user
      * @param $password
+     * @throws \Adldap\Models\ModelNotFoundException
      */
     private function changeLdapPassword($user,$password) {
-        LdapUser::changePassword($user,$password);
+        if ($user->ldapUser) {
+            LdapUser::changePassword($user->ldapUser->uid,$password);
+        }
     }
 }
