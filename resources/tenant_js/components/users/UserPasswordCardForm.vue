@@ -130,8 +130,9 @@ export default {
           'google': this.google
         }
       }).then(response => {
-        this.$snackbar.showMEssage('Paraula de pas canviada correctament.')
+        this.$snackbar.showMessage('Paraula de pas canviada correctament.')
         this.loading = false
+        this.$emit('close')
       }).catch(error => {
         this.loading = false
         this.$snackbar.showError(error)

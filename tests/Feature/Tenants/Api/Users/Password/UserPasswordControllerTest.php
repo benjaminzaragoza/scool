@@ -5,6 +5,7 @@ namespace Tests\Feature\Tenants\Api\Users\Password;
 use App\Events\Users\Password\UserPasswordChangedByManager;
 use App\Models\User;
 use Event;
+use Hash;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTenantTest;
@@ -46,11 +47,11 @@ class UserPasswordControllerTest extends BaseTenantTest
         $originalPassword = $user->password;
         Event::fake();
         $options = [
-            'force' => true,
-            'email' => true,
-            'ldap' => true,
-            'moodle' => true,
-            'google' => true
+            'force' => false,
+            'email' => false,
+            'ldap' => false,
+            'moodle' => false,
+            'google' => false
         ];
         $response = $this->json('PUT','/api/v1/user/' . $user->id . '/password' , [
             'password' => 'NEWPASSWORD',
@@ -59,11 +60,11 @@ class UserPasswordControllerTest extends BaseTenantTest
         Event::assertDispatched(UserPasswordChangedByManager::class, function ($event) use ($user, $options) {
             return $event->user->id === $user->id &&
                 $event->password === 'NEWPASSWORD' &&
-                $event->options['force'] === true &&
-                $event->options['email'] === true &&
-                $event->options['ldap'] === true &&
-                $event->options['moodle'] === true &&
-                $event->options['google'] === true;
+                $event->options['force'] === false &&
+                $event->options['email'] === false &&
+                $event->options['ldap'] === false &&
+                $event->options['moodle'] === false &&
+                $event->options['google'] === false;
         });
         $response->assertSuccessful();
         $result = json_decode($response->getContent());
@@ -71,6 +72,7 @@ class UserPasswordControllerTest extends BaseTenantTest
         $this->assertEquals('Pepe Pardo Jeans',$result->name);
         $user = $user->fresh();
         $this->assertNotEquals($originalPassword,$user->password);
+        $this->assertTrue(Hash::check('NEWPASSWORD',$user->password));
     }
 
     /**

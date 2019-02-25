@@ -7,6 +7,7 @@ use App\Http\Controllers\Tenant\Controller;
 use App\Http\Requests\Users\Password\UserPasswordUpdate;
 use App\Models\User;
 use Auth;
+use Hash;
 use Illuminate\Http\Request;
 
 /**
@@ -24,7 +25,7 @@ class UserPasswordController extends Controller
      */
     public function update(UserPasswordUpdate $request, $tenant, User $user)
     {
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->save();
         $options = [];
         if ($request->options) $options = $request->options;

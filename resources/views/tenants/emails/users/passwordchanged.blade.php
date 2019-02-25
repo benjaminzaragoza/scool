@@ -4,7 +4,8 @@
 Algú (probablament vosté o algún administrador) ha canviat la vostre paraula de pas.
 
 @component('mail::panel')
-    Usuari: {{ $user->email }} Password: {{ $password }}
+**Usuari**: {{ $user->email }}<br/>
+**Password**: {{ $password }}
 @endcomponent
 
 En cas de dubte si us plau consulteu al/s responsable/es de l'aplicació.
