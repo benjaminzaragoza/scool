@@ -77,19 +77,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
-
-// TODO
 import generator from 'generate-password'
-
-// var generator = require('generate-password');
-//
-// var password = generator.generate({
-//   length: 10,
-//   numbers: true
-// });
-//
-// // 'uEyMTw32v9'
-// console.log(password);
 
 export default {
   name: 'UserPasswordCardForm',
@@ -110,6 +98,12 @@ export default {
       syncLdap: true
     }
   },
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     invalid () {
       if (!this.password) return true
@@ -125,7 +119,23 @@ export default {
   },
   methods: {
     change () {
-      console.log('TODO')
+      this.loading = true
+      window.axios.put('/api/v1/user/' + this.user.id + '/password', {
+        'password': this.password,
+        'options': {
+          'force': this.force,
+          'email': this.email,
+          'ldap': this.ldap,
+          'moodle': this.moodle,
+          'google': this.google
+        }
+      }).then(response => {
+        this.$snackbar.showMEssage('Paraula de pas canviada correctament.')
+        this.loading = false
+      }).catch(error => {
+        this.loading = false
+        this.$snackbar.showError(error)
+      })
     },
     generatePassword () {
       this.password = generator.generate({ length: 10, numbers: true })
