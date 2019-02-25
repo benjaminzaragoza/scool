@@ -39,6 +39,15 @@ class PasswordChanged extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('tenants.emails.users.passwordchanged');
+        return $this->markdown('tenants.emails.users.passwordchanged')->subject($this->getSubject());
+    }
+
+    /**
+     * Get subject.
+     * @return string
+     */
+    protected function getSubject()
+    {
+        return 'Paraula de pas modificada';
     }
 }
